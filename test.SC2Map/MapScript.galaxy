@@ -1,0 +1,102 @@
+//==================================================================================================
+// 
+// Generated Map Script
+// 
+// Name:   Just Another StarCraft II Map
+// 
+//==================================================================================================
+include "TriggerLibs/NativeLib"
+include "TriggerLibs/LibertyLib"
+
+//--------------------------------------------------------------------------------------------------
+// Library: KeironTriggerUnitFunctions
+//--------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+// Library: KeironTriggerUnitFunctions
+//--------------------------------------------------------------------------------------------------
+// External Library Initialization
+void lib2_InitLibraries () {
+    libNtve_InitVariables();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Library Initialization
+//--------------------------------------------------------------------------------------------------
+bool lib2_InitLib_completed = false;
+
+void lib2_InitLib () {
+    if (lib2_InitLib_completed) {
+        return;
+    }
+
+    lib2_InitLib_completed = true;
+
+    lib2_InitLibraries();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Library Initialization
+//--------------------------------------------------------------------------------------------------
+void InitLibs () {
+    libNtve_InitLib();
+    libLbty_InitLib();
+    lib2_InitLib();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger Variables
+//--------------------------------------------------------------------------------------------------
+trigger gt_MeleeInitialization;
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Melee Initialization
+//--------------------------------------------------------------------------------------------------
+bool gt_MeleeInitialization_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    PlayerSetRace(1, "Keir");
+    PlayerModifyPropertyInt(1, c_playerPropMinerals, c_playerPropOperSetTo, 1000);
+    PlayerModifyPropertyInt(1, c_playerPropVespene, c_playerPropOperSetTo, 1000);
+    libLbty_gf_OrderWorkerstoGatherNearbyResources(RegionEntireMap(), 1);
+    TechTreeUpgradeAddLevel(2, "UmbraUpgrade", 1);
+    TechTreeUpgradeAddLevel(2, "AmplifiedSphere", 1);
+    TechTreeUpgradeAddLevel(2, "ElytraSpeed", 1);
+    TechTreeUpgradeAddLevel(2, "DissonanceProjector", 1);
+    TechTreeUpgradeAddLevel(2, "LatentCharge", 1);
+    TechTreeUpgradeAddLevel(4, "UmbraUpgrade", 1);
+    TechTreeUpgradeAddLevel(4, "AmplifiedSphere", 1);
+    TechTreeUpgradeAddLevel(4, "DissonanceProjector", 1);
+    TechTreeUpgradeAddLevel(4, "zerglingmovementspeed", 1);
+    libNtve_gf_SetUpgradeLevelForPlayer(4, "Stimpack", 1);
+    libNtve_gf_SetUpgradeLevelForPlayer(4, "ShieldWall", 1);
+    VisRevealerCreate(1, RegionEntireMap());
+    libNtve_gf_SetAlliance(1, 2, libNtve_ge_AllianceSetting_AllyWithSharedVisionControlAndSpending);
+    libNtve_gf_SetAlliance(1, 4, libNtve_ge_AllianceSetting_Enemy);
+    PlayerSetAlliance(4, c_allianceIdControl, 1, true);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_MeleeInitialization_Init () {
+    gt_MeleeInitialization = TriggerCreate("gt_MeleeInitialization_Func");
+    TriggerAddEventMapInit(gt_MeleeInitialization);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger Initialization
+//--------------------------------------------------------------------------------------------------
+void InitTriggers () {
+    gt_MeleeInitialization_Init();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Map Initialization
+//--------------------------------------------------------------------------------------------------
+void InitMap () {
+    InitLibs();
+    InitTriggers();
+}

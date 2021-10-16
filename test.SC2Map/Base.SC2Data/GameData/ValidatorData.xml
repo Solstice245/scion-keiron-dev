@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CValidatorUnitCompareBehaviorCount id="CasterHasChannel">
+        <WhichUnit Value="Caster"/>
+        <Compare value="GT"/>
+        <Behavior value="InvertFFieldChannel"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareDamageDealtTime id="CasterHasDealtNoDamage">
+        <WhichUnit Value="Caster"/>
+        <Compare value="GT"/>
+        <Value value="7"/>
+    </CValidatorUnitCompareDamageDealtTime>
+    <CValidatorUnitCompareBehaviorCount id="HasNoTurn">
+        <WhichUnit Value="Caster"/>
+        <Compare value="GT"/>
+        <Behavior value="DisableTurning"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitFilters id="IsMassive">
+        <Filters value="Massive;-"/>
+    </CValidatorUnitFilters>
+    <CValidatorCombine id="IsStructureOrMassive">
+        <CombineArray value="IsMassive"/>
+        <CombineArray value="IsStructure"/>
+    </CValidatorCombine>
+    <CValidatorUnitWeaponFiring id="PulsarIsFiringWeapon">
+        <WhichUnit Value="Caster"/>
+        <Weapon value="WeaponFacingDummy"/>
+    </CValidatorUnitWeaponFiring>
+    <CValidatorUnitCompareVital id="CasterShieldsGE20">
+        <WhichUnit Value="Caster"/>
+        <Compare value="GE"/>
+        <Value value="20"/>
+        <Vital value="Shields"/>
+    </CValidatorUnitCompareVital>
+    <CValidatorLocationCompareRange id="DistanceGreaterThan2">
+        <WhichLocation Value="TargetUnit"/>
+        <Compare value="GT"/>
+        <Range value="2"/>
+    </CValidatorLocationCompareRange>
+    <CValidatorLocationCompareRange id="EchoReverbFate">
+        <Compare value="LT"/>
+        <Range value="16"/>
+    </CValidatorLocationCompareRange>
+    <CValidatorUnitCompareBehaviorCount id="EchoTeleportController">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="EchoReverbTeleportController"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="ElytraHasWeaponChargesSelf">
+        <WhichUnit Value="Caster"/>
+        <Compare value="GT"/>
+        <Behavior value="ElytraAmmoDummy"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="ElytraHasWeaponChargesRecall">
+        <Behavior value="ElytraAmmoDummy"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitFilters id="GamutOrbTargetIsDead">
+        <WhichUnit Effect="GamutOrbLM"/>
+        <Filters value="Dead;-"/>
+    </CValidatorUnitFilters>
+    <CValidatorUnitCompareBehaviorCount id="HasAegisShieldProtection">
+        <Compare value="GT"/>
+        <Behavior value="AegisShield"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorLocationCompareRange id="InvertFFieldDistanceMinimum">
+        <Compare value="GT"/>
+        <Range value="1.2"/>
+        <Value Effect="InvertFFieldCP" Value="TargetPoint"/>
+    </CValidatorLocationCompareRange>
+    <CValidatorLocationCompareRange id="InvertFFieldDistanceMaximum">
+        <Compare value="LT"/>
+        <Range value="2.2"/>
+        <Value Effect="InvertFFieldCP" Value="TargetPoint"/>
+    </CValidatorLocationCompareRange>
+    <CValidatorLocationCompareRange id="InvertFFieldDistanceMinimum2">
+        <Compare value="GT"/>
+        <Range value="1.5"/>
+        <Value Effect="InvertFFieldCP" Value="TargetPoint"/>
+    </CValidatorLocationCompareRange>
+    <CValidatorUnitCompareBehaviorCount id="NoAegisShieldAura">
+        <Behavior value="AegisShieldAura"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="NoAegisShieldDummyRadiusBehavior">
+        <Behavior value="AegisShieldDummyRadius"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="NoAegisShieldProtection">
+        <Behavior value="AegisShield"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitType id="IsUnitTypeUmbra">
+        <Value value="Umbra"/>
+    </CValidatorUnitType>
+    <CValidatorUnitCompareBehaviorCount id="MustHaveInducerGamutOrb">
+        <WhichUnit Value="Caster"/>
+        <Compare value="GT"/>
+        <Behavior value="InducerGamutOrb"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="ParagonDoesNotHaveHasSpawn">
+        <Behavior value="ParagonHasSpawn"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="ParagonSourceHasParagonFollow">
+        <WhichUnit Value="Source"/>
+        <Compare value="GT"/>
+        <Behavior value="ParagonSpawnFollow"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="ParagonSpawnCount">
+        <WhichUnit Value="Caster"/>
+        <Compare value="LT"/>
+        <Value value="5"/>
+        <Behavior value="ParagonSpawnCount"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorCombine id="ParagonHasFollowOrIsParagon">
+        <CombineArray value="ParagonHasParagonFollow"/>
+        <CombineArray value="ParagonHasIsParagon"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareBehaviorCount id="ParagonHasParagonFollow">
+        <WhichUnit Effect="ParagonSpawnCU"/>
+        <Compare value="GT"/>
+        <Behavior value="ParagonSpawnFollow"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="ParagonHasIsParagon">
+        <WhichUnit Effect="ParagonSpawnCU"/>
+        <Compare value="GT"/>
+        <Behavior value="IsParagon"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="ParagonNoCreate">
+        <WhichUnit Effect="ParagonFindSpawnUnitIterate" Value="Source"/>
+        <Behavior value="NoCreate"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorLocationCompareRange id="ParagonSpawnDisconnectRange">
+        <Compare value="LT"/>
+        <Range value="2"/>
+        <Value Effect="ParagonSpawnCU" Value="TargetUnit"/>
+    </CValidatorLocationCompareRange>
+    <CValidatorLocationCompareRange id="RangeCheckLE3">
+        <WhichLocation Value="TargetUnit"/>
+        <Compare value="LE"/>
+        <Range value="3"/>
+    </CValidatorLocationCompareRange>
+    <CValidatorCombine id="RangeLE3AndTargetNotDead">
+        <Type value="And"/>
+        <CombineArray value="RangeCheckLE3"/>
+        <CombineArray value="TargetNotDead"/>
+    </CValidatorCombine>
+    <CValidatorLocationArc id="UnknownValidator"/>
+</Catalog>
