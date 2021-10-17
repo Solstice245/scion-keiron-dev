@@ -26,7 +26,7 @@
         <CostCategory value="Technology"/>
         <AbilArray Link="BuildInProgress"/>
         <AbilArray Link="que5"/>
-        <AbilArray Link="Rally"/>
+        <AbilArray Link="KeironCitadelMaterialize"/>
         <ScoreResult value="BuildOrder"/>
         <EditorCategories value="ObjectType:Structure,ObjectFamily:Melee"/>
         <GlossaryCategory value="Unit/Category/KeironUnits"/>
@@ -35,43 +35,24 @@
         <Food value="8"/>
         <Footprint value="Footprint3x3Contour"/>
         <PlacementFootprint value="Footprint3x3"/>
-    </CUnit>
-    <CUnit default="1" id="DefaultSettingsKeironBuildingFlyer">
-        <Race value="Keir"/>
-        <FlagArray index="Turnable" value="0"/>
-        <FlagArray index="Movable" value="0"/>
-        <FlagArray index="PreventDefeat" value="1"/>
-        <FlagArray index="PreventDestroy" value="1"/>
-        <FlagArray index="PenaltyRevealed" value="1"/>
-        <FlagArray index="UseLineOfSight" value="1"/>
-        <FlagArray index="TownAlert" value="1"/>
-        <FlagArray index="NoPortraitTalk" value="1"/>
-        <FlagArray index="ArmorDisabledWhileConstructing" value="1"/>
-        <FogVisibility value="Snapshot"/>
-        <PlaneArray index="Air" value="1"/>
-        <Collide index="Flying" value="1"/>
-        <Attributes index="Armored" value="1"/>
-        <Attributes index="Structure" value="1"/>
-        <LifeArmor value="1"/>
-        <LifeRegenRate value="0.25"/>
-        <LifeArmorName value="Unit/LifeArmorName/KeironStructureArmor"/>
-        <Mover value="Fly"/>
-        <Sight value="10"/>
-        <Height value="3.75"/>
-        <Food value="8"/>
-        <CostCategory value="Technology"/>
-        <AbilArray Link="BuildInProgress"/>
-        <AbilArray Link="que5"/>
-        <AbilArray Link="Rally"/>
         <Radius value="1.5"/>
         <SeparationRadius value="1.5"/>
+        <MinimapRadius value="1.5"/>
+    </CUnit>
+    <CUnit default="1" id="DefaultSettingsKeironBuildingFlyer" parent="CBuildingKeiron">
+        <PlaneArray index="Ground" value="0"/>
+        <PlaneArray index="Air" value="1"/>
+        <Collide index="Burrow" value="0"/>
+        <Collide index="Ground" value="0"/>
+        <Collide index="Structure" value="0"/>
+        <Collide index="RoachBurrow" value="0"/>
+        <Collide index="ForceField" value="0"/>
+        <Collide index="Flying" value="1"/>
+        <Mover value="Fly"/>
+        <Height value="3.75"/>
+        <VisionHeight value="4"/>
         <Footprint value="Footprint4x4Air"/>
         <PlacementFootprint value="Footprint4x4Air"/>
-        <ScoreResult value="BuildOrder"/>
-        <EditorCategories value="ObjectType:Structure,ObjectFamily:Melee"/>
-        <GlossaryCategory value="Unit/Category/KeironUnits"/>
-        <HotkeyCategory value="Unit/Category/KeironUnits"/>
-        <VisionHeight value="4"/>
     </CUnit>
     <CUnit default="1" id="CUnitKeiron">
         <DeathRevealRadius value="3"/>
@@ -176,29 +157,22 @@
         <ShieldsMax value="100"/>
         <Speed value="2.5"/>
         <EditorCategories value="ObjectType:Unit"/>
+        <AbilArray Link="ProgressRally"/>
+        <EffectArray index="Create" value="CelestialOutletAurApeDelay"/>
+        <CardLayouts index="0">
+            <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
+        </CardLayouts>
     </CUnit>
-    <CUnit id="Formulator" parent="CUnitKeiron">
-        <Facing value="315"/>
+    <CUnit id="FormulatorRich" parent="CBuildingKeiron">
+        <DeathRevealRadius value="3"/>
+        <Race value="Prot"/>
         <Mob value="Multiplayer"/>
-        <FlagArray index="Turnable" value="0"/>
-        <FlagArray index="PreventDefeat" value="1"/>
-        <FlagArray index="PenaltyRevealed" value="1"/>
-        <FlagArray index="TownAlert" value="1"/>
-        <FlagArray index="NoPortraitTalk" value="1"/>
-        <FlagArray index="ArmorDisabledWhileConstructing" value="1"/>
-        <FlagArray index="ArmySelect" value="0"/>
+        <FlagArray index="Movable" value="1"/>
         <ResourceState value="Harvestable"/>
         <ResourceType value="Vespene"/>
-        <FogVisibility value="Snapshot"/>
-        <Collide index="Burrow" value="1"/>
-        <Collide index="Structure" value="1"/>
-        <Collide index="RoachBurrow" value="1"/>
         <Collide index="Small" value="1"/>
-        <Attributes index="Armored" value="1"/>
-        <Attributes index="Structure" value="1"/>
         <LifeStart value="450"/>
         <LifeMax value="450"/>
-        <LifeArmor value="1"/>
         <LifeRegenRate value="0"/>
         <LifeArmorName value="Unit/LifeArmorName/ProtossBuildingPlating"/>
         <ShieldsStart value="450"/>
@@ -206,26 +180,62 @@
         <ShieldRegenDelay value="10"/>
         <ShieldRegenRate value="2"/>
         <ShieldArmorName value="Unit/ShieldArmorName/ProtossPlasmaShields"/>
-        <Acceleration value="0"/>
         <StationaryTurningRate value="719.4726"/>
         <TurningRate value="719.4726"/>
+        <Sight value="9"/>
+        <Food value="0"/>
         <CostCategory value="Economy"/>
         <CostResource index="Minerals" value="75"/>
         <AttackTargetPriority value="11"/>
-        <AbilArray index="0" Link="BuildInProgress"/>
         <AbilArray index="1" removed="1"/>
         <AbilArray index="2" removed="1"/>
-        <AbilArray index="3" removed="1"/>
-        <BehaviorArray Link="HarvestableVespeneGeyserGasProtoss"/>
-        <CardLayouts index="0">
-            <LayoutButtons index="0" Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
-            <LayoutButtons index="1" removed="1"/>
-            <LayoutButtons index="2" removed="1"/>
-            <LayoutButtons index="3" removed="1"/>
-            <LayoutButtons index="4" removed="1"/>
+        <BehaviorArray Link="HarvestableRichVespeneGeyserGasKeiron"/>
+        <CardLayouts>
+            <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
         </CardLayouts>
-        <Radius value="1.5"/>
-        <SeparationRadius value="1.5"/>
+        <Footprint value="FootprintGeyserRoundedBuilt"/>
+        <PlacementFootprint value="Footprint3x3CappedGeyser"/>
+        <BuiltOn value="RichVespeneGeyser"/>
+        <ScoreMake value="75"/>
+        <ScoreKill value="75"/>
+        <SubgroupPriority value="1"/>
+        <HotkeyAlias value="Assimilator"/>
+        <SelectAlias value="Assimilator"/>
+        <SubgroupAlias value="Assimilator"/>
+        <GlossaryCategory value=""/>
+        <GlossaryPriority value="10"/>
+        <GlossaryAlias value="Assimilator"/>
+        <HotkeyCategory value="Unit/Category/ProtossUnits"/>
+    </CUnit>
+    <CUnit id="Formulator" parent="CBuildingKeiron">
+        <DeathRevealRadius value="3"/>
+        <Mob value="Multiplayer"/>
+        <FlagArray index="Movable" value="1"/>
+        <ResourceState value="Harvestable"/>
+        <ResourceType value="Vespene"/>
+        <Collide index="Small" value="1"/>
+        <LifeStart value="450"/>
+        <LifeMax value="450"/>
+        <LifeRegenRate value="0"/>
+        <LifeArmorName value="Unit/LifeArmorName/ProtossBuildingPlating"/>
+        <ShieldsStart value="450"/>
+        <ShieldsMax value="450"/>
+        <ShieldRegenDelay value="10"/>
+        <ShieldRegenRate value="2"/>
+        <ShieldArmorName value="Unit/ShieldArmorName/ProtossPlasmaShields"/>
+        <StationaryTurningRate value="719.4726"/>
+        <TurningRate value="719.4726"/>
+        <Sight value="9"/>
+        <Food value="0"/>
+        <CostCategory value="Economy"/>
+        <CostResource index="Minerals" value="75"/>
+        <AttackTargetPriority value="11"/>
+        <AbilArray index="1" removed="1"/>
+        <AbilArray index="2" removed="1"/>
+        <BehaviorArray Link="HarvestableVespeneGeyserGasKeiron"/>
+        <CardLayouts>
+            <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
+        </CardLayouts>
         <Footprint value="FootprintGeyserRoundedBuilt"/>
         <PlacementFootprint value="Footprint3x3CappedGeyser"/>
         <BuiltOn value="VespeneGeyser"/>
@@ -234,19 +244,12 @@
         <BuiltOn value="ProtossVespeneGeyser"/>
         <BuiltOn value="PurifierVespeneGeyser"/>
         <BuiltOn value="ShakurasVespeneGeyser"/>
-        <BuildOnAs value="AssimilatorRich"/>
+        <BuildOnAs value="FormulatorRich"/>
         <ScoreMake value="75"/>
-        <ScoreMakeCostFactor index="Minerals" value="0"/>
-        <ScoreMakeCostFactor index="Vespene" value="0"/>
         <ScoreKill value="75"/>
-        <ScoreKillCostFactor index="Minerals" value="0"/>
-        <ScoreKillCostFactor index="Vespene" value="0"/>
         <SubgroupPriority value="1"/>
-        <MinimapRadius value="1.5"/>
-        <EditorCategories value="ObjectType:Structure,ObjectFamily:Melee"/>
         <GlossaryCategory value=""/>
         <GlossaryPriority value="14"/>
-        <GlossaryAlias value=""/>
         <HotkeyCategory value="Unit/Category/ProtossUnits"/>
     </CUnit>
     <CUnit id="Aurora" parent="CUnitKeironFlyer">
@@ -262,11 +265,15 @@
         <Food value="-2"/>
         <CostResource index="Minerals" value="125"/>
         <CostResource index="Vespene" value="125"/>
+        <AbilArray index="3" Link="ProgressRally"/>
+        <AbilArray Link="KeironWarpable"/>
         <AbilArray Link="Emanator"/>
         <WeaponArray Link="HalationPlasma"/>
         <CardLayouts index="0">
             <LayoutButtons Face="OracleBuildStasisTrap" Type="AbilCmd" AbilCmd="Emanator,Execute" Row="2" Column="0"/>
+            <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
         </CardLayouts>
+        <EffectArray index="Create" value="CelestialOutletAurApeDelay"/>
     </CUnit>
     <CUnit id="AstralConduit" parent="DefaultSettingsKeironBuildingFlyer">
         <LifeStart value="500"/>
@@ -274,6 +281,8 @@
         <ShieldsStart value="500"/>
         <ShieldsMax value="500"/>
         <EditorCategories value="ObjectType:Structure"/>
+        <BehaviorArray Link="AstralConduitEchoBase"/>
+        <EffectArray index="Death" value="AstralConduitEchoDeathCP"/>
     </CUnit>
     <CUnit id="Harbinger" parent="CUnitKeironFlyer">
         <LifeStart value="100"/>
@@ -282,26 +291,22 @@
         <ShieldsMax value="100"/>
         <Speed value="2.5"/>
         <EditorCategories value="ObjectType:Unit"/>
+        <AbilArray index="3" Link="ProgressRally"/>
+        <AbilArray Link="KeironWarpable"/>
+        <EffectArray index="Create" value="CosmicPortalHarParDelay"/>
+        <CardLayouts index="0">
+            <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
+        </CardLayouts>
     </CUnit>
-    <CUnit id="HarbingersElysium" parent="CBuildingKeiron">
-        <LifeStart value="500"/>
-        <LifeMax value="500"/>
-        <ShieldsStart value="500"/>
-        <ShieldsMax value="500"/>
-        <Radius value="1.5"/>
-        <SeparationRadius value="1.5"/>
-        <EditorCategories value="ObjectType:Structure"/>
-        <GlossaryAlias value="HarbingersElysium"/>
-    </CUnit>
-    <CUnit id="InducersFormus" parent="CBuildingKeiron">
-        <LifeStart value="500"/>
-        <LifeMax value="500"/>
-        <ShieldsStart value="500"/>
-        <ShieldsMax value="500"/>
-        <Radius value="1.5"/>
-        <SeparationRadius value="1.5"/>
-        <EditorCategories value="ObjectType:Structure"/>
+    <CUnit id="Atrium" parent="CBuildingKeiron">
         <Facing value="45"/>
+        <LifeStart value="500"/>
+        <LifeMax value="500"/>
+        <ShieldsStart value="500"/>
+        <ShieldsMax value="500"/>
+        <BehaviorArray Link="AtriumIndMyrBase"/>
+        <EffectArray index="Death" value="AtriumIndMyrDeathCP"/>
+        <EditorCategories value="ObjectType:Structure"/>
     </CUnit>
     <CUnit id="KeironNullifier" parent="CBuildingKeiron">
         <LifeStart value="200"/>
@@ -325,6 +330,7 @@
         <EditorCategories value="ObjectType:Structure"/>
         <EquipmentArray Weapon="NullifierWeaponDisplay"/>
         <Food value="0"/>
+        <MinimapRadius value="0.75"/>
     </CUnit>
     <CUnit id="Meridian" parent="CUnitKeiron">
         <Collide index="Small" value="1"/>
@@ -334,6 +340,12 @@
         <ShieldsMax value="80"/>
         <Speed value="2.5"/>
         <EditorCategories value="ObjectType:Unit"/>
+        <EffectArray index="Create" value="ElysiumMeridianDelay"/>
+        <AbilArray index="3" Link="ProgressRally"/>
+        <AbilArray Link="KeironWarpable"/>
+        <CardLayouts index="0">
+            <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
+        </CardLayouts>
     </CUnit>
     <CUnit id="Elysium" parent="CBuildingKeiron">
         <Facing value="45"/>
@@ -341,8 +353,8 @@
         <LifeMax value="500"/>
         <ShieldsStart value="500"/>
         <ShieldsMax value="500"/>
-        <Radius value="1.5"/>
-        <SeparationRadius value="1.5"/>
+        <BehaviorArray Link="ElysiumMeridianBase"/>
+        <EffectArray index="Death" value="ElysiumMeridianDeathCP"/>
         <EditorCategories value="ObjectType:Structure"/>
     </CUnit>
     <CUnit id="Oculus" parent="CBuildingKeiron">
@@ -359,6 +371,7 @@
         <Footprint value="Footprint2x2Contour"/>
         <PlacementFootprint value="Footprint2x2"/>
         <EditorCategories value="ObjectType:Structure"/>
+        <MinimapRadius value="0.75"/>
     </CUnit>
     <CUnit id="Paradox" parent="CUnitKeironFlyer">
         <LifeStart value="100"/>
@@ -368,11 +381,15 @@
         <ShieldsMax value="100"/>
         <Speed value="2.5"/>
         <EditorCategories value="ObjectType:Unit"/>
+        <AbilArray index="3" Link="ProgressRally"/>
+        <AbilArray Link="KeironWarpable"/>
         <AbilArray Link="ParadoxShield"/>
         <BehaviorArray Link="Detector10"/>
         <CardLayouts index="0">
             <LayoutButtons Face="ParadoxShield" Type="AbilCmd" AbilCmd="ParadoxShield,Execute" Row="2" Column="0"/>
+            <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
         </CardLayouts>
+        <EffectArray index="Create" value="CosmicPortalHarParDelay"/>
     </CUnit>
     <CUnit id="CosmicPortal" parent="DefaultSettingsKeironBuildingFlyer">
         <LifeStart value="500"/>
@@ -380,6 +397,8 @@
         <ShieldsStart value="500"/>
         <ShieldsMax value="500"/>
         <EditorCategories value="ObjectType:Structure"/>
+        <BehaviorArray Link="CosmicPortalHarParBase"/>
+        <EffectArray index="Death" value="CosmicPortalHarParDeathCP"/>
     </CUnit>
     <CUnit id="Pulsar4DMDummy">
         <Race value="Keir"/>
@@ -478,9 +497,12 @@
         <ResourceDropOff index="Minerals" value="1"/>
         <ResourceDropOff index="Vespene" value="1"/>
         <MinimapRadius value="2.5"/>
+        <AbilArray index="2" Link="Rally"/>
         <AbilArray Link="KeironCitadelTrain"/>
         <AbilArray Link="KeironCitadelMaterialize"/>
         <BehaviorArray Link="PowerSource"/>
+        <Radius value="2"/>
+        <SeparationRadius value="2"/>
     </CUnit>
     <CUnit id="Converter" parent="CUnitKeiron">
         <LifeStart value="20"/>
@@ -500,17 +522,16 @@
         <TurningRate value="999.8437"/>
         <FlagArray index="Worker" value="1"/>
         <FlagArray index="ArmySelect" value="0"/>
-        <ResourceDropOff index="Vespene" value="1"/>
         <Response value="Flee"/>
         <Attributes index="Light" value="1"/>
         <Attributes index="Mechanical" value="1"/>
         <Acceleration value="2.5"/>
-        <AbilArray index="3" Link="ProbeHarvest"/>
+        <AbilArray index="3" Link="ConverterGather"/>
         <AbilArray Link="KeironBuild"/>
         <WeaponArray Link="ParticleBeam"/>
         <CardLayouts index="0">
-            <LayoutButtons Face="GatherProt" Type="AbilCmd" AbilCmd="ProbeHarvest,Gather" Row="1" Column="0"/>
-            <LayoutButtons Face="ReturnCargo" Type="AbilCmd" AbilCmd="ProbeHarvest,Return" Row="1" Column="1"/>
+            <LayoutButtons Face="GatherProt" Type="AbilCmd" AbilCmd="ConverterGather,Gather" Row="1" Column="0"/>
+            <LayoutButtons Face="ReturnCargo" Type="AbilCmd" AbilCmd="ConverterGather,Return" Row="1" Column="1"/>
             <LayoutButtons Face="ShapeStructure" Type="Submenu" SubmenuCardId="0002" Row="2" Column="3"/>
             <LayoutButtons Face="ShapeAdvancedStructure" Type="Submenu" SubmenuCardId="0003" Row="2" Column="4"/>
         </CardLayouts>
@@ -518,18 +539,21 @@
             <LayoutButtons Face="Cancel" Type="CancelSubmenu" Row="2" Column="4"/>
             <LayoutButtons Face="ShapeCitadel" Type="AbilCmd" AbilCmd="KeironBuild,Build1" Row="0" Column="0"/>
             <LayoutButtons Face="ShapeEdifice" Type="AbilCmd" AbilCmd="KeironBuild,Build7" Row="1" Column="0"/>
-            <LayoutButtons Face="ShapeSubjecterssSanctum" Type="AbilCmd" AbilCmd="KeironBuild,Build8" Row="1" Column="1"/>
+            <LayoutButtons Face="ShapeSanctum" Type="AbilCmd" AbilCmd="KeironBuild,Build8" Row="1" Column="1"/>
             <LayoutButtons Face="ShapeReliquary" Type="AbilCmd" AbilCmd="KeironBuild,Build3" Row="1" Column="2"/>
             <LayoutButtons Face="ShapeNullifier" Type="AbilCmd" AbilCmd="KeironBuild,Build4" Row="2" Column="0"/>
             <LayoutButtons Face="ShapeOculus" Type="AbilCmd" AbilCmd="KeironBuild,Build6" Row="2" Column="2"/>
+            <LayoutButtons Face="ShapeFormulator" Type="AbilCmd" AbilCmd="KeironBuild,Build2" Row="0" Column="1"/>
         </CardLayouts>
         <CardLayouts CardId="0003">
             <LayoutButtons Face="Cancel" Type="CancelSubmenu" Row="2" Column="4"/>
             <LayoutButtons Face="ShapeElysium" Type="AbilCmd" AbilCmd="KeironBuild,Build9" Row="0" Column="2"/>
             <LayoutButtons Face="ShapeFoundry" Type="AbilCmd" AbilCmd="KeironBuild,Build10" Row="0" Column="0"/>
             <LayoutButtons Face="ShapeAstralConduit" Type="AbilCmd" AbilCmd="KeironBuild,Build13" Row="0" Column="1"/>
-            <LayoutButtons Face="ShapeInducersFormus" Type="AbilCmd" AbilCmd="KeironBuild,Build11" Row="1" Column="0"/>
+            <LayoutButtons Face="ShapeAtrium" Type="AbilCmd" AbilCmd="KeironBuild,Build11" Row="1" Column="0"/>
             <LayoutButtons Face="ShapePantheon" Type="AbilCmd" AbilCmd="KeironBuild,Build12" Row="2" Column="0"/>
+            <LayoutButtons Face="ShapeCelestialOutlet" Type="AbilCmd" AbilCmd="KeironBuild,Build14" Row="1" Column="1"/>
+            <LayoutButtons Face="ShapeCosmicPortal" Type="AbilCmd" AbilCmd="KeironBuild,Build15" Row="2" Column="1"/>
         </CardLayouts>
         <Sight value="1"/>
     </CUnit>
@@ -613,6 +637,12 @@
         <CostResource index="Vespene" value="250"/>
         <BehaviorArray Link="InducerGamutOrb"/>
         <WeaponArray Link="GamutOrb"/>
+        <AbilArray index="3" Link="ProgressRally"/>
+        <AbilArray Link="KeironWarpable"/>
+        <EffectArray index="Create" value="AtriumIndMyrDelay"/>
+        <CardLayouts index="0">
+            <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
+        </CardLayouts>
     </CUnit>
     <CUnit id="ParagonSpawn" parent="CUnitKeironFlyer">
         <Attributes index="Light" value="1"/>
@@ -647,12 +677,15 @@
         <Speed value="2.25"/>
         <CostResource index="Minerals" value="150"/>
         <CostResource index="Vespene" value="50"/>
+        <AbilArray index="3" Link="ProgressRally"/>
+        <AbilArray Link="KeironWarpable"/>
         <AbilArray Link="GhostHoldFire"/>
         <AbilArray Link="GhostWeaponsFree"/>
         <WeaponArray Link="SeperationBeam"/>
         <CardLayouts index="0">
             <LayoutButtons Face="WeaponsFree" Type="AbilCmd" AbilCmd="GhostWeaponsFree,Execute" Row="1" Column="3"/>
             <LayoutButtons Face="GhostHoldFire" Type="AbilCmd" AbilCmd="GhostHoldFire,Execute" Row="1" Column="2"/>
+            <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
         </CardLayouts>
         <Radius value="0.625"/>
         <InnerRadius value="0.5"/>
@@ -662,7 +695,8 @@
         <Sight value="10"/>
         <Food value="-3"/>
         <CargoSize value="4"/>
-        <BehaviorArray Link="DisableTurning"/>
+        <EffectArray index="Create" value="SanctumPulSubDelay"/>
+        <MinimapRadius value="0.625"/>
     </CUnit>
     <CUnit id="ReturnGamutOrb" parent="MISSILE">
         <Race value="Keir"/>
@@ -689,11 +723,16 @@
         <WeaponArray Link="Lunge"/>
         <WeaponArray Link="ElytraRelease"/>
         <AcquireMovementLimit value="2"/>
+        <AbilArray index="3" Link="ProgressRally"/>
+        <AbilArray Link="KeironWarpable"/>
         <AbilArray Link="HangarQueue5"/>
         <AbilArray Link="MyriadHanger"/>
         <CardLayouts index="0">
             <LayoutButtons Face="Interceptor" Type="AbilCmd" AbilCmd="MyriadHanger,Ammo1" Row="2" Column="0"/>
+            <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
         </CardLayouts>
+        <MinimapRadius value="0.875"/>
+        <EffectArray index="Create" value="AtriumIndMyrDelay"/>
     </CUnit>
     <CUnit id="ShadowCannonWeapon" parent="MISSILE">
         <Race value="Keir"/>
@@ -704,15 +743,15 @@
         <Race value="Keir"/>
         <EditorCategories value="ObjectType:Projectile,ObjectFamily:Melee"/>
     </CUnit>
-    <CUnit id="SubjectersSanctum" parent="CBuildingKeiron">
+    <CUnit id="Sanctum" parent="CBuildingKeiron">
+        <Facing value="45"/>
         <LifeStart value="500"/>
         <LifeMax value="500"/>
         <ShieldsStart value="500"/>
         <ShieldsMax value="500"/>
-        <Radius value="1.5"/>
-        <SeparationRadius value="1.5"/>
+        <BehaviorArray Link="SanctumPulSubBase"/>
+        <EffectArray index="Death" value="SanctumPulSubDeathCP"/>
         <EditorCategories value="ObjectType:Structure"/>
-        <Facing value="45"/>
     </CUnit>
     <CUnit id="Titan" parent="CUnitKeiron">
         <FlagArray index="Turnable" value="0"/>
@@ -729,20 +768,27 @@
         <Speed value="2.5"/>
         <WeaponArray Link="TitanWeapon" Turret="Titan"/>
         <WeaponArray Link="TitanWeaponDummy" Turret="TitanMovement"/>
-        <Radius value="1"/>
-        <SeparationRadius value="1"/>
+        <Radius value="1.125"/>
+        <SeparationRadius value="1.125"/>
         <InnerRadius value="1"/>
         <EditorCategories value="ObjectType:Unit"/>
+        <MinimapRadius value="1"/>
+        <AbilArray index="3" Link="ProgressRally"/>
+        <AbilArray Link="KeironWarpable"/>
+        <EffectArray index="Create" value="PantheonTitanDelay"/>
+        <CardLayouts index="0">
+            <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
+        </CardLayouts>
     </CUnit>
     <CUnit id="Pantheon" parent="CBuildingKeiron">
         <LifeStart value="500"/>
         <LifeMax value="500"/>
         <ShieldsStart value="500"/>
         <ShieldsMax value="500"/>
-        <Radius value="1.5"/>
-        <SeparationRadius value="1.5"/>
         <EditorCategories value="ObjectType:Structure"/>
         <Facing value="45"/>
+        <BehaviorArray Link="PantheonTitanBase"/>
+        <EffectArray index="Death" value="PantheonTitanDeathCP"/>
     </CUnit>
     <CUnit id="Umbra" parent="CUnitKeiron">
         <LifeStart value="80"/>
@@ -755,6 +801,8 @@
         <Food value="-2"/>
         <CostResource index="Minerals" value="150"/>
         <CostResource index="Vespene" value="100"/>
+        <AbilArray index="3" Link="ProgressRally"/>
+        <AbilArray Link="KeironWarpable"/>
         <AbilArray Link="GhostHoldFire"/>
         <AbilArray Link="GhostWeaponsFree"/>
         <BehaviorArray Link="UmbraStealth"/>
@@ -764,6 +812,7 @@
         <CardLayouts index="0">
             <LayoutButtons Face="GhostHoldFire" Type="AbilCmd" AbilCmd="GhostHoldFire,Execute" Row="1" Column="2"/>
             <LayoutButtons Face="WeaponsFree" Type="AbilCmd" AbilCmd="GhostWeaponsFree,Execute" Row="1" Column="3"/>
+            <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
         </CardLayouts>
         <Radius value="0.625"/>
         <SeparationRadius value="0.625"/>
@@ -771,6 +820,8 @@
         <CargoSize value="2"/>
         <Attributes index="Armored" value="1"/>
         <Attributes index="Mechanical" value="1"/>
+        <MinimapRadius value="0.625"/>
+        <EffectArray index="Create" value="FoundryUmbraDelay"/>
     </CUnit>
     <CUnit id="TitanBlastWeapon" parent="MISSILE">
         <Race value="Keir"/>
@@ -786,17 +837,22 @@
         <Speed value="2.3203"/>
         <Food value="-1"/>
         <CostResource index="Minerals" value="50"/>
+        <AbilArray index="3" Link="ProgressRally"/>
+        <AbilArray Link="KeironWarpable"/>
         <AbilArray Link="Projection"/>
         <AbilArray Link="ProjectionStart"/>
         <WeaponArray Link="Psythe"/>
         <CardLayouts index="0">
             <LayoutButtons Face="Projection" Type="AbilCmd" AbilCmd="Projection,Execute" Row="2" Column="0"/>
+            <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
         </CardLayouts>
         <Radius value="0.375"/>
         <SeparationRadius value="0.375"/>
         <CargoSize value="1"/>
         <Attributes index="Light" value="1"/>
         <Attributes index="Biological" value="1"/>
+        <EffectArray index="Create" value="EdificeParVolDelay"/>
+        <MinimapRadius value="0.375"/>
     </CUnit>
     <CUnit id="PariahProjection" parent="Pariah">
         <EditorFlags index="NoPlacement" value="1"/>
@@ -810,14 +866,18 @@
         <AbilArray index="3" Link="ProjectionEnd"/>
         <AbilArray index="4" removed="1"/>
         <AbilArray index="5" removed="1"/>
+        <AbilArray index="6" removed="1"/>
         <BehaviorArray Link="PariahProjectionFate"/>
         <WeaponArray index="0" removed="1"/>
         <CardLayouts index="0">
             <LayoutButtons index="5" removed="1"/>
+            <LayoutButtons index="6" removed="1"/>
         </CardLayouts>
         <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
         <HotkeyAlias value=""/>
         <GlossaryAlias value=""/>
+        <EffectArray index="Create" value=""/>
+        <MinimapRadius value="0.5"/>
     </CUnit>
     <CUnit id="Subjecter" parent="CUnitKeiron">
         <Attributes index="Armored" value="1"/>
@@ -839,6 +899,12 @@
         <SeparationRadius value="0.625"/>
         <InnerRadius value="0.5"/>
         <CargoSize value="2"/>
+        <EffectArray index="Create" value="SanctumPulSubDelay"/>
+        <AbilArray index="3" Link="ProgressRally"/>
+        <AbilArray Link="KeironWarpable"/>
+        <CardLayouts index="0">
+            <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
+        </CardLayouts>
     </CUnit>
     <CUnit id="EnthrallerQuillsLMWeapon" parent="MISSILE">
         <Race value="Keir"/>
@@ -863,6 +929,8 @@
         <Food value="-2"/>
         <CostResource index="Minerals" value="125"/>
         <CostResource index="Vespene" value="75"/>
+        <AbilArray index="3" Link="ProgressRally"/>
+        <AbilArray Link="KeironWarpable"/>
         <AbilArray Link="CreateReverb"/>
         <AbilArray Link="ReverbRB"/>
         <AbilArray Link="EchoDiscordMode"/>
@@ -871,7 +939,9 @@
             <LayoutButtons Face="AdeptPhaseShift" Type="AbilCmd" AbilCmd="CreateReverb,Execute" Row="2" Column="0"/>
             <LayoutButtons Face="Blink" Type="AbilCmd" AbilCmd="ReverbRB,Execute" Row="2" Column="1"/>
             <LayoutButtons Face="DiscordMode" Type="AbilCmd" AbilCmd="EchoDiscordMode,Execute" Row="2" Column="2"/>
+            <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
         </CardLayouts>
+        <EffectArray index="Create" value="AstralConduitEchoDelay"/>
     </CUnit>
     <CUnit id="EchoDM" parent="Echo">
         <ShieldsStart value="100"/>
@@ -884,6 +954,7 @@
         <AbilArray index="4" removed="1"/>
         <AbilArray index="5" removed="1"/>
         <AbilArray index="6" removed="1"/>
+        <AbilArray index="7" removed="1"/>
         <BehaviorArray Link="DiscordZoneRadius"/>
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="Stop" AbilCmd="stop,Stop" Column="1"/>
@@ -894,17 +965,20 @@
             <LayoutButtons index="5" removed="1"/>
             <LayoutButtons index="6" removed="1"/>
             <LayoutButtons index="7" removed="1"/>
+            <LayoutButtons index="8" removed="1"/>
         </CardLayouts>
         <KillDisplay value="Always"/>
+        <EffectArray index="Create" value=""/>
     </CUnit>
     <CUnit id="Edifice" parent="CBuildingKeiron">
         <LifeStart value="500"/>
         <LifeMax value="500"/>
         <ShieldsStart value="500"/>
         <ShieldsMax value="500"/>
-        <Radius value="1.5"/>
-        <SeparationRadius value="1.5"/>
         <EditorCategories value="ObjectType:Structure"/>
+        <Facing value="45"/>
+        <BehaviorArray Link="EdificeParVolBase"/>
+        <EffectArray index="Death" value="EdificeParVolDeathCP"/>
     </CUnit>
     <CUnit id="Foundry" parent="CBuildingKeiron">
         <Facing value="45"/>
@@ -913,9 +987,9 @@
         <LifeArmorName value="Unit/LifeArmorName/None"/>
         <ShieldsStart value="500"/>
         <ShieldsMax value="500"/>
-        <Radius value="1.5"/>
-        <SeparationRadius value="1.5"/>
         <EditorCategories value="ObjectType:Structure"/>
+        <BehaviorArray Link="FoundryUmbraBase"/>
+        <EffectArray index="Death" value="FoundryUmbraDeathCP"/>
     </CUnit>
     <CUnit id="CelestialOutlet" parent="DefaultSettingsKeironBuildingFlyer">
         <LifeStart value="500"/>
@@ -923,6 +997,8 @@
         <ShieldsStart value="500"/>
         <ShieldsMax value="500"/>
         <EditorCategories value="ObjectType:Structure"/>
+        <BehaviorArray Link="CelestialOutletAurApeBase"/>
+        <EffectArray index="Death" value="CelestialOutletAurApeDeathCP"/>
     </CUnit>
     <CUnit id="Volt" parent="CUnitKeiron">
         <Attributes index="Light" value="1"/>
@@ -937,6 +1013,13 @@
         <CostResource index="Minerals" value="50"/>
         <WeaponArray Link="ElectronBolt"/>
         <Radius value="0.375"/>
+        <EffectArray index="Create" value="EdificeParVolDelay"/>
+        <MinimapRadius value="0.375"/>
+        <AbilArray index="3" Link="ProgressRally"/>
+        <AbilArray Link="KeironWarpable"/>
+        <CardLayouts index="0">
+            <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
+        </CardLayouts>
     </CUnit>
     <CUnit id="Reliquary" parent="CBuildingKeiron">
         <Race value="Zerg"/>
@@ -944,9 +1027,8 @@
         <LifeMax value="500"/>
         <ShieldsStart value="500"/>
         <ShieldsMax value="500"/>
-        <Radius value="1.5"/>
-        <SeparationRadius value="1.5"/>
         <EditorCategories value="ObjectType:Structure"/>
         <Facing value="45"/>
+        <AbilArray index="2" Link="Rally"/>
     </CUnit>
 </Catalog>

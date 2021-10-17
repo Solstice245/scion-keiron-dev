@@ -10,18 +10,80 @@
         <Compare value="GT"/>
         <Value value="7"/>
     </CValidatorUnitCompareDamageDealtTime>
+    <CValidatorUnitType id="IsCelestialOutlet">
+        <Value value="CelestialOutlet"/>
+    </CValidatorUnitType>
+    <CValidatorUnitType id="IsAtrium">
+        <Value value="Atrium"/>
+    </CValidatorUnitType>
+    <CValidatorUnitType id="IsAstralConduit">
+        <Value value="AstralConduit"/>
+    </CValidatorUnitType>
+    <CValidatorUnitType id="IsCosmicPortal">
+        <Value value="CosmicPortal"/>
+    </CValidatorUnitType>
+    <CValidatorUnitType id="IsFoundry">
+        <Value value="Foundry"/>
+    </CValidatorUnitType>
+    <CValidatorUnitType id="IsPantheon">
+        <Value value="Pantheon"/>
+    </CValidatorUnitType>
+    <CValidatorUnitType id="IsSanctum">
+        <Value value="Sanctum"/>
+    </CValidatorUnitType>
+    <CValidatorUnitType id="IsElysium">
+        <Value value="Elysium"/>
+    </CValidatorUnitType>
+    <CValidatorUnitCompareBehaviorCount id="UnitChargeLT1">
+        <WhichUnit Value="Caster"/>
+        <Compare value="LT"/>
+        <Value value="1"/>
+        <Behavior value="KeironUnitCharge"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="UnitChargeLT3">
+        <WhichUnit Value="Caster"/>
+        <Compare value="LT"/>
+        <Value value="3"/>
+        <Behavior value="KeironUnitCharge"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="UnitChargeGT0">
+        <Compare value="GT"/>
+        <Behavior value="KeironUnitCharge"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="UnitChargeLT2">
+        <WhichUnit Value="Caster"/>
+        <Compare value="LT"/>
+        <Value value="2"/>
+        <Behavior value="KeironUnitCharge"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="HasNoTurn">
         <WhichUnit Value="Caster"/>
         <Compare value="GT"/>
         <Behavior value="DisableTurning"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitFilters id="SourceIsDead">
+        <WhichUnit Value="Source"/>
+        <Filters value="Dead;-"/>
+    </CValidatorUnitFilters>
+    <CValidatorUnitType id="IsEdifice">
+        <Value value="Edifice"/>
+    </CValidatorUnitType>
     <CValidatorUnitFilters id="IsMassive">
         <Filters value="Massive;-"/>
     </CValidatorUnitFilters>
+    <CValidatorCombine id="IsMaterializingOrSourceIsDead">
+        <CombineArray value="IsMaterializing"/>
+        <CombineArray value="SourceIsDead"/>
+    </CValidatorCombine>
     <CValidatorCombine id="IsStructureOrMassive">
         <CombineArray value="IsMassive"/>
         <CombineArray value="IsStructure"/>
     </CValidatorCombine>
+    <CValidatorUnitCompareBehaviorCount id="IsMaterializing">
+        <WhichUnit Value="Source"/>
+        <Compare value="GT"/>
+        <Behavior value="KeironMaterializing"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitWeaponFiring id="PulsarIsFiringWeapon">
         <WhichUnit Value="Caster"/>
         <Weapon value="WeaponFacingDummy"/>
@@ -140,5 +202,4 @@
         <CombineArray value="RangeCheckLE3"/>
         <CombineArray value="TargetNotDead"/>
     </CValidatorCombine>
-    <CValidatorLocationArc id="UnknownValidator"/>
 </Catalog>

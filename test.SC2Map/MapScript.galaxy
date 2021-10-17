@@ -11,12 +11,40 @@ include "TriggerLibs/LibertyLib"
 //--------------------------------------------------------------------------------------------------
 // Library: KeironTriggerUnitFunctions
 //--------------------------------------------------------------------------------------------------
+// Trigger Declarations
+trigger lib2_gt_UntitledTrigger001;
+
 //--------------------------------------------------------------------------------------------------
 // Library: KeironTriggerUnitFunctions
 //--------------------------------------------------------------------------------------------------
 // External Library Initialization
 void lib2_InitLibraries () {
     libNtve_InitVariables();
+}
+
+// Triggers
+//--------------------------------------------------------------------------------------------------
+// Trigger: Untitled Trigger 001
+//--------------------------------------------------------------------------------------------------
+bool lib2_gt_UntitledTrigger001_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaSubtitle, IntToText(TechTreeBehaviorCount(EventPlayer(), "KeironUnitCharge", c_techCountQueuedOrBetter)));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib2_gt_UntitledTrigger001_Init () {
+    lib2_gt_UntitledTrigger001 = TriggerCreate("lib2_gt_UntitledTrigger001_Func");
+    TriggerAddEventChatMessage(lib2_gt_UntitledTrigger001, c_playerAny, "test", true);
+}
+
+void lib2_InitTriggers () {
+    lib2_gt_UntitledTrigger001_Init();
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -32,6 +60,7 @@ void lib2_InitLib () {
     lib2_InitLib_completed = true;
 
     lib2_InitLibraries();
+    lib2_InitTriggers();
 }
 
 //--------------------------------------------------------------------------------------------------
