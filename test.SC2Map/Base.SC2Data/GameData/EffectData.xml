@@ -269,6 +269,38 @@
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="AtriumIndMyrRB"/>
     </CEffectEnumArea>
+    <CEffectDamage id="MeridianLightningBoltDMG" parent="CEffectDamageKeironSpell">
+        <EditorCategories value=""/>
+        <Amount value="50"/>
+    </CEffectDamage>
+    <CEffectUserData id="MeridianLightningBoltData">
+        <EditorCategories value=""/>
+        <ValidateMax value="3"/>
+        <EffectSuccess value="MeridianLightningBoltSearchTarget"/>
+    </CEffectUserData>
+    <CEffectSet id="MeridianLightningBoltInit">
+        <EditorCategories value=""/>
+        <Marker>
+            <MatchFlags index="Id" value="1"/>
+        </Marker>
+        <EffectArray value="MeridianLightningBoltInitDMG"/>
+        <EffectArray value="MeridianLightningBoltData"/>
+    </CEffectSet>
+    <CEffectDamage id="MeridianLightningBoltInitDMG" parent="CEffectDamageKeironSpell">
+        <EditorCategories value=""/>
+        <Amount value="100"/>
+    </CEffectDamage>
+    <CEffectEnumArea id="MeridianLightningBoltSearchTarget" parent="CEffectSearchAreaKeiron">
+        <EditorCategories value=""/>
+        <SearchFilters value="-;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <AreaArray MaxCount="1" Radius="3" Effect="MeridianLightningBoltSet"/>
+    </CEffectEnumArea>
+    <CEffectSet id="MeridianLightningBoltSet">
+        <ValidatorArray value="noMarkers"/>
+        <EditorCategories value=""/>
+        <EffectArray value="MeridianLightningBoltDMG"/>
+        <EffectArray value="MeridianLightningBoltData"/>
+    </CEffectSet>
     <CEffectCreatePersistent id="PantheonTitanDelay">
         <EditorCategories value=""/>
         <InitialDelay value="0.0625"/>
@@ -1245,7 +1277,7 @@
         <CaseArray Validator="IsStructureOrMassive" Effect="TitanWeaponSet"/>
         <CaseDefault value="TitanWeaponSA"/>
     </CEffectSwitch>
-    <CEffectCreateUnit id="UnknownEffect">
+    <CEffectCreateUnit id="ShieldDummyCreateUnit">
         <EditorCategories value="Race:Protoss"/>
         <WhichLocation Value="SourcePoint"/>
         <CreateFlags index="OffsetByRadius" value="0"/>
