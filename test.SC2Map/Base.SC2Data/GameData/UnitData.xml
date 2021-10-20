@@ -161,8 +161,12 @@
         <Speed value="2.5"/>
         <EditorCategories value="ObjectType:Unit"/>
         <AbilArray Link="ProgressRally"/>
+        <AbilArray Link="ApertureLoadUnload"/>
         <EffectArray index="Create" value="CelestialOutletAurApeDelay"/>
         <CardLayouts index="0">
+            <LayoutButtons Face="AcquireMove" Type="AbilCmd" AbilCmd="move,AcquireMove" Row="0" Column="4"/>
+            <LayoutButtons Face="WarpPrismLoad" Type="AbilCmd" AbilCmd="ApertureLoadUnload,Load" Row="2" Column="2"/>
+            <LayoutButtons Face="WarpPrismUnloadAll" Type="AbilCmd" AbilCmd="ApertureLoadUnload,UnloadAt" Row="2" Column="3"/>
             <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
         </CardLayouts>
     </CUnit>
@@ -358,13 +362,17 @@
         <AbilArray index="3" Link="ProgressRally"/>
         <AbilArray Link="KeironWarpable"/>
         <AbilArray Link="MeridianLightningBolt"/>
+        <AbilArray Link="MeridianConvergence"/>
         <CardLayouts index="0">
             <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
             <LayoutButtons Face="MeridianLightningBolt" Type="AbilCmd" AbilCmd="MeridianLightningBolt,Execute" Row="2" Column="0"/>
+            <LayoutButtons Face="MeridianConvergence" Type="AbilCmd" AbilCmd="MeridianConvergence,Execute" Row="2" Column="1"/>
         </CardLayouts>
         <EnergyStart value="50"/>
         <EnergyMax value="200"/>
         <EnergyRegenRate value="0.5625"/>
+        <WeaponArray Link="MeridianWeapon"/>
+        <CargoSize value="4"/>
     </CUnit>
     <CUnit id="Elysium" parent="CBuildingKeiron">
         <Facing value="45"/>
@@ -533,6 +541,7 @@
         <BehaviorArray Link="PowerSource"/>
         <Radius value="2"/>
         <SeparationRadius value="2"/>
+        <FlagArray index="TownStructureTownHall" value="1"/>
     </CUnit>
     <CUnit id="Converter" parent="CUnitKeiron">
         <LifeStart value="20"/>
@@ -558,7 +567,7 @@
         <Acceleration value="2.5"/>
         <AbilArray index="3" Link="ConverterGather"/>
         <AbilArray Link="KeironBuild"/>
-        <WeaponArray Link="ParticleBeam"/>
+        <WeaponArray Link="ConverterDissolutionRay"/>
         <CardLayouts index="0">
             <LayoutButtons Face="GatherProt" Type="AbilCmd" AbilCmd="ConverterGather,Gather" Row="1" Column="0"/>
             <LayoutButtons Face="ReturnCargo" Type="AbilCmd" AbilCmd="ConverterGather,Return" Row="1" Column="1"/>
@@ -673,6 +682,7 @@
         <CardLayouts index="0">
             <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
         </CardLayouts>
+        <CargoSize value="4"/>
     </CUnit>
     <CUnit id="ParagonSpawn" parent="CUnitKeironFlyer">
         <Attributes index="Light" value="1"/>
@@ -788,6 +798,11 @@
         <AbilArray index="2" Link="KeironCitadelMaterialize"/>
         <AbilArray index="3" removed="1"/>
     </CUnit>
+    <CUnit id="MeridianWeapon" parent="MISSILE">
+        <Race value="Keir"/>
+        <Mover value="MeridianWeaponMissile"/>
+        <EditorCategories value="ObjectType:Projectile,ObjectFamily:Melee"/>
+    </CUnit>
     <CUnit id="Titan" parent="CUnitKeiron">
         <FlagArray index="Turnable" value="0"/>
         <Collide index="Ground" value="0"/>
@@ -814,6 +829,7 @@
         <CardLayouts index="0">
             <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
         </CardLayouts>
+        <CargoSize value="8"/>
     </CUnit>
     <CUnit id="Pantheon" parent="CBuildingKeiron">
         <LifeStart value="500"/>
@@ -1078,6 +1094,7 @@
             <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
             <LayoutButtons Face="LatentCharge" Type="Passive" Requirements="UseLatentCharge" Row="2" Column="0"/>
         </CardLayouts>
+        <CargoSize value="1"/>
     </CUnit>
     <CUnit id="Reliquary" parent="CBuildingKeiron">
         <Race value="Zerg"/>

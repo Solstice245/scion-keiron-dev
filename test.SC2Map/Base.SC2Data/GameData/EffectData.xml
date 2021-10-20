@@ -42,6 +42,11 @@
         <EditorCategories value="Race:Keiron"/>
         <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
     </CEffectEnumArea>
+    <CEffectDamage id="ConverterDissolutionRay" parent="CEffectDamageKeironWeapon">
+        <EditorCategories value=""/>
+        <Kind value="Melee"/>
+        <Amount value="5"/>
+    </CEffectDamage>
     <CEffectRemoveBehavior id="FormulatorRichRB">
         <EditorCategories value="Race:Terran"/>
         <WhichUnit Value="Caster"/>
@@ -269,6 +274,23 @@
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="AtriumIndMyrRB"/>
     </CEffectEnumArea>
+    <CEffectCreatePersistent id="MeridianConvergenceCP">
+        <EditorCategories value=""/>
+        <Flags index="Channeled" value="1"/>
+        <InitialDelay value="2"/>
+        <InitialEffect value="MeridianConvergenceSA"/>
+    </CEffectCreatePersistent>
+    <CEffectDamage id="MeridianConvergenceDMG" parent="CEffectDamageKeironSpell">
+        <EditorCategories value=""/>
+        <AttributeBonus index="Mechanical" value="50"/>
+        <Amount value="50"/>
+        <SearchFilters value="-;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
+    </CEffectDamage>
+    <CEffectEnumArea id="MeridianConvergenceSA" parent="CEffectSearchAreaKeiron">
+        <EditorCategories value=""/>
+        <SearchFilters value="-;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <AreaArray Radius="2" Effect="MeridianConvergenceDMG"/>
+    </CEffectEnumArea>
     <CEffectDamage id="MeridianLightningBoltDMG" parent="CEffectDamageKeironSpell">
         <EditorCategories value=""/>
         <Amount value="50"/>
@@ -301,6 +323,35 @@
         <EffectArray value="MeridianLightningBoltDMG"/>
         <EffectArray value="MeridianLightningBoltData"/>
     </CEffectSet>
+    <CEffectSet id="MeridianWeapon">
+        <EditorCategories value=""/>
+        <EffectArray value="MeridianWeaponDMG"/>
+        <EffectArray value="MeridianWeaponLM"/>
+        <EffectArray value="MeridianWeaponTargetMU"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="MeridianWeaponCasterMU">
+        <EditorCategories value=""/>
+        <VitalArray index="Energy">
+            <Change value="5"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectDamage id="MeridianWeaponDMG" parent="CEffectDamageKeironWeapon">
+        <EditorCategories value=""/>
+        <Amount value="18"/>
+    </CEffectDamage>
+    <CEffectLaunchMissile id="MeridianWeaponLM">
+        <EditorCategories value=""/>
+        <LaunchLocation Value="TargetUnit"/>
+        <ImpactLocation Value="CasterUnit"/>
+        <ImpactEffect value="MeridianWeaponCasterMU"/>
+        <AmmoUnit value="MeridianWeapon"/>
+    </CEffectLaunchMissile>
+    <CEffectModifyUnit id="MeridianWeaponTargetMU">
+        <EditorCategories value=""/>
+        <VitalArray index="Energy">
+            <Change value="-5"/>
+        </VitalArray>
+    </CEffectModifyUnit>
     <CEffectCreatePersistent id="PantheonTitanDelay">
         <EditorCategories value=""/>
         <InitialDelay value="0.0625"/>

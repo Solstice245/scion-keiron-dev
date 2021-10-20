@@ -46,7 +46,7 @@
         <CreepHeightClass value="Small"/>
         <CreepRateGrow value="Grow"/>
         <CreepRateShrink value="Shrink"/>
-        <DeathArray index="Normal" ActorModel="KeironStructureDeathExplosion" ModelLink="KeironStructureDeathExplosion"/>
+        <DeathArray index="Normal" ActorModel="KeironStructureDeathExplosion" ModelLink="KeironStructureDeathExplosion" SoundLink="KeironStructureLarge_Death"/>
         <PlacementSound value="Keiron_BuildingPlacement"/>
         <BarOffset value="120"/>
         <BarWidth value="150"/>
@@ -55,6 +55,13 @@
         <Macros value="BuildingFlattenTerrainMacro"/>
         <Macros value="SnowVisualBuildingMacroMP"/>
     </CActorUnit>
+    <CActorSplat default="1" id="KeironCuserSplat" parent="CursorSplat">
+        <Model value="KeironAOECursorSplat"/>
+    </CActorSplat>
+    <CActorModel default="1" id="ModelAnimationStyleOneShotEffect" parent="ModelAnimationStyleOneShot">
+        <?token id="Effect" type="CEffectLink"?>
+        <On Terms="Effect.##Effect##.Start" Send="Create"/>
+    </CActorModel>
     <CActorSound default="1" id="SoundContinuousKeiron" parent="SoundContinuous">
         <?token id="Effect" type="CEffectLink"?>
         <On Terms="Effect.##Effect##.Start" Send="Create"/>
@@ -64,6 +71,7 @@
         <?token id="Effect" type="CEffectLink"?>
         <On Terms="Effect.##Effect##.Start" Send="Create"/>
     </CActorSound>
+    <CActorModel/>
     <CActorUnit id="Aegis" parent="GenericUnitStandard" unitName="Aegis">
         <On Terms="Behavior.AegisShieldAura.On" Send="AnimBracketStart StandWork Stand,Work,Start Stand,Work Stand,Work,End"/>
         <On Terms="Behavior.AegisShieldAura.Off" Send="AnimBracketStop StandWork"/>
@@ -106,6 +114,7 @@
         <On Terms="ActorCreation" Send="AliasAdd _ShieldGold"/>
         <WireframeShieldColor value="120,255,223,0"/>
     </CActorUnit>
+    <CActorSound id="Converter_Attack" parent="SoundOneShotKeiron" Effect="ConverterDissolutionRay"/>
     <CActorModel id="KeironStructureDeathExplosionSmall" parent="ModelAnimationStyleOneShot">
         <On Terms="ActorCreation" Send="SetTintColor {255,134,0 1.500000} 1.250000"/>
         <Model value="KeironStructureDeathExplosion"/>
@@ -123,6 +132,18 @@
     <CActorModel id="KeironStructureDeathExplosion" parent="ModelAnimationStyleOneShot">
         <On Terms="ActorCreation" Send="SetTintColor {255,134,0 1.500000} 1.250000"/>
     </CActorModel>
+    <CActorAction id="MeridianConvergenceAttack" parent="GenericAttack" effectAttack="MeridianConvergenceDMG">
+        <EditorCategories value=""/>
+        <ImpactMap index="None" Model="MeridianConvergenceDamage" Sound=""/>
+    </CActorAction>
+    <CActorModel id="MeridianConvergenceImpact" parent="ModelAnimationStyleOneShotEffect" Effect="MeridianConvergenceSA">
+        <On index="3" Terms="Effect.##Effect##.Start" Send="Create"/>
+    </CActorModel>
+    <CActorRange id="MeridianConvergenceRange" parent="RangeAbil" abil="MeridianConvergence"/>
+    <CActorSplat id="MeridianConvergenceSplat" parent="KeironCuserSplat" abil="MeridianConvergence"/>
+    <CActorSound id="MeridianConvergence_Impact" parent="SoundOneShotKeiron" Effect="MeridianConvergenceSA">
+        <On index="1" Terms="Effect.##Effect##.Start" Send="Create"/>
+    </CActorSound>
     <CActorBeamSimple id="MeridianLightningBoltBeam" parent="BeamSimpleAnimationStyleOneShot">
         <Macros value="ActionTargetTeleportDestroy"/>
         <Model value="MeridianLightningBolt"/>
@@ -286,6 +307,26 @@
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
         <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
     </CActorModel>
+    <CActorRange id="MeridianLightningBoltRange" parent="RangeAbil" abil="MeridianLightningBolt"/>
+    <CActorRange id="MeridianLightningBoltRange2" parent="RangeAbil" abil="MeridianLightningBolt">
+        <On index="1" Terms="Abil.##abil##.TargetOn" Send="Create"/>
+        <On index="2" Terms="Abil.##abil##.TargetOff" Send="Destroy"/>
+        <On index="3" Terms="Abil.##abil##.ButtonHoverOn" Send="Create"/>
+        <On index="4" Terms="Abil.##abil##.ButtonHoverOff" Send="Destroy"/>
+    </CActorRange>
+    <CActorAction id="MeridianWeaponAttack" parent="GenericAttack" effectAttack="MeridianWeaponDMG">
+        <ImpactSite value="MeridianWeaponSite"/>
+    </CActorAction>
+    <CActorAction id="MeridianWeaponLaunch" parent="GenericAttack" effectImpact="" effectLaunch="MeridianWeaponLM">
+        <On index="1" Terms="Effect.Start; FromEffectTreeDescendant" Send="ActionImpact"/>
+        <On index="2" Terms="Effect.Stop; FromEffectTreeDescendant" Send="ActionImpactPhysics"/>
+        <LaunchSiteOps Ops=""/>
+        <LaunchAttachQuery Methods="Center 0"/>
+        <LaunchRequest Subject="MeridianWeaponSite" Actor="Find"/>
+        <Missile value="MeridianWeaponMissile"/>
+        <ImpactSiteOps Ops="SOpAttachHarness SOpAttachVolumeStandard SOpAttachWeapon01"/>
+    </CActorAction>
+    <CActorSite id="MeridianWeaponSite"/>
     <CActorUnit id="Nullifier" parent="GenericUnitKeironStructure" unitName="Nullifier">
         <Aliases index="4" value="_UnitLarge"/>
         <On Terms="WeaponStart.NullifierWeapon.AttackStart" Target="NullifierLookAtTurretY" Send="LookAtStop"/>
@@ -294,7 +335,7 @@
         <On Terms="WeaponStop.NullifierWeapon.AttackStop" Target="NullifierLookAtTurretY" Send="LookAtStart"/>
         <On Terms="ActorCreation" Send="Create NullifierAddition"/>
         <CreepHeightClass value="Tiny"/>
-        <DeathArray index="Normal" ActorModel="KeironStructureDeathExplosionSmall"/>
+        <DeathArray index="Normal" ActorModel="KeironStructureDeathExplosionSmall" SoundLink="KeironStructureSmall_Death"/>
         <BarOffset value="70"/>
         <BarWidth value="75"/>
     </CActorUnit>
@@ -326,7 +367,7 @@
     <CActorUnit id="Oculus" parent="GenericUnitKeironStructure" unitName="Oculus">
         <Aliases index="4" value="_UnitLarge"/>
         <CreepHeightClass value="Tiny"/>
-        <DeathArray index="Normal" ActorModel="KeironStructureDeathExplosionSmall"/>
+        <DeathArray index="Normal" ActorModel="KeironStructureDeathExplosionSmall" SoundLink="KeironStructureSmall_Death"/>
         <BarOffset value="110"/>
         <BarWidth value="85"/>
     </CActorUnit>
@@ -354,10 +395,9 @@
         <HostSiteOps Ops="SOpTipabilityFloorScope"/>
         <Model value="PlacementModel"/>
     </CActorModel>
-    <CActorSound id="ProtossHarvest2" parent="SoundContinuous">
-        <On Terms="Abil.ProbeHarvest2.Start" Send="Create"/>
-        <On Terms="Abil.ProbeHarvest2.Stop" Send="Destroy"/>
-        <Sound value="Probe_Mine2"/>
+    <CActorSound id="Keiron_Harvest" parent="SoundContinuousKeiron">
+        <On index="3" Terms="Abil.ConverterGather.Start" Send="Create"/>
+        <On index="4" Terms="Abil.ConverterGather.Stop" Send="Destroy"/>
     </CActorSound>
     <CActorShield id="ProtossShieldFacer">
         <On Terms="ActorCreation; ScopeContains _ShieldGold" Send="ModelSwap KeironShieldDamage"/>
@@ -621,6 +661,9 @@
     <CActorSite id="MeridianLightningBoltSite">
         <EditorCategories value=""/>
     </CActorSite>
+    <CActorMissile id="MeridianWeaponMissile" parent="GenericAttackMissile" unitName="MeridianWeapon">
+        <Model value="MeridianWeaponMissile"/>
+    </CActorMissile>
     <CActorUnit id="Volt" parent="GenericUnitKeiron" unitName="Volt">
         <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionSmallBlood" SoundLink="VoltDeath" VoiceLink="VoltDeathVoice"/>
         <WalkAnimMoveSpeed value="3.25"/>
@@ -677,8 +720,8 @@
         <BarWidth value="200"/>
     </CActorUnit>
     <CActorUnit id="Converter" parent="GenericUnitKeiron" unitName="Converter">
-        <On Terms="Abil.ProbeHarvest.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
-        <On Terms="Abil.ProbeHarvest.Stop" Send="AnimClear StandWork"/>
+        <On Terms="Abil.ConverterGather.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
+        <On Terms="Abil.ConverterGather.Stop" Send="AnimClear StandWork"/>
         <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionSmallBlood" SoundLink="ConverterDeath" VoiceLink="ConverterDeathVoice"/>
         <BarOffset value="35"/>
         <BarWidth value="42"/>
@@ -935,20 +978,14 @@
         <Model value="UmbraAttackMissile"/>
         <Scale value="1.600000"/>
     </CActorMissile>
-    <CActorUnit id="Umbra" parent="GenericUnitStandard" unitName="Umbra">
+    <CActorUnit id="Umbra" parent="GenericUnitKeiron" unitName="Umbra">
         <On index="65" Terms="WeaponStart.*.AttackStart" Send="AnimBracketStart Cover Cover,Start Cover Cover,End OpeningPlayForever"/>
         <On index="67" Terms="WeaponStop.*.AttackStop" Send="TimerSet 3.000000 CoverDelay"/>
         <On Terms="TimerExpired; TimerName CoverDelay" Send="AnimBracketStop Cover"/>
         <On Terms="WeaponStart.*.AttackStart" Send="AnimBracketStart Attack {} Attack {} ContentNonLooping,ContentPlayOnce"/>
         <On Terms="WeaponStop.*.AttackStop" Send="AnimBracketStop Attack"/>
-        <On Terms="ActorCreation" Send="AliasAdd _ShieldGold"/>
         <Baselines index="Walk" AnimProps="Walk,Superior"/>
-        <DeathArray index="Normal" ModelLink="ProtossMediumUnitDeath" SoundLink="Stalker_Explode"/>
         <BarOffset value="65"/>
-        <UnitIcon value="Assets\Textures\btn-unit-keiron-umbra.dds"/>
-        <PlacementActorModel value="PlacementModelKeiron"/>
-        <PlaceholderActorModel value="PlaceholderModelKeiron"/>
-        <WireframeShieldColor value="120,255,223,0"/>
     </CActorUnit>
     <CActorMissile id="TitanBlastWeapon" parent="GenericAttackMissile" unitName="TitanBlastWeapon">
         <On Terms="UnitBirth" Send="AnimSetTimeScaleAbsolute Lifetime 1.000000"/>

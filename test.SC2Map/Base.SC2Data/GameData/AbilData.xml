@@ -265,12 +265,21 @@
             <Button DefaultButtonFace="MaterializeParagon"/>
         </InfoArray>
     </CAbilWarpTrain>
+    <CAbilEffectTarget id="MeridianConvergence">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <Effect index="0" value="MeridianConvergenceCP"/>
+        <Range value="9"/>
+        <AINotifyEffect value="MeridianConvergenceCP"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="MeridianConvergence"/>
+        <CursorEffect value="MeridianConvergenceSA"/>
+    </CAbilEffectTarget>
     <CAbilEffectTarget id="MeridianLightningBolt">
         <EditorCategories value="AbilityorEffectType:Units"/>
         <Effect index="0" value="MeridianLightningBoltInit"/>
         <Range value="10"/>
         <AINotifyEffect value="MeridianLightningBoltInit"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="MeridianLightningBolt"/>
+        <PrepTime value="0.75"/>
     </CAbilEffectTarget>
     <CAbilArmMagazine id="MyriadHanger">
         <AbilSetId value="MyriadHanger"/>
@@ -406,4 +415,41 @@
         <DataCollection value="Warpable"/>
         <PowerUserBehavior value="KeironMaterializing"/>
     </CAbilWarpable>
+    <CAbilTransport id="ApertureLoadUnload">
+        <Alignment value="Positive"/>
+        <AbilSetId value="ULdM"/>
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <DataCollection value="WarpPrismTransport"/>
+        <CmdButtonArray index="Load" DefaultButtonFace="ApetureLoad">
+            <Flags index="ShowInGlossary" value="1"/>
+        </CmdButtonArray>
+        <CmdButtonArray index="UnloadAll" DefaultButtonFace="BunkerUnloadAll">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+        <CmdButtonArray index="UnloadAt" DefaultButtonFace="ApertureUnloadAll"/>
+        <CmdButtonArray index="UnloadUnit">
+            <Flags index="Hidden" value="1"/>
+        </CmdButtonArray>
+        <CmdButtonArray index="LoadAll">
+            <Flags index="Hidden" value="1"/>
+            <Flags index="ShowInGlossary" value="1"/>
+        </CmdButtonArray>
+        <Flags index="AllowPassengerSmartCmd" value="1"/>
+        <Flags index="AllowSmartCmd" value="1"/>
+        <Flags index="CargoDeath" value="1"/>
+        <Flags index="ShowCargoSize" value="1"/>
+        <Flags index="ShowStatus" value="1"/>
+        <Range value="1"/>
+        <MaxUnloadRange value="3"/>
+        <MaxCargoCount value="8"/>
+        <MaxCargoSize value="8"/>
+        <TotalCargoSpace value="8"/>
+        <TargetFilters value="Visible;Ally,Neutral,Enemy,Buried,UnderConstruction,Dead,Hidden"/>
+        <LoadValidatorArray value="NotWidowMineTarget"/>
+        <TargetSorts>
+            <SortArray value="TSInterruptible"/>
+            <SortArray value="TSDistance"/>
+        </TargetSorts>
+        <ErrorAlert value="Error"/>
+    </CAbilTransport>
 </Catalog>
