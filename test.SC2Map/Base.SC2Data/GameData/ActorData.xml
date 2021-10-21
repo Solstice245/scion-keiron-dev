@@ -55,6 +55,21 @@
         <Macros value="BuildingFlattenTerrainMacro"/>
         <Macros value="SnowVisualBuildingMacroMP"/>
     </CActorUnit>
+    <CActorUnit default="1" id="GenericUnitKeironStructureAir" parent="GenericUnitKeironStructure">
+        <On index="69" Terms="UnitConstruction.Bogus.Start" Send="Create KeironBuildModelAir"/>
+        <On index="70" Terms="UnitConstruction.Bogus.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 21.000000 AsDuration 0.000000 100"/>
+        <On index="71" Terms="UnitConstruction.Bogus.Start" Send="AnimSetPausedAll"/>
+        <On index="72" Terms="UnitConstruction.Bogus.Start" Send="AnimSetPaused Build 0"/>
+        <On index="73" Terms="UnitConstruction.Bogus.Finish" Send="AnimSetPausedAll 0"/>
+        <On index="74" Terms="Abil.KeironResearch.Start" Send="AnimBracketStart Work Stand,Work,Start Stand,Work Stand,Work,End"/>
+        <On index="75" Terms="Abil.KeironResearch.Stop" Send="AnimBracketStop Work"/>
+        <On index="76" removed="1"/>
+        <On index="77" removed="1"/>
+        <CreepHeightClass value=""/>
+        <CreepRateGrow value=""/>
+        <CreepRateShrink value=""/>
+        <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
+    </CActorUnit>
     <CActorSplat default="1" id="KeironCuserSplat" parent="CursorSplat">
         <Model value="KeironAOECursorSplat"/>
     </CActorSplat>
@@ -115,6 +130,37 @@
         <WireframeShieldColor value="120,255,223,0"/>
     </CActorUnit>
     <CActorSound id="Converter_Attack" parent="SoundOneShotKeiron" Effect="ConverterDissolutionRay"/>
+    <CActorModel id="KeironBuildModelAir" parent="ModelAddition">
+        <Aliases value="_ZergBuildModel"/>
+        <Flags index="RespondsToUnitPlayerChange" value="1"/>
+        <Inherits index="BaseModelScale" value="0"/>
+        <Inherits index="Scale" value="0"/>
+        <On index="0" Terms="UnitConstruction.*.Finish" Send="AnimBracketStop BSD"/>
+        <On index="1" Terms="UnitConstruction.*.Cancel" Send="AnimBracketStop BSD"/>
+        <On index="2" Terms="ActorOrphan" Send="Destroy"/>
+        <On Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand Death 0 0.500000 AsTimeScale"/>
+        <On Terms="AnimBracketState.*.AfterClosing; AnimName BSD" Send="Destroy"/>
+        <HostSiteOps Ops="SOpMoveUpBy3 SOpMoveUpByDot5"/>
+        <Model value="KeironBuildModel"/>
+        <ModelFlags index="AutomateGlobalLoops" value="1"/>
+        <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
+    </CActorModel>
+    <CActorModel id="KeironBuildModelAirSmall" parent="ModelAddition">
+        <Aliases value="_ZergBuildModel"/>
+        <Flags index="RespondsToUnitPlayerChange" value="1"/>
+        <Inherits index="BaseModelScale" value="0"/>
+        <Inherits index="Scale" value="0"/>
+        <On index="0" Terms="UnitConstruction.*.Finish" Send="AnimBracketStop BSD"/>
+        <On index="1" Terms="UnitConstruction.*.Cancel" Send="AnimBracketStop BSD"/>
+        <On index="2" Terms="ActorOrphan" Send="Destroy"/>
+        <On Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand Death 0 0.500000 AsTimeScale"/>
+        <On Terms="AnimBracketState.*.AfterClosing; AnimName BSD" Send="Destroy"/>
+        <HostSiteOps Ops="SOpMoveUpBy3 SOpMoveUpByDot5"/>
+        <Model value="KeironBuildModel"/>
+        <Scale value="0.660000"/>
+        <ModelFlags index="AutomateGlobalLoops" value="1"/>
+        <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
+    </CActorModel>
     <CActorModel id="KeironStructureDeathExplosionSmall" parent="ModelAnimationStyleOneShot">
         <On Terms="ActorCreation" Send="SetTintColor {255,134,0 1.500000} 1.250000"/>
         <Model value="KeironStructureDeathExplosion"/>
@@ -136,14 +182,10 @@
         <EditorCategories value=""/>
         <ImpactMap index="None" Model="MeridianConvergenceDamage" Sound=""/>
     </CActorAction>
-    <CActorModel id="MeridianConvergenceImpact" parent="ModelAnimationStyleOneShotEffect" Effect="MeridianConvergenceSA">
-        <On index="3" Terms="Effect.##Effect##.Start" Send="Create"/>
-    </CActorModel>
+    <CActorModel id="MeridianConvergenceImpact" parent="ModelAnimationStyleOneShotEffect" Effect="MeridianConvergenceSA"/>
     <CActorRange id="MeridianConvergenceRange" parent="RangeAbil" abil="MeridianConvergence"/>
     <CActorSplat id="MeridianConvergenceSplat" parent="KeironCuserSplat" abil="MeridianConvergence"/>
-    <CActorSound id="MeridianConvergence_Impact" parent="SoundOneShotKeiron" Effect="MeridianConvergenceSA">
-        <On index="1" Terms="Effect.##Effect##.Start" Send="Create"/>
-    </CActorSound>
+    <CActorSound id="MeridianConvergence_Impact" parent="SoundOneShotKeiron" Effect="MeridianConvergenceSA"/>
     <CActorBeamSimple id="MeridianLightningBoltBeam" parent="BeamSimpleAnimationStyleOneShot">
         <Macros value="ActionTargetTeleportDestroy"/>
         <Model value="MeridianLightningBolt"/>
@@ -308,12 +350,7 @@
         <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
     </CActorModel>
     <CActorRange id="MeridianLightningBoltRange" parent="RangeAbil" abil="MeridianLightningBolt"/>
-    <CActorRange id="MeridianLightningBoltRange2" parent="RangeAbil" abil="MeridianLightningBolt">
-        <On index="1" Terms="Abil.##abil##.TargetOn" Send="Create"/>
-        <On index="2" Terms="Abil.##abil##.TargetOff" Send="Destroy"/>
-        <On index="3" Terms="Abil.##abil##.ButtonHoverOn" Send="Create"/>
-        <On index="4" Terms="Abil.##abil##.ButtonHoverOff" Send="Destroy"/>
-    </CActorRange>
+    <CActorRange id="MeridianLightningBoltRange2" parent="RangeAbil" abil="MeridianLightningBolt"/>
     <CActorAction id="MeridianWeaponAttack" parent="GenericAttack" effectAttack="MeridianWeaponDMG">
         <ImpactSite value="MeridianWeaponSite"/>
     </CActorAction>
@@ -358,6 +395,44 @@
         <Beam value="MeridianLightningBoltBeam"/>
         <ImpactSite value="MeridianLightningBoltSite"/>
     </CActorAction>
+    <CActorModel id="StratusAddition" parent="ModelAddition">
+        <HostSiteOps Ops="SOpAttachTurretY SOpMoveBy2"/>
+        <Model value="Invisible"/>
+        <ModelFlags index="AllowHitTest" value="0"/>
+    </CActorModel>
+    <CActorLookAt id="StratusLookAt" parent="UnitTurret">
+        <On Terms="TurretEnable.Stratus" Send="Create"/>
+        <Types Id="DefaultLookAtTurret">
+            <Start Group="Turret_Right" Weight="1" Rate="720.000000"/>
+            <Stop Group="TurretRight" Weight="1" Rate="720.000000"/>
+        </Types>
+    </CActorLookAt>
+    <CActorLookAt id="StratusLookAtTurretY" parent="UnitTurret">
+        <On Terms="TurretEnable.Stratus" Send="Create"/>
+        <On Terms="ActorCreation" Send="LookAtStart"/>
+        <HostTarget Subject="StratusAddition"/>
+        <HostTargetSiteOps Ops=""/>
+        <Types Id="DefaultLookAtTurret">
+            <Start Group="Turret_Right" Weight="1" Time="100"/>
+            <Stop Group="Turret_Right" Weight="1" Time="100"/>
+        </Types>
+    </CActorLookAt>
+    <CActorTurret id="StratusMovement">
+        <On Terms="TurretEnable.StratusMovement" Send="Create"/>
+        <YawQuery Methods="TurretY 0"/>
+    </CActorTurret>
+    <CActorUnit id="Stratus" parent="GenericUnitKeironStructureAir" unitName="Stratus">
+        <Aliases index="4" value="_UnitLarge"/>
+        <On index="69" Terms="UnitConstruction.Bogus.Start" Send="Create KeironBuildModelAirSmall"/>
+        <On Terms="WeaponStart.StratusWeapon.AttackStart" Target="StratusLookAtTurretY" Send="LookAtStop"/>
+        <On Terms="WeaponStart.StratusWeapon.AttackStart" Target="StratusLookAt" Send="LookAtEngage"/>
+        <On Terms="WeaponStop.StratusWeapon.AttackStop" Target="StratusLookAt" Send="LookAtStop"/>
+        <On Terms="WeaponStop.StratusWeapon.AttackStop" Target="StratusLookAtTurretY" Send="LookAtStart"/>
+        <On Terms="ActorCreation" Send="Create StratusAddition"/>
+        <DeathArray index="Normal" ActorModel="KeironStructureDeathExplosionSmall" SoundLink="KeironStructureSmall_Death"/>
+        <BarOffset value="70"/>
+        <BarWidth value="75"/>
+    </CActorUnit>
     <CActorModel id="NullifierAddition" parent="ModelAddition">
         <EditorCategories value=""/>
         <HostSiteOps Ops="SOpAttachTurretY SOpMoveBy2 SOpMoveUpByDot5 SOpMoveUpByDot25"/>
@@ -439,6 +514,19 @@
     <CActorEventMacro id="ShieldColorMacro">
         <On Terms="ActorCreation; ScopeContains _ShieldGold" Send="SetTintColor {255,102,0 8.000000}"/>
     </CActorEventMacro>
+    <CActorMissile id="StratusAttackMissile" parent="GenericAttackMissile" unitName="WeaponStratus">
+        <On Terms="UnitBirth" Send="AnimSetTimeScaleAbsolute Lifetime 1.000000"/>
+        <On Terms="ActorCreation" Send="SetTintColor {255,89,0 2.000000}"/>
+        <Model value="StratusAttackMissile"/>
+    </CActorMissile>
+    <CActorAction id="StratusWeaponAttackRight" parent="GenericAttack" effectImpact="StratusWeaponDMG" effectLaunch="StratusWeaponLMRight">
+        <LaunchAttachQuery Methods="AMFilterWeaponRight"/>
+        <Missile value="StratusAttackMissile"/>
+    </CActorAction>
+    <CActorAction id="StratusWeaponAttackLeft" parent="GenericAttack" effectImpact="StratusWeaponDMG" effectLaunch="StratusWeaponLMLeft">
+        <LaunchAttachQuery Methods="AMFilterWeaponLeft"/>
+        <Missile value="StratusAttackMissile"/>
+    </CActorAction>
     <CActorUnit id="Titan" parent="GenericUnitKeiron" unitName="Titan">
         <On Terms="WeaponStart.TitanWeapon.AttackStart" Target="TitanLookAtTurretY" Send="LookAtStop"/>
         <On Terms="WeaponStart.TitanWeapon.AttackStart" Target="TitanLookAt" Send="LookAtEngage"/>
