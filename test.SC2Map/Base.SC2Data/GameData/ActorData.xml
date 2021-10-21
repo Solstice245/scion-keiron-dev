@@ -353,6 +353,7 @@
     <CActorRange id="MeridianLightningBoltRange2" parent="RangeAbil" abil="MeridianLightningBolt"/>
     <CActorAction id="MeridianWeaponAttack" parent="GenericAttack" effectAttack="MeridianWeaponDMG">
         <ImpactSite value="MeridianWeaponSite"/>
+        <ImpactMap index="None" Sound="MeridianWeapon_Launch"/>
     </CActorAction>
     <CActorAction id="MeridianWeaponLaunch" parent="GenericAttack" effectImpact="" effectLaunch="MeridianWeaponLM">
         <On index="1" Terms="Effect.Start; FromEffectTreeDescendant" Send="ActionImpact"/>
@@ -362,6 +363,8 @@
         <LaunchRequest Subject="MeridianWeaponSite" Actor="Find"/>
         <Missile value="MeridianWeaponMissile"/>
         <ImpactSiteOps Ops="SOpAttachHarness SOpAttachVolumeStandard SOpAttachWeapon01"/>
+        <LaunchAssets Sound="MeridianWeapon_Launch"/>
+        <ImpactMap index="None" Sound="MeridianWeapon_Impact"/>
     </CActorAction>
     <CActorSite id="MeridianWeaponSite"/>
     <CActorUnit id="Nullifier" parent="GenericUnitKeironStructure" unitName="Nullifier">
@@ -395,6 +398,10 @@
         <Beam value="MeridianLightningBoltBeam"/>
         <ImpactSite value="MeridianLightningBoltSite"/>
     </CActorAction>
+    <CActorSound id="NullifierAttackSoundLoop" parent="SoundContinuous">
+        <On Terms="Effect.NullifierWeaponCP.Start" Send="Create"/>
+        <On Terms="Effect.NullifierWeaponCP.Stop" Send="Destroy"/>
+    </CActorSound>
     <CActorModel id="StratusAddition" parent="ModelAddition">
         <HostSiteOps Ops="SOpAttachTurretY SOpMoveBy2"/>
         <Model value="Invisible"/>
@@ -520,12 +527,16 @@
         <Model value="StratusAttackMissile"/>
     </CActorMissile>
     <CActorAction id="StratusWeaponAttackRight" parent="GenericAttack" effectImpact="StratusWeaponDMG" effectLaunch="StratusWeaponLMRight">
-        <LaunchAttachQuery Methods="AMFilterWeaponRight"/>
         <Missile value="StratusAttackMissile"/>
+        <LaunchAssets Model="StratusWeaponAttackLeftLaunch" Sound="StratusWeaponAttackLaunch"/>
+        <ImpactMap index="None" Sound="StratusWeaponAttackImpact"/>
     </CActorAction>
     <CActorAction id="StratusWeaponAttackLeft" parent="GenericAttack" effectImpact="StratusWeaponDMG" effectLaunch="StratusWeaponLMLeft">
-        <LaunchAttachQuery Methods="AMFilterWeaponLeft"/>
+        <LaunchAttachQuery Methods="AMFilterWeapon01"/>
         <Missile value="StratusAttackMissile"/>
+        <LaunchAssets Sound="StratusWeaponAttackLaunch"/>
+        <ImpactMap index="None" Model="StratusWeaponAttackRightImpact" Sound="StratusWeaponAttackImpact" ModelReaction="StratusWeaponAttackRightImpactReaction"/>
+        <ImpactMap index="Shield" Sound="StratusWeaponAttackRightImpactShield" ModelReaction="StratusWeaponAttackRightImpactReactionShield"/>
     </CActorAction>
     <CActorUnit id="Titan" parent="GenericUnitKeiron" unitName="Titan">
         <On Terms="WeaponStart.TitanWeapon.AttackStart" Target="TitanLookAtTurretY" Send="LookAtStop"/>
