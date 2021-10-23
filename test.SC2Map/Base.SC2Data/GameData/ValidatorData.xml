@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
+    <CValidatorCombine id="Aperture1CargoAnd10Energy">
+        <Type value="And"/>
+        <CombineArray value="KeironCasterEnergyGE10"/>
+        <CombineArray value="IsCargoSize1OrSmallKeironAir"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="Aperture2CargoAnd20Energy">
+        <Type value="And"/>
+        <CombineArray value="KeironCasterEnergyGE20"/>
+        <CombineArray value="IsCargoSize2OrMediumKeironAir"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="Aperture2CargoAnd40Energy">
+        <Type value="And"/>
+        <CombineArray value="KeironCasterEnergyGE40"/>
+        <CombineArray value="IsCargoSize4OrLargeKeironAir"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="Aperture2CargoAnd80Energy">
+        <Type value="And"/>
+        <CombineArray value="KeironCasterEnergyGE80"/>
+        <CombineArray value="IsCargoSize8OrHugeKeironAir"/>
+    </CValidatorCombine>
+    <CValidatorUnitType id="IsZenith">
+        <Value value="Zenith"/>
+    </CValidatorUnitType>
+    <CValidatorUnitCompareVital id="KeironCasterEnergyGE10" parent="CasterLifePercent">
+        <ResultFailed value="Error,error/text/notenoughenergy"/>
+        <Compare value="GE"/>
+        <Type value="Current"/>
+        <Value value="10"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
     <CValidatorUnitCompareBehaviorCount id="CasterHasChannel">
         <WhichUnit Value="Caster"/>
         <Compare value="GT"/>
@@ -29,9 +59,13 @@
     <CValidatorUnitType id="IsAperture">
         <Value value="Aperture"/>
     </CValidatorUnitType>
+    <CValidatorUnitType id="IsEmanator">
+        <Value value="Emanator"/>
+    </CValidatorUnitType>
     <CValidatorCombine id="IsCargoSize1OrSmallKeironAir">
         <CombineArray value="Is1CargoSize"/>
         <CombineArray value="IsEcho"/>
+        <CombineArray value="IsEmanator"/>
         <CombineArray value="IsEchoDiscord"/>
     </CValidatorCombine>
     <CValidatorCombine id="IsCargoSize2OrMediumKeironAir">
@@ -51,16 +85,16 @@
         <Value value="Paradox"/>
     </CValidatorUnitType>
     <CValidatorUnitType id="IsCelestialOutlet">
-        <Value value="CelestialOutlet"/>
+        <Value value="Outlet"/>
     </CValidatorUnitType>
     <CValidatorUnitType id="IsAtrium">
         <Value value="Atrium"/>
     </CValidatorUnitType>
     <CValidatorUnitType id="IsAstralConduit">
-        <Value value="AstralConduit"/>
+        <Value value="Conduit"/>
     </CValidatorUnitType>
-    <CValidatorUnitType id="IsCosmicPortal">
-        <Value value="CosmicPortal"/>
+    <CValidatorUnitType id="IsEmpyrean">
+        <Value value="Empyrean"/>
     </CValidatorUnitType>
     <CValidatorUnitType id="IsAurora">
         <Value value="Aurora"/>
@@ -86,6 +120,27 @@
     <CValidatorUnitType id="IsElysium">
         <Value value="Elysium"/>
     </CValidatorUnitType>
+    <CValidatorUnitCompareVital id="KeironCasterEnergyGE20" parent="CasterLifePercent">
+        <ResultFailed value="Error,error/text/notenoughenergy"/>
+        <Compare value="GE"/>
+        <Type value="Current"/>
+        <Value value="20"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
+    <CValidatorUnitCompareVital id="KeironCasterEnergyGE40" parent="CasterLifePercent">
+        <ResultFailed value="Error,error/text/notenoughenergy"/>
+        <Compare value="GE"/>
+        <Type value="Current"/>
+        <Value value="40"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
+    <CValidatorUnitCompareVital id="KeironCasterEnergyGE80" parent="CasterLifePercent">
+        <ResultFailed value="Error,error/text/notenoughenergy"/>
+        <Compare value="GE"/>
+        <Type value="Current"/>
+        <Value value="80"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
     <CValidatorUnitCompareBehaviorCount id="UnitChargeLT1">
         <WhichUnit Value="Caster"/>
         <Compare value="LT"/>

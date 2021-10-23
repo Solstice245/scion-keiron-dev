@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
+    <CAbilEffectTarget id="ApertureTeleport">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <Effect index="0" value="ApertureTeleportTP"/>
+        <Range value="500"/>
+        <Arc value="360"/>
+        <AINotifyEffect value="ApertureTeleportTP"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="ApertureTeleport"/>
+    </CAbilEffectTarget>
+    <CAbilWarpTrain id="KeironCitadelDummyTrain">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+    </CAbilWarpTrain>
     <CAbilResearch id="KeironResearch">
         <EditorCategories value="AbilityorEffectType:Units"/>
         <InfoArray index="Research1" Time="20" Upgrade="ExaltedShield">
@@ -97,16 +108,22 @@
         <InfoArray index="Build12" Unit="Pantheon" Time="20">
             <Button DefaultButtonFace="ShapePantheon" Requirements="HaveAtrium"/>
         </InfoArray>
-        <InfoArray index="Build13" Unit="AstralConduit" Time="20">
-            <Button DefaultButtonFace="ShapeAstralConduit" Requirements="HaveSanctum"/>
+        <InfoArray index="Build13" Unit="Conduit" Time="20">
+            <Button DefaultButtonFace="ShapeConduit" Requirements="HaveSanctum"/>
         </InfoArray>
-        <InfoArray index="Build14" Unit="CelestialOutlet" Time="20">
-            <Button DefaultButtonFace="ShapeCelestialOutlet" Requirements="HaveAstralConduit"/>
+        <InfoArray index="Build14" Unit="Outlet" Time="20">
+            <Button DefaultButtonFace="ShapeOutlet" Requirements="HaveConduit"/>
         </InfoArray>
-        <InfoArray index="Build15" Unit="CosmicPortal" Time="20">
-            <Button DefaultButtonFace="ShapeCosmicPortal" Requirements="HaveCelestialOutlet"/>
+        <InfoArray index="Build15" Unit="Empyrean" Time="20">
+            <Button DefaultButtonFace="ShapeEmpyrean" Requirements="HaveOutlet"/>
         </InfoArray>
-        <Range value="3"/>
+        <InfoArray index="Build16" Unit="Zenith" Time="20">
+            <Button DefaultButtonFace="ShapeZenith" Requirements="HaveEmpyrean"/>
+        </InfoArray>
+        <Range value="4.5"/>
+        <EffectArray index="Start" value="KeironConstructionStart"/>
+        <EffectArray index="Finish" value="KeironConstructionStop"/>
+        <EffectArray index="Cancel" value="KeironConstructionStop"/>
     </CAbilBuild>
     <CAbilTrain id="KeironCitadelTrain">
         <EditorCategories value="AbilityorEffectType:Units"/>
@@ -267,6 +284,7 @@
             <Cooldown Link="Abil/KeironCitadelMaterializeParagon" Location="Player"/>
             <Button DefaultButtonFace="MaterializeParagon"/>
         </InfoArray>
+        <Flags index="WarpTrainersButton" value="0"/>
     </CAbilWarpTrain>
     <CAbilEffectTarget id="MeridianConvergence">
         <EditorCategories value="AbilityorEffectType:Units"/>

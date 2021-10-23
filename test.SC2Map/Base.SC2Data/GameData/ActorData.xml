@@ -31,7 +31,7 @@
         <WireframeShieldColor value="120,255,223,0"/>
         <Aliases value="_ShieldGold"/>
         <PlacementSound value="Keiron_BuildingPlacementSmall"/>
-        <ShieldArmorIcon value="Assets\Textures\btn-upgrade-keiron-shieldslevel0.dds"/>
+        <ShieldArmorIcon value="Assets\Textures\btn-upgrade-keiron-shields-level0.dds"/>
     </CActorUnit>
     <CActorUnit default="1" id="GenericUnitKeironStructure" parent="GenericUnitKeiron">
         <Aliases value="_CreepEngulfable"/>
@@ -69,6 +69,8 @@
         <CreepRateGrow value=""/>
         <CreepRateShrink value=""/>
         <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
+        <Macros index="1" value="SnowVisualBuildingMacroMP"/>
+        <Macros index="2" removed="1"/>
     </CActorUnit>
     <CActorSplat default="1" id="KeironCuserSplat" parent="CursorSplat">
         <Model value="KeironAOECursorSplat"/>
@@ -132,6 +134,22 @@
     <CActorSound id="Converter_Attack" parent="SoundOneShotKeiron" Effect="ConverterDissolutionRay">
         <Sound value="Converter_Weapon"/>
     </CActorSound>
+    <CActorUnit id="Zenith" parent="GenericUnitKeironStructureAir" unitName="Zenith">
+        <BarOffset value="140"/>
+        <GroupIcon>
+            <Image index="0" value="Assets\Textures\wireframe-keiron-Empyrean.dds"/>
+        </GroupIcon>
+        <HeroIcon value="Assets\Textures\btn-building-keiron-Empyrean.dds"/>
+        <UnitIcon value="Assets\Textures\btn-building-keiron-Empyrean.dds"/>
+        <Wireframe>
+            <Image index="0" value="Assets\Textures\wireframe-keiron-Empyrean.dds"/>
+        </Wireframe>
+        <WireframeShield>
+            <Image index="0" value="Assets\Textures\wireframe-keiron-Empyrean-shield1.dds"/>
+            <Image index="1" value="Assets\Textures\wireframe-keiron-Empyrean-shield2.dds"/>
+            <Image index="2" value="Assets\Textures\wireframe-keiron-Empyrean-shield3.dds"/>
+        </WireframeShield>
+    </CActorUnit>
     <CActorModel id="KeironBuildModelAir" parent="ModelAddition">
         <Aliases value="_ZergBuildModel"/>
         <Flags index="RespondsToUnitPlayerChange" value="1"/>
@@ -142,6 +160,7 @@
         <On index="2" Terms="ActorOrphan" Send="Destroy"/>
         <On Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand Death 0 0.500000 AsTimeScale"/>
         <On Terms="AnimBracketState.*.AfterClosing; AnimName BSD" Send="Destroy"/>
+        <On Terms="ActorCreation" Send="SetScale 1.000000,1.000000,1.500000 21.000000"/>
         <HostSiteOps Ops="SOpAttachCenter"/>
         <Model value="KeironBuildModel"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
@@ -163,6 +182,14 @@
         <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
         <HostSiteOps Ops="SOpAttachCenter"/>
     </CActorModel>
+    <CActorBeamSimple id="KeironConstructionBeam" parent="BeamSimpleAnimationStyleContinuous">
+        <EditorCategories value=""/>
+        <On Terms="Effect.KeironConstructionStart.Start; At Target" Send="Create"/>
+        <On Terms="Effect.KeironConstructionStop.Start" Send="Destroy"/>
+        <ModelFlags index="AutomateGlobalLoops" value="1"/>
+        <HostLaunchSiteOps Ops="SOpCasterUnit SOpAttachCenter"/>
+        <HostImpactSiteOps Ops="SOpAttachCenter"/>
+    </CActorBeamSimple>
     <CActorModel id="KeironStructureDeathExplosionSmall" parent="ModelAnimationStyleOneShot">
         <On Terms="ActorCreation" Send="SetTintColor {255,134,0 1.500000} 1.250000"/>
         <Model value="KeironStructureDeathExplosion"/>
@@ -184,9 +211,14 @@
         <EditorCategories value=""/>
         <ImpactMap index="None" Model="MeridianConvergenceDamage" Sound=""/>
     </CActorAction>
-    <CActorModel id="MeridianConvergenceImpact" parent="ModelAnimationStyleOneShotEffect" Effect="MeridianConvergenceSA"/>
+    <CActorModel id="MeridianConvergenceImpact" parent="ModelAnimationStyleOneShotEffect" Effect="MeridianConvergenceSA">
+        <Aliases value="_Scalable"/>
+        <On index="3" Terms="Effect.MeridianConvergenceSA.Start; At Effect" Send="Create"/>
+    </CActorModel>
     <CActorRange id="MeridianConvergenceRange" parent="RangeAbil" abil="MeridianConvergence"/>
-    <CActorSplat id="MeridianConvergenceSplat" parent="KeironCuserSplat" abil="MeridianConvergence"/>
+    <CActorSplat id="MeridianConvergenceSplat" parent="KeironCuserSplat" abil="MeridianConvergence">
+        <On Terms="ActorCreation" Send="AnimPlay BSD GLstand PlayForever -1.000000 -1.000000 -1.000000 AsAutomatic 0.000000 100"/>
+    </CActorSplat>
     <CActorSound id="MeridianConvergence_Impact" parent="SoundOneShotKeiron" Effect="MeridianConvergenceSA"/>
     <CActorBeamSimple id="MeridianLightningBoltBeam" parent="BeamSimpleAnimationStyleOneShot">
         <Macros value="ActionTargetTeleportDestroy"/>
@@ -239,21 +271,11 @@
         <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
         <WireframeShieldColor value="120,255,223,0"/>
     </CActorUnit>
-    <CActorUnit id="CelestialOutlet" parent="GenericUnitStandard" unitName="CelestialOutlet">
-        <EditorCategories value=""/>
-        <HighlightTooltip value="Unit/Name/Bogus"/>
-        <PlacementActorModel value="PlacementModelKeiron"/>
-        <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
-        <On Terms="ActorCreation" Send="AliasAdd _ShieldGold"/>
-        <WireframeShieldColor value="120,255,223,0"/>
+    <CActorUnit id="Outlet" parent="GenericUnitKeironStructureAir" unitName="Outlet">
+        <BarOffset value="140"/>
     </CActorUnit>
-    <CActorUnit id="AstralConduit" parent="GenericUnitStandard" unitName="AstralConduit">
-        <EditorCategories value=""/>
-        <HighlightTooltip value="Unit/Name/Bogus"/>
-        <PlacementActorModel value="PlacementModelKeiron"/>
-        <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
-        <On Terms="ActorCreation" Send="AliasAdd _ShieldGold"/>
-        <WireframeShieldColor value="120,255,223,0"/>
+    <CActorUnit id="Conduit" parent="GenericUnitKeironStructureAir" unitName="Conduit">
+        <BarOffset value="140"/>
     </CActorUnit>
     <CActorUnit id="FormulatorRich" parent="GenericUnitKeironStructure" unitName="FormulatorRich">
         <On Terms="Behavior.HarvestableRichVespeneGeyserGasKeiron.Deplete" Send="SetTintColor 255,170,170"/>
@@ -372,6 +394,7 @@
     <CActorSite id="MeridianWeaponSite"/>
     <CActorUnit id="Nullifier" parent="GenericUnitKeironStructure" unitName="Nullifier">
         <Aliases index="4" value="_UnitLarge"/>
+        <On index="69" Terms="UnitConstruction.Nullifier.Start" Send="Create KeironBuildModelSmall"/>
         <On Terms="WeaponStart.NullifierWeapon.AttackStart" Target="NullifierLookAtTurretY" Send="LookAtStop"/>
         <On Terms="WeaponStart.NullifierWeapon.AttackStart" Target="NullifierLookAt" Send="LookAtEngage"/>
         <On Terms="WeaponStop.NullifierWeapon.AttackStop" Target="NullifierLookAt" Send="LookAtStop"/>
@@ -405,6 +428,20 @@
         <On Terms="Effect.NullifierWeaponCP.Start" Send="Create"/>
         <On Terms="Effect.NullifierWeaponCP.Stop" Send="Destroy"/>
     </CActorSound>
+    <CActorPower id="CitadelPower">
+        <On Terms="Behavior.CitadelPowerSource.Create" Send="Create"/>
+        <On Terms="Behavior.CitadelPowerSource.Destroy" Send="Destroy"/>
+        <VisualArray value="CitadelPowerVisual"/>
+    </CActorPower>
+    <CActorSplat id="CitadelPowerVisual">
+        <FogVisibility value="Visible"/>
+        <Host Subject="_Selectable"/>
+        <HostSiteOps Ops="SOpShadow"/>
+        <FadeIn value="0.000000"/>
+        <FadeOut value="0.000000"/>
+        <HoldTime value="-1.000000"/>
+        <Layer value="PowerLayer"/>
+    </CActorSplat>
     <CActorModel id="StratusAddition" parent="ModelAddition">
         <HostSiteOps Ops="SOpAttachTurretY SOpMoveBy2"/>
         <Model value="Invisible"/>
@@ -433,7 +470,7 @@
     </CActorTurret>
     <CActorUnit id="Stratus" parent="GenericUnitKeironStructureAir" unitName="Stratus">
         <Aliases index="4" value="_UnitLarge"/>
-        <On index="69" Terms="UnitConstruction.##id##.Start" Send="Create KeironBuildModelAirSmall"/>
+        <On index="69" Terms="UnitConstruction.Stratus.Start" Send="Create KeironBuildModelAirSmall"/>
         <On Terms="WeaponStart.StratusWeapon.AttackStart" Target="StratusLookAtTurretY" Send="LookAtStop"/>
         <On Terms="WeaponStart.StratusWeapon.AttackStart" Target="StratusLookAt" Send="LookAtEngage"/>
         <On Terms="WeaponStop.StratusWeapon.AttackStop" Target="StratusLookAt" Send="LookAtStop"/>
@@ -455,6 +492,7 @@
         <DeathArray index="Normal" ActorModel="KeironStructureDeathExplosionSmall" SoundLink="KeironStructureSmall_Death"/>
         <BarOffset value="110"/>
         <BarWidth value="85"/>
+        <On index="69" Terms="UnitConstruction.Oculus.Start" Send="Create KeironBuildModelSmall"/>
     </CActorUnit>
     <CActorModel id="PlaceholderModelKeiron" parent="PlacementModel">
         <On index="0" Terms="ActorCreation"/>
@@ -590,13 +628,8 @@
         <On Terms="TurretEnable.TitanMovement" Send="Create"/>
         <YawQuery Methods="TurretY 0"/>
     </CActorTurret>
-    <CActorUnit id="Harbinger" parent="GenericUnitStandard" unitName="Harbinger">
-        <EditorCategories value=""/>
-        <HighlightTooltip value="Unit/Name/Bogus"/>
-        <PlacementActorModel value="PlacementModelKeiron"/>
-        <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
-        <On Terms="ActorCreation" Send="AliasAdd _ShieldGold"/>
-        <WireframeShieldColor value="120,255,223,0"/>
+    <CActorUnit id="Harbinger" parent="GenericUnitKeiron" unitName="Harbinger">
+        <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMedium"/>
     </CActorUnit>
     <CActorUnit id="Atrium" parent="GenericUnitKeironStructure" unitName="Atrium">
         <BarOffset value="140"/>
@@ -654,13 +687,8 @@
         <ModelFlags index="AllowHitTest" value="0"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModel>
-    <CActorUnit id="CosmicPortal" parent="GenericUnitStandard" unitName="CosmicPortal">
-        <EditorCategories value=""/>
-        <HighlightTooltip value="Unit/Name/Bogus"/>
-        <PlacementActorModel value="PlacementModelKeiron"/>
-        <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
-        <On Terms="ActorCreation" Send="AliasAdd _ShieldGold"/>
-        <WireframeShieldColor value="120,255,223,0"/>
+    <CActorUnit id="Empyrean" parent="GenericUnitKeironStructureAir" unitName="Empyrean">
+        <BarOffset value="140"/>
     </CActorUnit>
     <CActorUnit id="Pulsar4DMDummy" parent="GenericUnitEmpty" unitname="Pulsar4DMDummy">
         <EditorCategories value=""/>
@@ -773,6 +801,7 @@
         <WalkAnimMoveSpeed value="3.25"/>
         <BarOffset value="40"/>
         <BarWidth value="40"/>
+        <On index="69" Terms="UnitConstruction.Volt.Start" Send="Create KeironMaterializeModelSmall"/>
     </CActorUnit>
     <CActorSite id="VoltAttackImpactSite" parent="GenericAttackImpactSite"/>
     <CActorAction id="VoltBounceAttack" parent="GenericAttack" effectImpact="ElectronBoltBDMG" effectLaunch="ElectronBoltBLM">
@@ -1100,6 +1129,7 @@
         <WalkAnimMoveSpeed value="2.25"/>
         <BarOffset value="45"/>
         <BarWidth value="40"/>
+        <On index="69" Terms="UnitConstruction.Pariah.Start" Send="Create KeironMaterializeModelSmall"/>
     </CActorUnit>
     <CActorUnit id="Subjecter" parent="GenericUnitKeiron" unitName="Subjecter">
         <WalkAnimMoveSpeed value="2.6992"/>
