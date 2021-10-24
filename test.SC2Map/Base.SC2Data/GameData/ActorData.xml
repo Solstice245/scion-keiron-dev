@@ -88,6 +88,9 @@
         <?token id="Effect" type="CEffectLink"?>
         <On Terms="Effect.##Effect##.Start" Send="Create"/>
     </CActorSound>
+    <CActorMissile id="HarbingerAirAttackMissile" parent="GenericAttackMissile" unitName="HeraldEnergyCannonsLMWeapon">
+        <Model value="HarbingerAirAttackMissile"/>
+    </CActorMissile>
     <CActorModel/>
     <CActorUnit id="Aegis" parent="GenericUnitStandard" unitName="Aegis">
         <On Terms="Behavior.AegisShieldAura.On" Send="AnimBracketStart StandWork Stand,Work,Start Stand,Work Stand,Work,End"/>
@@ -134,6 +137,46 @@
     <CActorSound id="Converter_Attack" parent="SoundOneShotKeiron" Effect="ConverterDissolutionRay">
         <Sound value="Converter_Weapon"/>
     </CActorSound>
+    <CActorMissile id="HarbingerGroundAttackMissile" parent="GenericAttackMissile" unitName="AuguryGunsLMWeapon">
+        <On Terms="UnitBirth" Send="AnimSetTimeScaleAbsolute Lifetime 1.000000"/>
+        <On Terms="ActorCreation" Send="SetTintColor {172,255,0 2.000000}"/>
+        <Model value="HarbingerGroundAttackMissile"/>
+    </CActorMissile>
+    <CActorAction id="HarbingerAirAttack" parent="GenericAttack" effectImpact="HeraldEnergyCannonsLMImpact" effectLaunch="HeraldEnergyCannonsLM">
+        <LaunchAttachQuery Methods="AMPatternHarbingerAir"/>
+        <LaunchAssets Sound="HarbingerGroundAttackLaunch2"/>
+        <LaunchModel value="HarbingerAirAttackLaunchModel"/>
+        <ImpactMap index="None" Sound="HarbingerGroundAttackImpact2" ModelReaction="SubjugatorAirAttackImpactReaction"/>
+        <ImpactMap index="Shield" Sound="SubjugatorAirAttackImpactShield" ModelReaction="SubjugatorAirAttackImpactReactionShield"/>
+        <ImpactModel value="HarbingerAirAttackImpactModel"/>
+        <DamageMap index="None" Model="SubjugatorAirAttackDamage" Sound="SubjugatorAirAttackDamage" ModelReaction="SubjugatorAirAttackDamageReaction"/>
+        <DamageMap index="Shield" Sound="SubjugatorAirAttackDamageShield" ModelReaction="SubjugatorAirAttackDamageReactionShield"/>
+    </CActorAction>
+    <CActorModel id="HarbingerGroundAttackImpactModel" parent="ModelAnimationStyleOneShot">
+        <On Terms="ActorCreation" Send="SetTintColor {255,134,0 2.500000}"/>
+        <Model value="HarbingerGroundAttackImpact"/>
+    </CActorModel>
+    <CActorModel id="HarbingerAirAttackImpactModel" parent="ModelAnimationStyleOneShot">
+        <On Terms="ActorCreation" Send="SetTintColor {255,134,0 2.500000}"/>
+        <Model value="HarbingerGroundAttackImpact"/>
+    </CActorModel>
+    <CActorModel id="HarbingerGroundAttackLaunchModel" parent="ModelAnimationStyleOneShot">
+        <On Terms="ActorCreation" Send="SetTintColor {255,89,0 2.000000}"/>
+        <Model value="HarbingerGroundAttackLaunch"/>
+    </CActorModel>
+    <CActorAction id="HarbingerGroundAttack" parent="GenericAttack" effectImpact="AuguryGunsLMImpact" effectLaunch="AuguryGunsLM">
+        <LaunchAttachQuery Methods="AMPatternHarbingerGround"/>
+        <LaunchModel value="HarbingerGroundAttackLaunchModel"/>
+        <ImpactMap index="None" ModelReaction="SubjugatorAirAttackImpactReaction"/>
+        <ImpactMap index="Shield" Sound="SubjugatorAirAttackImpactShield" ModelReaction="SubjugatorAirAttackImpactReactionShield"/>
+        <ImpactModel value="HarbingerGroundAttackImpactModel"/>
+        <DamageMap index="None" Model="SubjugatorAirAttackDamage" Sound="SubjugatorAirAttackDamage" ModelReaction="SubjugatorAirAttackDamageReaction"/>
+        <DamageMap index="Shield" Sound="SubjugatorAirAttackDamageShield" ModelReaction="SubjugatorAirAttackDamageReactionShield"/>
+    </CActorAction>
+    <CActorModel id="HarbingerAirAttackLaunchModel" parent="ModelAnimationStyleOneShot">
+        <On Terms="ActorCreation" Send="SetTintColor {255,89,0 2.000000}"/>
+        <Model value="HarbingerGroundAttackLaunch"/>
+    </CActorModel>
     <CActorUnit id="Zenith" parent="GenericUnitKeironStructureAir" unitName="Zenith">
         <BarOffset value="140"/>
         <GroupIcon>
@@ -630,6 +673,8 @@
     </CActorTurret>
     <CActorUnit id="Harbinger" parent="GenericUnitKeiron" unitName="Harbinger">
         <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMedium"/>
+        <BarOffset value="82"/>
+        <BarWidth value="108"/>
     </CActorUnit>
     <CActorUnit id="Atrium" parent="GenericUnitKeironStructure" unitName="Atrium">
         <BarOffset value="140"/>
@@ -1063,6 +1108,7 @@
         <LaunchAttachQuery Methods="AMFilterSubjugatorLeft AMPatternSubjugatorLeft"/>
         <LaunchModel value="SubjecterAirAttackLaunch"/>
         <ImpactModel value="SubjecterAirAttackImpact"/>
+        <Missile value="EnthrallerQuillAttackMissile"/>
     </CActorAction>
     <CActorModel id="SubjecterAirAttackImpact" parent="ModelAnimationStyleOneShot">
         <On Terms="ActorCreation" Send="SetTintColor {255,134,0 2.500000}"/>
@@ -1136,7 +1182,7 @@
         <BarOffset value="65"/>
         <BarWidth value="65"/>
     </CActorUnit>
-    <CActorMissile id="SubjecterAirAttackMissile" parent="GenericAttackMissile" unitName="EnthrallerQuillsLMWeapon">
+    <CActorMissile id="EnthrallerQuillAttackMissile" parent="GenericAttackMissile" unitName="EnthrallerQuillsLMWeapon">
         <On Terms="UnitBirth" Send="AnimSetTimeScaleAbsolute Lifetime 1.000000"/>
         <On Terms="ActorCreation" Send="SetTintColor {255,89,0 2.000000}"/>
         <Model value="SubjecterAirAttackMissile"/>
