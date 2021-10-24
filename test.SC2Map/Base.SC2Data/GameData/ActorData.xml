@@ -177,6 +177,10 @@
         <On Terms="ActorCreation" Send="SetTintColor {255,89,0 2.000000}"/>
         <Model value="HarbingerGroundAttackLaunch"/>
     </CActorModel>
+    <CActorModel id="HarbingerHeraldEnergyCannonsAOE" parent="ModelAnimationStyleContinuous">
+        <On Terms="Effect.HarbingerHeraldEnergyCannonsAOECP.Start" Send="Create"/>
+        <On Terms="Effect.HarbingerHeraldEnergyCannonsAOECP.Stop; FromEffectTreeDescendant" Send="Destroy"/>
+    </CActorModel>
     <CActorUnit id="Zenith" parent="GenericUnitKeironStructureAir" unitName="Zenith">
         <BarOffset value="140"/>
         <GroupIcon>
@@ -675,6 +679,8 @@
         <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMedium"/>
         <BarOffset value="82"/>
         <BarWidth value="108"/>
+        <On Terms="Behavior.HarbingerJudgementModeStart.On" Send="AnimBracketStart Cover Cover,Start Cover Cover,End"/>
+        <On Terms="Behavior.HarbingerJudgementMode.Off" Send="AnimBracketStop Cover"/>
     </CActorUnit>
     <CActorUnit id="Atrium" parent="GenericUnitKeironStructure" unitName="Atrium">
         <BarOffset value="140"/>

@@ -51,14 +51,44 @@
         <TargetLocation Value="CasterUnitOrPoint"/>
         <TeleportFlags index="TestFog" value="0"/>
     </CEffectTeleport>
-    <CEffectCreatePersistent id="HeraldEnergyCannons">
-        <EditorCategories value="Race:Protoss"/>
-        <WhichLocation Value="TargetUnit"/>
-        <PeriodCount value="2"/>
-        <PeriodicEffectArray value="HeraldEnergyCannonsLM"/>
-        <PeriodicPeriodArray value="0.0625"/>
+    <CEffectRemoveBehavior id="HarbingerExitJudgementMode">
+        <EditorCategories value=""/>
+        <BehaviorLink value="HarbingerJudgementMode"/>
+    </CEffectRemoveBehavior>
+    <CEffectApplyBehavior id="HarbingerHeraldEnergyCannonsAOEAB" parent="CEffectApplyBehaviorKeironTarget">
+        <Behavior value="HarbingerHeraldEnergyCannonsAOE"/>
+    </CEffectApplyBehavior>
+    <CEffectCreatePersistent id="HarbingerHeraldEnergyCannonsAOECP">
+        <ValidatorArray value="HarbingerJudgementModeOn"/>
+        <EditorCategories value=""/>
+        <PeriodCount value="8"/>
+        <PeriodicEffectArray value="HarbingerHeraldEnergyCannonsSA"/>
+        <PeriodicPeriodArray value="0.25"/>
     </CEffectCreatePersistent>
-    <CEffectLaunchMissile id="HeraldEnergyCannonsLM" parent="CEffectLaunchMissileKeiron"/>
+    <CEffectDamage id="HarbingerHeraldEnergyCannonsAOEDMG" parent="CEffectDamageKeironSpell">
+        <Amount value="2.5"/>
+    </CEffectDamage>
+    <CEffectEnumArea id="HarbingerHeraldEnergyCannonsSA" parent="CEffectSearchAreaKeiron">
+        <DebugTrace value="1"/>
+        <ImpactLocation Value="TargetPoint"/>
+        <SearchFilters value="Air;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <AreaArray Radius="1" Effect="HarbingerHeraldEnergyCannonsAOEAB"/>
+    </CEffectEnumArea>
+    <CEffectSet id="HarbingerHeraldEnergyCannonsSet">
+        <EditorCategories value=""/>
+        <EffectArray value="HeraldEnergyCannonsLMImpact"/>
+        <EffectArray value="HarbingerHeraldEnergyCannonsAOECP"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="HarbingerJudgementMode" parent="CEffectApplyBehaviorKeironCaster"/>
+    <CEffectApplyBehavior id="HarbingerJudgementModeStart" parent="CEffectApplyBehaviorKeironCaster">
+        <EditorCategories value=""/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="HarbingerJudgementModeStop" parent="CEffectApplyBehaviorKeironCaster">
+        <EditorCategories value=""/>
+    </CEffectApplyBehavior>
+    <CEffectLaunchMissile id="HeraldEnergyCannonsLM" parent="CEffectLaunchMissileKeiron">
+        <ImpactEffect value="HarbingerHeraldEnergyCannonsSet"/>
+    </CEffectLaunchMissile>
     <CEffectDamage id="HeraldEnergyCannonsLMImpact" parent="CEffectDamageKeironWeapon">
         <Amount value="18"/>
         <Death value="Electrocute"/>
