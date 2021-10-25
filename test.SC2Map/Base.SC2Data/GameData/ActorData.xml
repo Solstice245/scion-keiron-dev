@@ -181,6 +181,24 @@
         <On Terms="Effect.HarbingerHeraldEnergyCannonsAOECP.Start" Send="Create"/>
         <On Terms="Effect.HarbingerHeraldEnergyCannonsAOECP.Stop; FromEffectTreeDescendant" Send="Destroy"/>
     </CActorModel>
+    <CActorModel id="MeridianConvergenceImpactCharge" parent="ModelAnimationStyleOneShotEffect" Effect="MeridianConvergenceCP">
+        <Aliases value="_Scalable"/>
+        <On index="0" Send="AnimBracketStart BSD Birth Stand Death"/>
+        <On Terms="Effect.MeridianConvergenceCP.Stop" Send="AnimBracketStop BSD"/>
+    </CActorModel>
+    <CActorModel id="MeridianConvergenceSourceCharge1" parent="ModelAnimationStyleContinuousUNIT">
+        <Aliases value="_Scalable"/>
+        <On Terms="Effect.MeridianConvergenceCP.Start; At Caster" Send="Create"/>
+        <On Terms="Effect.MeridianConvergenceCP.Stop; At Caster" Send="Destroy"/>
+        <HostSiteOps Ops="SOpAttachWeapon00"/>
+        <Model value="MeridianConvergenceSourceCharge"/>
+    </CActorModel>
+    <CActorModel id="MeridianConvergenceSourceCharge2" parent="MeridianConvergenceSourceCharge1">
+        <HostSiteOps Ops="SOpAttachWeapon01"/>
+    </CActorModel>
+    <CActorSound id="MeridianConvergence_Charge" parent="SoundOneShotKeiron" Effect="MeridianConvergenceCP">
+        <On Terms="Effect.MeridianConvergenceCP.Stop" Send="Destroy"/>
+    </CActorSound>
     <CActorUnit id="Zenith" parent="GenericUnitKeironStructureAir" unitName="Zenith">
         <BarOffset value="140"/>
         <GroupIcon>
@@ -463,6 +481,7 @@
         <EditorCategories value=""/>
         <Beam value="MeridianLightningBoltBeam"/>
         <ImpactSite value="MeridianLightningBoltSite"/>
+        <ImpactMap index="None" Sound="MeridianLightningBolt_Impact"/>
     </CActorAction>
     <CActorAction id="MeridianLightningBoltAttack" parent="GenericAttack" effectAttack="MeridianLightningBoltDMG">
         <EditorCategories value=""/>
@@ -1172,18 +1191,19 @@
         <On Terms="ActorCreation" Send="SetTintColor {255,134,0 2.000000} 0.150000"/>
     </CActorModel>
     <CActorAction id="UmbraAttack" parent="GenericAttack" effectImpact="ShadowCannonImpact" effectLaunch="ShadowCannon"/>
-    <CActorUnit id="Myriad" parent="GenericUnitStandard" unitName="Myriad">
-        <WalkAnimMoveSpeed value="2.1484"/>
+    <CActorUnit id="Myriad" parent="GenericUnitKeiron" unitName="Myriad">
         <On index="65" Terms="WeaponStart.Lunge" Send="AnimBracketStart Attack Attack"/>
         <On index="67" Terms="WeaponStop.Lunge" Send="AnimBracketStop Attack"/>
         <On Terms="Effect.ElytraReleaseAM.Start" Send="$Spell"/>
-        <On Terms="ActorCreation" Send="AliasAdd _ShieldGold"/>
-        <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionLarge" ModelLink="ProtossLargeUnitDeath"/>
+        <DeathArray index="Normal">
+            <ActorModel value="KeironUnitDeathExplosionLarge"/>
+            <ModelLink value="ProtossLargeUnitDeath"/>
+            <SoundLink value="MyriadDeath"/>
+            <VoiceLink value="MyriadDeathVoice"/>
+        </DeathArray>
+        <WalkAnimMoveSpeed value="2.1484"/>
         <BarOffset value="80"/>
         <BarWidth value="74"/>
-        <PlacementActorModel value="PlacementModelKeiron"/>
-        <PlaceholderActorModel value="PlaceholderModelKeiron"/>
-        <WireframeShieldColor value="120,255,223,0"/>
     </CActorUnit>
     <CActorAction id="AuroraAttack" parent="GenericAttack" effectImpact="HalationPlasmaLMImpact" effectLaunch="HalationPlasmaLM"/>
     <CActorMissile id="UmbraAttackMissile" parent="GenericAttackMissile" unitName="ShadowCannonWeapon">
