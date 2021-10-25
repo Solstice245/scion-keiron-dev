@@ -326,15 +326,12 @@
         <NameOffset value="130"/>
         <StatusHarvesterData Text="UI/HarvesterCountVespene"/>
     </CActorUnit>
-    <CActorUnit id="Aurora" parent="GenericUnitStandard" unitName="Aurora">
+    <CActorUnit id="Aurora" parent="GenericUnitKeiron" unitName="Aurora">
+        <On Terms="Abil.Emanator.TargetCastStart" Send="AnimPlay Attack Attack"/>
+        <DeathArray index="Normal" ModelLink="ProtossMediumUnitDeath" SoundLink="AuroraDeath" VoiceLink="AuroraDeathVoice"/>
+        <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
         <BarOffset value="50"/>
         <BarWidth value="72"/>
-        <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMediumBlood" ModelLink="ProtossMediumUnitDeath"/>
-        <On Terms="Abil.Emanator.TargetCastStart" Send="AnimPlay Attack Attack"/>
-        <On Terms="ActorCreation" Send="AliasAdd _ShieldGold"/>
-        <PlacementActorModel value="PlacementModelKeiron"/>
-        <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
-        <WireframeShieldColor value="120,255,223,0"/>
     </CActorUnit>
     <CActorUnit id="Outlet" parent="GenericUnitKeironStructureAir" unitName="Outlet">
         <BarOffset value="140"/>
@@ -741,13 +738,9 @@
         <BarOffset value="160"/>
         <BarWidth value="160"/>
     </CActorUnit>
-    <CActorUnit id="Paradox" parent="GenericUnitStandard" unitName="Paradox">
+    <CActorUnit id="Paradox" parent="GenericUnitKeiron" unitName="Paradox">
         <EditorCategories value=""/>
-        <HighlightTooltip value="Unit/Name/Bogus"/>
-        <PlacementActorModel value="PlacementModelKeiron"/>
         <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
-        <On Terms="ActorCreation" Send="AliasAdd _ShieldGold"/>
-        <WireframeShieldColor value="120,255,223,0"/>
     </CActorUnit>
     <CActorModel id="ParadoxShield" parent="ModelAddition">
         <Inherits index="Opacity" value="0"/>
@@ -932,18 +925,18 @@
         <BarOffset value="35"/>
         <BarWidth value="42"/>
     </CActorUnit>
-    <CActorUnit id="Echo" parent="GenericUnitStandard" unitName="Echo">
-        <DeathArray index="Normal" ActorModel="KeironAirUnitDeathExplosionSmall" ModelLink="KeironSmallAirUnitDeath" SoundLink="Phoenix_Explode"/>
+    <CActorUnit id="Echo" parent="GenericUnitKeiron" unitName="Echo">
         <On Terms="UnitBirth.EchoDM" Send="Create"/>
         <On Terms="UnitBirth.EchoDM" Send="AnimBracketStart StandWork Stand,Work Stand,Work Stand,Work,End Instant"/>
         <On Terms="AbilMorph.EchoDiscordMode.Start" Send="AnimBracketStart StandWork Stand,Work,Start Stand,Work Stand,Work,End"/>
         <On Terms="AbilMorph.EchoFighterMode.Start" Send="AnimBracketStop StandWork"/>
-        <On Terms="ActorCreation" Send="AliasAdd _ShieldGold"/>
+        <DeathArray index="Normal">
+            <ActorModel value="KeironAirUnitDeathExplosionSmall"/>
+            <ModelLink value="KeironSmallAirUnitDeath"/>
+            <SoundLink value="Phoenix_Explode"/>
+            <VoiceLink value="EchoDeathVoice"/>
+        </DeathArray>
         <BarOffset value="40"/>
-        <UnitIcon value="Assets\Textures\btn-unit-keiron-echo.dds"/>
-        <PlacementActorModel value="PlacementModelKeiron"/>
-        <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
-        <WireframeShieldColor value="120,255,223,0"/>
     </CActorUnit>
     <CActorSound id="EchoDiscordModeSound" parent="SoundOneShot">
         <On Terms="Abil.EchoDiscordMode.Start" Send="Create"/>
