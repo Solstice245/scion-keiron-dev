@@ -714,6 +714,9 @@
     </CActorModelMaterial>
     <CActorUnit id="Meridian" parent="GenericUnitKeiron" unitName="Meridian">
         <BarOffset value="70"/>
+        <On Terms="Abil.MeridianLightningBolt.SourceCastStart" Send="$Spell,A 0 -1.000000 -1.000000 0.750000 AsDuration"/>
+        <On Terms="Effect.MeridianConvergenceCP.Start" Send="AnimBracketStart Spell Spell,B,Start Spell,B Spell,B,End"/>
+        <On Terms="Effect.MeridianConvergenceCP.Stop" Send="AnimBracketStop Spell"/>
     </CActorUnit>
     <CActorUnit id="Elysium" parent="GenericUnitKeironStructure" unitName="Elysium">
         <BarOffset value="160"/>
@@ -1208,6 +1211,11 @@
         <BarOffset value="45"/>
         <BarWidth value="40"/>
         <On index="69" Terms="UnitConstruction.Pariah.Start" Send="Create KeironMaterializeModelSmall"/>
+        <On Terms="AbilMorph.ProjectionEnd.Finish" Send="ModelSwap Pariah"/>
+        <On Terms="AbilMorph.ProjectionStart.Start" Send="ModelSwap PariahProjection"/>
+        <On Terms="AbilMorph.ProjectionEnd.Finish" Send="AnimBaselineStart"/>
+        <On Terms="AbilMorph.ProjectionEnd.Finish" Send="AnimClear Walk"/>
+        <On Terms="AbilMorph.ProjectionStart.Start" Send="AnimPlay Walk Walk PlayForever"/>
     </CActorUnit>
     <CActorUnit id="Subjecter" parent="GenericUnitKeiron" unitName="Subjecter">
         <WalkAnimMoveSpeed value="2.6992"/>

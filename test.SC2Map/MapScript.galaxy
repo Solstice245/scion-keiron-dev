@@ -9,73 +9,21 @@ include "TriggerLibs/NativeLib"
 include "TriggerLibs/LibertyLib"
 
 //--------------------------------------------------------------------------------------------------
-// Library: KeironTriggerUnitFunctions
-//--------------------------------------------------------------------------------------------------
-// Trigger Declarations
-trigger lib2_gt_UntitledTrigger001;
-
-//--------------------------------------------------------------------------------------------------
-// Library: KeironTriggerUnitFunctions
-//--------------------------------------------------------------------------------------------------
-// External Library Initialization
-void lib2_InitLibraries () {
-    libNtve_InitVariables();
-}
-
-// Triggers
-//--------------------------------------------------------------------------------------------------
-// Trigger: Untitled Trigger 001
-//--------------------------------------------------------------------------------------------------
-bool lib2_gt_UntitledTrigger001_Func (bool testConds, bool runActions) {
-    // Automatic Variable Declarations
-    // Actions
-    if (!runActions) {
-        return true;
-    }
-
-    UIDisplayMessage(PlayerGroupAll(), c_messageAreaSubtitle, IntToText(TechTreeBehaviorCount(EventPlayer(), "KeironUnitCharge", c_techCountQueuedOrBetter)));
-    return true;
-}
-
-//--------------------------------------------------------------------------------------------------
-void lib2_gt_UntitledTrigger001_Init () {
-    lib2_gt_UntitledTrigger001 = TriggerCreate("lib2_gt_UntitledTrigger001_Func");
-    TriggerAddEventChatMessage(lib2_gt_UntitledTrigger001, c_playerAny, "test", true);
-}
-
-void lib2_InitTriggers () {
-    lib2_gt_UntitledTrigger001_Init();
-}
-
-//--------------------------------------------------------------------------------------------------
-// Library Initialization
-//--------------------------------------------------------------------------------------------------
-bool lib2_InitLib_completed = false;
-
-void lib2_InitLib () {
-    if (lib2_InitLib_completed) {
-        return;
-    }
-
-    lib2_InitLib_completed = true;
-
-    lib2_InitLibraries();
-    lib2_InitTriggers();
-}
-
-//--------------------------------------------------------------------------------------------------
 // Library Initialization
 //--------------------------------------------------------------------------------------------------
 void InitLibs () {
     libNtve_InitLib();
     libLbty_InitLib();
-    lib2_InitLib();
 }
 
 //--------------------------------------------------------------------------------------------------
 // Trigger Variables
 //--------------------------------------------------------------------------------------------------
 trigger gt_MeleeInitialization;
+trigger gt_ChangeRaceK;
+trigger gt_ChangeRaceT;
+trigger gt_ChangeRaceP;
+trigger gt_ChangeRaceZ;
 
 //--------------------------------------------------------------------------------------------------
 // Trigger: Melee Initialization
@@ -87,7 +35,6 @@ bool gt_MeleeInitialization_Func (bool testConds, bool runActions) {
         return true;
     }
 
-    PlayerSetRace(1, "Keir");
     PlayerModifyPropertyInt(1, c_playerPropMinerals, c_playerPropOperSetTo, 1000);
     PlayerModifyPropertyInt(1, c_playerPropVespene, c_playerPropOperSetTo, 1000);
     libLbty_gf_OrderWorkerstoGatherNearbyResources(RegionEntireMap(), 1);
@@ -118,10 +65,94 @@ void gt_MeleeInitialization_Init () {
 }
 
 //--------------------------------------------------------------------------------------------------
+// Trigger: Change Race K
+//--------------------------------------------------------------------------------------------------
+bool gt_ChangeRaceK_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    PlayerSetRace(1, "Keir");
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_ChangeRaceK_Init () {
+    gt_ChangeRaceK = TriggerCreate("gt_ChangeRaceK_Func");
+    TriggerAddEventChatMessage(gt_ChangeRaceK, c_playerAny, "k", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Change Race T
+//--------------------------------------------------------------------------------------------------
+bool gt_ChangeRaceT_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    PlayerSetRace(1, "Terr");
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_ChangeRaceT_Init () {
+    gt_ChangeRaceT = TriggerCreate("gt_ChangeRaceT_Func");
+    TriggerAddEventChatMessage(gt_ChangeRaceT, c_playerAny, "t", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Change Race P
+//--------------------------------------------------------------------------------------------------
+bool gt_ChangeRaceP_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    PlayerSetRace(1, "Prot");
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_ChangeRaceP_Init () {
+    gt_ChangeRaceP = TriggerCreate("gt_ChangeRaceP_Func");
+    TriggerAddEventChatMessage(gt_ChangeRaceP, c_playerAny, "p", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Change Race Z
+//--------------------------------------------------------------------------------------------------
+bool gt_ChangeRaceZ_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    PlayerSetRace(1, "Zerg");
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_ChangeRaceZ_Init () {
+    gt_ChangeRaceZ = TriggerCreate("gt_ChangeRaceZ_Func");
+    TriggerAddEventChatMessage(gt_ChangeRaceZ, c_playerAny, "z", true);
+}
+
+//--------------------------------------------------------------------------------------------------
 // Trigger Initialization
 //--------------------------------------------------------------------------------------------------
 void InitTriggers () {
     gt_MeleeInitialization_Init();
+    gt_ChangeRaceK_Init();
+    gt_ChangeRaceT_Init();
+    gt_ChangeRaceP_Init();
+    gt_ChangeRaceZ_Init();
 }
 
 //--------------------------------------------------------------------------------------------------
