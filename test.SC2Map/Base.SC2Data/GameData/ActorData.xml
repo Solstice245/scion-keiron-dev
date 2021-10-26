@@ -38,10 +38,12 @@
         <Aliases value="_UnitHuge"/>
         <On index="69" Terms="UnitConstruction.##unitName##.Start" Send="Create KeironBuildModel"/>
         <On index="70" Terms="UnitConstruction.##unitName##.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 21.000000 AsDuration 0.000000 100"/>
+        <On Terms="Abil.BuildInProgress.Pause" Send="AnimSetPaused Build"/>
+        <On Terms="Abil.BuildInProgress.Resume" Send="AnimSetPaused Build 0"/>
         <On Terms="UnitDeathCustomize; CreepEngulfs" Send="CreepEngulfmentStopTransition"/>
         <On Terms="ActorCreation; CreepIntersects" Send="CreepEngulfmentStartTransition"/>
-        <On Terms="Abil.ReliquaryResearch.Start" Send="AnimBracketStart Work Stand,Work,Start Stand,Work Stand,Work,End"/>
-        <On Terms="Abil.ReliquaryResearch.Stop" Send="AnimBracketStop Work"/>
+        <On Terms="Abil.##id##Research.Start" Send="AnimBracketStart Work Stand,Work,Start Stand,Work Stand,Work,End"/>
+        <On Terms="Abil.##id##Research.Stop" Send="AnimBracketStop Work"/>
         <CreepHeightClass value="Small"/>
         <CreepRateGrow value="Grow"/>
         <CreepRateShrink value="Shrink"/>
@@ -55,21 +57,27 @@
         <Macros value="SnowVisualBuildingMacroMP"/>
     </CActorUnit>
     <CActorUnit default="1" id="GenericUnitKeironStructureAir" parent="GenericUnitKeironStructure">
-        <On index="69" Terms="UnitConstruction.##id##.Start" Send="Create KeironBuildModelAir"/>
-        <On index="70" Terms="UnitConstruction.##id##.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 21.000000 AsDuration 0.000000 100"/>
-        <On index="71" Terms="UnitConstruction.##id##.Start" Send="AnimSetPausedAll"/>
-        <On index="72" Terms="UnitConstruction.##id##.Start" Send="AnimSetPaused Build 0"/>
-        <On index="73" Terms="UnitConstruction.##id##.Finish" Send="AnimSetPausedAll 0"/>
-        <On index="74" Terms="Abil.ReliquaryResearch.Start" Send="AnimBracketStart Work Stand,Work,Start Stand,Work Stand,Work,End"/>
-        <On index="75" Terms="Abil.ReliquaryResearch.Stop" Send="AnimBracketStop Work"/>
-        <On index="76" removed="1"/>
-        <On index="77" removed="1"/>
         <CreepHeightClass value=""/>
         <CreepRateGrow value=""/>
         <CreepRateShrink value=""/>
         <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
         <Macros index="1" value="SnowVisualBuildingMacroMP"/>
         <Macros index="2" removed="1"/>
+        <On index="0" Terms="UnitBirth.##id##" Send="Create SoundEmitter Bogus_Ambience"/>
+        <On index="1" Terms="UnitBirth.##id##"/>
+        <On index="2" Terms="UnitRevive.##id##"/>
+        <On index="3" Terms="UnitRevive.##id##"/>
+        <On index="4" Terms="UnitConstruction.##id##.Start"/>
+        <On index="5" Terms="UnitConstruction.##id##.Finish"/>
+        <On index="69" Terms="UnitConstruction.##id##.Start" Send="Create KeironBuildModelAir"/>
+        <On index="70" Terms="UnitConstruction.##id##.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 21.000000 AsDuration 0.000000 100"/>
+        <On index="71" Terms="UnitConstruction.##id##.Start" Send="AnimSetPausedAll"/>
+        <On index="72" Terms="UnitConstruction.##id##.Start" Send="AnimSetPaused Build 0"/>
+        <On index="73" Terms="UnitConstruction.##id##.Finish" Send="AnimSetPausedAll 0"/>
+        <On index="76" Terms="Abil.##id##Research.Start" Send="AnimBracketStart Work Stand,Work,Start Stand,Work Stand,Work,End"/>
+        <On index="77" Terms="Abil.##id##Research.Stop" Send="AnimBracketStop Work"/>
+        <On index="78" removed="1"/>
+        <On index="79" removed="1"/>
     </CActorUnit>
     <CActorSplat default="1" id="KeironCuserSplat" parent="CursorSplat">
         <Model value="KeironAOECursorSplat"/>
@@ -261,6 +269,7 @@
             <Image index="1" value="Assets\Textures\wireframe-keiron-Empyrean-shield2.dds"/>
             <Image index="2" value="Assets\Textures\wireframe-keiron-Empyrean-shield3.dds"/>
         </WireframeShield>
+        <On index="70" Terms="UnitConstruction.Zenith.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 81.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
     <CActorModel id="KeironBuildModelAir" parent="ModelAddition">
         <Aliases value="_ZergBuildModel"/>
@@ -357,6 +366,7 @@
         <ModelFlags index="AllowHitTest" value="0"/>
     </CActorModel>
     <CActorUnit id="Formulator" parent="GenericUnitKeironStructure" unitName="Formulator">
+        <On index="70" Terms="UnitConstruction.Formulator.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 26.000000 AsDuration 0.000000 100"/>
         <On Terms="Behavior.HarvestableVespeneGeyserGasKeiron.Deplete" Send="SetTintColor 255,170,170"/>
         <On Terms="Behavior.HarvestableVespeneGeyserGasKeiron.Deplete" Send="AnimGroupRemove D"/>
         <On Terms="Behavior.HarvestableVespeneGeyserGasKeiron.Deplete" Send="AnimGroupApply B"/>
@@ -382,13 +392,16 @@
     </CActorUnit>
     <CActorUnit id="Outlet" parent="GenericUnitKeironStructureAir" unitName="Outlet">
         <BarOffset value="140"/>
+        <On index="70" Terms="UnitConstruction.Outlet.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 81.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
     <CActorUnit id="Conduit" parent="GenericUnitKeironStructureAir" unitName="Conduit">
         <BarOffset value="140"/>
-        <On index="74" Terms="Abil.ConduitResearch.Start" Send="AnimBracketStart Work Stand,Work,Start Stand,Work Stand,Work,End"/>
-        <On index="75" Terms="Abil.ConduitResearch.Stop" Send="AnimBracketStop Work"/>
+        <On index="70" Terms="UnitConstruction.Conduit.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 71.000000 AsDuration 0.000000 100"/>
+        <On index="76" Terms="Abil.##id##Research.Start" Send="AnimBracketStart Work Stand,Work,Start Stand,Work Stand,Work,End"/>
+        <On index="77" Terms="Abil.##id##Research.Stop" Send="AnimBracketStop Work"/>
     </CActorUnit>
     <CActorUnit id="FormulatorRich" parent="GenericUnitKeironStructure" unitName="FormulatorRich">
+        <On index="70" Terms="UnitConstruction.FormulatorRich.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 26.000000 AsDuration 0.000000 100"/>
         <On Terms="Behavior.HarvestableRichVespeneGeyserGasKeiron.Deplete" Send="SetTintColor 255,170,170"/>
         <On Terms="Behavior.HarvestableRichVespeneGeyserGasKeiron.Deplete" Send="AnimGroupRemove E"/>
         <On Terms="Behavior.HarvestableRichVespeneGeyserGasKeiron.Deplete" Send="AnimGroupApply B"/>
@@ -506,6 +519,7 @@
     <CActorUnit id="Nullifier" parent="GenericUnitKeironStructure" unitName="Nullifier">
         <Aliases index="4" value="_UnitLarge"/>
         <On index="69" Terms="UnitConstruction.Nullifier.Start" Send="Create KeironBuildModelSmall"/>
+        <On index="70" Terms="UnitConstruction.Nullifier.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 41.000000 AsDuration 0.000000 100"/>
         <On Terms="WeaponStart.NullifierWeapon.AttackStart" Target="NullifierLookAtTurretY" Send="LookAtStop"/>
         <On Terms="WeaponStart.NullifierWeapon.AttackStart" Target="NullifierLookAt" Send="LookAtEngage"/>
         <On Terms="WeaponStop.NullifierWeapon.AttackStop" Target="NullifierLookAt" Send="LookAtStop"/>
@@ -583,6 +597,7 @@
     <CActorUnit id="Stratus" parent="GenericUnitKeironStructureAir" unitName="Stratus">
         <Aliases index="4" value="_UnitLarge"/>
         <On index="69" Terms="UnitConstruction.Stratus.Start" Send="Create KeironBuildModelAirSmall"/>
+        <On index="70" Terms="UnitConstruction.Stratus.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 41.000000 AsDuration 0.000000 100"/>
         <On Terms="WeaponStart.StratusWeapon.AttackStart" Target="StratusLookAtTurretY" Send="LookAtStop"/>
         <On Terms="WeaponStart.StratusWeapon.AttackStart" Target="StratusLookAt" Send="LookAtEngage"/>
         <On Terms="WeaponStop.StratusWeapon.AttackStop" Target="StratusLookAt" Send="LookAtStop"/>
@@ -605,6 +620,7 @@
         <BarOffset value="110"/>
         <BarWidth value="85"/>
         <On index="69" Terms="UnitConstruction.Oculus.Start" Send="Create KeironBuildModelSmall"/>
+        <On index="70" Terms="UnitConstruction.Oculus.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 31.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
     <CActorModel id="PlaceholderModelKeiron" parent="PlacementModel">
         <On index="0" Terms="ActorCreation"/>
@@ -751,8 +767,7 @@
     <CActorUnit id="Atrium" parent="GenericUnitKeironStructure" unitName="Atrium">
         <BarOffset value="140"/>
         <BarWidth value="160"/>
-        <On index="76" Terms="Abil.AtriumResearch.Start" Send="AnimBracketStart Work Stand,Work,Start Stand,Work Stand,Work,End"/>
-        <On index="77" Terms="Abil.AtriumResearch.Stop" Send="AnimBracketStop Work"/>
+        <On index="70" Terms="UnitConstruction.Atrium.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 81.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
     <CActorModel id="KeironMaterializeModelSmall" parent="ModelAddition">
         <Aliases value="_ZergBuildModel"/>
@@ -791,8 +806,7 @@
     <CActorUnit id="Elysium" parent="GenericUnitKeironStructure" unitName="Elysium">
         <BarOffset value="160"/>
         <BarWidth value="160"/>
-        <On index="76" Terms="Abil.ElysiumResearch.Start" Send="AnimBracketStart Work Stand,Work,Start Stand,Work Stand,Work,End"/>
-        <On index="77" Terms="Abil.ElysiumResearch.Stop" Send="AnimBracketStop Work"/>
+        <On index="70" Terms="UnitConstruction.Elysium.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 71.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
     <CActorUnit id="Paradox" parent="GenericUnitKeiron" unitName="Paradox">
         <EditorCategories value=""/>
@@ -812,6 +826,7 @@
     </CActorModel>
     <CActorUnit id="Empyrean" parent="GenericUnitKeironStructureAir" unitName="Empyrean">
         <BarOffset value="140"/>
+        <On index="70" Terms="UnitConstruction.Empyrean.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 81.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
     <CActorUnit id="Pulsar4DMDummy" parent="GenericUnitEmpty" unitname="Pulsar4DMDummy">
         <EditorCategories value=""/>
@@ -894,15 +909,14 @@
         <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
     </CActorModel>
     <CActorUnit id="Sanctum" parent="GenericUnitKeironStructure" unitName="Sanctum">
-        <On index="76" Terms="Abil.SanctumResearch.Start" Send="AnimBracketStart Work Stand,Work,Start Stand,Work Stand,Work,End"/>
-        <On index="77" Terms="Abil.SanctumResearch.Stop" Send="AnimBracketStop Work"/>
+        <On index="70" Terms="UnitConstruction.Sanctum.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 71.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
     <CActorUnit id="Pantheon" parent="GenericUnitKeironStructure" unitName="Pantheon">
         <BarOffset value="150"/>
+        <On index="70" Terms="UnitConstruction.Pantheon.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 81.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
     <CActorUnit id="Foundry" parent="GenericUnitKeironStructure" unitName="Foundry">
-        <On index="76" Terms="Abil.FoundryResearch.Start" Send="AnimBracketStart Work Stand,Work,Start Stand,Work Stand,Work,End"/>
-        <On index="77" Terms="Abil.FoundryResearch.Stop" Send="AnimBracketStop Work"/>
+        <On index="70" Terms="UnitConstruction.Foundry.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 81.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
     <CActorModelMaterial id="KeironConstructionGlaze" parent="GlazeParent">
         <EditorCategories value=""/>
@@ -976,11 +990,11 @@
     </CActorModel>
     <CActorUnit id="Citadel" parent="GenericUnitKeironStructure" unitName="Citadel">
         <On index="69" Terms="UnitConstruction.Citadel.Start" Send="Create KeironBuildModelLarge"/>
+        <On index="70" Terms="UnitConstruction.Citadel.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 101.000000 AsDuration 0.000000 100"/>
         <On Terms="AbilTrain.KeironCitadelTrain.Start" Send="AnimBracketStart Work Stand,Work,Start Stand,Work Stand,Work,End"/>
         <On Terms="AbilTrain.KeironCitadelTrain.Cancel" Send="AnimBracketStop Work"/>
         <On Terms="AbilTrain.KeironCitadelTrain.Finish" Send="AnimBracketStop Work"/>
         <CreepHeightClass value="Medium"/>
-        <DeathArray index="Normal" ActorModel="KeironStructureDeathExplosionLarge"/>
         <BarOffset value="160"/>
         <BarWidth value="200"/>
         <StatusHarvesterData Text="UI/HarvesterCountMinerals" SearchFilters="HarvestableResource;Player,Ally,Enemy" SearchRadius="8"/>
@@ -1329,9 +1343,9 @@
     </CActorAction>
     <CActorUnit id="Reliquary" parent="GenericUnitKeironStructure" unitName="Reliquary">
         <BarOffset value="160"/>
+        <On index="70" Terms="UnitConstruction.Reliquary.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 31.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
     <CActorUnit id="Edifice" parent="GenericUnitKeironStructure" unitName="Edifice">
-        <On index="76" Terms="Abil.EdificeResearch.Start" Send="AnimBracketStart Work Stand,Work,Start Stand,Work Stand,Work,End"/>
-        <On index="77" Terms="Abil.EdificeResearch.Stop" Send="AnimBracketStop Work"/>
+        <On index="70" Terms="UnitConstruction.Edifice.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 71.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
 </Catalog>
