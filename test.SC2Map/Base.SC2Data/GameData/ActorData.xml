@@ -254,6 +254,9 @@
     <CActorSound id="MeridianConvergence_Charge" parent="SoundOneShotKeiron" Effect="MeridianConvergenceCP">
         <On Terms="Effect.MeridianConvergenceCP.Stop" Send="Destroy"/>
     </CActorSound>
+    <CActorSiteOpLocalOffset id="SOpEdificeBuildOffset">
+        <LocalOffset value="0.070000,-0.270000,0.000000"/>
+    </CActorSiteOpLocalOffset>
     <CActorUnit id="Zenith" parent="GenericUnitKeironStructureAir" unitName="Zenith">
         <BarOffset value="140"/>
         <GroupIcon>
@@ -853,6 +856,9 @@
     <CActorModel id="KeironBuildModelLarge" parent="KeironBuildModel">
         <Scale value="1.750000"/>
     </CActorModel>
+    <CActorModel id="KeironBuildModelEdifice" parent="KeironBuildModel">
+        <HostSiteOps Ops="SOpEdificeBuildOffset"/>
+    </CActorModel>
     <CActorModel id="KeironBuildModelSmall" parent="KeironBuildModel">
         <Scale value="0.660000"/>
     </CActorModel>
@@ -1294,6 +1300,7 @@
         <On index="70" Terms="UnitConstruction.Reliquary.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 31.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
     <CActorUnit id="Edifice" parent="GenericUnitKeironStructure" unitName="Edifice">
+        <On index="69" Terms="UnitConstruction.Edifice.Start" Send="Create KeironBuildModelEdifice"/>
         <On index="70" Terms="UnitConstruction.Edifice.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 71.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
 </Catalog>
