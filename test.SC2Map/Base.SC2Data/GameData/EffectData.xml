@@ -66,7 +66,7 @@
         <PeriodicPeriodArray value="0.25"/>
     </CEffectCreatePersistent>
     <CEffectDamage id="HarbingerHeraldEnergyCannonsAOEDMG" parent="CEffectDamageKeironSpell">
-        <Amount value="2.5"/>
+        <Amount value="3"/>
     </CEffectDamage>
     <CEffectEnumArea id="HarbingerHeraldEnergyCannonsSA" parent="CEffectSearchAreaKeiron">
         <ImpactLocation Value="TargetPoint"/>
@@ -756,18 +756,18 @@
         <EffectArray value="ElectronBoltLM"/>
         <EffectArray value="ElectronBoltDMG"/>
     </CEffectSet>
-    <CEffectRemoveBehavior id="ElytraAmmoUse">
+    <CEffectRemoveBehavior id="ElytronAmmoUse">
         <EditorCategories value="Race:Protoss"/>
         <WhichUnit Value="Caster"/>
         <BehaviorLink value="ElytraAmmoDummy"/>
         <Count value="1"/>
     </CEffectRemoveBehavior>
-    <CEffectApplyBehavior id="ElytraAmmoRecharge">
+    <CEffectApplyBehavior id="ElytronAmmoRecharge">
         <EditorCategories value="Race:Protoss"/>
         <Behavior value="ElytraAmmoDummy"/>
         <Count value="4"/>
     </CEffectApplyBehavior>
-    <CEffectModifyUnit id="ElytraRechargeHeal">
+    <CEffectModifyUnit id="ElytronRechargeHeal">
         <EditorCategories value="Race:Protoss"/>
         <VitalArray index="Life">
             <ChangeFraction value="1"/>
@@ -776,13 +776,13 @@
             <ChangeFraction value="1"/>
         </VitalArray>
     </CEffectModifyUnit>
-    <CEffectReturnMagazine id="ElytraReturn">
+    <CEffectReturnMagazine id="ElytronReturn">
         <ValidatorArray value="ElytraHasWeaponChargesRecall"/>
         <EditorCategories value="Race:Protoss"/>
         <WhichUnit Value="Target"/>
-        <MagazineEffect value="ElytraReleaseAM"/>
+        <MagazineEffect value="ElytronReleaseAM"/>
     </CEffectReturnMagazine>
-    <CEffectUseMagazine id="ElytraReleaseAM">
+    <CEffectUseMagazine id="ElytronReleaseAM">
         <EditorCategories value="Race:Protoss"/>
     </CEffectUseMagazine>
     <CEffectCreateUnit id="CreateReverbCU">
@@ -811,16 +811,16 @@
         <SearchFilters value="-;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <AreaArray Radius="5" Effect="DiscordZoneDebuff"/>
     </CEffectEnumArea>
-    <CEffectRemoveBehavior id="ElytraAmmoClear">
+    <CEffectRemoveBehavior id="ElytronAmmoClear">
         <EditorCategories value="Race:Protoss"/>
         <BehaviorLink value="ElytraAmmoDummy"/>
         <Count value="4"/>
     </CEffectRemoveBehavior>
-    <CEffectSet id="ElytraReturnSet">
+    <CEffectSet id="ElytronReturnSet">
         <EditorCategories value="Race:Protoss"/>
         <EffectArray value="ElytraSelectionToggle"/>
-        <EffectArray value="ElytraAmmoClear"/>
-        <EffectArray value="ElytraRechargeHeal"/>
+        <EffectArray value="ElytronAmmoClear"/>
+        <EffectArray value="ElytronRechargeHeal"/>
         <MinCount value="3"/>
         <MaxCount value="3"/>
     </CEffectSet>
@@ -854,13 +854,13 @@
     <CEffectDamage id="ForceBlast" parent="CEffectDamageKeironWeapon">
         <Amount value="14"/>
     </CEffectDamage>
-    <CEffectCreatePersistent id="ElytraRelease">
+    <CEffectCreatePersistent id="ElytronRelease">
         <EditorCategories value="Race:Protoss"/>
         <WhichLocation Value="TargetUnit"/>
         <TimeScaleSource Value="Caster"/>
         <PeriodCount value="3"/>
         <PeriodicValidator value="CasterNotDead"/>
-        <PeriodicEffectArray value="ElytraReleaseAM"/>
+        <PeriodicEffectArray value="ElytronReleaseAM"/>
         <PeriodicPeriodArray value="0.25"/>
     </CEffectCreatePersistent>
     <CEffectCreatePersistent id="GamutOrb" parent="CEffectCreatePersistentKeironUnit">
@@ -1515,8 +1515,8 @@
     <CEffectLaunchMissile id="ShadowCannon" parent="CEffectLaunchMissileKeiron"/>
     <CEffectDamage id="TitanBlastImpact" parent="CEffectDamageKeironWeapon">
         <Amount value="22"/>
-        <AreaArray Radius="0.75" Fraction="1"/>
         <Death value="Fire"/>
+        <AreaArray Radius="0.75" Fraction="1"/>
     </CEffectDamage>
     <CEffectDamage id="ShadowCannonImpact" parent="CEffectDamageKeironWeapon">
         <AttributeBonus index="Armored" value="10"/>
@@ -1526,7 +1526,7 @@
     <CEffectSet id="TitanBlastS">
         <ValidatorArray value="ElytraHasWeaponChargesSelf"/>
         <EffectArray value="TitanBlast"/>
-        <EffectArray value="ElytraAmmoUse"/>
+        <EffectArray value="ElytronAmmoUse"/>
         <MinCount value="2"/>
         <MaxCount value="2"/>
     </CEffectSet>
