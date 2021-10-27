@@ -194,9 +194,19 @@
         <Mover value="HeraldEnergyCannon"/>
         <EditorCategories value="ObjectType:Projectile,ObjectFamily:Melee"/>
     </CUnit>
+    <CUnit id="ParagonAir" parent="MISSILE">
+        <Race value="Keir"/>
+        <Mover value="ParagonAirWeapon"/>
+        <EditorCategories value="ObjectType:Projectile,ObjectFamily:Melee"/>
+    </CUnit>
     <CUnit id="HeraldEnergyCannonsLMWeapon" parent="MISSILE">
         <Race value="Keir"/>
         <Mover value="HeraldEnergyCannon"/>
+        <EditorCategories value="ObjectType:Projectile,ObjectFamily:Melee"/>
+    </CUnit>
+    <CUnit id="ParagonGround" parent="MISSILE">
+        <Race value="Keir"/>
+        <Mover value="ParagonGroundWeapon"/>
         <EditorCategories value="ObjectType:Projectile,ObjectFamily:Melee"/>
     </CUnit>
     <CUnit id="Zenith" parent="DefaultSettingsKeironBuildingFlyer">
@@ -607,31 +617,30 @@
         <EditorCategories value="ObjectType:Structure,ObjectFamily:Melee"/>
     </CUnit>
     <CUnit id="Paragon" parent="CUnitKeironFlyer">
-        <Attributes index="Light" value="1"/>
-        <Attributes index="Biological" value="1"/>
+        <Attributes index="Armored" value="1"/>
         <Attributes index="Mechanical" value="1"/>
-        <LifeStart value="100"/>
-        <LifeMax value="100"/>
+        <Attributes index="Massive" value="1"/>
+        <LifeStart value="300"/>
+        <LifeMax value="300"/>
         <LifeArmor value="1"/>
         <LifeArmorLevel value="1"/>
-        <ShieldsStart value="50"/>
-        <ShieldsMax value="50"/>
+        <ShieldsStart value="200"/>
+        <ShieldsMax value="200"/>
         <Speed value="2.75"/>
         <Acceleration value="4"/>
         <LateralAcceleration value="46"/>
         <Sight value="10"/>
         <VisionHeight value="4"/>
-        <Food value="-2"/>
+        <Food value="-6"/>
         <CostResource index="Minerals" value="125"/>
         <CostResource index="Vespene" value="75"/>
-        <AbilArray index="3" Link="ParagonSpawn"/>
-        <AbilArray Link="ParagonDrop"/>
-        <AbilArray Link="InvertFField"/>
-        <BehaviorArray Link="IsParagon"/>
+        <AbilArray index="3" Link="ProgressRally"/>
+        <AbilArray Link="KeironWarpable"/>
+        <WeaponArray Link="ParagonAirWeapon"/>
+        <WeaponArray Link="ParagonGroundWeapon"/>
+        <EffectArray index="Create" value="ZenithParagonDelay"/>
         <CardLayouts index="0">
-            <LayoutButtons Face="Interceptor" Type="AbilCmd" AbilCmd="ParagonSpawn,Execute" Row="2" Column="0"/>
-            <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="ParagonDrop,Execute" Row="2" Column="1"/>
-            <LayoutButtons Face="ForceField" Type="AbilCmd" AbilCmd="InvertFField,Execute" Row="2" Column="2"/>
+            <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
         </CardLayouts>
         <Radius value="1"/>
         <SeparationRadius value="1"/>
