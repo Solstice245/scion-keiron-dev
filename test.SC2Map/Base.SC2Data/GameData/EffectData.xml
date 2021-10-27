@@ -42,6 +42,72 @@
         <EditorCategories value="Race:Keiron"/>
         <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
     </CEffectEnumArea>
+    <CEffectModifyUnit id="ApertureTeleportLargeMU">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Energy">
+            <Change value="-40"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectSet id="ApertureTeleportMassSet">
+        <EditorCategories value=""/>
+        <EffectArray value="ApertureTeleportTP"/>
+        <EffectArray value="ApertureTeleportMassMU"/>
+        <EffectArray value="ApertureTeleportLoad"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="ApertureTeleportMassMU">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Energy">
+            <Change value="-80"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectSet id="ApertureTeleportLargeSet">
+        <EditorCategories value=""/>
+        <EffectArray value="ApertureTeleportTP"/>
+        <EffectArray value="ApertureTeleportLargeMU"/>
+        <EffectArray value="ApertureTeleportLoad"/>
+    </CEffectSet>
+    <CEffectLoadContainer id="ApertureTeleportLoad">
+        <ValidatorArray value="TargetIsGround"/>
+        <EditorCategories value=""/>
+        <ContainerType value="Transport"/>
+        <ContainerAbil value="ApertureLoadUnload"/>
+    </CEffectLoadContainer>
+    <CEffectModifyUnit id="ApertureTeleportSmallMU">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Energy">
+            <Change value="-10"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="ApertureTeleportMedMU">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Energy">
+            <Change value="-20"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectSet id="ApertureTeleportSmallSet">
+        <EditorCategories value=""/>
+        <EffectArray value="ApertureTeleportTP"/>
+        <EffectArray value="ApertureTeleportSmallMU"/>
+        <EffectArray value="ApertureTeleportLoad"/>
+    </CEffectSet>
+    <CEffectSet id="ApertureTeleportMedSet">
+        <EditorCategories value=""/>
+        <EffectArray value="ApertureTeleportTP"/>
+        <EffectArray value="ApertureTeleportMedMU"/>
+        <EffectArray value="ApertureTeleportLoad"/>
+    </CEffectSet>
+    <CEffectSwitch id="ApertureTeleportSwitch">
+        <ValidatorArray value="KeironCasterEnergyGE10"/>
+        <EditorCategories value=""/>
+        <CaseArray Validator="Aperture1CargoAnd10Energy" Effect="ApertureTeleportSmallSet"/>
+        <CaseArray Validator="Aperture2CargoAnd20Energy" Effect="ApertureTeleportMedSet"/>
+        <CaseArray Validator="Aperture4CargoAnd40Energy" Effect="ApertureTeleportLargeSet"/>
+        <CaseArray Validator="Aperture8CargoAnd80Energy" Effect="ApertureTeleportMassSet"/>
+    </CEffectSwitch>
     <CEffectTeleport id="ApertureTeleportTP">
         <EditorCategories value=""/>
         <PlacementArc value="360"/>
