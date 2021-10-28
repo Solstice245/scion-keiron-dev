@@ -95,10 +95,24 @@
         <?token id="Effect" type="CEffectLink"?>
         <On Terms="Effect.##Effect##.Start" Send="Create"/>
     </CActorSound>
+    <CActorModel id="KeironBuildModelAirEmpyrean" parent="ModelAddition">
+        <Aliases value="_ZergBuildModel"/>
+        <Flags index="RespondsToUnitPlayerChange" value="1"/>
+        <Inherits index="BaseModelScale" value="0"/>
+        <Inherits index="ModelMaterials" value="0"/>
+        <Inherits index="Scale" value="0"/>
+        <On index="0" Terms="UnitConstruction.*.Finish" Send="AnimBracketStop BSD"/>
+        <On index="1" Terms="UnitConstruction.*.Cancel" Send="AnimBracketStop BSD"/>
+        <On index="2" Terms="ActorOrphan" Send="Destroy"/>
+        <On Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand Death 0 0.500000 AsTimeScale"/>
+        <On Terms="AnimBracketState.*.AfterClosing; AnimName BSD" Send="Destroy"/>
+        <HostSiteOps Ops="SOpAttachCenter SOpMoveDownByDot25"/>
+        <Model value="KeironBuildModel"/>
+        <Scale value="0.800000,0.800000,1.250000"/>
+        <ModelFlags index="AutomateGlobalLoops" value="1"/>
+        <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
+    </CActorModel>
     <CActorAction id="ParagonGroundWeaponAttack" parent="GenericAttack" effectImpact="ParagonGroundWeaponDMG" effectLaunch="ParagonGroundWeapon">
-        <On index="1" Terms="Effect.##effectImpact##.Start; FromEffectTreeDescendant" Send="ActionImpact"/>
-        <On index="2" Terms="Effect.##effectImpact##.Stop; FromEffectTreeDescendant" Send="ActionImpactPhysics"/>
-        <On index="6" Terms="Effect.##effectLaunch##.Start; At Caster" Send="Create"/>
         <LaunchAssets Sound="ParagonGroundWeapon_Launch"/>
         <Missile value="ParagonGroundWeaponMissile"/>
         <ImpactMap index="None" Sound="ParagonGroundWeapon_Impact"/>
@@ -321,9 +335,6 @@
         <On Terms="Effect.MeridianConvergenceCP.Stop" Send="Destroy"/>
     </CActorSound>
     <CActorAction id="ParagonAirWeaponAttack" parent="GenericAttack" effectImpact="ParagonAirWeaponDMG" effectLaunch="ParagonAirWeapon">
-        <On index="1" Terms="Effect.##effectImpact##.Start; FromEffectTreeDescendant" Send="ActionImpact"/>
-        <On index="2" Terms="Effect.##effectImpact##.Stop; FromEffectTreeDescendant" Send="ActionImpactPhysics"/>
-        <On index="6" Terms="Effect.##effectLaunch##.Start; At Caster" Send="Create"/>
         <LaunchAssets Sound="ParagonAirWeapon_Launch"/>
         <Missile value="ParagonAirWeaponMissile"/>
         <ImpactMap index="None" Sound="ParagonAirWeapon_Impact"/>
@@ -350,6 +361,7 @@
         <Sound value="ApertureUnload"/>
     </CActorSound>
     <CActorModel id="ApertureLoadModel" parent="ModelAnimationStyleOneShot">
+        <On Terms="Effect.ApertureTeleportTP.Start; At Target" Send="Create"/>
         <On Terms="AbilTransport.ApertureLoadUnload.CargoLoad" Send="Create"/>
         <On Terms="ActorCreation" Send="SetTintColor {255,255,0 1.500000}"/>
         <Host Subject="_Selectable"/>
@@ -364,19 +376,6 @@
     </CActorSound>
     <CActorUnit id="Zenith" parent="GenericUnitKeironStructureAir" unitName="Zenith">
         <BarOffset value="140"/>
-        <GroupIcon>
-            <Image index="0" value="Assets\Textures\wireframe-keiron-Empyrean.dds"/>
-        </GroupIcon>
-        <HeroIcon value="Assets\Textures\btn-building-keiron-Empyrean.dds"/>
-        <UnitIcon value="Assets\Textures\btn-building-keiron-Empyrean.dds"/>
-        <Wireframe>
-            <Image index="0" value="Assets\Textures\wireframe-keiron-Empyrean.dds"/>
-        </Wireframe>
-        <WireframeShield>
-            <Image index="0" value="Assets\Textures\wireframe-keiron-Empyrean-shield1.dds"/>
-            <Image index="1" value="Assets\Textures\wireframe-keiron-Empyrean-shield2.dds"/>
-            <Image index="2" value="Assets\Textures\wireframe-keiron-Empyrean-shield3.dds"/>
-        </WireframeShield>
         <On index="70" Terms="UnitConstruction.Zenith.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 81.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
     <CActorBeamSimple id="KeironConstructionBeam" parent="BeamSimpleAnimationStyleContinuous">
@@ -872,6 +871,7 @@
     </CActorModel>
     <CActorUnit id="Empyrean" parent="GenericUnitKeironStructureAir" unitName="Empyrean">
         <BarOffset value="140"/>
+        <On index="69" Terms="UnitConstruction.Empyrean.Start" Send="Create KeironBuildModelAirEmpyrean"/>
         <On index="70" Terms="UnitConstruction.Empyrean.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 81.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
     <CActorUnit id="Pulsar4DMDummy" parent="GenericUnitEmpty" unitname="Pulsar4DMDummy">
@@ -952,7 +952,6 @@
         <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
     </CActorModel>
     <CActorModel id="KeironBuildModelAir" parent="KeironBuildModel">
-        <On Terms="ActorCreation" Send="SetScale 1.000000,1.000000,1.500000 21.000000"/>
         <HostSiteOps Ops="SOpAttachCenter"/>
     </CActorModel>
     <CActorModel id="KeironBuildModelAirSmall" parent="KeironBuildModel">
