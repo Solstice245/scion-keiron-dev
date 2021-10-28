@@ -97,6 +97,53 @@
         <?token id="Effect" type="CEffectLink"?>
         <On Terms="Effect.##Effect##.Start" Send="Create"/>
     </CActorSound>
+    <CActorModel id="KeironMaterializeModelAirParagon" parent="ModelAddition">
+        <Aliases value="_ZergBuildModel"/>
+        <Flags index="RespondsToUnitPlayerChange" value="1"/>
+        <Inherits index="BaseModelScale" value="0"/>
+        <Inherits index="ModelMaterials" value="0"/>
+        <Inherits index="Scale" value="0"/>
+        <On index="0" Terms="UnitConstruction.*.Finish" Send="AnimBracketStop BSD"/>
+        <On index="1" Terms="UnitConstruction.*.Cancel" Send="AnimBracketStop BSD"/>
+        <On index="2" Terms="ActorOrphan" Send="Destroy"/>
+        <On Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand Death 0 0.500000 AsTimeScale"/>
+        <On Terms="AnimBracketState.*.AfterClosing; AnimName BSD" Send="Destroy"/>
+        <HostSiteOps Ops="SOpAttachCenter"/>
+        <Model value="KeironBuildModel"/>
+        <Scale value="0.875000"/>
+        <ModelFlags index="AutomateGlobalLoops" value="1"/>
+        <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
+    </CActorModel>
+    <CActorLookAt id="ParagonLookAt" parent="UnitTurret">
+        <On Terms="SupporterDestruction.*.UnitDeathModel" Send="Destroy"/>
+        <Type value="ParagonTurret"/>
+        <Aliases value="_ParagonTurretAG"/>
+    </CActorLookAt>
+    <CActorLookAt id="ParagonLookAt00" parent="ParagonLookAt">
+        <Types Id="ParagonTurret">
+            <Start Group="Turret_00" Weight="1" Time="125"/>
+            <Stop Group="Turret_00" Weight="1" Time="125"/>
+        </Types>
+    </CActorLookAt>
+    <CActorLookAt id="ParagonLookAt01" parent="ParagonLookAt">
+        <Aliases value="_ParagonTurretAG"/>
+        <Types Id="ParagonTurret">
+            <Start Group="Turret_01" Weight="1" Time="125"/>
+            <Stop Group="Turret_01" Weight="1" Time="125"/>
+        </Types>
+    </CActorLookAt>
+    <CActorLookAt id="ParagonLookAt02" parent="ParagonLookAt">
+        <Types Id="ParagonTurret">
+            <Start Group="Turret_02" Weight="1" Time="125"/>
+            <Stop Group="Turret_02" Weight="1" Time="125"/>
+        </Types>
+    </CActorLookAt>
+    <CActorLookAt id="ParagonLookAt03" parent="ParagonLookAt">
+        <Types Id="ParagonTurret">
+            <Start Group="Turret_03" Weight="1" Time="125"/>
+            <Stop Group="Turret_03" Weight="1" Time="125"/>
+        </Types>
+    </CActorLookAt>
     <CActorModel id="KeironBuildModelAirEmpyrean" parent="ModelAddition">
         <Aliases value="_ZergBuildModel"/>
         <Flags index="RespondsToUnitPlayerChange" value="1"/>
@@ -118,8 +165,10 @@
         <LaunchAssets Sound="ParagonGroundWeapon_Launch"/>
         <Missile value="ParagonGroundWeaponMissile"/>
         <ImpactMap index="None" Sound="ParagonGroundWeapon_Impact"/>
+        <LaunchAttachQuery Methods="AMPatternParagon"/>
     </CActorAction>
     <CActorMissile id="ParagonAirWeaponMissile" parent="GenericAttackMissile" unitName="ParagonAir">
+        <On Terms="ActorCreation" Send="SetTintColor {255,172,0 2.000000}"/>
         <Model value="ParagonAirWeapon"/>
     </CActorMissile>
     <CActorMissile id="HarbingerAirAttackMissile" parent="GenericAttackMissile" unitName="HeraldEnergyCannonsLMWeapon">
@@ -342,8 +391,17 @@
         <ImpactMap index="None" Sound="ParagonAirWeapon_Impact"/>
     </CActorAction>
     <CActorMissile id="ParagonGroundWeaponMissile" parent="GenericAttackMissile" unitName="ParagonGround">
+        <On Terms="ActorCreation" Send="SetTintColor {172,255,0 2.000000}"/>
         <Model value="ParagonGroundWeapon"/>
     </CActorMissile>
+    <CActorLookAt id="HarbingerLookAt" parent="UnitTurret">
+        <On Terms="SupporterDestruction.*.UnitDeathModel" Send="Destroy"/>
+        <Type value="HarbingerTurret"/>
+        <Types Id="HarbingerTurret">
+            <Start Group="Turret_Right" Weight="1" Rate="180.000000"/>
+            <Stop Group="Turret_Right" Weight="1" Rate="180.000000"/>
+        </Types>
+    </CActorLookAt>
     <CActorSiteOpLocalOffset id="SOpEdificeBuildOffset">
         <LocalOffset value="0.070000,-0.270000,0.000000"/>
     </CActorSiteOpLocalOffset>
@@ -806,6 +864,11 @@
         <BarOffset value="82"/>
         <BarWidth value="108"/>
         <On index="69" Terms="UnitConstruction.Harbinger.Start" Send="Create KeironMaterializeModelAirLarge"/>
+        <On Terms="ActorCreation" Send="Create HarbingerLookAt"/>
+        <On Terms="WeaponStart.AuguryGuns.AttackStart" Target="HarbingerLookAt" Send="LookAtEngage Continue"/>
+        <On Terms="WeaponStart.AuguryGuns.AttackStart" Target="HarbingerLookAt" Send="TimerKill Cover"/>
+        <On Terms="WeaponStop.AuguryGuns.AttackStop" Send="TimerSet 1.000000 Cover"/>
+        <On Terms="TimerExpired; TimerName Cover" Target="HarbingerLookAt" Send="LookAtDisengage"/>
         <On Terms="Behavior.HarbingerJudgementModeStart.On" Send="AnimBracketStart Cover Cover,Start Cover Cover,End"/>
         <On Terms="Behavior.HarbingerJudgementMode.Off" Send="AnimBracketStop Cover"/>
         <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
@@ -891,8 +954,18 @@
         <EditorCategories value=""/>
     </CActorSplat>
     <CActorUnit id="Paragon" parent="GenericUnitKeiron" unitName="Paragon">
+        <On index="69" Terms="UnitConstruction.Paragon.Start" Send="Create KeironMaterializeModelAirParagon"/>
+        <On Terms="ActorCreation" Send="Create ParagonLookAt00"/>
+        <On Terms="ActorCreation" Send="Create ParagonLookAt01"/>
+        <On Terms="ActorCreation" Send="Create ParagonLookAt02"/>
+        <On Terms="ActorCreation" Send="Create ParagonLookAt03"/>
+        <On Terms="WeaponStart.ParagonGroundWeapon.AttackStart" Target="_ParagonTurretAG" Send="LookAtEngage Continue"/>
+        <On Terms="WeaponStart.ParagonGroundWeapon.AttackStart" Target="_ParagonTurretAG" Send="TimerKill Cover"/>
+        <On Terms="WeaponStop.ParagonGroundWeapon.AttackStop" Send="TimerSet 2.000000 Cover"/>
+        <On Terms="TimerExpired; TimerName Cover" Target="_ParagonTurretAG" Send="LookAtDisengage"/>
         <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMassive"/>
-        <BarOffset value="40"/>
+        <BarOffset value="70"/>
+        <BarWidth value="100"/>
     </CActorUnit>
     <CActorModel id="InducerAttackLaunchModel" parent="ModelAnimationStyleOneShot">
         <On Terms="Behavior.InducerGamutOrb.On" Send="Create"/>
