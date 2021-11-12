@@ -1,0 +1,65 @@
+include "TriggerLibs/NativeLib"
+
+include "LibE2D7E647_h"
+
+//--------------------------------------------------------------------------------------------------
+// Library: Init
+//--------------------------------------------------------------------------------------------------
+// External Library Initialization
+void libE2D7E647_InitLibraries () {
+    libNtve_InitVariables();
+}
+
+// Triggers
+//--------------------------------------------------------------------------------------------------
+// Trigger: Init Map
+//--------------------------------------------------------------------------------------------------
+bool libE2D7E647_gt_InitMap_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    playergroup autoEEE494B1_g;
+    int autoEEE494B1_var;
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    autoEEE494B1_g = PlayerGroupAll();
+    autoEEE494B1_var = -1;
+    while (true) {
+        autoEEE494B1_var = PlayerGroupNextPlayer(autoEEE494B1_g, autoEEE494B1_var);
+        if (autoEEE494B1_var < 0) { break; }
+        if ((GameAttributePlayerValue("1", autoEEE494B1_var) == "0001") && (PlayerType(autoEEE494B1_var) != c_playerTypeComputer)) {
+            PlayerSetRace(autoEEE494B1_var, "Keir");
+        }
+
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libE2D7E647_gt_InitMap_Init () {
+    libE2D7E647_gt_InitMap = TriggerCreate("libE2D7E647_gt_InitMap_Func");
+    TriggerAddEventMapInit(libE2D7E647_gt_InitMap);
+}
+
+void libE2D7E647_InitTriggers () {
+    libE2D7E647_gt_InitMap_Init();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Library Initialization
+//--------------------------------------------------------------------------------------------------
+bool libE2D7E647_InitLib_completed = false;
+
+void libE2D7E647_InitLib () {
+    if (libE2D7E647_InitLib_completed) {
+        return;
+    }
+
+    libE2D7E647_InitLib_completed = true;
+
+    libE2D7E647_InitLibraries();
+    libE2D7E647_InitTriggers();
+}
+

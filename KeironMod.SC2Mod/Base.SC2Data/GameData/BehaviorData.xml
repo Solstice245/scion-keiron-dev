@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CBehaviorBuff id="AegisShield">
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <Duration value="0.3125"/>
+        <Modification>
+            <StateFlags index="Invulnerable" value="1"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="AegisShieldAura">
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <Period value="0.25"/>
+        <PeriodicEffect value="ShieldAura"/>
+        <Modification>
+            <StateFlags index="Invulnerable" value="1"/>
+        </Modification>
+        <DisableValidatorArray value="ShieldGZero"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="AegisShieldDummyInitRadiusDisable">
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <Duration value="0.5"/>
+        <Modification RadiusMultiplier="0.5">
+            <BehaviorLinkDisableArray value="AegisShieldDummyRadius"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="AegisShieldDummyRadius">
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="ShieldGZero"/>
+        <Modification RadiusMultiplier="4"/>
+    </CBehaviorBuff>
+    <CBehaviorConjoined id="AegisShieldDummyConjoin">
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <ConjoinedFlags index="ShareShields" value="1"/>
+        <ConjoinedFlags index="ShareEnergy" value="1"/>
+        <ConjoinedFlags index="ShareVisible" value="1"/>
+    </CBehaviorConjoined>
+    <CBehaviorBuff id="AegisShieldDummyFollow">
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <Period value="0.0625"/>
+        <PeriodicEffect value="ShieldDummyFollowSet"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="ApertureRequirementDummy">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="KeironCasterEnergyGE10"/>
+        <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="Beholder">
+        <InfoIcon value="Assets\Textures\btn-ability-zeratul-hero-propheticvision.dds"/>
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <Duration value="21"/>
+        <Modification SightBonus="3" Detect="10"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="CitadelEnergize">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisplayDuration index="Ally" value="1"/>
+        <Duration value="16.8"/>
+        <Period value="0.0625"/>
+        <PeriodicEffect value="CitadelEnergizedSearch"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="ConduitEchoBase">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisableValidatorArray value="NotUnderConstruction"/>
+        <DisableValidatorArray value="UnitChargeLT3"/>
+        <BuffFlags index="Countdown" value="0"/>
+        <Duration value="30"/>
+        <ExpireEffect value="AstralConduitEchoSet"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="CarryHarvestableRichVespeneGeyserGasKeiron">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Terran,AbilityorEffectType:Units"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="CarryHarvestableVespeneGeyserGasKeiron">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="CelestialOutletAurApeBase">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisableValidatorArray value="NotUnderConstruction"/>
+        <DisableValidatorArray value="UnitChargeLT2"/>
+        <BuffFlags index="Countdown" value="0"/>
+        <Duration value="50"/>
+        <ExpireEffect value="CelestialOutletAurApeSet"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="EmpyreanHarParBase">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisableValidatorArray value="NotUnderConstruction"/>
+        <DisableValidatorArray value="UnitChargeLT2"/>
+        <BuffFlags index="Countdown" value="0"/>
+        <Duration value="60"/>
+        <ExpireEffect value="EmpyreanHarParSet"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="CitadelEnergized">
+        <Tooltip value="Button/Tooltip/CitadelEnergize"/>
+        <InfoIcon value="Assets\Textures\btn-ability-protoss-energize.dds"/>
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <Duration value="2.8"/>
+        <Modification MoveSpeedMultiplier="1.25" AccelerationMultiplier="1.75" ShieldArmorBonus="3">
+            <ResourceHarvestTimeMultiplier index="Minerals" value="-0.5"/>
+            <VitalRegenMultiplier index="Life" value="4"/>
+            <VitalRegenMultiplier index="Shields" value="4"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="KeironConstructionFreeze">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="IsConstructing"/>
+        <Modification>
+            <ModifyFlags index="DisableWeapons" value="1"/>
+            <TurretDisableArray value="NullifierMovement"/>
+            <TurretDisableArray value="StratusMovement"/>
+            <TurretDisableArray value="TitanMovement"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="DisableTurning">
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <Modification>
+            <ModifyFlags index="SuppressTurning" value="1"/>
+        </Modification>
+        <Period value="0.1875"/>
+        <PeriodicEffect value="Pulsar4DMCU"/>
+        <TimeScaleSource Value="Unknown"/>
+        <Duration value="1"/>
+        <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="Disconnected">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <Duration value="10"/>
+        <FinalEffect value="Suicide"/>
+        <Modification>
+            <ModifyFlags index="SuppressMoving" value="1"/>
+            <BehaviorLinkDisableArray value="ParagonSpawnFollow"/>
+            <BehaviorLinkDisableArray value="ParagonHasSpawn"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="DiscordZoneDebuff">
+        <BehaviorCategories index="Slow" value="1"/>
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <Duration value="0.3"/>
+        <Modification MoveSpeedMultiplier="0.75"/>
+        <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="DiscordZoneRadius">
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <Period value="0.2"/>
+        <PeriodicEffect value="DiscordZoneSA"/>
+        <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="EchoReverbFate">
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="EchoReverbFate"/>
+        <FinalEffect value="ReverbFateBounds"/>
+        <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="EchoReverbCasterController">
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <FinalEffect value="ReverbFateSet"/>
+        <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="AtriumIndMyrBase">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisableValidatorArray value="NotUnderConstruction"/>
+        <DisableValidatorArray value="UnitChargeLT2"/>
+        <BuffFlags index="Countdown" value="0"/>
+        <Duration value="60"/>
+        <ExpireEffect value="AtriumIndMyrSet"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="HarbingerHeraldEnergyCannonsAOE">
+        <Alignment value="Negative"/>
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <TimeScaleSource Value="Global"/>
+        <Duration value="0.35"/>
+        <Period value="0.25"/>
+        <InitialEffect value="HarbingerHeraldEnergyCannonsAOEDMG"/>
+        <PeriodicEffect value="HarbingerHeraldEnergyCannonsAOEDMG"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="HarbingerJudgementMode">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <FinalEffect value="HarbingerJudgementModeStop"/>
+        <Modification MoveSpeedMultiplier="0.4">
+            <WeaponDisableArray value="AuguryGuns"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="HarbingerJudgementModeStart">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <Duration value="2"/>
+        <Period value="2"/>
+        <FinalEffect value="HarbingerJudgementMode"/>
+        <Modification MoveSpeedMultiplier="0.4">
+            <WeaponArray Link="HarbingerDummyWeapon"/>
+            <WeaponDisableArray value="AuguryGuns"/>
+            <WeaponDisableArray value="HeraldEnergyCannons"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="HarbingerJudgementModeStop">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <Duration value="2"/>
+        <Period value="2"/>
+        <Modification MoveSpeedMultiplier="0.4">
+            <WeaponArray Link="HarbingerDummyWeapon"/>
+            <WeaponDisableArray value="AuguryGuns"/>
+            <WeaponDisableArray value="HeraldEnergyCannons"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="ZenithParagonBase">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisableValidatorArray value="NotUnderConstruction"/>
+        <DisableValidatorArray value="UnitChargeLT1"/>
+        <BuffFlags index="Countdown" value="0"/>
+        <Duration value="75"/>
+        <ExpireEffect value="ZenithParagonSet"/>
+    </CBehaviorBuff>
+    <CBehaviorResource id="HarvestableRichVespeneGeyserGasKeiron">
+        <InfoFlags index="Hidden" value="1"/>
+        <InfoIcon value="Assets\Textures\icon-gas.dds"/>
+        <EditorCategories value="Race:Terran,AbilityorEffectType:Units"/>
+        <Capacity value="32000"/>
+        <HarvestTime value="1.981"/>
+        <HarvestAmount value="4"/>
+        <Flags index="HideHarvesters" value="1"/>
+        <RequiredAlliance value="Control"/>
+        <ExhaustedAlert value="ResourceExhausted_Vespene"/>
+        <IdealHarvesterCount value="3"/>
+    </CBehaviorResource>
+    <CBehaviorResource id="HarvestableVespeneGeyserGasKeiron">
+        <InfoFlags index="Hidden" value="1"/>
+        <InfoIcon value="Assets\Textures\icon-gas.dds"/>
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <Capacity value="2500"/>
+        <HarvestTime value="1.981"/>
+        <HarvestAmount value="4"/>
+        <Flags index="HideHarvesters" value="1"/>
+        <RequiredAlliance value="Control"/>
+        <ExhaustedAlert value="ResourceExhausted_Vespene"/>
+        <IdealHarvesterCount value="3"/>
+    </CBehaviorResource>
+    <CBehaviorBuff id="KeironConstructionModifier">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="IsConstructing"/>
+        <Modification SightMaximum="0.0625">
+            <VitalMaxArray index="Shields" value="-500000"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="PantheonTitanBase">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisableValidatorArray value="NotUnderConstruction"/>
+        <DisableValidatorArray value="UnitChargeLT1"/>
+        <BuffFlags index="Countdown" value="0"/>
+        <Duration value="70"/>
+        <ExpireEffect value="PantheonTitanSet"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="FoundryUmbraBase">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisableValidatorArray value="NotUnderConstruction"/>
+        <DisableValidatorArray value="UnitChargeLT2"/>
+        <BuffFlags index="Countdown" value="0"/>
+        <Duration value="40"/>
+        <ExpireEffect value="FoundryUmbraSet"/>
+    </CBehaviorBuff>
+    <CBehaviorPowerSource id="CitadelPowerSource">
+        <InfoFlags index="Hidden" value="1"/>
+        <InfoIcon value="Assets\Textures\btn-building-protoss-pylon.dds"/>
+        <EditorCategories value="AbilityorEffectType:Structures"/>
+        <Radius value="10"/>
+        <PowerLink value="PowerSource"/>
+        <CliffLevelFlags index="Higher" value="0"/>
+    </CBehaviorPowerSource>
+    <CBehaviorBuff id="SanctumPulSubBase">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisableValidatorArray value="NotUnderConstruction"/>
+        <DisableValidatorArray value="UnitChargeLT2"/>
+        <BuffFlags index="Countdown" value="0"/>
+        <Duration value="35"/>
+        <ExpireEffect value="SanctumPulSubSet"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="ElytraAmmoDummy">
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <MaxStackCount value="5"/>
+        <FinalEffect value="ElytronReturn"/>
+        <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="EmanatorFate">
+        <InfoFlags index="Hidden" value="1"/>
+        <BehaviorCategories index="Cloak" value="1"/>
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisplayDuration index="Ally" value="1"/>
+        <Duration value="252"/>
+        <ExpireEffect value="Suicide"/>
+        <Modification>
+            <StateFlags index="Cloak" value="1"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="EmanatorFateDelay">
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisplayDuration index="Ally" value="1"/>
+        <DisplayDuration index="Enemy" value="1"/>
+        <BuffFlags index="Countdown" value="0"/>
+        <Duration value="5.6"/>
+        <ExpireEffect value="EmanatorFate"/>
+        <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="InducerGamutOrb">
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="InvertFField">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="InvertFFieldDistanceMinimum"/>
+        <RemoveValidatorArray value="InvertFFieldDistanceMaximum"/>
+        <RemoveValidatorArray value="CasterHasChannel"/>
+        <MaxStackCount value="0"/>
+        <Duration value="12.5"/>
+        <Period value="0.0625"/>
+        <InitialEffect value="InvertFFieldForce"/>
+        <PeriodicEffect value="InvertFFieldForce"/>
+        <Modification MoveSpeedMaximum="1"/>
+        <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="InvertFField2">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="InvertFFieldDistanceMinimum2"/>
+        <RemoveValidatorArray value="InvertFFieldDistanceMaximum"/>
+        <RemoveValidatorArray value="CasterHasChannel"/>
+        <MaxStackCount value="0"/>
+        <Duration value="12.5"/>
+        <Period value="0.0625"/>
+        <InitialEffect value="InvertFFieldForce"/>
+        <PeriodicEffect value="InvertFFieldForce"/>
+        <Modification MoveSpeedMaximum="0.3007"/>
+        <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="InvertFFieldChannel">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <Duration value="12.5"/>
+        <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="IsParagon">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="EdificeParVolBase">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisableValidatorArray value="NotUnderConstruction"/>
+        <DisableValidatorArray value="UnitChargeLT3"/>
+        <BuffFlags index="Countdown" value="0"/>
+        <Duration value="21"/>
+        <ExpireEffect value="EdificeParVolSet"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="KeironUnitCharge">
+        <BehaviorFlags index="Permanent" value="1"/>
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <MaxStackCount value="0"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="ManualWeaponBackswing">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <Modification MoveSpeedMaximum="0.004">
+            <ModifyFlags index="SuppressTurning" value="1"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="NoCreate">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <Duration value="0.125"/>
+        <Modification>
+            <BehaviorLinkDisableArray value="IsParagon"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="ParadoxShieldBoost">
+        <InfoIcon value="Assets\Textures\btn-ability-zeratul-warpprism-shieldboosters.dds"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <Duration value="20"/>
+        <RefreshEffect value="ParadoxShieldMU"/>
+        <Modification ShieldArmorBonus="1">
+            <VitalMaxArray index="Shields" value="100"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="ParagonHasSpawn">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <FinalEffect value="ParagonFindSpawnUnitIterate"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="ParagonSpawnCount">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <MaxStackCount value="0"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="ParagonSpawnFollow">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="ParagonHasFollowOrIsParagon"/>
+        <RemoveValidatorArray value="ParagonSpawnDisconnectRange"/>
+        <Period value="0.125"/>
+        <PeriodicEffect value="ParagonSpawnFollowOrder"/>
+        <FinalEffect value="ParagonSpawnDisconnectedSet"/>
+        <InitialEffect value="ParagonSpawnFollowSet"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="PariahProjectionFate">
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="CasterIsAttacking"/>
+        <Duration value="1"/>
+        <FinalEffect value="ProjectionIME"/>
+        <Modification MoveSpeedMultiplier="3"/>
+        <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="EchoReverbTeleportController">
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <Duration value="0.15"/>
+        <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
+    <CBehaviorPowerUser id="KeironMaterializing">
+        <Alignment value="Positive"/>
+        <InfoIcon value="Assets\Textures\btn-building-protoss-pylon.dds"/>
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <PowerLink value="PowerSource"/>
+        <PlacementMinPowerLevel value="1"/>
+        <Flags index="KillIfUnpowered" value="1"/>
+        <PoweredWhileUnderConstruction value="1"/>
+        <PowerStageArray/>
+    </CBehaviorPowerUser>
+    <CBehaviorBuff id="ElysiumMeridianBase">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisableValidatorArray value="NotUnderConstruction"/>
+        <DisableValidatorArray value="UnitChargeLT1"/>
+        <BuffFlags index="Countdown" value="0"/>
+        <Duration value="50"/>
+        <ExpireEffect value="ElysiumMeridianSet"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="TitanWeapon">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <Modification MoveSpeedMultiplier="0.2" AttackSpeedMultiplier="0.4"/>
+        <TimeScaleSource Value="Global"/>
+        <Duration value="1"/>
+        <Tooltip value="Button/Tooltip/InhibitorBeam"/>
+        <InfoIcon value="Assets\Textures\btn-ability-zeratul-topbar-stasisbeam.dds"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="UmbraDamageReduction">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units,Race:Protoss"/>
+        <DisableValidatorArray value="CasterIsMoving"/>
+        <DamageResponse ModifyFraction="0.75">
+            <Kind index="Spell" value="0"/>
+            <Chance value="1"/>
+        </DamageResponse>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="UmbraShieldVisualControl">
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="CasterShieldsGE20"/>
+        <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="UmbraStealth">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="CasterHasDealtNoDamage"/>
+        <Modification>
+            <StateFlags index="Cloak" value="1"/>
+            <DamageDealtFraction index="Ranged" value="0.5"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="WalkAnimBack">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <Duration value="0.25"/>
+        <TimeScaleSource Value="Unknown"/>
+        <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="WalkAnimLeft">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <Duration value="0.25"/>
+        <TimeScaleSource Value="Unknown"/>
+        <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="WalkAnimRight">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <Duration value="0.25"/>
+        <TimeScaleSource Value="Unknown"/>
+        <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="WalkAnimForward">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <Duration value="0.25"/>
+        <TimeScaleSource Value="Unknown"/>
+        <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
+</Catalog>
