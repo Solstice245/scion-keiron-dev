@@ -24,6 +24,85 @@
         <CombineArray value="KeironCasterEnergyGE80"/>
         <CombineArray value="IsCargoSize8OrHugeKeironAir"/>
     </CValidatorCombine>
+    <CValidatorUnitOrderQueue id="ConverterBuildingZenith">
+        <WhichUnit Value="Target"/>
+        <AbilLink value="KeironBuild"/>
+        <AbilCmdIndex value="15"/>
+    </CValidatorUnitOrderQueue>
+    <CValidatorUnitOrderQueue id="ConverterBuildingOutlet">
+        <WhichUnit Value="Target"/>
+        <AbilLink value="KeironBuild"/>
+        <AbilCmdIndex value="13"/>
+    </CValidatorUnitOrderQueue>
+    <CValidatorUnitOrderQueue id="ConverterBuildingEmpyrean">
+        <WhichUnit Value="Target"/>
+        <AbilLink value="KeironBuild"/>
+        <AbilCmdIndex value="14"/>
+    </CValidatorUnitOrderQueue>
+    <CValidatorUnitOrderQueue id="ConverterBuildingPantheon">
+        <WhichUnit Value="Target"/>
+        <AbilLink value="KeironBuild"/>
+        <AbilCmdIndex value="11"/>
+    </CValidatorUnitOrderQueue>
+    <CValidatorUnitOrderQueue id="ConverterBuildingCitadel">
+        <WhichUnit Value="Target"/>
+        <AbilLink value="KeironBuild"/>
+    </CValidatorUnitOrderQueue>
+    <CValidatorUnitOrderQueue id="ConverterBuildingFoundry">
+        <WhichUnit Value="Target"/>
+        <AbilLink value="KeironBuild"/>
+        <AbilCmdIndex value="9"/>
+    </CValidatorUnitOrderQueue>
+    <CValidatorUnitOrderQueue id="ConverterBuildingAtrium">
+        <WhichUnit Value="Target"/>
+        <AbilLink value="KeironBuild"/>
+        <AbilCmdIndex value="10"/>
+    </CValidatorUnitOrderQueue>
+    <CValidatorUnitOrderQueue id="ConverterBuildingConduit">
+        <WhichUnit Value="Target"/>
+        <AbilLink value="KeironBuild"/>
+        <AbilCmdIndex value="12"/>
+    </CValidatorUnitOrderQueue>
+    <CValidatorUnitOrderQueue id="ConverterBuildingSanctum">
+        <WhichUnit Value="Target"/>
+        <AbilLink value="KeironBuild"/>
+        <AbilCmdIndex value="7"/>
+    </CValidatorUnitOrderQueue>
+    <CValidatorUnitOrderQueue id="ConverterBuildingFormulator">
+        <WhichUnit Value="Target"/>
+        <AbilLink value="KeironBuild"/>
+        <AbilCmdIndex value="1"/>
+    </CValidatorUnitOrderQueue>
+    <CValidatorUnitOrderQueue id="ConverterBuildingEdifice">
+        <WhichUnit Value="Target"/>
+        <AbilLink value="KeironBuild"/>
+        <AbilCmdIndex value="6"/>
+    </CValidatorUnitOrderQueue>
+    <CValidatorUnitOrderQueue id="ConverterBuildingElysium">
+        <WhichUnit Value="Target"/>
+        <AbilLink value="KeironBuild"/>
+        <AbilCmdIndex value="8"/>
+    </CValidatorUnitOrderQueue>
+    <CValidatorUnitOrderQueue id="ConverterBuildingStratus">
+        <WhichUnit Value="Target"/>
+        <AbilLink value="KeironBuild"/>
+        <AbilCmdIndex value="4"/>
+    </CValidatorUnitOrderQueue>
+    <CValidatorUnitOrderQueue id="ConverterBuildingReliquary">
+        <WhichUnit Value="Target"/>
+        <AbilLink value="KeironBuild"/>
+        <AbilCmdIndex value="2"/>
+    </CValidatorUnitOrderQueue>
+    <CValidatorUnitOrderQueue id="ConverterBuildingNullifier">
+        <WhichUnit Value="Target"/>
+        <AbilLink value="KeironBuild"/>
+        <AbilCmdIndex value="3"/>
+    </CValidatorUnitOrderQueue>
+    <CValidatorUnitOrderQueue id="ConverterBuildingOculus">
+        <WhichUnit Value="Target"/>
+        <AbilLink value="KeironBuild"/>
+        <AbilCmdIndex value="5"/>
+    </CValidatorUnitOrderQueue>
     <CValidatorUnitCompareField id="DisguiseAsVolt">
         <Field value="Race"/>
         <Value value="Keir"/>
@@ -39,6 +118,27 @@
     <CValidatorUnitType id="IsZenith">
         <Value value="Zenith"/>
     </CValidatorUnitType>
+    <CValidatorCombine id="KeironBuildingCombine">
+        <CombineArray value="ConverterBuildingCitadel"/>
+        <CombineArray value="ConverterBuildingFormulator"/>
+        <CombineArray value="ConverterBuildingReliquary"/>
+        <CombineArray value="ConverterBuildingNullifier"/>
+        <CombineArray value="ConverterBuildingStratus"/>
+        <CombineArray value="ConverterBuildingOculus"/>
+        <CombineArray value="ConverterBuildingEdifice"/>
+        <CombineArray value="ConverterBuildingSanctum"/>
+        <CombineArray value="ConverterBuildingElysium"/>
+        <CombineArray value="ConverterBuildingFoundry"/>
+        <CombineArray value="ConverterBuildingAtrium"/>
+        <CombineArray value="ConverterBuildingPantheon"/>
+        <CombineArray value="ConverterBuildingConduit"/>
+        <CombineArray value="ConverterBuildingOutlet"/>
+        <CombineArray value="ConverterBuildingEmpyrean"/>
+        <CombineArray value="ConverterBuildingZenith"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="KeironBuildingCombineNot" parent="KeironBuildingCombine">
+        <Negate value="1"/>
+    </CValidatorCombine>
     <CValidatorUnitCompareVital id="KeironCasterEnergyGE10" parent="CasterLifePercent">
         <ResultFailed value="Error,error/text/notenoughenergy"/>
         <Compare value="GE"/>
@@ -170,6 +270,22 @@
         <Value value="Keir"/>
     </CValidatorPlayerCompareRace>
     <CValidatorLocationVision id="TargetLocationVisible"/>
+    <CValidatorCombine id="TerranBuildingCombineNot">
+        <CombineArray value="SCVBuildingCommandCenter"/>
+        <CombineArray value="SCVBuildingRefinery"/>
+        <CombineArray value="SCVBuildingSupplyDepot"/>
+        <CombineArray value="SCVBuildingBarracks"/>
+        <CombineArray value="SCVBuildingEngineeringBay"/>
+        <CombineArray value="SCVBuildingBunker"/>
+        <CombineArray value="SCVBuildingMissileTurret"/>
+        <CombineArray value="SCVBuildingSensorTower"/>
+        <CombineArray value="SCVBuildingGhostAcademy"/>
+        <CombineArray value="SCVBuildingFactory"/>
+        <CombineArray value="SCVBuildingArmory"/>
+        <CombineArray value="SCVBuildingStarport"/>
+        <CombineArray value="SCVBuildingFusionCore"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
     <CValidatorUnitCompareBehaviorCount id="UnitChargeLT1">
         <WhichUnit Value="Caster"/>
         <Compare value="LT"/>
