@@ -56,7 +56,7 @@
         <Collide index="ForceField" value="0"/>
         <Collide index="Flying" value="1"/>
         <Mover value="Fly"/>
-        <Height value="3.75"/>
+        <Height value="4"/>
         <VisionHeight value="4"/>
         <Footprint value="Footprint4x4AirContour"/>
         <PlacementFootprint value="Footprint4x4Air"/>
@@ -235,6 +235,11 @@
         <ScoreLost value="150"/>
         <MinimapRadius value="0.75"/>
         <GlossaryPriority value="53"/>
+    </CUnit>
+    <CUnit id="EmissaryOrb" parent="MISSILE_INVULNERABLE">
+        <Race value="Keir"/>
+        <Mover value="ParagonEmissaryOrb"/>
+        <EditorCategories value="ObjectType:Projectile,ObjectFamily:Melee"/>
     </CUnit>
     <CUnit id="ParagonAir" parent="MISSILE">
         <Race value="Keir"/>
@@ -568,10 +573,10 @@
         <ScoreKill value="400"/>
     </CUnit>
     <CUnit id="Stratus" parent="DefaultSettingsKeironBuildingFlyer">
-        <LifeStart value="200"/>
-        <LifeMax value="200"/>
-        <ShieldsStart value="100"/>
-        <ShieldsMax value="100"/>
+        <LifeStart value="250"/>
+        <LifeMax value="250"/>
+        <ShieldsStart value="125"/>
+        <ShieldsMax value="125"/>
         <Food value="0"/>
         <CostResource index="Minerals" value="150"/>
         <AbilArray index="1" Link="attack"/>
@@ -741,11 +746,13 @@
         <CostResource index="Vespene" value="350"/>
         <AbilArray index="3" Link="ProgressRally"/>
         <AbilArray Link="KeironWarpable"/>
+        <AbilArray Link="EmissaryOrb"/>
         <WeaponArray Link="ParagonAirWeapon" Turret="Phoenix"/>
         <WeaponArray Link="ParagonGroundWeapon"/>
         <EffectArray index="Create" value="ZenithParagonDelay"/>
         <CardLayouts index="0">
             <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
+            <LayoutButtons Face="EmissaryOrb" Type="AbilCmd" AbilCmd="EmissaryOrb,Execute" Row="2" Column="0"/>
         </CardLayouts>
         <Radius value="1.25"/>
         <SeparationRadius value="1.25"/>
@@ -754,6 +761,9 @@
         <BehaviorArray Link="KeironConstructionFreeze"/>
         <SubgroupPriority value="19"/>
         <LifeArmorName value="Unit/LifeArmorName/KeironMechanicalArmor"/>
+        <EnergyStart value="50"/>
+        <EnergyMax value="200"/>
+        <EnergyRegenRate value="0.5625"/>
     </CUnit>
     <CUnit id="ElectronBoltWeapon" parent="MISSILE">
         <Race value="Keir"/>
@@ -778,7 +788,7 @@
             <LayoutButtons index="0" Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
             <LayoutButtons Face="SelectBuilderKeiron" Type="SelectBuilder" Row="1" Column="3"/>
-            <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="RallyCitadel,Rally1" Row="1" Column="4"/>
+            <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="RallyCommand,Rally1" Row="1" Column="4"/>
             <LayoutButtons Face="Converter" Type="AbilCmd" AbilCmd="KeironCitadelTrain,Train1" Row="0" Column="0"/>
             <LayoutButtons>
                 <Face value="MaterializeAirUnits"/>
@@ -824,7 +834,7 @@
         <ResourceDropOff index="Minerals" value="1"/>
         <ResourceDropOff index="Vespene" value="1"/>
         <MinimapRadius value="2.5"/>
-        <AbilArray index="2" Link="RallyCitadel"/>
+        <AbilArray index="2" Link="RallyCommand"/>
         <AbilArray index="3" Link="KeironCitadelTrain"/>
         <AbilArray Link="KeironCitadelMaterialize"/>
         <AbilArray Link="CitadelEnergize"/>

@@ -214,6 +214,42 @@
         <HoldTime value="-1.000000"/>
         <Layer value="PowerLayer"/>
     </CActorSplat>
+    <CActorModel id="ParagonEmissaryOrbChargeModel" parent="ModelAnimationStyleContinuousUNIT">
+        <On Terms="Abil.EmissaryOrb.SourceCastStart" Send="Create"/>
+        <On Terms="Abil.EmissaryOrb.SourceCastStop" Send="AnimBracketStop BSD"/>
+        <HostSiteOps Ops="SOpAttachWeapon"/>
+    </CActorModel>
+    <CActorModel id="ParagonEmissaryOrbImpactModel" parent="ModelAnimationStyleOneShot">
+        <On Terms="Effect.EmissaryOrbDMG.Start" Send="Create"/>
+    </CActorModel>
+    <!--                                                                                         -->
+    <!-- Resources                                                                               -->
+    <!--                                                                                         -->
+    <CActorSound id="ParagonEmissaryOrbChargeSound" parent="SoundOneShot">
+        <On Terms="Abil.EmissaryOrb.SourceCastStart" Send="Create"/>
+        <On Terms="Abil.EmissaryOrb.SourceCastStop" Send="Destroy"/>
+    </CActorSound>
+    <CActorSound id="ParagonEmissaryOrbLaunchSound" parent="SoundOneShot">
+        <On Terms="Effect.EmissaryOrb.Start; At Caster" Send="Create"/>
+    </CActorSound>
+    <CActorSound id="ParagonEmissaryOrbImpactSound" parent="SoundOneShot">
+        <On Terms="Effect.EmissaryOrbDMG.Start; At Target" Send="Create"/>
+    </CActorSound>
+    <CActorRange id="ParagonEmissaryOrbRange" parent="RangeAbil" abil="EmissaryOrb">
+        <Icon value="Assets\Textures\RadarIcon2.dds"/>
+        <IconArcLength value="3.250000"/>
+    </CActorRange>
+    <CActorAction id="ParagonEmissaryOrbAttack" parent="GenericAttack" effectImpact="EmissaryOrbDMG" effectLaunch="EmissaryOrb">
+        <Missile value="ParagonEmissaryOrbWeapon"/>
+        <ImpactSiteOps Ops="SOpTargetPoint SOp2DRotation"/>
+        <ImpactAttachQuery Methods="Origin"/>
+        <ShieldFlashType value="Full"/>
+    </CActorAction>
+    <CActorMissile id="ParagonEmissaryOrbWeapon" parent="GenericAttackMissile" unitName="EmissaryOrb">
+        <On Terms="UnitBirth" Send="AnimSetTimeScaleAbsolute Lifetime 1.000000"/>
+        <Model value="ParagonEmissaryOrbWeapon"/>
+        <ModelFlags index="AutomateGlobalLoops" value="1"/>
+    </CActorMissile>
     <CActorUnit id="LabMineralField">
         <On Terms="Abil.ConverterGather.Start" Send="StatusIncrement Harvest"/>
         <On Terms="Abil.ConverterGather.Stop" Send="StatusDecrement Harvest"/>
@@ -457,6 +493,7 @@
     <CActorModel id="HarbingerHeraldEnergyCannonsAOE" parent="ModelAnimationStyleContinuous">
         <On Terms="Effect.HarbingerHeraldEnergyCannonsAOECP.Start" Send="Create"/>
         <On Terms="Effect.HarbingerHeraldEnergyCannonsAOECP.Stop; FromEffectTreeDescendant" Send="Destroy"/>
+        <On Terms="ActorCreation" Send="SetOpacity 0.750000"/>
     </CActorModel>
     <CActorModel id="KeironMaterializeModelAirLarge" parent="ModelAddition">
         <Aliases value="_ZergBuildModel"/>
@@ -662,6 +699,13 @@
         <Filter index="Enemy" value="1"/>
         <Range value="7.500000"/>
     </CActorRange>
+    <CActorSimple id="ParagonEmissaryOrbTint">
+        <Aliases value="_AngryTinter"/>
+        <On Terms="Behavior.EmissaryOrbTint.On" Send="Create"/>
+        <On Terms="ActorCreation" Target="_Unit" Send="SetTintColor 255,50,50 0.500000 OneShot EmissaryOrbTint"/>
+        <On Terms="Behavior.EmissaryOrbTint.Off" Target="_Unit" Send="ClearTintColor 0.500000 EmissaryOrbTint"/>
+        <On Terms="Behavior.EmissaryOrbTint.Off" Send="Destroy"/>
+    </CActorSimple>
     <CActorSound id="TitanAttack_Start" parent="SoundOneShotKeiron" Effect="TitanWeaponCP">
         <On Terms="Effect.TitanWeaponCP.Stop" Send="Destroy"/>
     </CActorSound>

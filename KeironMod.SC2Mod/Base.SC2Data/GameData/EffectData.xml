@@ -144,6 +144,28 @@
     <CEffectIssueOrder id="DisguiseAsVoltIssueOrder" parent="DisguiseIssueOrderDefault">
         <Abil value="DisguiseAsVolt"/>
     </CEffectIssueOrder>
+    <CEffectLaunchMissile id="EmissaryOrb" parent="CEffectLaunchMissileKeiron">
+        <LaunchEffect value="EmissaryOrbFate"/>
+        <PeriodicEffect value="EmissaryOrbAB"/>
+        <AmmoUnit value="EmissaryOrb"/>
+    </CEffectLaunchMissile>
+    <CEffectApplyBehavior id="EmissaryOrbAB" parent="CEffectApplyBehaviorKeironTarget">
+        <EditorCategories value="Race:Protoss"/>
+        <WhichUnit Effect="EmissaryOrb"/>
+        <Behavior value="EmissaryOrbTint"/>
+    </CEffectApplyBehavior>
+    <CEffectDamage id="EmissaryOrbDMG" parent="CEffectDamageKeironSpell">
+        <Amount value="160"/>
+        <AreaArray Fraction="1"/>
+        <AreaArray Radius="0.25" Fraction="0.75"/>
+        <AreaArray Radius="1" Fraction="0.5"/>
+        <AreaArray Radius="1.5" Fraction="0.25"/>
+        <SearchFilters value="-;Missile,Stasis,Dead,Hidden,Invulnerable"/>
+    </CEffectDamage>
+    <CEffectApplyBehavior id="EmissaryOrbFate">
+        <EditorCategories value="Race:Protoss"/>
+        <WhichUnit Value="Source"/>
+    </CEffectApplyBehavior>
     <CEffectRemoveBehavior id="HarbingerExitJudgementMode">
         <EditorCategories value=""/>
         <BehaviorLink value="HarbingerJudgementMode"/>
@@ -1006,6 +1028,7 @@
         <AmmoUnit value="InducerAttackMissile"/>
         <LaunchEffect value="InducerGamutOrb"/>
         <PeriodicEffect value="GamutOrbRedirect"/>
+        <ImpactRange value="0.25"/>
     </CEffectLaunchMissile>
     <CEffectApplyBehavior id="GamutOrbRMImpact" parent="CEffectApplyBehaviorKeironCaster">
         <Behavior value="InducerGamutOrb"/>
@@ -1536,7 +1559,7 @@
     </CEffectCreatePersistent>
     <CEffectDamage id="StratusWeaponDMG" parent="CEffectDamageKeironWeaponVisible">
         <EditorCategories value=""/>
-        <Amount value="10"/>
+        <Amount value="12"/>
     </CEffectDamage>
     <CEffectCreatePersistent id="StratusWeaponDummy">
         <WhichLocation Value="TargetUnitOrPoint"/>
