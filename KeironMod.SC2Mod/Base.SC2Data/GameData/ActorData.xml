@@ -71,19 +71,9 @@
         <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
         <Macros index="1" value="SnowVisualBuildingMacroMP"/>
         <Macros index="2" removed="1"/>
-        <On index="0" Terms="UnitBirth.##id##" Send="Create SoundEmitter ##id##_Ambience"/>
-        <On index="1" Terms="UnitBirth.##id##"/>
-        <On index="2" Terms="UnitRevive.##id##"/>
-        <On index="3" Terms="UnitRevive.##id##"/>
-        <On index="4" Terms="UnitConstruction.##id##.Start"/>
-        <On index="5" Terms="UnitConstruction.##id##.Finish"/>
         <On index="69" Terms="UnitConstruction.##id##.Start" Send="Create KeironBuildModelAir"/>
-        <On index="70" Terms="UnitConstruction.##id##.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 21.000000 AsDuration 0.000000 100"/>
-        <On index="71" Terms="UnitConstruction.##id##.Start" Send="AnimSetPausedAll"/>
-        <On index="72" Terms="UnitConstruction.##id##.Start" Send="AnimSetPaused Build 0"/>
-        <On index="73" Terms="UnitConstruction.##id##.Finish" Send="AnimSetPausedAll 0"/>
-        <On index="76" Terms="Abil.##id##Research.Start" Send="AnimBracketStart Work Stand,Work,Start Stand,Work Stand,Work,End"/>
-        <On index="77" Terms="Abil.##id##Research.Stop" Send="AnimBracketStop Work"/>
+        <On index="76" Terms="Abil.##id##Research.Start" Target="_ZergBuildModel" Send="AnimBracketStart Work Stand,Work,Start Stand,Work Stand,Work,End"/>
+        <On index="77" Terms="Abil.##id##Research.Stop" Target="_ZergBuildModel" Send="AnimBracketStop Work"/>
         <On index="78" removed="1"/>
         <On index="79" removed="1"/>
     </CActorUnit>
@@ -376,23 +366,6 @@
             <Stop Group="Turret_03" Weight="1" Time="125"/>
         </Types>
     </CActorLookAt>
-    <CActorModel id="KeironBuildModelAirEmpyrean" parent="ModelAddition">
-        <Aliases value="_ZergBuildModel"/>
-        <Flags index="RespondsToUnitPlayerChange" value="1"/>
-        <Inherits index="BaseModelScale" value="0"/>
-        <Inherits index="ModelMaterials" value="0"/>
-        <Inherits index="Scale" value="0"/>
-        <On index="0" Terms="UnitConstruction.*.Finish" Send="AnimBracketStop BSD"/>
-        <On index="1" Terms="UnitConstruction.*.Cancel" Send="AnimBracketStop BSD"/>
-        <On index="2" Terms="ActorOrphan" Send="Destroy"/>
-        <On Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand Death 0 0.500000 AsTimeScale"/>
-        <On Terms="AnimBracketState.*.AfterClosing; AnimName BSD" Send="Destroy"/>
-        <HostSiteOps Ops="SOpAttachCenter SOpMoveDownByDot25"/>
-        <Model value="KeironBuildModel"/>
-        <Scale value="0.800000,0.800000,1.250000"/>
-        <ModelFlags index="AutomateGlobalLoops" value="1"/>
-        <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
-    </CActorModel>
     <CActorAction id="ParagonGroundWeaponAttack" parent="GenericAttack" effectImpact="ParagonGroundWeaponDMG" effectLaunch="ParagonGroundWeapon">
         <LaunchAssets Sound="ParagonGroundWeapon_Launch"/>
         <Missile value="ParagonGroundWeaponMissile"/>
@@ -1178,8 +1151,12 @@
         <On Terms="Behavior.KeironMaterializing.Destroy" Send="ModelMaterialApplyTo ::Main"/>
         <On Terms="Behavior.KeironMaterializing.Destroy" Send="AnimSetTimeScale BSD 1.500000"/>
         <On Terms="Behavior.KeironMaterializing.Destroy" Send="AnimBracketStop BSD"/>
+        <On Terms="ActorCreation" Send="AnimBracketStart Build {} GLstand {} OpeningPlayForever"/>
+        <On Terms="Abil.BuildInProgress.Pause" Send="AnimSetTimeScale Build 0.200000"/>
+        <On Terms="Abil.BuildInProgress.Resume" Send="AnimSetTimeScale Build 1.000000"/>
+        <On Terms="Abil.KeironCitadelMaterializing.Pause" Send="AnimSetTimeScale Build 0.200000"/>
+        <On Terms="Abil.KeironCitadelMaterializing.Resume" Send="AnimSetTimeScale Build 1.000000"/>
         <Model value="KeironConstructionGlaze"/>
-        <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModelMaterial>
     <CActorUnit id="Meridian" parent="GenericUnitKeiron" unitName="Meridian">
         <BarOffset value="70"/>
@@ -1242,8 +1219,8 @@
         <On Terms="WeaponStop.ParagonGroundWeapon.AttackStop" Send="TimerSet 2.000000 Cover"/>
         <On Terms="TimerExpired; TimerName Cover" Target="_ParagonTurretAG" Send="LookAtDisengage"/>
         <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMassive" SoundLink="Tempest_Explode"/>
-        <BarOffset value="70"/>
-        <BarWidth value="100"/>
+        <BarOffset value="75"/>
+        <BarWidth value="110"/>
     </CActorUnit>
     <CActorModel id="InducerAttackLaunchModel" parent="ModelAnimationStyleOneShot">
         <On Terms="Behavior.InducerGamutOrb.On" Send="Create"/>
@@ -1300,11 +1277,17 @@
         <On index="2" Terms="ActorOrphan" Send="Destroy"/>
         <On Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand Death 0 0.500000 AsTimeScale"/>
         <On Terms="AnimBracketState.*.AfterClosing; AnimName BSD" Send="Destroy"/>
-        <ModelFlags index="AutomateGlobalLoops" value="1"/>
+        <On Terms="ActorCreation" Send="AnimBracketStart Build {} GLstand {} OpeningPlayForever"/>
+        <On Terms="Abil.BuildInProgress.Pause" Send="AnimSetTimeScale Build 0.200000"/>
+        <On Terms="Abil.BuildInProgress.Resume" Send="AnimSetTimeScale Build 1.000000"/>
         <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
     </CActorModel>
     <CActorModel id="KeironBuildModelAir" parent="KeironBuildModel">
         <HostSiteOps Ops="SOpAttachCenter"/>
+    </CActorModel>
+    <CActorModel id="KeironBuildModelAirEmpyrean" parent="KeironBuildModel">
+        <HostSiteOps Ops="SOpAttachCenter SOpMoveDownByDot25"/>
+        <Scale value="0.800000,0.800000,1.250000"/>
     </CActorModel>
     <CActorModel id="KeironBuildModelAirSmall" parent="KeironBuildModel">
         <HostSiteOps Ops="SOpAttachCenter"/>
