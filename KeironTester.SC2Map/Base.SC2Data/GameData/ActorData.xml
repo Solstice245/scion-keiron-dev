@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CActorUnit id="Drone2" parent="GenericBurrowerStandard" unitName="Drone">
+        <Macros value="CarryAnim"/>
+        <Macros value="BuildAnim"/>
+        <Macros value="ZergBurrowStandardAnimMacro"/>
+        <Macros value="ZergSmallBurrowEffects"/>
+        <On index="0" Terms="UnitBirth.Drone2"/>
+        <On index="1" Terms="UnitBirth.Drone2"/>
+        <On index="2" Terms="UnitRevive.Drone2"/>
+        <On index="3" Terms="UnitConstruction.Drone2.Start"/>
+        <On index="4" Terms="UnitConstruction.Drone2.Finish"/>
+        <On Terms="Abil.DroneHarvest.Start" Send="AnimPlay Work Work PlayForever"/>
+        <On Terms="Abil.DroneHarvest.Stop" Send="AnimClear Work"/>
+        <On Terms="AbilMorph.*.Cancel; MorphFrom Drone; MorphTo DroneBurrowed" Send="AnimClear Burrow"/>
+        <On Terms="AbilMorph.*.Finish; MorphTo Drone; MorphFrom DroneBurrowed" Send="AnimBracketStop Burrow"/>
+        <On Terms="Abil.DroneHarvest.Start" Send="StatusSet CloakSound 1"/>
+        <On Terms="Behavior.CarryHarvestableVespeneGeyserGasZerg.Create" Send="StatusSet CloakSound 1"/>
+        <On Terms="Confirmation.Drone.Start" Send="StatusSet CloakSound 0"/>
+        <On Terms="Behavior.CloakingFieldEffect.Create; IsStatus CloakSound" Send="Create Worker_CloakFieldOn"/>
+        <On Terms="Behavior.CloakingFieldEffect.Destroy; IsStatus CloakSound" Send="Create Worker_CloakFieldOff"/>
+        <Scale value="1.500000"/>
+        <DeathArray index="Normal" ModelLink="DroneDeath" SoundLink="Drone_Explode"/>
+        <DeathArray index="Disintegrate" ModelLink="DroneDeathAcid" SoundLink="Uni_DeathFXAcid"/>
+        <DeathArray index="Fire" ModelLink="DroneDeathFire" SoundLink="Uni_DeathFXFire"/>
+        <PortraitModel value="DronePortrait"/>
+        <BarOffset value="40"/>
+        <BarWidth value="42"/>
+        <HeroIcon value="Assets\Textures\btn-unit-zerg-drone.dds"/>
+        <HighlightTooltip value="Unit/Name/Drone2"/>
+        <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-groundcarapace-level0.dds"/>
+        <SoundArray index="Help" value="Alert_ZergEconomyUnderAttack"/>
+        <UnitIcon value="Assets\Textures\btn-unit-zerg-drone.dds"/>
+    </CActorUnit>
+    <CActorUnit id="Probe2" parent="GenericUnitStandard" unitName="Probe">
+        <Macros value="CarryAnim"/>
+        <Macros value="BuildAnim"/>
+        <On index="0" Terms="UnitBirth.Probe2"/>
+        <On index="1" Terms="UnitBirth.Probe2"/>
+        <On index="2" Terms="UnitRevive.Probe2"/>
+        <On index="3" Terms="UnitConstruction.Probe2.Start"/>
+        <On index="4" Terms="UnitConstruction.Probe2.Finish"/>
+        <On Terms="Abil.ProbeHarvest.Start" Send="AnimPlay Work Work PlayForever"/>
+        <On Terms="Abil.ProbeHarvest.Stop" Send="AnimClear Work"/>
+        <On Terms="Behavior.Hallucination.On" Send="Create HallucinationBirthSoundSmall"/>
+        <On Terms="UnitDeathCustomize; ValidateUnit IsHallucination" Send="DeathCustomize Hallucination"/>
+        <On Terms="Abil.ProbeHarvest.Start" Send="StatusSet CloakSound 1"/>
+        <On Terms="Behavior.CarryHarvestableVespeneGeyserGasProtoss.Create" Send="StatusSet CloakSound 1"/>
+        <On Terms="Confirmation.Probe.Start" Send="StatusSet CloakSound 0"/>
+        <On Terms="Behavior.CloakingFieldEffect.Create; IsStatus CloakSound" Send="Create Worker_CloakFieldOn"/>
+        <On Terms="Behavior.CloakingFieldEffect.Destroy; IsStatus CloakSound" Send="Create Worker_CloakFieldOff"/>
+        <HostSiteOps Ops="SOpBankerProbe"/>
+        <Scale value="1.500000"/>
+        <AnimBlendTime value="0.250000"/>
+        <DeathArray index="Normal" ModelLink="ProbeDeath" SoundLink="Probe_Explode"/>
+        <DeathCustoms ModelLink="HallucinationDeath" SoundLink="Disruptor_HallucinationDeathSmall" Name="Hallucination"/>
+        <PortraitModel value="ProbePortrait"/>
+        <BarOffset value="40"/>
+        <BarWidth value="42"/>
+        <ErrorArray Error="MustTargetUnit" Sound="Alert_ProtossPlaceOnVespeneGeyser"/>
+        <HeroIcon value="Assets\Textures\btn-unit-protoss-probe.dds"/>
+        <HighlightTooltip value="Unit/Name/Probe2"/>
+        <LifeArmorIcon value="Assets\Textures\btn-upgrade-protoss-groundarmorlevel0.dds"/>
+        <SoundArray index="Help" value="Alert_ProtossEconomyUnderAttack"/>
+        <UnitIcon value="Assets\Textures\btn-unit-protoss-probe.dds"/>
+    </CActorUnit>
+    <CActorUnit id="SCV2" parent="GenericUnitStandard" unitName="SCV">
+        <Macros value="CarryAnim"/>
+        <On index="0" Terms="UnitBirth.SCV2"/>
+        <On index="1" Terms="UnitBirth.SCV2"/>
+        <On index="2" Terms="UnitRevive.SCV2"/>
+        <On index="3" Terms="UnitConstruction.SCV2.Start"/>
+        <On index="4" Terms="UnitConstruction.SCV2.Finish"/>
+        <On Terms="Abil.SCVHarvest.Start" Send="TimerSet 0.000000,0.300000 Gather"/>
+        <On Terms="Abil.SCVHarvest.Stop" Send="AnimClear Gather"/>
+        <On Terms="Abil.SCVHarvest.Stop" Send="TimerKill Gather"/>
+        <On Terms="AnimDone.*.Complete; AnimName Gather" Send="TimerSet 0.000000,0.300000 Gather"/>
+        <On Terms="TimerExpired; TimerName Gather" Send="AnimPlay Gather Work NonLooping"/>
+        <On Terms="TimerExpired; TimerName Gather" Send="Create SCVGatherSound"/>
+        <On Terms="Abil.Repair.SourceChannelStart" Send="TimerSet 0.000000,0.300000 Repair"/>
+        <On Terms="Abil.Repair.SourceChannelStop" Send="TimerKill Repair"/>
+        <On Terms="Abil.Repair.SourceChannelStop" Send="AnimClear Repair"/>
+        <On Terms="AnimDone.*.Complete; AnimName Repair" Send="TimerSet 0.000000,0.300000 Repair"/>
+        <On Terms="TimerExpired; TimerName Repair" Send="AnimPlay Repair Work NonLooping"/>
+        <On Terms="TimerExpired; TimerName Repair" Send="Create SCVRepairSound"/>
+        <On Terms="Abil.*.WorkerStart" Send="TimerSet 0.000000,0.300000 Build"/>
+        <On Terms="Abil.*.WorkerStop" Send="TimerKill Build"/>
+        <On Terms="Abil.*.WorkerStop" Send="AnimClear Build"/>
+        <On Terms="Abil.*.WorkerCancel" Send="TimerKill Build"/>
+        <On Terms="Abil.*.WorkerCancel" Send="AnimClear Build"/>
+        <On Terms="AnimDone.*.Complete; AnimName Build" Send="TimerSet 0.000000,0.300000 Build"/>
+        <On Terms="TimerExpired; TimerName Build" Send="AnimPlay Build Work NonLooping"/>
+        <On Terms="TimerExpired; TimerName Build" Send="Create SCVBuildSound"/>
+        <On Terms="Abil.SCVHarvest.Start" Send="StatusSet CloakSound 1"/>
+        <On Terms="Behavior.CarryHarvestableVespeneGeyserGas.Create" Send="StatusSet CloakSound 1"/>
+        <On Terms="Confirmation.SCV.Start" Send="StatusSet CloakSound 0"/>
+        <On Terms="Behavior.CloakingFieldEffect.Create; IsStatus CloakSound" Send="Create Worker_CloakFieldOn"/>
+        <On Terms="Behavior.CloakingFieldEffect.Destroy; IsStatus CloakSound" Send="Create Worker_CloakFieldOff"/>
+        <Scale value="1.500000"/>
+        <AnimBlendTime value="0.500000"/>
+        <DeathArray index="Normal" ModelLink="SCVDeath" SoundLink="SCV_Explode"/>
+        <PortraitModel value="SCVPortrait"/>
+        <BarOffset value="40"/>
+        <BarWidth value="42"/>
+        <HeroIcon value="Assets\Textures\btn-unit-terran-scv.dds"/>
+        <HighlightTooltip value="Unit/Name/SCV2"/>
+        <LifeArmorIcon value="Assets\Textures\btn-upgrade-terran-infantryarmorlevel0.dds"/>
+        <SoundArray index="Help" value="Alert_TerranEconomyUnderAttack"/>
+        <UnitIcon value="Assets\Textures\btn-unit-terran-scv.dds"/>
+    </CActorUnit>
+</Catalog>
