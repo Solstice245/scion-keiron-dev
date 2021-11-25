@@ -97,6 +97,7 @@
         <EffectArray value="ApertureTeleportLoad"/>
     </CEffectSet>
     <CEffectSwitch id="ApertureTeleportSwitch">
+        <ValidatorArray value="ApertureEnergy"/>
         <ValidatorArray value="IsNotElytron"/>
         <ValidatorArray value="NotMaterializing"/>
         <ValidatorArray value="KeironCasterEnergyGE10"/>
@@ -157,9 +158,9 @@
     <CEffectDamage id="EmissaryOrbDMG" parent="CEffectDamageKeironSpell">
         <Amount value="160"/>
         <AreaArray Fraction="1"/>
-        <AreaArray Radius="0.25" Fraction="0.75"/>
-        <AreaArray Radius="1" Fraction="0.5"/>
-        <AreaArray Radius="1.5" Fraction="0.25"/>
+        <AreaArray Radius="0.6125" Fraction="0.75"/>
+        <AreaArray Radius="1.25" Fraction="0.5"/>
+        <AreaArray Radius="2" Fraction="0.25"/>
         <SearchFilters value="-;Missile,Stasis,Dead,Hidden,Invulnerable"/>
     </CEffectDamage>
     <CEffectApplyBehavior id="EmissaryOrbFate">
@@ -259,6 +260,11 @@
         <EditorCategories value="Race:Protoss"/>
         <BehaviorLink value="PariahProjectionFate"/>
     </CEffectRemoveBehavior>
+    <CEffectLaunchMissile id="BulwarkBlast" parent="CEffectLaunchMissileKeiron"/>
+    <CEffectDamage id="BulwarkBlastImpact" parent="CEffectDamageKeironWeapon">
+        <Amount value="60"/>
+        <Death value="Blast"/>
+    </CEffectDamage>
     <CEffectCreatePersistent id="ZenithParagonDelay">
         <EditorCategories value=""/>
         <InitialDelay value="0.0625"/>
@@ -1028,7 +1034,6 @@
         <AmmoUnit value="InducerAttackMissile"/>
         <LaunchEffect value="InducerGamutOrb"/>
         <PeriodicEffect value="GamutOrbRedirect"/>
-        <ImpactRange value="0.25"/>
     </CEffectLaunchMissile>
     <CEffectApplyBehavior id="GamutOrbRMImpact" parent="CEffectApplyBehaviorKeironCaster">
         <Behavior value="InducerGamutOrb"/>
@@ -1502,7 +1507,7 @@
     </CEffectDamage>
     <CEffectEnumArea id="ShieldAura" parent="CEffectSearchAreaKeiron">
         <SearchFilters value="Ground;Self,Missile,Stasis,Dead,Hidden"/>
-        <AreaArray Radius="3.75" Effect="ShieldAuraS"/>
+        <AreaArray Radius="10" Effect="ShieldAuraS"/>
     </CEffectEnumArea>
     <CEffectApplyBehavior id="ShieldAuraAB" parent="CEffectApplyBehaviorKeironTarget">
         <ValidatorArray index="0" value="NoAegisShieldDummyRadiusBehavior"/>

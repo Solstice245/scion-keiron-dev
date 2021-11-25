@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
-    <CAbilEffectTarget id="ApertureTeleport">
+    <CAbilEffectTarget id="ApertureKeyhole">
         <EditorCategories value="AbilityorEffectType:Units"/>
         <Effect index="0" value="ApertureTeleportSwitch"/>
+        <Flags index="Transient" value="1"/>
+        <TargetFilters value="-;Ally,Neutral,Enemy,Structure,Missile,Stasis,Dead,Hidden"/>
         <Range value="500"/>
         <Arc value="360"/>
         <AINotifyEffect value="ApertureTeleportTP"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="ApertureTeleport" Requirements="ApertureEnergy"/>
-        <TargetFilters value="-;Ally,Neutral,Enemy,Structure,Missile,Stasis,Dead,Hidden"/>
-        <Flags index="Transient" value="1"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="ApertureTeleport" Requirements="UseKeyhole"/>
     </CAbilEffectTarget>
     <CAbilEffectInstant id="Beholder">
         <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
@@ -43,7 +43,7 @@
         <CmdButtonArray index="Execute" DefaultButtonFace="EmissaryOrb"/>
         <Flags index="AllowMovement" value="1"/>
         <Cost>
-            <Vital index="Energy" value="125"/>
+            <Vital index="Energy" value="100"/>
         </Cost>
         <RangeSlop value="100"/>
         <CastIntroTime value="2"/>
@@ -83,6 +83,17 @@
         <CmdButtonArray index="Execute" DefaultButtonFace="Reveal"/>
         <CursorEffect value="OculusReveal"/>
     </CAbilEffectTarget>
+    <CAbilResearch id="OutletResearch">
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <Activity value="UI/Developing"/>
+        <InfoArray index="Research1" Time="110" Upgrade="ApertureKeyhole">
+            <Resource index="Minerals" value="100"/>
+            <Resource index="Vespene" value="100"/>
+            <Button DefaultButtonFace="DevelopKeyhole" Requirements="LearnKeyhole">
+                <Flags index="ShowInGlossary" value="1"/>
+            </Button>
+        </InfoArray>
+    </CAbilResearch>
     <CAbilEffectInstant id="ProjectionCancel">
         <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
         <Effect index="0" value="PariahProjectionRemoveBehavior"/>
@@ -341,7 +352,7 @@
         <InfoArray index="Build8" Unit="Sanctum" Time="60">
             <Button DefaultButtonFace="Sanctum" Requirements="HaveEdifice"/>
         </InfoArray>
-        <InfoArray index="Build9" Unit="Elysium" Time="70">
+        <InfoArray index="Build9" Unit="Elysium" Time="60">
             <Button DefaultButtonFace="Elysium" Requirements="HaveSanctum"/>
         </InfoArray>
         <InfoArray index="Build10" Unit="Foundry" Time="60">
@@ -356,11 +367,11 @@
         <InfoArray index="Build13" Unit="Conduit" Time="60">
             <Button DefaultButtonFace="Conduit" Requirements="HaveSanctum"/>
         </InfoArray>
-        <InfoArray index="Build14" Unit="Outlet" Time="65">
-            <Button DefaultButtonFace="Outlet" Requirements="HaveConduit"/>
+        <InfoArray index="Build14" Unit="Outlet" Time="70">
+            <Button DefaultButtonFace="Outlet" Requirements="HaveSanctum"/>
         </InfoArray>
         <InfoArray index="Build15" Unit="Empyrean" Time="65">
-            <Button DefaultButtonFace="Empyrean" Requirements="HaveConduit"/>
+            <Button DefaultButtonFace="Empyrean" Requirements="HaveConduitOrOutlet"/>
         </InfoArray>
         <InfoArray index="Build16" Unit="Zenith" Time="80">
             <Button DefaultButtonFace="Zenith" Requirements="HaveEmpyrean"/>
@@ -598,7 +609,7 @@
         <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
         <Activity value="UI/Building"/>
         <Leash value="14"/>
-        <InfoArray index="Ammo1" Time="12" CountStart="3" Manage="Recall" Unit="Elytron">
+        <InfoArray index="Ammo1" Time="12" CountStart="1" Manage="Recall" Unit="Elytron">
             <Charge Link="MyriadElytra" Location="Unit"/>
             <Cooldown Link="MyriadTrainElytra" TimeUse="0.01"/>
             <Button DefaultButtonFace="CreateElytron" Requirements="ArmElytra">
