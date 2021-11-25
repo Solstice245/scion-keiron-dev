@@ -42,6 +42,15 @@
         <EditorCategories value="Race:Keiron"/>
         <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
     </CEffectEnumArea>
+    <CEffectTeleport id="AegisRelocate">
+        <ValidatorArray value="IsCitadel"/>
+        <EditorCategories value="Race:Protoss"/>
+        <WhichUnit Value="Caster"/>
+        <ClearQueuedOrders value="0"/>
+        <MinDistance value="2"/>
+        <PlacementArc value="360"/>
+        <TargetLocation Value="TargetUnit"/>
+    </CEffectTeleport>
     <CEffectApplyBehavior id="AegisShieldAuraReveal">
         <EditorCategories value="Race:Protoss"/>
     </CEffectApplyBehavior>
@@ -50,6 +59,12 @@
         <EffectArray value="ShieldAura"/>
         <EffectArray value="AegisShieldAuraRevealSA"/>
     </CEffectSet>
+    <CEffectModifyUnit id="AegisShieldRestore">
+        <EditorCategories value="Race:Protoss"/>
+        <VitalArray index="Shields">
+            <ChangeFraction value="1"/>
+        </VitalArray>
+    </CEffectModifyUnit>
     <CEffectModifyUnit id="ApertureTeleportLargeMU">
         <EditorCategories value=""/>
         <ImpactUnit Value="Caster"/>
@@ -233,6 +248,14 @@
         <Death value="Electrocute"/>
     </CEffectDamage>
     <CEffectLaunchMissile id="AuguryGunsLM" parent="CEffectLaunchMissileKeiron"/>
+    <CEffectMorph id="MorphToNormal">
+        <EditorCategories value="Race:Protoss"/>
+        <MorphUnit value="Aegis"/>
+    </CEffectMorph>
+    <CEffectMorph id="MorphToShielded">
+        <EditorCategories value="Race:Protoss"/>
+        <MorphUnit value="AegisShielded"/>
+    </CEffectMorph>
     <CEffectEnumMagazine id="MyriadDestroyElytraIterate">
         <EditorCategories value="Race:Protoss"/>
         <SearchFilters value="-;Self"/>
