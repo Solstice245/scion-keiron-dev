@@ -100,6 +100,9 @@
         <?token id="Effect" type="CEffectLink"?>
         <On Terms="Effect.##Effect##.Start" Send="Create"/>
     </CActorSound>
+    <CActorSound id="AegisShieldExpire" parent="SoundOneShot">
+        <On Terms="Behavior.AegisShieldAura.Off" Send="Create"/>
+    </CActorSound>
     <CActorUnit id="BattleStationMineralField">
         <On Terms="Abil.ConverterGather.Start" Send="StatusIncrement Harvest"/>
         <On Terms="Abil.ConverterGather.Stop" Send="StatusDecrement Harvest"/>
@@ -204,6 +207,13 @@
         <HoldTime value="-1.000000"/>
         <Layer value="PowerLayer"/>
     </CActorSplat>
+    <CActorSound id="AegisShieldActivate" parent="SoundOneShot">
+        <On Terms="Behavior.AegisShieldAura.On" Send="Create"/>
+    </CActorSound>
+    <CActorSound id="AegisShieldLoop" parent="SoundContinuous">
+        <On Terms="Behavior.AegisShieldAura.On" Send="Create"/>
+        <On Terms="Behavior.AegisShieldAura.Off" Send="Destroy"/>
+    </CActorSound>
     <CActorRange id="NullifierRange" parent="RangeWeapon" weapon="NullifierWeapon"/>
     <CActorModel id="ParagonEmissaryOrbChargeModel" parent="ModelAnimationStyleContinuousUNIT">
         <On Terms="Abil.EmissaryOrb.SourceCastStart" Send="Create"/>
@@ -380,20 +390,29 @@
         <Model value="HarbingerAirAttackMissile"/>
     </CActorMissile>
     <CActorModel/>
-    <CActorUnit id="Aegis" parent="GenericUnitStandard" unitName="Aegis">
-        <On Terms="Behavior.AegisShieldAura.On" Send="AnimBracketStart StandWork Stand,Work,Start Stand,Work Stand,Work,End"/>
-        <On Terms="Behavior.AegisShieldAura.Off" Send="AnimBracketStop StandWork"/>
-        <On Terms="UnitBirth.AegisShielded" Send="Create SoundEmitter Aegis_Ambience"/>
-        <On Terms="UnitBirth.AegisShielded" Send="Create"/>
-        <On Terms="UnitBirth.AegisShielded" Send="ModelSwap AegisShielded"/>
+    <CActorUnit id="Aegis" parent="GenericUnitKeiron" unitName="Aegis">
+        <On index="69" Terms="Behavior.AegisShieldAura.On" Send="AnimBracketStart StandWork Stand,Work,Start Stand,Work Stand,Work,End"/>
+        <On index="70" Terms="Behavior.AegisShieldAura.Off" Send="AnimBracketStop StandWork"/>
+        <On index="71" Terms="UnitBirth.AegisShielded" Send="Create SoundEmitter Aegis_Ambience"/>
+        <On index="72" Terms="UnitBirth.AegisShielded" Send="Create"/>
+        <On index="73" Terms="UnitBirth.AegisShielded" Send="ModelSwap AegisShielded"/>
+        <On Terms="Behavior.AegisShieldAura.On" Send="ModelSwap AegisShielded"/>
+        <On Terms="Behavior.AegisShieldAura.Off" Send="ModelSwap Aegis"/>
+        <On Terms="Behavior.AegisShieldAura.On" Send="AliasAdd _ShieldAegis"/>
+        <On Terms="Behavior.AegisShieldAura.Off" Send="AliasRemove _ShieldAegis"/>
+        <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMassive" SoundLink="Tempest_Explode"/>
         <BarOffset value="120"/>
         <BarWidth value="100"/>
+        <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-structurearmor.dds"/>
     </CActorUnit>
     <CActorModel id="AegisShield" parent="ModelAnimationStyleContinuous">
-        <On index="0" Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand Death OpeningPlayForever"/>
         <On Terms="Behavior.AegisShieldAura.On" Send="Create"/>
-        <On Terms="Behavior.AegisShieldAura.Off" Send="Destroy"/>
-        <HostSiteOps Ops="SOpMoveDownBy2 SOpMoveDownBy2"/>
+        <On Terms="Behavior.AegisShieldAura.Off" Send="AnimBracketClear BSD"/>
+        <On Terms="ActorCreation" Send="SetOpacity"/>
+        <On Terms="ActorCreation" Send="SetOpacity 1.000000 1.000000"/>
+        <On Terms="ActorCreation" Send="SetTintColor {255,255,255 3.000000}"/>
+        <On Terms="ActorCreation" Send="SetTintColor 255,255,255 2.000000"/>
+        <HostSiteOps Ops="SOpMoveDownBy2 SOpMoveDownBy2 SOpMoveDownBy2"/>
         <ModelFlags index="AllowHitTest" value="0"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
         <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
@@ -675,7 +694,6 @@
         <On Terms="UnitBirth" Send="AnimSetTimeScaleAbsolute Lifetime 1.000000"/>
         <On Terms="ActorCreation" Send="SetTintColor 255,255,255"/>
         <Model value="AegisAttackMissile"/>
-        <Scale value="1.600000"/>
     </CActorMissile>
     <CActorUnit id="Zenith" parent="GenericUnitKeironStructureAir" unitName="Zenith">
         <BarOffset value="140"/>
@@ -1013,15 +1031,18 @@
     </CActorSound>
     <CActorShield id="ProtossShieldFacer">
         <On Terms="ActorCreation; ScopeContains _ShieldGold" Send="ModelSwap KeironShieldDamage"/>
+        <On Terms="ActorCreation; ScopeContains _ShieldAegis" Send="SetOpacity 0.125000"/>
     </CActorShield>
     <CActorModel id="ProtossShieldFacerRipple">
         <On Terms="ActorCreation; ScopeContains _ShieldGold" Send="ModelSwap KeironShieldRipple"/>
     </CActorModel>
     <CActorShield id="ProtossShieldFull">
         <On Terms="ActorCreation; ScopeContains _ShieldGold" Send="ModelSwap KeironShieldFull"/>
+        <On Terms="ActorCreation; ScopeContains _ShieldAegis" Send="SetOpacity 0.125000"/>
     </CActorShield>
     <CActorShield id="ProtossShieldHeader">
         <On Terms="ActorCreation; ScopeContains _ShieldGold" Send="ModelSwap KeironShieldDamage"/>
+        <On Terms="ActorCreation; ScopeContains _ShieldAegis" Send="SetOpacity 0.125000"/>
     </CActorShield>
     <CActorSiteOpAttach id="SOpAttachTurretY">
         <AttachQuery Methods="TurretY 0"/>
