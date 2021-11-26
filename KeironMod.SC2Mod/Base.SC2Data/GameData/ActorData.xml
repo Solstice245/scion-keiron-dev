@@ -108,6 +108,11 @@
         <HostSiteOps Ops="SOpAttachOriginStationary"/>
         <On Terms="Abil.AegisRelocate.SourceCastStart" Send="Create"/>
     </CActorSound>
+    <CActorSound id="ParadoxShieldBoostImpact" parent="SoundOneShot">
+        <On Terms="Behavior.ParadoxShieldBoost.On" Send="Create"/>
+        <Host Subject="_Selectable"/>
+        <HostSiteOps Ops="SOpAttachOriginStationary"/>
+    </CActorSound>
     <CActorSound id="AegisRelocateStopSound" parent="SoundOneShot">
         <On Terms="Effect.AegisRelocate.Stop; At Source" Send="Create"/>
     </CActorSound>
@@ -245,6 +250,9 @@
         <On Terms="Behavior.AegisShieldAura.Off" Send="Destroy"/>
     </CActorSound>
     <CActorRange id="NullifierRange" parent="RangeWeapon" weapon="NullifierWeapon"/>
+    <CActorSound id="ParadoxPrisonInit" parent="SoundOneShot">
+        <On Terms="Effect.InvertFFieldCP.Start; At Target" Send="Create"/>
+    </CActorSound>
     <CActorModel id="ParagonEmissaryOrbChargeModel" parent="ModelAnimationStyleContinuousUNIT">
         <On Terms="Abil.EmissaryOrb.SourceCastStart" Send="Create"/>
         <On Terms="Abil.EmissaryOrb.SourceCastStop" Send="AnimBracketStop BSD"/>
@@ -434,35 +442,23 @@
         <On Terms="Behavior.AegisShieldAura.Off" Send="AliasRemove _ShieldAegis"/>
         <On Terms="Effect.AegisRelocate.Stop" Send="AnimPlay Spell Birth"/>
         <On Terms="Abil.AegisRelocate.SourceCastStart" Send="AnimPlay Spell Blink"/>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        <On Terms="UnitBirth.Aegis" Send="Create AegisRelocateStopModel"/>
-        <On Terms="UnitBirth.Aegis" Send="Create AegisRelocateStopSound"/>
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+        <On Terms="UnitBirth.Aegis.Normal" Send="Create AegisRelocateStopModel"/>
+        <On Terms="UnitBirth.Aegis.Normal" Send="Create AegisRelocateStopSound"/>
         <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMassive" SoundLink="Tempest_Explode"/>
-        <BarOffset value="120"/>
-        <BarWidth value="100"/>
+        <BarOffset value="140"/>
+        <BarWidth value="125"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-structurearmor.dds"/>
+        <ModelFlags index="OutlineEmitter" value="0"/>
         <ModelFlags index="OutlineOccluder" value="1"/>
     </CActorUnit>
     <CActorModel id="AegisShield" parent="ModelAnimationStyleContinuous">
         <On Terms="Behavior.AegisShieldAura.On" Send="Create"/>
-        <On Terms="Behavior.AegisShieldAura.Off" Send="AnimBracketClear BSD"/>
+        <On Terms="Behavior.AegisShieldAura.Off" Send="AnimBracketStop BSD"/>
         <On Terms="ActorCreation" Send="SetOpacity"/>
         <On Terms="ActorCreation" Send="SetOpacity 1.000000 1.000000"/>
         <On Terms="ActorCreation" Send="SetTintColor {255,255,255 3.000000}"/>
         <On Terms="ActorCreation" Send="SetTintColor 255,255,255 2.000000"/>
         <HostSiteOps Ops="SOpMoveDownBy2 SOpMoveDownBy2 SOpMoveDownBy2"/>
-        <ModelFlags index="AllowHitTest" value="0"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
         <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
         <Host Subject="_Selectable"/>
@@ -1254,6 +1250,9 @@
         <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
         <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMedium" SoundLink="KeironUnit_Death"/>
         <On index="69" Terms="UnitConstruction.Paradox.Start" Send="Create KeironMaterializeModelAirMedium"/>
+        <On Terms="Abil.ParadoxShield.SourceChannelStart" Send="$Spell"/>
+        <On Terms="Abil.InvertFField.SourceCastStart" Send="$Spell PlayForever"/>
+        <On Terms="Abil.InvertFField.SourceFinishStart" Send="AnimClear Spell"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-mechanicalarmorlevel0.dds"/>
     </CActorUnit>
     <CActorModel id="ParadoxShield" parent="ModelAddition">
