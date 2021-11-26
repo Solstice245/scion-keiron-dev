@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
-    <CAbilEffectInstant id="AegisActivateShield">
+    <CAbilMorph id="AegisMorphToShielded">
         <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
-        <Effect index="0" value="MorphToShielded"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="ActivateShield"/>
-    </CAbilEffectInstant>
+        <Cost>
+            <Vital index="Energy" value="50"/>
+            <Cooldown TimeUse="63"/>
+        </Cost>
+        <InfoArray Unit="AegisShielded">
+            <SectionArray index="Stats">
+                <EffectArray index="Finish" value="AegisShieldRestore"/>
+            </SectionArray>
+        </InfoArray>
+    </CAbilMorph>
     <CAbilEffectTarget id="AegisRelocate">
         <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
         <Cost>
@@ -15,6 +23,11 @@
         <Range value="1000"/>
         <Arc value="360"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="Relocate"/>
+        <CastIntroTime value="0.5"/>
+        <FinishTime value="0.5"/>
+        <UninterruptibleArray index="Cast" value="1"/>
+        <UninterruptibleArray index="Channel" value="1"/>
+        <UninterruptibleArray index="Finish" value="1"/>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="ApertureKeyhole">
         <EditorCategories value="AbilityorEffectType:Units"/>
@@ -88,6 +101,10 @@
             <Unit value="Converter"/>
         </InfoArray>
     </CAbilTrain>
+    <CAbilMorph id="AegisMorphToNormal">
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <InfoArray Unit="Aegis"/>
+    </CAbilMorph>
     <CAbilEffectTarget id="OculusReveal">
         <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
         <Flags index="RequireTargetVision" value="0"/>
@@ -406,6 +423,15 @@
         <InfoArray index="Train1" Time="17">
             <Button DefaultButtonFace="Converter"/>
             <Unit value="Converter"/>
+        </InfoArray>
+        <Alert value="TrainWorkerComplete"/>
+    </CAbilTrain>
+    <CAbilTrain id="KeironCitadelAegisTrain">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <Activity value="UI/Materializing"/>
+        <InfoArray index="Train1" Time="160" Effect="AegisRelocateBirth">
+            <Button DefaultButtonFace="Aegis" Requirements="AegisRequirements"/>
+            <Unit value="Aegis"/>
         </InfoArray>
     </CAbilTrain>
     <CAbilWarpTrain id="KeironCitadelMaterialize">
