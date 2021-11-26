@@ -39,6 +39,7 @@
         <PlacementSound value="Keiron_BuildingPlacementSmall"/>
         <ShieldArmorIcon value="Assets\Textures\btn-upgrade-keiron-shields-level0.dds"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-biologicalarmorlevel0.dds"/>
+        <ModelFlags index="OutlineEmitter" value="1"/>
     </CActorUnit>
     <CActorUnit default="1" id="GenericUnitKeironStructure" parent="GenericUnitKeiron">
         <Aliases value="_CreepEngulfable"/>
@@ -63,6 +64,8 @@
         <Macros value="BuildingFlattenTerrainMacro"/>
         <Macros value="SnowVisualBuildingMacroMP"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-structurearmor.dds"/>
+        <ModelFlags index="OutlineEmitter" value="0"/>
+        <ModelFlags index="OutlineOccluder" value="1"/>
     </CActorUnit>
     <CActorUnit default="1" id="GenericUnitKeironStructureAir" parent="GenericUnitKeironStructure">
         <CreepHeightClass value=""/>
@@ -100,6 +103,14 @@
         <?token id="Effect" type="CEffectLink"?>
         <On Terms="Effect.##Effect##.Start" Send="Create"/>
     </CActorSound>
+    <CActorSound id="AegisRelocateOriginSound" parent="SoundOneShot">
+        <Host Subject="_Selectable"/>
+        <HostSiteOps Ops="SOpAttachOriginStationary"/>
+        <On Terms="Abil.AegisRelocate.SourceCastStart" Send="Create"/>
+    </CActorSound>
+    <CActorSound id="AegisRelocateStopSound" parent="SoundOneShot">
+        <On Terms="Effect.AegisRelocate.Stop; At Source" Send="Create"/>
+    </CActorSound>
     <CActorSound id="AegisShieldExpire" parent="SoundOneShot">
         <On Terms="Behavior.AegisShieldAura.Off" Send="Create"/>
     </CActorSound>
@@ -111,6 +122,25 @@
         <On Terms="Abil.ConverterGather.Start" Send="StatusIncrement Harvest"/>
         <On Terms="Abil.ConverterGather.Stop" Send="StatusDecrement Harvest"/>
     </CActorUnit>
+    <CActorModel id="AegisRelocateOriginModel" parent="ModelAnimationStyleOneShot">
+        <InheritType value="OneShot"/>
+        <Inherits index="BaseModelScale" value="1"/>
+        <Inherits index="Scale" value="1"/>
+        <On Terms="ActorCreation" Send="SetTintColor {255,128,0 1.500000}"/>
+        <On Terms="Abil.AegisRelocate.SourceCastStart" Send="Create"/>
+        <Host Subject="_Selectable"/>
+        <HostSiteOps Ops="SOpAttachOriginStationary"/>
+        <ModelFlags index="AllowHitTest" value="0"/>
+    </CActorModel>
+    <CActorModel id="AegisRelocateStopModel" parent="ModelAnimationStyleOneShot">
+        <InheritType value="OneShot"/>
+        <Inherits index="BaseModelScale" value="1"/>
+        <Inherits index="Scale" value="1"/>
+        <On Terms="ActorCreation" Send="SetTintColor {255,128,0 1.500000}"/>
+        <On Terms="Effect.AegisRelocate.Stop; At Source" Send="Create"/>
+        <Host Subject="_Selectable"/>
+        <HostSiteOps Ops="SOpAttachOrigin"/>
+    </CActorModel>
     <CActorUnit id="ChangelingZealot2" parent="GenericUnitMorph" unitName="ChangelingVolt">
         <Aliases value="_UnitSmall"/>
         <Macros value="TerrainSquibAnimations"/>
@@ -391,19 +421,24 @@
     </CActorMissile>
     <CActorModel/>
     <CActorUnit id="Aegis" parent="GenericUnitKeiron" unitName="Aegis">
-        <On index="69" Terms="Behavior.AegisShieldAura.On" Send="AnimBracketStart StandWork Stand,Work,Start Stand,Work Stand,Work,End"/>
-        <On index="70" Terms="Behavior.AegisShieldAura.Off" Send="AnimBracketStop StandWork"/>
-        <On index="71" Terms="UnitBirth.AegisShielded" Send="Create SoundEmitter Aegis_Ambience"/>
-        <On index="72" Terms="UnitBirth.AegisShielded" Send="Create"/>
-        <On index="73" Terms="UnitBirth.AegisShielded" Send="ModelSwap AegisShielded"/>
-        <On Terms="Behavior.AegisShieldAura.On" Send="ModelSwap AegisShielded"/>
+        <On index="66" Terms="WeaponStop.*.AttackStop" Send="AnimBracketStop Attack"/>
+        <On index="67" Terms="Abil.attack.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <On index="68" Terms="Behavior.AegisShieldAura.On" Send="AnimBracketStart StandWork Stand,Work,Start Stand,Work Stand,Work,End"/>
+        <On index="69" Terms="Behavior.AegisShieldAura.Off" Send="AnimBracketStop StandWork"/>
+        <On index="70" Terms="UnitBirth.AegisShielded" Send="Create SoundEmitter Aegis_Ambience"/>
+        <On index="71" Terms="UnitBirth.AegisShielded" Send="Create"/>
+        <On index="72" Terms="UnitBirth.AegisShielded" Send="ModelSwap AegisShielded"/>
+        <On index="73" Terms="Behavior.AegisShieldAura.On" Send="ModelSwap AegisShielded"/>
         <On Terms="Behavior.AegisShieldAura.Off" Send="ModelSwap Aegis"/>
         <On Terms="Behavior.AegisShieldAura.On" Send="AliasAdd _ShieldAegis"/>
         <On Terms="Behavior.AegisShieldAura.Off" Send="AliasRemove _ShieldAegis"/>
+        <On Terms="Effect.AegisRelocate.Stop" Send="AnimPlay Spell Birth"/>
+        <On Terms="Abil.AegisRelocate.SourceCastStart" Send="AnimPlay Spell Blink"/>
         <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMassive" SoundLink="Tempest_Explode"/>
         <BarOffset value="120"/>
         <BarWidth value="100"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-structurearmor.dds"/>
+        <ModelFlags index="OutlineOccluder" value="1"/>
     </CActorUnit>
     <CActorModel id="AegisShield" parent="ModelAnimationStyleContinuous">
         <On Terms="Behavior.AegisShieldAura.On" Send="Create"/>
@@ -425,6 +460,7 @@
         <BarOffset value="80"/>
         <BarWidth value="90"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-mechanicalarmorlevel0.dds"/>
+        <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMedium" SoundLink="KeironUnit_Death"/>
     </CActorUnit>
     <CActorSound id="Converter_Attack" parent="SoundOneShotKeiron" Effect="ConverterDissolutionRay">
         <Sound value="Converter_Weapon"/>
@@ -779,7 +815,7 @@
     <CActorUnit id="Aurora" parent="GenericUnitKeiron" unitName="Aurora">
         <On index="69" Terms="UnitConstruction.Aurora.Start" Send="Create KeironMaterializeModelAirSmall"/>
         <On Terms="Abil.Emanator.TargetCastStart" Send="AnimPlay Attack Attack"/>
-        <DeathArray index="Normal" ModelLink="ProtossMediumUnitDeath" SoundLink="KeironUnit_Death" VoiceLink="AuroraDeathVoice"/>
+        <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMedium" SoundLink="KeironUnit_Death" VoiceLink="AuroraDeathVoice"/>
         <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
         <BarOffset value="50"/>
         <BarWidth value="72"/>
@@ -1202,7 +1238,7 @@
     <CActorUnit id="Paradox" parent="GenericUnitKeiron" unitName="Paradox">
         <EditorCategories value=""/>
         <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
-        <DeathArray index="Normal" SoundLink="KeironUnit_Death"/>
+        <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMedium" SoundLink="KeironUnit_Death"/>
         <On index="69" Terms="UnitConstruction.Paradox.Start" Send="Create KeironMaterializeModelAirMedium"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-mechanicalarmorlevel0.dds"/>
     </CActorUnit>
@@ -1426,7 +1462,7 @@
     <CActorUnit id="Converter" parent="GenericUnitKeiron" unitName="Converter">
         <On Terms="Abil.ConverterGather.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
         <On Terms="Abil.ConverterGather.Stop" Send="AnimClear StandWork"/>
-        <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionSmallBlood" SoundLink="ConverterDeath" VoiceLink="ConverterDeathVoice"/>
+        <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionSmallBlood" SoundLink="KeironUnitSmall_Death"/>
         <BarOffset value="35"/>
         <BarWidth value="42"/>
     </CActorUnit>
@@ -1516,12 +1552,7 @@
     <CActorUnit id="Elytron" parent="GenericUnitKeiron" unitName="Elytron">
         <On index="65" Terms="WeaponStart.*.AttackStart" Send="AnimBracketStart Attack Spell"/>
         <On index="69" Terms="UnitConstruction.Elytron.Start" Send="Create KeironMaterializeModelAirSmall"/>
-        <DeathArray index="Normal">
-            <ActorModel value="KeironUnitDeathExplosionSmallBlood"/>
-            <ModelLink value="ProtossSmallUnitDeath"/>
-            <SoundLink value="KeironUnitSmall_Death"/>
-            <VoiceLink value="PariahDeathVoice"/>
-        </DeathArray>
+        <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionSmallBlood" SoundLink="KeironUnitSmall_Death"/>
         <BarOffset value="40"/>
         <BarWidth value="46"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-mechanicalarmorlevel0.dds"/>
@@ -1679,12 +1710,7 @@
         <On index="67" Terms="WeaponStop.Lunge" Send="AnimBracketStop Attack"/>
         <On index="69" Terms="UnitConstruction.Myriad.Start" Send="Create KeironMaterializeModelMyriad"/>
         <On Terms="Effect.ElytronReleaseAM.Start; At Caster" Send="$Spell"/>
-        <DeathArray index="Normal">
-            <ActorModel value="KeironUnitDeathExplosionLarge"/>
-            <ModelLink value="ProtossLargeUnitDeath"/>
-            <SoundLink value="KeironUnit_Death"/>
-            <VoiceLink value="MyriadDeathVoice"/>
-        </DeathArray>
+        <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionLarge" ModelLink="ProtossLargeUnitDeath" SoundLink="KeironUnit_Death"/>
         <WalkAnimMoveSpeed value="2.1484"/>
         <BarOffset value="80"/>
         <BarWidth value="74"/>
