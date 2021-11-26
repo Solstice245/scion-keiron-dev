@@ -27,7 +27,14 @@ Abil/EditorSuffix/ParagonSpawnMove=
 Actor/Name/Aegis=Aegis
 Actor/Name/AegisAttack=Aegis Attack
 Actor/Name/AegisAttackMissile=Aegis Attack Missile
+Actor/Name/AegisRelocateOriginModel=Aegis Relocate Origin Model
+Actor/Name/AegisRelocateOriginSound=Aegis Relocate Origin Sound
+Actor/Name/AegisRelocateStopModel=Aegis Relocate Stop Model
+Actor/Name/AegisRelocateStopSound=Aegis Relocate Stop Sound
 Actor/Name/AegisShield=Aegis Shield
+Actor/Name/AegisShieldActivate=Aegis Shield Activate
+Actor/Name/AegisShieldExpire=Aegis Shield Expire
+Actor/Name/AegisShieldLoop=Aegis Shield Loop
 Actor/Name/Aperture=Aperture
 Actor/Name/ApertureLoadModel=Aperture Load Model
 Actor/Name/ApertureLoadSound=Aperture Load Sound
@@ -296,6 +303,7 @@ Behavior/EditorPrefix/WalkAnimForward=Pulsar -
 Behavior/EditorPrefix/WalkAnimLeft=Pulsar -
 Behavior/EditorPrefix/WalkAnimRight=Pulsar -
 Behavior/EditorSuffix/EmissaryOrbTint=(Tint)
+Behavior/Name/AegisShieldAura=Aegis Shield Aura
 Behavior/Name/AegisShieldAuraReveal=Aegis Shield Aura Reveal
 Behavior/Name/ApertureRequirementDummy=Aperture - Requirement Dummy
 Behavior/Name/AtriumIndMyrBase=Atrium - IndMyr Base
@@ -441,8 +449,6 @@ Effect/EditorPrefix/HeraldEnergyCannonsLM=Harbinger -
 Effect/EditorPrefix/HeraldEnergyCannonsLMImpact=Harbinger -
 Effect/EditorPrefix/InducerGamutOrb=Inducer -
 Effect/EditorPrefix/Lunge=Myriad -
-Effect/EditorPrefix/MorphToNormal=Aegis -
-Effect/EditorPrefix/MorphToShielded=Aegis -
 Effect/EditorPrefix/OculusReveal=Oculus -
 Effect/EditorPrefix/ProjectionCP=Pariah -
 Effect/EditorPrefix/ProjectionIM=Pariah -
@@ -572,8 +578,9 @@ Footprint/Name/Footprint4x4AirContour=Footprint 4x4 (Air + Contour)
 Light/Name/EditorTestLight=default
 Model/Name/Aegis=Aegis
 Model/Name/AegisAttackImpact=Aegis Attack Impact
-Model/Name/AegisAttackLaunch=Aegis Attack Launch
 Model/Name/AegisAttackMissile=Aegis Attack Missile
+Model/Name/AegisRelocateOriginModel=Aegis Relocate Origin Model
+Model/Name/AegisRelocateStopModel=Aegis Relocate Stop Model
 Model/Name/AegisShield=Aegis Shield
 Model/Name/AegisShielded=Aegis Shielded
 Model/Name/Aperture=Aperture
@@ -721,6 +728,7 @@ Requirement/EditorPrefix/ActiveReverb=Echo -
 Requirement/EditorPrefix/ArmElytra=Myriad -
 Requirement/EditorPrefix/ElytraHasAmmo=Myriad -
 Requirement/Name/ActiveReverb=Active Reverb
+Requirement/Name/AegisRequirements=Aegis Requirements
 Requirement/Name/ApertureEnergy=Aperture Energy
 Requirement/Name/ArmElytra=Arm Elytra
 Requirement/Name/ElytraHasAmmo=Elytra Has Ammo
@@ -782,12 +790,14 @@ RequirementNode/Name/AndEq416967604CountUpgradeKeironMechWeaponsLevel1CompleteOn
 RequirementNode/Name/AndEq4230515576CountUpgradeKeironMechArmorLevel1CompleteOnly1CountUnitPantheonCompleteOnlyTechTreeCheat=CountUpgrade(KeironMechArmorLevel1,CompleteOnly) == {Keiron Mechanical Armor Level 1}1 && CountUnit(Pantheon,CompleteOnly)[TechTreeCheat]
 RequirementNode/Name/AndEq493131630CountUpgradeKeironBioWeaponsLevel2CompleteOnly1CountUnitElysiumCompleteOnlyTechTreeCheat=CountUpgrade(KeironBioWeaponsLevel2,CompleteOnly) == {Keiron Biological Weapons Level 2}1 && CountUnit(Elysium,CompleteOnly)[TechTreeCheat]
 RequirementNode/Name/AndNotCountBehaviorHarbingerJudgementModeQueuedOrBetterAtUnitNotCountBehaviorHarbingerJudgementModeStopQueuedOrBetterAtUnit=!CountBehavior(HarbingerJudgementMode,QueuedOrBetterAtUnit) && !CountBehavior(HarbingerJudgementModeStop,QueuedOrBetterAtUnit)
+RequirementNode/Name/AndOrCountUnitPantheonCompleteOnlyTechTreeCheatCountUnitZenithCompleteOnlyTechTreeCheatEq2528407907CountUnitAlias_AegisQueuedOrBetter0=(CountUnit(Pantheon,CompleteOnly)[TechTreeCheat] || CountUnit(Zenith,CompleteOnly)[TechTreeCheat]) && CountUnit(Alias_Aegis,QueuedOrBetter) == {No Aegis}0
 RequirementNode/Name/CountBehaviorApertureRequirementDummyQueuedOrBetterAtUnit1756462=CountBehavior(ApertureRequirementDummy,QueuedOrBetterAtUnit){At least 10 energy}
 RequirementNode/Name/CountBehaviorEchoReverbCasterControllerCompleteOnlyAtUnit2145668228=CountBehavior(EchoReverbCasterController,CompleteOnlyAtUnit){Must Have Active Sonic Image}
 RequirementNode/Name/CountBehaviorElytraAmmoDummyCompleteOnlyAtUnit3668520173=CountBehavior(ElytraAmmoDummy,CompleteOnlyAtUnit){Elytra must have Ammo}
 RequirementNode/Name/CountBehaviorHarbingerJudgementModeQueuedOrBetterAtUnit=CountBehavior(HarbingerJudgementMode,QueuedOrBetterAtUnit)
 RequirementNode/Name/CountBehaviorHarbingerJudgementModeStartQueuedOrBetterAtUnit=CountBehavior(HarbingerJudgementModeStart,QueuedOrBetterAtUnit)
 RequirementNode/Name/CountBehaviorHarbingerJudgementModeStopQueuedOrBetterAtUnit=CountBehavior(HarbingerJudgementModeStop,QueuedOrBetterAtUnit)
+RequirementNode/Name/CountUnitAlias_AegisQueuedOrBetter=CountUnit(Alias_Aegis,QueuedOrBetter)
 RequirementNode/Name/CountUnitAtriumCompleteOnly=CountUnit(Atrium,CompleteOnly)
 RequirementNode/Name/CountUnitCitadelCompleteOnly=CountUnit(Citadel,CompleteOnly)
 RequirementNode/Name/CountUnitConduitCompleteOnly=CountUnit(Conduit,CompleteOnly)
@@ -803,6 +813,7 @@ RequirementNode/Name/CountUnitPantheonCompleteOnlyTechTreeCheat=CountUnit(Panthe
 RequirementNode/Name/CountUnitReliquaryCompleteOnly=CountUnit(Reliquary,CompleteOnly)
 RequirementNode/Name/CountUnitSanctumCompleteOnly=CountUnit(Sanctum,CompleteOnly)
 RequirementNode/Name/CountUnitZenithCompleteOnly=CountUnit(Zenith,CompleteOnly)
+RequirementNode/Name/CountUnitZenithCompleteOnlyTechTreeCheat=CountUnit(Zenith,CompleteOnly)[TechTreeCheat]
 RequirementNode/Name/CountUpgradeAmplifiedSphereQueuedOrBetter=CountUpgrade(AmplifiedSphere,QueuedOrBetter)
 RequirementNode/Name/CountUpgradeAnisopteraWingsCompleteOnly2056493273=CountUpgrade(AnisopteraWings,CompleteOnly){Develop Anisoptera Wings at the Atrium}
 RequirementNode/Name/CountUpgradeAnisopteraWingsQueuedOrBetter=CountUpgrade(AnisopteraWings,QueuedOrBetter)
@@ -843,6 +854,7 @@ RequirementNode/Name/CountUpgradeMeridianConvergenceQueuedOrBetter=CountUpgrade(
 RequirementNode/Name/CountUpgradeModifiedGaitQueuedOrBetter=CountUpgrade(ModifiedGait,QueuedOrBetter)
 RequirementNode/Name/CountUpgradeWraithChamberQueuedOrBetter=CountUpgrade(WraithChamber,QueuedOrBetter)
 RequirementNode/Name/Eq2199705485CountUpgradeKeironBioArmorLevel1CompleteOnly1=CountUpgrade(KeironBioArmorLevel1,CompleteOnly) == {Keiron Biological Armor Level 1}1
+RequirementNode/Name/Eq2528407907CountUnitAlias_AegisQueuedOrBetter0=CountUnit(Alias_Aegis,QueuedOrBetter) == {No Aegis}0
 RequirementNode/Name/Eq2851331946CountUpgradeKeironMechArmorLevel2CompleteOnly1=CountUpgrade(KeironMechArmorLevel2,CompleteOnly) == {Keiron Mechanical Armor Level 2}1
 RequirementNode/Name/Eq2920017419CountUpgradeKeironMechWeaponsLevel2CompleteOnly1=CountUpgrade(KeironMechWeaponsLevel2,CompleteOnly) == {Keiron Mechanical Weapons Level 2}1
 RequirementNode/Name/Eq3141436001CountUpgradeKeironShieldsLevel2CompleteOnly1=CountUpgrade(KeironShieldsLevel2,CompleteOnly) == {Keiron Shields Level 2}1
@@ -882,8 +894,14 @@ RequirementNode/Name/NotCountUpgradeModifiedGaitQueuedOrBetter=!CountUpgrade(Mod
 RequirementNode/Name/NotCountUpgradeWraithChamberQueuedOrBetter=!CountUpgrade(WraithChamber,QueuedOrBetter)
 RequirementNode/Name/OrCountBehaviorHarbingerJudgementModeQueuedOrBetterAtUnitCountBehaviorHarbingerJudgementModeStopQueuedOrBetterAtUnit=CountBehavior(HarbingerJudgementMode,QueuedOrBetterAtUnit) || CountBehavior(HarbingerJudgementModeStop,QueuedOrBetterAtUnit)
 RequirementNode/Name/OrCountUnitConduitCompleteOnlyCountUnitOutletCompleteOnly=CountUnit(Conduit,CompleteOnly) || CountUnit(Outlet,CompleteOnly)
+RequirementNode/Name/OrCountUnitPantheonCompleteOnlyTechTreeCheatCountUnitZenithCompleteOnlyTechTreeCheat=CountUnit(Pantheon,CompleteOnly)[TechTreeCheat] || CountUnit(Zenith,CompleteOnly)[TechTreeCheat]
 Sound/Name/AegisAttackImpact=Aegis Attack Impact
 Sound/Name/AegisAttackLaunch=Aegis Attack Launch
+Sound/Name/AegisRelocateOriginSound=Aegis Relocate Origin Sound
+Sound/Name/AegisRelocateStopSound=Aegis Relocate Stop Sound
+Sound/Name/AegisShieldActivate=Aegis Shield Activate
+Sound/Name/AegisShieldExpire=Aegis Shield Expire
+Sound/Name/AegisShieldLoop=Aegis Shield Loop
 Sound/Name/ApertureLoad=Aperture Load Sound
 Sound/Name/ApertureUnload=Aperture Unload
 Sound/Name/Aperture_Movement=Aperture_Movement

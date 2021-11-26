@@ -44,12 +44,20 @@
     </CEffectEnumArea>
     <CEffectTeleport id="AegisRelocate">
         <ValidatorArray value="IsCitadel"/>
+        <ValidatorArray value="NotUnderConstruction"/>
         <EditorCategories value="Race:Protoss"/>
         <WhichUnit Value="Caster"/>
         <ClearQueuedOrders value="0"/>
         <MinDistance value="2"/>
         <PlacementArc value="360"/>
         <TargetLocation Value="TargetUnit"/>
+    </CEffectTeleport>
+    <CEffectTeleport id="AegisRelocateBirth">
+        <EditorCategories value="Race:Protoss"/>
+        <ClearQueuedOrders value="0"/>
+        <MinDistance value="0"/>
+        <PlacementArc value="360"/>
+        <TeleportFlags index="TestFog" value="0"/>
     </CEffectTeleport>
     <CEffectApplyBehavior id="AegisShieldAuraReveal">
         <EditorCategories value="Race:Protoss"/>
@@ -168,6 +176,12 @@
     <CEffectIssueOrder id="DisguiseAsVoltIssueOrder" parent="DisguiseIssueOrderDefault">
         <Abil value="DisguiseAsVolt"/>
     </CEffectIssueOrder>
+    <CEffectCreateUnit id="DisguiseAsVoltCU" parent="DisguiseEx3CU">
+        <SpawnUnit value="ChangelingVolt"/>
+    </CEffectCreateUnit>
+    <CEffectSwitch id="DisguiseEx3">
+        <CaseArray Validator="DisguiseAsVolt" Effect="DisguiseAsVoltCU"/>
+    </CEffectSwitch>
     <CEffectLaunchMissile id="EmissaryOrb" parent="CEffectLaunchMissileKeiron">
         <LaunchEffect value="EmissaryOrbFate"/>
         <PeriodicEffect value="EmissaryOrbAB"/>
@@ -181,9 +195,9 @@
     <CEffectDamage id="EmissaryOrbDMG" parent="CEffectDamageKeironSpell">
         <Amount value="160"/>
         <AreaArray Fraction="1"/>
-        <AreaArray Radius="0.6125" Fraction="0.75"/>
+        <AreaArray Radius="0.625" Fraction="0.75"/>
         <AreaArray Radius="1.25" Fraction="0.5"/>
-        <AreaArray Radius="2" Fraction="0.25"/>
+        <AreaArray Radius="2.5" Fraction="0.25"/>
         <SearchFilters value="-;Missile,Stasis,Dead,Hidden,Invulnerable"/>
     </CEffectDamage>
     <CEffectApplyBehavior id="EmissaryOrbFate">
@@ -248,14 +262,6 @@
         <Death value="Electrocute"/>
     </CEffectDamage>
     <CEffectLaunchMissile id="AuguryGunsLM" parent="CEffectLaunchMissileKeiron"/>
-    <CEffectMorph id="MorphToNormal">
-        <EditorCategories value="Race:Protoss"/>
-        <MorphUnit value="Aegis"/>
-    </CEffectMorph>
-    <CEffectMorph id="MorphToShielded">
-        <EditorCategories value="Race:Protoss"/>
-        <MorphUnit value="AegisShielded"/>
-    </CEffectMorph>
     <CEffectEnumMagazine id="MyriadDestroyElytraIterate">
         <EditorCategories value="Race:Protoss"/>
         <SearchFilters value="-;Self"/>
@@ -300,6 +306,12 @@
         <SearchFilters value="-;Self,Player,Ally,Neutral,Missile,Stasis,Dead,Hidden"/>
         <AreaArray Radius="20" Effect="AegisShieldAuraReveal"/>
     </CEffectEnumArea>
+    <CEffectIssueOrder id="AegisShieldedUnmorph">
+        <EditorCategories value="Race:Protoss"/>
+        <WhichUnit Value="Caster"/>
+        <Abil value="AegisMorphToNormal"/>
+        <Player Value="Caster"/>
+    </CEffectIssueOrder>
     <CEffectCreatePersistent id="ZenithParagonDelay">
         <EditorCategories value=""/>
         <InitialDelay value="0.0625"/>

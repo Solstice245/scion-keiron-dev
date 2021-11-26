@@ -1,4 +1,5 @@
-﻿Abil/Name/AegisActivateShield=Aegis Activate Shield
+﻿Abil/Name/AegisMorphToNormal=Aegis - Morph To Normal
+Abil/Name/AegisMorphToShielded=Aegis - Morph To Shielded
 Abil/Name/AegisRelocate=Aegis Relocate
 Abil/Name/ApertureLoadUnload=Aperture - Load-Unload
 Abil/Name/ApertureTeleport=Aperture - Teleport
@@ -22,6 +23,7 @@ Abil/Name/HarbingerJudgementModeStart=Harbinger - Judgement Mode
 Abil/Name/InvertFField=@InvertFField
 Abil/Name/KeironAquiferTrain=Keiron - Aquifer Train
 Abil/Name/KeironBuild=Keiron Build
+Abil/Name/KeironCitadelAegisTrain=Keiron - Citadel Aegis Train
 Abil/Name/KeironCitadelMaterialize=Keiron - Citadel Materialize
 Abil/Name/KeironCitadelTrain=Keiron - Citadel Train
 Abil/Name/KeironWarpable=Keiron Warpable
@@ -52,7 +54,6 @@ Attribute001/Name=Custom Race
 Attribute001/Value001/Name=Keiron
 Attribute001/Value002/Name=Default
 Behavior/Name/AegisShield=Aegis Shield
-Behavior/Name/AegisShieldAura=Aegis Shield Aura
 Behavior/Name/Beholder=Beholder
 Behavior/Name/CitadelEnergized=Energized
 Behavior/Name/Disconnected=!Disconnected
@@ -68,10 +69,12 @@ Behavior/Name/ParagonHasSpawn=!Paragon Has Spawn
 Behavior/Name/ParagonSpawnCount=!Paragon Spawn Count
 Behavior/Name/ParagonSpawnFollow=!Paragon Spawn Follow
 Behavior/Name/TitanWeapon=Inhibitor Beam
+Behavior/Tooltip/AegisShield=The unit is invulnerable while inside the shield of an owned Aegis.
 Behavior/Tooltip/EmissaryOrbTint=This unit being targeted by an Emissary Orb.
 Behavior/Tooltip/KeironMaterializing=Unit is being materialized.
 Button/ChargeText/KeironProductionStructures=<d ref="$BehaviorStackCount:KeironUnitCharge$"/>
 Button/Name/ActivateShield=Activate Shield
+Button/Name/Aegis=Materialize Aegis
 Button/Name/AnisopteraWings=Anisoptera Wings
 Button/Name/ApertureTeleport=Keyhole
 Button/Name/ApertureUnloadAll=Unload All
@@ -163,6 +166,7 @@ Button/Name/Stratus=Shape Stratus
 Button/Name/UmbraCloakingSystems=Cloaking Systems
 Button/Name/Zenith=Shape Zenith
 Button/Tooltip/ActivateShield=Activates a shield, rendering all friendly units within it invulnerable to attack. Enemy units are unable to enter the shields area.
+Button/Tooltip/Aegis=Powerful defense structure. Can use Relocate and Activate Shield.<n/><n/><c val="FFFF80">Can attack ground and air units.</c>
 Button/Tooltip/AnisopteraWings=Increases the movement speed of <c val="FFFF80">Elytra</c>.
 Button/Tooltip/Aperture=Transport unit. Can use Keyhole.
 Button/Tooltip/ApertureTeleport=Teleports the target unit to the caster. Costs energy. The cost varies based on the target's cargo size.
@@ -189,7 +193,7 @@ Button/Tooltip/DevelopModifiedGait=Increases the movement speed of <c val="FFFF8
 Button/Tooltip/DevelopWraithChamber=Increases the range of the <c val="FFFF80">Umbra</c> weapon, and increases its damage bonus while cloaked.
 Button/Tooltip/DiscordMode=The Echo becomes stationary, and slows enemy movement speed in the area around it.
 Button/Tooltip/Echo=Melee air fighter. Can use Discord Mode and Reverb.<n/><n/><c val="FFFF80">Can attack air units.</c>
-Button/Tooltip/Edifice=Basic tech facility.<n/><n/><c val="FFFF80">Enables:</c><n/>  - Pariah from the Citadel<n/>  - Volts from the Citadel<n/>  - Oculus from the Converter<n/>
+Button/Tooltip/Edifice=Basic tech facility.<n/><n/><c val="FFFF80">Enables:</c><n/>  - Pariah from the Citadel<n/>  - Volts from the Citadel<n/>  - Oculus from the Converter
 Button/Tooltip/Elysium=Advanced tech facility.<n/><n/><c val="FFFF80">Enables:</c><n/>  - Meridians from the Citadel
 Button/Tooltip/Elytron=Combat escorts that automatically attack their Myriad's target.<n/><n/><c val="#ColorAttackInfo">Can attack ground units.</c>
 Button/Tooltip/Emanator=Stationary timed-life unit which provides vision in an area.<n/><n/><c val="FFE303">Detector</c>
@@ -276,10 +280,12 @@ DocInfo/DescShort=2+
 DocInfo/Name=Keiron Data
 DocInfo/Website=https://discord.gg/4GSXkYU
 Effect/Name/AegisRelocate=Aegis Relocate
+Effect/Name/AegisRelocateBirth=Aegis Relocate Birth
 Effect/Name/AegisShieldAuraReveal=Aegis - Shield Aura Reveal (AB)
 Effect/Name/AegisShieldAuraRevealSA=Aegis - Shield Aura Reveal (SA)
 Effect/Name/AegisShieldAuraSASet=Aegis - Shield Aura (SASet)
 Effect/Name/AegisShieldRestore=Aegis - Shield Restore
+Effect/Name/AegisShieldedUnmorph=Aegis Shielded Unmorph
 Effect/Name/ApertureTeleportEnergySwitch=Aperture - Teleport (Energy Switch)
 Effect/Name/ApertureTeleportLargeMU=Aperture - Teleport Large (MU)
 Effect/Name/ApertureTeleportLargeSet=Aperture - Teleport Large (Set)
@@ -354,6 +360,7 @@ Effect/Name/CreateReverbTargetSet=Create Reverb
 Effect/Name/DiscordZoneDebuff=Discord Zone
 Effect/Name/DiscordZoneSA=Discord Zone
 Effect/Name/DisguiseAsVolt=Disguise As Volt
+Effect/Name/DisguiseAsVoltCU=DisguiseAsVoltCU
 Effect/Name/DisguiseAsVoltIssueOrder=Disguise As Volt Issue Order
 Effect/Name/EchoReverbFate=Reverb Fate
 Effect/Name/EchoReverbSuicide=Echo Reverb Suicide
@@ -471,8 +478,6 @@ Effect/Name/MeridianWeaponCasterMU=Meridian - Weapon (CasterMU)
 Effect/Name/MeridianWeaponDMG=Meridian - Weapon (DMG)
 Effect/Name/MeridianWeaponLM=Meridian - Weapon (LM)
 Effect/Name/MeridianWeaponTargetMU=Meridian - Weapon (TargetMU)
-Effect/Name/MorphToNormal=Morph To Normal
-Effect/Name/MorphToShielded=Morph To Shielded
 Effect/Name/MyriadDestroyElytraIterate=Myriad - Destroy Elytra Iterate
 Effect/Name/NullifierWeaponCP=Nullifier - Weapon (CP)
 Effect/Name/NullifierWeaponDMG=Nullifier - Weapon (DMG)
@@ -606,6 +611,7 @@ RequirementNode/Tooltip/CountUpgradeDissonanceProjectorCompleteOnly3767743394=De
 RequirementNode/Tooltip/CountUpgradeLatentChargeCompleteOnly2407529555TechTreeCheat=Develop Latent Charge at the Edifice
 RequirementNode/Tooltip/CountUpgradeMeridianConvergenceCompleteOnly4219486538=Develop Convergence at the Elysium
 RequirementNode/Tooltip/Eq2199705485CountUpgradeKeironBioArmorLevel1CompleteOnly1=Keiron Biological Armor Level 1
+RequirementNode/Tooltip/Eq2528407907CountUnitAlias_AegisQueuedOrBetter0=No Aegis
 RequirementNode/Tooltip/Eq2851331946CountUpgradeKeironMechArmorLevel2CompleteOnly1=Keiron Mechanical Armor Level 2
 RequirementNode/Tooltip/Eq2920017419CountUpgradeKeironMechWeaponsLevel2CompleteOnly1=Keiron Mechanical Weapons Level 2
 RequirementNode/Tooltip/Eq3141436001CountUpgradeKeironShieldsLevel2CompleteOnly1=Keiron Shields Level 2
@@ -626,7 +632,7 @@ UI/Shaping=Shaping
 Unit/Category/KeironUnits=Keiron
 Unit/LifeArmorName/KeironArmor=Keiron Armor
 Unit/LifeArmorName/KeironBiologicalArmor=Keiron Biological Armor
-Unit/LifeArmorName/KeironMechanicalArmor=Keiron Structure Armor
+Unit/LifeArmorName/KeironMechanicalArmor=Keiron Mechanical Armor
 Unit/LifeArmorName/KeironStructureArmor=Keiron Structure Armor
 Unit/Name/Aegis=Aegis
 Unit/Name/AegisShielded=Aegis
