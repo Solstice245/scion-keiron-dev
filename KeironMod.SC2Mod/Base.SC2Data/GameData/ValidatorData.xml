@@ -29,9 +29,25 @@
         <Behavior value="ApertureRequirementDummy"/>
         <Compare value="NE"/>
     </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitType id="IsCitadel">
+    <CValidatorUnitType id="IsCitadelNormal">
         <ResultFailed value="Error,error/iscitadel"/>
         <Value value="Citadel"/>
+    </CValidatorUnitType>
+    <CValidatorUnitType id="NotCitadelCharged">
+        <Value value="CitadelCharged"/>
+        <Find value="0"/>
+    </CValidatorUnitType>
+    <CValidatorCombine id="IsCitadel">
+        <ResultFailed value="Error,error/iscitadel"/>
+        <CombineArray value="IsCitadelNormal"/>
+        <CombineArray value="IsCitadelCharged"/>
+    </CValidatorCombine>
+    <CValidatorUnitType id="IsCitadelCharged">
+        <Value value="CitadelCharged"/>
+    </CValidatorUnitType>
+    <CValidatorUnitType id="NotCitadelNormal">
+        <Value value="Citadel"/>
+        <Find value="0"/>
     </CValidatorUnitType>
     <CValidatorCombine id="NotAegis">
         <CombineArray value="NotAegisNormal"/>
@@ -45,10 +61,11 @@
         <Value value="AegisShielded"/>
         <Find value="0"/>
     </CValidatorUnitType>
-    <CValidatorUnitType id="NotCitadel">
-        <Value value="Citadel"/>
-        <Find value="0"/>
-    </CValidatorUnitType>
+    <CValidatorCombine id="NotCitadel">
+        <Type value="And"/>
+        <CombineArray value="NotCitadelNormal"/>
+        <CombineArray value="NotCitadelCharged"/>
+    </CValidatorCombine>
     <CValidatorUnitOrderQueue id="NotBuilding00">
         <WhichUnit Value="Target"/>
         <AbilClass value="CAbilBuild"/>

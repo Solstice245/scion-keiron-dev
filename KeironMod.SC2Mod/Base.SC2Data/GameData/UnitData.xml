@@ -153,8 +153,7 @@
         <PlaneArray index="Ground" value="1"/>
         <ShieldsStart value="3000"/>
         <ShieldsMax value="3000"/>
-        <ShieldRegenDelay value="10"/>
-        <ShieldRegenRate value="10"/>
+        <ShieldRegenRate value="2.5"/>
         <BehaviorArray Link="AegisShieldAura"/>
         <GlossaryCategory value=""/>
     </CUnit>
@@ -302,6 +301,7 @@
         <GlossaryPriority value="64"/>
         <ScoreMake value="500"/>
         <ScoreKill value="500"/>
+        <TechTreeUnlockedUnitArray value="Paragon"/>
     </CUnit>
     <CUnit id="WeaponStratus" parent="MISSILE">
         <Race value="Keir"/>
@@ -418,6 +418,7 @@
         <GlossaryPriority value="61"/>
         <ScoreMake value="250"/>
         <ScoreKill value="250"/>
+        <TechTreeUnlockedUnitArray value="Echo"/>
     </CUnit>
     <CUnit id="FormulatorRich" parent="Formulator">
         <BuiltOn index="0" value="RichVespeneGeyser"/>
@@ -483,6 +484,8 @@
         <GlossaryPriority value="59"/>
         <ScoreMake value="450"/>
         <ScoreKill value="450"/>
+        <TechTreeUnlockedUnitArray value="Inducer"/>
+        <TechTreeUnlockedUnitArray value="Myriad"/>
     </CUnit>
     <CUnit id="Nullifier" parent="CBuildingKeiron">
         <LifeStart value="175"/>
@@ -574,6 +577,7 @@
         <GlossaryPriority value="57"/>
         <ScoreMake value="375"/>
         <ScoreKill value="375"/>
+        <TechTreeUnlockedUnitArray value="Meridian"/>
     </CUnit>
     <CUnit id="Stratus" parent="DefaultSettingsKeironBuildingFlyer">
         <LifeStart value="250"/>
@@ -718,6 +722,8 @@
         <GlossaryPriority value="63"/>
         <ScoreMake value="400"/>
         <ScoreKill value="400"/>
+        <TechTreeUnlockedUnitArray value="Harbinger"/>
+        <TechTreeUnlockedUnitArray value="Paradox"/>
     </CUnit>
     <CUnit id="Pulsar4DMDummy">
         <Race value="Keir"/>
@@ -810,8 +816,9 @@
                 <Row value="2"/>
                 <Column value="0"/>
             </LayoutButtons>
-            <LayoutButtons Face="CitadelEnergize" Type="AbilCmd" AbilCmd="CitadelEnergize,Execute" Row="2" Column="2"/>
             <LayoutButtons Face="Aegis" Type="AbilCmd" AbilCmd="KeironCitadelAegisTrain,Train1" Row="0" Column="1"/>
+            <LayoutButtons Face="ChargeCitadel" Type="AbilCmd" AbilCmd="CitadelCharge,Execute" Row="0" Column="4"/>
+            <LayoutButtons Face="CancelUpgradeMorph" Type="AbilCmd" AbilCmd="CitadelCharge,Cancel" Row="2" Column="4"/>
         </CardLayouts>
         <CardLayouts CardId="0002">
             <LayoutButtons Face="MaterializePariah" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train1" Row="0" Column="0"/>
@@ -843,8 +850,10 @@
         <AbilArray index="3" Link="KeironCitadelTrain"/>
         <AbilArray Link="KeironCitadelAegisTrain"/>
         <AbilArray Link="KeironCitadelMaterialize"/>
+        <AbilArray Link="CitadelCharge"/>
         <AbilArray Link="CitadelEnergize"/>
         <BehaviorArray Link="CitadelPowerSource"/>
+        <BehaviorArray Link="CitadelCharged"/>
         <Radius value="2"/>
         <SeparationRadius value="2"/>
         <FlagArray index="PreventReveal" value="1"/>
@@ -855,8 +864,34 @@
         <CostCategory value="Economy"/>
         <ScoreMake value="400"/>
         <ScoreKill value="400"/>
+        <TechAliasArray value="Alias_Citadel"/>
+        <TechTreeProducedUnitArray value="Converter"/>
+        <TechTreeProducedUnitArray value="Pariah"/>
+        <TechTreeProducedUnitArray value="Volt"/>
+        <TechTreeProducedUnitArray value="Pulsar"/>
+        <TechTreeProducedUnitArray value="Subjecter"/>
+        <TechTreeProducedUnitArray value="Umbra"/>
+        <TechTreeProducedUnitArray value="Inducer"/>
+        <TechTreeProducedUnitArray value="Myriad"/>
+        <TechTreeProducedUnitArray value="Titan"/>
+        <TechTreeProducedUnitArray value="Echo"/>
+        <TechTreeProducedUnitArray value="Aurora"/>
+        <TechTreeProducedUnitArray value="Aperture"/>
+        <TechTreeProducedUnitArray value="Harbinger"/>
+        <TechTreeProducedUnitArray value="Paradox"/>
+        <TechTreeProducedUnitArray value="Paragon"/>
+        <TechTreeProducedUnitArray value="Aegis"/>
+    </CUnit>
+    <CUnit id="CitadelCharged" parent="Citadel">
+        <Description value="Button/Tooltip/CitadelCharged"/>
         <EnergyMax value="100"/>
         <EnergyRegenRate value="0.5625"/>
+        <CostResource index="Minerals" value="450"/>
+        <CardLayouts index="0">
+            <LayoutButtons index="7" Face="CitadelEnergize" Type="AbilCmd" AbilCmd="CitadelEnergize,Execute" Row="2" Column="2"/>
+            <LayoutButtons index="8" Face="Aegis" Type="AbilCmd" AbilCmd="KeironCitadelAegisTrain,Train1" Row="0" Column="1"/>
+            <LayoutButtons index="9" removed="1"/>
+        </CardLayouts>
     </CUnit>
     <CUnit id="Converter" parent="CUnitKeiron">
         <LifeStart value="20"/>
@@ -1155,6 +1190,8 @@
         <GlossaryPriority value="56"/>
         <ScoreMake value="275"/>
         <ScoreKill value="275"/>
+        <TechTreeUnlockedUnitArray value="Pulsar"/>
+        <TechTreeUnlockedUnitArray value="Subjecter"/>
     </CUnit>
     <CUnit id="MeridianWeapon" parent="MISSILE">
         <Race value="Keir"/>
@@ -1217,6 +1254,7 @@
         <GlossaryPriority value="60"/>
         <ScoreMake value="500"/>
         <ScoreKill value="500"/>
+        <TechTreeUnlockedUnitArray value="Titan"/>
     </CUnit>
     <CUnit id="Umbra" parent="CUnitKeiron">
         <LifeStart value="80"/>
@@ -1449,6 +1487,8 @@
         <GlossaryPriority value="55"/>
         <ScoreMake value="225"/>
         <ScoreKill value="225"/>
+        <TechTreeUnlockedUnitArray value="Pariah"/>
+        <TechTreeUnlockedUnitArray value="Volt"/>
     </CUnit>
     <CUnit id="Foundry" parent="CBuildingKeiron">
         <Facing value="45"/>
@@ -1472,6 +1512,7 @@
         <GlossaryPriority value="58"/>
         <ScoreMake value="300"/>
         <ScoreKill value="300"/>
+        <TechTreeUnlockedUnitArray value="Umbra"/>
     </CUnit>
     <CUnit id="Outlet" parent="DefaultSettingsKeironBuildingFlyer">
         <Facing value="45"/>
@@ -1508,6 +1549,8 @@
         <GlossaryPriority value="62"/>
         <ScoreMake value="325"/>
         <ScoreKill value="325"/>
+        <TechTreeUnlockedUnitArray value="Aurora"/>
+        <TechTreeUnlockedUnitArray value="Aperture"/>
     </CUnit>
     <CUnit id="Volt" parent="CUnitKeiron">
         <Attributes index="Light" value="1"/>
