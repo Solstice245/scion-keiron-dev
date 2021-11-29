@@ -79,6 +79,8 @@
         <On index="77" Terms="Abil.##id##Research.Stop" Send="AnimBracketStop Work"/>
         <On index="78" removed="1"/>
         <On index="79" removed="1"/>
+        <Aliases index="3" value="_UnitHuge"/>
+        <Aliases index="4" removed="1"/>
     </CActorUnit>
     <CActorSplat default="1" id="KeironCursorSplat" parent="CursorSplat">
         <Model value="KeironAOECursorSplat"/>
@@ -110,6 +112,7 @@
     </CActorSound>
     <CActorSound id="CitadelChargeFinish" parent="SoundOneShot">
         <On Terms="AbilMorph.CitadelCharge.Finish" Send="Create"/>
+        <On Terms="AbilMorph.CitadelCharge.Cancel" Send="Destroy"/>
     </CActorSound>
     <CActorSound id="ParadoxShieldBoostImpact" parent="SoundOneShot">
         <On Terms="Behavior.ParadoxShieldBoost.On" Send="Create"/>
@@ -1006,7 +1009,6 @@
         <YawQuery Methods="TurretY 0"/>
     </CActorTurret>
     <CActorUnit id="Stratus" parent="GenericUnitKeironStructureAir" unitName="Stratus">
-        <Aliases index="4" value="_UnitLarge"/>
         <On index="65" Terms="WeaponStart.StratusWeapon.AttackStart"/>
         <On index="67" Terms="WeaponStop.StratusWeapon.AttackStop"/>
         <On index="69" Terms="UnitConstruction.Stratus.Start" Send="Create KeironBuildModelAirSmall"/>
@@ -1480,9 +1482,10 @@
         <On Terms="UnitBirth.Citadel" Send="AnimPlay Cover Cover PlayForever"/>
         <On Terms="UnitBirth.CitadelCharged" Send="Create"/>
         <On Terms="AbilMorph.CitadelCharge.Start" Send="AnimBracketStart Morph Stand,Work,Start Stand,Work Stand,Work,End"/>
-        <On Terms="AbilMorph.CitadelCharge.Cancel" Send="AnimBracketStop Morph"/>
         <On Terms="AbilMorph.CitadelCharge.Finish" Send="AnimBracketStop Morph"/>
         <On Terms="AbilMorph.CitadelCharge.Finish" Send="AnimClear Cover"/>
+        <On Terms="AbilMorph.CitadelCharge.Cancel" Send="AnimBracketStop Morph"/>
+        <On Terms="AbilMorph.CitadelCharge.Cancel" Send="AnimPlay Cover Cover PlayForever"/>
         <CreepHeightClass value="Medium"/>
         <BarOffset value="160"/>
         <BarWidth value="200"/>
