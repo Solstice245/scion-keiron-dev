@@ -152,44 +152,6 @@
         <Host Subject="_Selectable"/>
         <HostSiteOps Ops="SOpAttachOrigin"/>
     </CActorModel>
-    <CActorUnit id="ChangelingVolt" parent="GenericUnitMorph" unitName="ChangelingVolt">
-        <Aliases value="_UnitSmall"/>
-        <Aliases value="_ShieldGold"/>
-        <Macros value="TerrainSquibAnimations"/>
-        <AcceptedHostedPropTransfers index="Scale" value="0"/>
-        <On Terms="ActorCreation" Send="SetLocalTintColor 255,128,255"/>
-        <On Terms="UnitHeightUpdate.*.Land" Send="Create ChangelingZealot_Land"/>
-        <Model value="Volt"/>
-        <ModelFlags index="OutlineEmitter" value="1"/>
-        <DeathArray index="Normal" ModelLink="ChangelingDeathZealot2" SoundLink="Changling_Explode"/>
-        <TerrainSquibs>
-            <MovementDistance value="0.150000,0.150000"/>
-            <IdlePeriod value="0.100000,0.250000"/>
-            <RangeUp value="0.800000"/>
-            <RangeDown value="0.800000"/>
-            <AttachQuery Methods="AMFilterCenter"/>
-            <Visuals TerrainPhysicsMaterial="Water" ActorModel="TerrainSquibHarnessContinuous" ModelLink="WaterRippleMedium"/>
-        </TerrainSquibs>
-        <WalkAnimMoveSpeed value="3.25"/>
-        <BarOffset value="40"/>
-        <BarWidth value="40"/>
-        <GroupIcon>
-            <Image value="Assets\Textures\wireframe-keiron-volt.dds"/>
-        </GroupIcon>
-        <HeroIcon value="Assets\Textures\btn-unit-keiron-volt.dds"/>
-        <HighlightTooltip value="Unit/Name/Volt"/>
-        <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-biologicalarmorlevel0.dds"/>
-        <UnitIcon value="Assets\Textures\btn-unit-keiron-volt.dds"/>
-        <Wireframe>
-            <Image value="Assets\Textures\wireframe-keiron-volt.dds"/>
-        </Wireframe>
-        <WireframeShield>
-            <Image value="Assets\Textures\wireframe-keiron-volt-shield1.dds"/>
-            <Image value="Assets\Textures\wireframe-keiron-volt-shield2.dds"/>
-            <Image value="Assets\Textures\wireframe-keiron-volt-shield3.dds"/>
-        </WireframeShield>
-        <ShieldArmorIcon value="Assets\Textures\btn-upgrade-keiron-shields-level0.dds"/>
-    </CActorUnit>
     <CActorSound id="Changeling_Death2" parent="SoundOneShot">
         <On Terms="UnitDeath.ChangelingMarine; PassChance 100.000000" Send="Create"/>
         <On Terms="UnitDeath.ChangelingMarineShield; PassChance 100.000000" Send="Create"/>
@@ -1407,6 +1369,39 @@
         <BarWidth value="40"/>
         <On index="69" Terms="UnitConstruction.Volt.Start" Send="Create KeironMaterializeModelSmall"/>
     </CActorUnit>
+    <CActorUnit id="ChangelingVolt" parent="Volt" unitName="ChangelingVolt">
+        <AcceptedHostedPropTransfers index="Scale" value="0"/>
+        <On index="0" Terms="UnitBirth.ChangelingVolt" Send="Create SoundEmitter ChangelingVolt_Ambience"/>
+        <On index="1" Terms="UnitBirth.ChangelingVolt"/>
+        <On index="2" Terms="UnitRevive.ChangelingVolt"/>
+        <On index="3" Terms="UnitRevive.ChangelingVolt"/>
+        <On index="4" Terms="UnitConstruction.ChangelingVolt.Start"/>
+        <On index="5" Terms="UnitConstruction.ChangelingVolt.Finish"/>
+        <On index="69" Terms="AbilMorph.*.Finish; MorphTo ChangelingVolt" Send="Create"/>
+        <On index="70" Terms="AbilMorph.*.Start; MorphFrom ChangelingVolt" Send="Destroy"/>
+        <On index="71" Terms="ActorCreation" Send="SetLocalTintColor 255,128,255"/>
+        <On index="72" Terms="UnitHeightUpdate.*.Land" Send="Create ChangelingZealot_Land"/>
+        <On index="73" removed="1"/>
+        <DeathArray index="Normal">
+            <ActorModel value=""/>
+            <ModelLink value="ChangelingDeath"/>
+            <SoundLink value="Changling_Explode"/>
+            <VoiceLink value="ChangelingVoltDeathVoice"/>
+        </DeathArray>
+        <SoundArray index="Birth" value="ChangelingVolt_Birth"/>
+        <SoundArray index="Ready" value="ChangelingVolt_Ready"/>
+        <SoundArray index="Help" value="ChangelingVolt_Help"/>
+        <SoundArray index="What" value="ChangelingVolt_What"/>
+        <SoundArray index="Yes" value="ChangelingVolt_Yes"/>
+        <SoundArray index="Attack" value="ChangelingVolt_Attack"/>
+        <SoundArray index="Pissed" value="ChangelingVolt_Pissed"/>
+        <SoundArray index="Movement" value="ChangelingVolt_Movement"/>
+        <SoundArray index="Turning" value="ChangelingVolt_Turning"/>
+        <SoundArray index="Board" value="ChangelingVolt_Board"/>
+        <SoundArray index="Click" value="ChangelingVolt_Click"/>
+        <SoundArray index="ClickError" value="ChangelingVolt_ClickError"/>
+        <SoundArray index="Highlight" value="ChangelingVolt_Highlight"/>
+    </CActorUnit>
     <CActorSite id="VoltAttackImpactSite" parent="GenericAttackImpactSite"/>
     <CActorAction id="VoltBounceAttack" parent="GenericAttack" effectImpact="ElectronBoltBDMG" effectLaunch="ElectronBoltBLM">
         <LaunchRequest Subject="_ImpactGuide" Actor="Find"/>
@@ -1538,6 +1533,7 @@
         <BarWidth value="38"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-mechanicalarmorlevel0.dds"/>
         <PlacementActorModel value="AuroraEmanatorPlacement"/>
+        <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMedium"/>
     </CActorUnit>
     <CActorModel id="EchoReverbCreationModel" parent="ModelAnimationStyleOneShot">
         <On Terms="Behavior.EchoReverbFate.On" Send="Create"/>
