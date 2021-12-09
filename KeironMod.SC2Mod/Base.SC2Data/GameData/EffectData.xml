@@ -268,6 +268,19 @@
         <Death value="Electrocute"/>
     </CEffectDamage>
     <CEffectLaunchMissile id="AuguryGunsLM" parent="CEffectLaunchMissileKeiron"/>
+    <CEffectUserData id="InducerGamutOrbImpactUserData">
+        <EditorCategories value="Race:Keiron"/>
+        <Amount value="0"/>
+        <EffectSuccess value="GamutOrbRMImpact"/>
+    </CEffectUserData>
+    <CEffectUserData id="InducerGamutOrbReturnUserData">
+        <EditorCategories value="Race:Keiron"/>
+    </CEffectUserData>
+    <CEffectCreatePersistent id="InducerGamutOrbReturnUserDataDelay" parent="CEffectCreatePersistentKeironUnit">
+        <InitialEffect value="GamutOrbLMImpact"/>
+        <ExpireDelay value="0.5"/>
+        <ExpireEffect value="InducerGamutOrbImpactUserData"/>
+    </CEffectCreatePersistent>
     <CEffectEnumMagazine id="MyriadDestroyElytraIterate">
         <EditorCategories value="Race:Protoss"/>
         <SearchFilters value="-;Self"/>
@@ -465,16 +478,16 @@
         <BehaviorLink value="KeironUnitCharge"/>
         <Count value="1"/>
     </CEffectRemoveBehavior>
-    <CEffectApplyBehavior id="CelestialOutletAurApeAB" parent="CEffectApplyBehaviorKeironCaster">
+    <CEffectApplyBehavior id="OutletAurApeAB" parent="CEffectApplyBehaviorKeironCaster">
         <EditorCategories value=""/>
-        <Behavior value="CelestialOutletAurApeBase"/>
+        <Behavior value="OutletAurApeBase"/>
     </CEffectApplyBehavior>
     <CEffectModifyUnit id="AstralConduitEchoAddCharge">
         <EditorCategories value=""/>
         <ImpactUnit Value="Caster"/>
         <Cost Abil="KeironCitadelMaterialize,Train10" ChargeCountUse="-1"/>
     </CEffectModifyUnit>
-    <CEffectModifyUnit id="CelestialOutletAurApeAddCharge">
+    <CEffectModifyUnit id="OutletAurApeAddCharge">
         <EditorCategories value=""/>
         <ImpactUnit Value="Caster"/>
         <Cost Abil="KeironCitadelMaterialize,Train11" ChargeCountUse="-1"/>
@@ -523,11 +536,11 @@
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="AstralConduitEchoRB"/>
     </CEffectEnumArea>
-    <CEffectSet id="CelestialOutletAurApeSet">
+    <CEffectSet id="OutletAurApeSet">
         <EditorCategories value=""/>
-        <EffectArray value="CelestialOutletAurApeAB"/>
+        <EffectArray value="OutletAurApeAB"/>
         <EffectArray value="KeironUnitChargeAB"/>
-        <EffectArray value="CelestialOutletAurApeAddCharge"/>
+        <EffectArray value="OutletAurApeAddCharge"/>
     </CEffectSet>
     <CEffectSet id="EmpyreanHarParSet">
         <EditorCategories value=""/>
@@ -1102,6 +1115,7 @@
         <AmmoUnit value="ReturnGamutOrb"/>
         <ImpactEffect value=""/>
         <FinishEffect value="GamutOrbRMImpact"/>
+        <LaunchEffect value="InducerGamutOrbReturnUserData"/>
     </CEffectLaunchMissile>
     <CEffectRedirectMissile id="GamutOrbRedirect">
         <ValidatorArray value="GamutOrbTargetIsDead"/>
