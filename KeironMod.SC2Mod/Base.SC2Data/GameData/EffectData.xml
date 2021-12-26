@@ -217,9 +217,8 @@
     <CEffectApplyBehavior id="HarbingerHeraldEnergyCannonsAOEAB" parent="CEffectApplyBehaviorKeironTarget">
         <Behavior value="HarbingerHeraldEnergyCannonsAOE"/>
     </CEffectApplyBehavior>
-    <CEffectCreatePersistent id="HarbingerHeraldEnergyCannonsAOECP">
+    <CEffectCreatePersistent id="HarbingerHeraldEnergyCannonsAOECP" parent="CEffectCreatePersistentKeiron">
         <ValidatorArray value="HarbingerJudgementModeOn"/>
-        <EditorCategories value=""/>
         <PeriodCount value="8"/>
         <PeriodicEffectArray value="HarbingerHeraldEnergyCannonsSA"/>
         <PeriodicPeriodArray value="0.25"/>
@@ -233,7 +232,7 @@
         <AreaArray Radius="1.75" Effect="HarbingerHeraldEnergyCannonsAOEAB"/>
     </CEffectEnumArea>
     <CEffectSet id="HarbingerHeraldEnergyCannonsSet">
-        <EditorCategories value=""/>
+        <EditorCategories value="Race:Keiron"/>
         <EffectArray value="HeraldEnergyCannonsLMImpact"/>
         <EffectArray value="HarbingerHeraldEnergyCannonsAOECP"/>
     </CEffectSet>
@@ -256,9 +255,7 @@
         <Kind value="Melee"/>
         <Amount value="5"/>
     </CEffectDamage>
-    <CEffectCreatePersistent id="AuguryGuns">
-        <EditorCategories value="Race:Protoss"/>
-        <WhichLocation Value="TargetUnit"/>
+    <CEffectCreatePersistent id="AuguryGuns" parent="CEffectCreatePersistentKeironUnit">
         <PeriodCount value="2"/>
         <PeriodicEffectArray value="AuguryGunsLM"/>
         <PeriodicPeriodArray value="0.0625"/>
@@ -670,6 +667,9 @@
         <EditorCategories value=""/>
         <SearchFilters value="-;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <AreaArray MaxCount="1" Radius="3" Effect="MeridianLightningBoltSet"/>
+        <TargetSorts>
+            <SortArray value="TSEnergy"/>
+        </TargetSorts>
     </CEffectEnumArea>
     <CEffectSet id="MeridianLightningBoltSet">
         <ValidatorArray value="noMarkers"/>

@@ -121,7 +121,7 @@
     <CActorModel id="UmbraShieldCompulsionModel" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Effect.UmbraShieldCompulsion.Start" Send="Create"/>
         <On Terms="ActorCreation" Send="SetTintColor 193,255,6"/>
-        <HostSiteOps Ops="SOpAttachCenter"/>
+        <HostSiteOps Ops="SOpAttachShield"/>
     </CActorModel>
     <CActorSound id="UmbraShieldCompulsionSound" parent="SoundOneShotKeiron" Effect="UmbraShieldCompulsion"/>
     <CActorSound id="ParadoxShieldBoostImpact" parent="SoundOneShot">
@@ -143,23 +143,21 @@
         <On Terms="Abil.ConverterGather.Start" Send="StatusIncrement Harvest"/>
         <On Terms="Abil.ConverterGather.Stop" Send="StatusDecrement Harvest"/>
     </CActorUnit>
-    <CActorModel id="AegisRelocateOriginModel" parent="ModelAnimationStyleOneShot">
+    <CActorModel id="AegisRelocateOriginModel" parent="ModelAnimationStyleOneShotUNIT">
         <InheritType value="OneShot"/>
         <Inherits index="BaseModelScale" value="1"/>
         <Inherits index="Scale" value="1"/>
         <On Terms="ActorCreation" Send="SetTintColor {255,128,0 1.500000}"/>
         <On Terms="Abil.AegisRelocate.SourceCastStart" Send="Create"/>
-        <Host Subject="_Selectable"/>
         <HostSiteOps Ops="SOpAttachOriginStationary"/>
         <ModelFlags index="AllowHitTest" value="0"/>
     </CActorModel>
-    <CActorModel id="AegisRelocateStopModel" parent="ModelAnimationStyleOneShot">
+    <CActorModel id="AegisRelocateStopModel" parent="ModelAnimationStyleOneShotUNIT">
         <InheritType value="OneShot"/>
         <Inherits index="BaseModelScale" value="1"/>
         <Inherits index="Scale" value="1"/>
         <On Terms="ActorCreation" Send="SetTintColor {255,128,0 1.500000}"/>
         <On Terms="Effect.AegisRelocate.Stop; At Source" Send="Create"/>
-        <Host Subject="_Selectable"/>
         <HostSiteOps Ops="SOpAttachOrigin"/>
     </CActorModel>
     <CActorSound id="Changeling_Death2" parent="SoundOneShot">
@@ -413,7 +411,7 @@
         <ModelFlags index="OutlineEmitter" value="0"/>
         <ModelFlags index="OutlineOccluder" value="1"/>
     </CActorUnit>
-    <CActorModel id="AegisShield" parent="ModelAnimationStyleContinuous">
+    <CActorModel id="AegisShield" parent="ModelAnimationStyleContinuousUNIT">
         <On Terms="Behavior.AegisShieldAura.On" Send="Create"/>
         <On Terms="Behavior.AegisShieldAura.Off" Send="AnimBracketStop BSD"/>
         <On Terms="ActorCreation" Send="SetOpacity"/>
@@ -423,7 +421,6 @@
         <HostSiteOps Ops="SOpMoveDownBy2 SOpMoveDownBy2 SOpMoveDownBy2"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
         <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
-        <Host Subject="_Selectable"/>
     </CActorModel>
     <CActorUnit id="Aperture" parent="GenericUnitKeiron" unitName="Aperture">
         <On index="69" Terms="UnitConstruction.Aperture.Start" Send="Create KeironMaterializeModelAirMedium"/>
@@ -646,13 +643,12 @@
     <CActorSiteOpLocalOffset id="SOpEdificeBuildOffset">
         <LocalOffset value="0.070000,-0.270000,0.000000"/>
     </CActorSiteOpLocalOffset>
-    <CActorModel id="ApertureUnloadModel" parent="ModelAnimationStyleOneShot">
+    <CActorModel id="ApertureUnloadModel" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="AbilTransport.ApertureLoadUnload.CargoUnload" Send="Create"/>
         <On Terms="ActorCreation" Send="SetTintColor {255,255,0 1.500000}"/>
-        <Host Subject="_Selectable"/>
         <HostSiteOps Ops="SOpAttachOrigin SOpMoveDownByDot25"/>
-        <Model value="ApertureUnload"/>
         <MaxScale value="1.500000"/>
+        <Model value="ApertureUnload"/>
         <AutoScaleFactor value="0.900000"/>
     </CActorModel>
     <CActorSound id="ApertureUnloadSound" parent="SoundOneShot">
@@ -661,11 +657,10 @@
         <HostSiteOps Ops="SOpAttachOrigin"/>
         <Sound value="ApertureUnload"/>
     </CActorSound>
-    <CActorModel id="ApertureLoadModel" parent="ModelAnimationStyleOneShot">
+    <CActorModel id="ApertureLoadModel" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Effect.ApertureTeleportTP.Start; At Target" Send="Create"/>
         <On Terms="AbilTransport.ApertureLoadUnload.CargoLoad" Send="Create"/>
         <On Terms="ActorCreation" Send="SetTintColor {255,255,0 1.500000}"/>
-        <Host Subject="_Selectable"/>
         <HostSiteOps Ops="SOpAttachOriginStationary"/>
     </CActorModel>
     <CActorSound id="ApertureLoadSound" parent="SoundOneShot">
@@ -715,7 +710,6 @@
         <On index="70" Terms="UnitConstruction.Zenith.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 81.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
     <CActorBeamSimple id="KeironConstructionBeam" parent="BeamSimpleAnimationStyleContinuous">
-        <EditorCategories value=""/>
         <On Terms="Effect.KeironConstructionStart.Start; At Target" Send="Create"/>
         <On Terms="Effect.KeironConstructionStop.Start" Send="Destroy"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
@@ -740,7 +734,6 @@
         <On Terms="ActorCreation" Send="SetTintColor {255,134,0 1.500000} 1.250000"/>
     </CActorModel>
     <CActorAction id="MeridianConvergenceAttack" parent="GenericAttack" effectAttack="MeridianConvergenceDMG">
-        <EditorCategories value=""/>
         <ImpactMap index="None" Model="MeridianConvergenceDamage" Sound=""/>
     </CActorAction>
     <CActorModel id="MeridianConvergenceImpact" parent="ModelAnimationStyleOneShotEffect" Effect="MeridianConvergenceSA">
@@ -914,13 +907,11 @@
         <Scale value="1.500000"/>
     </CActorModel>
     <CActorAction id="MeridianLightningBoltAttackInit" parent="GenericAttack" effectAttack="MeridianLightningBoltInitDMG">
-        <EditorCategories value=""/>
         <Beam value="MeridianLightningBoltBeam"/>
         <ImpactSite value="MeridianLightningBoltSite"/>
         <ImpactMap index="None" Sound="MeridianLightningBolt_Impact"/>
     </CActorAction>
     <CActorAction id="MeridianLightningBoltAttack" parent="GenericAttack" effectAttack="MeridianLightningBoltDMG">
-        <EditorCategories value=""/>
         <LaunchRequest Subject="MeridianLightningBoltSite" Actor="Find"/>
         <LaunchAssets Model="MeridianLightningBoltAttackInitLaunch" Sound="MeridianLightningBoltAttackInitLaunch"/>
         <Beam value="MeridianLightningBoltBeam"/>
@@ -987,7 +978,6 @@
         <PlacementActorModel value="PlacementModelKeironStratus"/>
     </CActorUnit>
     <CActorModel id="NullifierAddition" parent="ModelAddition">
-        <EditorCategories value=""/>
         <HostSiteOps Ops="SOpAttachTurretY SOpMoveBy2 SOpMoveUpByDot5 SOpMoveUpByDot25"/>
         <Model value="Invisible"/>
         <ModelFlags index="AllowHitTest" value="0"/>
@@ -1120,7 +1110,6 @@
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-mechanicalarmorlevel0.dds"/>
     </CActorUnit>
     <CActorModel id="TitanAddition" parent="ModelAddition">
-        <EditorCategories value=""/>
         <HostSiteOps Ops="SOpAttachTurretY SOpMoveBy4 SOpMoveUpByDot5"/>
         <Model value="Invisible"/>
         <ModelFlags index="AllowHitTest" value="0"/>
@@ -1187,7 +1176,6 @@
         <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
     </CActorModel>
     <CActorModelMaterial id="KeironMaterializeGlaze" parent="GlazeParent">
-        <EditorCategories value=""/>
         <On Terms="ActorCreation" Send="ModelMaterialApplyTo ::Main"/>
         <On Terms="Behavior.KeironMaterializing.Create" Send="Create"/>
         <On Terms="Behavior.KeironMaterializing.Destroy" Send="ModelMaterialApplyTo ::Main"/>
@@ -1214,19 +1202,17 @@
         <On index="70" Terms="UnitConstruction.Elysium.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 71.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
     <CActorUnit id="Paradox" parent="GenericUnitKeiron" unitName="Paradox">
-        <EditorCategories value=""/>
-        <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
-        <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMedium" SoundLink="KeironUnit_Death"/>
         <On index="69" Terms="UnitConstruction.Paradox.Start" Send="Create KeironMaterializeModelAirMedium"/>
         <On Terms="Abil.ParadoxShield.SourceChannelStart" Send="$Spell"/>
         <On Terms="Abil.InvertFField.SourceCastStart" Send="$Spell PlayForever"/>
         <On Terms="Abil.InvertFField.SourceFinishStart" Send="AnimClear Spell"/>
+        <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMedium" SoundLink="KeironUnit_Death"/>
+        <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-mechanicalarmorlevel0.dds"/>
     </CActorUnit>
     <CActorModel id="ParadoxShield" parent="ModelAddition">
         <Inherits index="Opacity" value="0"/>
         <Inherits index="TintColor" value="0"/>
-        <EditorCategories value=""/>
         <On Terms="Behavior.ParadoxShieldBoost.On" Send="Create"/>
         <On Terms="Behavior.ParadoxShieldBoost.Off" Send="Destroy"/>
         <HostSiteOps Ops="SOpAttachCenter"/>
@@ -1240,19 +1226,15 @@
         <On index="70" Terms="UnitConstruction.Empyrean.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 66.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
     <CActorUnit id="Pulsar4DMDummy" parent="GenericUnitEmpty" unitname="Pulsar4DMDummy">
-        <EditorCategories value=""/>
         <On Terms="UnitBirth.Pulsar4DMDummy" Send="Create"/>
         <Model value="Invisible"/>
     </CActorUnit>
     <CActorModel id="InvertForceField" parent="ModelAnimationStyleContinuous">
-        <EditorCategories value=""/>
         <On Terms="Effect.InvertFFieldCP.Start" Send="Create"/>
         <On Terms="Effect.InvertFFieldCP.Stop" Send="Destroy"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModel>
-    <CActorSplat id="InvertForceFieldSplat" parent="ProtossCursorSplat" abil="InvertFField">
-        <EditorCategories value=""/>
-    </CActorSplat>
+    <CActorSplat id="InvertForceFieldSplat" parent="ProtossCursorSplat" abil="InvertFField"/>
     <CActorUnit id="Paragon" parent="GenericUnitKeiron" unitName="Paragon">
         <On index="69" Terms="UnitConstruction.Paragon.Start" Send="Create KeironMaterializeModelAirParagon"/>
         <On index="70" Terms="UnitConstruction.Paragon.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 10.500000 AsDuration 0.000000 100"/>
@@ -1269,11 +1251,10 @@
         <BarWidth value="120"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-mechanicalarmorlevel0.dds"/>
     </CActorUnit>
-    <CActorModel id="InducerAttackLaunchModel" parent="ModelAnimationStyleOneShot">
+    <CActorModel id="InducerAttackLaunchModel" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Behavior.InducerGamutOrb.On" Send="Create"/>
         <On Terms="Behavior.InducerGamutOrb.Off" Send="Create"/>
         <On Terms="ActorCreation" Send="SetTintColor {255,75,0 3.000000}"/>
-        <Host Subject="_Selectable"/>
         <HostSiteOps Ops="SOpAttachWeapon SOpMoveDownByDot75 SOpRotationRandomDisc"/>
     </CActorModel>
     <CActorUnit id="ParagonSpawn" parent="GenericUnitStandard" unitName="ParagonSpawn">
@@ -1286,7 +1267,6 @@
         <HostSiteOps Ops="SOp180"/>
     </CActorUnit>
     <CActorBeamSimple id="ParagonSpawnAttachBeam" parent="BeamSimpleAnimationStyleContinuous">
-        <EditorCategories value=""/>
         <On Terms="Effect.ParagonSpawnFollowCP.Start; At Target" Send="Create"/>
         <On Terms="Effect.ParagonSpawnFollowCP.Stop; At Target" Send="Destroy"/>
         <HostLaunchSiteOps Ops="SOpSourceUnit SOpAttachOverhead"/>
@@ -1308,7 +1288,6 @@
         <Lifetime value="-1.000000"/>
     </CActorAction>
     <CActorBeamSimple id="TitanWeaponBeam" parent="BeamSimpleAnimationStyleContinuous">
-        <EditorCategories value=""/>
         <On Terms="Effect.TitanWeaponCP.Stop" Send="Destroy"/>
         <Model value="TitanWeapon"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
@@ -1360,7 +1339,6 @@
         <On index="70" Terms="UnitConstruction.Foundry.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 51.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
     <CActorModelMaterial id="KeironConstructionGlaze" parent="GlazeParent">
-        <EditorCategories value=""/>
         <On Terms="ActorCreation" Send="ModelMaterialApplyTo ::Main"/>
         <On Terms="Abil.KeironBuild.BuiltStart" Send="Create"/>
         <On Terms="Abil.KeironBuild.BuiltStop" Send="ModelMaterialApplyTo ::Main"/>
@@ -1374,9 +1352,7 @@
         </Types>
         <On Terms="TurretEnable.Titan" Send="Create"/>
     </CActorLookAt>
-    <CActorSite id="MeridianLightningBoltSite">
-        <EditorCategories value=""/>
-    </CActorSite>
+    <CActorSite id="MeridianLightningBoltSite"/>
     <CActorMissile id="MeridianWeaponMissile" parent="GenericAttackMissile" unitName="MeridianWeapon">
         <Model value="MeridianWeaponMissile"/>
     </CActorMissile>
@@ -1456,10 +1432,9 @@
         <Missile value="AuroraEmanatorMissile"/>
         <ImpactSiteOps Ops="SOpAttachHarness SOpAttachVolumeStandard SOpAttachCenter"/>
     </CActorAction>
-    <CActorModel id="AuroraWeaponCharge" parent="ModelAnimationStyleOneShot">
+    <CActorModel id="AuroraWeaponCharge" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Effect.HalationPlasma.Start" Send="Create"/>
         <On Terms="ActorCreation" Send="SetTintColor 165,74,255"/>
-        <Host Subject="_Selectable"/>
         <HostSiteOps Ops="SOpAttachWeapon"/>
     </CActorModel>
     <CActorUnit id="Citadel" parent="GenericUnitKeironStructure" unitName="Citadel">
@@ -1533,14 +1508,13 @@
     <CActorSound id="EchoFighterModeSound" parent="SoundOneShot">
         <On Terms="Abil.EchoFighterMode.Start" Send="Create"/>
     </CActorSound>
-    <CActorModel id="EchoDiscordZone" parent="ModelAnimationStyleContinuous">
+    <CActorModel id="EchoDiscordZone" parent="ModelAnimationStyleContinuousUNIT">
         <On Terms="Behavior.DiscordZoneRadius.On" Send="Create"/>
         <On Terms="Behavior.DiscordZoneRadius.Off" Send="AnimBracketStop BSD"/>
         <On Terms="ActorCreation" Send="SetTintColor 255,0,255"/>
         <HostSiteOps Ops="SOpLowerBy375"/>
         <ModelFlags index="AllowHitTest" value="0"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
-        <Host Subject="_Selectable"/>
     </CActorModel>
     <CActorUnit id="EchoReverb" parent="GenericUnitStandard" unitName="EchoReverb">
         <On Terms="ActorCreation" Send="SetOpacity 0.300000"/>
@@ -1560,11 +1534,10 @@
         <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMedium"/>
         <PlaceholderActorModel value="AuroraEmanatorPlacement"/>
     </CActorUnit>
-    <CActorModel id="EchoReverbCreationModel" parent="ModelAnimationStyleOneShot">
+    <CActorModel id="EchoReverbCreationModel" parent="ModelAnimationStyleOneShotUNIT">
+        <Inherits index="CloakEffect" value="1"/>
         <On Terms="Behavior.EchoReverbFate.On" Send="Create"/>
         <On Terms="ActorCreation" Send="SetTintColor {255,108,11 2.000000}"/>
-        <Inherits index="CloakEffect" value="1"/>
-        <HostForProps Subject="_Selectable"/>
         <ModelFlags index="CloakedUndetectedIsHidden" value="1"/>
     </CActorModel>
     <CActorModel id="EchoReverbTeleportInModel" parent="ModelAnimationStyleOneShot">
