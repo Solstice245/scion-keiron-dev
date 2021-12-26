@@ -60,10 +60,12 @@ Behavior/Name/ParadoxShieldBoost=Усиление щита
 Behavior/Name/ParagonHasSpawn=!Парагон появился
 Behavior/Name/ParagonSpawnCount=!Счетчик появления Парагона
 Behavior/Name/ParagonSpawnFollow=!Направление Парагона
+Behavior/Name/PulsarDampener=Гаситель
 Behavior/Name/TitanWeapon=Луч-ингибитор
 Behavior/Tooltip/EmissaryOrbTint=На этого юнита нацелена Сфера Эмиссара.
 Behavior/Tooltip/AegisShieldDummyInitRadiusDisable=Helps prevent the conjoin from latching onto units it shouldn't
 Behavior/Tooltip/KeironMaterializing=Единица материализуется
+Behavior/Tooltip/PulsarDampener=Урон по области и от способностей уменьшен на <d ref="-Behavior,PulsarDampener,DamageResponse.ModifyFraction+1*100"/>%.
 Button/ChargeText/KeironProductionStructures=<d ref="$BehaviorStackCount:KeironUnitCharge$"/>
 Button/Name/ActivateShield=Активировать Щит
 Button/Name/AnisopteraWings=Крылья Анизоптеры
@@ -73,6 +75,7 @@ Button/Name/ApetureLoad=Загрузить
 Button/Name/Atrium=Сформировать Атриум
 Button/Name/Beholder=Смотрящий
 Button/Name/CButtonKeiron=CButtonKeiron
+Button/Name/ChargeCitadel=Зарядить Цитадель
 Button/Name/Citadel=Сформировать Цитадель
 Button/Name/CitadelEnergize=Подзарядка
 Button/Name/Conduit=Сформировать Канал
@@ -86,6 +89,8 @@ Button/Name/DevelopExaltedShields=Разработать Возвышенные 
 Button/Name/DevelopKeyhole=Разработать Ключ в Пустоту
 Button/Name/DevelopLatentCharge=Разработать Скрытый Заряд
 Button/Name/DevelopModifiedGait=Разработать Модифицированное Движение
+Button/Name/DevelopPulsarDampener=Разработать Гаситель
+Button/Name/DevelopUmbraShieldCompulsion=Разработать Вынужденную Маскировку
 Button/Name/DevelopWraithChamber=Разработать Камеру Призраков
 Button/Name/DiscordMode=Режим Разлада
 Button/Name/Edifice=Сформировать Дом Доктрин
@@ -143,6 +148,7 @@ Button/Name/ParadoxShield=Усиление Щита
 Button/Name/PlaceEmanator=Разместить Эманатор
 Button/Name/Prison=Тюрьма
 Button/Name/Projection=Проекция
+Button/Name/PulsarDampener=Гаситель
 Button/Name/Reliquary=Сформировать Реликварий
 Button/Name/Relocate=Перемещение
 Button/Name/Reveal=Раскрытие
@@ -154,17 +160,21 @@ Button/Name/ShapeStructure=Сформировать Строение
 Button/Name/SonicImage=Звуковое Изображение
 Button/Name/Stratus=Сформировать Стратус
 Button/Name/UmbraCloakingSystems=Маскировочные Системы
+Button/Name/UmbraDamageReduction=Отклонение
+Button/Name/UmbraShieldCompulsion=Вынужденная Маскировка
 Button/Name/Zenith=Сформировать Зенит
 Button/Tooltip/ActivateShield=Активирует Щит, внутри которого дружественные юниты неуязвимы для атаки. Вражеские юниты не могут войти в область щита.
 Button/Tooltip/AnisopteraWings=Увеличивает скорость передвижения <c val="FFFF80">Элитры</c>.
-Button/Tooltip/Aperture=Транспортная единица. Может использовать Ключ в Пустоту.
+Button/Tooltip/Aperture=Транспортная единица. Может быть улучшена, чтобы использовать Ключ в Пустоту.
 Button/Tooltip/ApertureTeleport=Телепортирует выбранную единицу к Апертуре. Расходует энергию. Стоимость варьируется в зависимости от размера цели.
 Button/Tooltip/ApertureUnloadAll=Выгружает всех юнитов.
 Button/Tooltip/ApetureLoad=Загружает единицы в трюм Апертуры.
 Button/Tooltip/Atrium=Технологичное здание.<n/><n/><c val="FFFF80">Открывает:</c><n/>  - Индукторы из Цитадели<n/>  - Мириады из Цитадели
 Button/Tooltip/Aurora=Самолёт для тактических ударов. Может использовать Эманатор.<n/><n/><c val="FFFF80">Может атаковать наземные цели.</c>
 Button/Tooltip/Beholder=Меридиан получает детекцию и дополнительную дальность обзора на <d ref="Behavior,Beholder,Duration"/> секунд.
-Button/Tooltip/Citadel=Основное строение. Используется для создания всех юнитов Кейронов и хранения собранных ресурсов. Может использовать Подзарядку.
+Button/Tooltip/ChargeCitadel=Улучшает Цитадель, открывая доступ к Подзарядке.
+Button/Tooltip/Citadel=Основное строение. Используется для создания всех юнитов Кейронов и хранения собранных ресурсов. Может быть улучшено для использования Подзарядки.
+Button/Tooltip/CitadelCharged=Основное строение. Используется для создания всех юнитов Кейронов и хранения собранных ресурсов. Может использовать Подзарядку.
 Button/Tooltip/CitadelEnergize=Повышает скорость передвижения и регенерации, а также укрепляет щиты находящихся рядом юнитов. <n/><n/><c val="FFFF80">Также повышает скорость добычи ресурсов.</c>
 Button/Tooltip/Conduit=Базовое строение воздушной техники.<n/><n/><c val="FFFF80">Открывает:</c><n/>  - Эхо из Цитадели
 Button/Tooltip/Converter=Базовая рабочая единица. Может собирать ресурсы и формировать строения Кейронов.<n/><n/><c val="ffff8a">Может атаковать наземные цели.</c>
@@ -177,8 +187,10 @@ Button/Tooltip/DevelopExaltedShields=<c val="FFFF80">Пария</c> получа
 Button/Tooltip/DevelopKeyhole=Позволяет <c val="FFFF80">Апертуре</c> использовать способность Ключ в Пустоту.
 Button/Tooltip/DevelopLatentCharge=Позволяет оружию <c val="FFFF80">Вольта</c> атаковать дополнительную цель и наносить ей <d ref="Effect,ElectronBoltBDMG,Amount"/> урона.
 Button/Tooltip/DevelopModifiedGait=Повышает скорость передвижения <c val="FFFF80">Вольта</c> и <c val="FFFF80">Парии</c>.
+Button/Tooltip/DevelopPulsarDampener=Позволяет <c val="FFFF80">Пульсару</c> использовать способность Гаситель.
+Button/Tooltip/DevelopUmbraShieldCompulsion=Позволяет <c val="FFFF80">Умбре</c> использовать способность Вынужденная Маскировка.
 Button/Tooltip/DevelopWraithChamber=Увеличивает радиус атаки <c val="FFFF80">Умбры</c> и увеличивает бонус к урону когда замаскирован.
-Button/Tooltip/DiscordMode=Эхо становится неподвижным и создаёт вокруг себя зону замедления.
+Button/Tooltip/DiscordMode=Эхо становится неподвижным и создаёт вокруг себя зону замедления, раскрывающую замаскированные боевые единицы.
 Button/Tooltip/Echo=Воздушная единица ближнего боя. Может использовать Режим Разлада и Отражение.<n/><n/><c val="FFFF80">Может атаковать воздушные цели.</c>
 Button/Tooltip/Edifice=Базовое технологичное строение.<n/><n/><c val="FFFF80">Открывает:</c><n/>  - Парии из Цитадели<n/>  - Вольты из Цитадели<n/>  - Око из Конвертеров
 Button/Tooltip/Elysium=Продвинутое технологичное строение.<n/><n/><c val="FFFF80">Открывает:</c><n/>  - Меридианы из Цитадели
@@ -213,7 +225,7 @@ Button/Tooltip/KeironShieldsLevel2=Значительно улучшает щи�
 Button/Tooltip/KeironShieldsLevel3=Максимально улучшает щиты всех юнитов и строений Кейронов.
 Button/Tooltip/LatentCharge=Позволяет оружию <c val="FFFF80">Вольта</c> атаковать дополнительную цель и наносить ей <d ref="Effect,ElectronBoltBDMG,Amount"/> урона.
 Button/Tooltip/MaterializeAirUnits=Список воздушных единиц.
-Button/Tooltip/MaterializeAperture=Производится в <c val="FFFF80">Точке Выпуска</c>.<n/><n/>Транспорт. Может использовать Ключ в Пустоту.
+Button/Tooltip/MaterializeAperture=Производится в <c val="FFFF80">Точке Выпуска</c>.<n/><n/>Транспорт. Может быть улучшена, чтобы использовать Ключ в Пустоту.
 Button/Tooltip/MaterializeAurora=Производится в <c val="FFFF80">Точке Выпуска</c>.<n/><n/>Самолёт для тактических ударов. Может использовать Эманатор.<n/><n/><c val="FFFF80">Может атаковать наземные цели.</c>
 Button/Tooltip/MaterializeEcho=Производится в <c val="FFFF80">Канале</c>.<n/><n/>Воздушная единица ближнего боя. Может использовать Режим Разлада и Отражение.<n/><n/><c val="FFFF80">Может атаковать воздушные цели.</c>
 Button/Tooltip/MaterializeGroundUnits=Список наземных единиц.
@@ -224,10 +236,10 @@ Button/Tooltip/MaterializeMyriad=Производится в <c val="FFFF80">А�
 Button/Tooltip/MaterializeParadox=Производится в <c val="FFFF80">Эмпирее</c>.<n/><n/>Юнит поддержки. Может использовать Усиление Щита и Тюрьму.<n/><n/><c val="FFE303">Detector</c>
 Button/Tooltip/MaterializeParagon=Производится в <c val="FFFF80">Зените</c>.<n/><n/>Капитальный корабль. Может использовать Сферу Эмиссара.<n/><n/><c val="FFFF80">Может атаковать наземные и воздушные цели.</c>
 Button/Tooltip/MaterializePariah=Производится в <c val="FFFF80">Доме Доктрин</c>.<n/><n/>Лёгкий воин ближнего боя. Может использовать Проекцию.<n/><n/><c val="FFFF80">Может атаковать наземные цели.</c>
-Button/Tooltip/MaterializePulsar=Производится в <c val="FFFF80">Святилище</c>.<n/><n/>Прочная боевая единица ближнего боя.<n/><n/><c val="FFFF80">Может атаковать наземные цели.</c>
+Button/Tooltip/MaterializePulsar=Производится в <c val="FFFF80">Святилище</c>.<n/><n/>Прочная боевая единица ближнего боя. Может быть улучшена, чтобы использовать способность Гаситель.<n/><n/><c val="FFFF80">Может атаковать наземные цели.</c>
 Button/Tooltip/MaterializeSubjecter=Производится в <c val="FFFF80">Святилище</c>.<n/><n/>Дальнобойный противовоздушный юнит поддержки.<n/><n/><c val="FFFF80">Может атаковать наземные и воздушные цели.</c>
 Button/Tooltip/MaterializeTitan=Производится в <c val="FFFF80">Пантеоне</c>.</n><n/>Тяжёлый штурмовик.<n/><n/><c val="FFFF80">Может атаковать наземные цели.</c>
-Button/Tooltip/MaterializeUmbra=Производится в <c val="FFFF80">Литейном Заводе</c>.<n/><n/>Замаскированный юнит для тактических целей. Эффективен против бронированных целей.<n/><n/><c val="FFFF80">Может атаковать наземные цели.</c>
+Button/Tooltip/MaterializeUmbra=Производится в <c val="FFFF80">Литейном Заводе</c>.<n/><n/>Замаскированный юнит для тактических целей. Эффективен против бронированных целей. Может быть улучшен, чтобы использовать Вынужденную Маскировку.<n/><n/><c val="FFFF80">Может атаковать наземные цели.</c>
 Button/Tooltip/MaterializeVolt=Производится в <c val="FFFF80">Доме Доктрин</c>.<n/><n/>Лёгкая единица дальнего боя.<n/><n/><c val="FFFF80">Может атаковать наземные и воздушные цели.</c>
 Button/Tooltip/Meridian=Кастер. Может использовать Смотрителя и Удар Молнии. Можно исследовать способность Конвергенция.<n/><n/><c val="FFFF80">Может атаковать наземные и воздушные цели.</c>
 Button/Tooltip/MeridianConvergence=Наносит <d ref="Effect,MeridianConvergenceDMG,Amount"/> (+<d ref="Effect,MeridianConvergenceDMG,AttributeBonus[Mechanical]"/> против Механических) урона по площади <d ref="Effect,MeridianConvergenceCP,InitialDelay"/> секунд.
@@ -245,7 +257,8 @@ Button/Tooltip/Pariah=Лёгкий воин ближнего боя. Может 
 Button/Tooltip/PlaceEmanator=Эманаторы дают обзор области. Они уязвимы для атак, но могут навсегда стать невидимыми спустя <d ref="Behavior,EmanatorFateDelay,Duration"/> секунд после размещения.</n></n><c val="FFE303">Детектор</c>
 Button/Tooltip/Prison=Небольшая область эффекта. Вражеские юниты, которые входят в эту область, не могут из неё выйти.
 Button/Tooltip/Projection=Позволяет кастеру перемещаться между другими единицами с увеличенной скоростью. Не может атаковать в этой фазе.
-Button/Tooltip/Pulsar=Прочная боевая единица ближнего боя.<n/><n/><c val="FFFF80">Может атаковать наземные цели.</c>
+Button/Tooltip/Pulsar=Прочная боевая единица ближнего боя. Может быть улучшена, чтобы использовать способность Гаситель.<n/><n/><c val="FFFF80">Может атаковать наземные цели.</c>
+Button/Tooltip/PulsarDampener=Позволяет боевой единице получать на <d ref="-Behavior,PulsarDampener,DamageResponse.ModifyFraction+1*100"/>% меньше урона по области и от способоностей в течение <d ref="Behavior,PulsarDampener,Duration"/> секунд.
 Button/Tooltip/Reliquary=Модернизированный технический объект.<n/><n/><c val="FFFF80">Открывает:</c><n/>  - Обнулители из Конвертеров<n/>  - Стратусы из Конвертеров
 Button/Tooltip/Relocate=Телепортирует заклинателя на выбранную <c val="FFFF80">Citadel</c>.
 Button/Tooltip/Reveal=Обеспечивает обзор области на карте.
@@ -255,11 +268,13 @@ Button/Tooltip/SelectBuilderKeiron=Выбирает единицу, строящ
 Button/Tooltip/ShapeAdvancedStructure=Список Продвинутых Строений
 Button/Tooltip/ShapeStructure=Список Основных Строений.
 Button/Tooltip/SonicImage=Размещает Звуковое Изображение, к которому Эхо может телепортироваться, если оно будет неподалёку.
-Button/Tooltip/Stratus=Противовоздушное оборонительное сооружение. <n/><n/><c val="ffff8a">Может атаковать воздушные цели.</c>
+Button/Tooltip/Stratus=Противовоздушное оборонительное сооружение. <n/><n/><c val="ffff8a">Может атаковать воздушные цели.</c><n/><c val="FFE303">Detector</c>
 Button/Tooltip/Subjecter=Противовоздушный юнит поддержки с высокой дальностью атаки.<n/><n/><c val="FFFF80">Может атаковать наземные и воздушные цели.</c>
 Button/Tooltip/Titan=Тяжёлый штурмовик.<n/><n/><c val="FFFF80">Может атаковать наземные цели.</c>
-Button/Tooltip/Umbra=Замаскированный юнит для тактических целей. Эффективен против бронированных целей.<n/><n/><c val="FFFF80">Может атаковать наземные цели.</c>
-Button/Tooltip/UmbraCloakingSystems=Поддерживает маскировку, но теряет её после атаки. Урон от оружия увеличен, когда единица замаскирована. Повторная маскировка после <d ref="Validator,CasterHasDealtNoDamage,Value"/> секунд без атак.
+Button/Tooltip/Umbra=Замаскированный юнит для тактических целей. Эффективен против бронированных целей. Может быть улучшен, чтобы использовать Вынужденную Маскировку.<n/><n/><c val="FFFF80">Может атаковать наземные цели.</c>
+Button/Tooltip/UmbraCloakingSystems=Поддерживает маскировку, но теряет её после атаки. Урон от оружия увеличен, когда единица замаскирована. Повторная маскировка после <d ref="Weapon,ShadowCannon,PreEffectBehavior.Duration"/> секунд без атак.
+Button/Tooltip/UmbraDamageReduction=Во время движения Умбра получает на 25% меньше урона от любых источников.
+Button/Tooltip/UmbraShieldCompulsion=Мгновенно маскирует Умбру. Боевая единица теряет при этом <d ref="Abil,UmbraShieldCompulsion,Cost[0].Vital[Life]"/> ед. здоровья.
 Button/Tooltip/Volt=Лёгкая единица дальнего боя.<n/><n/><c val="FFFF80">Может атаковать наземные и воздушные цели.</c>
 Button/Tooltip/Zenith=Высшая технология.<n/><n/><c val="FFFF80">Открывает:</c><n/>  - Парагоны из Цитадели
 DocInfo/DescLong=Contains the gameplay data for the Keiron custom race.
@@ -318,15 +333,12 @@ Effect/Name/CEffectLaunchMissileKeiron=(CEffectLaunchMissileKeiron)
 Effect/Name/CEffectLaunchMissileKeironPoint=(CEffectLaunchMissileKeironPoint)
 Effect/Name/CEffectPersistentKeiron=CEffectPersistentKeiron
 Effect/Name/CEffectSearchAreaKeiron=(CEffectSearchAreaKeiron)
-Effect/Name/CelestialOutletAurApeAB=Celestial Outlet - AurApe (AB)
-Effect/Name/CelestialOutletAurApeAddCharge=Celestial Outlet - AurApe (AddCharge)
 Effect/Name/CelestialOutletAurApeDeathCP=Celestial Outlet - AurApe Death (CP)
 Effect/Name/CelestialOutletAurApeDeathRemoveCharge=Celestial Outlet - AurApe Death (RemoveCharge)
 Effect/Name/CelestialOutletAurApeDeathSet=Celestial Outlet - AurApe Death (Set)
 Effect/Name/CelestialOutletAurApeDelay=Celestial Outlet - AurApe (Delay)
 Effect/Name/CelestialOutletAurApeRB=Celestial Outlet - AurApe (RB)
 Effect/Name/CelestialOutletAurApeSA=Celestial Outlet - AurApe (SA)
-Effect/Name/CelestialOutletAurApeSet=Celestial Outlet - AurApe (Set)
 Effect/Name/ConverterDissolutionRay=Converter - Dissolution Ray (DMG)
 Effect/Name/CreateReverb=Create Reverb
 Effect/Name/CreateReverbCU=Create Reverb
@@ -575,7 +587,8 @@ Race/Name/Keir=Кейрон
 RequirementNode/Tooltip/And352081205NotCountBehaviorHarbingerJudgementModeStartQueuedOrBetterAtUnitNotCountBehaviorHarbingerJudgementModeStopQueuedOrBetterAtUnit=Не трансформируется
 RequirementNode/Tooltip/CountBehaviorApertureRequirementDummyQueuedOrBetterAtUnit1756462=Не менее 10 единиц энергии
 RequirementNode/Tooltip/CountBehaviorEchoReverbCasterControllerCompleteOnlyAtUnit2145668228=Должно быть активное Звуковое Изображение
-RequirementNode/Tooltip/CountBehaviorElytraAmmoDummyCompleteOnlyAtUnit3668520173=Должны быть боеприпасы
+RequirementNode/Tooltip/CountBehaviorElytraAmmoDummyCompleteOnlyAtUnit3668520173=У Элитры должны быть боеприпасы
+RequirementNode/Tooltip/CountUnitAlias_CitadelCompleteOnly2790733192=Цитадель
 RequirementNode/Tooltip/CountUnitAlias_GatewayCompleteOnly4260347518TechTreeCheat=Врата
 RequirementNode/Tooltip/CountUnitAtriumCompleteOnly158540716=Атриум
 RequirementNode/Tooltip/CountUnitCitadelCompleteOnly2790733192=Цитадель
@@ -603,6 +616,9 @@ RequirementNode/Tooltip/Eq416967604CountUpgradeKeironMechWeaponsLevel1CompleteOn
 RequirementNode/Tooltip/Eq4230515576CountUpgradeKeironMechArmorLevel1CompleteOnly1=Броня Механических Кейронов Уровень 1
 RequirementNode/Tooltip/Eq493131630CountUpgradeKeironBioWeaponsLevel2CompleteOnly1=Оружие Биологических Кейронов Уровень 2
 RequirementNode/Tooltip/LT1744328212CountUnitElytronQueuedOrBetterAtUnit3=У Мириады должно быть меньше трёх Элитр
+UI/TechTreeTooltipOr=ИЛИ
+UI/TechTreeTooltipCharges_Colon=Заряды:
+UI/Charging=Зарядка
 UI/Developing=Разработка
 UI/HarvesterCountVespene_Keir=<img path="@@UI/ResourceIconNoBackground1_Keir" alignment="AbsoluteMiddle" width="20" height="20"/> Рабочие:<c val="%colorValue%"> %current%/%ideal%</c>
 UI/HelpMenuDialogTechGlossary_Control_Unit/Category/KeironUnits=Единицы Кейронов
@@ -610,6 +626,7 @@ UI/HelpMenuDialogTechTree_Control_Keir=Техническое Древо Кей�
 UI/Materializing=Материализация
 UI/ResourceSupplyToolTip_Keir=Все юниты стоят лимит. Стройте технологичные строения для увеличения лимита.
 UI/Shaping=Формирование
+UI/Upgrading=Улучшение
 Unit/Category/KeironUnits=Keiron
 Unit/LifeArmorName/KeironArmor=Броня Кейронов
 Unit/LifeArmorName/KeironBiologicalArmor=Броня Биологических Кейронов
@@ -624,6 +641,7 @@ Unit/Name/AuguryGunsLMWeapon=Оружие Предзнаменования
 Unit/Name/Aurora=Аврора
 Unit/Name/AuroraAttackMissile=Хэлэйшн Плазма
 Unit/Name/BulwarkBlastWeapon=Удар Оплота
+Unit/Name/ChangelingVolt=Вольт
 Unit/Name/Citadel=Цитадель
 Unit/Name/Conduit=Канал
 Unit/Name/Converter=Конвертер
@@ -712,6 +730,8 @@ Upgrade/Name/KeironShieldsLevel3=Щиты Кейронов Уровень 3
 Upgrade/Name/LatentCharge=Скрытый Заряд
 Upgrade/Name/MeridianConvergence=Конвергенция
 Upgrade/Name/ModifiedGait=Модифицированное Движение
+Upgrade/Name/PulsarDampener=Гаситель
+Upgrade/Name/ShieldCompulsion=Вынужденная Маскировка
 Upgrade/Name/WraithChamber=Камера Призраков
 Weapon/Name/AuguryGuns=Оружие Предзнаменования
 Weapon/Name/BulwarkBlast=Удар оплота
