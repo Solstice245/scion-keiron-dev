@@ -97,7 +97,10 @@
         <On Terms="Effect.##Effect##.Start" Send="Create"/>
     </CActorModel>
     <CActorSound default="1" id="SoundContinuousKeiron" parent="SoundContinuous">
-        <?token id="Effect" type="CEffectLink"?>
+        <?token id="Behavior" type="CBehaviorLink" value="Bogus"?>
+        <?token id="Effect" type="CEffectLink" value="Bogus"?>
+        <On Terms="Behavior.##Behavior##.On" Send="Create"/>
+        <On Terms="Behavior.##Behavior##.Off" Send="Destroy"/>
         <On Terms="Effect.##Effect##.Start" Send="Create"/>
         <On Terms="Effect.##Effect##.Stop" Send="Destroy"/>
     </CActorSound>
@@ -169,10 +172,7 @@
         <Sound value="Changeling_Death"/>
     </CActorSound>
     <CActorSound id="CitadelEnergizeCastSoundInit" parent="SoundOneShotKeiron" Effect="CitadelEnergize"/>
-    <CActorSound id="CitadelEnergizeCastSoundLoop" parent="SoundContinuous">
-        <On Terms="Behavior.CitadelEnergize.On" Send="Create"/>
-        <On Terms="Behavior.CitadelEnergize.Off" Send="Destroy"/>
-    </CActorSound>
+    <CActorSound id="CitadelEnergizeCastSoundLoop" parent="SoundContinuousKeiron" Behavior="CitadelEnergize"/>
     <CActorModel id="CitadelEnergized" parent="ModelAnimationStyleContinuousUNIT">
         <HostSiteOps Ops="SOpAttachCenterSoft"/>
         <On Terms="Behavior.CitadelEnergized.On" Send="Create"/>
@@ -204,10 +204,7 @@
     <CActorSound id="AegisShieldActivate" parent="SoundOneShot">
         <On Terms="Behavior.AegisShieldAura.On" Send="Create"/>
     </CActorSound>
-    <CActorSound id="AegisShieldLoop" parent="SoundContinuous">
-        <On Terms="Behavior.AegisShieldAura.On" Send="Create"/>
-        <On Terms="Behavior.AegisShieldAura.Off" Send="Destroy"/>
-    </CActorSound>
+    <CActorSound id="AegisShieldLoop" parent="SoundContinuousKeiron" Behavior="AegisShieldAura"/>
     <CActorRange id="NullifierRange" parent="RangeWeapon" weapon="NullifierWeapon"/>
     <CActorSound id="ParadoxPrisonInit" parent="SoundOneShot">
         <On Terms="Effect.InvertFFieldCP.Start" Send="Create"/>
@@ -917,10 +914,7 @@
         <Beam value="MeridianLightningBoltBeam"/>
         <ImpactSite value="MeridianLightningBoltSite"/>
     </CActorAction>
-    <CActorSound id="NullifierAttackSoundLoop" parent="SoundContinuous">
-        <On Terms="Effect.NullifierWeaponCP.Start" Send="Create"/>
-        <On Terms="Effect.NullifierWeaponCP.Stop" Send="Destroy"/>
-    </CActorSound>
+    <CActorSound id="NullifierAttackSoundLoop" parent="SoundContinuousKeiron" Effect="NullifierWeaponCP"/>
     <CActorPower id="CitadelPower">
         <On Terms="Behavior.CitadelPowerSource.Create; ValidateUnit NotDead" Send="Create"/>
         <On Terms="Behavior.CitadelPowerSource.Destroy" Send="Destroy"/>
@@ -1029,9 +1023,9 @@
         <On Terms="ActorCreation" Send="Create NullifierRange"/>
         <On Terms="ActorDestruction" Target="NullifierRange" Send="Destroy"/>
     </CActorModel>
-    <CActorSound id="Keiron_Harvest" parent="SoundContinuousKeiron">
-        <On index="3" Terms="Abil.ConverterGather.Start" Send="Create"/>
-        <On index="4" Terms="Abil.ConverterGather.Stop" Send="Destroy"/>
+    <CActorSound id="Keiron_Harvest" parent="SoundContinuous">
+        <On Terms="Abil.ConverterGather.Start" Send="Create"/>
+        <On Terms="Abil.ConverterGather.Stop" Send="Destroy"/>
     </CActorSound>
     <CActorShield id="ProtossShieldFacer">
         <On Terms="ActorCreation; ScopeContains _ShieldGold" Send="ModelSwap KeironShieldDamage"/>
@@ -1501,10 +1495,7 @@
         <ModelFlags index="AllowHitTest" value="0"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModel>
-    <CActorSound id="EchoDiscordZoneLoop" parent="SoundContinuous">
-        <On Terms="Behavior.DiscordZoneRadius.On" Send="Create"/>
-        <On Terms="Behavior.DiscordZoneRadius.Off" Send="Destroy"/>
-    </CActorSound>
+    <CActorSound id="EchoDiscordZoneLoop" parent="SoundContinuousKeiron" Behavior="DiscordZoneRadius"/>
     <CActorSound id="EchoFighterModeSound" parent="SoundOneShot">
         <On Terms="Abil.EchoFighterMode.Start" Send="Create"/>
     </CActorSound>
@@ -1672,10 +1663,7 @@
     <CActorSound id="PulsarAttackLaunchSound" parent="SoundOneShot">
         <On Terms="Effect.SeperationBeam.Start; At Effect" Send="Create"/>
     </CActorSound>
-    <CActorSound id="PulsarAttackSoundLoop" parent="SoundContinuous">
-        <On Terms="Effect.SeperationBeam.Start" Send="Create"/>
-        <On Terms="Effect.SeperationBeam.Stop" Send="Destroy"/>
-    </CActorSound>
+    <CActorSound id="PulsarAttackSoundLoop" parent="SoundContinuousKeiron" Effect="SeperationBeam"/>
     <CActorModel id="ReverbTeleportPoint" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Effect.ReverbCPDumy" Send="Create"/>
         <Model value="Stalker_Deluxe_Collection_BlinkOut"/>
