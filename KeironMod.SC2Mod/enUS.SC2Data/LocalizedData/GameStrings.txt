@@ -40,6 +40,7 @@ Abil/Name/Projection=Projection
 Abil/Name/ProjectionCancel=Projection Cancel
 Abil/Name/ProjectionEnd=Projection End
 Abil/Name/ProjectionStart=Projection Start
+Abil/Name/PulsarDampener=Pulsar - Dampener
 Abil/Name/RallyCitadel=Citadel - Rally
 Abil/Name/ReliquaryResearch=Reliquary Research
 Abil/Name/ReverbRB=Reverb Teleport
@@ -70,10 +71,12 @@ Behavior/Name/ParadoxShieldBoost=Shield Boost
 Behavior/Name/ParagonHasSpawn=!Paragon Has Spawn
 Behavior/Name/ParagonSpawnCount=!Paragon Spawn Count
 Behavior/Name/ParagonSpawnFollow=!Paragon Spawn Follow
+Behavior/Name/PulsarDampener=Dampener
 Behavior/Name/TitanWeapon=Inhibitor Beam
 Behavior/Tooltip/AegisShield=The unit is invulnerable while inside the shield of an owned Aegis.
 Behavior/Tooltip/EmissaryOrbTint=This unit being targeted by an Emissary Orb.
 Behavior/Tooltip/KeironMaterializing=Unit is being materialized.
+Behavior/Tooltip/PulsarDampener=Spell and splash damage taken reduced by <d ref="-Behavior,PulsarDampener,DamageResponse.ModifyFraction+1*100"/>%.
 Button/ChargeText/KeironProductionStructures=<d ref="$BehaviorStackCount:KeironUnitCharge$"/>
 Button/Name/ActivateShield=Activate Shield
 Button/Name/Aegis=Materialize Aegis
@@ -99,6 +102,7 @@ Button/Name/DevelopExaltedShields=Develop Exalted Shields
 Button/Name/DevelopKeyhole=Develop Keyhole
 Button/Name/DevelopLatentCharge=Develop Latent Charge
 Button/Name/DevelopModifiedGait=Develop Modified Gait
+Button/Name/DevelopPulsarDampener=Develop Dampener
 Button/Name/DevelopUmbraShieldCompulsion=Develop Stealth Compulsion
 Button/Name/DevelopWraithChamber=Develop Wraith Chamber
 Button/Name/DiscordMode=Discord Mode
@@ -157,6 +161,7 @@ Button/Name/ParadoxShield=Shield Boost
 Button/Name/PlaceEmanator=Place Emanator
 Button/Name/Prison=Prison
 Button/Name/Projection=Projection
+Button/Name/PulsarDampener=Dampener
 Button/Name/Reliquary=Shape Reliquary
 Button/Name/Relocate=Relocate
 Button/Name/Reveal=Reveal
@@ -197,6 +202,7 @@ Button/Tooltip/DevelopExaltedShields=<c val="FFFF80">Pariah</c> gain +10 shields
 Button/Tooltip/DevelopKeyhole=Allows <c val="FFFF80">Apertures</c> to use the Keyhole ability.
 Button/Tooltip/DevelopLatentCharge=Enables the <c val="FFFF80">Volt's</c> weapon to bounce to 1 additional target and deal <d ref="Effect,ElectronBoltBDMG,Amount"/> spell damage.
 Button/Tooltip/DevelopModifiedGait=Increases the movement speed of <c val="FFFF80">Volt</c> and <c val="FFFF80">Pariah</c>.
+Button/Tooltip/DevelopPulsarDampener=Allows the <c val="FFFF80">Pulsar</c> to use the Dampener ability.
 Button/Tooltip/DevelopUmbraShieldCompulsion=Allows <c val="FFFF80">Umbrae</c> to use the Stealth Compulsion ability.
 Button/Tooltip/DevelopWraithChamber=Increases the range of the <c val="FFFF80">Umbra</c> weapon, and increases its damage bonus while cloaked.
 Button/Tooltip/DiscordMode=The Echo becomes stationary, slowing enemy movement speed and revealing cloaked units in an area.
@@ -245,7 +251,7 @@ Button/Tooltip/MaterializeMyriad=Produced by the <c val="FFFF80">Atrium</c>.<n/>
 Button/Tooltip/MaterializeParadox=Produced by the <c val="FFFF80">Empyrean</c>.<n/><n/>Support unit. Can use Shield Boost and Prison.<n/><n/><c val="FFE303">Detector</c>
 Button/Tooltip/MaterializeParagon=Produced by the <c val="FFFF80">Zenith</c>.<n/><n/>Capital ship. Can use Emissary Orb.<n/><n/><c val="FFFF80">Can attack ground and air units.</c>
 Button/Tooltip/MaterializePariah=Produced by the <c val="FFFF80">Edifice</c>.<n/><n/>Light melee warrior. Can use Projection.<n/><n/><c val="FFFF80">Can attack ground units.</c>
-Button/Tooltip/MaterializePulsar=Produced by the <c val="FFFF80">Sanctum</c>.<n/><n/>Durable close range combat unit.<n/><n/><c val="FFFF80">Can attack ground units.</c>
+Button/Tooltip/MaterializePulsar=Produced by the <c val="FFFF80">Sanctum</c>.<n/><n/>Durable close range combat unit. Can be upgraded to use the Dampener ability.<n/><n/><c val="FFFF80">Can attack ground units.</c>
 Button/Tooltip/MaterializeSubjecter=Produced by the <c val="FFFF80">Sanctum</c>.<n/><n/>Ranged anti-air support unit.<n/><n/><c val="FFFF80">Can attack ground and air units.</c>
 Button/Tooltip/MaterializeTitan=Produced by the <c val="FFFF80">Pantheon</c>.</n><n/>Heavy assault walker.<n/><n/><c val="FFFF80">Can attack ground units.</c>
 Button/Tooltip/MaterializeUmbra=Produced by the <c val="FFFF80">Foundry</c>.<n/><n/>Tactical cloaking anti-armored specialist. Can be upgraded to use Stealth Compulsion.<n/><n/><c val="FFFF80">Can attack ground units.</c>
@@ -266,7 +272,8 @@ Button/Tooltip/Pariah=Light melee warrior. Can use Projection.<n/><n/><c val="FF
 Button/Tooltip/PlaceEmanator=Emanators grant vision in an area. They are vulnerable to attack, but becomes permanently cloaked <d ref="Behavior,EmanatorFateDelay,Duration"/> seconds after placement.</n></n><c val="FFE303">Detector</c>
 Button/Tooltip/Prison=Channels an effect in an area. Enemy units that walk into it are unable to leave.
 Button/Tooltip/Projection=Allows the caster to move through other units at increased speed. Cannot attack while phased.
-Button/Tooltip/Pulsar=Durable close range combat unit.<n/><n/><c val="FFFF80">Can attack ground units.</c>
+Button/Tooltip/Pulsar=Durable close range combat unit. Can be upgraded to use the Dampener ability.<n/><n/><c val="FFFF80">Can attack ground units.</c>
+Button/Tooltip/PulsarDampener=Causes the unit to receive <d ref="-Behavior,PulsarDampener,DamageResponse.ModifyFraction+1*100"/>% less spell and splash damage for <d ref="Behavior,PulsarDampener,Duration"/> seconds.
 Button/Tooltip/Reliquary=Upgrade tech facility.<n/><n/><c val="FFFF80">Enables:</c><n/>  - Nullifiers from the Converter<n/>  - Strati from the Converter
 Button/Tooltip/Relocate=Teleports the caster to the target <c val="FFFF80">Citadel</c>.
 Button/Tooltip/Reveal=Grants vision on an area on the map.
@@ -554,6 +561,7 @@ Effect/Name/Pulsar4DMLeftDummy=Pulsar - 4DM Left (Dummy)
 Effect/Name/Pulsar4DMLeftSA=Pulsar - 4DM Left (SA)
 Effect/Name/Pulsar4DMRightDummy=Pulsar - 4DM Right (Dummy)
 Effect/Name/Pulsar4DMRightSA=Pulsar - 4DM Right (SA)
+Effect/Name/PulsarDampener=Pulsar - Dampener
 Effect/Name/PulsarSeperationBeamSet=Pulsar - Seperation Beam (Set)
 Effect/Name/ReverbCasterController=Reverb Caster Controller
 Effect/Name/ReverbFateBounds=Reverb Fate Bounds
@@ -751,6 +759,7 @@ Upgrade/Name/KeironShieldsLevel3=Keiron Shields Level 3
 Upgrade/Name/LatentCharge=Latent Charge
 Upgrade/Name/MeridianConvergence=Convergence
 Upgrade/Name/ModifiedGait=Modified Gait
+Upgrade/Name/PulsarDampener=Dampener
 Upgrade/Name/ShieldCompulsion=Stealth Compulsion
 Upgrade/Name/WraithChamber=Wraith Chamber
 Weapon/Name/AuguryGuns=Augury Guns

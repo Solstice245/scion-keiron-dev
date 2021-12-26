@@ -117,7 +117,8 @@
         <On Terms="AbilMorph.CitadelCharge.Finish" Send="Create"/>
         <On Terms="AbilMorph.CitadelCharge.Cancel" Send="Destroy"/>
     </CActorSound>
-    <CActorModel id="UmbraShieldCompulsionModel" parent="ModelAnimationStyleOneShot">
+    <CActorSound id="PulsarDampenerStartSound" parent="SoundOneShotKeiron" Behavior="PulsarDampener" Sub="On"/>
+    <CActorModel id="UmbraShieldCompulsionModel" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Effect.UmbraShieldCompulsion.Start" Send="Create"/>
         <On Terms="ActorCreation" Send="SetTintColor 193,255,6"/>
         <HostSiteOps Ops="SOpAttachCenter"/>
@@ -315,9 +316,7 @@
         <On Terms="Abil.ConverterGather.Start" Send="StatusIncrement Harvest"/>
         <On Terms="Abil.ConverterGather.Stop" Send="StatusDecrement Harvest"/>
     </CActorUnit>
-    <CActorSound id="OculusRevealStart" parent="SoundOneShotKeiron" Effect="OculusReveal">
-        <On index="1" Terms="Effect.OculusReveal.Start; At Target" Send="Create"/>
-    </CActorSound>
+    <CActorSound id="OculusRevealStart" parent="SoundOneShotKeiron" Effect="OculusReveal"/>
     <CActorModel id="OculusRevealModel" parent="ModelAnimationStyleContinuous">
         <On Terms="Effect.OculusReveal.Start" Send="Create"/>
         <On Terms="Effect.OculusReveal.Stop" Send="AnimBracketStop BSD"/>
@@ -702,6 +701,13 @@
         <On Terms="ActorCreation" Send="SetTintColor 255,255,255"/>
         <Model value="AegisAttackMissile"/>
     </CActorMissile>
+    <CActorModel id="PulsarShieldEffect" parent="ModelAddition">
+        <On Terms="Behavior.PulsarDampener.On" Send="Create"/>
+        <On Terms="ActorCreation" Send="SetOpacity 0.600000"/>
+        <On Terms="Behavior.PulsarDampener.Off" Send="Destroy"/>
+        <HostSiteOps Ops="SOpAttachCenter"/>
+        <Model value="UmbraShieldEffect"/>
+    </CActorModel>
     <CActorSound id="Umbra_CloakOn" parent="SoundOneShotKeiron" Behavior="UmbraStealth" Sub="On"/>
     <CActorSound id="Umbra_CloakOff" parent="SoundOneShotKeiron" Behavior="UmbraStealth" Sub="Off"/>
     <CActorUnit id="Zenith" parent="GenericUnitKeironStructureAir" unitName="Zenith">
