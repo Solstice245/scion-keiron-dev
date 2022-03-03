@@ -259,6 +259,11 @@ static void KeironInit (int player) {
     AISetDefaultTownHall(player, c_KB_Citadel);
 
     AISetMainState(player, e_mainState_Open, e_mainSubState_Init);
+
+    if (AIPlayerDifficulty(player) > c_skirHard) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringToText("Keiron AI: Difficulties above Harder are not supported at this time, please use at most Harder difficulty for this AI"));
+    }
+
 }
 
 //--------------------------------------------------------------------------------------------------

@@ -1,0 +1,945 @@
+//--------------------------------------------------------------------------------------------------
+//  XayidUpgradesHard
+//--------------------------------------------------------------------------------------------------
+void XayidUpgradesHard (int player, int phase) {
+    int buildType;
+
+    if (phase < c_ldPhaseLate) {
+        buildType = AIGetUserInt(player, c_openingBuildType);
+    } else {
+        buildType = AIGetUserInt(player, c_lateGameBuildType);
+    }
+    if (buildType != e_buildType_Air) {
+        if (phase >= c_ldPhaseMid) {
+
+            AISetStock( player, 1, c_XR_OcularAcuity );
+            AISetStock( player, 1, c_XR_PiercingThrust );
+            if (AITechCount(player, c_XU_Scorpalisk, c_techCountInProgressOrBetter) >= 3) {
+                AISetStock( player, 1, c_XR_ScorpaliskSpeed );
+            }
+
+            AISetStock( player, 1, c_XR_GroundAttacks1 );
+            AISetStock( player, 1, c_XR_GroundCarapace1 );
+
+            if (AITechCount(player, c_XU_Reviler, c_techCountInProgressOrBetter) >= 3) {
+                AISetStock( player, 1, c_XR_BattleFrenzy );
+            }
+            if (AITechCount(player, c_XU_Roamer, c_techCountInProgressOrBetter) >= 4) {
+                AISetStock( player, 1, c_XR_CalcifiedHusk );
+                AISetStock( player, 1, c_XR_BileDucts );
+            }
+
+            if (phase >= c_ldPhaseLate) {
+
+                AISetStock( player, 1, c_XR_GroundAttacks2 );
+                AISetStock( player, 1, c_XR_GroundCarapace2 );
+
+                if (AITechCount(player, c_XU_Spitter, c_techCountInProgressOrBetter) >= 3) {
+                    AISetStock( player, 1, c_XR_ProlongedSpores);
+                }
+
+                AISetStock( player, 1, c_XR_FlyerAttacks1 );
+                AISetStock( player, 1, c_XR_FlyerCarapace1 );
+
+                if (AITechCount(player, c_XU_Xayithoan, c_techCountInProgressOrBetter) >= 3) {
+                    AISetStock( player, 1, c_XR_RefinedExcretion);
+                }
+                if (AITechCount(player, c_XU_Kraken, c_techCountInProgressOrBetter) >= 3) {
+                    AISetStock( player, 1, c_XR_VolatileDischarge);
+                }
+
+                if (phase >= c_ldPhaseFinal) {
+
+                    AISetStock( player, 1, c_XR_GroundAttacks3 );
+                    AISetStock( player, 1, c_XR_GroundCarapace3 );
+                    AISetStock( player, 1, c_XR_FlyerAttacks3 );
+                    AISetStock( player, 1, c_XR_FlyerCarapace3 );
+                }
+            }
+        }
+    }
+    else {  // (buildType == e_buildType_Air) 
+        if (phase >= c_ldPhaseMid) {
+
+            AISetStock( player, 1, c_XR_FlyerAttacks1 );
+            AISetStock( player, 1, c_XR_FlyerCarapace1 );
+
+            if (AITechCount(player, c_XU_Raptor, c_techCountInProgressOrBetter) >= 6) {
+                AISetStock( player, 1, c_XR_CleavingSpores );
+            }
+
+            if (phase >= c_ldPhaseLate) {
+
+                if (AITechCount(player, c_XU_Xayithoan, c_techCountInProgressOrBetter) >= 3) {
+                    AISetStock( player, 1, c_XR_RefinedExcretion);
+                }
+                if (AITechCount(player, c_XU_Kraken, c_techCountInProgressOrBetter) >= 2) {
+                    AISetStock( player, 1, c_XR_VolatileDischarge );
+                }
+
+                AISetStock( player, 1, c_XR_FlyerAttacks2 );
+                AISetStock( player, 1, c_XR_FlyerCarapace2 );
+
+                if (AITechCount(player, c_XU_Xayidling, c_techCountInProgressOrBetter) >= 6) {
+                    AISetStock( player, 1, c_XR_OcularAcuity );
+                    AISetStock( player, 1, c_XR_PiercingThrust );
+                }
+                if (AITechCount(player, c_XU_Scorpalisk, c_techCountInProgressOrBetter) >= 3) {
+                    AISetStock( player, 1, c_XR_ScorpaliskSpeed );
+                }
+                if (AITechCount(player, c_XU_Roamer, c_techCountInProgressOrBetter) >= 4) {
+                    AISetStock( player, 1, c_XR_CalcifiedHusk );
+                    AISetStock( player, 1, c_XR_BileDucts );
+                }
+
+                if (phase >= c_ldPhaseFinal) {
+
+                    AISetStock( player, 1, c_XR_FlyerAttacks3 );
+                    AISetStock( player, 1, c_XR_FlyerCarapace3 );
+                    AISetStock( player, 1, c_XR_GroundAttacks3 );
+                    AISetStock( player, 1, c_XR_GroundCarapace3 );
+                }
+            }
+        }
+    }
+}
+
+//--------------------------------------------------------------------------------------------------
+//  XayidOpenArmyInitHard
+//--------------------------------------------------------------------------------------------------
+int XayidOpenArmyInitHard (int player, int buildType) {
+    int armyRoll = 0;
+    int duration = 0;
+
+    if (buildType == e_buildType_Rush) {
+        armyRoll = RandomInt(0,1);
+        if (armyRoll == 0) {
+            AIAddToStockArmy(player, c_XB_XayidDen, 2);
+            AIAddToStockArmy(player, c_XU_Xayidling, 4);
+            AIAddToStockArmy(player, c_XU_Roamer, 4);
+            // validation: 725 resources
+            duration = 350 + RandomInt(-15, 15);
+        } else if (armyRoll == 1) {
+            AIAddToStockArmy(player, c_XB_XayidDen, 2);
+            AIAddToStockArmy(player, c_XU_Xayidling, 9);
+            // validation: 675 resources
+            duration = 350 + RandomInt(-15, 15);
+        }
+    }
+    else if (buildType == e_buildType_Timing) {
+        armyRoll = RandomInt(0,1);
+        if (armyRoll == 0) {
+            AIAddToStockArmy(player, c_XB_XayidDen, 2);
+            AIAddToStockArmy(player, c_XU_Xayidling, 14);
+            // validation: 1050 resources
+            duration = 400 + RandomInt(-15, 15);
+        } else if (armyRoll == 1) {
+            AIAddToStockArmy(player, c_XB_XayidDen, 2);
+            AIAddToStockArmy(player, c_XU_Xayidling, 8);
+            AIAddToStockArmy(player, c_XU_Scorpalisk, 3);
+            // validation: 1050 resources
+            duration = 400 + RandomInt(-15, 15);
+        }
+    }
+    else if (buildType == e_buildType_Power) {
+        armyRoll = RandomInt(0,1);
+        if (armyRoll == 0) {
+            AIAddToStockArmy(player, c_XB_XayidDen, 2);
+            AIAddToStockArmy(player, c_XU_Xayidling, 8);
+            AIAddToStockArmy(player, c_XU_Mendling, 4);
+            // validation: 1400 resources
+            duration = 480 + RandomInt(-15, 15);
+        } else if (armyRoll == 1) {
+            AIAddToStockArmy(player, c_XB_XayidDen, 2);
+            AIAddToStockArmy(player, c_XB_BiomassHatchery, 1);
+            AIAddToStockArmy(player, c_XU_Xayidling, 7);
+            AIAddToStockArmy(player, c_XU_Scorpalisk, 3);
+            AIAddToStockArmy(player, c_XU_Mendling, 2);
+            AIAddToStockArmy(player, c_XU_Reviler, 1);
+            // validation: 1500 resources
+            duration = 520 + RandomInt(-15, 15);
+        }
+    }
+    else if (buildType == e_buildType_Macro) {
+        armyRoll = RandomInt(0,1);
+        if (armyRoll == 0) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 7);
+            AIAddToStockArmy(player, c_XU_Mendling, 1);
+            // validation: 725 resources
+            duration = 230 + RandomInt(-15, 15);
+        } else if (armyRoll == 1) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 5);
+            AIAddToStockArmy(player, c_XU_Scorpalisk, 1);
+            AIAddToStockArmy(player, c_XU_Mendling, 1);
+            // validation: 725 resources
+            duration = 230 + RandomInt(-15, 15);
+        }
+    }
+    else if (buildType == e_buildType_Air) {
+        AIAddToStockArmy(player, c_XU_Raptor, 6);
+        AIAddToStockArmy(player, c_XU_Assailant, 1);
+        // validation: 1200 resources
+        duration = 500 + RandomInt(-20, 20);
+    }
+    else {
+        return XayidOpenArmyInitHard(player, e_buildType_Macro);
+    }
+
+    AISetUserInt(player, c_ldNextArmyRoll, armyRoll);
+    return duration;
+}
+
+//--------------------------------------------------------------------------------------------------
+//  XayidOpenInitHard
+//--------------------------------------------------------------------------------------------------
+void XayidOpenInitHard (int player) {
+    int buildType = 0;
+
+    AIChooseNextOpeningBuild(player);
+    buildType = AIGetUserInt(player, c_openingBuildType);
+    AISetupNextArmy (player, buildType, c_ldPhaseOpen, XayidOpenArmyInitHard);
+
+    AISetMainState(player, e_mainState_Open, e_mainSubState_Build);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  XayidOpenBuildHard
+//--------------------------------------------------------------------------------------------------
+void XayidOpenBuildHard (int player) {
+    int buildType = AIGetUserInt(player, c_openingBuildType);
+    int armyRoll = AIGetUserInt(player, c_ldNextArmyRoll);
+    int timeOut = AIGetUserInt(player, c_nextArmyTime);
+    bool nextState = false;
+
+    if (AIHasPlayerChangedCurrentOpening(player)) {
+        AISetMainState(player, e_mainState_Open, e_mainSubState_Init);
+        return;
+    }
+
+    AIClearStock(player);
+
+    if (buildType == e_buildType_Rush) {
+        AISetStock( player, 1, c_XB_ScavengerNest );
+        AISetStock( player, 14, c_XU_Scavenger );
+        AISetStock( player, 1, c_XB_FeedingPool );
+        AISetStock( player, 16, c_XU_Scavenger );
+        AISetStock( player, 1, c_XB_XayidDen );
+        AISetStock( player, 17, c_XU_Scavenger );
+        AISetStock( player, 1, c_XB_Siphoner );
+        AISetStock( player, 19, c_XU_Scavenger );
+        AISetStock( player, 3, c_XU_Xayidling );
+        AISetStock( player, 1, c_XB_MutagenChamber );
+        AISetStock( player, 2, c_XB_FeedingPool );
+        AISetStockUnitNext( player, 20, c_XU_Scavenger, c_stockIdle );
+        AISetStockFarms( player, c_XB_FeedingPool, c_stockNormalFarms);
+    }
+    else if (buildType == e_buildType_Timing) {
+        AISetStock( player, 1, c_XB_ScavengerNest );
+        AISetStock( player, 14, c_XU_Scavenger );
+        AISetStock( player, 1, c_XB_FeedingPool );
+        AISetStock( player, 16, c_XU_Scavenger );
+        AISetStock( player, 1, c_XB_XayidDen );
+        AISetStock( player, 17, c_XU_Scavenger );
+        AISetStock( player, 1, c_XB_Siphoner );
+        AISetStock( player, 19, c_XU_Scavenger );
+        AISetStock( player, 3, c_XU_Xayidling );
+        AISetStock( player, 1, c_XB_MutagenChamber );
+        AISetStock( player, 2, c_XB_FeedingPool );
+        AISetStockUnitNext( player, 20, c_XU_Scavenger, c_stockIdle );
+        AISetStockFarms( player, c_XB_FeedingPool, c_stockNormalFarms);
+        AISetStock( player, 2, c_XB_Siphoner );
+    }
+    else if (buildType == e_buildType_Power) {
+        AISetStock( player, 1, c_XB_ScavengerNest );
+        AISetStock( player, 14, c_XU_Scavenger );
+        AISetStock( player, 1, c_XB_FeedingPool );
+        AISetStock( player, 16, c_XU_Scavenger );
+        AISetStock( player, 1, c_XB_XayidDen );
+        AISetStock( player, 17, c_XU_Scavenger );
+        AISetStock( player, 1, c_XB_Siphoner );
+        AISetStock( player, 19, c_XU_Scavenger );
+        AISetStock( player, 1, c_XU_Xayidling );
+        AISetStock( player, 1, c_XB_MutagenChamber );
+        AISetStock( player, 2, c_XB_FeedingPool );
+        AISetStockUnitNext( player, 20, c_XU_Scavenger, c_stockIdle );
+        AISetStockFarms( player, c_XB_FeedingPool, c_stockNormalFarms);
+        AISetStock( player, 2, c_XB_Siphoner );
+    }
+    else if (buildType == e_buildType_Macro) {
+        AISetStock( player, 1, c_XB_ScavengerNest );
+        AISetStock( player, 14, c_XU_Scavenger );
+        AISetStock( player, 1, c_XB_FeedingPool );
+        AISetStock( player, 16, c_XU_Scavenger );
+        AISetStock( player, 1, c_XB_XayidDen );
+        AISetStock( player, 17, c_XU_Scavenger );
+        if (XayidMacroExpand(player)) { return; }
+        AISetStock( player, 19, c_XU_Scavenger );
+        AISetStock( player, 2, c_XU_Xayidling );
+        AISetStock( player, 1, c_XB_MutagenChamber );
+        AISetStock( player, 2, c_XB_FeedingPool );
+        AISetStock( player, 1, c_XB_BiomassHatchery );
+        AISetStock( player, 1, c_XB_Siphoner );
+        AISetStockUnitNext( player, 30, c_XU_Scavenger, c_stockIdle );
+        AISetStockFarms( player, c_XB_FeedingPool, c_stockNormalFarms);
+        AISetStock( player, 2, c_XB_Siphoner );
+    }
+    else if (buildType == e_buildType_Air) {
+        AISetStock( player, 1, c_XB_ScavengerNest );
+        AISetStock( player, 14, c_XU_Scavenger );
+        AISetStock( player, 1, c_XB_FeedingPool );
+        AISetStock( player, 16, c_XU_Scavenger );
+        if (XayidMacroExpand(player)) { return; }
+        AISetStock( player, 1, c_XB_Siphoner );
+        AISetStock( player, 1, c_XB_XayidDen );
+        AISetStock( player, 17, c_XU_Scavenger );
+        AISetStock( player, 2, c_XB_Siphoner );
+        AISetStock( player, 19, c_XU_Scavenger );
+        AISetStock( player, 1, c_XB_MutagenChamber );
+        AISetStock( player, 2, c_XB_FeedingPool );
+        AISetStock( player, 1, c_XB_BiomassHatchery );
+        AISetStockUnitNext( player, 30, c_XU_Scavenger, c_stockIdle );
+        AISetStockFarms( player, c_XB_FeedingPool, c_stockNormalFarms);
+        AISetStock( player, 1, c_XB_AvianNest );
+    }
+
+    XayidBasicDefenseStock(player);
+
+    AISetStockArmyScale(player, 0.35);
+
+    XayidGeneralBuild(player, c_ldPhaseOpen);
+
+    AISetStockArmyScale(player, 0.70);
+
+    XayidUpgradesHard(player, c_ldPhaseOpen);
+
+    AISetStockArmyScale(player, 1.00);
+
+    AILDStockWorkers( player, 30, c_XU_Scavenger);
+
+    XayidTechUp(player, c_ldPhaseOpen);
+
+    if (buildType == e_buildType_Air) {
+        AISetStock( player, 1, c_XU_Ferrion );
+    }
+
+    AIEnableStock(player);
+
+    AILDGeneralSharedLogic(player);
+
+    nextState = AITestTimeout(player, timeOut, e_mainState_Mid, e_mainSubState_Init);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  XayidMidArmyInitHard
+//--------------------------------------------------------------------------------------------------
+int XayidMidArmyInitHard (int player, int buildType) {
+    int armyRoll = 0;
+    int duration = 0;
+
+    if (buildType == e_buildType_Rush) {
+        armyRoll = RandomInt(0,1);
+        if (armyRoll == 0) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 8);
+            AIAddToStockArmy(player, c_XU_Roamer, 6);
+            AIAddToStockArmy(player, c_XU_Scorpalisk, 2);
+            // validation: 1500 resources
+            duration = 300 + RandomInt(-15, 15);
+        } else if (armyRoll == 1) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 10);
+            AIAddToStockArmy(player, c_XU_Scorpalisk, 3);
+            AIAddToStockArmy(player, c_XU_Mendling, 2);
+            // validation: 1500 resources
+            duration = 300 + RandomInt(-15, 15);
+        }
+    } else if (buildType == e_buildType_Timing) {
+        armyRoll = RandomInt(0,1);
+        if (armyRoll == 0) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 7);
+            AIAddToStockArmy(player, c_XU_Roamer, 6);
+            AIAddToStockArmy(player, c_XU_Mendling, 2);
+            AIAddToStockArmy(player, c_XU_Eroder, 2);
+            // validation: 1975 resources
+            duration = 320 + RandomInt(-15, 15);
+        } else if (armyRoll == 1) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 7);
+            AIAddToStockArmy(player, c_XU_Scorpalisk, 5);
+            AIAddToStockArmy(player, c_XU_Reviler, 3);
+            // validation: 1950 resources
+            duration = 330 + RandomInt(-15, 15);
+        }
+    } else if (buildType == e_buildType_Power) {
+        armyRoll = RandomInt(0,1);
+        if (armyRoll == 0) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 8);
+            AIAddToStockArmy(player, c_XU_Scorpalisk, 2);
+            AIAddToStockArmy(player, c_XU_Mendling, 3);
+            AIAddToStockArmy(player, c_XU_Eroder, 3);
+            // validation: 2175 resources
+            duration = 350 + RandomInt(-15, 15);
+        } else if (armyRoll == 1) {
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Xayidling, 7, c_XU_Roamer, 5);
+            AIAddToStockArmy(player, c_XU_Mendling, 3);
+            AIAddToStockArmy(player, c_XU_Reviler, 2);
+            AIAddToStockArmy(player, c_XU_Spitter, 2);
+            // validation: 2150 resources 
+            duration = 350 + RandomInt(-15, 15);
+        }
+    } else if (buildType == e_buildType_Macro) {
+        armyRoll = RandomInt(0,1);
+        if (armyRoll == 0) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 12);
+            AIAddToStockArmy(player, c_XU_Mendling, 3);
+            AIAddToStockArmy(player, c_XU_Eroder, 2);
+            AIAddToStockArmy(player, c_XU_Spitter, 3);
+            // validation: 2850 resources
+            duration = 500 + RandomInt(-15, 15);
+        } else if (armyRoll == 1) {
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Xayidling, 7, c_XU_Roamer, 5);
+            AIAddToStockArmy(player, c_XU_Scorpalisk, 4);
+            AIAddToStockArmy(player, c_XU_Mendling, 2);
+            AIAddToStockArmy(player, c_XU_Reviler, 2);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Scorpalisk, 3, c_XU_Massalisk_Alias, 1);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Scorpalisk, 3, c_XU_Massalisk_Alias, 1);
+            // validation: 2975 resources
+            duration = 520 + RandomInt(-15, 15);
+        }
+    } else if (buildType == e_buildType_Air) {
+        AIAddToStockArmy(player, c_XU_Raptor, 6);
+        AIAddToStockArmy(player, AIPickFrom2(c_XU_Assailant, c_XU_Exterminator), 2);
+        AIAddToStockArmyPickFrom2Count(player, c_XU_Raptor, 4, c_XU_Exterminator, 2);
+        // validation: 2100 resources
+        duration = 330 + RandomInt(-15, 15);
+    } else {
+        return XayidMidArmyInitHard(player, e_buildType_Macro);
+    }
+
+    AISetUserInt(player, c_ldNextArmyRoll, armyRoll);
+    return duration;
+}
+
+//--------------------------------------------------------------------------------------------------
+//  XayidMidInitHard
+//--------------------------------------------------------------------------------------------------
+void XayidMidInitHard (int player) {
+    int buildType = 0;
+
+    AIChooseNextOpeningBuild(player);
+    buildType = AIGetUserInt(player, c_openingBuildType);
+    AISetupNextArmy (player, buildType, c_ldPhaseMid, XayidMidArmyInitHard);
+
+    AISetFlag(player, e_flagsScouting, true);
+    AISetFlag(player, e_flagsLateScout, true);
+    AISetFlag(player, e_flagsDetect, true);
+
+    AISetMainState(player, e_mainState_Mid, e_mainSubState_Build);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  XayidMidBuildHard
+//--------------------------------------------------------------------------------------------------
+void XayidMidBuildHard (int player) {
+    int buildType = AIGetUserInt(player, c_openingBuildType);
+    int armyRoll = AIGetUserInt(player, c_ldNextArmyRoll);
+    int timeOut = AIGetUserInt(player, c_nextArmyTime);
+    bool nextState = false;
+
+    if (AIHasPlayerChangedCurrentOpening(player)) {
+        AISetMainState(player, e_mainState_Mid, e_mainSubState_Init);
+        return;
+    }
+
+    AIClearStock(player);
+
+    XayidBasicEconomy(player, c_ldPhaseMid, 20);
+    if (buildType == e_buildType_Air) {
+        AISetStock( player, 2, c_XU_Ferrion );
+    }
+    XayidBasicExpansion(player, c_ldPhaseMid, 5500, 1500);
+
+    XayidBasicDefenseStock(player);
+
+    AISetStockArmyScale(player, 0.35);
+
+    XayidGeneralBuild(player, c_ldPhaseMid);
+
+    AILDStockWorkers( player, 30, c_XU_Scavenger);
+
+    if (buildType == e_buildType_Rush) {
+        AISetStockUnitNext( player, 2, c_XB_XayidDen, c_stockIdle );
+        AISetStockUnitNext( player, 2, c_XB_BiomassHatchery, c_stockIdle );
+    }
+    else if (buildType == e_buildType_Timing) {
+        AISetStockUnitNext( player, 2, c_XB_XayidDen, c_stockIdle );
+        AISetStockUnitNext( player, 2, c_XB_BiomassHatchery, c_stockIdle );
+    }
+    else if (buildType == e_buildType_Power) {
+        if (XayidMacroExpand(player)) { return; }
+        AISetStockUnitNext( player, 2, c_XB_XayidDen, c_stockIdle );
+        AISetStockUnitNext( player, 2, c_XB_BiomassHatchery, c_stockIdle );
+    }
+    else if (buildType == e_buildType_Macro) {
+        if (XayidMacroExpand(player)) { return; }
+        AISetStockUnitNext( player, 2, c_XB_XayidDen, c_stockIdle );
+        AISetStockUnitNext( player, 2, c_XB_BiomassHatchery, c_stockIdle );
+    }
+    else if (buildType == e_buildType_Air) {
+        if (XayidMacroExpand(player)) { return; }
+        AISetStock( player, 2, c_XB_AvianNest );
+    }
+
+    if (AINeedsDetection(player)) {
+        AISetStock( player, 1, c_XU_Ferrion );
+        AISetStock( player, 2, c_XB_BilePit );
+    }
+
+    AISetStockArmyScale(player, 0.70);
+
+    AILDStockWorkers( player, 60, c_XU_Scavenger);
+
+    XayidUpgradesHard(player, c_ldPhaseMid);
+
+    AISetStockArmyScale(player, 1.00); 
+
+    AISetStock( player, 2, c_XU_Ferrion );
+
+    XayidTechUp(player, c_ldPhaseMid);
+
+    AIEnableStock(player);
+
+    AILDGeneralSharedLogic(player);
+
+    nextState = AITestTimeout(player, timeOut, e_mainState_Late, e_mainSubState_Init);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  XayidLateArmyInitHard
+//--------------------------------------------------------------------------------------------------
+int XayidLateArmyInitHard (int player, int buildType) {
+    int armyRoll = 0;
+    int duration = 0;
+
+    if (buildType == e_buildType_Core) {
+        armyRoll = RandomInt(0,2);
+        if (armyRoll == 0) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 12);
+            AIAddToStockArmy(player, c_XU_Scorpalisk, 6);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Scorpalisk, 4, c_XU_Roamer, 6);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Xayidling, 7, c_XU_Roamer, 5);
+            // validation: 2900 resources
+            duration = 280 + RandomInt(-15, 15);
+        } else if (armyRoll == 1) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 12);
+            AIAddToStockArmy(player, c_XU_Scorpalisk, 6);
+            AIAddToStockArmy(player, c_XU_Reviler, 4);
+            // validation: 2700 resources
+            duration = 270 + RandomInt(-15, 15);
+        } else if (armyRoll == 1) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 12);
+            AIAddToStockArmy(player, c_XU_Scorpalisk, 5);
+            AIAddToStockArmy(player, c_XU_Raptor, 8);
+            // validation: 2850 resources
+            duration = 270 + RandomInt(-15, 15);
+        } 
+    } else if (buildType == e_buildType_HighTech) {
+        armyRoll = RandomInt(0,2);
+        if (armyRoll == 0) {
+            AIAddToStockArmy(player, c_XU_Scorpalisk, 5);
+            AIAddToStockArmy(player, c_XU_Reviler, 5);
+            AIAddToStockArmy(player, c_XU_Eroder, 4);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Xayidling, 7, c_XU_Roamer, 5);
+            // validation: 3275 resources
+            duration = 310 + RandomInt(-15, 15);
+        } else if (armyRoll == 1) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 9);
+            AIAddToStockArmy(player, c_XU_Reviler, 2);
+            AIAddToStockArmy(player, c_XU_Spitter, 3);
+            AIAddToStockArmy(player, c_XU_Massalisk_Alias, 3);
+            // validation: 3525 resources
+            duration = 320 + RandomInt(-15, 15);
+        } else if (armyRoll == 2) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 12);
+            AIAddToStockArmy(player, c_XU_Reviler, 3);
+            AIAddToStockArmy(player, c_XU_Spitter, 3);
+            AIAddToStockArmy(player, c_XU_Assailant, 3);
+            // validation: 3375 resources
+            duration = 310 + RandomInt(-15, 15);
+        }
+    }
+    else if (buildType == e_buildType_Special) {
+        armyRoll = RandomInt(0,1);
+        if (armyRoll == 0) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 16);
+            AIAddToStockArmy(player, c_XU_Casnolisk, 4);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Scorpalisk, 6, c_XU_Roamer, 9);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Scorpalisk, 6, c_XU_Roamer, 9);
+            // validation: 3900 resources
+            duration = 350 + RandomInt(-15, 15);
+        } else {
+            AIAddToStockArmy(player, c_XU_Xayidling, 10);
+            AIAddToStockArmy(player, c_XU_Mendling, 4);
+            AIAddToStockArmy(player, c_XU_Scorpalisk, 4);
+            AIAddToStockArmy(player, c_XU_Xayithoan, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Xayidling, 6, c_XU_Roamer, 5);
+            // validation: 3550 resources
+            duration = 320 + RandomInt(-15, 15);
+        }
+    } else if (buildType == e_buildType_Mixed) {
+        armyRoll = RandomInt(0,2);
+        if (armyRoll == 0) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 16);
+            AIAddToStockArmy(player, c_XU_Roamer, 2);
+            AIAddToStockArmy(player, c_XU_Spitter, 4);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Eroder, 2, c_XU_Scorpalisk, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Mendling, 2, c_XU_Scorpalisk, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Mendling, 2, c_XU_Scorpalisk, 3);
+            // validation: 3900 resources
+            duration = 360 + RandomInt(-15, 15);
+        } else if (armyRoll == 1) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 12);
+            AIAddToStockArmy(player, c_XU_Mendling, 4);
+            AIAddToStockArmy(player, c_XU_Reviler, 2);
+            AIAddToStockArmy(player, AIPickFrom2(c_XU_Massalisk_Alias, c_XU_Kraken), 1);
+            AIAddToStockArmy(player, AIPickFrom2(c_XU_Massalisk_Alias, c_XU_Kraken), 1);
+            AIAddToStockArmy(player, AIPickFrom2(c_XU_Massalisk_Alias, c_XU_Kraken), 1);
+            // validation: 3950 resources
+            duration = 360 + RandomInt(-15, 15);
+        } else if (armyRoll == 2) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 6);
+            AIAddToStockArmy(player, c_XU_Eroder, 5);
+            AIAddToStockArmy(player, c_XU_Casnolisk, 2);
+            AIAddToStockArmy(player, c_XU_Reviler, 4);
+            AIAddToStockArmy(player, c_XU_Massalisk_Alias, 2);
+            // validation: 3975 resources
+            duration = 360 + RandomInt(-15, 15);
+        }
+    } else if (buildType == e_buildType_Air) {
+        armyRoll = RandomInt(0,1);
+        if (armyRoll == 0) {
+            AIAddToStockArmy(player, c_XU_Assailant, 3);
+            AIAddToStockArmy(player, c_XU_Exterminator, 3);
+            AIAddToStockArmy(player, c_XU_Raptor, 4);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Assailant, 4, c_XU_Raptor, 8);
+            // validation: 3600 resources
+            duration = 310 + RandomInt(-15, 15);
+        } else if (armyRoll == 1) {
+            AIAddToStockArmy(player, c_XU_Raptor, 10);
+            AIAddToStockArmy(player, c_XU_Exterminator, 2);
+            AIAddToStockArmy(player, c_XU_Kraken, 2);
+            // validation: 3500 resources
+            duration = 320 + RandomInt(-15, 15);
+        }
+    } else {
+        return XayidLateArmyInitHard(player, e_buildType_Core);
+    }
+
+    AISetUserInt(player, c_ldNextArmyRoll, armyRoll);
+    return duration;
+}
+
+//--------------------------------------------------------------------------------------------------
+//  XayidFinalArmyInitHard
+//--------------------------------------------------------------------------------------------------
+int XayidFinalArmyInitHard (int player, int buildType) {
+    int armyRoll = 0;
+    int duration = 0;
+
+    if (buildType == e_buildType_Core) {
+        armyRoll = RandomInt(0,2);
+        if (armyRoll == 0) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 16);
+            AIAddToStockArmy(player, c_XU_Scorpalisk, 5);
+            AIAddToStockArmy(player, c_XU_Raptor, 6);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Scorpalisk, 4, c_XU_Roamer, 6);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Xayidling, 7, c_XU_Roamer, 5);
+            // validation: 3950 resources
+            duration = 250 + RandomInt(-15, 15);
+        } else if (armyRoll == 1) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 12);
+            AIAddToStockArmy(player, c_XU_Scorpalisk, 6);
+            AIAddToStockArmy(player, c_XU_Reviler, 8);
+            // validation: 3600 resources
+            duration = 240 + RandomInt(-15, 15);
+        } else if (armyRoll == 1) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 12);
+            AIAddToStockArmy(player, c_XU_Scorpalisk, 6);
+            AIAddToStockArmy(player, c_XU_Eroder, 6);
+            AIAddToStockArmy(player, c_XU_Raptor, 8);
+            // validation: 4350 resources
+            duration = 280 + RandomInt(-15, 15);
+        } 
+    } else if (buildType == e_buildType_HighTech) {
+        armyRoll = RandomInt(0,2);
+        if (armyRoll == 0) {
+            AIAddToStockArmy(player, c_XU_Scorpalisk, 5);
+            AIAddToStockArmy(player, c_XU_Reviler, 5);
+            AIAddToStockArmy(player, c_XU_Eroder, 4);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Xayidling, 4, c_XU_Roamer, 3);
+            // validation: 3075 resources
+            duration = 280 + RandomInt(-15, 15);
+        } else if (armyRoll == 1) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 8);
+            AIAddToStockArmy(player, c_XU_Reviler, 2);
+            AIAddToStockArmy(player, c_XU_Spitter, 3);
+            AIAddToStockArmy(player, c_XU_Massalisk_Alias, 2);
+            AIAddToStockArmy(player, c_XU_Assailant, 3);
+            // validation: 3850 resources
+            duration = 290 + RandomInt(-15, 15);
+        } else if (armyRoll == 2) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 10);
+            AIAddToStockArmy(player, c_XU_Reviler, 6);
+            AIAddToStockArmy(player, c_XU_Spitter, 4);
+            AIAddToStockArmy(player, c_XU_Assailant, 2);
+            // validation: 3900 resources
+            duration = 300 + RandomInt(-15, 15);
+        }
+    }
+    else if (buildType == e_buildType_Special) {
+        armyRoll = RandomInt(0,1);
+        if (armyRoll == 0) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 16);
+            AIAddToStockArmy(player, c_XU_Casnolisk, 5);
+            AIAddToStockArmy(player, c_XU_Exterminator, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Scorpalisk, 4, c_XU_Roamer, 6);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Scorpalisk, 4, c_XU_Roamer, 6);
+            // validation: 4550 resources
+            duration = 280 + RandomInt(-15, 15);
+        } else {
+            AIAddToStockArmy(player, c_XU_Xayidling, 10);
+            AIAddToStockArmy(player, c_XU_Mendling, 5);
+            AIAddToStockArmy(player, c_XU_Scorpalisk, 6);
+            AIAddToStockArmy(player, c_XU_Xayithoan, 4);
+            AIAddToStockArmy(player, c_XU_Massalisk_Alias, 2);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Xayidling, 6, c_XU_Roamer, 5);
+            // validation: 5350 resources
+            duration = 310 + RandomInt(-15, 15);
+        }
+    } else if (buildType == e_buildType_Mixed) {
+        armyRoll = RandomInt(0,2);
+        if (armyRoll == 0) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 10);
+            AIAddToStockArmy(player, c_XU_Roamer, 8);
+            AIAddToStockArmy(player, c_XU_Eroder, 3);
+            AIAddToStockArmy(player, c_XU_Spitter, 4);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Eroder, 4, c_XU_Scorpalisk, 6);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Mendling, 2, c_XU_Scorpalisk, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Mendling, 2, c_XU_Scorpalisk, 3);
+            // validation: 5175 resources
+            duration = 340 + RandomInt(-15, 15);
+        } else if (armyRoll == 1) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 12);
+            AIAddToStockArmy(player, c_XU_Mendling, 7);
+            AIAddToStockArmy(player, c_XU_Reviler, 4);
+            AIAddToStockArmy(player, AIPickFrom2(c_XU_Massalisk_Alias, c_XU_Kraken), 1);
+            AIAddToStockArmy(player, AIPickFrom2(c_XU_Massalisk_Alias, c_XU_Kraken), 1);
+            AIAddToStockArmy(player, AIPickFrom2(c_XU_Massalisk_Alias, c_XU_Kraken), 1);
+            AIAddToStockArmy(player, AIPickFrom2(c_XU_Massalisk_Alias, c_XU_Kraken), 1);
+            // validation: 5600 resources
+            duration = 340 + RandomInt(-15, 15);
+        } else if (armyRoll == 2) {
+            AIAddToStockArmy(player, c_XU_Xayidling, 16);
+            AIAddToStockArmy(player, c_XU_Eroder, 8);
+            AIAddToStockArmy(player, c_XU_Casnolisk, 3);
+            AIAddToStockArmy(player, c_XU_Reviler, 4);
+            AIAddToStockArmy(player, c_XU_Massalisk_Alias, 2);
+            // validation: 5650 resources
+            duration = 340 + RandomInt(-15, 15);
+        }
+    } else if (buildType == e_buildType_Air) {
+        armyRoll = RandomInt(0,3);
+        if (armyRoll == 0) {
+            AIAddToStockArmy(player, c_XU_Assailant, 3);
+            AIAddToStockArmy(player, c_XU_Exterminator, 3);
+            AIAddToStockArmy(player, c_XU_Raptor, 6);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Assailant, 4, c_XU_Raptor, 8);
+            AIAddToStockArmyPickFrom2Count(player, c_XU_Exterminator, 4, c_XU_Raptor, 8);
+            // validation: 5100 resources
+            duration = 280 + RandomInt(-15, 15);
+        } else if (armyRoll == 1) {
+            AIAddToStockArmy(player, c_XU_Raptor, 10);
+            AIAddToStockArmy(player, c_XU_Exterminator, 1);
+            AIAddToStockArmy(player, c_XU_Kraken, 3);
+            AIAddToStockArmy(player, c_XU_Massalisk_Alias, 2);
+            // validation: 4900 resources
+            duration = 280 + RandomInt(-15, 15);
+        } else if (armyRoll == 2) {
+            AIAddToStockArmy(player, c_XU_Raptor, 10);
+            AIAddToStockArmy(player, c_XU_Exterminator, 5);
+            AIAddToStockArmy(player, c_XU_Kraken, 2);
+            AIAddToStockArmy(player, c_XU_Massalisk_Alias, 1);
+            // validation: 4700 resources
+            duration = 280 + RandomInt(-15, 15);
+        } else if (armyRoll == 3) {
+            AIAddToStockArmy(player, c_XU_Exterminator, 3);
+            AIAddToStockArmy(player, c_XU_Kraken, 6);
+            // validation: 5100 resources
+            duration = 280 + RandomInt(-15, 15);
+        }
+    } else {
+        return XayidFinalArmyInitHard(player, e_buildType_Core);
+    }
+
+    AISetUserInt(player, c_ldNextArmyRoll, armyRoll);
+    return duration;
+}
+
+//--------------------------------------------------------------------------------------------------
+//  XayidLateInitHard
+//--------------------------------------------------------------------------------------------------
+void XayidLateInitHard (int player) {
+    int lateLoop = AIGetUserInt(player, c_ldNumLateLoops);
+    int curPhase = c_ldPhaseLate;
+    int buildType = 0;
+
+    AIChooseNextLateGameBuild(player);
+    buildType = AIGetUserInt(player, c_lateGameBuildType);
+
+    if (lateLoop <= 0) { // First Late Loop
+        AISetupNextArmy (player, buildType, curPhase, XayidLateArmyInitHard);
+    } else {
+        curPhase = c_ldPhaseFinal + lateLoop;
+        AISetupNextArmy (player, buildType, curPhase, XayidFinalArmyInitHard);
+    }
+
+    AISetFlag(player, e_flagsScouting, true);
+    AISetFlag(player, e_flagsClearObs, true);
+    AISetFlag(player, e_flagsLateScout, true);
+    AISetFlag(player, e_flagsDetect, true);
+
+    AISetMainState(player, e_mainState_Late, e_mainSubState_Build);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  XayidLateBuildHard
+//--------------------------------------------------------------------------------------------------
+void XayidLateBuildHard (int player) {
+    int lateLoop = AIGetUserInt(player, c_ldNumLateLoops);
+    int buildType = AIGetUserInt(player, c_lateGameBuildType);
+    int armyRoll = AIGetUserInt(player, c_ldNextArmyRoll);
+    int timeOut = AIGetUserInt(player, c_nextArmyTime);
+    bool nextState = false;
+
+    if (AIHasPlayerChangedCurrentLateGame(player)) {
+        AISetMainState(player, e_mainState_Late, e_mainSubState_Init);
+        return;
+    }
+
+    AIClearStock(player);
+
+    XayidBasicEconomy(player, c_ldPhaseLate, 20);
+    if (buildType == e_buildType_Air) {
+        AISetStock( player, 2, c_XU_Ferrion );
+    }
+    XayidBasicExpansion(player, c_ldPhaseLate, 14000, 4500);
+
+    XayidBasicDefenseStock(player);
+
+    AISetStockArmyScale(player, 0.35);
+
+    XayidGeneralBuild(player, c_ldPhaseLate);
+
+    AILDStockWorkers( player, 30, c_XU_Scavenger);
+
+    if (buildType == e_buildType_Core) {
+        if (XayidMacroExpand(player)) { return; }
+        AISetStockUnitNext( player, 4, c_XB_XayidDen, c_stockIdle );
+        AISetStockUnitNext( player, 3, c_XB_BiomassHatchery, c_stockIdle );
+        AISetStockUnitNext( player, 2, c_XB_AvianNest, c_stockIdle );
+    }
+    else if (buildType == e_buildType_HighTech) {
+        if (XayidMacroExpand(player)) { return; }
+        AISetStockUnitNext( player, 4, c_XB_XayidDen, c_stockIdle );
+        AISetStockUnitNext( player, 3, c_XB_BiomassHatchery, c_stockIdle );
+        AISetStockUnitNext( player, 2, c_XB_AvianNest, c_stockIdle );
+    }
+    else if (buildType == e_buildType_Special) {
+        if (XayidMacroExpand(player)) { return; }
+        AISetStockUnitNext( player, 4, c_XB_XayidDen, c_stockIdle );
+        AISetStockUnitNext( player, 3, c_XB_BiomassHatchery, c_stockIdle );
+        AISetStockUnitNext( player, 2, c_XB_AvianNest, c_stockIdle );
+    }
+    else if (buildType == e_buildType_Mixed) {
+        if (XayidMacroExpand(player)) { return; }
+        AISetStockUnitNext( player, 4, c_XB_XayidDen, c_stockIdle );
+        AISetStockUnitNext( player, 3, c_XB_BiomassHatchery, c_stockIdle );
+        AISetStockUnitNext( player, 2, c_XB_AvianNest, c_stockIdle );
+    }
+    else if (buildType == e_buildType_Air) {
+        if (XayidMacroExpand(player)) { return; }
+        AISetStockUnitNext( player, 4, c_XB_XayidDen, c_stockIdle );
+        AISetStockUnitNext( player, 3, c_XB_BiomassHatchery, c_stockIdle );
+        AISetStockUnitNext( player, 3, c_XB_AvianNest, c_stockIdle );
+    }
+
+    AISetStock( player, 3, c_XU_Ferrion );
+    AISetStock( player, 2, c_XB_BilePit );
+
+    AISetStockArmyScale(player, 0.70);
+
+    AISetStockArmyScale(player, 1.00);
+
+    AILDStockWorkers( player, 60, c_XU_Scavenger);
+
+    if (lateLoop <= 0) { // First Late Loop
+        XayidUpgradesHard(player, c_ldPhaseLate);
+        XayidTechUp(player, c_ldPhaseLate);
+    } else { // Remaining Loops
+        XayidUpgradesHard(player, c_ldPhaseFinal);
+        XayidTechUp(player, c_ldPhaseFinal);
+    }
+
+    AIEnableStock(player);
+
+    AILDGeneralSharedLogic(player);
+
+    nextState = AITestTimeout(player, timeOut, e_mainState_Late, e_mainSubState_Init);
+    if (nextState) {
+        lateLoop += 1;
+        AISetUserInt(player, c_ldNumLateLoops, lateLoop);
+    }
+}
+
+//--------------------------------------------------------------------------------------------------
+//  XayidOpenHard
+//--------------------------------------------------------------------------------------------------
+void XayidOpenHard (int player) {
+    int mainSubState = AIState(player, e_mainSubState);
+
+    if (mainSubState != e_mainSubState_Build) {
+        XayidOpenInitHard(player);
+        mainSubState = AIState(player, e_mainSubState);
+    }
+
+    if (mainSubState == e_mainSubState_Build) { XayidOpenBuildHard(player); }
+    else { ErrorMeleeScript(player, "Invalid Open MainSubState XayidHard"); }
+}
+
+//--------------------------------------------------------------------------------------------------
+//  XayidMidHard
+//--------------------------------------------------------------------------------------------------
+void XayidMidHard (int player) {
+    int mainSubState = AIState(player, e_mainSubState);
+
+    if (mainSubState != e_mainSubState_Build) {
+        XayidMidInitHard(player);
+        mainSubState = AIState(player, e_mainSubState);
+    }
+
+    if (mainSubState == e_mainSubState_Build) { XayidMidBuildHard(player);  }
+    else { ErrorMeleeScript(player, "Invalid Mid MainSubState XayidHard"); }
+}
+
+//--------------------------------------------------------------------------------------------------
+//  XayidLateHard
+//--------------------------------------------------------------------------------------------------
+void XayidLateHard (int player) {
+    int mainSubState = AIState(player, e_mainSubState);
+
+    if (mainSubState != e_mainSubState_Build) {
+        XayidLateInitHard(player);
+        mainSubState = AIState(player, e_mainSubState);
+    }
+
+    if (mainSubState == e_mainSubState_Build) { XayidLateBuildHard(player);  }
+    else { ErrorMeleeScript(player, "Invalid Late MainSubState XayidHard"); }
+}
+

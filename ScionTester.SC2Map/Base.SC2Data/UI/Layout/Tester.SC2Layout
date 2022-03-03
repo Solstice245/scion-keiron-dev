@@ -1,0 +1,1299 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+
+    <Frame type="Button" name="CheckBox">
+        <Width val="31"/>
+        <Height val="30"/>
+        <NormalImage val="NormalImage"/>
+        <HoverImage val="HoverImage"/>
+        <ClickSound val="@UI_CheckboxSelect"/>
+
+        <Frame type="Image" name="NormalImage">
+            <Anchor relative="$parent"/>
+            <Texture val="@@UI/StandardCheckBox"/>
+            <ColorAdjustMode val="Colorize"/>
+            <StateCount val="2"/>
+            <DesaturateOnDisable val="false"/>
+            <DisabledAlpha val="64"/>
+        </Frame>
+    
+        <Frame type="Image" name="HoverImage">
+            <Anchor relative="$parent"/>
+            <Texture val="@@UI/StandardCheckBoxHover"/>
+            <ColorAdjustMode val="Colorize"/>
+            <StateCount val="2"/>
+            <DesaturateOnDisable val="false"/>
+            <DisabledAlpha val="64"/>
+        </Frame>
+
+        <Frame type="Image" name="CheckMarkImage">
+            <Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
+            <Anchor side="Left" relative="$parent" pos="Mid" offset="0"/>
+            <Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+            <Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
+            <Width val="23"/>
+            <Height val="23"/>
+            <Texture val="@@UI/StandardCheckBoxMark"/>
+            <ColorAdjustMode val="Colorize"/>
+            <DesaturateOnDisable val="false"/>
+            <DisabledAlpha val="64"/>
+            <AcceptsMouse val="False"/>
+            <Visible val="False"/>
+        </Frame>
+
+        <StateGroup name="Toggle">
+            <State name="ToggleOn">
+                <When type="Property" frame="$this" Toggled="True"/>
+                <Action type="SetProperty" frame="$this/CheckMarkImage" Visible="True"/>
+            </State>
+            <State name="ToggleOff">
+                <When type="Property" frame="$this" Toggled="False"/>
+                <Action type="SetProperty" frame="$this/CheckMarkImage" Visible="False"/>
+            </State>
+        </StateGroup>
+
+    </Frame>
+
+    <Frame type="Frame" name="AllianceOptionTemplate">
+        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+        <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+        <Height val="30"/>
+
+        <Frame type="Label" name="Label">
+            <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+            <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+            <Anchor side="Right" relative="$parent" pos="0.35" offset="0"/>
+            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+            <Style val="OptionsLabel_Terr"/>
+        </Frame>
+
+        <Frame type="Button" name="Creator" template="Tester/CheckBox">
+            <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+            <Anchor side="Left" relative="$parent/Label" pos="Max" offset="60"/>
+            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+            
+            <Frame type="Image" name="NormalImage">
+                <AdjustmentColor val="30C030"/>
+            </Frame>
+            <Frame type="Image" name="HoverImage">
+                <AdjustmentColor val="30C030"/>
+            </Frame>
+            <Frame type="Image" name="CheckMarkImage">
+                <AdjustmentColor val="30C030"/>
+            </Frame>
+            
+        </Frame>
+
+        <Frame type="Button" name="Red" template="Tester/CheckBox">
+            <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+            <Anchor side="Left" relative="$parent/Creator" pos="Max" offset="60"/>
+            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+            
+            <Frame type="Image" name="NormalImage">
+                <AdjustmentColor val="FF0000"/>
+            </Frame>
+            <Frame type="Image" name="HoverImage">
+                <AdjustmentColor val="FF0000"/>
+            </Frame>
+            <Frame type="Image" name="CheckMarkImage">
+                <AdjustmentColor val="FF0000"/>
+            </Frame>
+
+        </Frame>
+
+        <Frame type="Button" name="Blue" template="Tester/CheckBox">
+            <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+            <Anchor side="Left" relative="$parent/Red" pos="Max" offset="16"/>
+            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+            
+            <Frame type="Image" name="NormalImage">
+                <AdjustmentColor val="3080FF"/>
+            </Frame>
+            <Frame type="Image" name="HoverImage">
+                <AdjustmentColor val="3080FF"/>
+            </Frame>
+            <Frame type="Image" name="CheckMarkImage">
+                <AdjustmentColor val="3080FF"/>
+            </Frame>
+
+        </Frame>
+
+    </Frame>
+
+    <Frame type="Button" name="TesterMenuButton">
+        <Width val="72"/>
+        <Height val="72"/>
+
+        <DisplayType val="ImageLayer"/>
+        <ClickSound val="@UI_ActionButtonSelect"/>
+
+        <Label val="Label"/>
+        <NormalImage val="NormalImage"/>
+        <HoverImage val="HoverImage"/>
+
+        <Frame type="Image" name="NormalImage">
+            <Anchor relative="$parent"/>
+            <LayerCount val="4"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_normal_defaultterran.dds" layer="0"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_pressed_defaultterran.dds" layer="1"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_selected_defaultterran.dds" layer="2"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_disabled_defaultterran.dds" layer="3"/>
+            <TextureType val="NineSlice"/>
+        </Frame>
+
+        <Frame type="Image" name="HoverImage">
+            <Anchor relative="$parent"/>
+            <LayerCount val="4"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_hover_defaultterran.dds" layer="0"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_pressed_defaultterran.dds" layer="1"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_selected_defaultterran.dds" layer="2"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_disabled_defaultterran.dds" layer="3"/>
+            <TextureType val="NineSlice"/>
+        </Frame>
+
+        <Frame type="Image" name="FaceImage">
+            <Anchor relative="$parent"/>
+            <Desaturated val="True"/>
+        </Frame>
+
+        <Frame type="Label" name="Label">
+            <Anchor relative="$parent"/>
+            <Style val="TesterButtonLabel"/>
+        </Frame>
+
+    </Frame>
+
+    <Frame type="Button" name="TesterOptionButton">
+        <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+        <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+        <Width val="109"/>
+
+        <Label val="Label"/>
+        <DisplayType val="ImageLayer"/>
+        <ClickSound val="@UI_ActionButtonSelect"/>
+
+        <NormalImage val="NormalImage"/>
+        <HoverImage val="HoverImage"/>
+
+        <Frame type="Image" name="NormalImage">
+            <Anchor relative="$parent"/>
+            <LayerCount val="4"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_normal_defaultterran.dds" layer="0"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_pressed_defaultterran.dds" layer="1"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_selected_defaultterran.dds" layer="2"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_disabled_defaultterran.dds" layer="3"/>
+            <TextureType val="NineSlice"/>
+        </Frame>
+
+        <Frame type="Image" name="HoverImage">
+            <Anchor relative="$parent"/>
+            <LayerCount val="4"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_hover_defaultterran.dds" layer="0"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_pressed_defaultterran.dds" layer="1"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_selected_defaultterran.dds" layer="2"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_disabled_defaultterran.dds" layer="3"/>
+            <TextureType val="NineSlice"/>
+        </Frame>
+
+        <Frame type="Label" name="Label">
+            <Anchor relative="$parent"/>
+            <Style val="TesterButtonLabel"/>
+        </Frame>
+
+    </Frame>
+
+    <Frame type="Button" name="TesterRaceButton_Red">
+        <Width val="78"/>
+        <Height val="29"/>
+
+        <DisplayType val="ImageLayer"/>
+        <ClickSound val="@UI_ActionButtonSelect"/>
+
+        <Label val="Label"/>
+        <NormalImage val="NormalImage"/>
+        <HoverImage val="HoverImage"/>
+
+        <Frame type="Image" name="NormalImage">
+            <Anchor relative="$parent"/>
+            <LayerCount val="4"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_normal_forged.dds" layer="0"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_pressed_forged.dds" layer="1"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_selected_forged.dds" layer="2"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_disabled_forged.dds" layer="3"/>
+            <TextureType val="NineSlice"/>
+        </Frame>
+
+        <Frame type="Image" name="HoverImage">
+            <Anchor relative="$parent"/>
+            <LayerCount val="4"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_hover_forged.dds" layer="0"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_pressed_forged.dds" layer="1"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_selected_forged.dds" layer="2"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_disabled_forged.dds" layer="3"/>
+            <TextureType val="NineSlice"/>
+        </Frame>
+
+        <Frame type="Label" name="Label">
+            <Anchor relative="$parent"/>
+            <Style val="TesterButtonLabel"/>
+        </Frame>
+
+    </Frame>
+
+    <Frame type="Button" name="TesterRaceButton_Blue">
+        <Width val="78"/>
+        <Height val="29"/>
+
+        <DisplayType val="ImageLayer"/>
+        <ClickSound val="@UI_ActionButtonSelect"/>
+
+        <Label val="Label"/>
+        <NormalImage val="NormalImage"/>
+        <HoverImage val="HoverImage"/>
+
+        <Frame type="Image" name="NormalImage">
+            <Anchor relative="$parent"/>
+            <LayerCount val="4"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_normal_defaultprotoss.dds" layer="0"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_pressed_defaultprotoss.dds" layer="1"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_selected_defaultprotoss.dds" layer="2"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_disabled_defaultprotoss.dds" layer="3"/>
+            <TextureType val="NineSlice" layer="0"/>
+            <TextureType val="NineSlice" layer="1"/>
+            <TextureType val="NineSlice" layer="2"/>
+            <TextureType val="NineSlice" layer="3"/>
+        </Frame>
+
+        <Frame type="Image" name="HoverImage">
+            <Anchor relative="$parent"/>
+            <LayerCount val="4"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_hover_defaultprotoss.dds" layer="0"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_pressed_defaultprotoss.dds" layer="1"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_selected_defaultprotoss.dds" layer="2"/>
+            <Texture val="Assets\Textures\ui_console_menubutton_disabled_defaultprotoss.dds" layer="3"/>
+            <TextureType val="NineSlice" layer="0"/>
+            <TextureType val="NineSlice" layer="1"/>
+            <TextureType val="NineSlice" layer="2"/>
+            <TextureType val="NineSlice" layer="3"/>
+        </Frame>
+
+        <Frame type="Label" name="Label">
+            <Anchor relative="$parent"/>
+            <Style val="TesterButtonLabel"/>
+        </Frame>
+
+    </Frame>
+
+    <Frame type="Button" name="TesterItemButton_Red">
+        <Width val="76"/>
+        <Height val="76"/>
+
+        <DisplayType val="ImageLayer"/>
+        <ClickSound val="@UI_GenericButton"/>
+
+        <NormalImage val="NormalImage"/>
+
+        <Frame type="Image" name="NormalImage">
+            <Anchor relative="$parent"/>
+            <LayerCount val="4"/>
+            <Texture val="Assets\Textures\ui_console_commandbutton_normal_forged.dds" layer="0"/>
+            <Texture val="Assets\Textures\ui_console_commandbutton_highlighted_forged.dds" layer="1"/>
+            <Texture val="Assets\Textures\ui_console_commandbutton_superhighlighted_forged.dds" layer="2"/>
+            <Texture val="Assets\Textures\ui_techtree_buttonframe_disabled.dds" layer="3"/>
+            <TextureType val="NineSlice"/>
+        </Frame>
+
+        <Frame type="Image" name="FaceImage">
+            <Anchor relative="$parent"/>
+            <Visible val="False"/>
+        </Frame>
+
+    </Frame>
+
+    <Frame type="Button" name="TesterItemButton_Blue">
+        <Width val="76"/>
+        <Height val="76"/>
+
+        <DisplayType val="ImageLayer"/>
+        <ClickSound val="@UI_GenericButton"/>
+
+        <NormalImage val="NormalImage"/>
+
+        <Frame type="Image" name="NormalImage">
+            <Anchor relative="$parent"/>
+            <LayerCount val="4"/>
+            <Texture val="Assets\Textures\ui_console_commandbutton_normal_defaultprotoss.dds" layer="0"/>
+            <Texture val="Assets\Textures\ui_console_commandbutton_highlighted_defaultprotoss.dds" layer="1"/>
+            <Texture val="Assets\Textures\ui_console_commandbutton_superhighlighted_defaultprotoss.dds" layer="2"/>
+            <Texture val="Assets\Textures\ui_techtree_buttonframe_disabled.dds" layer="3"/>
+            <TextureType val="NineSlice"/>
+        </Frame>
+
+        <Frame type="Image" name="FaceImage">
+            <Anchor relative="$parent"/>
+            <Visible val="False"/>
+        </Frame>
+
+    </Frame>
+
+    <Frame type="Frame" name="GameUI/UIContainer/FullscreenUpperContainer" file="GameUI">
+
+        <Frame type="Frame" name="TesterMenu">
+            <Anchor side="Left" relative="$parent" pos="Min" offset="-20"/>
+            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+            <Width val="221"/>
+            <Height val="390"/>
+
+            <Frame type="Image" name="CornerFill">
+                <Anchor side="Left" relative="$parent" pos="Min" offset="-92"/>
+                <Anchor side="Top" relative="$parent" pos="Min" offset="-77"/>
+                <Width val="321"/>
+                <Height val="458"/>
+                <Texture val="Assets\Textures\ui_battlereport_metalconnector_r.dds"/>
+            </Frame>
+
+            <Frame type="Image" name="Background">
+                <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent" pos="Max" offset="-104"/>
+                <Width val="216"/>
+                <Height val="235"/>
+                <Texture val="Assets/Textures/tester_ui_menu_frame.dds"/>
+            </Frame>
+
+            <Frame type="Frame" name="Modes">
+                <Anchor side="Left" relative="$parent" pos="Min" offset="35"/>
+                <Anchor side="Top" relative="$parent/Background" pos="Min" offset="38"/>
+                <Width val="146"/>
+                <Height val="72"/>
+
+                <Frame type="Button" name="Settings" template="Tester/TesterMenuButton">
+                    <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+
+                    <Tooltip val="@UI/TesterMenuSettingsButton"/>
+
+                    <Frame type="Image" name="FaceImage">
+                        <Texture val="Assets\Textures\btn-techupgrade-terran-automatedselfrepair.dds"/>
+                    </Frame>
+                    
+                </Frame>
+
+                <Frame type="Button" name="Creator" template="Tester/TesterMenuButton">
+                    <Anchor side="Left" relative="$parent/Settings" pos="Max" offset="1"/>
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+
+                    <Tooltip val="@UI/TesterMenuCreatorButton"/>
+
+                    <Frame type="Image" name="FaceImage">
+                        <Texture val="Assets\Textures\btn-techupgrade-terran-fusionwelder.dds"/>
+                    </Frame>
+
+                </Frame>
+
+            </Frame>
+
+            <Frame type="Frame" name="CreatorMenu">
+                <Anchor side="Left" relative="$parent/Modes" pos="Min" offset="0"/>
+                <Anchor side="Top" relative="$parent/Background" pos="Min" offset="126"/>
+                <Width val="145"/>
+                <Height val="72"/>
+
+                <Visible val="False"/>
+
+                <Frame type="Button" name="Mirror" template="Tester/TesterMenuButton">
+                    <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+
+                    <Tooltip val="@UI/TesterMenuMirrorButton"/>
+
+                    <Frame type="Image" name="FaceImage">
+                        <Texture val="Assets\Textures\btn-command-patrol.dds"/>
+                    </Frame>
+
+                </Frame>
+
+                <Frame type="Button" name="Clear" template="Tester/TesterMenuButton">
+                    <Anchor side="Left" relative="$parent/Mirror" pos="Max" offset="1"/>
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+
+                    <Tooltip val="@UI/TesterMenuClearButton"/>
+
+                    <Frame type="Image" name="FaceImage">
+                        <Texture val="Assets\Textures\btn-command-stop.dds"/>
+                    </Frame>
+
+                </Frame>
+
+            </Frame>
+
+            <Frame type="Frame" name="AttackMenu">
+                <Anchor side="Left" relative="$parent/CreatorMenu" pos="Min" offset="0"/>
+                <Anchor side="Top" relative="$parent/CreatorMenu" pos="Min" offset="0"/>
+                <Width val="145"/>
+                <Height val="72"/>
+
+                <Visible val="False"/>
+
+                <Frame type="Button" name="Pause" template="Tester/TesterMenuButton">
+                    <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+
+                    <Tooltip val="@UI/TesterMenuPauseButton"/>
+
+                    <Frame type="Image" name="FaceImage">
+                        <Texture val="Assets\Textures\btn-command-holdposition.dds"/>
+                    </Frame>
+
+                </Frame>
+
+                <Frame type="Button" name="Reset" template="Tester/TesterMenuButton">
+                    <Anchor side="Left" relative="$parent/Pause" pos="Max" offset="1"/>
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+
+                    <Tooltip val="@UI/TesterMenuResetButton"/>
+
+                    <Frame type="Image" name="FaceImage">
+                        <Texture val="Assets\Textures\btn-command-returncargo.dds"/>
+                    </Frame>
+
+                </Frame>
+
+            </Frame>
+
+            <Frame type="Button" name="StartButton" template="StandardTemplates/StandardSmallPanelLeftButtonTemplate">
+                <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent" pos="Max" offset="-48"/>
+                <Width val="240"/>
+
+                <Visible val="False"/>
+
+                <Frame type="Label" name="ButtonLabel">
+                    <Text val="@UI/LobbyResumeReplayFrame/Start"/>
+                </Frame>
+
+            </Frame>
+
+            <Frame type="Button" name="StopButton" template="StandardTemplates/StandardSmallPanelLeftButtonTemplate">
+                <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent" pos="Max" offset="-48"/>
+                <Width val="240"/>
+
+                <Visible val="False"/>
+
+                <Frame type="Label" name="ButtonLabel">
+                    <Text val="@UI/Hotkey/Name/07/ReplayStop"/>
+                </Frame>
+
+            </Frame>
+
+            <Frame type="Button" name="AttackButton" template="StandardTemplates/StandardSmallPanelLeftButtonTemplate">
+                <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+                <Width val="240"/>
+
+                <Visible val="False"/>
+
+                <Frame type="Label" name="ButtonLabel">
+                    <Text val="@UI/PingPanel/SelectAttack"/>
+                </Frame>
+
+          </Frame>
+
+        </Frame>
+      
+        <Frame type="Frame" name="TesterPanel">
+            <Anchor side="Left" relative="$parent" pos="Min" offset="120"/>
+            <Anchor side="Top" relative="$parent" pos="Min" offset="-17"/>
+            <Width val="1098"/>
+            <Height val="444"/>
+
+            <Visible val="False"/>
+
+            <Frame type="Image" name="Background">
+                <Anchor relative="$parent"/>
+                <Texture val="Assets/Textures/tester_ui_race_frame.dds"/>
+            </Frame>
+
+            <Frame type="Frame" name="SettingsPanel">
+                <Anchor relative="$parent"/>
+
+                <Constant name="OptionHeight" val="28"/>
+                <Constant name="OptionButtonOffset" val="10"/>
+                <Constant name="OptionGap" val="10"/>
+                <Constant name="OptionMidPos" val="0.377"/>
+
+                <Frame type="Image" name="ButtonListFillLeft">
+                    <Anchor side="Left" relative="$parent" pos="Min" offset="59"/>
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+                    <Width val="473"/>
+                    <Height val="29"/>
+                    <Texture val="Assets\Textures\tester_ui_race_listfill.dds"/>
+                </Frame>
+
+                <Frame type="Image" name="ButtonListFillRight">
+                    <Anchor side="Left" relative="$parent" pos="Min" offset="566"/>
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+                    <Width val="473"/>
+                    <Height val="29"/>
+                    <Texture val="Assets\Textures\tester_ui_race_listfill.dds"/>
+                </Frame>
+
+                <Frame type="Frame" name="ListLeft">
+                    <Anchor side="Left" relative="$parent" pos="Min" offset="79"/>
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="79"/>
+
+                    <Width val="461"/>
+                    <Height val="307"/>
+
+                    <Frame type="Frame" name="UpgradeLevel">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="30"/>
+                        <Height val="#OptionHeight"/>
+
+                        <Frame type="Label" name="Label">
+                            <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+                            <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                            <Anchor side="Right" relative="$parent" pos="#OptionMidPos" offset="0"/>
+                            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+    
+                            <Text val="@UI/TesterOption/UpgradeLevel/Label"/>
+                            <Style val="OptionsLabel_Terr"/>
+                        </Frame>
+
+                        <Frame type="Button" name="Level0" template="Tester/TesterOptionButton">
+                            <Anchor side="Left" relative="$parent/Label" pos="Max" offset="#OptionButtonOffset"/>
+                            <Width val="54"/>
+                            <Frame type="Label" name="Label">
+                                <Text val="@UI/TesterOption/UpgradeLevel/Level0"/>
+                            </Frame>
+                        </Frame>
+
+                        <Frame type="Button" name="Level1" template="Tester/TesterOptionButton">
+                            <Anchor side="Left" relative="$parent/Level0" pos="Max" offset="1"/>
+                            <Width val="54"/>
+                            <Frame type="Label" name="Label">
+                                <Text val="@UI/TesterOption/UpgradeLevel/Level1"/>
+                            </Frame>
+                        </Frame>
+
+                        <Frame type="Button" name="Level2" template="Tester/TesterOptionButton">
+                            <Anchor side="Left" relative="$parent/Level1" pos="Max" offset="1"/>
+                            <Width val="54"/>
+                            <Frame type="Label" name="Label">
+                                <Text val="@UI/TesterOption/UpgradeLevel/Level2"/>
+                            </Frame>
+                        </Frame>
+
+                        <Frame type="Button" name="Level3" template="Tester/TesterOptionButton">
+                            <Anchor side="Left" relative="$parent/Level2" pos="Max" offset="1"/>
+                            <Width val="54"/>
+                            <Frame type="Label" name="Label">
+                                <Text val="@UI/TesterOption/UpgradeLevel/Level3"/>
+                            </Frame>
+                        </Frame>
+
+                    </Frame>
+
+                    <Frame type="Frame" name="Research">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+                        <Anchor side="Top" relative="$parent/UpgradeLevel" pos="Max" offset="#OptionGap"/>
+                        <Height val="#OptionHeight"/>
+
+                        <Frame type="Label" name="Label">
+                            <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+                            <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                            <Anchor side="Right" relative="$parent" pos="#OptionMidPos" offset="0"/>
+                            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+    
+                            <Text val="@UI/TesterOption/Research/Label"/>
+                            <Style val="OptionsLabel_Terr"/>
+                        </Frame>
+
+                        <Frame type="Button" name="Off" template="Tester/TesterOptionButton">
+                            <Anchor side="Left" relative="$parent/Label" pos="Max" offset="#OptionButtonOffset"/>
+                            <Frame type="Label" name="Label">
+                                <Text val="@UI/TesterOption/Generic/Off"/>
+                            </Frame>
+                        </Frame>
+
+                        <Frame type="Button" name="On" template="Tester/TesterOptionButton">
+                            <Anchor side="Left" relative="$parent/Off" pos="Max" offset="1"/>
+                            <Frame type="Label" name="Label">
+                                <Text val="@UI/TesterOption/Generic/On"/>
+                            </Frame>
+                        </Frame>
+
+                    </Frame>
+
+                    <Frame type="Frame" name="Vision">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+                        <Anchor side="Top" relative="$parent/Research" pos="Max" offset="#OptionGap"/>
+                        <Height val="#OptionHeight"/>
+
+                        <Frame type="Label" name="Label">
+                            <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+                            <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                            <Anchor side="Right" relative="$parent" pos="#OptionMidPos" offset="0"/>
+                            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+    
+                            <Text val="@UI/TesterOption/Vision/Label"/>
+                            <Style val="OptionsLabel_Terr"/>
+                        </Frame>
+
+                        <Frame type="Button" name="Off" template="Tester/TesterOptionButton">
+                            <Anchor side="Left" relative="$parent/Label" pos="Max" offset="#OptionButtonOffset"/>
+                            <Frame type="Label" name="Label">
+                                <Text val="@UI/TesterOption/Generic/Off"/>
+                            </Frame>
+                        </Frame>
+
+                        <Frame type="Button" name="On" template="Tester/TesterOptionButton">
+                            <Anchor side="Left" relative="$parent/Off" pos="Max" offset="1"/>
+                            <Frame type="Label" name="Label">
+                                <Text val="@UI/TesterOption/Generic/On"/>
+                            </Frame>
+                        </Frame>
+
+                    </Frame>
+
+                    <Frame type="Frame" name="Terrain">
+                        <Anchor side="Bottom" relative="$parent" pos="Max" offset="-30"/>
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+                        <Height val="122"/>
+
+                        <Frame type="Label" name="Label">
+                            <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                            <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+                            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                            <Style val="HotkeyDialogBindButton_Terr"/>
+                            <Text val="@UI/TesterOption/Terrain/Label"/>
+                        </Frame>
+
+                        <Frame type="Frame" name="Buttons">
+                            <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+                            <Anchor side="Left" relative="$parent" pos="Mid" offset="0"/>
+                            <Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+                            <Anchor side="Top" relative="$parent/Label" pos="Max" offset="2"/>
+                            <Width val="351"/>
+
+                            <Frame type="Button" name="Terrain0" template="Tester/TesterOptionButton">
+                                <Anchor side="Bottom" relative="" pos="0" offset="0"/>
+                                <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                                <Anchor side="Top" relative="$parent" pos="Min" offset="2"/>
+                                <Width val="113"/>
+                                <Height val="#OptionHeight"/>
+                                <Tooltip val="@UI/TesterOption/Terrain/Terrain0/Desc"/>
+                                <Frame type="Label" name="Label">
+                                    <Text val="@UI/TesterOption/Terrain/Terrain0/Name"/>
+                                </Frame>
+                            </Frame>
+
+                            <Frame type="Button" name="Terrain1" template="Tester/TesterOptionButton">
+                                <Anchor side="Bottom" relative="" pos="0" offset="0"/>
+                                <Anchor side="Left" relative="$sibling-1" pos="Max" offset="4"/>
+                                <Anchor side="Top" relative="$sibling-1" pos="Min" offset="0"/>
+                                <Width val="113"/>
+                                <Height val="#OptionHeight"/>
+                                <Tooltip val="@UI/TesterOption/Terrain/Terrain1/Desc"/>
+                                <Frame type="Label" name="Label">
+                                    <Text val="@UI/TesterOption/Terrain/Terrain1/Name"/>
+                                </Frame>
+                            </Frame>
+
+                            <Frame type="Button" name="Terrain2" template="Tester/TesterOptionButton">
+                                <Anchor side="Bottom" relative="" pos="0" offset="0"/>
+                                <Anchor side="Left" relative="$sibling-1" pos="Max" offset="4"/>
+                                <Anchor side="Top" relative="$sibling-1" pos="Min" offset="0"/>
+                                <Width val="113"/>
+                                <Height val="#OptionHeight"/>
+                                <Tooltip val="@UI/TesterOption/Terrain/Terrain2/Desc"/>
+                                <Frame type="Label" name="Label">
+                                    <Text val="@UI/TesterOption/Terrain/Terrain2/Name"/>
+                                </Frame>
+                            </Frame>
+
+                            <Frame type="Button" name="Terrain3" template="Tester/TesterOptionButton">
+                                <Anchor side="Bottom" relative="" pos="0" offset="0"/>
+                                <Anchor side="Left" relative="$parent/Terrain0" pos="Min" offset="0"/>
+                                <Anchor side="Top" relative="$parent/Terrain0" pos="Max" offset="4"/>
+                                <Width val="113"/>
+                                <Height val="#OptionHeight"/>
+                                <Tooltip val="@UI/TesterOption/Terrain/Terrain3/Desc"/>
+                                <Frame type="Label" name="Label">
+                                    <Text val="@UI/TesterOption/Terrain/Terrain3/Name"/>
+                                </Frame>
+                            </Frame>
+
+                            <Frame type="Button" name="Terrain4" template="Tester/TesterOptionButton">
+                                <Anchor side="Bottom" relative="" pos="0" offset="0"/>
+                                <Anchor side="Left" relative="$sibling-1" pos="Max" offset="4"/>
+                                <Anchor side="Top" relative="$sibling-1" pos="Min" offset="0"/>
+                                <Width val="113"/>
+                                <Height val="#OptionHeight"/>
+                                <Tooltip val="@UI/TesterOption/Terrain/Terrain4/Desc"/>
+                                <Frame type="Label" name="Label">
+                                    <Text val="@UI/TesterOption/Terrain/Terrain4/Name"/>
+                                </Frame>
+                            </Frame>
+
+                            <Frame type="Button" name="Terrain5" template="Tester/TesterOptionButton">
+                                <Anchor side="Bottom" relative="" pos="0" offset="0"/>
+                                <Anchor side="Left" relative="$sibling-1" pos="Max" offset="4"/>
+                                <Anchor side="Top" relative="$sibling-1" pos="Min" offset="0"/>
+                                <Width val="113"/>
+                                <Height val="#OptionHeight"/>
+                                <Tooltip val="@UI/TesterOption/Terrain/Terrain5/Desc"/>
+                                <Frame type="Label" name="Label">
+                                    <Text val="@UI/TesterOption/Terrain/Terrain5/Name"/>
+                                </Frame>
+                            </Frame>
+
+                            <Frame type="Button" name="Terrain6" template="Tester/TesterOptionButton">
+                                <Anchor side="Bottom" relative="" pos="0" offset="0"/>
+                                <Anchor side="Left" relative="$parent/Terrain3" pos="Min" offset="0"/>
+                                <Anchor side="Top" relative="$parent/Terrain3" pos="Max" offset="4"/>
+                                <Width val="113"/>
+                                <Height val="#OptionHeight"/>
+                                <Tooltip val="@UI/TesterOption/Terrain/Terrain6/Desc"/>
+                                <Frame type="Label" name="Label">
+                                    <Text val="@UI/TesterOption/Terrain/Terrain6/Name"/>
+                                </Frame>
+                            </Frame>
+
+                            <Frame type="Button" name="Terrain7" template="Tester/TesterOptionButton">
+                                <Anchor side="Bottom" relative="" pos="0" offset="0"/>
+                                <Anchor side="Left" relative="$sibling-1" pos="Max" offset="4"/>
+                                <Anchor side="Top" relative="$sibling-1" pos="Min" offset="0"/>
+                                <Width val="113"/>
+                                <Height val="#OptionHeight"/>
+                                <Tooltip val="@UI/TesterOption/Terrain/Terrain8/Desc"/>
+                                <Frame type="Label" name="Label">
+                                    <Text val="@UI/TesterOption/Terrain/Terrain8/Name"/>
+                                </Frame>
+                            </Frame>
+
+                            <Frame type="Button" name="Terrain8" template="Tester/TesterOptionButton">
+                                <Anchor side="Bottom" relative="" pos="0" offset="0"/>
+                                <Anchor side="Left" relative="$sibling-1" pos="Max" offset="4"/>
+                                <Anchor side="Top" relative="$sibling-1" pos="Min" offset="0"/>
+                                <Width val="113"/>
+                                <Height val="#OptionHeight"/>
+                                <Tooltip val="@UI/TesterOption/Terrain/Terrain9/Desc"/>
+                                <Frame type="Label" name="Label">
+                                    <Text val="@UI/TesterOption/Terrain/Terrain9/Name"/>
+                                </Frame>
+                            </Frame>
+
+                        </Frame>
+
+                    </Frame>
+
+                </Frame>
+
+                <Frame type="Frame" name="ListRight">
+                    <Anchor side="Left" relative="$parent" pos="Min" offset="559"/>
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="79"/>
+
+                    <Width val="461"/>
+                    <Height val="307"/>
+
+                    <Frame type="Label" name="Label">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
+                        <Style val="HotkeyDialogBindButton_Terr"/>
+                        <Text val="@UI/TesterOption/Access/Label"/>
+                    </Frame>
+
+                    <Frame type="Frame" name="Legend">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+                        <Anchor side="Top" relative="$parent/Label" pos="Max" offset="8"/>
+                        <Height val="18"/>
+
+                        <Frame type="Label" name="Players">
+                            <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+                            <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                            <Anchor side="Right" relative="$parent" pos="0.35" offset="0"/>
+                            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                            <Style val="TesterOptionsLegendRight"/>
+                            <Text val="@UI/SocialManagementPanelPlayersListTitle"/>
+                        </Frame>
+                
+                        <Frame type="Label" name="Creator">
+                            <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+                            <Anchor side="Left" relative="$parent/Players" pos="Max" offset="60"/>
+                            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                            <Width val="86"/>
+                            <Style val="TesterOptionsLegend"/>
+                            <Text val="Creator"/>
+                        </Frame>
+                
+                        <Frame type="Label" name="Red">
+                            <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+                            <Anchor side="Left" relative="$parent/Creator" pos="Max" offset="4"/>
+                            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                            <Style val="TesterOptionsLegend"/>
+                            <Text val="@UI/TeamColor01"/>
+                            <Width val="43"/>
+                        </Frame>
+
+                        <Frame type="Label" name="Blue">
+                            <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+                            <Anchor side="Left" relative="$parent/Red" pos="Max" offset="5"/>
+                            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                            <Style val="TesterOptionsLegend"/>
+                            <Text val="@UI/TeamColor02"/>
+                        </Frame>
+
+                    </Frame>
+
+                    <Frame type="Frame" name="Player1" template="Tester/AllianceOptionTemplate">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+                        <Anchor side="Top" relative="$parent/Legend" pos="Max" offset="2"/>
+                    </Frame>
+
+                    <Frame type="Frame" name="Player2" template="Tester/AllianceOptionTemplate">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+                        <Anchor side="Top" relative="$sibling-1" pos="Max" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Frame" name="Player3" template="Tester/AllianceOptionTemplate">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+                        <Anchor side="Top" relative="$sibling-1" pos="Max" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Frame" name="Player4" template="Tester/AllianceOptionTemplate">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+                        <Anchor side="Top" relative="$sibling-1" pos="Max" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Frame" name="Player5" template="Tester/AllianceOptionTemplate">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+                        <Anchor side="Top" relative="$sibling-1" pos="Max" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Frame" name="Player6" template="Tester/AllianceOptionTemplate">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+                        <Anchor side="Top" relative="$sibling-1" pos="Max" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Frame" name="Player7" template="Tester/AllianceOptionTemplate">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+                        <Anchor side="Top" relative="$sibling-1" pos="Max" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Frame" name="Player8" template="Tester/AllianceOptionTemplate">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+                        <Anchor side="Top" relative="$sibling-1" pos="Max" offset="0"/>
+                    </Frame>
+
+                </Frame>
+
+            </Frame>
+
+            <Frame type="Frame" name="CreatorPanel">
+                <Anchor relative="$parent"/>
+
+                <Frame type="Frame" name="RaceList_Red">
+                    <Anchor side="Left" relative="$parent" pos="Min" offset="59"/>
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+                    <Width val="473"/>
+                    <Height val="29"/>
+
+                    <Frame type="Button" name="Protoss" template="Tester/TesterRaceButton_Red">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                        <Tooltip val="@UI/TesterRaceButton_Prot"/>
+                        <Frame type="Label" name="Label">
+                            <Text val="Protoss"/>
+                        </Frame>
+                    </Frame>
+
+                    <Frame type="Button" name="Terran" template="Tester/TesterRaceButton_Red">
+                        <Anchor side="Left" relative="$parent/Protoss" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                        <Tooltip val="@UI/TesterRaceButton_Terr"/>
+                        <Frame type="Label" name="Label">
+                            <Text val="Terran"/>
+                        </Frame>
+                    </Frame>
+
+                    <Frame type="Button" name="Zerg" template="Tester/TesterRaceButton_Red">
+                        <Anchor side="Left" relative="$parent/Terran" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                        <Tooltip val="@UI/TesterRaceButton_Zerg"/>
+                        <Frame type="Label" name="Label">
+                            <Text val="Zerg"/>
+                        </Frame>
+                    </Frame>
+
+                    <Frame type="Button" name="Genetron" template="Tester/TesterRaceButton_Red">
+                        <Anchor side="Left" relative="$parent/Zerg" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                        <Tooltip val="@UI/TesterRaceButton_Gen"/>
+                        <Frame type="Label" name="Label">
+                            <Text val="Genetron"/>
+                        </Frame>
+                    </Frame>
+
+                    <Frame type="Button" name="Keiron" template="Tester/TesterRaceButton_Red">
+                        <Anchor side="Left" relative="$parent/Genetron" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                        <Tooltip val="@UI/TesterRaceButton_Keir"/>
+                        <Frame type="Label" name="Label">
+                            <Text val="Keiron"/>
+                        </Frame>
+                    </Frame>
+
+                    <Frame type="Button" name="Xayid" template="Tester/TesterRaceButton_Red">
+                        <Anchor side="Left" relative="$parent/Keiron" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                        <Tooltip val="@UI/TesterRaceButton_Xayi"/>
+                        <Frame type="Label" name="Label">
+                            <Text val="Xayid"/>
+                        </Frame>
+                    </Frame>
+
+                </Frame>
+
+                <Frame type="Frame" name="RaceList_Blue">
+                    <Anchor side="Left" relative="$parent" pos="Min" offset="566"/>
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+                    <Width val="473"/>
+                    <Height val="29"/>
+
+                    <Frame type="Button" name="Protoss" template="Tester/TesterRaceButton_Blue">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                        <Tooltip val="@UI/TesterRaceButton_Prot"/>
+                        <Frame type="Label" name="Label">
+                            <Text val="Protoss"/>
+                        </Frame>
+                    </Frame>
+
+                    <Frame type="Button" name="Terran" template="Tester/TesterRaceButton_Blue">
+                        <Anchor side="Left" relative="$parent/Protoss" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                        <Tooltip val="@UI/TesterRaceButton_Terr"/>
+                        <Frame type="Label" name="Label">
+                            <Text val="Terran"/>
+                        </Frame>
+                    </Frame>
+
+                    <Frame type="Button" name="Zerg" template="Tester/TesterRaceButton_Blue">
+                        <Anchor side="Left" relative="$parent/Terran" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                        <Tooltip val="@UI/TesterRaceButton_Zerg"/>
+                        <Frame type="Label" name="Label">
+                            <Text val="Zerg"/>
+                        </Frame>
+                    </Frame>
+
+                    <Frame type="Button" name="Genetron" template="Tester/TesterRaceButton_Blue">
+                        <Anchor side="Left" relative="$parent/Zerg" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                        <Tooltip val="@UI/TesterRaceButton_Gen"/>
+                        <Frame type="Label" name="Label">
+                            <Text val="Genetron"/>
+                        </Frame>
+                    </Frame>
+
+                    <Frame type="Button" name="Keiron" template="Tester/TesterRaceButton_Blue">
+                        <Anchor side="Left" relative="$parent/Genetron" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                        <Tooltip val="@UI/TesterRaceButton_Keir"/>
+                        <Frame type="Label" name="Label">
+                            <Text val="Keiron"/>
+                        </Frame>
+                    </Frame>
+
+                    <Frame type="Button" name="Xayid" template="Tester/TesterRaceButton_Blue">
+                        <Anchor side="Left" relative="$parent/Keiron" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                        <Tooltip val="@UI/TesterRaceButton_Xayi"/>
+                        <Frame type="Label" name="Label">
+                            <Text val="Xayid"/>
+                        </Frame>
+                    </Frame>
+
+                </Frame>
+
+                <Frame type="Frame" name="ItemCard_Red">
+                    <Anchor side="Left" relative="$parent" pos="Min" offset="79"/>
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="79"/>
+
+                    <Width val="461"/>
+                    <Height val="307"/>
+
+                    <Frame type="Button" name="Item0" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item1" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent/Item0" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item0" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item2" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent/Item1" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item0" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item3" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent/Item2" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item0" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item4" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent/Item3" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item5" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent/Item4" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item0" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item6" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Top" relative="$parent/Item0" pos="Max" offset="1"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item7" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent/Item6" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item6" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item8" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent/Item7" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item6" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item9" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent/Item8" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item6" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item10" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent/Item9" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item6" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item11" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent/Item10" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item6" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item12" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Top" relative="$parent/Item6" pos="Max" offset="1"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item13" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent/Item12" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item12" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item14" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent/Item13" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item12" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item15" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent/Item14" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item12" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item16" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent/Item15" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item12" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item17" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent/Item16" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item12" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item18" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Top" relative="$parent/Item12" pos="Max" offset="1"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item19" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent/Item18" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item18" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item20" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent/Item19" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item18" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item21" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent/Item20" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item18" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item22" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent/Item21" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item18" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item23" template="Tester/TesterItemButton_Red">
+                        <Anchor side="Left" relative="$parent/Item22" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item18" pos="Min" offset="0"/>
+                    </Frame>
+
+                </Frame>
+
+                <Frame type="Frame" name="ItemCard_Blue">
+                    <Anchor side="Left" relative="$parent" pos="Min" offset="559"/>
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="79"/>
+
+                    <Width val="461"/>
+                    <Height val="307"/>
+
+                    <Frame type="Button" name="Item0" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item1" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent/Item0" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item0" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item2" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent/Item1" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item0" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item3" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent/Item2" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item0" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item4" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent/Item3" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item5" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent/Item4" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item0" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item6" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Top" relative="$parent/Item0" pos="Max" offset="1"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item7" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent/Item6" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item6" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item8" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent/Item7" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item6" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item9" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent/Item8" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item6" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item10" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent/Item9" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item6" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item11" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent/Item10" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item6" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item12" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Top" relative="$parent/Item6" pos="Max" offset="1"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item13" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent/Item12" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item12" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item14" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent/Item13" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item12" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item15" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent/Item14" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item12" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item16" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent/Item15" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item12" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item17" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent/Item16" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item12" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item18" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Top" relative="$parent/Item12" pos="Max" offset="1"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item19" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent/Item18" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item18" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item20" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent/Item19" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item18" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item21" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent/Item20" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item18" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item22" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent/Item21" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item18" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Button" name="Item23" template="Tester/TesterItemButton_Blue">
+                        <Anchor side="Left" relative="$parent/Item22" pos="Max" offset="1"/>
+                        <Anchor side="Top" relative="$parent/Item18" pos="Min" offset="0"/>
+                    </Frame>
+
+                </Frame>
+            
+            </Frame>
+
+        </Frame>
+
+    </Frame>
+
+</Desc>

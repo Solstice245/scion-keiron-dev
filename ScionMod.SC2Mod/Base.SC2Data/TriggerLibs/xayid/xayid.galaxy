@@ -1,0 +1,304 @@
+//==================================================================================================
+//  Scion Xayid Melee AI
+//==================================================================================================
+
+include "TriggerLibs/Xayid/XayidVyEy"
+include "TriggerLibs/Xayid/XayidEasy"
+include "TriggerLibs/Xayid/XayidMedi"
+include "TriggerLibs/Xayid/XayidMdHd"
+include "TriggerLibs/Xayid/XayidHard"
+//include "TriggerLibs/Xayid/XayidHdVH"
+//include "TriggerLibs/Xayid/XayidVyHd"
+//include "TriggerLibs/Xayid/XayidChVi"
+//include "TriggerLibs/Xayid/XayidChRe"
+//include "TriggerLibs/Xayid/XayidChIn"
+
+//--------------------------------------------------------------------------------------------------
+//  Counter-Attack Units
+//--------------------------------------------------------------------------------------------------
+static void InitCounters (int player) {
+    // versus Protoss
+    AICounterUnitSetup(player, c_PU_Zealot,             1.00, c_XU_Scorpalisk,  1.00, c_XU_Scorpalisk);
+    AICounterUnitSetup(player, c_PU_Stalker,            1.50, c_XU_Xayidling,   0.50, c_XU_Eroder);
+    AICounterUnitSetup(player, c_PU_Sentry,             0.70, c_XU_Roamer,      0.70, c_XU_Roamer);
+    AICounterUnitSetup(player, c_PU_HighTemplar,        1.00, c_XU_Scorpalisk,  1.00, c_XU_Mendling);
+    AICounterUnitSetup(player, c_PU_DarkTemplar,        1.00, c_XU_Scorpalisk,  1.00, c_XU_Scorpalisk);
+    AICounterUnitSetup(player, c_PU_Archon,             1.00, c_XU_Scorpalisk,  1.00, c_XU_Eroder);
+    AICounterUnitSetup(player, c_PU_Immortal,           2.00, c_XU_Xayidling,   1.50, c_XU_Eroder);
+    AICounterUnitSetup(player, c_PU_Colossus,           1.00, c_XU_Massalisk,   2.00, c_XU_Eroder);
+    AICounterUnitSetup(player, c_PU_Phoenix,            2.50, c_XU_Xayidling,   1.00, c_XU_Reviler);
+    AICounterUnitSetup(player, c_PU_VoidRay,            4.00, c_XU_Xayidling,   2.00, c_XU_Raptor);
+    AICounterUnitSetup(player, c_PU_Carrier,            2.50, c_XU_Exterminator,2.50, c_XU_Exterminator);
+    AICounterUnitSetup(player, c_PB_PhotonCannon,       3.00, c_XU_Xayidling,   0.40, c_XU_Spitter);
+    AICounterUnitSetup(player, c_PU_Mothership,         9.99, c_XU_Raptor,      2.00, c_XU_Massalisk_Alias);
+    AICounterUnitSetup(player, c_PU_MothershipCore,     3.00, c_XU_Xayidling,   1.50, c_XU_Mendling);
+    AICounterUnitSetup(player, c_PU_Oracle,             3.00, c_XU_Xayidling,   2.00, c_XU_Raptor);
+    AICounterUnitSetup(player, c_PU_Tempest,            8.00, c_XU_Xayidling,   6.00, c_XU_Raptor);
+    AICounterUnitSetup(player, c_PU_Adept,              1.00, c_XU_Scorpalisk,  1.00, c_XU_Scorpalisk);
+    AICounterUnitSetup(player, c_PU_Disruptor,          1.00, c_XU_Massalisk,   1.00, c_XU_Xayithoan);
+
+    // versus Terran
+    AICounterUnitSetup(player, c_TU_Marine,             0.50, c_XU_Roamer,      0.10, c_XU_Spitter);
+    AICounterUnitSetup(player, c_TU_Marauder,           1.50, c_XU_Xayidling,   0.50, c_XU_Eroder);
+    AICounterUnitSetup(player, c_TU_Reaper,             0.75, c_XU_Roamer,      0.75, c_XU_Roamer);
+    AICounterUnitSetup(player, c_TU_Ghost,              1.00, c_XU_Scorpalisk,  1.00, c_XU_Scorpalisk);
+    AICounterUnitSetup(player, c_TU_Hellion,            0.50, c_XU_Scorpalisk,  0.50, c_XU_Reviler);
+    AICounterUnitSetup(player, c_TU_SiegeTank_Alias,    1.25, c_XU_Eroder,      1.25, c_XU_Eroder);
+    AICounterUnitSetup(player, c_TU_Thor,               8.00, c_XU_Xayidling,   2.00, c_XU_Eroder);
+    AICounterUnitSetup(player, c_TU_Viking_Alias,       1.00, c_XU_Reviler,     1.00, c_XU_Reviler);
+    AICounterUnitSetup(player, c_TU_Medivac,            1.00, c_XU_Reviler,     1.00, c_XU_Reviler);
+    AICounterUnitSetup(player, c_TU_Raven,              1.00, c_XU_Reviler,     1.00, c_XU_Reviler);
+    AICounterUnitSetup(player, c_TU_Banshee,            1.50, c_XU_Reviler,     1.50, c_XU_Raptor);
+    AICounterUnitSetup(player, c_TU_Battlecruiser,      8.00, c_XU_Raptor,      8.00, c_XU_Raptor);
+    AICounterUnitSetup(player, c_TB_Bunker,             6.00, c_XU_Xayidling,   0.40, c_XU_Spitter);
+    AICounterUnitSetup(player, c_TU_WidowMine,          0.50, c_XU_Reviler,     0.50, c_XU_Reviler);
+    AICounterUnitSetup(player, c_TU_Cyclone,            1.00, c_XU_Eroder,      1.00, c_XU_Eroder);
+    AICounterUnitSetup(player, c_TU_Liberator_Alias,    1.00, c_XU_Exterminator,0.50, c_XU_Kraken);
+
+    // versus Zerg
+    AICounterUnitSetup(player, c_ZU_Zergling,           0.25, c_XU_Scorpalisk,  0.25, c_XU_Scorpalisk);
+    AICounterUnitSetup(player, c_ZU_Baneling,           0.25, c_XU_Scorpalisk,  0.25, c_XU_Scorpalisk);
+    AICounterUnitSetup(player, c_ZU_Roach,              1.50, c_XU_Xayidling,   0.25, c_XU_Eroder);
+    AICounterUnitSetup(player, c_ZU_Hydralisk,          2.00, c_XU_Roamer,      0.30, c_XU_Spitter);
+    AICounterUnitSetup(player, c_ZU_Infestor,           1.50, c_XU_Reviler,     1.50, c_XU_Reviler);
+    AICounterUnitSetup(player, c_ZU_Mutalisk,           1.00, c_XU_Reviler,     1.00, c_XU_Reviler);
+    AICounterUnitSetup(player, c_ZU_Corruptor,          0.80, c_XU_Reviler,     0.80, c_XU_Reviler);
+    AICounterUnitSetup(player, c_ZU_Ultralisk,          2.50, c_XU_Eroder,      2.50, c_XU_Eroder);
+    AICounterUnitSetup(player, c_ZU_BroodLord,          4.00, c_XU_Raptor,      4.00, c_XU_Raptor);
+    AICounterUnitSetup(player, c_ZB_SpineCrawler,       3.00, c_XU_Xayidling,   0.50, c_XU_Assailant);
+    AICounterUnitSetup(player, c_ZU_SwarmHost,          3.00, c_XU_Scorpalisk,  2.00, c_XU_Raptor);
+    AICounterUnitSetup(player, c_ZU_Viper,              1.50, c_XU_Reviler,     3.00, c_XU_Raptor);
+    AICounterUnitSetup(player, c_ZU_Ravager,            2.00, c_XU_Xayidling,   0.50, c_XU_Reviler);
+    AICounterUnitSetup(player, c_ZU_Lurker,             2.00, c_XU_Eroder,      0.50, c_XU_Spitter);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  XayidSubStateName
+//--------------------------------------------------------------------------------------------------
+string XayidSubStateName (int state) {
+    // TODO Call the individual difficulties to return a real substate name
+    return "-" + IntToString(state) + "-";
+}
+
+//--------------------------------------------------------------------------------------------------
+//  DebugCallbackXayi
+//--------------------------------------------------------------------------------------------------
+void DebugCallbackXayi (int player) {
+    DebugAI("=====Xayid=====\n");
+    DebugMelee(player);
+    DebugAI("e_mainState = "        + MainStateName(AIState(player, e_mainState))           +
+            ", e_mainSubState = "   + XayidSubStateName(AIState(player, e_mainSubState))  +
+            ", e_attackState = "    + AttackStateName(AIState(player, e_attackState))
+    );
+}
+
+//--------------------------------------------------------------------------------------------------
+//  AINewUnitXayi
+//--------------------------------------------------------------------------------------------------
+void AINewUnitXayi (int player, unit u) {
+    string type = UnitGetType(u);
+
+    // ignored units
+    //
+    if (type == c_XU_Worm ||
+        type == c_XU_Grub ||
+        type == c_XU_Wasp) {
+        return;     
+    }
+
+    if (UnitTypeTestAttribute(type, c_unitAttributeStructure)) {
+        return;
+    }
+    if (UnitTypeTestFlag(type, c_unitFlagWorker)) {
+        return;
+    }
+    
+    // detector
+    //
+    if (type == c_XU_Ferrion) {
+        AINewDetector(player, u, true);
+        return;
+    }
+
+    // clear obstacle units
+    //
+    if (AIWaveNeedClearObsUnits(player)) {
+        if (type == c_XU_Xayidling || type == c_XU_Scorpalisk || type == c_XU_Roamer) {
+            AIMergeUnit(player, u, AIWaveGet(player, c_waveClearObs));
+            return;
+        }
+    }
+
+    // main wave units
+    //
+    AINewUnitDefault(player, u);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  AIGetScoutXayi
+//--------------------------------------------------------------------------------------------------
+unit AIGetScoutXayi (int player, int index, unit prev, bool allowWorkers) {
+    unit obs;
+    string prevType = UnitGetType(prev);
+
+    if (!PlayerBeaconIsSet(player, c_beaconScout) &&
+        !AIGetFlag(player, e_flagsScouting)) {
+        // if no scouting beacons are set and we're not ready to scout, don't return a unit
+        return c_nullUnit;
+    }
+
+    if (index == 1 && PlayerBeaconIsSet(player, c_beaconScout)) {
+        AISetFlag(player, e_flagsScouting, true);
+        if (allowWorkers) {
+            // only return a worker, we want to claim a tower
+            if (prevType == c_XU_Scavenger) {
+                return prev;
+            } 
+            return AIGrabUnit(player, c_XU_Scavenger, c_prioScout, null);
+        }
+    }
+
+    if (prevType == c_XU_Ferrion) {
+        return prev;
+    }
+    obs = AIGrabUnit(player, c_XU_Ferrion, c_prioScout, null);
+    if (obs) {
+        return obs;
+    }
+    if (prev) {
+        return prev;
+    }
+    if (!allowWorkers) {
+        return c_nullUnit;
+    }
+    return AIGrabUnit(player, c_XU_Scavenger, c_prioScout, null);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  AIEarlyDefScoutXayi
+//--------------------------------------------------------------------------------------------------
+unit AIEarlyDefScoutXayi (int player, unit prev, bool allowWorkers) {
+    unit obs;
+    string prevType;
+    
+    if (!AIGetFlag(player, e_flagsEarlyDefScout)) {
+        return c_nullUnit;
+    }
+    prevType = UnitGetType(prev);
+    if (prevType == c_XU_Ferrion) {
+        return prev;
+    }
+    obs = AIGrabUnit(player, c_XU_Ferrion, c_prioScout, null);
+    if (obs) {
+        return obs;
+    }
+    if (prevType == c_XU_Xayidling) {
+        return prev;
+    }
+    obs = AIGrabUnit(player, c_XU_Xayidling, c_prioScout, null);
+    if (obs) {
+        return obs;
+    }
+    if (prev) {
+        return prev;
+    }
+    if (!allowWorkers) {
+        return c_nullUnit;
+    }
+    return AIGrabUnit(player, c_XU_Scavenger, c_prioScout, null);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  AIWaveThinkXayi
+//--------------------------------------------------------------------------------------------------
+void AIWaveThinkXayi (int player, wave w, int type) {
+    AIWaveThinkDefault(player, w, type);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  Xayid Init
+//--------------------------------------------------------------------------------------------------
+static void XayidInit (int player) {
+
+    InitCounters(player);
+    AIMeleeSharedInit(player);
+    AISetFlag(player, e_flagsScouting, false);
+    AISetFlag(player, e_flagsEarlyDefScout, false);
+    AILimitStockLarva(player, c_XU_Worm);
+    AILimitStockLarva(player, c_XU_Grub);
+    AILimitStockLarva(player, c_XU_Wasp);
+    AIReqCountAsBuiltObject(player, c_XU_Worm);
+    AIReqCountAsBuiltObject(player, c_XU_Grub);
+    AIReqCountAsBuiltObject(player, c_XU_Wasp);
+    AISetDefaultArmyUnit(player, c_XU_Xayidling);
+    AISetDefaultTownHall(player, c_XB_ScavengerNest);
+
+    AISetMainState(player, e_mainState_Open, e_mainSubState_Init);
+
+    if (AIPlayerDifficulty(player) > c_skirHard) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringToText("Xayid AI: Difficulties above Harder are not supported at this time, please use at most Harder difficulty for this AI"));
+    }
+}
+
+//--------------------------------------------------------------------------------------------------
+void XayidOpen (int player);
+void XayidMid (int player);
+void XayidLate (int player);
+
+//--------------------------------------------------------------------------------------------------
+//  AIMeleeXayi
+//--------------------------------------------------------------------------------------------------
+void AIMeleeXayi (int player) {
+    int mainState = AIState(player, e_mainState);
+
+    if (AIPlayerDifficulty(player) >= c_skirChMoney) {
+        AIMeleeCheatResources(player);
+    }
+
+    if (mainState == e_mainState_Init)      { XayidInit(player); }
+    else if (mainState == e_mainState_Open) { XayidOpen(player); }
+    else if (mainState == e_mainState_Mid ) { XayidMid (player); }
+    else if (mainState == e_mainState_Late) { XayidLate(player); }
+    else { ErrorMeleeScript(player, "Invalid mainState"); }
+
+}
+
+void XayidOpen (int player) {
+    int diff = AIPlayerDifficulty(player);
+    
+    if      (diff == c_skirVeryEasy) { XayidOpenVyEy(player); }
+    else if (diff == c_skirEasy)     { XayidOpenEasy(player); }
+    else if (diff == c_skirMedium)   { XayidOpenMedi(player); }
+    else if (diff == c_skirMed_Hard) { XayidOpenMdHd(player); }
+    else if (diff == c_skirHard)     { XayidOpenHard(player); }
+    //else if (diff == c_skirHard_VH)  { XayidOpenHdVd(player); }
+    //else if (diff == c_skirVeryHard) { XayidOpenVyHd(player); }
+    else                             { XayidOpenHard(player); }
+
+}
+
+void XayidMid (int player) {
+    int diff = AIPlayerDifficulty(player);
+
+    if      (diff == c_skirVeryEasy) { XayidMidVyEy(player); }
+    else if (diff == c_skirEasy)     { XayidMidEasy(player); }
+    else if (diff == c_skirMedium)   { XayidMidMedi(player); }
+    else if (diff == c_skirMed_Hard) { XayidMidMdHd(player); }
+    //else if (diff == c_skirHard)     { XayidMidHard(player); }
+    //else if (diff == c_skirVeryHard) { XayidMidVyHd(player); }
+    else                             { XayidMidHard(player); }
+
+}
+
+void XayidLate (int player) {
+    int diff = AIPlayerDifficulty(player);
+    
+    if      (diff == c_skirVeryEasy) { XayidLateVyEy(player); }
+    else if (diff == c_skirEasy)     { XayidLateEasy(player); }
+    else if (diff == c_skirMedium)   { XayidLateMedi(player); }
+    else if (diff == c_skirMed_Hard) { XayidLateMdHd(player); }
+    //else if (diff == c_skirHard)     { XayidLateHard(player); }
+    //else if (diff == c_skirVeryHard) { XayidLateVyHd(player); }
+    else                             { XayidLateHard(player); }
+
+}

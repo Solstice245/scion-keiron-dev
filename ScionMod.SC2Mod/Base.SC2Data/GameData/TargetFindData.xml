@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CTargetFindEnumArea id="AvengerVengeanceMissile">
+        <TargetValidator value="AvengerTacticalAI"/>
+        <SearchFilters value="Visible;Player,Ally,Neutral,Structure,Missile,Stasis,Dead,Hallucination,Invulnerable"/>
+        <SearchFlags index="ExtendByUnitRadius" value="1"/>
+        <AreaArray/>
+        <Abil value="VengeanceMissile"/>
+        <ExtendRadius value="2"/>
+    </CTargetFindEnumArea>
+    <CTargetFindSet id="ExplosiveGlob">
+        <Type value="Sequential"/>
+        <Array value="ExplosiveGlobEffect"/>
+        <Array value="ExplosiveGlobBestPoint"/>
+    </CTargetFindSet>
+    <CTargetFindSet id="StagnatingBile">
+        <Type value="Sequential"/>
+        <Array value="StagnatingBileEffect"/>
+        <Array value="StagnatingBileBestPoint"/>
+    </CTargetFindSet>
+    <CTargetFindBestPoint id="ExplosiveGlobBestPoint">
+        <DamageBase value="40"/>
+        <Effect value="ExplosiveGlobImpactSearch"/>
+        <MinCount value="3"/>
+        <MinScore value="2"/>
+    </CTargetFindBestPoint>
+    <CTargetFindEffect id="ExplosiveGlobEffect">
+        <Effect value="ExplosiveGlobImpactSearch"/>
+    </CTargetFindEffect>
+    <CTargetFindSet id="IgnitionBlast">
+        <Type value="Sequential"/>
+        <Array value="IgnitionBlastEffect"/>
+        <Array value="IgnitionBlastBestPoint"/>
+    </CTargetFindSet>
+    <CTargetFindBestPoint id="IgnitionBlastBestPoint">
+        <Flags index="EvaluateCmd" value="1"/>
+        <DamageBase value="20"/>
+        <Effect value="IgnitionBlastSA"/>
+        <MinCount value="3"/>
+        <MinScore value="1"/>
+    </CTargetFindBestPoint>
+    <CTargetFindEffect id="IgnitionBlastEffect">
+        <Effect value="IgnitionBlastSA"/>
+        <ExtendRadius value="0.125"/>
+    </CTargetFindEffect>
+    <CTargetFindEnumArea id="IncendiaryInfusion">
+        <TargetValidator value="IncendiaryInfusionTargetFilters"/>
+        <AreaArray Validator="noMarkers"/>
+        <Abil value="IncendiaryInfusion"/>
+    </CTargetFindEnumArea>
+    <CTargetFindSet id="NaniteGrenade">
+        <Type value="Sequential"/>
+        <Array value="NaniteGrenadeSearch"/>
+        <Array value="NaniteGrenadeBestPoint"/>
+    </CTargetFindSet>
+    <CTargetFindBestPoint id="NaniteGrenadeBestPoint">
+        <Flags index="EvaluateCmd" value="1"/>
+        <Effect value="NaniteGrenadeImpact"/>
+        <MinCount value="6"/>
+        <MinScore value="2"/>
+    </CTargetFindBestPoint>
+    <CTargetFindEffect id="NaniteGrenadeSearch">
+        <TargetFilters value="Visible;Player,Ally,Neutral,Structure,Worker"/>
+        <TargetValidator value="NoNaniteGrenadeBuff"/>
+        <Effect value="NaniteGrenadeImpact"/>
+    </CTargetFindEffect>
+    <CTargetFindEnumArea id="ProcessingDroneMoveSearch">
+        <CasterValidator value="NoOrdersAndNoMove"/>
+        <AreaArray Radius="500" Validator="TargetIsProcessingCore"/>
+        <TargetSorts>
+            <SortArray value="TSRandom"/>
+        </TargetSorts>
+    </CTargetFindEnumArea>
+    <CTargetFindEnumArea id="SchematicTransmit">
+        <AreaArray/>
+        <Abil value="SchematicTransmit"/>
+        <TargetSorts>
+            <SortArray value="TSFarthestDistance"/>
+        </TargetSorts>
+    </CTargetFindEnumArea>
+    <CTargetFindEnumArea id="Scour">
+        <CasterValidator value="AICasterInCombat"/>
+        <SearchFilters value="-;Visible"/>
+        <AreaArray Validator="TargetAttackingCaster"/>
+        <Abil value="Scour"/>
+    </CTargetFindEnumArea>
+    <CTargetFindBestPoint id="StagnatingBileBestPoint">
+        <Flags index="EvaluateCmd" value="1"/>
+        <Effect value="StagnatingBileSA"/>
+    </CTargetFindBestPoint>
+    <CTargetFindEffect id="StagnatingBileEffect">
+        <TargetValidator value="TacticalAICasnoliskStagnatingBile"/>
+        <Effect value="StagnatingBileSA"/>
+    </CTargetFindEffect>
+    <CTargetFindSet id="TeslaShockCharge">
+        <Type value="Sequential"/>
+        <Array value="TeslaShockChargeSearch"/>
+        <Array value="TeslaShockChargeBestPoint"/>
+    </CTargetFindSet>
+    <CTargetFindSet id="RevenantBomb">
+        <Type value="Sequential"/>
+        <Array value="RevenantBombSearch"/>
+        <Array value="RevenantBombBestPoint"/>
+    </CTargetFindSet>
+    <CTargetFindSet id="AnalyzeWeakness">
+        <Type value="Sequential"/>
+        <Array value="AnalyzeWeaknessSearch"/>
+        <Array value="AnalyzeWeaknessBestPoint"/>
+    </CTargetFindSet>
+    <CTargetFindBestPoint id="TeslaShockChargeBestPoint">
+        <DamageBase value="20"/>
+        <Effect value="ShockChargeSA"/>
+        <MinCount value="3"/>
+        <MinScore value="0.5"/>
+    </CTargetFindBestPoint>
+    <CTargetFindBestPoint id="RevenantBombBestPoint">
+        <Flags index="EvaluateCmd" value="1"/>
+        <DamageBase value="40"/>
+        <Effect value="RevenantBombShellShockedS"/>
+        <MinCount value="3"/>
+        <MinScore value="2"/>
+    </CTargetFindBestPoint>
+    <CTargetFindBestPoint id="AnalyzeWeaknessBestPoint">
+        <DamageBase value="20"/>
+        <Effect value="ProcessingDroneAnalyzeWeaknessSA"/>
+        <MinCount value="3"/>
+        <MinScore value="0.5"/>
+        <TargetValidator value="TargetCanAttack"/>
+    </CTargetFindBestPoint>
+    <CTargetFindEffect id="TeslaShockChargeSearch">
+        <Effect value="ShockChargeSA"/>
+    </CTargetFindEffect>
+    <CTargetFindEffect id="RevenantBombSearch">
+        <Effect value="RevenantBombShellShockedS"/>
+    </CTargetFindEffect>
+    <CTargetFindEffect id="AnalyzeWeaknessSearch">
+        <TargetValidator value="NoAnalyzeWeaknessBuff"/>
+        <Effect value="ProcessingDroneAnalyzeWeaknessSA"/>
+        <TargetFilters value="Visible;Player,Ally,Neutral,Worker"/>
+    </CTargetFindEffect>
+</Catalog>

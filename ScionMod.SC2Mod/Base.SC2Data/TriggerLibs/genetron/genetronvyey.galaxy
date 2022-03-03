@@ -1,0 +1,706 @@
+//--------------------------------------------------------------------------------------------------
+//  GenetronUpgradesVyEy
+//--------------------------------------------------------------------------------------------------
+void GenetronUpgradesVyEy (int player, int phase) {
+    int buildType;
+
+    if (phase < c_ldPhaseLate) {
+        buildType = AIGetUserInt(player, c_openingBuildType);
+    } else {
+        buildType = AIGetUserInt(player, c_lateGameBuildType);
+    }
+    if (buildType != e_buildType_Air) {
+        if (phase >= c_ldPhaseMid) {
+            if (phase >= c_ldPhaseLate) {
+                if (phase >= c_ldPhaseFinal) {
+                }
+            }
+        }
+    }
+    else {  // (buildType == e_buildType_Air) 
+        if (phase >= c_ldPhaseMid) {
+            if (phase >= c_ldPhaseLate) {
+                if (phase >= c_ldPhaseFinal) {
+                }
+            }
+        }
+    }
+}
+
+//--------------------------------------------------------------------------------------------------
+//  GenetronOpenArmyInitVyEy
+//--------------------------------------------------------------------------------------------------
+int GenetronOpenArmyInitVyEy (int player, int buildType) {
+    int armyRoll = 0;
+    int duration = 0;
+
+    if (buildType == e_buildType_Rush) {
+        // next attack should be around 2 foodCost and 160 resCost after about 420 seconds
+        AIAddToStockArmy(player, c_GU_Spitfire, 1);
+        AIAddToStockArmy(player, c_GU_Blaze, 1);
+        // validation: 2 units above with average cost 2 food and 225 resources
+        duration = 410 + RandomInt(-13, 20);
+    }
+    else if (buildType == e_buildType_Timing) {
+        // next attack should be around 2 foodCost and 170 resCost after about 480 seconds
+        AIAddToStockArmy(player, c_GU_Spitfire, 3);
+        // validation: 3 units above with average cost 3 food and 300 resources
+        duration = 516 + RandomInt(-17, 25);
+    }
+    else if (buildType == e_buildType_Power) {
+        // next attack should be around 4 foodCost and 240 resCost after about 600 seconds
+        AIAddToStockArmy(player, c_GU_Spitfire, 2);
+        AIAddToStockArmy(player, c_GU_Blitzer, 1);
+        // validation: 3 units above with average cost 4 food and 225 resources
+        duration = 585 + RandomInt(-19, 29);
+    }
+    else if (buildType == e_buildType_Macro) {
+        // next attack should be around 2 foodCost and 160 resCost after about 240 seconds
+        AIAddToStockArmy(player, c_GU_Spitfire, 1);
+        AIAddToStockArmy(player, c_GU_Blaze, 1);
+        // validation: 2 units above with average cost 2 food and 150 resources
+        duration = 234 + RandomInt(-7, 11);
+    }
+    else if (buildType == e_buildType_Air) {
+        // next attack should be around 4 foodCost and 330 resCost after about 660 seconds
+        AIAddToStockArmy(player, c_GU_Hornet, 2);
+        // validation: 2 units above with average cost 4 food and 450 resources
+        duration = 709 + RandomInt(-23, 35);
+    }
+    else {
+        return GenetronOpenArmyInitVyEy(player, e_buildType_Macro);
+    }
+
+    AISetUserInt(player, c_ldNextArmyRoll, armyRoll);
+    return duration;
+}
+
+//--------------------------------------------------------------------------------------------------
+//  GenetronOpenInitVyEy
+//--------------------------------------------------------------------------------------------------
+void GenetronOpenInitVyEy (int player) {
+    int buildType = 0;
+
+    AIChooseNextOpeningBuild(player);
+    buildType = AIGetUserInt(player, c_openingBuildType);
+    AISetupNextArmy (player, buildType, c_ldPhaseOpen, GenetronOpenArmyInitVyEy);
+
+    AISetMainState(player, e_mainState_Open, e_mainSubState_Build);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  GenetronOpenBuildVyEy
+//--------------------------------------------------------------------------------------------------
+void GenetronOpenBuildVyEy (int player) {
+    int buildType = AIGetUserInt(player, c_openingBuildType);
+    int armyRoll = AIGetUserInt(player, c_ldNextArmyRoll);
+    int timeOut = AIGetUserInt(player, c_nextArmyTime);
+    bool nextState = false;
+
+    if (AIHasPlayerChangedCurrentOpening(player)) {
+        AISetMainState(player, e_mainState_Open, e_mainSubState_Init);
+        return;
+    }
+
+    AIClearStock(player);
+
+    if (buildType == e_buildType_Rush) {
+        AISetStock( player, 1, c_GB_ProcessingCore );
+        AISetStock( player, 14, c_GU_ACR );
+        AISetStock( player, 1, c_GB_ProcessingNode );
+        AISetStock( player, 1, c_GB_Manufacturer );
+        AISetStock( player, 1, c_GB_FilteringPlant );
+        AISetStock( player, 1, c_GU_Spitfire );
+        AISetStock( player, 1, c_GB_Uploader );
+        AISetStock( player, 2, c_GB_ProcessingNode );
+        AISetStockFarms( player, c_GB_ProcessingNode, c_stockNormalFarms);
+    }
+    else if (buildType == e_buildType_Timing) {
+        AISetStock( player, 1, c_GB_ProcessingCore );
+        AISetStock( player, 14, c_GU_ACR );
+        AISetStock( player, 1, c_GB_ProcessingNode );
+        AISetStock( player, 1, c_GB_Manufacturer );
+        AISetStock( player, 1, c_GB_FilteringPlant );
+        AISetStock( player, 1, c_GU_Spitfire );
+        AISetStock( player, 1, c_GB_Uploader );
+        AISetStock( player, 2, c_GB_ProcessingNode );
+        AISetStockFarms( player, c_GB_ProcessingNode, c_stockNormalFarms);
+        AISetStock( player, 2, c_GB_FilteringPlant );
+    }
+    else if (buildType == e_buildType_Power) {
+        AISetStock( player, 1, c_GB_ProcessingCore );
+        AISetStock( player, 14, c_GU_ACR );
+        AISetStock( player, 1, c_GB_ProcessingNode );
+        AISetStock( player, 1, c_GB_Manufacturer );
+        AISetStock( player, 1, c_GB_FilteringPlant );
+        AISetStock( player, 1, c_GU_Spitfire );
+        AISetStock( player, 1, c_GB_Uploader );
+        AISetStock( player, 2, c_GB_ProcessingNode );
+        AISetStockFarms( player, c_GB_ProcessingNode, c_stockNormalFarms);
+        AISetStock( player, 2, c_GB_FilteringPlant );
+    }
+    else if (buildType == e_buildType_Macro) {
+        AISetStock( player, 1, c_GB_ProcessingCore );
+        AISetStock( player, 14, c_GU_ACR );
+        AISetStock( player, 1, c_GB_ProcessingNode );
+        AISetStock( player, 1, c_GB_Manufacturer );
+        if (GenetronMacroExpand(player)) { return; }
+        AISetStock( player, 1, c_GU_Spitfire );
+        AISetStock( player, 1, c_GB_Uploader );
+        AISetStock( player, 2, c_GB_ProcessingNode );
+        AISetStock( player, 1, c_GB_FilteringPlant );
+        AISetStockUnitNext( player, 20, c_GU_ACR, c_stockIdle );
+        AISetStockFarms( player, c_GB_ProcessingNode, c_stockNormalFarms);
+        AISetStock( player, 2, c_GB_FilteringPlant );
+    }
+    else if (buildType == e_buildType_Air) {
+        AISetStock( player, 1, c_GB_ProcessingCore );
+        AISetStock( player, 14, c_GU_ACR );
+        AISetStock( player, 1, c_GB_ProcessingNode );
+        if (GenetronMacroExpand(player)) { return; }
+        AISetStock( player, 1, c_GB_FilteringPlant );
+        AISetStock( player, 1, c_GB_Manufacturer );
+        AISetStock( player, 2, c_GB_FilteringPlant );
+        AISetStock( player, 2, c_GB_ProcessingNode );
+        AISetStock( player, 1, c_GB_Fabricator );
+        AISetStock( player, 2, c_GB_Uploader );
+        AISetStockUnitNext( player, 20, c_GU_ACR, c_stockIdle );
+        AISetStockFarms( player, c_GB_ProcessingNode, c_stockNormalFarms);
+        AISetStock( player, 1, c_GB_AssemblyArray );
+        AISetStock( player, 4, c_GB_Uploader );
+    }
+
+    GenetronBasicDefenseStock(player);
+
+    AISetStockArmyScale(player, 0.35);
+
+    GenetronGeneralBuild(player, c_ldPhaseOpen);
+
+    AISetStockArmyScale(player, 0.70);
+
+    GenetronUpgradesVyEy(player, c_ldPhaseOpen);
+
+    AISetStockArmyScale(player, 1.00);
+
+    AILDStockWorkers( player, 20, c_GU_ACR);
+
+    GenetronTechUp(player, c_ldPhaseOpen);
+
+    if (buildType == e_buildType_Air) {
+        AISetStock( player, 1, c_GU_Courier );
+    }
+
+    AIEnableStock(player);
+
+    AILDGeneralSharedLogic(player);
+
+    nextState = AITestTimeout(player, timeOut, e_mainState_Mid, e_mainSubState_Init);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  GenetronMidArmyInitVyEy
+//--------------------------------------------------------------------------------------------------
+int GenetronMidArmyInitVyEy (int player, int buildType) {
+    int armyRoll = 0;
+    int duration = 0;
+
+    if (buildType == e_buildType_Rush) {
+        // next attack should be around 5 foodCost and 260 resCost after about 380 seconds
+        AIAddToStockArmy(player, c_GU_Spitfire, 1);
+        AIAddToStockArmy(player, c_GU_Blitzer, 1);
+        // validation: 4 units above with average cost 5 food and 275 resources
+        duration = 389 + RandomInt(-12, 19);
+    }
+    else if (buildType == e_buildType_Timing) {
+        // next attack should be around 6 foodCost and 320 resCost after about 420 seconds
+        AIAddToStockArmy(player, c_GU_Spitfire, 2);
+        AIAddToStockArmy(player, c_GU_Blitzer, 1);
+        // validation: 5 units above with average cost 6 food and 325 resources
+        duration = 422 + RandomInt(-14, 21);
+    }
+    else if (buildType == e_buildType_Power) {
+        // next attack should be around 6 foodCost and 350 resCost after about 440 seconds
+        AIAddToStockArmy(player, c_GU_Spitfire, 1);
+        AIAddToStockArmy(player, c_GU_Blitzer, 2);
+        // validation: 3 units above with average cost 7 food and 450 resources
+        duration = 471 + RandomInt(-15, 23);
+    }
+    else if (buildType == e_buildType_Macro) {
+        // next attack should be around 8 foodCost and 480 resCost after about 660 seconds
+        // note: mid macro build did not send opening attack at 240 time
+        AIAddToStockArmy(player, c_GU_Spitfire, 2);
+        AIAddToStockArmy(player, c_GU_Blitzer, 1);
+        AIAddToStockArmyPickFrom2Count(player, c_GU_Blitzer, 1, c_GU_Blaze, 2);
+        // validation: 8 units above with average cost 9 food and 537 resources
+        duration = 732 + RandomInt(-32, 48);
+    }
+    else if (buildType == e_buildType_Air) {
+        // next attack should be around 6 foodCost and 600 resCost after about 420 seconds
+        AIAddToStockArmy(player, c_GU_Avenger, 1);
+        AIAddToStockArmy(player, c_GU_Boar, 1);
+        AIAddToStockArmy(player, c_GU_Hornet, 1);
+        // validation: 3 units above with average cost 6 food and 675 resources
+        duration = 441 + RandomInt(-14, 22);
+    }
+    else {
+        return GenetronMidArmyInitVyEy(player, e_buildType_Macro);
+    }
+
+    AISetUserInt(player, c_ldNextArmyRoll, armyRoll);
+    return duration;
+}
+
+//--------------------------------------------------------------------------------------------------
+//  GenetronMidInitVyEy
+//--------------------------------------------------------------------------------------------------
+void GenetronMidInitVyEy (int player) {
+    int buildType = 0;
+
+    AIChooseNextOpeningBuild(player);
+    buildType = AIGetUserInt(player, c_openingBuildType);
+    AISetupNextArmy (player, buildType, c_ldPhaseMid, GenetronMidArmyInitVyEy);
+
+    AISetFlag(player, e_flagsScouting, true);
+    AISetFlag(player, e_flagsLateScout, true);
+    AISetFlag(player, e_flagsDetect, true);
+
+    AISetMainState(player, e_mainState_Mid, e_mainSubState_Build);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  GenetronMidBuildVyEy
+//--------------------------------------------------------------------------------------------------
+void GenetronMidBuildVyEy (int player) {
+    int buildType = AIGetUserInt(player, c_openingBuildType);
+    int armyRoll = AIGetUserInt(player, c_ldNextArmyRoll);
+    int timeOut = AIGetUserInt(player, c_nextArmyTime);
+    bool nextState = false;
+
+    if (AIHasPlayerChangedCurrentOpening(player)) {
+        AISetMainState(player, e_mainState_Mid, e_mainSubState_Init);
+        return;
+    }
+
+    AIClearStock(player);
+
+    GenetronBasicEconomy(player, c_ldPhaseMid, 14);
+    if (buildType == e_buildType_Air) {
+        AISetStock( player, 1, c_GU_Courier );
+    }
+    GenetronBasicExpansion(player, c_ldPhaseMid, 5500, 1500);
+
+    GenetronBasicDefenseStock(player);
+
+    AISetStockArmyScale(player, 0.35);
+
+    GenetronGeneralBuild(player, c_ldPhaseMid);
+
+    AILDStockWorkers( player, 20, c_GU_ACR);
+
+    if (buildType == e_buildType_Rush) {
+    }
+    else if (buildType == e_buildType_Timing) {
+    }
+    else if (buildType == e_buildType_Power) {
+        if (GenetronMacroExpand(player)) { return; }
+    }
+    else if (buildType == e_buildType_Macro) {
+        if (GenetronMacroExpand(player)) { return; }
+    }
+    else if (buildType == e_buildType_Air) {
+        if (GenetronMacroExpand(player)) { return; }
+        AISetStock( player, 2, c_GB_AssemblyArray );
+    }
+
+    if (AINeedsDetection(player)) {
+        AISetStock( player, 1, c_GU_ProcessingDrone );
+    }
+
+    AISetStockArmyScale(player, 0.70);
+
+    AILDStockWorkers( player, 40, c_GU_ACR);
+
+    GenetronUpgradesVyEy(player, c_ldPhaseMid);
+
+    AISetStockArmyScale(player, 1.00);
+
+    AISetStock( player, 2, c_GU_ProcessingDrone );
+    AISetStock( player, 4, c_GB_Uploader );
+
+    GenetronTechUp(player, c_ldPhaseMid);
+
+    AIEnableStock(player);
+
+    AILDGeneralSharedLogic(player);
+
+    nextState = AITestTimeout(player, timeOut, e_mainState_Late, e_mainSubState_Init);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  GenetronLateArmyInitVyEy
+//--------------------------------------------------------------------------------------------------
+int GenetronLateArmyInitVyEy (int player, int buildType) {
+    int armyRoll = 0;
+    int duration = 0;
+
+    if (buildType == e_buildType_Core) {
+        armyRoll = RandomInt(1,4);
+        if (armyRoll <= 3) {
+            AIAddToStockArmy(player, c_GU_Spitfire, 3);
+            AIAddToStockArmy(player, c_GU_Blitzer, 2);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Blitzer, 1, c_GU_Blaze, 2);
+            // validation: 9 units above with average cost 11 food and 662 resources
+            duration = 363 + RandomInt(-12, 18);
+        }
+        else if (armyRoll <= 4) {
+            AIAddToStockArmy(player, c_GU_Spitfire, 2);
+            AIAddToStockArmy(player, c_GU_Blitzer, 1);
+            AIAddToStockArmy(player, c_GU_Mole_Alias, 1);
+            // validation: 6 units above with average cost 9 food and 600 resources
+            duration = 332 + RandomInt(-11, 16);
+        }
+    }
+    else if (buildType == e_buildType_HighTech) {
+        armyRoll = RandomInt(1,4);
+        if (armyRoll <= 3) {
+            AIAddToStockArmy(player, c_GU_Spitfire, 2);
+            AIAddToStockArmy(player, c_GU_Mole_Alias, 2);
+            // validation: 5 units above with average cost 9 food and 700 resources
+            duration = 358 + RandomInt(-11, 17);
+        }
+        else if (armyRoll <= 4) {
+            AIAddToStockArmy(player, c_GU_Mole_Alias, 1);
+            AIAddToStockArmy(player, c_GU_Virtus, 1);
+            // validation: 2 units above with average cost 9 food and 775 resources
+            duration = 375 + RandomInt(-12, 18);
+        }
+    }
+    else if (buildType == e_buildType_Special) {
+        armyRoll = RandomInt(1,2);
+        if (armyRoll <= 1) {
+            AIAddToStockArmy(player, c_GU_Spitfire, 2);
+            AIAddToStockArmy(player, c_GU_Blitzer, 1);
+            AIAddToStockArmy(player, c_GU_Aquila, 2);
+            // validation: 7 units above with average cost 10 food and 925 resources
+            duration = 421 + RandomInt(-14, 21);
+        }
+        else if (armyRoll <= 2) {
+            AIAddToStockArmy(player, c_GU_Spitfire, 2);
+            AIAddToStockArmy(player, c_GU_Mole_Alias, 1);
+            AIAddToStockArmy(player, c_GU_ProcessingDrone, 1);
+            // validation: 6 units above with average cost 9 food and 775 resources
+            duration = 379 + RandomInt(-12, 18);
+        }
+    }
+    else if (buildType == e_buildType_Mixed) {
+        armyRoll = RandomInt(1,5);
+        if (armyRoll <= 2) {
+            AIAddToStockArmy(player, c_GU_Spitfire, 3);
+            AIAddToStockArmy(player, c_GU_Blitzer, 2);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Aquila, 1, c_GU_Blaze, 2);
+            // validation: 10 units above with average cost 12 food and 800 resources
+            duration = 418 + RandomInt(-13, 20);
+        }
+        else if (armyRoll <= 4) {
+            AIAddToStockArmy(player, c_GU_Spitfire, 2);
+            AIAddToStockArmy(player, c_GU_Blitzer, 2);
+            AIAddToStockArmy(player, c_TU_Hellion, 1);
+            AIAddToStockArmy(player, c_GU_Mole_Alias, 1);
+            // validation: 8 units above with average cost 13 food and 825 resources
+            duration = 432 + RandomInt(-14, 21);
+        }
+        else if (armyRoll <= 5) {
+            AIAddToStockArmy(player, c_GU_Spitfire, 2);
+            AIAddToStockArmy(player, AIPickFrom2(c_GU_Badger, c_GU_Virtus), 2);
+            // validation: 5 units above with average cost 10 food and 800 resources
+            duration = 401 + RandomInt(-13, 20);
+        }
+    }
+    else if (buildType == e_buildType_Air) {
+        armyRoll = RandomInt(1,2);
+        if (armyRoll <= 1) {
+            AIAddToStockArmy(player, c_GU_Avenger, 1);
+            AIAddToStockArmy(player, c_GU_Hornet, 2);
+            AIAddToStockArmy(player, AIPickFrom2(c_GU_Avenger, c_GU_Hornet), 2);
+            // validation: 3 units above with average cost 8 food and 712 resources
+            duration = 344 + RandomInt(-11, 17);
+        }
+        else if (armyRoll <= 2) {
+            AIAddToStockArmy(player, c_GU_Avenger, 1);
+            AIAddToStockArmy(player, c_GU_Badger, 2);
+            // validation: 2 units above with average cost 8 food and 925 resources
+            duration = 383 + RandomInt(-12, 19);
+        }
+    }
+    else {
+        return GenetronLateArmyInitVyEy(player, e_buildType_Core);
+    }
+
+    AISetUserInt(player, c_ldNextArmyRoll, armyRoll);
+    return duration;
+}
+
+//--------------------------------------------------------------------------------------------------
+//  GenetronFinalArmyInitVyEy
+//--------------------------------------------------------------------------------------------------
+int GenetronFinalArmyInitVyEy (int player, int buildType) {
+    int armyRoll = 0;
+    int duration = 0;
+
+    if (buildType == e_buildType_Core) {
+        // next attack should be around 15 foodCost and 900 resCost after about 300 seconds
+        armyRoll = RandomInt(1,4);
+        if (armyRoll <= 3) {
+            AIAddToStockArmy(player, c_GU_Spitfire, 5);
+            AIAddToStockArmy(player, c_GU_Blitzer, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Blitzer, 1, c_GU_Blaze, 2);
+            // validation: 15 units above with average cost 18 food and 1037 resources
+            duration = 334 + RandomInt(-11, 16);
+        }
+        else if (armyRoll <= 4) {
+            AIAddToStockArmy(player, c_GU_Spitfire, 3);
+            AIAddToStockArmy(player, c_GU_Blitzer, 1);
+            AIAddToStockArmy(player, c_GU_Mole_Alias, 2);
+            // validation: 9 units above with average cost 14 food and 975 resources
+            duration = 305 + RandomInt(-10, 15);
+        }
+    }
+    else if (buildType == e_buildType_HighTech) {
+        // next attack should be around 16 foodCost and 960 resCost after about 320 seconds
+        armyRoll = RandomInt(1,4);
+        if (armyRoll <= 3) {
+            AIAddToStockArmy(player, c_GU_Spitfire, 3);
+            AIAddToStockArmy(player, c_GU_Torrent, 2);
+            AIAddToStockArmy(player, c_GU_Mole_Alias, 2);
+            // validation: 9 units above with average cost 15 food and 1125 resources
+            duration = 337 + RandomInt(-11, 16);
+        }
+        else if (armyRoll <= 4) {
+            AIAddToStockArmy(player, c_GU_Torrent, 2);
+            AIAddToStockArmy(player, c_GU_Mole_Alias, 2);
+            AIAddToStockArmy(player, c_GU_Virtus, 1);
+            // validation: 3 units above with average cost 12 food and 1050 resources
+            duration = 313 + RandomInt(-10, 15);
+        }
+    }
+    else if (buildType == e_buildType_Special) {
+        // next attack should be around 17 foodCost and 1020 resCost after about 340 seconds
+        armyRoll = RandomInt(1,2);
+        if (armyRoll <= 1) {
+            AIAddToStockArmy(player, c_GU_Spitfire, 3);
+            AIAddToStockArmy(player, c_GU_Blitzer, 1);
+            AIAddToStockArmy(player, c_GU_Aquila, 2);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Aquila, 1, c_GU_Blaze, 2);
+            // validation: 11 units above with average cost 14 food and 1275 resources
+            duration = 360 + RandomInt(-12, 18);
+        }
+        else if (armyRoll <= 2) {
+            AIAddToStockArmy(player, c_GU_Spitfire, 3);
+            AIAddToStockArmy(player, c_GU_Mole_Alias, 2);
+            AIAddToStockArmy(player, c_GU_ProcessingDrone, 1);
+            // validation: 9 units above with average cost 14 food and 1150 resources
+            duration = 343 + RandomInt(-11, 17);
+        }
+    }
+    else if (buildType == e_buildType_Mixed) {
+        // next attack should be around 18 foodCost and 1080 resCost after about 360 seconds
+        armyRoll = RandomInt(1,5);
+        if (armyRoll <= 2) {
+            AIAddToStockArmy(player, c_GU_Spitfire, 4);
+            AIAddToStockArmy(player, c_GU_Blitzer, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Aquila, 1, c_GU_Blaze, 2);
+            // validation: 14 units above with average cost 18 food and 1150 resources
+            duration = 369 + RandomInt(-12, 18);
+        }
+        else if (armyRoll <= 4) {
+            AIAddToStockArmy(player, c_GU_Spitfire, 2);
+            AIAddToStockArmy(player, c_GU_Blitzer, 2);
+            AIAddToStockArmy(player, c_GU_Blaze, 2);
+            AIAddToStockArmy(player, c_GU_Mole_Alias, 2);
+            // validation: 10 units above with average cost 18 food and 1200 resources
+            duration = 376 + RandomInt(-12, 18);
+        }
+        else if (armyRoll <= 5) {
+            AIAddToStockArmy(player, c_GU_Spitfire, 1);
+            AIAddToStockArmy(player, c_GU_Blitzer, 1);
+            AIAddToStockArmy(player, AIPickFrom2(c_GU_Badger, c_GU_Virtus), 2);
+            AIAddToStockArmy(player, AIPickFrom2(c_GU_Badger, c_GU_Virtus), 2);
+            // validation: 5 units above with average cost 16 food and 1425 resources
+            duration = 397 + RandomInt(-13, 19);
+        }
+    }
+    else if (buildType == e_buildType_Air) {
+        // next attack should be around 12 foodCost and 1200 resCost after about 320 seconds
+        armyRoll = RandomInt(1,2);
+        if (armyRoll <= 1) {
+            AIAddToStockArmy(player, c_GU_Avenger, 2);
+            AIAddToStockArmy(player, c_GU_Hornet, 3);
+            AIAddToStockArmy(player, AIPickFrom2(c_GU_Avenger, c_GU_Hornet), 2);
+            // validation: 5 units above with average cost 12 food and 1175 resources
+            duration = 318 + RandomInt(-10, 15);
+        }
+        else if (armyRoll <= 2) {
+            AIAddToStockArmy(player, c_GU_Avenger, 1);
+            AIAddToStockArmy(player, c_GU_Hornet, 1);
+            AIAddToStockArmy(player, c_GU_Badger, 1);
+            // validation: 3 units above with average cost 11 food and 1175 resources
+            duration = 311 + RandomInt(-10, 15);
+        }
+    }
+    else {
+        return GenetronFinalArmyInitVyEy(player, e_buildType_Core);
+    }
+
+    AISetUserInt(player, c_ldNextArmyRoll, armyRoll);
+    return duration;
+}
+
+//--------------------------------------------------------------------------------------------------
+//  GenetronLateInitVyEy
+//--------------------------------------------------------------------------------------------------
+void GenetronLateInitVyEy (int player) {
+    int lateLoop = AIGetUserInt(player, c_ldNumLateLoops);
+    int curPhase = c_ldPhaseLate;
+    int buildType = 0;
+
+    AIChooseNextLateGameBuild(player);
+    buildType = AIGetUserInt(player, c_lateGameBuildType);
+
+    if (lateLoop <= 0) { // First Late Loop
+        AISetupNextArmy (player, buildType, curPhase, GenetronLateArmyInitVyEy);
+    } else {
+        curPhase = c_ldPhaseFinal + lateLoop;
+        AISetupNextArmy (player, buildType, curPhase, GenetronFinalArmyInitVyEy);
+    }
+
+    AISetFlag(player, e_flagsScouting, true);
+    AISetFlag(player, e_flagsClearObs, true);
+    AISetFlag(player, e_flagsLateScout, true);
+    AISetFlag(player, e_flagsDetect, true);
+
+    AISetMainState(player, e_mainState_Late, e_mainSubState_Build);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  GenetronLateBuildVyEy
+//--------------------------------------------------------------------------------------------------
+void GenetronLateBuildVyEy (int player) {
+    int lateLoop = AIGetUserInt(player, c_ldNumLateLoops);
+    int buildType = AIGetUserInt(player, c_lateGameBuildType);
+    int armyRoll = AIGetUserInt(player, c_ldNextArmyRoll);
+    int timeOut = AIGetUserInt(player, c_nextArmyTime);
+    bool nextState = false;
+
+    if (AIHasPlayerChangedCurrentLateGame(player)) {
+        AISetMainState(player, e_mainState_Late, e_mainSubState_Init);
+        return;
+    }
+
+    AIClearStock(player);
+
+    GenetronBasicEconomy(player, c_ldPhaseLate, 14);
+    if (buildType == e_buildType_Air) {
+        AISetStock( player, 1, c_GU_Courier );
+    }
+    GenetronBasicExpansion(player, c_ldPhaseLate, 7000, 1500);
+
+    GenetronBasicDefenseStock(player);
+
+    AISetStockArmyScale(player, 0.35);
+
+    GenetronGeneralBuild(player, c_ldPhaseLate);
+
+    AILDStockWorkers( player, 20, c_GU_ACR);
+
+    if (buildType == e_buildType_Core) {
+        if (GenetronMacroExpand(player)) { return; }
+    }
+    else if (buildType == e_buildType_HighTech) {
+        if (GenetronMacroExpand(player)) { return; }
+    }
+    else if (buildType == e_buildType_Special) {
+        if (GenetronMacroExpand(player)) { return; }
+    }
+    else if (buildType == e_buildType_Mixed) {
+        if (GenetronMacroExpand(player)) { return; }
+    }
+    else if (buildType == e_buildType_Air) {
+        if (GenetronMacroExpand(player)) { return; }
+    }
+
+    AISetStock( player, 2, c_GU_ProcessingDrone );
+    AISetStock( player, 9, c_GB_Uploader );
+
+    AISetStockArmyScale(player, 0.70);
+
+    AISetStock( player, 2, c_GU_Courier );
+    AISetStock( player, 3, c_GU_ProcessingDrone );
+
+    AISetStockArmyScale(player, 1.00);
+
+    AILDStockWorkers( player, 40, c_GU_ACR);
+
+    if (lateLoop <= 0) { // First Late Loop
+        GenetronUpgradesVyEy(player, c_ldPhaseLate);
+        GenetronTechUp(player, c_ldPhaseLate);
+    } else { // Remaining Loops
+        GenetronUpgradesVyEy(player, c_ldPhaseFinal);
+        GenetronTechUp(player, c_ldPhaseFinal);
+    }
+
+    AIEnableStock(player);
+
+    AILDGeneralSharedLogic(player);
+
+    nextState = AITestTimeout(player, timeOut, e_mainState_Late, e_mainSubState_Init);
+    if (nextState) {
+        lateLoop += 1;
+        AISetUserInt(player, c_ldNumLateLoops, lateLoop);
+    }
+}
+
+//--------------------------------------------------------------------------------------------------
+//  GenetronOpenVyEy
+//--------------------------------------------------------------------------------------------------
+void GenetronOpenVyEy (int player) {
+    int mainSubState = AIState(player, e_mainSubState);
+
+    if (mainSubState != e_mainSubState_Build) {
+        GenetronOpenInitVyEy(player);
+        mainSubState = AIState(player, e_mainSubState);
+    }
+
+    if (mainSubState == e_mainSubState_Build) { GenetronOpenBuildVyEy(player); }
+    else { ErrorMeleeScript(player, "Invalid Open MainSubState GenetronVyEy"); }
+}
+
+//--------------------------------------------------------------------------------------------------
+//  GenetronMidVyEy
+//--------------------------------------------------------------------------------------------------
+void GenetronMidVyEy (int player) {
+    int mainSubState = AIState(player, e_mainSubState);
+
+    if (mainSubState != e_mainSubState_Build) {
+        GenetronMidInitVyEy(player);
+        mainSubState = AIState(player, e_mainSubState);
+    }
+
+    if (mainSubState == e_mainSubState_Build) { GenetronMidBuildVyEy(player);  }
+    else { ErrorMeleeScript(player, "Invalid Mid MainSubState GenetronVyEy"); }
+}
+
+//--------------------------------------------------------------------------------------------------
+//  GenetronLateVyEy
+//--------------------------------------------------------------------------------------------------
+void GenetronLateVyEy (int player) {
+    int mainSubState = AIState(player, e_mainSubState);
+
+    if (mainSubState != e_mainSubState_Build) {
+        GenetronLateInitVyEy(player);
+        mainSubState = AIState(player, e_mainSubState);
+    }
+
+    if (mainSubState == e_mainSubState_Build) { GenetronLateBuildVyEy(player);  }
+    else { ErrorMeleeScript(player, "Invalid Late MainSubState GenetronVyEy"); }
+}
+
