@@ -62,7 +62,8 @@ Abil/Name/SunkenWarrenResearch=Sunken Warren Research
 Abil/Name/SuperCharge=Super Charge
 Abil/Name/SystemOffload=System Offload
 Abil/Name/TechVaultResearch=Research
-Abil/Name/TorrentWeaponMode=Weapon Mode
+Abil/Name/TorrentHeavyOutputModeOff=Torrent - Heavy Output Mode Off
+Abil/Name/TorrentHeavyOutputModeOn=Torrent - Heavy Output Mode On
 Abil/Name/TrainACR=Train ACR
 Abil/Name/TrainHeavyweightMechs=Train Heavyweight Mechs
 Abil/Name/TrainLightweightMechs=Train Lightweight Mechs
@@ -74,7 +75,6 @@ Abil/Name/VolatileDischarge=Volatile Discharge
 Abil/Name/VolatileDischargeCancel=Volatile Discharge Cancel
 Abil/Name/XayidlingDash=Dash
 Abil/Name/que1Passive=Queue (1) Passive
-Abil/Name/testing=testing
 Alert/Text/BuildComplete_Xayi=Structure complete.
 Alert/Text/ResearchComplete_Gen=Research complete.
 Alert/Text/ResearchComplete_Xayi=Research complete.
@@ -191,6 +191,7 @@ Button/Name/BilePit=Form Bile Pit
 Button/Name/BiomassCavern=Form Biomass Cavern
 Button/Name/BiomassHatchery=Form Biomass Hatchery
 Button/Name/BirthScavenger=Birth Scavenger
+Button/Name/BirthScavengerSpawn=Birth Scavenger Spawn
 Button/Name/Blaze=Fabricate Blaze
 Button/Name/BlindingBurst=Blinding Burst
 Button/Name/Blitzer=Fabricate Blitzer
@@ -430,9 +431,9 @@ Button/Tooltip/BilePit=Defensive structure with a quick fire rate. Must be place
 Button/Tooltip/BiomassCavern=Contains upgrades for various Xayid units.<n/><n/><c val="FFFF80">Enables:</c><n/>- Massalisks from the Biomass Hatchery
 Button/Tooltip/BiomassHatchery=Creates larva, which can mutate into various Xayid beasts.<n/><n/><c val="FFFF80">Enables:</c><n/>- Revilers<n/>- Ferrions<n/> - Prowlers<n/>- Spitters
 Button/Tooltip/BirthScavenger=Basic builder and worker unit.<n/><n/><c val="FFFF80">Can attack ground units.</c>
-Button/Tooltip/BirthScavengerSpawn=Rapid spawn unit with timed life. Can harvest resources.<n/><n/><c val="FFFF80">Can attack ground units.</c>
+Button/Tooltip/BirthScavengerSpawn=Rapid spawn defense unit with timed life. Can harvest resources.<n/><n/><c val="FFFF80">Can attack ground units.</c>
 Button/Tooltip/Blaze=Melee anti-light specialist. Can use Speed Cloak.<n/><c val="FFFF80"><n/>Can attack ground units.</c>
-Button/Tooltip/BlindingBurst=Blinds all enemies in a medium radius, disabling their vision, attacks and abilities. Lasts for a duration of <d ref="Behavior,BlindingBurstAB,Duration" precision="0"/> seconds.
+Button/Tooltip/BlindingBurst=Blinds all enemies in a medium radius, disabling their vision, attacks and abilities. Lasts for a duration of <d ref="Behavior,BlindingBurstAB,Duration" precision="0"/> seconds. Will be cast upon death if available.
 Button/Tooltip/Blitzer=Ranged general purpose combat unit. Can use Supercharge.<n/><n/><c val="FFFF80">Can attack ground and air units.</c>
 Button/Tooltip/BlitzerSupercharge=Charges up the <c val="FFFF80">Blitzer's</c> weapon, causing it's next attack to deal doubled damage. The charge lasts for <d ref="Behavior,SuperChargeCannon,Duration"/> seconds.
 Button/Tooltip/BlitzerSupercharged=The <c val="FFFF80">Blitzer's</c> weapon is currently charged, causing it to deal double damage on it's next attack.
@@ -500,7 +501,7 @@ Button/Tooltip/Kraken=A huge powerful beast, with a devastating attack. Can use 
 Button/Tooltip/LaunchCloakCharge=Launches a <c val="FFFF80">Cloak Charge</c> to the target point.
 Button/Tooltip/LaunchShockCharge=Launches a <c val="FFFF80">Shock Charge</c> to the target point.
 Button/Tooltip/LoadFerrion=Loads units into the Ferrion's hold.
-Button/Tooltip/LockdownMode=When the <c val="FFFF80">Virtus</c> reaches <d ref="Validator,VirtusLockdownRegenThreshhold,Value"/> health, it is rendered unable to attack, move, or use any abilities.
+Button/Tooltip/LockdownMode=When the <c val="FFFF80">Virtus</c> reaches <d ref="Validator,VirtusLockdownRegenThreshhold,Value"/> health, it is rendered unable to attack, move, or use any abilities. Will remain locked down for at least <d ref="Behavior,VirtusLockdownModeDuration,Duration"/> seconds after being repaired.
 Button/Tooltip/MELESTargetingSystem=The <c val="FFFF80">Badger</c> is able to attack air and ground targets simultaneously.
 Button/Tooltip/Manufacturer=Produces light-weight machines.<n/><n/><c val="FFFF80">Enables:</c><n/>- Spitfires
 Button/Tooltip/Massalisk=Large, low ranged durable beast with splash damage. Can use Hunker.<n/><n/><c val="FFFF80">Can attack ground units.</c>
@@ -608,7 +609,7 @@ Button/Tooltip/ScorpaliskMetabolics=<c val="FFFF80">Scorpalisks</c> gain +30% mo
 Button/Tooltip/Scour=Reveals a small area. Lasts for a duration of <d ref="Effect,ScourCP,ExpireDelay" precision="1"/> seconds.<n/><n/><c val="FFFF80">Does not detect.</c>
 Button/Tooltip/SelectWasp=Can mutate into various Xayid flyers.
 Button/Tooltip/SelectWorms=Can mutate into various Xayid ground units.
-Button/Tooltip/SelfFixProtocol=<c val="FFFF80">Virtus</c> gain +3 health regeneration while in Lockdown Mode.
+Button/Tooltip/SelfFixProtocol=<c val="FFFF80">Virtus</c> gain +<d ref="Behavior,SelffixProtocol,Modification.VitalRegenArray[Life]"/> life regeneration while in Lockdown Mode.
 Button/Tooltip/ShapedHull=<c val="FFFF80">Boars</c> gain +50 life.
 Button/Tooltip/ShockCharge=Consumes energy after it is placed, and when it deals damage. Self-destructs when its energy reserves are consumed.
 Button/Tooltip/Siphoner=Formed over a Vespene Geyser to allow harvesting of vespene gas.
@@ -958,6 +959,12 @@ Effect/Name/TheGreatEqualizerImpact=The Great Equalizer
 Effect/Name/TheGreatEqualizerLMTM=The Great Equalizer
 Effect/Name/ThrasherSpine=Thrasher Spine
 Effect/Name/ThrasherSpineDMG=Thrasher Spine
+Effect/Name/TorrentAAWeaponSwitchHeavyOutputOff=Torrent - AA Weapon Switch (Heavy Output Off)
+Effect/Name/TorrentAAWeaponSwitchHeavyOutputOn=Torrent - AA Weapon Switch (Heavy Output On)
+Effect/Name/TorrentHeavyOutputOff=Torrent - Heavy Output Off
+Effect/Name/TorrentHeavyOutputOffSet=Torrent - Heavy Output Off Set
+Effect/Name/TorrentHeavyOutputOn=Torrent - Heavy Output On
+Effect/Name/TorrentHeavyOutputOnSet=Torrent - Heavy Output On Set
 Effect/Name/TrackingImplant=Tracking Munitions
 Effect/Name/TuskMachineGuns=Tusk Machine Guns
 Effect/Name/TwinP1Dash0Guns=Twin P1-0 Guns (Damage)
@@ -977,6 +984,7 @@ Effect/Name/VolatileDischarge=Volatile Discharge
 Effect/Name/VolatileDischargeAB=Volatile Discharge
 Effect/Name/VolatileDischargeCU=Volatile Discharge
 Effect/Name/VolatileDischargeDMG=Volatile Discharge
+Effect/Name/XayidSpawnTimedLife=Xayid Spawn Timed Life
 Effect/Name/XayidlingDash=Dash Persistant
 Error/AdaptiveInjectionError=Must target a unit with an attack
 Error/NotProcessingCore=Can't target Processing Cores
@@ -1034,6 +1042,7 @@ RequirementNode/Tooltip/Eq3206128948CountUpgradeGenetronHeavyWeaponsLevel1Comple
 RequirementNode/Tooltip/Eq3493798543CountUpgradeGenetronLightWeaponsLevel1CompleteOnly1=Mech Light Weapons Level 1
 RequirementNode/Tooltip/Eq57742739CountUpgradeGenetronAircraftWeaponsLevel2CompleteOnly1=Aircraft Weapons Level 2
 RequirementNode/Tooltip/Or1239961003CountBehaviorSchematicTransmitCompleteOnlyAtUnitCountBehaviorSchematicTransmit2CompleteOnlyAtUnitCountBehaviorSchematicTransmit3CompleteOnlyAtUnit=Has At Least 1 Linked Uploader
+RequirementNode/Tooltip/Or1580205116CountBehaviorSchematicTransmitAL2CompleteOnlyAtUnitCountBehaviorSchematicTransmitAL3CompleteOnlyAtUnit=Shares A Link To An Assembly Array With 1 Or More Other Uploaders
 RequirementNode/Tooltip/Or4277062134CountBehaviorSchematicTransmit2CompleteOnlyAtUnitCountBehaviorSchematicTransmit3CompleteOnlyAtUnit=Has At Least 2 Linked Uploaders
 RequirementNode/Tooltip/Or534145292CountBehaviorSchematicTransmitAL2CompleteOnlyAtUnitCountBehaviorSchematicTransmitAL3CompleteOnlyAtUnit=Shares A Link To A Fabricator With 1 Or More Other Uploaders
 RequirementNode/Tooltip/Or542205753CountBehaviorSchematicTransmitAL2CompleteOnlyAtUnitCountBehaviorSchematicTransmitAL3CompleteOnlyAtUnit=Shares A Link To A Manufacturer With 1 Or More Other Uploaders
@@ -1298,6 +1307,7 @@ Weapon/Name/SuppressionCannons=Suppression Cannons
 Weapon/Name/TheGreatEqualizer=The Great Equalizer
 Weapon/Name/TheGreatEqualizerTM=The Great Equalizer
 Weapon/Name/ThrasherSpine=Thrasher Spine
+Weapon/Name/TorrentAADummy=AA Dummy
 Weapon/Name/TuskMachineGuns=Tusk Machine Guns
 Weapon/Name/TwinP1Dash0Guns=Twin P1-0 Guns
 Weapon/Name/VenomousStrike=Venomous Strike
@@ -1305,8 +1315,8 @@ Weapon/Name/VirulentSpit=Virulent Spit
 Weapon/Tip/AAMLaser=Shoots enemy missiles.
 Weapon/Tip/ChargeCannon=<s val="@@@StandardTooltip">Tracking Munitions range bonus:</s> <c val="9F9F9F"><d ref="Weapon,ChargeCannonTM,Range-Weapon,ChargeCannon,Range"/><n/></c><s val="@@@CommandTooltipRequirements">Requirements:<n/><c val="FF0000"> - Research Tracking Munitions at the Uploader</c></s>
 Weapon/Tip/ChargeCannonTM=<s val="@@@StandardTooltip">Tracking Munitions range bonus:</s> <d ref="Weapon,ChargeCannonTM,Range-Weapon,ChargeCannon,Range"/>
-Weapon/Tip/D15Magnum=<img path="@@UI/ResourceIconEnergy" height="24" width="24" alignment="absolutemiddle"/><s val="@@@StandardTooltip"><d ref="Weapon,D15Magnum,Cost.Vital[Energy]"/><n/><n/>Tracking Munitions range bonus:</s> <c val="9F9F9F"><d ref="Weapon,D15MagnumTM,Range-Weapon,D15Magnum,Range"/><n/></c><s val="@@@CommandTooltipRequirements">Requirements:<n/><c val="FF0000"> - Research Tracking Munitions at the Uploader</c></s>
-Weapon/Tip/D15MagnumTM=<img path="@@UI/ResourceIconEnergy" height="24" width="24" alignment="absolutemiddle"/><s val="@@@StandardTooltip"><d ref="Weapon,D15Magnum,Cost.Vital[Energy]"/><n/><n/>Tracking Munitions range bonus:</s> <d ref="Weapon,D15MagnumTM,Range-Weapon,D15Magnum,Range"/>
+Weapon/Tip/D15Magnum=<img path="@@UI/ResourceIconEnergy" height="24" width="24" alignment="absolutemiddle"/><s val="@@@StandardTooltip"><d ref="Weapon,D15Magnum,Cost.Vital[Energy]" precision="1"/><n/><n/>Tracking Munitions range bonus:</s> <c val="9F9F9F"><d ref="Weapon,D15MagnumTM,Range-Weapon,D15Magnum,Range"/><n/></c><s val="@@@CommandTooltipRequirements">Requirements:<n/><c val="FF0000"> - Research Tracking Munitions at the Uploader</c></s>
+Weapon/Tip/D15MagnumTM=<img path="@@UI/ResourceIconEnergy" height="24" width="24" alignment="absolutemiddle"/><s val="@@@StandardTooltip"><d ref="Weapon,D15Magnum,Cost.Vital[Energy]" precision="1"/><n/><n/>Tracking Munitions range bonus:</s> <d ref="Weapon,D15MagnumTM,Range-Weapon,D15Magnum,Range"/>
 Weapon/Tip/NeedleSpinesEquipment=<s val="@@@StandardTooltip">Range vs Air:</s> <d ref="Weapon,NeedleSpinesAntiAir,Range"/>
 Weapon/Tip/RiotGun=<s val="@@@StandardTooltip">Tracking Munitions range bonus:</s> <c val="9F9F9F"><d ref="Weapon,RiotGunTM,Range-Weapon,RiotGun,Range"/><n/></c><s val="@@@CommandTooltipRequirements">Requirements:<n/><c val="FF0000"> - Research Tracking Munitions at the Uploader</c></s>
 Weapon/Tip/RiotGunTM=<s val="@@@StandardTooltip">Tracking Munitions range bonus:</s> <d ref="Weapon,RiotGunTM,Range-Weapon,RiotGun,Range"/>

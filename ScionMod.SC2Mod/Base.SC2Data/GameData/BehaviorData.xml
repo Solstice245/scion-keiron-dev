@@ -97,6 +97,29 @@
         </Modification>
         <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="TorrentAAWeaponSwitch">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <Modification>
+            <WeaponDisableArray value="HurricaneMissilesHighOutput"/>
+            <WeaponDisableArray value="HurricaneMissilesNormalOutput"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="XayidSpawnTimedLife">
+        <InfoFlags index="Hidden" value="1"/>
+        <InfoIcon value="Assets\Textures\btn-ability-zerg-explode.dds"/>
+        <EditorCategories value="Race:Zerg,AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisplayDuration index="Ally" value="1"/>
+        <Duration value="35"/>
+        <DurationRandomMax value="0.5"/>
+        <ExpireEffect value="TimedLifeFate"/>
+        <Modification>
+            <StateFlags index="Summoned" value="1"/>
+        </Modification>
+        <KillCredit Value="Caster"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="ShockChargeDecloak">
         <Alignment value="Negative"/>
         <InfoIcon value="Assets\Textures\btn-ability-genetron-launchshockcharge.dds"/>
@@ -180,9 +203,9 @@
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Zerg,AbilityorEffectType:Units"/>
         <DamageResponse Fatal="1" Handled="BlindingBurst">
-            <ValidatorArray value="BlindingBurstCooldownBehaviorCount"/>
             <Chance value="1"/>
         </DamageResponse>
+        <DisableValidatorArray value="BlindingBurstCooldownComplete"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="SelffixProtocol">
         <InfoIcon value="Assets\Textures\btn-upgrade-swann-regenerativebiosteel.dds"/>
@@ -410,7 +433,7 @@
         <BehaviorCategories index="Stun" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <BuffFlags index="RefreshStack" value="1"/>
-        <Duration value="3"/>
+        <Duration value="2.1"/>
         <Modification>
             <ModifyFlags index="DisableAbils" value="1"/>
             <ModifyFlags index="DisableWeapons" value="1"/>

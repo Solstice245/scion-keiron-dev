@@ -520,6 +520,35 @@
         <ContainerType value="Transport"/>
         <ContainerUnit Effect="LaunchShockCharge" Value="Target"/>
     </CEffectLoadContainer>
+    <CEffectApplyBehavior id="TorrentAAWeaponSwitchHeavyOutputOff" parent="CEffectApplyBehaviorGenetronCaster">
+        <EditorCategories value=""/>
+        <Behavior value="TorrentAAWeaponSwitch"/>
+        <Flags index="UseDuration" value="1"/>
+        <Duration value="0.42"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="TorrentAAWeaponSwitchHeavyOutputOn" parent="CEffectApplyBehaviorGenetronCaster">
+        <EditorCategories value=""/>
+        <Behavior value="TorrentAAWeaponSwitch"/>
+        <Flags index="UseDuration" value="1"/>
+        <Duration value="4.2"/>
+    </CEffectApplyBehavior>
+    <CEffectRemoveBehavior id="TorrentHeavyOutputOff">
+        <EditorCategories value="Genetron"/>
+        <BehaviorLink value="HeavyOutputActive"/>
+    </CEffectRemoveBehavior>
+    <CEffectSet id="TorrentHeavyOutputOffSet">
+        <EditorCategories value=""/>
+        <EffectArray value="TorrentAAWeaponSwitchHeavyOutputOff"/>
+        <EffectArray value="TorrentHeavyOutputOff"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="TorrentHeavyOutputOn" parent="CEffectApplyBehaviorGenetronCaster">
+        <Behavior value="HeavyOutputActive"/>
+    </CEffectApplyBehavior>
+    <CEffectSet id="TorrentHeavyOutputOnSet">
+        <EditorCategories value=""/>
+        <EffectArray value="TorrentAAWeaponSwitchHeavyOutputOn"/>
+        <EffectArray value="TorrentHeavyOutputOn"/>
+    </CEffectSet>
     <CEffectDamage id="TwinP1Dash0Guns" parent="CEffectDamageGenetronWeapon">
         <Amount value="6"/>
     </CEffectDamage>
@@ -661,7 +690,7 @@
         <DrainVital value="Energy"/>
         <DrainVitalCostFactor value="0.66"/>
         <RechargeVital value="Energy"/>
-        <RechargeVitalRate value="45"/>
+        <RechargeVitalRate value="25"/>
     </CEffectCreateHealer>
     <CEffectCreateHealer id="SystemRechargeCoreCH">
         <ValidatorArray value="NotWarpingIn"/>
@@ -720,14 +749,14 @@
     <CEffectCreatePersistent id="HurricaneMissilesCPNormal">
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="TargetUnit"/>
-        <PeriodCount value="4"/>
+        <PeriodCount value="2"/>
         <PeriodicEffectArray value="HurricaneMissilesLM"/>
         <PeriodicPeriodArray value="0.1"/>
         <ValidatorArray value="CasterNotDead"/>
     </CEffectCreatePersistent>
     <CEffectCreatePersistent id="HurricaneMissilesCPHigh" parent="HurricaneMissilesCPNormal">
         <Name value="Effect/Name/HurricaneMissilesCPHigh"/>
-        <PeriodCount value="10"/>
+        <PeriodCount value="8"/>
     </CEffectCreatePersistent>
     <CEffectLaunchMissile id="HurricaneMissilesLM" parent="CEffectLaunchMissileGenetron"/>
     <CEffectCreatePersistent id="RevenantBombCPAccel">
@@ -996,7 +1025,7 @@
         <SearchFilters value="Ground;Self,Neutral,Enemy,Missile,Stasis,Dead,Hidden,Invulnerable"/>
     </CEffectDamage>
     <CEffectDamage id="HurricaneMissilesLMImpact" parent="CEffectDamageGenetronWeapon">
-        <Amount value="6"/>
+        <Amount value="8"/>
     </CEffectDamage>
     <CEffectDamage id="IBF7FlamethrowerDMG" parent="CEffectDamageGenetronWeapon">
         <AttributeBonus index="Light" value="6"/>
@@ -1244,6 +1273,7 @@
     </CEffectLaunchMissile>
     <CEffectEnumArea id="BlindingBurst">
         <EditorCategories value="Race:Xayid"/>
+        <ImpactLocation Value="SourceUnit"/>
         <SearchFilters value="Ground;Player,Ally,Neutral,Structure,RawResource,HarvestableResource,Missile,Item,Stasis,Dead,Hidden"/>
         <AreaArray Radius="3.5" Effect="BlindingBurstSet"/>
     </CEffectEnumArea>
@@ -1308,6 +1338,7 @@
     </CEffectApplyForce>
     <CEffectApplyBehavior id="DashFrenzy" parent="ApplyBehaviorXayid"/>
     <CEffectApplyBehavior id="VirtusLockdownModeDuration" parent="CEffectApplyBehaviorGenetronCaster"/>
+    <CEffectApplyBehavior id="XayidSpawnTimedLife" parent="ApplyBehaviorXayid"/>
     <CEffectCreatePersistent id="XayidlingDash">
         <EditorCategories value="Race:Zerg"/>
         <Flags index="Channeled" value="1"/>

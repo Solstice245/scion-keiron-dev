@@ -244,20 +244,18 @@
         <CursorEffect value="NaniteGrenadeImpact"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="NaniteGrenade"/>
     </CAbilEffectTarget>
-    <CAbilBehavior id="TorrentWeaponMode">
-        <OrderArray index="0">
-            <DisplayType value="Confirm"/>
-            <Color value="255,0,255,0"/>
-            <Model value="Assets\UI\Cursors\WayPointAttack_Void\WayPointAttack_Void.m3"/>
-            <LineTexture value="Assets\Textures\WayPointLine.dds"/>
-        </OrderArray>
-        <EditorCategories value="AbilityorEffectType:Units,Race:Genetron"/>
-        <CmdButtonArray index="On" DefaultButtonFace="HeavyOutputMode"/>
-        <CmdButtonArray index="Off" DefaultButtonFace="NormalOutputMode"/>
-        <Flags index="Toggle" value="1"/>
+    <CAbilEffectInstant id="TorrentHeavyOutputModeOff">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Effect index="0" value="TorrentHeavyOutputOffSet"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="NormalOutputMode" Requirements="TorrentHeavyModeOn"/>
         <Flags index="Transient" value="1"/>
-        <BehaviorArray value="HeavyOutputActive"/>
-    </CAbilBehavior>
+    </CAbilEffectInstant>
+    <CAbilEffectInstant id="TorrentHeavyOutputModeOn">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Effect index="0" value="TorrentHeavyOutputOnSet"/>
+        <Flags index="Transient" value="1"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="HeavyOutputMode" Requirements="TorrentHeavyModeOff"/>
+    </CAbilEffectInstant>
     <CAbilEffectTarget id="LaunchShockCharge">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Effect index="0" value="LaunchShockChargeLS"/>
@@ -925,6 +923,7 @@
         <Effect index="0" value="VengeanceMissileS"/>
         <Flags index="AllowMovement" value="1"/>
         <Flags index="NoDeceleration" value="1"/>
+        <Flags index="TransientPreferred" value="1"/>
         <Cost>
             <Cooldown TimeUse="56"/>
         </Cost>
@@ -932,6 +931,7 @@
         <Range value="8"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="VengeanceMissile" Requirements="UseVengeanceMissile"/>
         <SharedFlags index="RegisterCooldownEvent" value="1"/>
+        <Arc value="360"/>
     </CAbilEffectTarget>
     <CAbilMove id="MoleMove">
         <CmdButtonArray index="Move" DefaultButtonFace=""/>
@@ -1096,10 +1096,17 @@
         <InfoArray index="Train1" Time="17">
             <Button DefaultButtonFace="BirthScavenger"/>
             <Unit value="Scavenger"/>
-            <Unit value="ScavengerSpawn"/>
         </InfoArray>
-        <InfoArray index="Train2" Time="4.25">
-            <Button DefaultButtonFace="BirthScavenger"/>
+        <InfoArray index="Train2" Time="2" Effect="XayidSpawnTimedLife">
+            <Charge>
+                <CountMax value="5"/>
+                <CountStart value="5"/>
+                <CountUse value="1"/>
+                <TimeUse value="17"/>
+            </Charge>
+            <Button DefaultButtonFace="BirthScavengerSpawn"/>
+            <Unit value="ScavengerSpawn"/>
+            <Unit value="ScavengerSpawn"/>
             <Unit value="ScavengerSpawn"/>
             <Unit value="ScavengerSpawn"/>
         </InfoArray>
@@ -1118,25 +1125,6 @@
         <CursorEffect value="BlindingBurst"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="BlindingBurst"/>
         <SharedFlags index="RegisterCooldownEvent" value="1"/>
-    </CAbilEffectInstant>
-    <CAbilEffectInstant id="testing">
-        <Alignment value="Negative"/>
-        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
-        <SharedFlags index="RegisterCooldownEvent" value="1"/>
-        <Effect index="0" value="BlindingBurst"/>
-        <Flags index="AllowMovement" value="1"/>
-        <Flags index="AutoCast" value="1"/>
-        <Flags index="AutoCastOn" value="1"/>
-        <Flags index="Transient" value="1"/>
-        <Cost>
-            <Cooldown TimeUse="5"/>
-        </Cost>
-        <Arc value="360"/>
-        <AutoCastFilters value="Ground,Visible;Player,Ally,Neutral,Structure,Missile,Stasis,Dead,Hidden"/>
-        <AutoCastRange value="2"/>
-        <AutoCastValidatorArray value="IsNotChangeling"/>
-        <CursorEffect value="BlindingBurst"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="BlindingBurst"/>
     </CAbilEffectInstant>
     <CAbilResearch id="CasnoliskDenResearch">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
