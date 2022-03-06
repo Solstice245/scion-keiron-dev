@@ -192,7 +192,6 @@ void gf_MirrorTesterUnitsByPlayer (int lp_player);
 void gf_LoadTerrainData (structref<gs_DATA_TERRAIN> lp_dataTerrain);
 void gf_MovePlayerCameras ();
 bool gf_TesterLeaderboardValidUnitType (string lp_unitType);
-bool gf_TesterLeaderboardSpecialUnitType (string lp_unitType);
 void gf_TesterLeaderboardSpecialUnitCost (string lp_unitType, int lp_column, bool lp_deleteMode);
 void gf_TesterLeaderboardCreate ();
 int gf_TesterLeaderboardAddRow (string lp_unitName);
@@ -1026,9 +1025,6 @@ bool auto_gf_SaveTesterUnits_TriggerFunc (bool testConds, bool runActions) {
 }
 
 void gf_ResetTesterUnits () {
-    // Variable Declarations
-    int lv_hangar_count;
-
     // Automatic Variable Declarations
     const int auto3D6D11B2_ae = gv_const_players;
     int auto3D6D11B2_var;
@@ -1044,8 +1040,6 @@ void gf_ResetTesterUnits () {
     unitgroup autoD3BD3B18_g;
     int autoD3BD3B18_u;
     unit autoD3BD3B18_var;
-
-    // Variable Initialization
 
     // Implementation
     gf_DeleteAllTesterUnits();
@@ -1080,8 +1074,7 @@ void gf_ResetTesterUnits () {
         auto88460349_var = UnitGroupUnitFromEnd(auto88460349_g, auto88460349_u);
         if (auto88460349_var == null) { break; }
         UnitSetProgressStage(auto88460349_var, 1, c_unitProgressStageCancel);
-        lv_hangar_count = UnitMagazineCount(auto88460349_var, "CarrierHangar");
-        UnitMagazineArm(auto88460349_var, AbilityCommand("CarrierHangar", 0), (CatalogFieldValueGetAsInt(c_gameCatalogAbil, "CarrierHangar", "MaxCount", UnitGetOwner(auto88460349_var))-lv_hangar_count));
+        UnitMagazineArm(auto88460349_var, AbilityCommand("CarrierHangar", 0), (CatalogFieldValueGetAsInt(c_gameCatalogAbil, "CarrierHangar", "MaxCount", UnitGetOwner(auto88460349_var))-CatalogFieldValueGetAsInt(c_gameCatalogAbil, "CarrierHangar", "InfoArray[" + IntToString(0) + "].CountStart", UnitGetOwner(auto88460349_var))));
     }
     autoD3BD3B18_g = UnitGroup("Myriad", c_playerAny, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
     autoD3BD3B18_u = UnitGroupCount(autoD3BD3B18_g, c_unitCountAll);
@@ -1089,8 +1082,7 @@ void gf_ResetTesterUnits () {
         autoD3BD3B18_var = UnitGroupUnitFromEnd(autoD3BD3B18_g, autoD3BD3B18_u);
         if (autoD3BD3B18_var == null) { break; }
         UnitSetProgressStage(autoD3BD3B18_var, 1, c_unitProgressStageCancel);
-        lv_hangar_count = UnitMagazineCount(autoD3BD3B18_var, "ElytraHangar");
-        UnitMagazineArm(autoD3BD3B18_var, AbilityCommand("ElytraHangar", 0), (CatalogFieldValueGetAsInt(c_gameCatalogAbil, "ElytraHangar", "MaxCount", UnitGetOwner(autoD3BD3B18_var))-lv_hangar_count));
+        UnitMagazineArm(autoD3BD3B18_var, AbilityCommand("ElytraHangar", 0), (CatalogFieldValueGetAsInt(c_gameCatalogAbil, "ElytraHangar", "MaxCount", UnitGetOwner(autoD3BD3B18_var))-CatalogFieldValueGetAsInt(c_gameCatalogAbil, "ElytraHangar", "InfoArray[" + IntToString(0) + "].CountStart", UnitGetOwner(autoD3BD3B18_var))));
     }
     gf_MovePlayerCameras();
     TimerRestart(gv_test_timer);
@@ -1224,21 +1216,10 @@ bool gf_TesterLeaderboardValidUnitType (string lp_unitType) {
     }
 }
 
-bool gf_TesterLeaderboardSpecialUnitType (string lp_unitType) {
-    // Automatic Variable Declarations
-    // Implementation
-    if (((lp_unitType == "Myriad") || (lp_unitType == "Carrier"))) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-
 void gf_TesterLeaderboardSpecialUnitCost (string lp_unitType, int lp_column, bool lp_deleteMode) {
     // Variable Declarations
-    int lv_mineralsmodifier;
-    int lv_vespenemodifer;
+    int lv_minerals_mod;
+    int lv_gas_mod;
 
     // Automatic Variable Declarations
     string auto0E11D460_val;
@@ -1248,22 +1229,22 @@ void gf_TesterLeaderboardSpecialUnitCost (string lp_unitType, int lp_column, boo
     // Implementation
     auto0E11D460_val = lp_unitType;
     if (auto0E11D460_val == "Carrier") {
-        lv_mineralsmodifier = 100;
-        lv_vespenemodifer = 0;
+        lv_minerals_mod = ((CatalogFieldValueGetAsInt(c_gameCatalogAbil, "CarrierHangar", "MaxCount", c_playerAny)-CatalogFieldValueGetAsInt(c_gameCatalogAbil, "CarrierHangar", "InfoArray[" + IntToString(0) + "].CountStart", c_playerAny))*UnitTypeGetCost((CatalogFieldValueGet(c_gameCatalogAbil, "CarrierHangar", "InfoArray[" + IntToString(0) + "].Unit", c_playerAny)), c_unitCostMinerals));
+        lv_gas_mod = ((CatalogFieldValueGetAsInt(c_gameCatalogAbil, "CarrierHangar", "MaxCount", c_playerAny)-CatalogFieldValueGetAsInt(c_gameCatalogAbil, "CarrierHangar", "InfoArray[" + IntToString(0) + "].CountStart", c_playerAny))*UnitTypeGetCost((CatalogFieldValueGet(c_gameCatalogAbil, "CarrierHangar", "InfoArray[" + IntToString(0) + "].Unit", c_playerAny)), c_unitCostVespene));
     }
     else if (auto0E11D460_val == "Myriad") {
-        lv_mineralsmodifier = ((CatalogFieldValueGetAsInt(c_gameCatalogAbil, "ElytraHangar", "MaxCount", c_playerAny)-CatalogFieldValueGetAsInt(c_gameCatalogAbil, "ElytraHangar", "InfoArray[" + IntToString(0) + "].CountStart", c_playerAny))*UnitTypeGetCost((CatalogFieldValueGet(c_gameCatalogAbil, "ElytraHangar", "InfoArray[" + IntToString(0) + "].Unit", c_playerAny)), c_unitCostMinerals));
-        lv_vespenemodifer = ((CatalogFieldValueGetAsInt(c_gameCatalogAbil, "ElytraHangar", "MaxCount", c_playerAny)-CatalogFieldValueGetAsInt(c_gameCatalogAbil, "ElytraHangar", "InfoArray[" + IntToString(0) + "].CountStart", c_playerAny))*UnitTypeGetCost((CatalogFieldValueGet(c_gameCatalogAbil, "ElytraHangar", "InfoArray[" + IntToString(0) + "].Unit", c_playerAny)), c_unitCostVespene));
+        lv_minerals_mod = ((CatalogFieldValueGetAsInt(c_gameCatalogAbil, "ElytraHangar", "MaxCount", c_playerAny)-CatalogFieldValueGetAsInt(c_gameCatalogAbil, "ElytraHangar", "InfoArray[" + IntToString(0) + "].CountStart", c_playerAny))*UnitTypeGetCost((CatalogFieldValueGet(c_gameCatalogAbil, "ElytraHangar", "InfoArray[" + IntToString(0) + "].Unit", c_playerAny)), c_unitCostMinerals));
+        lv_gas_mod = ((CatalogFieldValueGetAsInt(c_gameCatalogAbil, "ElytraHangar", "MaxCount", c_playerAny)-CatalogFieldValueGetAsInt(c_gameCatalogAbil, "ElytraHangar", "InfoArray[" + IntToString(0) + "].CountStart", c_playerAny))*UnitTypeGetCost((CatalogFieldValueGet(c_gameCatalogAbil, "ElytraHangar", "InfoArray[" + IntToString(0) + "].Unit", c_playerAny)), c_unitCostVespene));
     }
     else {
     }
     if ((lp_deleteMode == true)) {
-        lv_mineralsmodifier *= -1;
-        lv_vespenemodifer *= -1;
+        lv_minerals_mod *= -1;
+        lv_gas_mod *= -1;
     }
 
-    gv_leaderboard_minerals[lp_column] += lv_mineralsmodifier;
-    gv_leaderboard_gas[lp_column] += lv_vespenemodifer;
+    gv_leaderboard_minerals[lp_column] += lv_minerals_mod;
+    gv_leaderboard_gas[lp_column] += lv_gas_mod;
 }
 
 void gf_TesterLeaderboardCreate () {
@@ -1587,6 +1568,7 @@ bool gt_Init_Func (bool testConds, bool runActions) {
     gf_AddUnitData("Inciter", "Assets\\Textures\\btn-unit-genetron-inciter.dds");
     gf_AddUnitData("Tesla", "Assets\\Textures\\btn-unit-genetron-tesla.dds");
     gf_AddUnitData("Virtus", "Assets\\Textures\\btn-unit-genetron-virtus.dds");
+    gf_AddUnitData("Courier", "Assets\\Textures\\btn-unit-genetron-courier.dds");
     gf_AddUnitData("Hornet", "Assets\\Textures\\btn-unit-genetron-hornet.dds");
     gf_AddUnitData("AvengerGenetron", "Assets\\Textures\\btn-unit-genetron-avenger.dds");
     gf_AddUnitData("Boar", "Assets\\Textures\\btn-unit-genetron-boar.dds");
@@ -2835,10 +2817,7 @@ bool gt_LeaderboardUnitCreated_Func (bool testConds, bool runActions) {
     }
     gv_leaderboard_minerals[lv_col] += UnitTypeGetCost(lv_unit_type, c_unitCostMinerals);
     gv_leaderboard_gas[lv_col] += UnitTypeGetCost(lv_unit_type, c_unitCostVespene);
-    if ((gf_TesterLeaderboardSpecialUnitType(lv_unit_type) == true)) {
-        gf_TesterLeaderboardSpecialUnitCost(lv_unit_type, lv_col, false);
-    }
-
+    gf_TesterLeaderboardSpecialUnitCost(lv_unit_type, lv_col, false);
     BoardItemSetText(gv_leaderboard, lv_col, 1, IntToText(gv_leaderboard_minerals[lv_col]));
     BoardItemSetText(gv_leaderboard, lv_col, 2, IntToText(gv_leaderboard_gas[lv_col]));
     BoardItemSetText(gv_leaderboard, lv_col, 3, IntToText(PlayerGetPropertyInt(UnitGetOwner(EventUnitCreatedUnit()), c_playerPropSuppliesUsed)));
@@ -2892,10 +2871,7 @@ bool gt_LeaderboardUnitRemoved_Func (bool testConds, bool runActions) {
     lv_row = DataTableGetInt(true, lv_unit_name);
     gv_leaderboard_minerals[lv_col] -= UnitTypeGetCost(lv_unit_type, c_unitCostMinerals);
     gv_leaderboard_gas[lv_col] -= UnitTypeGetCost(lv_unit_type, c_unitCostVespene);
-    if ((gf_TesterLeaderboardSpecialUnitType(lv_unit_type) == true)) {
-        gf_TesterLeaderboardSpecialUnitCost(lv_unit_type, lv_col, true);
-    }
-
+    gf_TesterLeaderboardSpecialUnitCost(lv_unit_type, lv_col, true);
     BoardItemSetText(gv_leaderboard, lv_col, 1, IntToText(gv_leaderboard_minerals[lv_col]));
     BoardItemSetText(gv_leaderboard, lv_col, 2, IntToText(gv_leaderboard_gas[lv_col]));
     BoardItemSetText(gv_leaderboard, lv_col, 3, IntToText(PlayerGetPropertyInt(UnitGetOwner(EventUnit()), c_playerPropSuppliesUsed)));

@@ -1,0 +1,175 @@
+include "TriggerLibs/NativeLib"
+
+include "Lib30DDA1CB_h"
+
+//--------------------------------------------------------------------------------------------------
+// Library: Scion Extension
+//--------------------------------------------------------------------------------------------------
+// External Library Initialization
+void lib30DDA1CB_InitLibraries () {
+    libNtve_InitVariables();
+}
+
+// Triggers
+//--------------------------------------------------------------------------------------------------
+// Trigger: MapInit
+//--------------------------------------------------------------------------------------------------
+bool lib30DDA1CB_gt_MapInit_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_supplyLimit;
+    int lv_factionRoll;
+
+    // Automatic Variable Declarations
+    string auto4B902CA3_val;
+    unitgroup auto68BD2A04_g;
+    int auto68BD2A04_u;
+    unit auto68BD2A04_var;
+    string autoBB5F33F2_val;
+    string auto917206E1_val;
+    playergroup auto3183AA6B_g;
+    int auto3183AA6B_var;
+    string autoD6390572_val;
+    int auto5048B0D8_val;
+
+    // Variable Initialization
+    lv_supplyLimit = 200;
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    auto4B902CA3_val = GameAttributeGameValue("3");
+    if (auto4B902CA3_val == "0002") {
+        auto68BD2A04_g = UnitGroup(null, 0, RegionEntireMap(), UnitFilter((1 << c_targetFilterStructure), 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0);
+        auto68BD2A04_u = UnitGroupCount(auto68BD2A04_g, c_unitCountAll);
+        for (;; auto68BD2A04_u -= 1) {
+            auto68BD2A04_var = UnitGroupUnitFromEnd(auto68BD2A04_g, auto68BD2A04_u);
+            if (auto68BD2A04_var == null) { break; }
+            autoBB5F33F2_val = UnitBehaviorGet(auto68BD2A04_var, 1);
+            if (autoBB5F33F2_val == "MineralFieldMinerals750") {
+                UnitBehaviorRemove(auto68BD2A04_var, UnitBehaviorGet(auto68BD2A04_var, 1), 1);
+                UnitBehaviorAdd(auto68BD2A04_var, "MineralFieldMineralsBGH", auto68BD2A04_var, 1);
+            }
+            else if (autoBB5F33F2_val == "MineralFieldMinerals") {
+                UnitBehaviorRemove(auto68BD2A04_var, UnitBehaviorGet(auto68BD2A04_var, 1), 1);
+                UnitBehaviorAdd(auto68BD2A04_var, "MineralFieldMineralsBGH", auto68BD2A04_var, 1);
+            }
+            else if (autoBB5F33F2_val == "HighYieldMineralFieldMinerals750") {
+                UnitBehaviorRemove(auto68BD2A04_var, UnitBehaviorGet(auto68BD2A04_var, 1), 1);
+                UnitBehaviorAdd(auto68BD2A04_var, "MineralsHighYieldBGH", auto68BD2A04_var, 1);
+            }
+            else if (autoBB5F33F2_val == "HighYieldMineralFieldMinerals") {
+                UnitBehaviorRemove(auto68BD2A04_var, UnitBehaviorGet(auto68BD2A04_var, 1), 1);
+                UnitBehaviorAdd(auto68BD2A04_var, "MineralsHighYieldBGH", auto68BD2A04_var, 1);
+            }
+            else if (autoBB5F33F2_val == "RawRichVespeneGeyserGas") {
+                UnitBehaviorRemove(auto68BD2A04_var, UnitBehaviorGet(auto68BD2A04_var, 1), 1);
+                UnitBehaviorAdd(auto68BD2A04_var, "GasRawRichVespeneGeyserBGH", auto68BD2A04_var, 1);
+            }
+            else if (autoBB5F33F2_val == "RawVespeneGeyserGas") {
+                UnitBehaviorRemove(auto68BD2A04_var, UnitBehaviorGet(auto68BD2A04_var, 1), 1);
+                UnitBehaviorAdd(auto68BD2A04_var, "GasRawVespeneGeyserBGH", auto68BD2A04_var, 1);
+            }
+            else {
+            }
+        }
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringExternal("Param/Value/lib_30DDA1CB_D30B733A"));
+    }
+    else {
+    }
+    auto917206E1_val = GameAttributeGameValue("2");
+    if (auto917206E1_val == "0001") {
+        lv_supplyLimit = 100;
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, (StringExternal("Param/Value/lib_30DDA1CB_8AC8BD7B") + IntToText(lv_supplyLimit)));
+    }
+    else if (auto917206E1_val == "0003") {
+        lv_supplyLimit = 300;
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, (StringExternal("Param/Value/lib_30DDA1CB_59378F7B") + IntToText(lv_supplyLimit)));
+    }
+    else if (auto917206E1_val == "0005") {
+        lv_supplyLimit = 400;
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, (StringExternal("Param/Value/lib_30DDA1CB_5A4BFF88") + IntToText(lv_supplyLimit)));
+    }
+    else if (auto917206E1_val == "0004") {
+        lv_supplyLimit = 500;
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, (StringExternal("Param/Value/lib_30DDA1CB_277B1CB8") + IntToText(lv_supplyLimit)));
+    }
+    else if (auto917206E1_val == "0006") {
+        lv_supplyLimit = 1000;
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, (StringExternal("Param/Value/lib_30DDA1CB_A386F1A6") + IntToText(lv_supplyLimit)));
+    }
+    else {
+    }
+    auto3183AA6B_g = PlayerGroupActive();
+    auto3183AA6B_var = -1;
+    while (true) {
+        auto3183AA6B_var = PlayerGroupNextPlayer(auto3183AA6B_g, auto3183AA6B_var);
+        if (auto3183AA6B_var < 0) { break; }
+        autoD6390572_val = GameAttributePlayerValue("1", auto3183AA6B_var);
+        if (autoD6390572_val == "0001") {
+            lv_factionRoll = 0;
+        }
+        else if (autoD6390572_val == "0005") {
+            lv_factionRoll = 1;
+        }
+        else if (autoD6390572_val == "0004") {
+            lv_factionRoll = 2;
+        }
+        else if (autoD6390572_val == "0002") {
+            lv_factionRoll = RandomInt(0, 2);
+        }
+        else if (autoD6390572_val == "0003") {
+            if ((GameAttributePlayerValue("[bnet:Liberty (Mod)/0.0/999,file:Mods/Liberty.SC2Mod]3001", auto3183AA6B_var) == "RAND")) {
+                lv_factionRoll = RandomInt(0, 5);
+            }
+            else {
+                lv_factionRoll = RandomInt(0, 3);
+            }
+        }
+        else {
+            lv_factionRoll = -1;
+        }
+        auto5048B0D8_val = lv_factionRoll;
+        if (auto5048B0D8_val == 0) {
+            PlayerSetRace(auto3183AA6B_var, "Gen");
+        }
+        else if (auto5048B0D8_val == 1) {
+            PlayerSetRace(auto3183AA6B_var, "Keir");
+        }
+        else if (auto5048B0D8_val == 2) {
+            PlayerSetRace(auto3183AA6B_var, "Xayi");
+        }
+        else {
+        }
+        PlayerModifyPropertyInt(auto3183AA6B_var, c_playerPropSuppliesLimit, c_playerPropOperSetTo, lv_supplyLimit);
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib30DDA1CB_gt_MapInit_Init () {
+    lib30DDA1CB_gt_MapInit = TriggerCreate("lib30DDA1CB_gt_MapInit_Func");
+    TriggerAddEventMapInit(lib30DDA1CB_gt_MapInit);
+}
+
+void lib30DDA1CB_InitTriggers () {
+    lib30DDA1CB_gt_MapInit_Init();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Library Initialization
+//--------------------------------------------------------------------------------------------------
+bool lib30DDA1CB_InitLib_completed = false;
+
+void lib30DDA1CB_InitLib () {
+    if (lib30DDA1CB_InitLib_completed) {
+        return;
+    }
+
+    lib30DDA1CB_InitLib_completed = true;
+
+    lib30DDA1CB_InitLibraries();
+    lib30DDA1CB_InitTriggers();
+}
+
