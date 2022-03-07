@@ -310,8 +310,10 @@
             <StateFlags index="SuppressDropOff" value="1"/>
             <StateFlags index="SuppressFoodMade" value="1"/>
             <StateFlags index="SuppressEnergyRegen" value="1"/>
-            <LifeArmorBonus value="3"/>
         </Modification>
+        <DamageResponse ModifyFraction="0.25">
+            <Chance value="1"/>
+        </DamageResponse>
     </CBehaviorBuff>
     <CBehaviorBuff id="EnergyRegenerationBuff">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -383,11 +385,17 @@
             <ModifyFlags index="DisableWeapons" value="1"/>
             <ModifyFlags index="SuppressMoving" value="1"/>
             <ModifyFlags index="SuppressTurning" value="1"/>
-            <LifeArmorBonus value="8"/>
             <BehaviorLinkDisableArray value="VirtusLockdownModeDuration"/>
         </Modification>
         <Period value="0.0625"/>
         <PeriodicEffect value="VirtusLockdownModeDuration"/>
+        <DamageResponse ModifyFraction="0.25">
+            <Chance value="1"/>
+            <Cost>
+                <Charge Link="Behavior/LockdownMode"/>
+                <Cooldown Link="Behavior/LockdownMode"/>
+            </Cost>
+        </DamageResponse>
     </CBehaviorBuff>
     <CBehaviorBuff id="ProcessingNodeSearchBuff">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -920,9 +928,15 @@
             <ModifyFlags index="DisableWeapons" value="1"/>
             <ModifyFlags index="SuppressMoving" value="1"/>
             <ModifyFlags index="SuppressTurning" value="1"/>
-            <LifeArmorBonus value="8"/>
         </Modification>
         <BuffFlags index="Countdown" value="0"/>
+        <DamageResponse ModifyFraction="0.25">
+            <Chance value="1"/>
+            <Cost>
+                <Charge Link="Behavior/LockdownMode"/>
+                <Cooldown Link="Behavior/LockdownMode"/>
+            </Cost>
+        </DamageResponse>
     </CBehaviorBuff>
     <CBehaviorBuff id="VolatileDischargeAB">
         <InfoIcon value="Assets\Textures\btn-ability-Xayid-volatiledischarge.dds"/>
