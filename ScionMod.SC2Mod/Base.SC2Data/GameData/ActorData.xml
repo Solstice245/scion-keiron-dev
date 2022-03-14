@@ -1259,7 +1259,8 @@
     <CActorSplat id="OutfittingStationSplat" parent="GenericUnitSplat" unitName="OutfittingStation"/>
     <CActorSplat id="TechVaultSplat" parent="GenericUnitSplat" unitName="TechVault"/>
     <CActorUnit id="TeslaCloakChargeUnit" parent="GenericUnitStandard" unitName="CloakCharge">
-        <On Terms="ActorCreation" Send="Create TeslaCloakChargeRange"/>
+        <On Terms="ActorCreation" Send="Create TeslaCloakChargeRangeFriendly"/>
+        <On Terms="ActorCreation" Send="Create TeslaCloakChargeRangeEnemy"/>
         <Model value="TeslaCloakCharge"/>
         <BuildModel value="TeslaCloakCharge"/>
         <DeathArray index="Normal" ModelLink="TerranSmallTriggeredExplosion"/>
@@ -1297,10 +1298,13 @@
         <HostSiteOps Ops="SOpAttachHardPoint SOpMoveDownByDot25"/>
         <Model value="TeslaCloakCharge"/>
     </CActorModel>
-    <CActorRange id="TeslaCloakChargeRange">
+    <CActorRange id="TeslaCloakChargeRangeFriendly">
+        <Filter index="Neutral" value="1"/>
+        <Filter index="Enemy" value="1"/>
         <Range value="3.000000"/>
-        <Icon value="Assets\Textures\scannersweepradiusblue_diffuse.dds"/>
+        <Icon value="Assets\Textures\rangegradient.dds"/>
         <IconArcLength value="1.500000"/>
+        <IconTint value="255,0,128,255"/>
         <CliffLevelFlags index="Lower" value="0"/>
         <CliffLevelFlags index="Higher" value="0"/>
     </CActorRange>
@@ -1310,6 +1314,13 @@
     <CActorSplat id="ProcessingDroneAnalyzeWeaknessCursor" parent="TerranCursorSplat" abil="ProcessingDroneAnalyzeWeakness">
         <Scale value="3.750000"/>
     </CActorSplat>
+    <CActorRange id="TeslaCloakChargeRangeEnemy" parent="TeslaCloakChargeRangeFriendly">
+        <Filter index="Self" value="1"/>
+        <Filter index="Ally" value="1"/>
+        <Filter index="Neutral" value="0"/>
+        <Filter index="Enemy" value="0"/>
+        <IconTint value="255,255,0,0"/>
+    </CActorRange>
     <CActorModel id="UnloadFX">
         <On Terms="AbilTransport.CourierTransport.CargoUnload" Send="Create"/>
         <On Terms="AbilTransport.TransportFerrion.CargoUnload" Send="Create"/>
@@ -1594,12 +1605,12 @@
     </CActorModel>
     <CActorBeamSimple id="UploaderSchematicTransmitBeam" parent="BeamSimpleAnimationStyleContinuous">
         <On Terms="Effect.SchematicTransmitCP.Start; At Caster" Send="Create"/>
-        <On Terms="Effect.SchematicTransmitCP.Stop; FromEffectTreeDescendant" Send="Destroy"/>
-        <On Terms="ActorCreation" Send="TimerSet 0.031250 BeamColor"/>
-        <On Terms="TimerExpired; TimerName BeamColor" Send="TimerSet 0.125000 BeamColor"/>
-        <On Terms="TimerExpired; TimerName BeamColor; ValidateUnit UploaderLevel1" Send="$Spell,A"/>
-        <On Terms="TimerExpired; TimerName BeamColor; ValidateUnit UploaderLevel2" Send="$Spell,B"/>
-        <On Terms="TimerExpired; TimerName BeamColor; ValidateUnit UploaderLevel3" Send="$Spell,C"/>
+        <On Terms="Effect.SchematicTransmitCP.Stop; FromEffectTreeDescendant" Send="AnimBracketStop BSD"/>
+        <On Terms="Behavior.SchematicTransmitAL1.On" Send="$Spell,A 0 0.500000"/>
+        <On Terms="Behavior.SchematicTransmitAL2.On" Send="$Spell,B 0 0.500000"/>
+        <On Terms="Behavior.SchematicTransmitAL3.On" Send="$Spell,C 0 0.500000"/>
+        <!--<On Terms="ActorCreation" Send="$Birth 0 0.000000 -1.000000 -1.000000 AsAutomatic 0.000000 20"/>
+        <On Terms="Effect.SchematicTransmitCP.Stop; FromEffectTreeDescendant" Send="AnimPlay Birth Death 0 -1.000000 -1.000000 -1.000000 AsAutomatic 0.000000 22"/>-->
         <HostLaunch Subject="_Unit" Scope="Caster" Actor="Find"/>
         <HostLaunchSiteOps Ops="SOpAttachHardPoint"/>
         <HostImpact Subject="_Unit" Scope="Target" Actor="Find"/>
@@ -2396,16 +2407,26 @@
         <HostSiteOps Ops="SOpAttachHardPoint SOpMoveDownByDot25"/>
         <Model value="TeslaShockCharge"/>
     </CActorModel>
-    <CActorRange id="TeslaShockChargeRange">
+    <CActorRange id="TeslaShockChargeRangeFriendly">
+        <Filter index="Neutral" value="1"/>
+        <Filter index="Enemy" value="1"/>
         <Range value="3.000000"/>
         <Icon value="Assets\Textures\scannersweepradius_diffuse.dds"/>
         <IconArcLength value="1.500000"/>
-        <IconTint value="255,255,0,0"/>
+        <IconTint value="255,0,128,255"/>
         <CliffLevelFlags index="Lower" value="0"/>
         <CliffLevelFlags index="Higher" value="0"/>
     </CActorRange>
+    <CActorRange id="TeslaShockChargeRangeEnemy" parent="TeslaShockChargeRangeFriendly">
+        <Filter index="Self" value="1"/>
+        <Filter index="Ally" value="1"/>
+        <Filter index="Neutral" value="0"/>
+        <Filter index="Enemy" value="0"/>
+        <IconTint value="255,255,0,0"/>
+    </CActorRange>
     <CActorUnit id="TeslaShockChargeUnit" parent="GenericUnitStandard" unitName="ShockCharge">
-        <On Terms="ActorCreation" Send="Create TeslaShockChargeRange"/>
+        <On Terms="ActorCreation" Send="Create TeslaShockChargeRangeFriendly"/>
+        <On Terms="ActorCreation" Send="Create TeslaShockChargeRangeEnemy"/>
         <Model value="TeslaShockCharge"/>
         <BuildModel value="TeslaShockCharge"/>
         <DeathArray index="Normal" ModelLink="TerranSmallTriggeredExplosion"/>
