@@ -59,15 +59,6 @@
             </SectionArray>
         </InfoArray>
     </CAbilMorph>
-    <CAbilEffectInstant id="EnergyGridInput">
-        <EditorCategories value="Race:Terran,AbilityorEffectType:Units"/>
-        <Cost>
-            <Charge CountMax="1000"/>
-        </Cost>
-        <CmdButtonArray index="Execute" DefaultButtonFace="EnergyGridInput" Requirements="ProcessingCoreHasEnergyInput">
-            <Flags index="IgnoreUser" value="1"/>
-        </CmdButtonArray>
-    </CAbilEffectInstant>
     <CAbilBehavior id="EqualizerWeaponMode">
         <EditorCategories value="Race:Terran,AbilityorEffectType:Units"/>
         <CmdButtonArray index="On" DefaultButtonFace="ExplosiveOrdnanceMode"/>
@@ -156,27 +147,27 @@
     </CAbilBehavior>
     <CAbilTrain id="BuildAircraft">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <InfoArray index="Train1" Time="34">
+        <InfoArray index="Train1" Time="28">
             <Button DefaultButtonFace="AvengerGenetron"/>
             <Unit value="AvengerGenetron"/>
         </InfoArray>
-        <InfoArray index="Train2" Time="38">
+        <InfoArray index="Train2" Time="35">
             <Button DefaultButtonFace="Courier" Requirements="HasAtLeast1LinkedUploader"/>
             <Unit value="Courier"/>
         </InfoArray>
-        <InfoArray index="Train3" Time="45">
+        <InfoArray index="Train3" Time="42">
             <Button DefaultButtonFace="Jupiter" Requirements="HasAtLeast2LinkedUploadersOS"/>
             <Unit value="Jupiter"/>
         </InfoArray>
-        <InfoArray index="Train4" Time="40">
+        <InfoArray index="Train4" Time="35">
             <Button DefaultButtonFace="Boar" Requirements="HasAtLeast2LinkedUploadersOS"/>
             <Unit value="Boar"/>
         </InfoArray>
-        <InfoArray index="Train5" Time="60">
+        <InfoArray index="Train5" Time="56">
             <Button DefaultButtonFace="Badger" Requirements="HasAtLeast3LinkedUploadersAndAnalysisTerminal"/>
             <Unit value="Badger"/>
         </InfoArray>
-        <InfoArray index="Train7" Time="40">
+        <InfoArray index="Train7" Time="35">
             <Button DefaultButtonFace="Hornet"/>
             <Unit value="Hornet"/>
         </InfoArray>
@@ -637,7 +628,7 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Effect index="0" value="SchematicTransmitCP"/>
         <TargetFilters value="Structure;Ally,Neutral,Enemy,RawResource,HarvestableResource,Missile,Stasis,Dead,Hidden"/>
-        <Range value="25"/>
+        <Range value="15"/>
         <Arc value="360"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="SchematicTransmit">
             <Flags index="AllowMinimap" value="0"/>
@@ -650,7 +641,7 @@
         <Flags index="AutoCastOn" value="1"/>
         <Flags index="Smart" value="1"/>
         <AutoCastFilters value="Structure,Visible;Ally,Neutral,Enemy,Stasis,Dead,Hidden"/>
-        <AutoCastRange value="25"/>
+        <AutoCastRange value="15"/>
         <AutoCastValidatorArray value="UploaderLinkToAnyMechProductionStructure"/>
         <SmartValidatorArray value="UploaderLinkToAnyMechProductionStructure"/>
     </CAbilEffectTarget>
@@ -771,19 +762,19 @@
             <Button DefaultButtonFace="Torrent"/>
             <Unit value="Torrent"/>
         </InfoArray>
-        <InfoArray index="Train2" Time="40">
+        <InfoArray index="Train2" Time="35">
             <Button DefaultButtonFace="Mole" Requirements="HasAtLeast1LinkedUploader"/>
             <Unit value="Mole"/>
         </InfoArray>
-        <InfoArray index="Train3" Time="45">
+        <InfoArray index="Train3" Time="42">
             <Button DefaultButtonFace="Tesla" Requirements="HasAtLeast2LinkedUploadersOS"/>
             <Unit value="Tesla"/>
         </InfoArray>
-        <InfoArray index="Train4" Time="60">
+        <InfoArray index="Train4" Time="56">
             <Button DefaultButtonFace="Inciter" Requirements="HasAtLeast2LinkedUploadersOS"/>
             <Unit value="Inciter"/>
         </InfoArray>
-        <InfoArray index="Train5" Time="60">
+        <InfoArray index="Train5" Time="56">
             <Button DefaultButtonFace="Virtus" Requirements="HasAtLeast3LinkedUploaders"/>
             <Unit value="Virtus"/>
         </InfoArray>
@@ -844,6 +835,15 @@
         <ValidatorArray value="IsBurrowedRepulsor"/>
         <AbilClassDisableArray index="CAbilAttack" value="1"/>
     </CAbilMorph>
+    <CAbilEffectTarget id="UploaderSmartLink">
+        <EditorCategories value="Race:Terran,AbilityorEffectType:Units"/>
+        <Effect index="0" value="GenetronSchematicTransmitIssueOrder"/>
+        <Flags index="Smart" value="1"/>
+        <Range value="15"/>
+        <Arc value="360"/>
+        <SmartValidatorArray value="IsUploader"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Uploader"/>
+    </CAbilEffectTarget>
     <CAbilResearch id="UploaderResearchFabricator">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <InfoArray index="Research1" Time="80" Alert="ResearchComplete_Terr" Upgrade="EnhancedTargeting">
@@ -925,7 +925,7 @@
         <Flags index="NoDeceleration" value="1"/>
         <Flags index="TransientPreferred" value="1"/>
         <Cost>
-            <Cooldown TimeUse="35"/>
+            <Cooldown TimeUse="28"/>
         </Cost>
         <TargetFilters value="-;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <Range value="8"/>

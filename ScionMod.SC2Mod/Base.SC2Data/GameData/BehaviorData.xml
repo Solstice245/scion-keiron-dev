@@ -97,6 +97,20 @@
         </Modification>
         <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="MassaliskDummy">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Zerg,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="MassaliskCasterIsHunkered"/>
+        <RemoveValidatorArray value="CasterNotDead"/>
+        <Period value="0.0625"/>
+        <PeriodicEffect value="MassaliskDummySelection"/>
+        <FinalEffect value="Suicide"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="MassaliskHunkered">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Zerg,AbilityorEffectType:Units"/>
+        <InitialEffect value="MassaliskDummyCU"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="TorrentAAWeaponSwitch">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="AbilityorEffectType:Units"/>
@@ -213,7 +227,7 @@
         <DisableValidatorArray value="VirtusSelfFixProtocolUpgraded"/>
         <DisableValidatorArray value="VirtusLockedDown"/>
         <Modification>
-            <VitalRegenArray index="Life" value="4.1992"/>
+            <VitalRegenArray index="Life" value="3.5703"/>
         </Modification>
     </CBehaviorBuff>
     <CBehaviorResource id="MineralFieldMineralsBGH" parent="MineralFieldMinerals">
@@ -263,7 +277,7 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Duration value="5"/>
         <FinalEffect value="SuperChargeCannonFinal"/>
-        <Modification CriticalAttackChanceUnscaledBonus="1"/>
+        <Modification RangedWeaponRange="2" WeaponScanBonus="2" CriticalAttackChanceUnscaledBonus="1"/>
         <Alignment value="Positive"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="CourierCloak">
@@ -311,7 +325,7 @@
             <StateFlags index="SuppressFoodMade" value="1"/>
             <StateFlags index="SuppressEnergyRegen" value="1"/>
         </Modification>
-        <DamageResponse ModifyFraction="0.25">
+        <DamageResponse ModifyFraction="0.3">
             <Chance value="1"/>
         </DamageResponse>
     </CBehaviorBuff>
@@ -389,7 +403,7 @@
         </Modification>
         <Period value="0.0625"/>
         <PeriodicEffect value="VirtusLockdownModeDuration"/>
-        <DamageResponse ModifyFraction="0.25">
+        <DamageResponse ModifyFraction="0.3">
             <Chance value="1"/>
             <Cost>
                 <Charge Link="Behavior/LockdownMode"/>
@@ -402,6 +416,7 @@
         <Period value="1"/>
         <PeriodicEffect value="ProcessingPowerSA"/>
         <DisableValidatorArray value="NotUnderConstruction"/>
+        <DisableValidatorArray value="StructureNotLockedDown"/>
         <InfoFlags index="Hidden" value="1"/>
         <InfoIcon value="Assets\Textures\btn-tips-computerterminals.dds"/>
     </CBehaviorBuff>
@@ -421,7 +436,7 @@
         <InfoFlags index="Hidden" value="1"/>
         <InfoIcon value="Assets\Textures\btn-building-genetron-fabricator.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Modification SubgroupPriority="-1">
+        <Modification SubgroupPriority="-2">
             <AbilLinkDisableArray value="UploaderResearchManufacL1"/>
             <AbilLinkDisableArray value="ResearchAssemblyArray"/>
         </Modification>
@@ -430,7 +445,7 @@
         <InfoFlags index="Hidden" value="1"/>
         <InfoIcon value="Assets\Textures\btn-building-genetron-assemblyarray.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Modification>
+        <Modification SubgroupPriority="-1">
             <AbilLinkDisableArray value="UploaderResearchManufacL1"/>
             <AbilLinkDisableArray value="UploaderResearchFabricator"/>
         </Modification>
@@ -463,7 +478,7 @@
         <InfoFlags index="Hidden" value="1"/>
         <InfoIcon value="Assets\Textures\btn-building-genetron-manufacturer.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Modification SubgroupPriority="-2">
+        <Modification SubgroupPriority="-3">
             <AbilLinkDisableArray value="UploaderResearchFabricator"/>
             <AbilLinkDisableArray value="ResearchAssemblyArray"/>
         </Modification>
@@ -930,13 +945,14 @@
             <ModifyFlags index="SuppressTurning" value="1"/>
         </Modification>
         <BuffFlags index="Countdown" value="0"/>
-        <DamageResponse ModifyFraction="0.25">
+        <DamageResponse ModifyFraction="0.3">
             <Chance value="1"/>
             <Cost>
                 <Charge Link="Behavior/LockdownMode"/>
                 <Cooldown Link="Behavior/LockdownMode"/>
             </Cost>
         </DamageResponse>
+        <Tooltip value="Behavior/Tooltip/VirtusLockdownMode"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="VolatileDischargeAB">
         <InfoIcon value="Assets\Textures\btn-ability-Xayid-volatiledischarge.dds"/>
@@ -1082,4 +1098,7 @@
         <Period value="0.25"/>
         <PeriodicEffect value="ZergBuildingNotOnCreepDamage"/>
     </CBehaviorBuff>
+    <CBehaviorClickResponse id="hkgvuihutv">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+    </CBehaviorClickResponse>
 </Catalog>

@@ -352,6 +352,7 @@
         <GlossaryWeakArray value="Immortal"/>
         <GlossaryWeakArray value="Marauder"/>
         <GlossaryWeakArray value="Zergling"/>
+        <Speed value="2.9531"/>
     </CUnit>
     <CUnit id="Equalizer" parent="CUnitGenetron">
         <Attributes index="Light" value="1"/>
@@ -417,6 +418,7 @@
         <AbilArray Link="que5"/>
         <AbilArray Link="Rally"/>
         <AbilArray Link="BuildAircraft"/>
+        <AbilArray Link="UploaderSmartLink"/>
         <BehaviorArray Link="SchematicTransmit"/>
         <BehaviorArray Link="SchematicTransmit2"/>
         <BehaviorArray Link="SchematicTransmit3"/>
@@ -553,7 +555,7 @@
         <Food value="-3"/>
         <CostResource index="Minerals" value="150"/>
         <CostResource index="Vespene" value="150"/>
-        <RepairTime value="60"/>
+        <RepairTime value="56"/>
         <BehaviorArray Link="InciterJump"/>
         <WeaponArray Link="HalifaxGrenades"/>
         <CardLayouts index="0">
@@ -607,6 +609,48 @@
         <BuiltOn index="5" removed="1"/>
         <BuildOnAs index="0" removed="1"/>
         <AIEvaluateAlias value="FilteringPlantRich"/>
+    </CUnit>
+    <CUnit id="MassaliskDummy" parent="CUnitXayid">
+        <FlagArray index="Untargetable" value="1"/>
+        <FlagArray index="Invulnerable" value="1"/>
+        <FlagArray index="ArmySelect" value="0"/>
+        <Collide index="Ground" value="0"/>
+        <Collide index="ForceField" value="0"/>
+        <Attributes index="Armored" value="1"/>
+        <Attributes index="Massive" value="1"/>
+        <LifeStart value="500"/>
+        <LifeMax value="500"/>
+        <LifeArmor value="3"/>
+        <Acceleration value="0"/>
+        <StationaryTurningRate value="0"/>
+        <TurningRate value="0"/>
+        <Sight value="10"/>
+        <Food value="-6"/>
+        <AbilArray index="0" Link="stop"/>
+        <AbilArray index="1" Link="attack"/>
+        <AbilArray index="2" removed="1"/>
+        <CardLayouts index="0">
+            <LayoutButtons index="0" Face="Stop" Type="AbilCmd" AbilCmd="stop,Stop" Row="0" Column="1"/>
+            <LayoutButtons index="1" Face="Attack" Type="AbilCmd" AbilCmd="attack,Execute" Row="0" Column="4"/>
+            <LayoutButtons index="2" Face="MobileForm" Type="AbilCmd" AbilCmd="stop,255" Row="2" Column="1"/>
+            <LayoutButtons index="3" removed="1"/>
+            <LayoutButtons index="4" removed="1"/>
+        </CardLayouts>
+        <Radius value="1"/>
+        <SeparationRadius value="1"/>
+        <InnerRadius value="0.75"/>
+        <CargoSize value="8"/>
+        <ScoreResult value=""/>
+        <MinimapRadius value="1"/>
+        <TacticalAI value="Massalisk"/>
+        <TechAliasArray value="Alias_Massalisk"/>
+        <EquipmentArray Icon="Assets\Textures\btn-upgrade-xayid-organiccarapace-level0.dds"/>
+        <EquipmentArray Weapon="MassiveSporeAG"/>
+        <EquipmentArray Weapon="MassiveSporeAA"/>
+        <GlossaryCategory value=""/>
+        <GlossaryPriority value="13"/>
+        <GlossaryAlias value="Massalisk"/>
+        <HotkeyCategory value=""/>
     </CUnit>
     <CUnit id="OutfittingStation" parent="CStructureGenetron">
         <Facing value="0"/>
@@ -949,7 +993,6 @@
         <AbilArray Link="BuildProcessingDrone"/>
         <AbilArray Link="MiningPriority"/>
         <AbilArray Link="CoreSystemRecharge"/>
-        <AbilArray Link="EnergyGridInput"/>
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
             <LayoutButtons index="1" Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
@@ -961,9 +1004,9 @@
             <LayoutButtons Face="CoreSystemRecharge" Type="AbilCmd" AbilCmd="CoreSystemRecharge,Execute" Row="2" Column="1"/>
             <LayoutButtons>
                 <Face value="EnergyGridInput"/>
-                <Type value="AbilCmd"/>
+                <Type value="Passive"/>
                 <AbilCmd value="EnergyGridInput,Execute"/>
-                <Behavior value="EnergyGridTickCounter"/>
+                <Behavior value="EnergyRegenerationBuff"/>
                 <Row value="2"/>
                 <Column value="2"/>
             </LayoutButtons>
@@ -991,6 +1034,7 @@
         <AbilArray Link="que5"/>
         <AbilArray Link="Rally"/>
         <AbilArray Link="TrainLightweightMechs"/>
+        <AbilArray Link="UploaderSmartLink"/>
         <BehaviorArray Link="SchematicTransmit"/>
         <BehaviorArray Link="SchematicTransmit2"/>
         <BehaviorArray Link="SchematicTransmit3"/>
@@ -1028,6 +1072,7 @@
         <AbilArray Link="que5"/>
         <AbilArray Link="Rally"/>
         <AbilArray Link="TrainHeavyweightMechs"/>
+        <AbilArray Link="UploaderSmartLink"/>
         <BehaviorArray Link="SchematicTransmit"/>
         <BehaviorArray Link="SchematicTransmit2"/>
         <BehaviorArray Link="SchematicTransmit3"/>
@@ -1067,7 +1112,7 @@
         <Food value="-2"/>
         <CostResource index="Minerals" value="125"/>
         <CostResource index="Vespene" value="100"/>
-        <RepairTime value="40"/>
+        <RepairTime value="35"/>
         <AbilArray index="2" Link="MoleActivate"/>
         <TurretArray value="Hellion"/>
         <CardLayouts index="0">
@@ -1245,7 +1290,7 @@
         <Food value="-3"/>
         <CostResource index="Minerals" value="150"/>
         <CostResource index="Vespene" value="200"/>
-        <RepairTime value="45"/>
+        <RepairTime value="42"/>
         <AbilArray index="2" Link="que1Passive"/>
         <AbilArray Link="ConstructTeslaCharge"/>
         <AbilArray Link="LaunchShockCharge"/>
@@ -1361,7 +1406,7 @@
         <Food value="-4"/>
         <CostResource index="Minerals" value="250"/>
         <CostResource index="Vespene" value="125"/>
-        <RepairTime value="60"/>
+        <RepairTime value="56"/>
         <AbilArray index="0" Link="attack"/>
         <AbilArray index="1" Link="move"/>
         <AbilArray index="2" Link="stop"/>
@@ -1407,7 +1452,7 @@
         <Food value="-2"/>
         <CostResource index="Minerals" value="175"/>
         <CostResource index="Vespene" value="100"/>
-        <RepairTime value="45"/>
+        <RepairTime value="28"/>
         <AbilArray Link="VengeanceMissile"/>
         <WeaponArray Link="NemesisMissile"/>
         <CardLayouts index="0">
@@ -1441,7 +1486,7 @@
         <Food value="-6"/>
         <CostResource index="Minerals" value="300"/>
         <CostResource index="Vespene" value="200"/>
-        <RepairTime value="60"/>
+        <RepairTime value="56"/>
         <WeaponArray Link="HellraiserGuns"/>
         <WeaponArray Link="LancerAutogun" Turret="BadgerAATurret"/>
         <WeaponArray Link="AAMLaser" Turret="BadgerPointDefenseTurret"/>
@@ -1480,7 +1525,7 @@
         <Food value="-4"/>
         <CostResource index="Minerals" value="200"/>
         <CostResource index="Vespene" value="150"/>
-        <RepairTime value="50"/>
+        <RepairTime value="35"/>
         <AbilArray Link="IgnitionBlast"/>
         <WeaponArray Link="TuskMachineGuns"/>
         <CardLayouts index="0">
@@ -1527,7 +1572,7 @@
         <Food value="-3"/>
         <CostResource index="Minerals" value="150"/>
         <CostResource index="Vespene" value="50"/>
-        <RepairTime value="40"/>
+        <RepairTime value="35"/>
         <AbilArray index="2" Link="CourierTransport"/>
         <AbilArray Link="CourierCloak"/>
         <CardLayouts index="0">
@@ -1582,6 +1627,7 @@
         <GlossaryWeakArray value="Mutalisk"/>
         <StationaryTurningRate value="720"/>
         <TurningRate value="720"/>
+        <RepairTime value="35"/>
     </CUnit>
     <CUnit id="Jupiter" parent="CUnitGenetronAir">
         <Attributes index="Armored" value="1"/>
@@ -1594,7 +1640,7 @@
         <Food value="-4"/>
         <CostResource index="Minerals" value="150"/>
         <CostResource index="Vespene" value="200"/>
-        <RepairTime value="50"/>
+        <RepairTime value="42"/>
         <AbilArray Link="RevenantBomb"/>
         <CardLayouts index="0">
             <LayoutButtons Face="RevenantBomb" Type="AbilCmd" AbilCmd="RevenantBomb,Execute" Row="2" Column="0"/>
@@ -2183,6 +2229,7 @@
         <GlossaryCategory value=""/>
         <GlossaryAlias value=""/>
         <TacticalAI value="MassaliskHunkered"/>
+        <BehaviorArray Link="MassaliskHunkered"/>
     </CUnit>
     <CUnit id="MassaliskSporeWeapon" parent="XayidMISSILE">
         <Mover value="MassaliskSporeMissile"/>

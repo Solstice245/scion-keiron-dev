@@ -73,16 +73,12 @@
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="ChargeCannonDMG"/>
         <EffectArray value="TrackingImplant"/>
-        <MinCount value="2"/>
-        <MaxCount value="2"/>
     </CEffectSet>
     <CEffectSet id="ChargeCannonSetTM">
         <ValidatorArray value="TrackingMunitionsApplied"/>
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="ChargeCannonDMG"/>
         <EffectArray value="TrackingImplant"/>
-        <MinCount value="2"/>
-        <MaxCount value="2"/>
     </CEffectSet>
     <CEffectModifyUnit id="AAMLaser">
         <ValidatorArray value="BadgerAAMDefenseTurretUpgraded"/>
@@ -98,6 +94,31 @@
         <EditorCategories value="Race:Genetron"/>
         <ImpactUnit Value="Source"/>
         <Cost Abil="ConstructTeslaCharge,Specialize2" ChargeCountUse="-1"/>
+    </CEffectModifyUnit>
+    <CEffectIssueOrder id="GenetronSchematicTransmitIssueOrder">
+        <ValidatorArray value="IsUploader"/>
+        <EditorCategories value="Race:Terran"/>
+        <Abil value="SchematicTransmit"/>
+        <Player Value="Caster"/>
+        <Target Value="CasterUnit"/>
+    </CEffectIssueOrder>
+    <CEffectApplyBehavior id="MassaliskDummyAB">
+        <EditorCategories value="Race:Zerg"/>
+        <Behavior value="MassaliskDummy"/>
+    </CEffectApplyBehavior>
+    <CEffectCreateUnit id="MassaliskDummyCU">
+        <EditorCategories value="Race:Zerg"/>
+        <CreateFlags index="OffsetByRadius" value="0"/>
+        <CreateFlags index="Placement" value="0"/>
+        <CreateFlags index="NormalizeSpawnOffset" value="0"/>
+        <SpawnEffect value="MassaliskDummyAB"/>
+        <SpawnUnit value="MassaliskDummy"/>
+    </CEffectCreateUnit>
+    <CEffectModifyUnit id="MassaliskDummySelection">
+        <EditorCategories value="Race:Zerg"/>
+        <ImpactUnit Value="Caster"/>
+        <SelectTransferUnit Value="Target"/>
+        <SelectTransferFlags index="DeselectSource" value="1"/>
     </CEffectModifyUnit>
     <CEffectApplyBehavior id="ShockChargeApplyDecloak">
         <EditorCategories value="Race:Terran"/>
@@ -168,18 +189,13 @@
         <Death value="Impact"/>
     </CEffectDamage>
     <CEffectSet id="D15MagnumS">
-        <ValidatorArray value="D15MagnumSTMTargetFilters"/>
         <EffectArray value="D15Magnum"/>
         <EffectArray value="TrackingImplant"/>
-        <MinCount value="2"/>
-        <MaxCount value="2"/>
     </CEffectSet>
     <CEffectSet id="D15MagnumSTM">
         <ValidatorArray value="TrackingMunitionsApplied"/>
         <EffectArray value="D15Magnum"/>
         <EffectArray value="TrackingImplant"/>
-        <MinCount value="2"/>
-        <MaxCount value="2"/>
     </CEffectSet>
     <CEffectCreateUnit id="DisguiseAsSpitfireCU" parent="DisguiseEx3CU">
         <Marker Link="Effect/DisguiseAsMarineWithoutShieldCU"/>
@@ -229,8 +245,6 @@
         <EditorCategories value="Race:Zerg"/>
         <EffectArray value="EroderEnervate"/>
         <EffectArray value="EnervatorSporesDMG"/>
-        <MinCount value="2"/>
-        <MaxCount value="2"/>
     </CEffectSet>
     <CEffectApplyBehavior id="Equipped" parent="CEffectApplyBehaviorGenetronCaster">
         <EditorCategories value="Race:Terran"/>
@@ -262,36 +276,6 @@
         <EffectArray value="ProcessingDroneFate"/>
         <EffectArray value="KillSource"/>
     </CEffectSet>
-    <CEffectApplyBehavior id="ProcessingPowerAB" parent="CEffectApplyBehaviorGenetronTarget">
-        <ValidatorArray index="0" value="TargetIsProcessingCore"/>
-        <Behavior value="ProcessingNodeSearchBuff"/>
-    </CEffectApplyBehavior>
-    <CEffectRemoveBehavior id="ProcessingPowerRB">
-        <ValidatorArray index="0" value="TargetIsProcessingCore"/>
-        <EditorCategories value="Race:Genetron"/>
-        <BehaviorLink value="ProcessingNodeSearchBuff"/>
-    </CEffectRemoveBehavior>
-    <CEffectCreatePersistent id="EnergyGridTickCP">
-        <ValidatorArray value="TargetIsProcessingCore"/>
-        <ValidatorArray value="EnergyNotFull"/>
-        <EditorCategories value="Race:Genetron"/>
-        <WhichLocation Value="TargetUnit"/>
-        <InitialEffect value="EnergyRegenerationBuff"/>
-        <PeriodCount value="2"/>
-        <PeriodicEffectArray value="EnergyGridTickUp"/>
-        <PeriodicEffectArray value="EnergyGridTickDown"/>
-        <PeriodicPeriodArray value="0"/>
-        <PeriodicPeriodArray value="1.001"/>
-    </CEffectCreatePersistent>
-    <CEffectModifyUnit id="EnergyGridTickUp">
-        <EditorCategories value="Race:Genetron"/>
-        <Cost Abil="EnergyGridInput,Execute" ChargeCountUse="-1"/>
-    </CEffectModifyUnit>
-    <CEffectModifyUnit id="EnergyGridTickDown">
-        <EditorCategories value="Race:Genetron"/>
-        <Cost Abil="EnergyGridInput,Execute" ChargeCountUse="1"/>
-        <ValidatorArray value="AtLeast1EnergyGridTick"/>
-    </CEffectModifyUnit>
     <CEffectDamage id="Feedback">
         <ValidatorArray index="0" value="NotInvulnerable"/>
     </CEffectDamage>
@@ -299,8 +283,6 @@
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="IBF7Flamethrower"/>
         <EffectArray value="IBF7FlamethrowerDMG"/>
-        <MinCount value="2"/>
-        <MaxCount value="2"/>
     </CEffectSet>
     <CEffectRemoveBehavior id="EquippedRemove">
         <EditorCategories value="Race:Terran"/>
@@ -311,8 +293,6 @@
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="RevenantBombDMG"/>
         <EffectArray value="RevenantBombShellShockedS"/>
-        <MinCount value="2"/>
-        <MaxCount value="2"/>
     </CEffectSet>
     <CEffectModifyUnit id="SchematicTransmitMU">
         <EditorCategories value="Race:Terran"/>
@@ -344,16 +324,12 @@
         <EffectArray value="SuperChargeCannonDMG"/>
         <EffectArray value="SuperChargeCannonRB"/>
         <EffectArray value="TrackingImplant"/>
-        <MinCount value="3"/>
-        <MaxCount value="3"/>
     </CEffectSet>
     <CEffectSet id="SuperChargeCannon2">
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="SuperChargeCannonDMG"/>
         <EffectArray value="SuperChargeCannonRB"/>
         <EffectArray value="TrackingImplant"/>
-        <MinCount value="3"/>
-        <MaxCount value="3"/>
     </CEffectSet>
     <CEffectApplyBehavior id="ProcessingDroneActivated" parent="CEffectApplyBehaviorGenetronTarget">
         <Behavior value="Active"/>
@@ -418,8 +394,6 @@
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="HalifaxGrenadesDMG"/>
         <EffectArray value="HalifaxGrenadesFDMG"/>
-        <MinCount value="2"/>
-        <MaxCount value="2"/>
         <TargetLocationType value="UnitOrPoint"/>
     </CEffectSet>
     <CEffectLaunchMissile id="LancerAutogun" parent="CEffectLaunchMissileGenetron"/>
@@ -461,32 +435,9 @@
     <CEffectLaunchMissile id="NullifierMissilesLM" parent="CEffectLaunchMissileGenetron"/>
     <CEffectApplyBehavior id="EnergyRegenerationBuff" parent="CEffectApplyBehaviorGenetronTarget">
         <ValidatorArray index="0" value="TargetIsProcessingCore"/>
+        <ValidatorArray value="StructureNotLockedDown"/>
+        <ValidatorArray value="EnergyNotFull"/>
     </CEffectApplyBehavior>
-    <CEffectSet id="ProcessingPowerFS">
-        <ValidatorArray value="ProcessingPowerFSTargetFilters"/>
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="EnergyGridRemove"/>
-        <EffectArray value="ProcessingPowerSA"/>
-    </CEffectSet>
-    <CEffectRemoveBehavior id="EnergyGridRemove">
-        <ValidatorArray index="0" value="TargetIsProcessingCore"/>
-        <EditorCategories value="Race:Genetron"/>
-        <BehaviorLink value="EnergyRegenerationBuff"/>
-    </CEffectRemoveBehavior>
-    <CEffectCreatePersistent id="ProcessingPowerCP">
-        <ValidatorArray value="TargetIsProcessingCore"/>
-        <ValidatorArray value="TargetNotDead"/>
-        <EditorCategories value="Race:Genetron"/>
-        <WhichLocation Value="CasterUnit"/>
-        <Flags index="Channeled" value="1"/>
-        <Flags index="Channeling" value="1"/>
-        <Flags index="PersistUntilDestroyed" value="1"/>
-        <InitialEffect value="EnergyRegenerationBuff"/>
-        <ExpireDelay value="0.05"/>
-        <FinalEffect value="EnergyGridTickFinalSet"/>
-        <PeriodicEffectArray value="EnergyGridTickPeriodicSet"/>
-        <PeriodicPeriodArray value="1"/>
-    </CEffectCreatePersistent>
     <CEffectSet id="ChargeUse">
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="ChargeRemove"/>
@@ -566,9 +517,10 @@
         <Flags index="PersistUntilDestroyed" value="1"/>
         <InitialEffect value="UploaderChargeStack"/>
         <FinalEffect value="SchematicTransmitFS"/>
-        <PeriodicPeriodArray value="0.1"/>
+        <PeriodicPeriodArray value="0.0625"/>
         <ExpireDelay value="0.05"/>
         <PeriodicEffectArray value="SchematicTransmitISet"/>
+        <PeriodicValidator value="CasterAndTargetNotDead"/>
     </CEffectCreatePersistent>
     <CEffectSet id="SchematicTransmitIS">
         <EditorCategories value="Race:Genetron"/>
@@ -657,8 +609,6 @@
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="StingerDrillDMG"/>
         <EffectArray value="StingerDrillSw"/>
-        <MinCount value="2"/>
-        <MaxCount value="2"/>
     </CEffectSet>
     <CEffectCreatePersistent id="StingerDrills">
         <EditorCategories value="Race:Genetron"/>
@@ -709,11 +659,12 @@
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="StratumMissilePodDMG"/>
         <EffectArray value="TrackingImplant"/>
-        <MinCount value="2"/>
-        <MaxCount value="2"/>
     </CEffectSet>
     <CEffectLaunchMissile id="StratumMissilePod" parent="CEffectLaunchMissileGenetron">
         <AmmoUnit value="StratumMissileLauncherWeapon"/>
+        <Movers Link="StratumMissileLauncherWeapon" IfRangeLTE="4"/>
+        <Movers Link="StratumMissileLauncherWeaponMed" IfRangeLTE="7"/>
+        <Movers Link="StratumMissileLauncherWeaponHigh" IfRangeLTE="-1"/>
     </CEffectLaunchMissile>
     <CEffectEnumArea id="ProcessingPowerSA">
         <EditorCategories value="Race:Genetron"/>
@@ -722,8 +673,7 @@
         <TargetSorts>
             <SortArray value="TSDistance"/>
         </TargetSorts>
-        <AreaArray MaxCount="1" Radius="500" Effect="EnergyGridTickCP"/>
-        <MinCount value="1"/>
+        <AreaArray MaxCount="1" Radius="500" Effect="EnergyRegenerationBuff"/>
     </CEffectEnumArea>
     <CEffectLaunchMissile id="StratumMissilePodTM" parent="StratumMissilePod">
         <Name value="Effect/Name/StratumMissilePodTM"/>
@@ -772,8 +722,6 @@
         <EffectArray value="RevenantBombForceOffset"/>
         <EffectArray value="RevenantBombCPAccel"/>
         <EffectArray value="RevenantBombSearchCP"/>
-        <MinCount value="4"/>
-        <MaxCount value="4"/>
         <TargetLocationType value="Point"/>
     </CEffectSet>
     <CEffectApplyForce id="RevenantBombCasterForce">
@@ -829,8 +777,6 @@
         <EffectArray value="RevenantBombDestroyForcePersistentDelay"/>
         <EffectArray value="RevenantBombCooldownFinal"/>
         <EffectArray value="RevenantBombLM"/>
-        <MinCount value="5"/>
-        <MaxCount value="5"/>
         <TargetLocationType value="Point"/>
     </CEffectSet>
     <CEffectApplyBehavior id="RevenantBombNapalm" parent="CEffectApplyBehaviorGenetronTarget"/>
@@ -880,8 +826,6 @@
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="RevenantBombDMGSet"/>
         <EffectArray value="RevenantBombNapalmCP"/>
-        <MinCount value="2"/>
-        <MaxCount value="2"/>
         <TargetLocationType value="Point"/>
     </CEffectSet>
     <CEffectApplyBehavior id="TrackingImplant" parent="CEffectApplyBehaviorGenetronTarget"/>
@@ -889,16 +833,12 @@
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="TrackingImplant"/>
         <EffectArray value="RiotGun"/>
-        <MinCount value="2"/>
-        <MaxCount value="2"/>
     </CEffectSet>
     <CEffectSet id="RiotGunSetMunitionsTracker">
         <ValidatorArray value="TrackingMunitionsApplied"/>
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="TrackingImplant"/>
         <EffectArray value="RiotGun"/>
-        <MinCount value="2"/>
-        <MaxCount value="2"/>
     </CEffectSet>
     <CEffectApplyBehavior id="AnalyzeWeakness" parent="CEffectApplyBehaviorGenetronTarget"/>
     <CEffectEnumArea id="SystemOffloadSA">
@@ -961,16 +901,12 @@
         <EffectArray value="ShockChargeZE"/>
         <EffectArray value="ShockChargeMU"/>
         <EffectArray value="ShockChargeApplyDecloak"/>
-        <MinCount value="4"/>
-        <MaxCount value="4"/>
         <ValidatorArray value="TeslaShockChargeTargetValidators"/>
     </CEffectSet>
     <CEffectSet id="TheGreatEqualizerImpact">
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="TheGreatEqualizerDMG"/>
         <EffectArray value="TrackingImplant"/>
-        <MinCount value="2"/>
-        <MaxCount value="2"/>
     </CEffectSet>
     <CEffectLaunchMissile id="TheGreatEqualizer" parent="CEffectLaunchMissileGenetron"/>
     <CEffectLaunchMissile id="TheGreatEqualizerLMTM" parent="TheGreatEqualizer">
@@ -981,8 +917,6 @@
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="VengeanceMissileMU"/>
         <EffectArray value="VengeanceMissileLM"/>
-        <MinCount value="2"/>
-        <MaxCount value="2"/>
     </CEffectSet>
     <CEffectEnumArea id="VengeanceMissileST">
         <EditorCategories value="Race:Genetron"/>
@@ -1047,10 +981,10 @@
         <Death value="Eviscerate"/>
     </CEffectDamage>
     <CEffectDamage id="StratumMissilePodDMG" parent="CEffectDamageGenetronWeapon">
-        <AttributeBonus index="Armored" value="6"/>
-        <Amount value="6"/>
+        <AttributeBonus index="Armored" value="5"/>
+        <Amount value="5"/>
         <Death value="Blast"/>
-        <AreaArray Radius="0.6" Fraction="0.5"/>
+        <AreaArray Radius="0.8125" Fraction="0.6"/>
     </CEffectDamage>
     <CEffectDamage id="SuperChargeCannonDMG" parent="CEffectDamageGenetronWeapon">
         <Amount value="24"/>
@@ -1073,7 +1007,7 @@
         <Amount value="15"/>
     </CEffectDamage>
     <CEffectDamage id="NemesisMissilesLMImpact" parent="CEffectDamageGenetronWeaponVisible">
-        <Amount value="12"/>
+        <Amount value="18"/>
         <Death value="Electrocute"/>
     </CEffectDamage>
     <CEffectDamage id="StingerDrillDMG" parent="CEffectDamageGenetronWeaponVisible">
@@ -1116,8 +1050,6 @@
         <EffectArray value="AcidNestSDMG"/>
         <EffectArray value="AcidNestDMG"/>
         <EffectArray value="AcidNestDelay"/>
-        <MinCount value="3"/>
-        <MaxCount value="3"/>
     </CEffectSet>
     <CEffectCreatePersistent id="AcidNestDelay">
         <EditorCategories value="Race:Zerg"/>
@@ -1413,8 +1345,6 @@
         <EditorCategories value="Race:Zerg"/>
         <EffectArray value="GlazeFire"/>
         <EffectArray value="IncendiaryInfusionSwitch"/>
-        <MinCount value="2"/>
-        <MaxCount value="2"/>
     </CEffectSet>
     <CEffectEnumArea id="IncendiaryInfusionSAG">
         <EditorCategories value="Race:Zerg"/>
@@ -1492,7 +1422,6 @@
         <EffectArray value="ExplosiveGlobDMG"/>
         <EffectArray value="ExplosiveGlobForceCP"/>
         <EffectArray value="ExplosiveGlobAB"/>
-        <MaxCount value="3"/>
     </CEffectSet>
     <CEffectEnumArea id="ExplosiveGlobSA">
         <EditorCategories value="Race:Zerg"/>
@@ -1781,8 +1710,6 @@
         <EditorCategories value="Race:Zerg"/>
         <EffectArray value="VenomousStrikeDMG"/>
         <EffectArray value="VenomInjection"/>
-        <MinCount value="2"/>
-        <MaxCount value="2"/>
     </CEffectSet>
     <CEffectDamage id="VirulentSpitDMG">
         <EditorCategories value="Race:Zerg"/>

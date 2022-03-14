@@ -92,6 +92,61 @@
     <CActorSound id="JupiterBombRunRumble" parent="SoundOneShot">
         <FogVisibility value="Visible"/>
     </CActorSound>
+    <CActorUnit id="MassaliskDummy" parent="GenericUnitStandard" unitName="MassaliskDummy">
+        <Aliases value="_UnitHuge"/>
+        <Macros value="QueueAnim"/>
+        <Macros value="TerrainSquibAnimations"/>
+        <On index="65" Terms="WeaponStart.*.AttackStart; ValidateUnitType IsMobileMassalisk" Send="AnimBracketStart Attack Attack"/>
+        <On Terms="ActorCreation" Send="AnimPlay BSD Burrow,Stand PlayForever"/>
+        <On Terms="ActorCreation" Send="SetOpacity"/>
+        <Model value="Massalisk"/>
+        <ModelFlags index="OutlineEmitter" value="1"/>
+        <EventDataFootprint index="0" Actor="UnitFootprint" Model="PrimalTownHallFootprint"/>
+        <BuildModel value="Massalisk"/>
+        <EditorModel value="Massalisk"/>
+        <PlacementModel value="Massalisk"/>
+        <PlacementActorModel value="Massalisk"/>
+        <PlaceholderActorModel value="PrimalPlacementModel"/>
+        <PortraitModel value="UltraliskPortrait"/>
+        <TerrainSquibs>
+            <GroupName value="RippleStandard"/>
+            <MovementDistance value="0.150000,0.150000"/>
+            <IdlePeriod value="0.100000,0.250000"/>
+            <RangeUp value="2.000000"/>
+            <RangeDown value="2.000000"/>
+            <AttachQuery Methods="AMFilterCenter"/>
+            <Visuals TerrainPhysicsMaterial="Water" ActorModel="TerrainSquibHarnessContinuous" ModelLink="WaterRippleUltralisk"/>
+        </TerrainSquibs>
+        <WalkAnimMoveSpeed value="1.2773"/>
+        <BarOffset value="115"/>
+        <BarWidth value="150"/>
+        <GroupIcon>
+            <Image value="Assets\Textures\wireframe-Xayid-massalisk.dds"/>
+        </GroupIcon>
+        <HeroIcon value="Assets\Textures\btn-unit-Xayid-massalisk.dds"/>
+        <LifeArmorIcon value="Assets\Textures\btn-upgrade-Xayid-organiccarapace-level0.dds"/>
+        <NameOffset value="130"/>
+        <SoundArray index="Birth" value=""/>
+        <SoundArray index="Ready" value="Lurker_Yes"/>
+        <SoundArray index="Help" value=""/>
+        <SoundArray index="What" value="Lurker_What"/>
+        <SoundArray index="Yes" value="Lurker_Yes"/>
+        <SoundArray index="Attack" value="Lurker_Attack"/>
+        <SoundArray index="Pissed" value="Lurker_Attack"/>
+        <SoundArray index="Movement" value="Brutalisk_Footsteps"/>
+        <SoundArray index="Turning" value=""/>
+        <SoundArray index="Board" value=""/>
+        <SoundArray index="Construction" value="Zerg_BuildingMorphWhat"/>
+        <SoundArray index="Click" value=""/>
+        <SoundArray index="ClickError" value=""/>
+        <SoundArray index="Highlight" value=""/>
+        <UnitFlags index="ShowBlobShadow" value="0"/>
+        <UnitFlags index="StandAnimBirthVariation" value="0"/>
+        <UnitIcon value="Assets\Textures\btn-unit-Xayid-massalisk.dds"/>
+        <Wireframe>
+            <Image value="Assets\Textures\wireframe-Xayid-massalisk.dds"/>
+        </Wireframe>
+    </CActorUnit>
     <CActorUnit id="ScavengerSpawn" parent="XayidUnitStandard" unitName="ScavengerSpawn">
         <Aliases value="_UnitSmall"/>
         <On Terms="Abil.DroneHarvest.Start" Send="AnimPlay Work Work PlayForever"/>
@@ -1538,11 +1593,13 @@
         <On Terms="ActorCreation" Send="SetScale 1.350000"/>
     </CActorModel>
     <CActorBeamSimple id="UploaderSchematicTransmitBeam" parent="BeamSimpleAnimationStyleContinuous">
-        <On Terms="Effect.SchematicTransmitCP.Start" Send="Create"/>
-        <On Terms="Effect.SchematicTransmitCP.Stop" Send="Destroy"/>
-        <On Terms="ActorCreation" Send="SetOpacity 0.250000 3.000000"/>
-        <On Terms="ActorCreation" Send="SetTintColor {68,255,162 2.000000}"/>
-        <AutoScaleFactor value="1.000000"/>
+        <On Terms="Effect.SchematicTransmitCP.Start; At Caster" Send="Create"/>
+        <On Terms="Effect.SchematicTransmitCP.Stop; FromEffectTreeDescendant" Send="Destroy"/>
+        <On Terms="ActorCreation" Send="TimerSet 0.031250 BeamColor"/>
+        <On Terms="TimerExpired; TimerName BeamColor" Send="TimerSet 0.125000 BeamColor"/>
+        <On Terms="TimerExpired; TimerName BeamColor; ValidateUnit UploaderLevel1" Send="$Spell,A"/>
+        <On Terms="TimerExpired; TimerName BeamColor; ValidateUnit UploaderLevel2" Send="$Spell,B"/>
+        <On Terms="TimerExpired; TimerName BeamColor; ValidateUnit UploaderLevel3" Send="$Spell,C"/>
         <HostLaunch Subject="_Unit" Scope="Caster" Actor="Find"/>
         <HostLaunchSiteOps Ops="SOpAttachHardPoint"/>
         <HostImpact Subject="_Unit" Scope="Target" Actor="Find"/>
@@ -2114,7 +2171,7 @@
         <SoundArray index="Ready" value="Barracks_Ready"/>
         <SoundArray index="What" value="Barracks_What"/>
         <SoundArray index="Construction" value="Terran_ConstructionWhat"/>
-        <BarWidth value="130"/>
+        <BarWidth value="160"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-mechstructurearmor.dds"/>
         <GroupIcon>
             <Image value="Assets\Textures\wireframe-genetron-manufacturer.dds"/>
@@ -2123,12 +2180,12 @@
         <Wireframe>
             <Image value="Assets\Textures\wireframe-genetron-manufacturer.dds"/>
         </Wireframe>
-        <AddonIndicator value="0"/>
         <PlacementSound value="Terran_BuildingPlacement"/>
         <DeathArray index="Normal" ModelLink="ManufacturerDeath" SoundLink="Barracks_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeathLarge" SoundLink="Barracks_Explode"/>
         <PlacementModel value="ManufacturerPlacement"/>
         <PortraitModel value="GenetronAdjutantPortrait"/>
+        <BarOffset value="115"/>
     </CActorUnit>
     <CActorUnit id="Fabricator" parent="TerranBuilding" unitName="Fabricator">
         <On Terms="AbilTrain.TrainHeavyweightMechs.Start" Send="AnimPlay StandWork Stand,Work PlayForever,RandomStartOffset"/>
@@ -3504,6 +3561,8 @@
         <On Terms="AbilMorph.*.Start; MorphTo Massalisk" Send="Create BurrowUpLarge"/>
         <On Terms="AbilMorph.*.Start; MorphTo Massalisk" Send="Create LargeBurrowUpEffects"/>
         <On Terms="AbilMorph.*.Finish; MorphTo Massalisk" Target="PrimalTownHallBase" Send="Destroy"/>
+        <On Terms="AbilMorph.*.Start; MorphTo MassaliskHunkered" Send="ModelSwap MassaliskHunkered 255 PredecessorDestroyImmediate"/>
+        <On Terms="AbilMorph.*.Start; MorphTo Massalisk" Send="ModelSwap Massalisk 255 PredecessorDestroyImmediate"/>
         <ModelFlags index="OutlineEmitter" value="1"/>
         <EventDataFootprint index="0" Actor="UnitFootprint" Model="PrimalTownHallFootprint"/>
         <DeathArray index="Normal" ModelLink="MassaliskDeath" SoundLink="Massalisk_Explode"/>
