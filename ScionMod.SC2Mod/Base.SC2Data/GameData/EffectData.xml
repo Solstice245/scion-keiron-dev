@@ -102,6 +102,10 @@
         <Player Value="Caster"/>
         <Target Value="CasterUnit"/>
     </CEffectIssueOrder>
+    <CEffectApplyBehavior id="JupiterStealth" parent="CEffectApplyBehaviorGenetronCaster">
+        <ValidatorArray index="0" value="JupiterStealthSpeedStacks"/>
+        <Chance value="0"/>
+    </CEffectApplyBehavior>
     <CEffectApplyBehavior id="MassaliskDummyAB">
         <EditorCategories value="Race:Zerg"/>
         <Behavior value="MassaliskDummy"/>
@@ -120,6 +124,12 @@
         <SelectTransferUnit Value="Target"/>
         <SelectTransferFlags index="DeselectSource" value="1"/>
     </CEffectModifyUnit>
+    <CEffectApplyForce id="RevenantBombFinalForce">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="TargetPoint"/>
+        <WhichUnit Value="Caster"/>
+        <Amount value="1"/>
+    </CEffectApplyForce>
     <CEffectApplyBehavior id="ShockChargeApplyDecloak">
         <EditorCategories value="Race:Terran"/>
         <Behavior value="ShockChargeDecloak"/>
@@ -144,12 +154,6 @@
         <ImpactUnit Value="Source"/>
         <Cost Abil="RevenantBomb,Execute" CooldownOperation="Set" CooldownTimeUse="0.0625"/>
     </CEffectModifyUnit>
-    <CEffectDestroyPersistent id="RevenantBombDPAccel">
-        <EditorCategories value="Race:Genetron"/>
-        <Effect value="RevenantBombCPAccel"/>
-        <Count value="1"/>
-        <Radius value="1000"/>
-    </CEffectDestroyPersistent>
     <CEffectCreatePersistent id="RevenantBombDestroyForcePersistentDelay">
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="CasterUnit"/>
@@ -713,7 +717,7 @@
         <EditorCategories value="Race:Genetron"/>
         <PeriodicEffectArray value="RevenantBombSpeedSet"/>
         <PeriodicPeriodArray value="0.0625"/>
-        <Flags index="Channeled" value="1"/>
+        <Flags index="Channeling" value="1"/>
         <Flags index="PersistUntilDestroyed" value="1"/>
     </CEffectCreatePersistent>
     <CEffectSet id="RevenantBombRunSet">
@@ -724,7 +728,7 @@
         <EffectArray value="RevenantBombSearchCP"/>
         <TargetLocationType value="Point"/>
     </CEffectSet>
-    <CEffectApplyForce id="RevenantBombCasterForce">
+    <CEffectApplyForce id="RevenantBombChannelForce">
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Effect="RevenantBombForceCP" Value="TargetPoint"/>
         <WhichUnit Value="Caster"/>
@@ -754,12 +758,12 @@
     <CEffectCreatePersistent id="RevenantBombForceCP">
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="CasterUnit"/>
-        <Flags index="Channeled" value="1"/>
         <Flags index="PersistUntilDestroyed" value="1"/>
         <InitialEffect value="RevenantBombChannel"/>
         <FinalEffect value="RevenantBombCE"/>
-        <PeriodicEffectArray value="RevenantBombCasterForce"/>
+        <PeriodicEffectArray value="RevenantBombChannelForce"/>
         <PeriodicPeriodArray value="0.0625"/>
+        <PeriodicValidator value="JupiterForce"/>
     </CEffectCreatePersistent>
     <CEffectEnumArea id="RevenantBombShellShockedS">
         <EditorCategories value="Race:Genetron"/>
@@ -773,10 +777,10 @@
         <ValidatorArray value="RevenantLaunchTargetDistances"/>
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="RevenantBombDP"/>
-        <EffectArray value="RevenantBombDPAccel"/>
         <EffectArray value="RevenantBombDestroyForcePersistentDelay"/>
         <EffectArray value="RevenantBombCooldownFinal"/>
         <EffectArray value="RevenantBombLM"/>
+        <EffectArray value="testcp"/>
         <TargetLocationType value="Point"/>
     </CEffectSet>
     <CEffectApplyBehavior id="RevenantBombNapalm" parent="CEffectApplyBehaviorGenetronTarget"/>
@@ -1026,6 +1030,7 @@
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="RevenantBombSpeed2"/>
         <EffectArray value="RevenantBombAccelerationEnergy"/>
+        <EffectArray value="JupiterStealth"/>
     </CEffectSet>
     <CEffectApplyBehavior id="SchematicTransmitAL1" parent="CEffectApplyBehaviorGenetronCaster"/>
     <CEffectApplyBehavior id="SchematicTransmitAL2" parent="CEffectApplyBehaviorGenetronCaster"/>
@@ -1748,4 +1753,14 @@
         <ImpactEffect value="VolatileDischargeCU"/>
         <AmmoUnit value="VolatileDischargeMissile"/>
     </CEffectLaunchMissile>
+    <CEffectCreatePersistent id="testcp">
+        <EditorCategories value="Race:Terran"/>
+        <WhichLocation Value="CasterUnit"/>
+        <OffsetVectorStartLocation Value="CasterUnit"/>
+        <OffsetVectorEndLocation Value="CasterUnit"/>
+        <PeriodCount value="8"/>
+        <PeriodicEffectArray value="RevenantBombFinalForce"/>
+        <PeriodicOffsetArray value="0,2,0"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
 </Catalog>

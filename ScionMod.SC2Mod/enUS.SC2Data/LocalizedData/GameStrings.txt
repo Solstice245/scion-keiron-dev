@@ -166,7 +166,7 @@ Behavior/Tooltip/ResourceTap=Has increased mining rates. Mineral harvesters mine
 Behavior/Tooltip/RevenantBombNapalm=This unit is taking damage while in the flames of a Jupiter's Revenant Bomb.
 Behavior/Tooltip/SacrificialMutationHeal=Healing units around itself in an aura. Self destructs after timing out.
 Behavior/Tooltip/SelffixProtocol=The <c val="FFFF80">Virtus</c> has +2 life regeneration while in Lockdown Mode.
-Behavior/Tooltip/ShockChargeDecloak=Target was recently hit by an EMP Round, making it unable to cloak for a short duration.
+Behavior/Tooltip/ShockChargeDecloak=Target was recently hit by a Tesla's Shock Charge, making it unable to cloak for a short duration.
 Behavior/Tooltip/SpeedCloak=Cloaked, and moving 40% faster.
 Behavior/Tooltip/StagnatingBileStun=Stunned. Cannot move or cast abilities.
 Behavior/Tooltip/SystemOffload=This unit fire 15% faster.
@@ -262,6 +262,7 @@ Button/Name/InternalOptimization=Internal Optimization
 Button/Name/InternalRepairSystem=Internal Repair System
 Button/Name/Jupiter=Fabricate Jupiter
 Button/Name/JupiterNapalm=Napalm
+Button/Name/JupiterStealthSystems=Stealth Systems
 Button/Name/Kraken=Mutate into Kraken
 Button/Name/LaunchCloakCharge=Launch Cloak Charge
 Button/Name/LaunchShockCharge=Launch Shock Charge
@@ -332,7 +333,7 @@ Button/Name/ResearchAAMDefenseTurret=Research AAM Defense Turret
 Button/Name/ResearchBoreDrills=Research Bore Drills
 Button/Name/ResearchCalibratedEngines=Research Calibrated Engines
 Button/Name/ResearchCloakingGenerator=Research Cloaking Generator
-Button/Name/ResearchCourierCloakingField=Research Cloaking Field
+Button/Name/ResearchCourierCloakingField=Research Stealth Systems
 Button/Name/ResearchEnhancedTargeting=Research Enhanced Targeting
 Button/Name/ResearchFirewallShield=Research Firewall Shield
 Button/Name/ResearchIntegratedOptics=Research Integrated Optics
@@ -499,6 +500,7 @@ Button/Tooltip/InternalOptimization=<c val="FFFF80">Teslas</c> gain +100% charge
 Button/Tooltip/InternalRepairSystem=The <c val="FFFF80">Processing Drone</c> regenerates health while out of combat.
 Button/Tooltip/Jupiter=High speed bomber aircraft. Can use Revenant Bomb to damage enemies, and apply napalm on the ground for damage over time.
 Button/Tooltip/JupiterNapalm=Revenant Bomb applies napalm to the ground, dealing <d ref="Effect,RevenantBombNapalmDMG,Amount/Behavior,RevenantBombNapalm,Period"/> (+<d ref="Effect,RevenantBombNapalmDMG,AttributeBonus[Structure]/Behavior,RevenantBombNapalm,Period"/> vs Structures) damage per second in the area. Lasts <d ref="Effect,RevenantBombNapalmCP,PeriodCount*Effect,RevenantBombNapalmCP,PeriodicPeriodArray[0]" /> seconds.
+Button/Tooltip/JupiterStealthSystems=The Jupiter becomes cloaked after accelerating for a time in a bombing run.
 Button/Tooltip/Kraken=A huge powerful beast, with a devastating attack. Can use Volatile Discharge.<n/><n/><c val="FFFF80">Can attack ground and air units.</c>
 Button/Tooltip/LaunchCloakCharge=Launches a <c val="FFFF80">Cloak Charge</c> to the target point.
 Button/Tooltip/LaunchShockCharge=Launches a <c val="FFFF80">Shock Charge</c> to the target point.
@@ -575,7 +577,7 @@ Button/Tooltip/ResearchAAMDefenseTurret=Adds a turret to the <c val="FFFF80">Bad
 Button/Tooltip/ResearchBoreDrills=Causes attacks from <c val="FFFF80">Hornets</c> to reduce the armor of their targets by 1 for each <c val="FFFF80">Hornet</c> attacking it. Stacks up to 5 times. The effect lasts for <d ref="Behavior,BoreDrill,Duration"/> seconds unless refreshed.
 Button/Tooltip/ResearchCalibratedEngines=Increases the <c val="FFFF80">Spitfire's</c> movement speed by 60%.
 Button/Tooltip/ResearchCloakingGenerator=Causes the <c val="FFFF80">Processing Drone</c> to become permanently cloaked.
-Button/Tooltip/ResearchCourierCloakingField=Enables <c val="ffff8a">Couriers</c> to use the Cloak ability. Cloak renders a unit invisible to enemies unless it's revealed by detectors or effects.
+Button/Tooltip/ResearchCourierCloakingField=Enables <c val="ffff8a">Couriers</c> to use the Cloak ability. Jupiters become cloaked after accelerating in a bombing run. Cloak renders a unit invisible to enemies unless it's revealed by detectors or effects.
 Button/Tooltip/ResearchEnhancedTargeting=<c val="FFFF80">Torrents</c> gain +1 gun range and +3 missile range.
 Button/Tooltip/ResearchFirewallShield=<c val="FFFF80">Blazes</c> gain +2 shield armor, and +4 shield regeneration.
 Button/Tooltip/ResearchIntegratedOptics=Allows the <c val="FFFF80">Processing Drone</c> to detect permanently, removing the energy consumption of detection.
@@ -801,6 +803,7 @@ Effect/Name/IncendiaryInfusionSAG=Incendiary Infusion
 Effect/Name/IncendiaryInfusionSet=Incendiary Infusion
 Effect/Name/IncendiaryInfusionSwitch=Incendiary Infusion
 Effect/Name/JupiterShellShocked=Shell-Shocked (Apply Behavior)
+Effect/Name/JupiterStealth=Jupiter - Stealth
 Effect/Name/LancerAutogun=Lancer Autogun
 Effect/Name/LancerAutogunImpact=Lancer Autogun
 Effect/Name/LaunchCloakCharge=Launch Cloak Charge
@@ -855,16 +858,16 @@ Effect/Name/RevenantBomb=Revenant Bomb (Init)
 Effect/Name/RevenantBombAccelerationEnergy=Revenant Bomb (Acceleration Energy)
 Effect/Name/RevenantBombCE=Revenant Bomb (Channel End)
 Effect/Name/RevenantBombCPAccel=Revenant Bomb (Acceleration Persistent)
-Effect/Name/RevenantBombCasterForce=Revenant Bomb (Caster Force)
 Effect/Name/RevenantBombChannel=Revenant Bomb (Channel Start)
+Effect/Name/RevenantBombChannelForce=Revenant Bomb (Channel Force)
 Effect/Name/RevenantBombCooldownFinal=Revenant Bomb (Cooldown Final)
 Effect/Name/RevenantBombCooldownInit=Revenant Bomb (Cooldown Init)
 Effect/Name/RevenantBombDMG=Revenant Bomb (Damage)
 Effect/Name/RevenantBombDMGSet=Revenant Bomb (Damage Set)
 Effect/Name/RevenantBombDP=Revenant Bomb (Destroy Search Persistent)
-Effect/Name/RevenantBombDPAccel=Revenant Bomb (Destroy Acceleration Persistent)
 Effect/Name/RevenantBombDPForce=Revenant Bomb (Destroy Force Persistent)
 Effect/Name/RevenantBombDestroyForcePersistentDelay=Revenant Bomb (Destroy Force Persistent Delay)
+Effect/Name/RevenantBombFinalForce=Revenant Bomb (Final Force)
 Effect/Name/RevenantBombForceCP=Revenant Bomb (Force Persistent)
 Effect/Name/RevenantBombForceOffset=Revenant Bomb (Force Offset)
 Effect/Name/RevenantBombLM=Revenant Bomb (Launch Missile)
@@ -985,6 +988,7 @@ Effect/Name/VolatileDischargeCU=Volatile Discharge
 Effect/Name/VolatileDischargeDMG=Volatile Discharge
 Effect/Name/XayidSpawnTimedLife=Xayid Spawn Timed Life
 Effect/Name/XayidlingDash=Dash Persistant
+Effect/Name/testcp=Jupiter - Revenant Bomb (Final Force Persistent)
 Error/AdaptiveInjectionError=Must target a unit with an attack
 Error/NotProcessingCore=Can't target Processing Cores
 Error/NotProcessingDrone=Can't target Processing Drones
