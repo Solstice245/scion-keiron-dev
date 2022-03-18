@@ -614,6 +614,8 @@
         <FlagArray index="Untargetable" value="1"/>
         <FlagArray index="Invulnerable" value="1"/>
         <FlagArray index="ArmySelect" value="0"/>
+        <EditorFlags index="NoPlacement" value="1"/>
+        <EditorFlags index="NoPalettes" value="1"/>
         <Collide index="Ground" value="0"/>
         <Collide index="ForceField" value="0"/>
         <Attributes index="Armored" value="1"/>
@@ -642,6 +644,7 @@
         <CargoSize value="8"/>
         <ScoreResult value=""/>
         <MinimapRadius value="1"/>
+        <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
         <TacticalAI value="Massalisk"/>
         <TechAliasArray value="Alias_Massalisk"/>
         <EquipmentArray Icon="Assets\Textures\btn-upgrade-xayid-organiccarapace-level0.dds"/>
@@ -854,19 +857,18 @@
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
             <LayoutButtons Face="ResearchCalibratedEngines" Type="AbilCmd" AbilCmd="UploaderResearchManufacL1,Research1" Row="0" Column="0"/>
             <LayoutButtons Face="ResearchEnhancedTargeting" Type="AbilCmd" AbilCmd="UploaderResearchFabricator,Research1" Row="0" Column="0"/>
-            <LayoutButtons Face="ResearchCourierCloakingField" Type="AbilCmd" AbilCmd="ResearchAssemblyArray,Research1" Row="0" Column="0"/>
+            <LayoutButtons Face="ResearchStealthSystems" Type="AbilCmd" AbilCmd="ResearchAssemblyArray,Research1" Row="0" Column="0"/>
             <LayoutButtons Face="ResearchReinforcedPlating" Type="AbilCmd" AbilCmd="UploaderResearchManufacL1,Research5" Row="0" Column="1"/>
             <LayoutButtons Face="ResearchSubterraneanSensors" Type="AbilCmd" AbilCmd="UploaderResearchFabricator,Research3" Row="0" Column="1"/>
+            <LayoutButtons Face="ResearchVengeanceMissile" Type="AbilCmd" AbilCmd="ResearchAssemblyArray,Research2" Row="0" Column="1"/>
             <LayoutButtons Face="ResearchFirewallShield" Type="AbilCmd" AbilCmd="UploaderResearchManufacL1,Research3" Row="0" Column="2"/>
             <LayoutButtons Face="ResearchSelfFixProtocol" Type="AbilCmd" AbilCmd="UploaderResearchFabricator,Research2" Row="0" Column="2"/>
-            <LayoutButtons Face="ResearchVengeanceMissile" Type="AbilCmd" AbilCmd="ResearchAssemblyArray,Research2" Row="0" Column="1"/>
             <LayoutButtons Face="ResearchShapedHull" Type="AbilCmd" AbilCmd="ResearchAssemblyArray,Research3" Row="0" Column="2"/>
             <LayoutButtons Face="ResearchRefittedNozzles" Type="AbilCmd" AbilCmd="UploaderResearchManufacL1,Research4" Row="0" Column="3"/>
-            <LayoutButtons Face="ResearchPhalanxReactor" Type="AbilCmd" AbilCmd="UploaderResearchManufacL1,Research6" Row="0" Column="4"/>
             <LayoutButtons Face="ResearchAAMDefenseTurret" Type="AbilCmd" AbilCmd="ResearchAssemblyArray,Research4" Row="0" Column="3"/>
+            <LayoutButtons Face="ResearchPhalanxReactor" Type="AbilCmd" AbilCmd="UploaderResearchManufacL1,Research6" Row="0" Column="4"/>
             <LayoutButtons Face="ResearchTrackingMunitions" Type="AbilCmd" AbilCmd="UploaderResearchManufacL1,Research2" Row="1" Column="0"/>
             <LayoutButtons Face="SchematicTransmit" Type="AbilCmd" AbilCmd="SchematicTransmit,Execute" Row="2" Column="0"/>
-            <LayoutButtons Face="SchematicTransmitPassive" Type="Passive" Requirements="UploaderNotResearching" Row="2" Column="1"/>
             <LayoutButtons Face="Halt" Type="AbilCmd" AbilCmd="BuildInProgress,Halt" Row="2" Column="3"/>
         </CardLayouts>
         <CardLayouts CardId="0002">
@@ -875,7 +877,7 @@
             <LayoutButtons Face="ResearchSelfFixProtocol" Type="AbilCmd" AbilCmd="UploaderResearchFabricator,Research2" Row="0" Column="2"/>
         </CardLayouts>
         <CardLayouts CardId="0003">
-            <LayoutButtons Face="ResearchCourierCloakingField" Type="AbilCmd" AbilCmd="ResearchAssemblyArray,Research1" Row="0" Column="0"/>
+            <LayoutButtons Face="ResearchStealthSystems" Type="AbilCmd" AbilCmd="ResearchAssemblyArray,Research1" Row="0" Column="0"/>
             <LayoutButtons Face="ResearchShapedHull" Type="AbilCmd" AbilCmd="ResearchAssemblyArray,Research3" Row="0" Column="2"/>
             <LayoutButtons Face="ResearchAAMDefenseTurret" Type="AbilCmd" AbilCmd="ResearchAssemblyArray,Research4" Row="0" Column="3"/>
             <LayoutButtons Face="ResearchVengeanceMissile" Type="AbilCmd" AbilCmd="ResearchAssemblyArray,Research2" Row="0" Column="1"/>
@@ -886,7 +888,6 @@
         <SubgroupPriority value="7"/>
         <MinimapRadius value="1"/>
         <GlossaryPriority value="20"/>
-        <BehaviorArray Link="UploaderResearchingStatus"/>
         <TacticalAIFilters value="-;Ally,Neutral,Enemy"/>
     </CUnit>
     <CUnit id="UploaderCountDummy">
@@ -896,12 +897,14 @@
         <FlagArray index="Uncommandable" value="1"/>
         <FlagArray index="Unselectable" value="1"/>
         <FlagArray index="Untargetable" value="1"/>
+        <FlagArray index="NoDraw" value="1"/>
         <FlagArray index="Undetectable" value="1"/>
         <FlagArray index="KillCredit" value="0"/>
         <FlagArray index="Invulnerable" value="1"/>
         <FlagArray index="NoScore" value="1"/>
         <FlagArray index="Unstoppable" value="1"/>
         <FlagArray index="CameraFollow" value="0"/>
+        <FlagArray index="NeverThink" value="1"/>
         <BehaviorArray Link="UploaderStackCountDummyFate"/>
         <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
         <EditorFlags index="NoPlacement" value="1"/>
@@ -1105,10 +1108,14 @@
         <TechTreeProducedUnitArray value="Virtus"/>
     </CUnit>
     <CUnit id="Mole" parent="CUnitGenetron">
+        <FlagArray index="AlwaysThreatens" value="1"/>
+        <FlagArray index="AISupport" value="1"/>
+        <FlagArray index="AIPressForwardDisabled" value="1"/>
         <LifeStart value="130"/>
         <LifeMax value="130"/>
         <LifeArmor value="0"/>
         <Speed value="2.25"/>
+        <TurningRate value="360"/>
         <Food value="-2"/>
         <CostResource index="Minerals" value="125"/>
         <CostResource index="Vespene" value="100"/>
@@ -1132,6 +1139,9 @@
         <CargoSize value="4"/>
         <SubgroupPriority value="45"/>
         <MinimapRadius value="0.8125"/>
+        <AIEvalConstant value="1"/>
+        <TechAliasArray value="Alias_Mole"/>
+        <EquipmentArray Weapon="LynxCannon"/>
         <GlossaryPriority value="8"/>
         <GlossaryStrongArray value="Inciter"/>
         <GlossaryStrongArray value="Immortal"/>
@@ -1142,12 +1152,6 @@
         <GlossaryWeakArray value="Marine"/>
         <GlossaryWeakArray value="Zergling"/>
         <KillDisplay value="Always"/>
-        <FlagArray index="AlwaysThreatens" value="1"/>
-        <FlagArray index="AISupport" value="1"/>
-        <FlagArray index="AIPressForwardDisabled" value="1"/>
-        <TurningRate value="360"/>
-        <TechAliasArray value="Alias_Mole"/>
-        <AIEvalConstant value="1"/>
     </CUnit>
     <CUnit id="MoleBurrowed" parent="Mole">
         <Name value="Unit/Name/MoleBurrowed"/>
@@ -1155,7 +1159,8 @@
         <AbilArray index="0" Link="stop"/>
         <AbilArray index="1" Link="attack"/>
         <AbilArray index="2" Link="MoleDeactivate"/>
-        <BehaviorArray Link="SubterraneanSensors"/>
+        <AbilArray Link="MoleTurnTurret"/>
+        <BehaviorArray Link="MoleBurrowed"/>
         <TurretArray index="0" removed="1"/>
         <WeaponArray Link="LynxCannon" Turret="MoleTurret"/>
         <CardLayouts index="0">
@@ -1171,7 +1176,7 @@
                 <Row value="2"/>
                 <Column value="2"/>
             </LayoutButtons>
-            <LayoutButtons index="4" removed="1"/>
+            <LayoutButtons index="4" Face="Turn" Type="AbilCmd" AbilCmd="MoleTurnTurret,Execute" Row="1" Column="4"/>
             <LayoutButtons index="5" removed="1"/>
             <LayoutButtons index="6" removed="1"/>
             <LayoutButtons index="7" removed="1"/>
@@ -1184,6 +1189,7 @@
         <TacticalAI value="MoleBurrowed"/>
         <Collide index="Burrow" value="1"/>
         <Collide index="Structure" value="1"/>
+        <EquipmentArray index="0" removed="1"/>
     </CUnit>
     <CUnit id="ProcessingNode" parent="CStructureGenetron">
         <Facing value="0"/>
@@ -1393,6 +1399,28 @@
         <FlagArray index="AISupport" value="1"/>
         <FlagArray index="AIPressForwardDisabled" value="1"/>
         <TurningRate value="360"/>
+    </CUnit>
+    <CUnit id="MoleTurnDummy">
+        <Race value="Gen"/>
+        <FlagArray index="Turnable" value="0"/>
+        <FlagArray index="Movable" value="0"/>
+        <FlagArray index="Uncommandable" value="1"/>
+        <FlagArray index="Unselectable" value="1"/>
+        <FlagArray index="Untargetable" value="1"/>
+        <FlagArray index="NoDraw" value="1"/>
+        <FlagArray index="Undetectable" value="1"/>
+        <FlagArray index="KillCredit" value="0"/>
+        <FlagArray index="Invulnerable" value="1"/>
+        <FlagArray index="NoScore" value="1"/>
+        <FlagArray index="Unstoppable" value="1"/>
+        <FlagArray index="CameraFollow" value="0"/>
+        <FlagArray index="NeverThink" value="1"/>
+        <EditorFlags index="NoPlacement" value="1"/>
+        <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
+        <LeaderAlias value=""/>
+        <HotkeyAlias value=""/>
+        <SelectAlias value=""/>
+        <SubgroupAlias value=""/>
     </CUnit>
     <CUnit id="Virtus" parent="CUnitGenetron">
         <Collide index="ForceField" value="0"/>
@@ -1645,7 +1673,7 @@
         <CardLayouts index="0">
             <LayoutButtons Face="RevenantBomb" Type="AbilCmd" AbilCmd="RevenantBomb,Execute" Row="2" Column="0"/>
             <LayoutButtons Face="JupiterNapalm" Type="Passive" AbilCmd="RevenantBomb,Execute" Row="2" Column="1"/>
-            <LayoutButtons Face="JupiterStealthSystems" Type="Passive" Requirements="UseCourierCloakingField" Row="2" Column="2"/>
+            <LayoutButtons Face="JupiterStealthSystems" Type="Passive" Requirements="UseStealthSystems" Row="2" Column="2"/>
         </CardLayouts>
         <Radius value="0.8125"/>
         <SeparationRadius value="0.875"/>

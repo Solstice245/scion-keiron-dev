@@ -251,6 +251,12 @@
         <Magnitude value="14.000000,10.000000"/>
         <Radius value="1.000000,0.500000"/>
     </CActorForceSphere>
+    <CActorUnit id="MoleTurnDummy" parent="GenericUnitStandard" unitName="MoleTurnDummy">
+        <Aliases index="1" removed="1"/>
+        <AcceptedHostedPropTransfers index="CastShadows" value="0"/>
+        <Model value="Invisible"/>
+        <UnitFlags index="ShowBlobShadow" value="0"/>
+    </CActorUnit>
     <CActorRange id="XayidlingDashRange" parent="RangeAbilStandard" abil="XayidlingDash">
         <Abil Link=""/>
         <Range value="3.000000"/>
@@ -476,7 +482,7 @@
         <PortraitModel value="PortraitEroder"/>
     </CActorUnit>
     <CActorSound id="JupiterBombImpactAdd" parent="SoundOneShot">
-        <On Terms="Effect.RevenantBombDMGSet.Start" Send="Create"/>
+        <On Terms="Effect.JupiterRevenantBombImpactSet.Start" Send="Create"/>
         <Sound value="JupiterAttackImpactAdd"/>
     </CActorSound>
     <CActorMissile id="EroderAttackMissile" parent="GenericAttackMissile" unitName="EnervatorSporesWeapon">
@@ -712,8 +718,8 @@
         <Model value="HornetMissileWeapon"/>
     </CActorMissile>
     <CActorSound id="JupiterBombRunStart" parent="SoundOneShot">
-        <On Terms="Behavior.RevenantBombSpeed.On" Send="Create"/>
-        <On Terms="Behavior.RevenantBombSpeed.Off; ValidateUnit CasterIsMovingLT10" Send="Destroy"/>
+        <On Terms="Behavior.JupiterSpeed.On" Send="Create"/>
+        <On Terms="Behavior.JupiterSpeed.Off; ValidateUnit CasterIsMovingLT10" Send="Destroy"/>
         <On Terms="ActorOrphan" Send="Destroy"/>
         <FogVisibility value="Visible"/>
     </CActorSound>
@@ -978,8 +984,8 @@
         <Filter index="Enemy" value="1"/>
         <Inherits index="Visibility" value="0"/>
         <FogVisibility value="Visible"/>
-        <On Terms="Behavior.SubterraneanSensors.On; ValidateUnit MoleSubterraneanSensorsUpgraded" Send="Create"/>
-        <On Terms="Behavior.SubterraneanSensors.Off" Send="Destroy"/>
+        <On Terms="Behavior.MoleBurrowed.On; ValidateUnit MoleSubterraneanSensorsUpgraded" Send="Create"/>
+        <On Terms="Behavior.MoleBurrowed.Off" Send="Destroy"/>
         <Range value="22.000000"/>
         <Icon value="Assets\Textures\radaricon1.dds"/>
         <IconArcLength value="3.250000"/>
@@ -1304,7 +1310,7 @@
         <Range value="3.000000"/>
         <Icon value="Assets\Textures\rangegradient.dds"/>
         <IconArcLength value="1.500000"/>
-        <IconTint value="255,0,128,255"/>
+        <IconTint value="255,0,255,255"/>
         <CliffLevelFlags index="Lower" value="0"/>
         <CliffLevelFlags index="Higher" value="0"/>
     </CActorRange>
@@ -1668,19 +1674,19 @@
         <UnitFlags index="ShowBlobShadow" value="0"/>
     </CActorUnit>
     <CActorModel id="JupiterNapalmImpact" parent="ModelAnimationStyleContinuousUNIT">
-        <On Terms="Effect.RevenantBombNapalmCP.Start" Target="RevenantBombNapalmCP" Send="Create"/>
-        <On Terms="Effect.RevenantBombNapalmCP.Stop" Send="Destroy"/>
+        <On Terms="Effect.JupiterNapalmCreatePersistent.Start" Target="RevenantBombNapalmCP" Send="Create"/>
+        <On Terms="Effect.JupiterNapalmCreatePersistent.Stop" Send="Destroy"/>
         <HostSiteOps Ops="SOpTargetPoint"/>
     </CActorModel>
     <CActorModel id="JupiterNapalmImpactFire" parent="ModelAnimationStyleOneShotUNIT">
-        <On Terms="Effect.RevenantBombNapalmDMG.Start; At Target" Send="Create"/>
+        <On Terms="Effect.JupiterNapalmDamage.Start; At Target" Send="Create"/>
         <Host Subject="_Unit"/>
         <HostSiteOps Ops="SOpAttachTarget"/>
         <Model value="HellionTankAttackFireAddition"/>
         <Scale value="1.200000"/>
         <ModelFlags index="AllowHitTest" value="0"/>
     </CActorModel>
-    <CActorAction id="JupiterAttack" parent="GenericAttack" effectImpact="RevenantBombShellShockedS" effectLaunch="RevenantBombLM">
+    <CActorAction id="JupiterAttack" parent="GenericAttack" effectImpact="JupiterShellShockedSearch" effectLaunch="JupiterRevenantBombLaunchMissile">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <ImpactPhysics Name="Explosion" MatchKeys="Basic" Physics="SiegeTankSiegedForce"/>
     </CActorAction>
@@ -1689,7 +1695,7 @@
         <On Terms="ActorOrphan" Send="Destroy"/>
         <On Terms="AnimBracketState.*.AfterClosing; !AnimBracketExitReason ModelSwap; AnimName BSD" Send="Destroy"/>
         <!--<On Terms="Effect.RevenantBombTarget.Start" Send="Create"/>-->
-        <On Terms="Effect.RevenantBombShellShockedS.Start" Send="Destroy"/>
+        <On Terms="Effect.JupiterShellShockedSearch.Start" Send="Destroy"/>
         <On Terms="Effect.RevenantBombTarget.Start" Send="TimerSet 4.000000"/>
         <On Terms="TimerExpired" Send="Destroy"/>
     </CActorModel>
@@ -1847,8 +1853,8 @@
     </CActorSound>
     <CActorUnit id="Jupiter" parent="GenericUnitStandard" unitName="Jupiter">
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-aircraftplating-level0.dds"/>
-        <On Terms="Behavior.RevenantBombSpeed.On" Send="$Spell PlayForever"/>
-        <On Terms="Behavior.RevenantBombSpeed.Off" Send="AnimClear Spell"/>
+        <On Terms="Behavior.JupiterSpeed.On" Send="$Spell PlayForever"/>
+        <On Terms="Behavior.JupiterSpeed.Off" Send="AnimClear Spell"/>
         <Macros value="TerrainSquibAnimations"/>
         <Macros value="PhysicsDeathsSwarmAir"/>
         <Macros value="PhysicsDeathsVoidAir"/>
@@ -1878,8 +1884,8 @@
         <DeathActorModel value="UnitDeathModelWithDeathMotionFlier"/>
     </CActorUnit>
     <CActorSound id="JupiterNapalmSound" parent="TerranFlameSound">
-        <On Terms="Effect.RevenantBombNapalmCP.Start" Send="Create"/>
-        <On Terms="Effect.RevenantBombNapalmCP.Stop" Send="Destroy"/>
+        <On Terms="Effect.JupiterNapalmCreatePersistent.Start" Send="Create"/>
+        <On Terms="Effect.JupiterNapalmCreatePersistent.Stop" Send="Destroy"/>
         <HostSiteOps Ops="SOpTargetPoint"/>
         <Sound value="DOM_Fire_Large_Loops"/>
     </CActorSound>
@@ -2413,7 +2419,7 @@
         <Range value="3.000000"/>
         <Icon value="Assets\Textures\scannersweepradius_diffuse.dds"/>
         <IconArcLength value="1.500000"/>
-        <IconTint value="255,0,128,255"/>
+        <IconTint value="255,0,255,255"/>
         <CliffLevelFlags index="Lower" value="0"/>
         <CliffLevelFlags index="Higher" value="0"/>
     </CActorRange>

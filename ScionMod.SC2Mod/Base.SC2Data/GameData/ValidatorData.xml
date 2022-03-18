@@ -15,20 +15,11 @@
         <SearchFilters value="Ground,Visible;Player,Ally,Neutral,Structure,Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <Count value="1"/>
     </CValidatorLocationEnumArea>
-    <CValidatorCombine id="BlindingBurstAutocastTargetValidators">
-        <Type value="And"/>
-        <CombineArray value="NotFrenzied"/>
-        <CombineArray value="IsNotPhasedUnit"/>
-        <CombineArray value="TargetIsNotBlindedByProwler"/>
-    </CValidatorCombine>
     <CValidatorPlayerRequirement id="AvengerVengeanceMissileUpgraded">
         <ResultNoPlayer value="Error"/>
         <Find value="1"/>
         <Value value="UseVengeanceMissile"/>
     </CValidatorPlayerRequirement>
-    <CValidatorUnitOrder id="CasterCanCancelQueue5">
-        <AbilLink value="que5"/>
-    </CValidatorUnitOrder>
     <CValidatorUnitCompareVital id="CasterEnergyLT75">
         <WhichUnit Value="Caster"/>
         <Compare value="LT"/>
@@ -82,7 +73,7 @@
         <WhichUnit Value="Caster"/>
         <Compare value="GE"/>
         <Value value="30"/>
-        <Behavior value="RevenantBombSpeed"/>
+        <Behavior value="JupiterSpeed"/>
     </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="MassaliskCasterIsHunkered">
         <WhichUnit Value="Caster"/>
@@ -93,11 +84,11 @@
         <CombineArray value="IsAquila"/>
         <CombineArray value="IsJupiter"/>
     </CValidatorCombine>
-    <CValidatorUnitCompareBehaviorCount id="RevenantBombSpeedNotMaxed">
+    <CValidatorUnitCompareBehaviorCount id="JupiterSpeedNotMaxed">
         <WhichUnit Value="Caster"/>
         <Compare value="LT"/>
         <Value value="50"/>
-        <Behavior value="RevenantBombSpeed"/>
+        <Behavior value="JupiterSpeed"/>
     </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="NoAnalyzeWeaknessBuff">
         <Behavior value="AnalyzeWeakness"/>
@@ -284,7 +275,7 @@
         <CombineArray value="CasterNotWantsToMove"/>
         <CombineArray value="MoleHostileSearch"/>
     </CValidatorCombine>
-    <CValidatorUnitCompareBehaviorCount id="TargetIsNotBlindedByProwler">
+    <CValidatorUnitCompareBehaviorCount id="NotBlindedByProwler">
         <Behavior value="BlindingBurstAB"/>
     </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="TeslaNotEquipped">
@@ -372,23 +363,6 @@
         <Value value="1"/>
         <Behavior value="SchematicTransmitAL3"/>
     </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitOrderQueue id="UploaderNotResearchingVSA">
-        <ResultFailed value="Error,UploaderNotResearching,ERROR"/>
-        <AbilLink value="UploaderResearchFabricator"/>
-        <AbilCmdIndex value="1"/>
-        <Queued value="1"/>
-    </CValidatorUnitOrderQueue>
-    <CValidatorCombine id="UploaderNotResearchingSet">
-        <CombineArray value="UploaderNotResearchingSCE"/>
-        <CombineArray value="UploaderNotResearchingSTM"/>
-        <CombineArray value="UploaderNotResearchingERP"/>
-        <CombineArray value="UploaderNotResearchingBFS"/>
-        <CombineArray value="UploaderNotResearchingBRN"/>
-        <CombineArray value="UploaderNotResearchingAPR"/>
-        <CombineArray value="UploaderNotResearchingSTM2"/>
-        <CombineArray value="UploaderNotResearchingSTM22"/>
-        <CombineArray value="UploaderNotResearchingVSA"/>
-    </CValidatorCombine>
     <CValidatorCombine id="VirtusLockedDown">
         <CombineArray value="VirtusLockedDownFull"/>
         <CombineArray value="VirtusLockedDownTimed"/>
@@ -449,7 +423,6 @@
     </CValidatorPlayerRequirement>
     <CValidatorCombine id="IncendiaryInfusionTargetFilters">
         <ResultFailed value="Error,Error/Exterminator/IncendiaryInfusion"/>
-        <Type value="And"/>
         <CombineArray value="NotHaveIncendiaryInfusionAir"/>
         <CombineArray value="NotHaveIncendiaryInfusionGround"/>
     </CValidatorCombine>
@@ -503,11 +476,6 @@
         <Compare value="GE"/>
         <Value value="5"/>
     </CValidatorUnitCompareDamageDealtTime>
-    <CValidatorUnitCompareBehaviorCount id="EnergyNotSuppressed">
-        <Compare value="LT"/>
-        <Value value="1"/>
-        <Behavior value="SuppressEnegy"/>
-    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitAbil id="AdaptiveInjectionTargetValidator">
         <ResultFailed value="Error,Error/AdaptiveInjectionError"/>
         <Find value="1"/>
@@ -607,7 +575,6 @@
     <CValidatorUnitType id="TargetIsProcessingDrone">
         <Value value="ProcessingDrone"/>
     </CValidatorUnitType>
-    <CValidatorUnitFilters id="TargetIsTarget"/>
     <CValidatorUnitType id="TargetNotProcessingDrone">
         <Value value="ProcessingDrone"/>
         <Find value="0"/>
@@ -623,29 +590,6 @@
         <Value value="1"/>
         <Behavior value="TrackingImplant"/>
     </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitOrderQueue id="UploaderNotResearchingBRN">
-        <ResultFailed value="Error,UploaderNotResearching,ERROR"/>
-        <AbilLink value="UploaderResearchManufacL1"/>
-        <AbilCmdIndex value="3"/>
-        <Queued value="1"/>
-    </CValidatorUnitOrderQueue>
-    <CValidatorUnitOrderQueue id="UploaderNotResearchingERP">
-        <ResultFailed value="Error,UploaderNotResearching,ERROR"/>
-        <AbilLink value="UploaderResearchManufacL1"/>
-        <AbilCmdIndex value="4"/>
-        <Queued value="1"/>
-    </CValidatorUnitOrderQueue>
-    <CValidatorUnitOrderQueue id="UploaderNotResearchingAPR">
-        <ResultFailed value="Error,UploaderNotResearching,ERROR"/>
-        <AbilLink value="UploaderResearchManufacL1"/>
-        <AbilCmdIndex value="5"/>
-        <Queued value="1"/>
-    </CValidatorUnitOrderQueue>
-    <CValidatorUnitOrderQueue id="UploaderNotResearchingSCE">
-        <ResultFailed value="Error,UploaderNotResearching,ERROR"/>
-        <AbilLink value="UploaderResearchManufacL1"/>
-        <Queued value="1"/>
-    </CValidatorUnitOrderQueue>
     <CValidatorUnitCompareBehaviorCount id="SchematicTransmitAL1TargetFilters">
         <Value value="1"/>
         <Behavior value="UploaderChargeStack"/>
@@ -683,57 +627,6 @@
     <CValidatorUnitType id="UploaderLinkedtoAssemblyArray">
         <Value value="AssemblyArray"/>
     </CValidatorUnitType>
-    <CValidatorUnitOrderQueue id="UploaderNotResearchingSTM">
-        <ResultFailed value="Error,UploaderNotResearching,ERROR"/>
-        <AbilLink value="UploaderResearchManufacL1"/>
-        <AbilCmdIndex value="1"/>
-        <Queued value="1"/>
-    </CValidatorUnitOrderQueue>
-    <CValidatorUnitOrderQueue id="UploaderNotResearchingBFS">
-        <ResultFailed value="Error,UploaderNotResearching,ERROR"/>
-        <AbilLink value="UploaderResearchManufacL1"/>
-        <AbilCmdIndex value="2"/>
-        <Queued value="1"/>
-    </CValidatorUnitOrderQueue>
-    <CValidatorUnitOrderQueue id="UploaderNotResearchingSTM2">
-        <ResultFailed value="Error,UploaderNotResearching,ERROR"/>
-        <AbilLink value="UploaderResearchFabricator"/>
-        <Queued value="1"/>
-    </CValidatorUnitOrderQueue>
-    <CValidatorUnitOrderQueue id="UploaderNotResearchingSTM22">
-        <ResultFailed value="Error,UploaderNotResearching,ERROR"/>
-        <AbilLink value="UploaderResearchFabricator"/>
-        <AbilCmdIndex value="2"/>
-        <Queued value="1"/>
-    </CValidatorUnitOrderQueue>
-    <CValidatorUnitOrderQueue id="UploaderNotResearchingSTM222">
-        <ResultFailed value="Error,UploaderNotResearching,ERROR"/>
-        <AbilLink value="UploaderResearchFabricator"/>
-        <AbilCmdIndex value="3"/>
-        <Queued value="1"/>
-    </CValidatorUnitOrderQueue>
-    <CValidatorUnitOrderQueue id="UploaderNotResearchingCCF">
-        <ResultFailed value="Error,UploaderNotResearching,ERROR"/>
-        <AbilLink value="ResearchAssemblyArray"/>
-        <Queued value="1"/>
-    </CValidatorUnitOrderQueue>
-    <CValidatorUnitOrderQueue id="UploaderNotResearchingVMS">
-        <ResultFailed value="Error,UploaderNotResearching,ERROR"/>
-        <AbilLink value="ResearchAssemblyArray"/>
-        <AbilCmdIndex value="1"/>
-        <Find value="0"/>
-        <Queued value="1"/>
-    </CValidatorUnitOrderQueue>
-    <CValidatorUnitOrderQueue id="UploaderNotResearchingSH">
-        <ResultFailed value="Error,UploaderNotResearching,ERROR"/>
-        <AbilLink value="ResearchAssemblyArray"/>
-        <AbilCmdIndex value="2"/>
-        <Queued value="1"/>
-    </CValidatorUnitOrderQueue>
-    <CValidatorPlayerRequirement id="UploaderResearchState">
-        <Find value="1"/>
-        <Value value="UploaderResearchState"/>
-    </CValidatorPlayerRequirement>
     <CValidatorLocationEnumArea id="BlindingBurstActivate">
         <ResultFailed value="CantFindEnoughTargets"/>
         <WhichLocation Value="CasterUnit"/>
@@ -771,9 +664,7 @@
     <CValidatorUnitType id="IsBilePit">
         <Value value="BilePit"/>
     </CValidatorUnitType>
-    <CValidatorUnitCompareBehaviorCount id="BilePitNearFeedingPool">
-        <Compare value="LT"/>
-        <Value value="1"/>
+    <CValidatorUnitCompareBehaviorCount id="BilePitNotSustained">
         <Behavior value="BilePitSustain"/>
     </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="UnitHasNoMoreThan4FeedingPoolHealStacks">

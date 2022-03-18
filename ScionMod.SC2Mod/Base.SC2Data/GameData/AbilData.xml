@@ -70,14 +70,16 @@
     <CAbilEffectTarget id="Feedback">
         <TargetFilters index="0" value="CanHaveEnergy,Visible,HasEnergy;Self,Player,Ally,Neutral,Missile,Stasis,Dead,Hidden"/>
     </CAbilEffectTarget>
-    <CAbilEffectTarget id="MoleTurn">
+    <CAbilEffectTarget id="MoleTurnTurret">
         <EditorCategories value="Race:Terran,AbilityorEffectType:Units"/>
-        <Effect index="0" value="MoleTurnIssueOrder"/>
         <Flags index="BestUnit" value="0"/>
         <Flags index="Smart" value="1"/>
         <Range value="500"/>
         <Arc value="360"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="TurnFacing"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Turn"/>
+        <Effect index="0" value="MoleTurnTurretCreateUnitDummy"/>
+        <SmartPriority value="5"/>
+        <AINotifyEffect value="MoleTurnTurretChannel"/>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="ProcessingDroneAnalyzeWeakness">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -130,7 +132,7 @@
     <CAbilBehavior id="CourierCloak">
         <AbilSetId value="Clok"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <CmdButtonArray index="On" DefaultButtonFace="CloakOnCourier" Requirements="UseCourierCloakingField">
+        <CmdButtonArray index="On" DefaultButtonFace="CloakOnCourier" Requirements="UseStealthSystems">
             <Flags index="ToSelection" value="1"/>
         </CmdButtonArray>
         <CmdButtonArray index="Off" DefaultButtonFace="CloakOffCourier">
@@ -572,10 +574,10 @@
     </CAbilMorph>
     <CAbilResearch id="ResearchAssemblyArray">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <InfoArray index="Research1" Time="110" Alert="ResearchComplete_Terr" Upgrade="CloakingField">
+        <InfoArray index="Research1" Time="110" Alert="ResearchComplete_Terr" Upgrade="StealthSystems">
             <Resource index="Minerals" value="100"/>
             <Resource index="Vespene" value="100"/>
-            <Button DefaultButtonFace="ResearchCourierCloakingField" Requirements="LearnCourierCloakingField">
+            <Button DefaultButtonFace="ResearchStealthSystems" Requirements="LearnStealthSystems">
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
         </InfoArray>
@@ -618,8 +620,9 @@
         <Cost>
             <Cooldown TimeUse="10"/>
         </Cost>
-        <CursorEffect value="RevenantBombDMG"/>
+        <CursorEffect value="JupiterRevenantBombDamage"/>
         <AINotifyEffect value="RevenantBombRunSet"/>
+        <PostEffectBehavior Behavior="RevenantBombAbilityChannel"/>
     </CAbilEffectTarget>
     <CAbilHarvest id="ACRGather">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -933,18 +936,6 @@
         <SharedFlags index="RegisterCooldownEvent" value="1"/>
         <Arc value="360"/>
     </CAbilEffectTarget>
-    <CAbilMove id="MoleMove">
-        <CmdButtonArray index="Move" DefaultButtonFace=""/>
-        <CmdButtonArray index="Patrol" DefaultButtonFace=""/>
-        <CmdButtonArray index="HoldPos" DefaultButtonFace=""/>
-        <CmdButtonArray index="AcquireMove" DefaultButtonFace=""/>
-        <FleeRange value="5"/>
-        <FleeTime value="5"/>
-        <FollowRangeSlop value="1"/>
-        <FollowAcquireRange value="6"/>
-        <MinPatrolDistance value="1"/>
-        <Flags index="ShowIfImmobile" value="1"/>
-    </CAbilMove>
     <CAbilQueue id="que1Passive">
         <EditorCategories value="Race:Neutral,AbilityorEffectType:Structures"/>
         <QueueSize value="1"/>

@@ -32,6 +32,9 @@
     <CEffectApplyBehavior default="1" id="ApplyBehaviorXayid">
         <EditorCategories value="Race:Xayid"/>
     </CEffectApplyBehavior>
+    <CEffectSet default="1" id="CEffectSetGenetron">
+        <EditorCategories value="Race:Genetron"/>
+    </CEffectSet>
     <CEffectModifyUnit id="ApplyChargeCC">
         <EditorCategories value="Race:Genetron"/>
         <ImpactUnit Value="Source"/>
@@ -69,14 +72,7 @@
     <CEffectApplyBehavior id="BoreDrill5" parent="CEffectApplyBehaviorGenetronTarget">
         <Marker Link="Effect/BoreDrill0"/>
     </CEffectApplyBehavior>
-    <CEffectSet id="ChargeCannonSet">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="ChargeCannonDMG"/>
-        <EffectArray value="TrackingImplant"/>
-    </CEffectSet>
-    <CEffectSet id="ChargeCannonSetTM">
-        <ValidatorArray value="TrackingMunitionsApplied"/>
-        <EditorCategories value="Race:Genetron"/>
+    <CEffectSet id="ChargeCannonSet" parent="CEffectSetGenetron">
         <EffectArray value="ChargeCannonDMG"/>
         <EffectArray value="TrackingImplant"/>
     </CEffectSet>
@@ -90,22 +86,63 @@
         <ModifyFlags index="NullifyMissile" value="1"/>
         <Cost/>
     </CEffectModifyUnit>
+    <CEffectSet id="ChargeCannonSetTM" parent="CEffectSetGenetron">
+        <ValidatorArray value="TrackingMunitionsApplied"/>
+        <EffectArray value="ChargeCannonDMG"/>
+        <EffectArray value="TrackingImplant"/>
+    </CEffectSet>
     <CEffectModifyUnit id="ChargeRemove">
         <EditorCategories value="Race:Genetron"/>
         <ImpactUnit Value="Source"/>
         <Cost Abil="ConstructTeslaCharge,Specialize2" ChargeCountUse="-1"/>
     </CEffectModifyUnit>
+    <CEffectSet id="ChargeUse" parent="CEffectSetGenetron">
+        <EffectArray value="ChargeRemove"/>
+        <EffectArray value="EquippedRemove"/>
+    </CEffectSet>
+    <CEffectSet id="CloakChargeComplete2" parent="CEffectSetGenetron">
+        <EffectArray value="Equipped"/>
+        <EffectArray value="ApplyChargeCC"/>
+    </CEffectSet>
+    <CEffectSet id="D15MagnumS" parent="CEffectSetGenetron">
+        <EffectArray value="D15Magnum"/>
+        <EffectArray value="TrackingImplant"/>
+    </CEffectSet>
+    <CEffectSet id="D15MagnumSTM" parent="CEffectSetGenetron">
+        <ValidatorArray value="TrackingMunitionsApplied"/>
+        <EffectArray value="D15Magnum"/>
+        <EffectArray value="TrackingImplant"/>
+    </CEffectSet>
     <CEffectIssueOrder id="GenetronSchematicTransmitIssueOrder">
         <ValidatorArray value="IsUploader"/>
-        <EditorCategories value="Race:Terran"/>
+        <EditorCategories value="Race:Genetron"/>
         <Abil value="SchematicTransmit"/>
         <Player Value="Caster"/>
         <Target Value="CasterUnit"/>
     </CEffectIssueOrder>
+    <CEffectSet id="HalifaxGrenadesLMImpact" parent="CEffectSetGenetron">
+        <EffectArray value="HalifaxGrenadesDMG"/>
+        <EffectArray value="HalifaxGrenadesFDMG"/>
+        <TargetLocationType value="UnitOrPoint"/>
+    </CEffectSet>
+    <CEffectSet id="IBF7FamethrowerSet" parent="CEffectSetGenetron">
+        <EffectArray value="IBF7Flamethrower"/>
+        <EffectArray value="IBF7FlamethrowerDMG"/>
+    </CEffectSet>
     <CEffectApplyBehavior id="JupiterStealth" parent="CEffectApplyBehaviorGenetronCaster">
         <ValidatorArray index="0" value="JupiterStealthSpeedCost"/>
         <Chance value="0"/>
     </CEffectApplyBehavior>
+    <CEffectSet id="LaunchCloakChargeLS" parent="CEffectSetGenetron">
+        <EffectArray value="LaunchCloakCharge"/>
+        <EffectArray value="ChargeUse"/>
+        <TargetLocationType value="Point"/>
+    </CEffectSet>
+    <CEffectSet id="LaunchShockChargeLS" parent="CEffectSetGenetron">
+        <EffectArray value="LaunchShockCharge"/>
+        <EffectArray value="ChargeUse"/>
+        <TargetLocationType value="UnitOrPoint"/>
+    </CEffectSet>
     <CEffectApplyBehavior id="MassaliskDummyAB">
         <EditorCategories value="Race:Zerg"/>
         <Behavior value="MassaliskDummy"/>
@@ -124,49 +161,146 @@
         <SelectTransferUnit Value="Target"/>
         <SelectTransferFlags index="DeselectSource" value="1"/>
     </CEffectModifyUnit>
-    <CEffectApplyForce id="RevenantBombFinalForce">
-        <EditorCategories value="Race:Genetron"/>
-        <WhichLocation Value="TargetPoint"/>
-        <WhichUnit Value="Caster"/>
-        <Amount value="1"/>
-    </CEffectApplyForce>
-    <CEffectApplyBehavior id="ShockChargeApplyDecloak">
+    <CEffectCreateUnit id="MoleTurnTurretCreateUnitDummy">
         <EditorCategories value="Race:Terran"/>
+        <WhichLocation Value="TargetPoint"/>
+        <CreateFlags index="Placement" value="0"/>
+        <SpawnEffect value="MoleTurnTurretChannel"/>
+        <SpawnUnit value="MoleTurnDummy"/>
+    </CEffectCreateUnit>
+    <CEffectModifyUnit id="MoleTurnTurretSetTarget">
+        <EditorCategories value="Race:Terran"/>
+        <ImpactUnit Value="Caster"/>
+        <ModifyTurret Turret="MoleTurret" AimCompleteEffect="MoleTurnTurretAimComplete">
+            <Target Effect="MoleTurnTurretChannel" Value="TargetUnit"/>
+            <Flags index="Tracking" value="1"/>
+        </ModifyTurret>
+    </CEffectModifyUnit>
+    <CEffectSet id="MoleTurnTurretAimComplete">
+        <EditorCategories value="Race:Terran"/>
+        <EffectArray value="MoleTurnTurretClearTarget"/>
+        <EffectArray value="Kill"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="MoleTurnTurretClearTarget">
+        <EditorCategories value="Race:Terran"/>
+        <ImpactUnit Value="Caster"/>
+        <ModifyTurret Action="ClearTarget" Turret="MoleTurret">
+            <Target Effect="MoleTurnTurretChannel" Value="TargetUnit"/>
+        </ModifyTurret>
+    </CEffectModifyUnit>
+    <CEffectSet id="ProcessingDroneFateSet" parent="CEffectSetGenetron">
+        <EffectArray value="ProcessingDroneFate"/>
+        <EffectArray value="KillSource"/>
+    </CEffectSet>
+    <CEffectCreatePersistent id="JupiterRevenantBombChannelFinalForceOptional">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="CasterUnit"/>
+        <OffsetVectorStartLocation Value="CasterUnit"/>
+        <OffsetVectorEndLocation Value="CasterUnit"/>
+        <PeriodCount value="50"/>
+        <PeriodicValidator value="CasterHasNoOrders"/>
+        <PeriodicEffectArray value="JupiterRevenantBombForce"/>
+        <PeriodicOffsetArray value="0,1,0"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="JupiterRevenantBombChannelFinalForceMandatory">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="CasterUnit"/>
+        <OffsetVectorStartLocation Value="CasterUnit"/>
+        <OffsetVectorEndLocation Value="CasterUnit"/>
+        <FinalEffect value="JupiterRevenantBombChannelFinalForceOptional"/>
+        <PeriodCount value="10"/>
+        <PeriodicEffectArray value="JupiterRevenantBombForce"/>
+        <PeriodicOffsetArray value="0,1,0"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
+    <CEffectSet id="JupiterRevenantBombImpactSet" parent="CEffectSetGenetron">
+        <EffectArray value="JupiterRevenantBombDamage"/>
+        <EffectArray value="JupiterNapalmCreatePersistent"/>
+        <EffectArray value="JupiterShellShockedSearch"/>
+        <TargetLocationType value="Point"/>
+    </CEffectSet>
+    <CEffectSet id="JupiterRevenantBombLaunchQuerySet" parent="CEffectSetGenetron">
+        <ValidatorArray value="RevenantLaunchTargetDistances"/>
+        <EffectArray value="JupiterRevenantBombDestroyChannel"/>
+        <EffectArray value="JupiterRevenantBombCooldownFinal"/>
+        <EffectArray value="JupiterRevenantBombLaunchMissile"/>
+        <TargetLocationType value="Point"/>
+    </CEffectSet>
+    <CEffectSet id="RiotGunSet" parent="CEffectSetGenetron">
+        <EffectArray value="TrackingImplant"/>
+        <EffectArray value="RiotGun"/>
+    </CEffectSet>
+    <CEffectSet id="RiotGunSetMunitionsTracker" parent="CEffectSetGenetron">
+        <ValidatorArray value="TrackingMunitionsApplied"/>
+        <EffectArray value="TrackingImplant"/>
+        <EffectArray value="RiotGun"/>
+    </CEffectSet>
+    <CEffectSet id="SchematicTransmitAS" parent="CEffectSetGenetron">
+        <EffectArray value="SchematicTransmitAL1"/>
+        <EffectArray value="SchematicTransmitAL2"/>
+        <EffectArray value="SchematicTransmitAL3"/>
+    </CEffectSet>
+    <CEffectSet id="SchematicTransmitFS" parent="CEffectSetGenetron">
+        <EffectArray value="SchematicTransmit"/>
+        <EffectArray value="SchematicTransmitUSet"/>
+        <EffectArray value="SchematicTransmitRS"/>
+        <EffectArray value="SchematicTransmit"/>
+    </CEffectSet>
+    <CEffectSet id="SchematicTransmitIS" parent="CEffectSetGenetron">
+        <EffectArray value="SchematicTransmit"/>
+        <EffectArray value="UploaderChargeStack"/>
+    </CEffectSet>
+    <CEffectSet id="SchematicTransmitISet" parent="CEffectSetGenetron">
+        <EffectArray value="SchematicTransmitUSet"/>
+        <EffectArray value="SchematicTransmitRS"/>
+        <EffectArray value="SchematicTransmitAS"/>
+        <EffectArray value="UploaderChargeStack"/>
+        <EffectArray value="SchematicTransmitLS"/>
+        <ValidatorArray value="CasterAndTargetNotDead"/>
+    </CEffectSet>
+    <CEffectSet id="SchematicTransmitRS" parent="CEffectSetGenetron">
+        <EffectArray value="SchematicTransmitRL1"/>
+        <EffectArray value="SchematicTransmitRL2"/>
+        <EffectArray value="SchematicTransmitRL3"/>
+    </CEffectSet>
+    <CEffectSet id="SchematicTransmitUSet" parent="CEffectSetGenetron">
+        <EffectArray value="SchematicTransmitUAA"/>
+        <EffectArray value="SchematicTransmitUFS"/>
+        <EffectArray value="SchematicTransmitUM"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="ShockChargeApplyDecloak">
+        <EditorCategories value="Race:Genetron"/>
         <Behavior value="ShockChargeDecloak"/>
     </CEffectApplyBehavior>
     <CEffectApplyBehavior id="IgnitionBlastADB" parent="CEffectApplyBehaviorGenetronTarget"/>
-    <CEffectModifyUnit id="RevenantBombAccelerationEnergy">
+    <CEffectModifyUnit id="JupiterSpeedModifyUnit">
+        <ValidatorArray value="JupiterSpeedNotMaxed"/>
         <EditorCategories value="Race:Genetron"/>
         <ImpactUnit Value="Caster"/>
         <VitalArray index="Energy">
             <Change value="-1"/>
         </VitalArray>
     </CEffectModifyUnit>
-    <CEffectModifyUnit id="RevenantBombCooldownFinal">
+    <CEffectModifyUnit id="JupiterRevenantBombCooldownFinal">
         <EditorCategories value="Race:Genetron"/>
         <DebugTrace value="1"/>
         <ImpactUnit Value="Source"/>
         <Cost Abil="RevenantBomb,Execute" CooldownOperation="Set" CooldownTimeUse="10"/>
     </CEffectModifyUnit>
-    <CEffectModifyUnit id="RevenantBombCooldownInit">
+    <CEffectModifyUnit id="JupiterRevenantBombCooldownInit">
         <EditorCategories value="Race:Genetron"/>
         <DebugTrace value="1"/>
         <ImpactUnit Value="Source"/>
         <Cost Abil="RevenantBomb,Execute" CooldownOperation="Set" CooldownTimeUse="0.0625"/>
     </CEffectModifyUnit>
-    <CEffectCreatePersistent id="RevenantBombDestroyForcePersistentDelay">
-        <EditorCategories value="Race:Genetron"/>
-        <WhichLocation Value="CasterUnit"/>
-        <ExpireDelay value="3.125"/>
-        <ExpireEffect value="RevenantBombDPForce"/>
-    </CEffectCreatePersistent>
-    <CEffectApplyBehavior id="RevenantBombSpeed2" parent="CEffectApplyBehaviorGenetronCaster">
-        <Behavior value="RevenantBombSpeed"/>
+    <CEffectApplyBehavior id="JupiterSpeed" parent="CEffectApplyBehaviorGenetronCaster">
+        <ValidatorArray index="0" value="CasterHasEnergy"/>
     </CEffectApplyBehavior>
     <CEffectSwitch id="RevenantBomb">
         <EditorCategories value="Race:Genetron"/>
-        <CaseArray Validator="RevenantLaunchTargetSlow" Effect="RevenantBombLM"/>
-        <CaseDefault value="RevenantBombRunSet"/>
+        <CaseArray Validator="RevenantLaunchTargetSlow" Effect="JupiterRevenantBombLaunchMissile"/>
+        <CaseDefault value="JupiterRevenantBombChannel"/>
         <TargetLocationType value="Point"/>
     </CEffectSwitch>
     <CEffectDamage id="ScavengerSpawnClaws">
@@ -178,29 +312,10 @@
         <Kind value="Melee"/>
         <Amount value="10"/>
     </CEffectDamage>
-    <CEffectSet id="ShockChargeComplete">
-        <EditorCategories value="Race:Terran"/>
-        <EffectArray value="Equipped"/>
-        <EffectArray value="ApplyChargeSC"/>
-    </CEffectSet>
-    <CEffectSet id="CloakChargeComplete2">
-        <EditorCategories value="Race:Terran"/>
-        <EffectArray value="Equipped"/>
-        <EffectArray value="ApplyChargeCC"/>
-    </CEffectSet>
     <CEffectDamage id="D15Magnum" parent="CEffectDamageGenetronWeapon">
         <Amount value="40"/>
         <Death value="Impact"/>
     </CEffectDamage>
-    <CEffectSet id="D15MagnumS">
-        <EffectArray value="D15Magnum"/>
-        <EffectArray value="TrackingImplant"/>
-    </CEffectSet>
-    <CEffectSet id="D15MagnumSTM">
-        <ValidatorArray value="TrackingMunitionsApplied"/>
-        <EffectArray value="D15Magnum"/>
-        <EffectArray value="TrackingImplant"/>
-    </CEffectSet>
     <CEffectCreateUnit id="DisguiseAsSpitfireCU" parent="DisguiseEx3CU">
         <Marker Link="Effect/DisguiseAsMarineWithoutShieldCU"/>
         <SpawnUnit value="ChangelingSpitfire"/>
@@ -250,9 +365,7 @@
         <EffectArray value="EroderEnervate"/>
         <EffectArray value="EnervatorSporesDMG"/>
     </CEffectSet>
-    <CEffectApplyBehavior id="Equipped" parent="CEffectApplyBehaviorGenetronCaster">
-        <EditorCategories value="Race:Terran"/>
-    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="Equipped" parent="CEffectApplyBehaviorGenetronCaster"/>
     <CEffectApplyBehavior id="EroderEnervate">
         <ValidatorArray index="0" value="TargetIsEnemy"/>
         <ValidatorArray value="NotStructureTarget"/>
@@ -267,45 +380,35 @@
         <ValidatorArray value="NotFrenzied"/>
         <EditorCategories value="Race:Genetron"/>
     </CEffectApplyBehavior>
-    <CEffectIssueOrder id="MoleTurnIssueOrder">
+    <CEffectCreatePersistent id="MoleTurnTurretChannel">
         <EditorCategories value="Race:Terran"/>
-        <WhichUnit Value="Caster"/>
-        <Abil value="MoleMove"/>
-        <AbilCmdIndex value="4"/>
-        <Player Value="Caster"/>
-        <Target Value="TargetUnitOrPoint"/>
-    </CEffectIssueOrder>
-    <CEffectSet id="ProcessingDroneFateSet">
-        <EditorCategories value="Race:Terran"/>
-        <EffectArray value="ProcessingDroneFate"/>
-        <EffectArray value="KillSource"/>
-    </CEffectSet>
+        <WhichLocation Value="TargetUnit"/>
+        <Flags index="Channeled" value="1"/>
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <InitialDelay value="0.0625"/>
+        <InitialEffect value="MoleTurnTurretSetTarget"/>
+        <FinalEffect value="MoleTurnTurretAimComplete"/>
+        <PeriodicValidator value="CasterAndTargetNotDead"/>
+    </CEffectCreatePersistent>
     <CEffectDamage id="Feedback">
         <ValidatorArray index="0" value="NotInvulnerable"/>
     </CEffectDamage>
-    <CEffectSet id="IBF7FamethrowerSet">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="IBF7Flamethrower"/>
-        <EffectArray value="IBF7FlamethrowerDMG"/>
-    </CEffectSet>
     <CEffectRemoveBehavior id="EquippedRemove">
-        <EditorCategories value="Race:Terran"/>
+        <EditorCategories value="Race:Genetron"/>
         <WhichUnit Value="Caster"/>
         <BehaviorLink value="Equipped"/>
     </CEffectRemoveBehavior>
-    <CEffectSet id="RevenantBombDMGSet">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="RevenantBombDMG"/>
-        <EffectArray value="RevenantBombShellShockedS"/>
+    <CEffectSet id="ShockChargeComplete" parent="CEffectSetGenetron">
+        <EffectArray value="Equipped"/>
+        <EffectArray value="ApplyChargeSC"/>
     </CEffectSet>
-    <CEffectModifyUnit id="SchematicTransmitMU">
-        <EditorCategories value="Race:Terran"/>
-        <Cost Abil="SchematicTransmit,Execute" CooldownOperation="Set" CooldownTimeUse="1.4"/>
-    </CEffectModifyUnit>
-    <CEffectModifyUnit id="SchematicTransmitMUF">
-        <EditorCategories value="Race:Terran"/>
-        <Cost Abil="SchematicTransmit,Execute" CooldownOperation="Set"/>
-    </CEffectModifyUnit>
+    <CEffectSet id="ShockChargeSet" parent="CEffectSetGenetron">
+        <EffectArray value="ShockChargeDMG"/>
+        <EffectArray value="ShockChargeZE"/>
+        <EffectArray value="ShockChargeMU"/>
+        <EffectArray value="ShockChargeApplyDecloak"/>
+        <ValidatorArray value="TeslaShockChargeTargetValidators"/>
+    </CEffectSet>
     <CEffectModifyUnit id="ShockChargeZE">
         <EditorCategories value="Race:Genetron"/>
         <LaunchUnit Effect="ShockChargeSA"/>
@@ -313,6 +416,10 @@
             <Change value="-9"/>
         </VitalArray>
     </CEffectModifyUnit>
+    <CEffectSet id="StingerDrillLMImpact" parent="CEffectSetGenetron">
+        <EffectArray value="StingerDrillDMG"/>
+        <EffectArray value="StingerDrillSw"/>
+    </CEffectSet>
     <CEffectSwitch id="StingerDrillSw">
         <EditorCategories value="Race:Genetron"/>
         <CaseArray Validator="ArmorIs1" Effect="BoreDrill1"/>
@@ -322,19 +429,6 @@
         <CaseArray Validator="ArmorIs5OrGreaterThan" Effect="BoreDrill5"/>
         <ValidatorArray value="NotStructureTarget"/>
     </CEffectSwitch>
-    <CEffectSet id="SuperChargeCannonSetTM">
-        <ValidatorArray value="TrackingMunitionsApplied"/>
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="SuperChargeCannonDMG"/>
-        <EffectArray value="SuperChargeCannonRB"/>
-        <EffectArray value="TrackingImplant"/>
-    </CEffectSet>
-    <CEffectSet id="SuperChargeCannon2">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="SuperChargeCannonDMG"/>
-        <EffectArray value="SuperChargeCannonRB"/>
-        <EffectArray value="TrackingImplant"/>
-    </CEffectSet>
     <CEffectApplyBehavior id="ProcessingDroneActivated" parent="CEffectApplyBehaviorGenetronTarget">
         <Behavior value="Active"/>
     </CEffectApplyBehavior>
@@ -394,12 +488,6 @@
         <PeriodicOffsetArray value="-0.25,0,0"/>
         <PeriodicOffsetArray value="0.25,0,0"/>
     </CEffectCreatePersistent>
-    <CEffectSet id="HalifaxGrenadesLMImpact">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="HalifaxGrenadesDMG"/>
-        <EffectArray value="HalifaxGrenadesFDMG"/>
-        <TargetLocationType value="UnitOrPoint"/>
-    </CEffectSet>
     <CEffectLaunchMissile id="LancerAutogun" parent="CEffectLaunchMissileGenetron"/>
     <CEffectCreateUnit id="LaunchCloakChargeImpact">
         <EditorCategories value="Race:Genetron"/>
@@ -407,12 +495,6 @@
         <SpawnUnit value="CloakCharge"/>
         <SpawnEffect value="TeslaChargeSpawned"/>
     </CEffectCreateUnit>
-    <CEffectSet id="LaunchCloakChargeLS">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="LaunchCloakCharge"/>
-        <EffectArray value="ChargeUse"/>
-        <TargetLocationType value="Point"/>
-    </CEffectSet>
     <CEffectLaunchMissile id="LynxCannon" parent="CEffectLaunchMissileGenetron">
         <Movers Link="LynxCannonWeaponStraight" IfRangeLTE="9.325"/>
         <Movers Link="LynxCannonWeapon" IfRangeLTE="15"/>
@@ -442,39 +524,39 @@
         <ValidatorArray value="StructureNotLockedDown"/>
         <ValidatorArray value="EnergyNotFull"/>
     </CEffectApplyBehavior>
-    <CEffectSet id="ChargeUse">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="ChargeRemove"/>
-        <EffectArray value="EquippedRemove"/>
-    </CEffectSet>
-    <CEffectRemoveBehavior id="RevenantBombCE">
-        <EditorCategories value="Race:Genetron"/>
-        <WhichUnit Value="Caster"/>
-        <BehaviorLink value="RevenantBombChannel"/>
-        <Count value="1"/>
-    </CEffectRemoveBehavior>
     <CEffectRemoveBehavior id="SchematicTransmit">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="UploaderChargeStack"/>
         <Count value="1"/>
     </CEffectRemoveBehavior>
-    <CEffectSet id="SchematicTransmitFS">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="SchematicTransmit"/>
-        <EffectArray value="SchematicTransmitUSet"/>
-        <EffectArray value="SchematicTransmitRS"/>
-        <EffectArray value="SchematicTransmit"/>
+    <CEffectSet id="StratumMissilePodImpact" parent="CEffectSetGenetron">
+        <EffectArray value="StratumMissilePodDMG"/>
+        <EffectArray value="TrackingImplant"/>
     </CEffectSet>
-    <CEffectSet id="TeslaChargeSpawned">
-        <EditorCategories value="Race:Terran"/>
+    <CEffectSet id="SuperChargeCannon2" parent="CEffectSetGenetron">
+        <EffectArray value="SuperChargeCannonDMG"/>
+        <EffectArray value="SuperChargeCannonRB"/>
+        <EffectArray value="TrackingImplant"/>
+    </CEffectSet>
+    <CEffectSet id="SuperChargeCannonSetTM" parent="CEffectSetGenetron">
+        <ValidatorArray value="TrackingMunitionsApplied"/>
+        <EffectArray value="SuperChargeCannonDMG"/>
+        <EffectArray value="SuperChargeCannonRB"/>
+        <EffectArray value="TrackingImplant"/>
+    </CEffectSet>
+    <CEffectSet id="TeslaChargeSpawned" parent="CEffectSetGenetron">
         <EffectArray value="TeslaLoadChargeIntoTransport"/>
         <EffectArray value="KillsToCaster"/>
     </CEffectSet>
     <CEffectLoadContainer id="TeslaLoadChargeIntoTransport">
-        <EditorCategories value="Race:Terran"/>
+        <EditorCategories value="Race:Genetron"/>
         <ContainerType value="Transport"/>
         <ContainerUnit Effect="LaunchShockCharge" Value="Target"/>
     </CEffectLoadContainer>
+    <CEffectSet id="TheGreatEqualizerImpact" parent="CEffectSetGenetron">
+        <EffectArray value="TheGreatEqualizerDMG"/>
+        <EffectArray value="TrackingImplant"/>
+    </CEffectSet>
     <CEffectApplyBehavior id="TorrentAAWeaponSwitchHeavyOutputOff" parent="CEffectApplyBehaviorGenetronCaster">
         <EditorCategories value=""/>
         <Behavior value="TorrentAAWeaponSwitch"/>
@@ -491,16 +573,14 @@
         <EditorCategories value="Genetron"/>
         <BehaviorLink value="HeavyOutputActive"/>
     </CEffectRemoveBehavior>
-    <CEffectSet id="TorrentHeavyOutputOffSet">
-        <EditorCategories value=""/>
+    <CEffectSet id="TorrentHeavyOutputOffSet" parent="CEffectSetGenetron">
         <EffectArray value="TorrentAAWeaponSwitchHeavyOutputOff"/>
         <EffectArray value="TorrentHeavyOutputOff"/>
     </CEffectSet>
     <CEffectApplyBehavior id="TorrentHeavyOutputOn" parent="CEffectApplyBehaviorGenetronCaster">
         <Behavior value="HeavyOutputActive"/>
     </CEffectApplyBehavior>
-    <CEffectSet id="TorrentHeavyOutputOnSet">
-        <EditorCategories value=""/>
+    <CEffectSet id="TorrentHeavyOutputOnSet" parent="CEffectSetGenetron">
         <EffectArray value="TorrentAAWeaponSwitchHeavyOutputOn"/>
         <EffectArray value="TorrentHeavyOutputOn"/>
     </CEffectSet>
@@ -526,20 +606,6 @@
         <PeriodicEffectArray value="SchematicTransmitISet"/>
         <PeriodicValidator value="CasterAndTargetNotDead"/>
     </CEffectCreatePersistent>
-    <CEffectSet id="SchematicTransmitIS">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="SchematicTransmit"/>
-        <EffectArray value="UploaderChargeStack"/>
-    </CEffectSet>
-    <CEffectSet id="SchematicTransmitISet">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="SchematicTransmitUSet"/>
-        <EffectArray value="SchematicTransmitRS"/>
-        <EffectArray value="SchematicTransmitAS"/>
-        <EffectArray value="UploaderChargeStack"/>
-        <EffectArray value="SchematicTransmitLS"/>
-        <ValidatorArray value="CasterAndTargetNotDead"/>
-    </CEffectSet>
     <CEffectSwitch id="SchematicTransmitLS">
         <EditorCategories value="Race:Genetron"/>
         <CaseArray Validator="UploaderLinkedtoManufacturer" Effect="SchematicTransmitLM"/>
@@ -553,34 +619,17 @@
         <Count value="1"/>
     </CEffectRemoveBehavior>
     <CEffectRemoveBehavior id="SchematicTransmitRL1">
-        <ValidatorArray index="0" value="SchematicTransmitRL2TargetFilters"/>
         <EditorCategories value="Race:Genetron"/>
-        <Marker Link="Effect/SchematicTransmitRL2"/>
         <WhichUnit Value="Caster"/>
         <BehaviorLink value="SchematicTransmitAL1"/>
         <Count value="1"/>
     </CEffectRemoveBehavior>
     <CEffectRemoveBehavior id="SchematicTransmitRL3">
-        <ValidatorArray index="0" value="SchematicTransmitRL2TargetFilters"/>
         <EditorCategories value="Race:Genetron"/>
-        <Marker Link="Effect/SchematicTransmitRL2"/>
         <WhichUnit Value="Caster"/>
         <BehaviorLink value="SchematicTransmitAL3"/>
         <Count value="1"/>
     </CEffectRemoveBehavior>
-    <CEffectSet id="SchematicTransmitRS">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="SchematicTransmitRL1"/>
-        <EffectArray value="SchematicTransmitRL2"/>
-        <EffectArray value="SchematicTransmitRL3"/>
-    </CEffectSet>
-    <CEffectSet id="SchematicTransmitAS">
-        <EditorCategories value="Race:Genetron"/>
-        <Marker Link="Effect/SchematicTransmitRS"/>
-        <EffectArray value="SchematicTransmitAL1"/>
-        <EffectArray value="SchematicTransmitAL2"/>
-        <EffectArray value="SchematicTransmitAL3"/>
-    </CEffectSet>
     <CEffectRemoveBehavior id="SchematicTransmitUM">
         <EditorCategories value="Race:Genetron"/>
         <WhichUnit Value="Caster"/>
@@ -588,32 +637,17 @@
         <Count value="1"/>
     </CEffectRemoveBehavior>
     <CEffectRemoveBehavior id="SchematicTransmitUFS">
-        <ValidatorArray index="0" value="SchematicTransmitUMTargetFilters"/>
         <EditorCategories value="Race:Genetron"/>
-        <Marker Link="Effect/SchematicTransmitUM"/>
         <WhichUnit Value="Caster"/>
         <BehaviorLink value="SchematicTransmitLFS"/>
         <Count value="1"/>
     </CEffectRemoveBehavior>
     <CEffectRemoveBehavior id="SchematicTransmitUAA">
-        <ValidatorArray index="0" value="SchematicTransmitUMTargetFilters"/>
         <EditorCategories value="Race:Genetron"/>
-        <Marker Link="Effect/SchematicTransmitUM"/>
         <WhichUnit Value="Caster"/>
         <BehaviorLink value="SchematicTransmitLAA"/>
         <Count value="1"/>
     </CEffectRemoveBehavior>
-    <CEffectSet id="SchematicTransmitUSet">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="SchematicTransmitUAA"/>
-        <EffectArray value="SchematicTransmitUFS"/>
-        <EffectArray value="SchematicTransmitUM"/>
-    </CEffectSet>
-    <CEffectSet id="StingerDrillLMImpact">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="StingerDrillDMG"/>
-        <EffectArray value="StingerDrillSw"/>
-    </CEffectSet>
     <CEffectCreatePersistent id="StingerDrills">
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="TargetUnit"/>
@@ -659,11 +693,6 @@
         <RechargeVital value="Energy"/>
         <RechargeVitalRate value="45"/>
     </CEffectCreateHealer>
-    <CEffectSet id="StratumMissilePodImpact">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="StratumMissilePodDMG"/>
-        <EffectArray value="TrackingImplant"/>
-    </CEffectSet>
     <CEffectLaunchMissile id="StratumMissilePod" parent="CEffectLaunchMissileGenetron">
         <AmmoUnit value="StratumMissileLauncherWeapon"/>
         <Movers Link="StratumMissileLauncherWeapon" IfRangeLTE="4"/>
@@ -713,137 +742,80 @@
         <PeriodCount value="8"/>
     </CEffectCreatePersistent>
     <CEffectLaunchMissile id="HurricaneMissilesLM" parent="CEffectLaunchMissileGenetron"/>
-    <CEffectCreatePersistent id="RevenantBombCPAccel">
+    <CEffectApplyForce id="JupiterRevenantBombForce">
         <EditorCategories value="Race:Genetron"/>
-        <PeriodicEffectArray value="RevenantBombSpeedSet"/>
-        <PeriodicPeriodArray value="0.0625"/>
-        <Flags index="Channeling" value="1"/>
-        <Flags index="PersistUntilDestroyed" value="1"/>
-    </CEffectCreatePersistent>
-    <CEffectSet id="RevenantBombRunSet">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="RevenantBombTarget"/>
-        <EffectArray value="RevenantBombForceOffset"/>
-        <EffectArray value="RevenantBombCPAccel"/>
-        <EffectArray value="RevenantBombSearchCP"/>
-        <TargetLocationType value="Point"/>
-    </CEffectSet>
-    <CEffectApplyForce id="RevenantBombChannelForce">
-        <EditorCategories value="Race:Genetron"/>
-        <WhichLocation Effect="RevenantBombForceCP" Value="TargetPoint"/>
+        <WhichLocation Value="TargetPoint"/>
         <WhichUnit Value="Caster"/>
         <Amount value="1"/>
     </CEffectApplyForce>
-    <CEffectDamage id="RevenantBombDMG" parent="CEffectDamageGenetronSpell">
+    <CEffectDamage id="JupiterRevenantBombDamage" parent="CEffectDamageGenetronSpell">
         <AttributeBonus index="Armored" value="25"/>
         <Amount value="25"/>
         <Death value="Blast"/>
         <AreaArray Fraction="2"/>
         <AreaArray Radius="1.5" Fraction="1"/>
     </CEffectDamage>
-    <CEffectDestroyPersistent id="RevenantBombDP">
+    <CEffectDestroyPersistent id="JupiterRevenantBombDestroyChannel">
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="TargetPoint"/>
-        <Effect value="RevenantBombSearchCP"/>
+        <Effect value="JupiterRevenantBombChannel"/>
         <Count value="1"/>
         <Radius value="1"/>
     </CEffectDestroyPersistent>
-    <CEffectDestroyPersistent id="RevenantBombDPForce">
-        <EditorCategories value="Race:Genetron"/>
-        <Effect value="RevenantBombForceCP"/>
-        <Count value="1"/>
-        <DebugTrace value="1"/>
-        <Radius value="1000"/>
-    </CEffectDestroyPersistent>
-    <CEffectCreatePersistent id="RevenantBombForceCP">
-        <EditorCategories value="Race:Genetron"/>
-        <WhichLocation Value="CasterUnit"/>
-        <Flags index="PersistUntilDestroyed" value="1"/>
-        <InitialEffect value="RevenantBombChannel"/>
-        <FinalEffect value="RevenantBombCE"/>
-        <PeriodicEffectArray value="RevenantBombChannelForce"/>
-        <PeriodicPeriodArray value="0.0625"/>
-        <PeriodicValidator value="JupiterChannelForce"/>
-    </CEffectCreatePersistent>
-    <CEffectEnumArea id="RevenantBombShellShockedS">
+    <CEffectEnumArea id="JupiterShellShockedSearch">
         <EditorCategories value="Race:Genetron"/>
         <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <AreaArray Radius="1.5" Effect="JupiterShellShocked"/>
     </CEffectEnumArea>
-    <CEffectLaunchMissile id="RevenantBombLM" parent="CEffectLaunchMissileGenetron">
+    <CEffectLaunchMissile id="JupiterRevenantBombLaunchMissile" parent="CEffectLaunchMissileGenetron">
         <ImpactLocation Value="TargetPoint"/>
+        <ImpactEffect value="JupiterRevenantBombImpactSet"/>
+        <AmmoUnit value="RevenantBombLMWeapon"/>
     </CEffectLaunchMissile>
-    <CEffectSet id="RevenantBombLaunchSet">
-        <ValidatorArray value="RevenantLaunchTargetDistances"/>
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="RevenantBombDP"/>
-        <EffectArray value="RevenantBombDestroyForcePersistentDelay"/>
-        <EffectArray value="RevenantBombCooldownFinal"/>
-        <EffectArray value="RevenantBombLM"/>
-        <EffectArray value="testcp"/>
-        <TargetLocationType value="Point"/>
-    </CEffectSet>
-    <CEffectApplyBehavior id="RevenantBombNapalm" parent="CEffectApplyBehaviorGenetronTarget"/>
-    <CEffectCreatePersistent id="RevenantBombNapalmCP">
+    <CEffectApplyBehavior id="JupiterNapalm" parent="CEffectApplyBehaviorGenetronTarget"/>
+    <CEffectCreatePersistent id="JupiterNapalmCreatePersistent">
         <EditorCategories value="Race:Genetron"/>
         <PeriodCount value="21"/>
-        <PeriodicEffectArray value="RevenantBombNapalmSA"/>
+        <PeriodicEffectArray value="JupiterNapalmSearchArea"/>
         <PeriodicPeriodArray value="0.575"/>
     </CEffectCreatePersistent>
-    <CEffectDamage id="RevenantBombNapalmDMG" parent="CEffectDamageGenetronSpell">
+    <CEffectDamage id="JupiterNapalmDamage" parent="CEffectDamageGenetronSpell">
         <AttributeBonus index="Structure" value="4"/>
         <Amount value="4"/>
         <Death value="Fire"/>
     </CEffectDamage>
-    <CEffectEnumArea id="RevenantBombNapalmSA">
+    <CEffectEnumArea id="JupiterNapalmSearchArea">
         <EditorCategories value="Race:Genetron"/>
         <ImpactLocation Value="TargetPoint"/>
         <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
-        <AreaArray Radius="1.5" Effect="RevenantBombNapalm"/>
+        <AreaArray Radius="1.5" Effect="JupiterNapalm"/>
     </CEffectEnumArea>
-    <CEffectCreatePersistent id="RevenantBombForceOffset">
+    <CEffectCreatePersistent id="JupiterRevenantBombForceOffset">
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="CasterUnit"/>
         <PeriodCount value="1"/>
-        <PeriodicEffectArray value="RevenantBombForceCP"/>
-        <PeriodicOffsetArray value="0,5,0"/>
+        <PeriodicEffectArray value="JupiterRevenantBombForce"/>
+        <PeriodicOffsetArray value="0,1,0"/>
     </CEffectCreatePersistent>
-    <CEffectRemoveBehavior id="RevenantBombRB">
-        <EditorCategories value="Race:Genetron"/>
-        <WhichUnit Value="Caster"/>
-        <BehaviorLink value="RevenantBombSpeed"/>
-        <Count value="1"/>
-    </CEffectRemoveBehavior>
-    <CEffectCreatePersistent id="RevenantBombSearchCP">
+    <CEffectCreatePersistent id="JupiterRevenantBombChannel">
         <EditorCategories value="Race:Genetron"/>
         <Flags index="Channeled" value="1"/>
         <Flags index="PersistUntilDestroyed" value="1"/>
         <InitialDelay value="0.0625"/>
-        <InitialEffect value="RevenantBombCooldownInit"/>
-        <PeriodicEffectArray value="RevenantBombLaunchSet"/>
-        <PeriodicPeriodArray value="0.125"/>
+        <InitialEffect value="JupiterRevenantBombCooldownInit"/>
+        <FinalEffect value="JupiterRevenantBombChannelFinalForceMandatory"/>
+        <PeriodicEffectArray value="JupiterRevenantBombLaunchQuerySet"/>
+        <PeriodicEffectArray value="JupiterRevenantBombForceOffset"/>
+        <PeriodicEffectArray value="JupiterSpeed"/>
+        <PeriodicEffectArray value="JupiterSpeedModifyUnit"/>
+        <PeriodicEffectArray value="JupiterStealth"/>
+        <PeriodicPeriodArray value="0.0625"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0"/>
     </CEffectCreatePersistent>
-    <CEffectCreatePersistent id="RevenantBombTarget">
-        <EditorCategories value="Race:Genetron"/>
-    </CEffectCreatePersistent>
-    <CEffectSet id="RevenantBombLMImpact">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="RevenantBombDMGSet"/>
-        <EffectArray value="RevenantBombNapalmCP"/>
-        <TargetLocationType value="Point"/>
-    </CEffectSet>
     <CEffectApplyBehavior id="TrackingImplant" parent="CEffectApplyBehaviorGenetronTarget"/>
-    <CEffectSet id="RiotGunSet">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="TrackingImplant"/>
-        <EffectArray value="RiotGun"/>
-    </CEffectSet>
-    <CEffectSet id="RiotGunSetMunitionsTracker">
-        <ValidatorArray value="TrackingMunitionsApplied"/>
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="TrackingImplant"/>
-        <EffectArray value="RiotGun"/>
-    </CEffectSet>
     <CEffectApplyBehavior id="AnalyzeWeakness" parent="CEffectApplyBehaviorGenetronTarget"/>
     <CEffectEnumArea id="SystemOffloadSA">
         <EditorCategories value="Race:Genetron"/>
@@ -881,12 +853,6 @@
         <ShieldBonus value="3"/>
         <ImpactUnitValidator value="NotInvulnerable"/>
     </CEffectDamage>
-    <CEffectSet id="LaunchShockChargeLS">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="LaunchShockCharge"/>
-        <EffectArray value="ChargeUse"/>
-        <TargetLocationType value="UnitOrPoint"/>
-    </CEffectSet>
     <CEffectModifyUnit id="ShockChargeMU">
         <EditorCategories value="Race:Genetron"/>
         <ImpactUnit Value="Source"/>
@@ -899,26 +865,12 @@
         <SearchFilters value="-;Player,Ally,Missile,Buried,Stasis,Dead,Hidden"/>
         <AreaArray Radius="3" Effect="ShockChargeSet"/>
     </CEffectEnumArea>
-    <CEffectSet id="ShockChargeSet">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="ShockChargeDMG"/>
-        <EffectArray value="ShockChargeZE"/>
-        <EffectArray value="ShockChargeMU"/>
-        <EffectArray value="ShockChargeApplyDecloak"/>
-        <ValidatorArray value="TeslaShockChargeTargetValidators"/>
-    </CEffectSet>
-    <CEffectSet id="TheGreatEqualizerImpact">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="TheGreatEqualizerDMG"/>
-        <EffectArray value="TrackingImplant"/>
-    </CEffectSet>
     <CEffectLaunchMissile id="TheGreatEqualizer" parent="CEffectLaunchMissileGenetron"/>
     <CEffectLaunchMissile id="TheGreatEqualizerLMTM" parent="TheGreatEqualizer">
         <Name value="Effect/Name/TheGreatEqualizerLMTM"/>
         <ValidatorArray index="0" value="TrackingMunitionsApplied"/>
     </CEffectLaunchMissile>
-    <CEffectSet id="VengeanceMissileS">
-        <EditorCategories value="Race:Genetron"/>
+    <CEffectSet id="VengeanceMissileS" parent="CEffectSetGenetron">
         <EffectArray value="VengeanceMissileMU"/>
         <EffectArray value="VengeanceMissileLM"/>
     </CEffectSet>
@@ -1023,15 +975,6 @@
     </CEffectDamage>
     <CEffectApplyBehavior id="IgnitionBlast" parent="CEffectApplyBehaviorGenetronCaster"/>
     <CEffectApplyBehavior id="ProcessingDroneActive" parent="CEffectApplyBehaviorGenetronCaster"/>
-    <CEffectApplyBehavior id="RevenantBombChannel" parent="CEffectApplyBehaviorGenetronCaster"/>
-    <CEffectSet id="RevenantBombSpeedSet">
-        <ValidatorArray value="CasterHasEnergy"/>
-        <ValidatorArray value="RevenantBombSpeedNotMaxed"/>
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="RevenantBombSpeed2"/>
-        <EffectArray value="RevenantBombAccelerationEnergy"/>
-        <EffectArray value="JupiterStealth"/>
-    </CEffectSet>
     <CEffectApplyBehavior id="SchematicTransmitAL1" parent="CEffectApplyBehaviorGenetronCaster"/>
     <CEffectApplyBehavior id="SchematicTransmitAL2" parent="CEffectApplyBehaviorGenetronCaster"/>
     <CEffectApplyBehavior id="SchematicTransmitAL3" parent="CEffectApplyBehaviorGenetronCaster"/>
@@ -1753,14 +1696,4 @@
         <ImpactEffect value="VolatileDischargeCU"/>
         <AmmoUnit value="VolatileDischargeMissile"/>
     </CEffectLaunchMissile>
-    <CEffectCreatePersistent id="testcp">
-        <EditorCategories value="Race:Terran"/>
-        <WhichLocation Value="CasterUnit"/>
-        <OffsetVectorStartLocation Value="CasterUnit"/>
-        <OffsetVectorEndLocation Value="CasterUnit"/>
-        <PeriodCount value="8"/>
-        <PeriodicEffectArray value="RevenantBombFinalForce"/>
-        <PeriodicOffsetArray value="0,2,0"/>
-        <PeriodicPeriodArray value="0.0625"/>
-    </CEffectCreatePersistent>
 </Catalog>
