@@ -52,26 +52,14 @@
     <CEffectCreatePersistent id="BlindingBurstDeath">
         <ValidatorArray value="BlindingBurstCooldownComplete"/>
         <EditorCategories value="Race:Xayid"/>
-        <Marker Link="Effect/BlindingBurstSet"/>
         <WhichLocation Value="SourceUnitOrPoint"/>
         <InitialEffect value="BlindingBurst"/>
     </CEffectCreatePersistent>
-    <CEffectApplyBehavior id="BoreDrill1" parent="CEffectApplyBehaviorGenetronTarget">
-        <Marker Link="Effect/BoreDrill0"/>
-        <Behavior value="BoreDrill"/>
-    </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="BoreDrill2" parent="CEffectApplyBehaviorGenetronTarget">
-        <Marker Link="Effect/BoreDrill0"/>
-    </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="BoreDrill3" parent="CEffectApplyBehaviorGenetronTarget">
-        <Marker Link="Effect/BoreDrill0"/>
-    </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="BoreDrill4" parent="CEffectApplyBehaviorGenetronTarget">
-        <Marker Link="Effect/BoreDrill0"/>
-    </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="BoreDrill5" parent="CEffectApplyBehaviorGenetronTarget">
-        <Marker Link="Effect/BoreDrill0"/>
-    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="BoreDrill1" parent="CEffectApplyBehaviorGenetronTarget"/>
+    <CEffectApplyBehavior id="BoreDrill2" parent="CEffectApplyBehaviorGenetronTarget"/>
+    <CEffectApplyBehavior id="BoreDrill3" parent="CEffectApplyBehaviorGenetronTarget"/>
+    <CEffectApplyBehavior id="BoreDrill4" parent="CEffectApplyBehaviorGenetronTarget"/>
+    <CEffectApplyBehavior id="BoreDrill5" parent="CEffectApplyBehaviorGenetronTarget"/>
     <CEffectSet id="ChargeCannonSet" parent="CEffectSetGenetron">
         <EffectArray value="ChargeCannonDMG"/>
         <EffectArray value="TrackingImplant"/>
@@ -79,9 +67,6 @@
     <CEffectModifyUnit id="AAMLaser">
         <ValidatorArray value="BadgerAAMDefenseTurretUpgraded"/>
         <EditorCategories value="Race:Genetron"/>
-        <Marker Link="Weapon/PointDefenseLaser">
-            <MatchFlags index="Link" value="1"/>
-        </Marker>
         <ModifyFlags index="Hide" value="1"/>
         <ModifyFlags index="NullifyMissile" value="1"/>
         <Cost/>
@@ -317,11 +302,9 @@
         <Death value="Impact"/>
     </CEffectDamage>
     <CEffectCreateUnit id="DisguiseAsSpitfireCU" parent="DisguiseEx3CU">
-        <Marker Link="Effect/DisguiseAsMarineWithoutShieldCU"/>
         <SpawnUnit value="ChangelingSpitfire"/>
     </CEffectCreateUnit>
     <CEffectCreateUnit id="DisguiseAsXayidlingCU" parent="DisguiseEx3CU">
-        <Marker Link="Effect/DisguiseAsMarineWithoutShieldCU"/>
         <SpawnUnit value="ChangelingXayidling"/>
     </CEffectCreateUnit>
     <CEffectSwitch id="DisguiseEx3">
@@ -558,19 +541,17 @@
         <EffectArray value="TrackingImplant"/>
     </CEffectSet>
     <CEffectApplyBehavior id="TorrentAAWeaponSwitchHeavyOutputOff" parent="CEffectApplyBehaviorGenetronCaster">
-        <EditorCategories value=""/>
         <Behavior value="TorrentAAWeaponSwitch"/>
         <Flags index="UseDuration" value="1"/>
         <Duration value="0.42"/>
     </CEffectApplyBehavior>
     <CEffectApplyBehavior id="TorrentAAWeaponSwitchHeavyOutputOn" parent="CEffectApplyBehaviorGenetronCaster">
-        <EditorCategories value=""/>
         <Behavior value="TorrentAAWeaponSwitch"/>
         <Flags index="UseDuration" value="1"/>
         <Duration value="4.2"/>
     </CEffectApplyBehavior>
     <CEffectRemoveBehavior id="TorrentHeavyOutputOff">
-        <EditorCategories value="Genetron"/>
+        <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="HeavyOutputActive"/>
     </CEffectRemoveBehavior>
     <CEffectSet id="TorrentHeavyOutputOffSet" parent="CEffectSetGenetron">
@@ -1009,7 +990,7 @@
         <PeriodicEffectArray value="AcidNestResidualAcidRB"/>
     </CEffectCreatePersistent>
     <CEffectRemoveBehavior id="AcidNestResidualAcidRB">
-        <EditorCategories value=""/>
+        <EditorCategories value="Race:Xayid"/>
         <WhichUnit Value="Source"/>
         <BehaviorLink value="ResidualAcidFate"/>
     </CEffectRemoveBehavior>
@@ -1096,7 +1077,6 @@
     </CEffectLaunchMissile>
     <CEffectLaunchMissile id="BileGlobLAG" parent="BileGlob">
         <Name value="Effect/Name/BileGlobLAG"/>
-        <Marker Link="Effect/BileGlobLMAA"/>
         <Movers Link="BilePitMissileShort" IfRangeLTE="3.25"/>
         <Movers Link="BilePitMissile" IfRangeLTE="8"/>
     </CEffectLaunchMissile>
@@ -1304,7 +1284,6 @@
     </CEffectEnumArea>
     <CEffectEnumArea id="IncendiaryInfusionSAA">
         <EditorCategories value="Race:Zerg"/>
-        <Marker Link="Effect/ExplosiveBloomSAG"/>
         <LaunchLocation Value="TargetUnit"/>
         <ImpactLocation Value="SourceUnit"/>
         <SearchFilters value="Air;Player,Ally,Neutral,Ground,RawResource,HarvestableResource,Missile,Stasis,Dead,Hidden,Invulnerable"/>
@@ -1432,12 +1411,6 @@
         <AreaArray Radius="0.75" Effect="ResidualAcid"/>
         <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
     </CEffectEnumArea>
-    <CEffectDamage id="SuicideCaster">
-        <LaunchLocation Value="CasterUnit"/>
-        <ImpactLocation Value="CasterUnit"/>
-        <Flags index="Kill" value="1"/>
-        <Flags index="NoKillCredit" value="1"/>
-    </CEffectDamage>
     <CEffectSet id="SupportEffectsS">
         <ValidatorArray value="SupportEffectsSTargetFilters"/>
         <EditorCategories value="Race:Zerg"/>
