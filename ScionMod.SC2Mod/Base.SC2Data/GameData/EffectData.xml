@@ -64,13 +64,13 @@
         <EffectArray value="ChargeCannonDMG"/>
         <EffectArray value="TrackingImplant"/>
     </CEffectSet>
-    <CEffectCreatePersistent id="AAMLaser">
+    <CEffectModifyUnit id="AAMLaser">
         <ValidatorArray value="BadgerAAMDefenseTurretUpgraded"/>
         <EditorCategories value="Race:Genetron"/>
-        <WhichLocation Value="TargetUnit"/>
-        <ExpireDelay value="0.0625"/>
-        <ExpireEffect value="Kill"/>
-    </CEffectCreatePersistent>
+        <ModifyFlags index="Hide" value="1"/>
+        <ModifyFlags index="NullifyMissile" value="1"/>
+        <Cost/>
+    </CEffectModifyUnit>
     <CEffectSet id="ChargeCannonSetTM" parent="CEffectSetGenetron">
         <ValidatorArray value="TrackingMunitionsApplied"/>
         <EffectArray value="ChargeCannonDMG"/>
@@ -311,8 +311,21 @@
         <CaseArray Validator="DisguiseAsSpitfire" Effect="DisguiseAsSpitfireCU"/>
         <CaseArray Validator="DisguiseAsXayidling" Effect="DisguiseAsXayidlingCU"/>
     </CEffectSwitch>
-    <CEffectApplyBehavior id="DownloadPhase" parent="CEffectApplyBehaviorGenetronTarget"/>
+    <CEffectApplyBehavior id="DownloadPhase" parent="CEffectApplyBehaviorGenetronTarget">
+        <Flags index="UseDuration" value="1"/>
+        <Duration value="15"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="DownloadPhaseABL" parent="CEffectApplyBehaviorGenetronTarget">
+        <Behavior value="DownloadPhase"/>
+        <Flags index="UseDuration" value="1"/>
+        <Duration value="30"/>
+    </CEffectApplyBehavior>
     <CEffectApplyBehavior id="DownloadPhaseInit" parent="CEffectApplyBehaviorGenetronTarget"/>
+    <CEffectSwitch id="DownloadPhaseSW">
+        <EditorCategories value="Race:Genetron"/>
+        <CaseArray Validator="HaveOutfittingStation" Effect="DownloadPhase"/>
+        <CaseDefault value="DownloadPhaseABL"/>
+    </CEffectSwitch>
     <CEffectEnumArea id="EMPSearch">
         <SearchFilters value="-;Hidden"/>
     </CEffectEnumArea>
