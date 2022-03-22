@@ -140,6 +140,38 @@
         <SpawnEffect value="MassaliskDummyAB"/>
         <SpawnUnit value="MassaliskDummy"/>
     </CEffectCreateUnit>
+    <CEffectCreateUnit id="UploaderCountDummyCreateUnit4x4">
+        <EditorCategories value="Race:Terran"/>
+        <CreateFlags index="OffsetByRadius" value="0"/>
+        <CreateFlags index="Placement" value="0"/>
+        <CreateFlags index="PlacementIgnoreBlockers" value="1"/>
+        <CreateFlags index="PlacementIgnoreCliffTest" value="1"/>
+        <SpawnEffect value="UploaderCountDummyPersistent"/>
+        <SpawnUnit value="Uploader4x4AddonDummy"/>
+        <SpawnOffset value="0,0"/>
+    </CEffectCreateUnit>
+    <CEffectCreatePersistent id="UploaderCountDummyPersistent">
+        <EditorCategories value="Race:Terran"/>
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <PeriodicValidator value="CasterAndTargetNotDead"/>
+        <PeriodicEffectArray value="UploaderCountDummyStack1"/>
+        <PeriodicEffectArray value="UploaderCountDummyStack2"/>
+        <PeriodicEffectArray value="UploaderCountDummyStack3"/>
+        <PeriodicPeriodArray value="0.0625"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0"/>
+        <WhichLocation Value="TargetUnit"/>
+    </CEffectCreatePersistent>
+    <CEffectCreateUnit id="UploaderCountDummyCreateUnit3x3">
+        <EditorCategories value="Race:Terran"/>
+        <CreateFlags index="OffsetByRadius" value="0"/>
+        <CreateFlags index="Placement" value="0"/>
+        <CreateFlags index="PlacementIgnoreBlockers" value="1"/>
+        <CreateFlags index="PlacementIgnoreCliffTest" value="1"/>
+        <SpawnEffect value="UploaderCountDummyPersistent"/>
+        <SpawnUnit value="Uploader3x3AddonDummy"/>
+        <SpawnOffset value="0,0"/>
+    </CEffectCreateUnit>
     <CEffectModifyUnit id="MassaliskDummySelection">
         <EditorCategories value="Race:Zerg"/>
         <ImpactUnit Value="Caster"/>
@@ -312,7 +344,6 @@
         <CaseArray Validator="DisguiseAsXayidling" Effect="DisguiseAsXayidlingCU"/>
     </CEffectSwitch>
     <CEffectApplyBehavior id="DownloadPhase" parent="CEffectApplyBehaviorGenetronTarget"/>
-    <CEffectApplyBehavior id="DownloadPhaseInit" parent="CEffectApplyBehaviorGenetronTarget"/>
     <CEffectEnumArea id="EMPSearch">
         <SearchFilters value="-;Hidden"/>
     </CEffectEnumArea>
@@ -680,6 +711,18 @@
         <Name value="Effect/Name/StratumMissilePodTM"/>
         <ValidatorArray index="0" value="TrackingMunitionsApplied"/>
     </CEffectLaunchMissile>
+    <CEffectDamage id="UploaderCountDummyStack1">
+        <ValidatorArray value="CasterUploaderCount1"/>
+        <EditorCategories value="Race:Terran"/>
+    </CEffectDamage>
+    <CEffectCreatePersistent id="UploaderCountDummyStack2">
+        <ValidatorArray value="CasterUploaderCount2"/>
+        <EditorCategories value="Race:Terran"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="UploaderCountDummyStack3">
+        <ValidatorArray value="CasterUploaderCount3"/>
+        <EditorCategories value="Race:Terran"/>
+    </CEffectCreatePersistent>
     <CEffectModifyUnit id="VengeanceMissileMU">
         <EditorCategories value="Race:Genetron"/>
         <LaunchUnit Value="Caster"/>
