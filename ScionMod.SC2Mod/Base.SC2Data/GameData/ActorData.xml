@@ -1736,15 +1736,6 @@
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <ImpactPhysics Name="Explosion" MatchKeys="Basic" Physics="SiegeTankSiegedForce"/>
     </CActorAction>
-    <CActorModel id="JupiterAttackIndicator">
-        <On Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand Death"/>
-        <On Terms="ActorOrphan" Send="Destroy"/>
-        <On Terms="AnimBracketState.*.AfterClosing; !AnimBracketExitReason ModelSwap; AnimName BSD" Send="Destroy"/>
-        <!--<On Terms="Effect.RevenantBombTarget.Start" Send="Create"/>-->
-        <On Terms="Effect.JupiterShellShockedSearch.Start" Send="Destroy"/>
-        <On Terms="Effect.RevenantBombTarget.Start" Send="TimerSet 4.000000"/>
-        <On Terms="TimerExpired" Send="Destroy"/>
-    </CActorModel>
     <CActorSplat id="JupiterAttackSplat" parent="GuideVisualCircle" unitName="Bogus">
         <On index="0" Terms="Abil.RevenantBomb.Cursor" Send="Create"/>
         <Model value="JupiterAttackSplat"/>
