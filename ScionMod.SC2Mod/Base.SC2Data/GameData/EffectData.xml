@@ -231,12 +231,16 @@
         <PeriodicOffsetArray value="0,1,0"/>
         <PeriodicPeriodArray value="0.0625"/>
     </CEffectCreatePersistent>
-    <CEffectSet id="JupiterRevenantBombImpactSet" parent="CEffectSetGenetron">
-        <EffectArray value="JupiterRevenantBombDamage"/>
-        <EffectArray value="JupiterNapalmCreatePersistent"/>
-        <EffectArray value="JupiterShellShockedSearch"/>
-        <TargetLocationType value="Point"/>
-    </CEffectSet>
+    <CEffectCreatePersistent id="JupiterRevenantBombImpact">
+        <EditorCategories value="Race:Genetron"/>
+        <PeriodCount value="3"/>
+        <PeriodicEffectArray value="JupiterShellShockedSearch"/>
+        <PeriodicEffectArray value="JupiterNapalmCreatePersistent"/>
+        <PeriodicEffectArray value="JupiterRevenantBombDamage"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
     <CEffectSet id="JupiterRevenantBombLaunchQuerySet" parent="CEffectSetGenetron">
         <ValidatorArray value="RevenantLaunchTargetDistances"/>
         <EffectArray value="JupiterRevenantBombDestroyChannel"/>
@@ -780,7 +784,7 @@
     </CEffectEnumArea>
     <CEffectLaunchMissile id="JupiterRevenantBombLaunchMissile" parent="CEffectLaunchMissileGenetron">
         <ImpactLocation Value="TargetPoint"/>
-        <ImpactEffect value="JupiterRevenantBombImpactSet"/>
+        <ImpactEffect value="JupiterRevenantBombImpact"/>
         <AmmoUnit value="RevenantBombLMWeapon"/>
     </CEffectLaunchMissile>
     <CEffectApplyBehavior id="JupiterNapalm" parent="CEffectApplyBehaviorGenetronTarget"/>
@@ -789,6 +793,7 @@
         <PeriodCount value="21"/>
         <PeriodicEffectArray value="JupiterNapalmSearchArea"/>
         <PeriodicPeriodArray value="0.575"/>
+        <InitialDelay value="0.575"/>
     </CEffectCreatePersistent>
     <CEffectDamage id="JupiterNapalmDamage" parent="CEffectDamageGenetronSpell">
         <AttributeBonus index="Structure" value="4"/>
