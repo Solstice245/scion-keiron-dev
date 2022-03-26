@@ -210,6 +210,120 @@
         <ValidatorArray value="NotCitadel"/>
         <ValidatorArray value="NotAegis"/>
     </CEffectSet>
+    <CEffectApplyBehavior id="FuseFusion">
+        <EditorCategories value=""/>
+        <Behavior value="FuseFused"/>
+        <ValidatorArray index="0" value="CanBeFused"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="FuseFusionABData">
+        <EditorCategories value=""/>
+        <Behavior value="FuseFusedData"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="FuseFusionABCaster">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="FuseFusedCaster"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyKinetic id="FuseFusionAK">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Kinetic value="FollowTargetPosition"/>
+    </CEffectApplyKinetic>
+    <CEffectAddTrackedUnit id="FuseFusionATU">
+        <EditorCategories value=""/>
+        <BehaviorLink value="FuseTracker"/>
+        <TrackerUnit Value="Target"/>
+    </CEffectAddTrackedUnit>
+    <CEffectModifyUnit id="FuseFusionHide">
+        <EditorCategories value=""/>
+        <ModifyFlags index="Hide" value="1"/>
+        <ImpactUnit Value="Caster"/>
+    </CEffectModifyUnit>
+    <CEffectSet id="FuseFusionSet">
+        <EditorCategories value=""/>
+        <EffectArray value="FuseFusionHide"/>
+        <EffectArray value="FuseFusionShieldMU"/>
+        <EffectArray value="FuseFusionAK"/>
+        <EffectArray value="FuseFusionTP"/>
+        <EffectArray value="FuseFusionATU"/>
+        <EffectArray value="FuseFusionABCaster"/>
+        <EffectArray value="FuseFusionABData"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="FuseFusionShieldMU">
+        <EditorCategories value=""/>
+        <VitalArray index="Shields">
+            <Change value="0">
+                <AccumulatorArray value="FuseFusionShieldsApply"/>
+            </Change>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectTeleport id="FuseFusionTP">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <MinDistance value="0"/>
+        <TargetLocation Value="TargetUnit"/>
+        <TeleportFlags index="TestFog" value="0"/>
+    </CEffectTeleport>
+    <CEffectRemoveBehavior id="FuseUnfuseRB">
+        <EditorCategories value=""/>
+        <BehaviorLink value="FuseFused"/>
+    </CEffectRemoveBehavior>
+    <CEffectRemoveBehavior id="FuseUnfuse">
+        <EditorCategories value=""/>
+        <BehaviorLink value="FuseFusedData"/>
+    </CEffectRemoveBehavior>
+    <CEffectRemoveBehavior id="FuseUnfuseRBCaster">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <BehaviorLink value="FuseFusedCaster"/>
+    </CEffectRemoveBehavior>
+    <CEffectUserData id="FuseUnfuseData">
+        <EditorCategories value=""/>
+        <Amount value="0">
+            <AccumulatorArray value="FuseUnfuseArithmetic"/>
+        </Amount>
+        <Operation value="Set"/>
+        <EffectSuccess value="FuseUnfuseSet"/>
+        <EffectFailure value="FuseUnfuseSet"/>
+    </CEffectUserData>
+    <CEffectRemoveKinetic id="FuseUnfuseRK">
+        <EditorCategories value=""/>
+        <KineticLink value="FollowTargetPosition"/>
+        <ImpactUnit Value="Caster"/>
+    </CEffectRemoveKinetic>
+    <CEffectSet id="FuseUnfuseSet">
+        <EditorCategories value=""/>
+        <EffectArray value="FuseUnfuseRB"/>
+        <EffectArray value="FuseUnfuseRK"/>
+        <EffectArray value="FuseUnfuseRBCaster"/>
+        <EffectArray value="FuseUnfuseShieldMUCaster"/>
+        <EffectArray value="FuseUnfuseShieldMUTarget"/>
+        <EffectArray value="FuseUnfuseShow"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="FuseUnfuseShieldMUCaster">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Shields">
+            <ChangeFraction value="0.001">
+                <AccumulatorArray value="FuseUnfuseData"/>
+            </ChangeFraction>
+        </VitalArray>
+        <ModifyFlags index="SetVitals" value="1"/>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="FuseUnfuseShieldMUTarget">
+        <EditorCategories value=""/>
+        <VitalArray index="Shields">
+            <ChangeFraction value="0.001">
+                <AccumulatorArray value="FuseUnfuseData"/>
+            </ChangeFraction>
+        </VitalArray>
+        <ModifyFlags index="SetVitals" value="1"/>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="FuseUnfuseShow">
+        <EditorCategories value=""/>
+        <ModifyFlags index="Show" value="1"/>
+        <ImpactUnit Value="Caster"/>
+    </CEffectModifyUnit>
     <CEffectRemoveBehavior id="HarbingerExitJudgementMode">
         <EditorCategories value=""/>
         <BehaviorLink value="HarbingerJudgementMode"/>
