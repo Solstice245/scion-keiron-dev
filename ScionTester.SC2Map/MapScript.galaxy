@@ -1380,6 +1380,9 @@ string gf_TesterLeaderboardStructureUnitTypeToIcon (string lp_unitType) {
     else if (autoA2020FA5_val == "StarportReactor") {
         return "Assets\\Textures\\btn-building-terran-reactor.dds";
     }
+    else if (autoA2020FA5_val == "Aegis") {
+        return "Assets\\Textures\\btn-unit-keiron-aegis.dds";
+    }
     else {
     }
     lv_unit_type_string_words = (lp_unitType);
@@ -1398,6 +1401,12 @@ string gf_TesterLeaderboardStructureUnitTypeToIcon (string lp_unitType) {
     }
     else if (auto4E280D49_val == "Keir") {
         lv_race_string = "keiron";
+    }
+    else if (auto4E280D49_val == "Gen") {
+        lv_race_string = "genetron";
+    }
+    else if (auto4E280D49_val == "Xayi") {
+        lv_race_string = "xayid";
     }
     else {
     }
@@ -1595,7 +1604,7 @@ bool gt_Init_Func (bool testConds, bool runActions) {
     gf_AddUnitData("Myriad", "Assets\\Textures\\btn-unit-keiron-myriad.dds");
     gf_AddUnitData("Inducer", "Assets\\Textures\\btn-unit-keiron-inducer.dds");
     gf_AddUnitData("Titan", "Assets\\Textures\\btn-unit-keiron-titan.dds");
-    gf_AddUnitData("Fuse", "Assets\\Textures\\btn-missing-kaeo.dds");
+    gf_AddUnitData("Fuse", "Assets\\Textures\\btn-unit-keiron-fuse.dds");
     gf_AddUnitData("Echo", "Assets\\Textures\\btn-unit-keiron-echo.dds");
     gf_AddUnitData("Aurora", "Assets\\Textures\\btn-unit-keiron-aurora.dds");
     gf_AddUnitData("Aperture", "Assets\\Textures\\btn-unit-keiron-aperture.dds");
@@ -2689,16 +2698,17 @@ bool gt_InstantBuild_Func (bool testConds, bool runActions) {
     }
 
     UnitSetProgressComplete(EventUnitProgressUnit(), 1, 99);
+    UnitSetProgressComplete(EventUnit(), 1, 99);
     return true;
 }
 
 //--------------------------------------------------------------------------------------------------
 void gt_InstantBuild_Init () {
     gt_InstantBuild = TriggerCreate("gt_InstantBuild_Func");
-    TriggerAddEventUnitArmMagazineProgress(gt_InstantBuild, null, c_unitProgressStageComplete);
+    TriggerAddEventUnitArmMagazineProgress(gt_InstantBuild, null, c_unitProgressStageStart);
     TriggerAddEventUnitConstructProgress(gt_InstantBuild, null, c_unitProgressStageStart);
-    TriggerAddEventUnitResearchProgress(gt_InstantBuild, null, c_unitProgressStageComplete);
-    TriggerAddEventUnitTrainProgress(gt_InstantBuild, null, c_unitProgressStageComplete);
+    TriggerAddEventUnitResearchProgress(gt_InstantBuild, null, c_unitProgressStageStart);
+    TriggerAddEventUnitTrainProgress(gt_InstantBuild, null, c_unitProgressStageStart);
 }
 
 //--------------------------------------------------------------------------------------------------
