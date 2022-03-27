@@ -51,6 +51,7 @@
         <MinDistance value="2"/>
         <PlacementArc value="360"/>
         <TargetLocation Value="TargetUnit"/>
+        <TeleportEffect value="AegisShieldAuraKBCP"/>
     </CEffectTeleport>
     <CEffectTeleport id="AegisRelocateBirth">
         <EditorCategories value="Race:Protoss"/>
@@ -61,6 +62,49 @@
         <TargetLocation Value="CasterPoint"/>
         <TeleportFlags index="TestFog" value="0"/>
     </CEffectTeleport>
+    <CEffectSet id="AegisShieldAuraActivationSet">
+        <EditorCategories value=""/>
+        <EffectArray value="AegisShieldRestore"/>
+        <EffectArray value="AegisShieldAuraKBCP"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="AegisShieldAuraKBAB">
+        <EditorCategories value=""/>
+        <WhichUnit Effect="AegisShieldAuraKBTarget"/>
+        <Behavior value="AegisShieldAuraKB"/>
+    </CEffectApplyBehavior>
+    <CEffectCreatePersistent id="AegisShieldAuraKBCP" parent="CEffectCreatePersistentKeironUnit">
+        <ValidatorArray value="CasterIsAegisShielded"/>
+        <Marker>
+            <MatchFlags index="Id" value="1"/>
+        </Marker>
+        <WhichLocation Value="CasterUnitOrPoint"/>
+        <PeriodCount value="8"/>
+        <PeriodicEffectArray value="AegisShieldAuraKBSA"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="AegisShieldAuraKBFate">
+        <EditorCategories value=""/>
+    </CEffectApplyBehavior>
+    <CEffectRemoveBehavior id="AegisShieldAuraKBRB">
+        <EditorCategories value=""/>
+        <WhichUnit Effect="AegisShieldAuraKBTarget"/>
+        <BehaviorLink value="AegisShieldAuraKB"/>
+    </CEffectRemoveBehavior>
+    <CEffectEnumArea id="AegisShieldAuraKBSA" parent="CEffectSearchAreaKeiron">
+        <SearchFilters value="-;Player,Ally,Structure,Missile,Buried,Stasis,Dead,Hidden,Invulnerable"/>
+        <AreaArray Radius="1" RadiusBonus="1" Effect="AegisShieldAuraKBTarget"/>
+    </CEffectEnumArea>
+    <CEffectCreatePersistent id="AegisShieldAuraKBTarget" parent="CEffectCreatePersistentKeironUnit">
+        <ValidatorArray value="noMarkers"/>
+        <ValidatorArray value="IsNotLarva"/>
+        <ValidatorArray value="IsNotEgg"/>
+        <ValidatorArray value="IsNotPhasedUnit"/>
+        <ValidatorArray value="IsNotWarpingIn"/>
+        <ValidatorArray value="IsNotEggUnit"/>
+        <ValidatorArray value="NotAbducted"/>
+        <ValidatorArray value="NoGravitonBeamInProgress"/>
+        <InitialEffect value="AegisShieldAuraKBCU"/>
+    </CEffectCreatePersistent>
     <CEffectApplyBehavior id="AegisShieldAuraReveal">
         <EditorCategories value="Race:Protoss"/>
     </CEffectApplyBehavior>
@@ -472,6 +516,51 @@
         <Player Value="Caster"/>
     </CEffectIssueOrder>
     <CEffectApplyBehavior id="PulsarDampener" parent="CEffectApplyBehaviorKeironTarget"/>
+    <CEffectCreateUnit id="AegisShieldAuraKBCU">
+        <EditorCategories value=""/>
+        <WhichLocation Value="CasterUnit"/>
+        <Origin Value="TargetUnit"/>
+        <CreateFlags index="Birth" value="0"/>
+        <CreateFlags index="DropOff" value="0"/>
+        <CreateFlags index="PlacementIgnoreBlockers" value="1"/>
+        <CreateFlags index="Precursor" value="1"/>
+        <CreateFlags index="ProvideFood" value="0"/>
+        <CreateFlags index="TechComplete" value="0"/>
+        <CreateFlags index="UseFood" value="0"/>
+        <CreateFlags index="NormalizeSpawnOffset" value="0"/>
+        <SpawnOwner Value="Neutral"/>
+        <SpawnEffect value="AegisShieldAuraKBCUSet"/>
+        <SpawnRange value="14"/>
+        <SpawnOffset value="0,-10"/>
+        <TypeFallbackUnit Value="Target"/>
+    </CEffectCreateUnit>
+    <CEffectSet id="AegisShieldAuraKBCUSet">
+        <EditorCategories value=""/>
+        <EffectArray value="AegisShieldAuraKBFate"/>
+        <EffectArray value="AegisShieldAuraKBAB"/>
+        <EffectArray value="AegisShieldAuraKBLM"/>
+    </CEffectSet>
+    <CEffectLaunchMissile id="AegisShieldAuraKBLM">
+        <ValidatorArray index="0" value="AegisShieldAuraKBTargetNotDead"/>
+        <EditorCategories value=""/>
+        <LaunchLocation Effect="AegisShieldAuraKBTarget" Value="TargetUnit"/>
+        <ImpactEffect value="AegisShieldAuraKBImpactDelay"/>
+        <Flags index="2D" value="1"/>
+        <Flags index="TravelValidation" value="1"/>
+        <Flags index="ValidateAbil" value="0"/>
+        <Flags index="ValidateBenign" value="0"/>
+        <Flags index="ValidateTeleport" value="0"/>
+        <Flags index="ValidateWeapon" value="0"/>
+        <Movers Link="UnitKnockbackMover5"/>
+        <DeathType value="Unknown"/>
+    </CEffectLaunchMissile>
+    <CEffectCreatePersistent id="AegisShieldAuraKBImpactDelay">
+        <EditorCategories value=""/>
+        <WhichLocation Effect="AegisShieldAuraKBTarget" Value="TargetUnit"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="AegisShieldAuraKBRB"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
     <CEffectRemoveBehavior id="UmbraShieldCompulsion">
         <ValidatorArray index="0" value="NotCloaked"/>
         <ValidatorArray value="NotEMPed"/>

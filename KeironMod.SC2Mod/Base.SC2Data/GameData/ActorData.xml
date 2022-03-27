@@ -116,6 +116,20 @@
         <HostSiteOps Ops="SOpAttachOriginStationary"/>
         <On Terms="Abil.AegisRelocate.SourceCastStart" Send="Create"/>
     </CActorSound>
+    <CActorModel id="AegisShieldAlly" parent="ModelAnimationStyleContinuousUNIT">
+        <Filter index="Enemy" value="1"/>
+        <On Terms="Behavior.AegisShieldAura.On" Send="Create"/>
+        <On Terms="Behavior.AegisShieldAura.Off" Send="AnimBracketStop BSD"/>
+        <On Terms="ActorCreation" Send="SetOpacity"/>
+        <On Terms="ActorCreation" Send="SetOpacity 1.000000 1.000000"/>
+        <On Terms="ActorCreation" Send="SetTintColor {255,255,255 3.000000}"/>
+        <On Terms="ActorCreation" Send="SetTintColor 255,255,255 2.000000"/>
+        <HostSiteOps Ops="SOpMoveDownBy2 SOpMoveDownBy2 SOpMoveDownBy2"/>
+        <Model value="AegisShield"/>
+        <ModelFlags index="AllowHitTest" value="0"/>
+        <ModelFlags index="AutomateGlobalLoops" value="1"/>
+        <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
+    </CActorModel>
     <CActorUnit id="Fuse" parent="GenericUnitKeiron" unitName="Fuse">
         <On index="69" Terms="UnitConstruction.Fuse.Start" Send="Create KeironMaterializeModelAirSmall"/>
         <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMedium" SoundLink="KeironUnit_Death" VoiceLink="AuroraDeathVoice"/>
@@ -135,6 +149,19 @@
         <On Terms="ActorCreation" Send="TimerSet 0.031250"/>
         <On Terms="TimerExpired" Send="TimerSet 0.125000"/>
         <On Terms="TimerExpired" Target="_Unit" Send="HaloStart"/>
+    </CActorSimple>
+    <CActorSimple id="AegisShieldAuraKBAnim">
+        <On Terms="Behavior.AegisShieldAuraKB.On; ValidateUnit IsNotConstructing" Send="Create"/>
+        <On Terms="ActorCreation" Target="_Unit" Send="AnimClear Attack"/>
+        <On Terms="ActorCreation" Target="_Unit" Send="AnimClear AttackReady"/>
+        <On Terms="ActorCreation" Target="_Unit" Send="AnimClear AttackLeft"/>
+        <On Terms="ActorCreation" Target="_Unit" Send="AnimClear AttackRight"/>
+        <On Terms="ActorCreation" Target="_Unit" Send="AnimPlay KnockbackFlail Flail PlayForever,RandomStartOffset 0.100000 0.100000"/>
+        <On Terms="ActorCreation" Send="TimerSet 3.500000 KnockbackDelay"/>
+        <On Terms="TimerExpired; TimerName KnockbackDelay" Target="_Unit" Send="AnimClear KnockbackFlail"/>
+        <On Terms="TimerExpired; TimerName KnockbackDelay" Send="Destroy"/>
+        <On Terms="Behavior.AegisShieldAuraKB.Off" Target="_Unit" Send="AnimClear KnockbackFlail"/>
+        <On Terms="Behavior.AegisShieldAuraKB.Off" Send="Destroy"/>
     </CActorSimple>
     <!--                                                                                         -->
     <!--                                                                                         -->
@@ -434,7 +461,9 @@
         <ModelFlags index="OutlineEmitter" value="0"/>
         <ModelFlags index="OutlineOccluder" value="1"/>
     </CActorUnit>
-    <CActorModel id="AegisShield" parent="ModelAnimationStyleContinuousUNIT">
+    <CActorModel id="AegisShieldEnemy" parent="ModelAnimationStyleContinuousUNIT">
+        <Filter index="Self" value="1"/>
+        <Filter index="Ally" value="1"/>
         <On Terms="Behavior.AegisShieldAura.On" Send="Create"/>
         <On Terms="Behavior.AegisShieldAura.Off" Send="AnimBracketStop BSD"/>
         <On Terms="ActorCreation" Send="SetOpacity"/>
@@ -442,6 +471,7 @@
         <On Terms="ActorCreation" Send="SetTintColor {255,255,255 3.000000}"/>
         <On Terms="ActorCreation" Send="SetTintColor 255,255,255 2.000000"/>
         <HostSiteOps Ops="SOpMoveDownBy2 SOpMoveDownBy2 SOpMoveDownBy2"/>
+        <Model value="AegisShield"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
         <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
     </CActorModel>
