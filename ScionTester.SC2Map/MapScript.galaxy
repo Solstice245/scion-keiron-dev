@@ -859,6 +859,9 @@ void gf_DeleteAllTesterUnits () {
     unitgroup auto5C4A9C34_g;
     int auto5C4A9C34_u;
     unit auto5C4A9C34_var;
+    unitgroup autoFDB84905_g;
+    int autoFDB84905_u;
+    unit autoFDB84905_var;
 
     // Implementation
     gf_RemoveNeutralStructures();
@@ -906,6 +909,13 @@ void gf_DeleteAllTesterUnits () {
         auto5C4A9C34_var = UnitGroupUnitFromEnd(auto5C4A9C34_g, auto5C4A9C34_u);
         if (auto5C4A9C34_var == null) { break; }
         UnitRemove(auto5C4A9C34_var);
+    }
+    autoFDB84905_g = UnitGroup("Fuse", c_playerAny, RegionEntireMap(), UnitFilter(0, 0, 0, 0), 0);
+    autoFDB84905_u = UnitGroupCount(autoFDB84905_g, c_unitCountAll);
+    for (;; autoFDB84905_u -= 1) {
+        autoFDB84905_var = UnitGroupUnitFromEnd(autoFDB84905_g, autoFDB84905_u);
+        if (autoFDB84905_var == null) { break; }
+        UnitRemove(autoFDB84905_var);
     }
 }
 
@@ -1585,6 +1595,7 @@ bool gt_Init_Func (bool testConds, bool runActions) {
     gf_AddUnitData("Myriad", "Assets\\Textures\\btn-unit-keiron-myriad.dds");
     gf_AddUnitData("Inducer", "Assets\\Textures\\btn-unit-keiron-inducer.dds");
     gf_AddUnitData("Titan", "Assets\\Textures\\btn-unit-keiron-titan.dds");
+    gf_AddUnitData("Fuse", "Assets\\Textures\\btn-missing-kaeo.dds");
     gf_AddUnitData("Echo", "Assets\\Textures\\btn-unit-keiron-echo.dds");
     gf_AddUnitData("Aurora", "Assets\\Textures\\btn-unit-keiron-aurora.dds");
     gf_AddUnitData("Aperture", "Assets\\Textures\\btn-unit-keiron-aperture.dds");
@@ -2633,6 +2644,12 @@ bool gt_TesterResult_Func (bool testConds, bool runActions) {
         if (autoF8A1256B_var == null) { break; }
         lv_mineral_count += UnitTypeGetCost(UnitGetType(autoF8A1256B_var), c_unitCostMinerals);
         lv_gas_count += UnitTypeGetCost(UnitGetType(autoF8A1256B_var), c_unitCostVespene);
+        if ((UnitBehaviorCount(autoF8A1256B_var, "FuseFused") > 0)) {
+            lv_winning_count += 1;
+            lv_mineral_count += UnitTypeGetCost("Fuse", c_unitCostMinerals);
+            lv_gas_count += UnitTypeGetCost("Fuse", c_unitCostVespene);
+        }
+
     }
     lv_food_count = PlayerGetPropertyInt(lv_winning_player, c_playerPropSuppliesUsed);
     TextExpressionSetToken("Param/Expression/A0DACC17", "A", lv_winning_text);

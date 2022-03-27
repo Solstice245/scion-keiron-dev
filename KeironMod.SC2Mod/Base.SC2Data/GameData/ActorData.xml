@@ -120,13 +120,22 @@
         <On index="69" Terms="UnitConstruction.Fuse.Start" Send="Create KeironMaterializeModelAirSmall"/>
         <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMedium" SoundLink="KeironUnit_Death" VoiceLink="AuroraDeathVoice"/>
         <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
-        <BarOffset value="50"/>
-        <BarWidth value="72"/>
+        <BarOffset value="40"/>
     </CActorUnit>
     <CActorSound id="CitadelChargeFinish" parent="SoundOneShot">
         <On Terms="AbilMorph.CitadelCharge.Finish" Send="Create"/>
         <On Terms="AbilMorph.CitadelCharge.Cancel" Send="Destroy"/>
     </CActorSound>
+    <CActorSimple id="FusionHalo">
+        <On Terms="Behavior.FuseFused.On" Send="Create"/>
+        <On Terms="ActorCreation" Target="_Unit" Send="HaloSetColor 255,255,0"/>
+        <On Terms="ActorCreation" Target="_Unit" Send="HaloStart"/>
+        <On Terms="Behavior.FuseFused.Off" Target="_Unit" Send="HaloStop"/>
+        <On Terms="Behavior.FuseFused.Off" Send="Destroy"/>
+        <On Terms="ActorCreation" Send="TimerSet 0.031250"/>
+        <On Terms="TimerExpired" Send="TimerSet 0.125000"/>
+        <On Terms="TimerExpired" Target="_Unit" Send="HaloStart"/>
+    </CActorSimple>
     <!--                                                                                         -->
     <!--                                                                                         -->
     <!-- To Be Sorted Through ================================================================== -->

@@ -210,10 +210,20 @@
         <ValidatorArray value="NotCitadel"/>
         <ValidatorArray value="NotAegis"/>
     </CEffectSet>
-    <CEffectApplyBehavior id="FuseFusion">
+    <CEffectCreatePersistent id="FuseFusion">
+        <ValidatorArray value="CanBeFused"/>
+        <ValidatorArray value="TargetIsNotFused"/>
+        <EditorCategories value=""/>
+        <WhichLocation Value="TargetUnit"/>
+        <ExpireDelay value="0.0625"/>
+        <ExpireEffect value="FuseFusionCooldown"/>
+        <PeriodCount value="2"/>
+        <PeriodicEffectArray value="FuseFusionAB"/>
+        <PeriodicEffectArray value="FuseFusionSelection"/>
+    </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="FuseFusionAB">
         <EditorCategories value=""/>
         <Behavior value="FuseFused"/>
-        <ValidatorArray index="0" value="CanBeFused"/>
     </CEffectApplyBehavior>
     <CEffectApplyBehavior id="FuseFusionABData">
         <EditorCategories value=""/>
@@ -291,6 +301,12 @@
         <KineticLink value="FollowTargetPosition"/>
         <ImpactUnit Value="Caster"/>
     </CEffectRemoveKinetic>
+    <CEffectModifyUnit id="FuseUnfuseSelectionCooldown">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="FuseFusion,Execute" CooldownOperation="Add" CooldownTimeUse="5"/>
+        <SelectTransferUnit Value="Target"/>
+    </CEffectModifyUnit>
     <CEffectSet id="FuseUnfuseSet">
         <EditorCategories value=""/>
         <EffectArray value="FuseUnfuseRB"/>
@@ -299,6 +315,7 @@
         <EffectArray value="FuseUnfuseShieldMUCaster"/>
         <EffectArray value="FuseUnfuseShieldMUTarget"/>
         <EffectArray value="FuseUnfuseShow"/>
+        <EffectArray value="FuseUnfuseSelectionCooldown"/>
     </CEffectSet>
     <CEffectModifyUnit id="FuseUnfuseShieldMUCaster">
         <EditorCategories value=""/>
@@ -323,6 +340,18 @@
         <EditorCategories value=""/>
         <ModifyFlags index="Show" value="1"/>
         <ImpactUnit Value="Caster"/>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="FuseFusionSelection">
+        <EditorCategories value=""/>
+        <Cost/>
+        <SelectTransferUnit Value="Caster"/>
+        <SelectTransferFlags index="DeselectSource" value="1"/>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="FuseFusionCooldown">
+        <EditorCategories value=""/>
+        <Cost Abil="FuseFusion,Execute" CooldownOperation="Set" CooldownTimeUse="0.0625"/>
+        <SelectTransferUnit Value="Caster"/>
+        <SelectTransferFlags index="DeselectSource" value="1"/>
     </CEffectModifyUnit>
     <CEffectRemoveBehavior id="HarbingerExitJudgementMode">
         <EditorCategories value=""/>
