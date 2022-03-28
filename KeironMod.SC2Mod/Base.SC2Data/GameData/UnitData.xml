@@ -239,12 +239,11 @@
     <CUnit id="Fuse" parent="CUnitKeironFlyer">
         <Attributes index="Light" value="1"/>
         <Attributes index="Biological" value="1"/>
-        <Attributes index="Mechanical" value="1"/>
         <LifeStart value="80"/>
         <LifeMax value="80"/>
         <LifeArmorName value="Unit/LifeArmorName/KeironBiologicalArmor"/>
-        <ShieldsStart value="125"/>
-        <ShieldsMax value="125"/>
+        <ShieldsStart value="150"/>
+        <ShieldsMax value="150"/>
         <Speed value="4"/>
         <Acceleration value="4"/>
         <StationaryTurningRate value="1350"/>
@@ -857,6 +856,7 @@
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
+            <LayoutButtons Face="CancelUpgradeMorph" Type="AbilCmd" AbilCmd="CitadelCharge,Cancel" Row="2" Column="4"/>
             <LayoutButtons Face="SelectBuilderKeiron" Type="SelectBuilder" Row="1" Column="3"/>
             <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="RallyCommand,Rally1" Row="1" Column="4"/>
             <LayoutButtons Face="Converter" Type="AbilCmd" AbilCmd="KeironCitadelTrain,Train1" Row="0" Column="0"/>
@@ -878,7 +878,6 @@
             </LayoutButtons>
             <LayoutButtons Face="Aegis" Type="AbilCmd" AbilCmd="KeironCitadelAegisTrain,Train1" Row="0" Column="1"/>
             <LayoutButtons Face="ChargeCitadel" Type="AbilCmd" AbilCmd="CitadelCharge,Execute" Row="0" Column="4"/>
-            <LayoutButtons Face="CancelUpgradeMorph" Type="AbilCmd" AbilCmd="CitadelCharge,Cancel" Row="2" Column="4"/>
         </CardLayouts>
         <CardLayouts CardId="0002">
             <LayoutButtons Face="MaterializePariah" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train1" Row="0" Column="0"/>
@@ -894,8 +893,9 @@
         </CardLayouts>
         <CardLayouts CardId="0003">
             <LayoutButtons Face="MaterializeEcho" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train10" Row="0" Column="0"/>
-            <LayoutButtons Face="MaterializeAurora" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train11" Row="0" Column="1"/>
-            <LayoutButtons Face="MaterializeAperture" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train12" Row="0" Column="2"/>
+            <LayoutButtons Face="MaterializeFuse" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train17" Row="0" Column="1"/>
+            <LayoutButtons Face="MaterializeAurora" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train11" Row="0" Column="2"/>
+            <LayoutButtons Face="MaterializeAperture" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train12" Row="0" Column="3"/>
             <LayoutButtons Face="MaterializeHarbinger" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train13" Row="1" Column="0"/>
             <LayoutButtons Face="MaterializeParadox" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train14" Row="1" Column="1"/>
             <LayoutButtons Face="MaterializeParagon" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train15" Row="2" Column="0"/>
@@ -913,7 +913,6 @@
         <AbilArray Link="CitadelCharge"/>
         <AbilArray Link="CitadelEnergize"/>
         <BehaviorArray Link="CitadelPowerSource"/>
-        <BehaviorArray Link="CitadelCharged"/>
         <Radius value="2"/>
         <SeparationRadius value="2"/>
         <FlagArray index="PreventReveal" value="1"/>
@@ -947,8 +946,15 @@
         <EnergyMax value="100"/>
         <EnergyRegenRate value="0.5625"/>
         <CardLayouts index="0">
-            <LayoutButtons index="7" Face="CitadelEnergize" Type="AbilCmd" AbilCmd="CitadelEnergize,Execute" Row="2" Column="2"/>
-            <LayoutButtons index="8" Face="Aegis" Type="AbilCmd" AbilCmd="KeironCitadelAegisTrain,Train1" Row="0" Column="1"/>
+            <LayoutButtons index="7">
+                <Face value="CitadelEnergize"/>
+                <Type value="AbilCmd"/>
+                <AbilCmd value="CitadelEnergize,Execute"/>
+                <SubmenuCardId value=""/>
+                <SubmenuIsSticky value="0"/>
+                <Row value="2"/>
+                <Column value="2"/>
+            </LayoutButtons>
             <LayoutButtons index="9" removed="1"/>
         </CardLayouts>
         <CostResource index="Minerals" value="475"/>

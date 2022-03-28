@@ -482,7 +482,7 @@
     <CAbilTrain id="KeironCitadelAegisTrain">
         <EditorCategories value="AbilityorEffectType:Units"/>
         <Activity value="UI/Materializing"/>
-        <InfoArray index="Train1" Time="160">
+        <InfoArray index="Train1" Time="100">
             <Button DefaultButtonFace="Aegis" Requirements="AegisRequirements"/>
             <Unit value="Aegis"/>
         </InfoArray>
@@ -666,6 +666,18 @@
             </Charge>
             <Cooldown Link="Abil/KeironCitadelMaterializeParagon" Location="Player"/>
             <Button DefaultButtonFace="MaterializeParagon">
+                <Flags index="AllowMinimap" value="1"/>
+            </Button>
+        </InfoArray>
+        <InfoArray index="Train17" Time="5" Unit="Fuse">
+            <Charge>
+                <CountMax value="500000"/>
+                <CountUse value="1"/>
+                <Link value="Abil/KeironCitadelMaterializeEcho"/>
+                <Location value="Player"/>
+            </Charge>
+            <Cooldown Link="Abil/KeironCitadelMaterializeEcho" Location="Player"/>
+            <Button DefaultButtonFace="MaterializeFuse">
                 <Flags index="AllowMinimap" value="1"/>
             </Button>
         </InfoArray>
@@ -875,7 +887,9 @@
     <CAbilEffectInstant id="FuseUnfuse">
         <EditorCategories value="AbilityorEffectType:Units"/>
         <Flags index="Transient" value="1"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="Unfuse" Requirements="FuseUnfuse"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Unfuse" Requirements="FuseUnfuse">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
         <TargetFilters value="-;Ally,Neutral,Enemy,Structure,Stasis,Dead,Hidden"/>
         <AINotifyEffect value="FuseUnfuseRB"/>
     </CAbilEffectInstant>
