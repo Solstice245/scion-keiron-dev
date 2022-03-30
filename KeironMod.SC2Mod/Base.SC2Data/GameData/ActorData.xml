@@ -116,10 +116,84 @@
         <HostSiteOps Ops="SOpAttachOriginStationary"/>
         <On Terms="Abil.AegisRelocate.SourceCastStart" Send="Create"/>
     </CActorSound>
+    <CActorModel id="AegisShieldAlly" parent="ModelAnimationStyleContinuousUNIT">
+        <Filter index="Enemy" value="1"/>
+        <On Terms="Behavior.AegisShieldAura.On" Send="Create"/>
+        <On Terms="Behavior.AegisShieldAura.Off" Send="AnimBracketStop BSD"/>
+        <On Terms="ActorCreation" Send="SetOpacity"/>
+        <On Terms="ActorCreation" Send="SetOpacity 1.000000 1.000000"/>
+        <On Terms="ActorCreation" Send="SetTintColor {255,255,255 3.000000}"/>
+        <On Terms="ActorCreation" Send="SetTintColor 255,255,255 2.000000"/>
+        <HostSiteOps Ops="SOpMoveDownBy2 SOpMoveDownBy2 SOpMoveDownBy2"/>
+        <Model value="AegisShield"/>
+        <ModelFlags index="AllowHitTest" value="0"/>
+        <ModelFlags index="AutomateGlobalLoops" value="1"/>
+        <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
+    </CActorModel>
+    <CActorUnit id="Fuse" parent="GenericUnitKeiron" unitName="Fuse">
+        <On index="69" Terms="UnitConstruction.Fuse.Start" Send="Create KeironMaterializeModelAirSmall"/>
+        <On Terms="Effect.FuseUnfuseShow.Start" Send="SetVisibility"/>
+        <On Terms="Effect.FuseUnfuseSelectionCooldown.Start" Send="SetVisibility 1"/>
+        <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMedium" SoundLink="KeironUnit_Death"/>
+        <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
+        <BarOffset value="40"/>
+    </CActorUnit>
     <CActorSound id="CitadelChargeFinish" parent="SoundOneShot">
         <On Terms="AbilMorph.CitadelCharge.Finish" Send="Create"/>
         <On Terms="AbilMorph.CitadelCharge.Cancel" Send="Destroy"/>
     </CActorSound>
+    <CActorSound id="Fuse_Impact" parent="SoundOneShot">
+        <On Terms="Behavior.FuseFused.On" Send="Create"/>
+    </CActorSound>
+    <CActorSound id="Fuse_End" parent="SoundOneShot">
+        <On Terms="Behavior.FuseFused.Off" Send="Create"/>
+    </CActorSound>
+    <CActorSimple id="AegisShieldAuraKBAnim">
+        <On Terms="Behavior.AegisShieldAuraKB.On; ValidateUnit IsNotConstructing" Send="Create"/>
+        <On Terms="ActorCreation" Target="_Unit" Send="AnimClear Attack"/>
+        <On Terms="ActorCreation" Target="_Unit" Send="AnimClear AttackReady"/>
+        <On Terms="ActorCreation" Target="_Unit" Send="AnimClear AttackLeft"/>
+        <On Terms="ActorCreation" Target="_Unit" Send="AnimClear AttackRight"/>
+        <On Terms="ActorCreation" Target="_Unit" Send="AnimPlay KnockbackFlail Flail PlayForever,RandomStartOffset 0.100000 0.100000"/>
+        <On Terms="ActorCreation" Send="TimerSet 3.500000 KnockbackDelay"/>
+        <On Terms="TimerExpired; TimerName KnockbackDelay" Target="_Unit" Send="AnimClear KnockbackFlail"/>
+        <On Terms="TimerExpired; TimerName KnockbackDelay" Send="Destroy"/>
+        <On Terms="Behavior.AegisShieldAuraKB.Off" Target="_Unit" Send="AnimClear KnockbackFlail"/>
+        <On Terms="Behavior.AegisShieldAuraKB.Off" Send="Destroy"/>
+    </CActorSimple>
+    <CActorModel id="FusionBuff" parent="ModelAnimationStyleContinuousUNIT">
+        <On Terms="Behavior.FuseFused.On" Send="Create"/>
+        <On Terms="Behavior.FuseFused.Off" Send="AnimBracketStop BSD"/>
+        <HostSiteOps Ops="SOpAttachCenter"/>
+        <MaxScale value="2.250000"/>
+        <AutoScaleFactor value="1.000000"/>
+    </CActorModel>
+    <CActorSound id="Fuse_Cast" parent="SoundOneShot">
+        <On Terms="Abil.FuseFusion.SourceCastStart" Send="Create"/>
+    </CActorSound>
+    <CActorBeamSimple id="KeironFusionBeam" parent="BeamSimpleAnimationStyleOneShot">
+        <On Terms="Effect.FuseFusion.Start; At Target" Send="Create"/>
+        <ModelFlags index="AutomateGlobalLoops" value="1"/>
+        <HostLaunchSiteOps Ops="SOpCasterUnit" HoldPosition="1" HoldRotation="1"/>
+        <HostImpactSiteOps Ops="SOpAttachCenter"/>
+    </CActorBeamSimple>
+    <CActorBeamSimple id="KeironFusionEndBeam" parent="BeamSimpleAnimationStyleOneShot">
+        <On Terms="Effect.FuseUnfuseSet.Start; At Caster" Send="Create"/>
+        <Model value="KeironFusionBeam"/>
+        <ModelFlags index="AutomateGlobalLoops" value="1"/>
+        <HostLaunchSiteOps Ops="SOpAttachCenter"/>
+        <HostImpactSiteOps Ops="SOpCasterUnit"/>
+    </CActorBeamSimple>
+    <!--<CActorSimple id="FusionHalo">
+        <On Terms="Behavior.FuseFused.On" Send="Create"/>
+        <On Terms="ActorCreation" Target="_Unit" Send="HaloSetColor 255,255,0"/>
+        <On Terms="ActorCreation" Target="_Unit" Send="HaloStart"/>
+        <On Terms="Behavior.FuseFused.Off" Target="_Unit" Send="HaloStop"/>
+        <On Terms="Behavior.FuseFused.Off" Send="Destroy"/>
+        <On Terms="ActorCreation" Send="TimerSet 0.031250"/>
+        <On Terms="TimerExpired" Send="TimerSet 0.125000"/>
+        <On Terms="TimerExpired" Target="_Unit" Send="HaloStart"/>
+    </CActorSimple>-->
     <!--                                                                                         -->
     <!--                                                                                         -->
     <!-- To Be Sorted Through ================================================================== -->
@@ -418,7 +492,9 @@
         <ModelFlags index="OutlineEmitter" value="0"/>
         <ModelFlags index="OutlineOccluder" value="1"/>
     </CActorUnit>
-    <CActorModel id="AegisShield" parent="ModelAnimationStyleContinuousUNIT">
+    <CActorModel id="AegisShieldEnemy" parent="ModelAnimationStyleContinuousUNIT">
+        <Filter index="Self" value="1"/>
+        <Filter index="Ally" value="1"/>
         <On Terms="Behavior.AegisShieldAura.On" Send="Create"/>
         <On Terms="Behavior.AegisShieldAura.Off" Send="AnimBracketStop BSD"/>
         <On Terms="ActorCreation" Send="SetOpacity"/>
@@ -426,6 +502,7 @@
         <On Terms="ActorCreation" Send="SetTintColor {255,255,255 3.000000}"/>
         <On Terms="ActorCreation" Send="SetTintColor 255,255,255 2.000000"/>
         <HostSiteOps Ops="SOpMoveDownBy2 SOpMoveDownBy2 SOpMoveDownBy2"/>
+        <Model value="AegisShield"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
         <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
     </CActorModel>

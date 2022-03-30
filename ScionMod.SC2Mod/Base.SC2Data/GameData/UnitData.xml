@@ -25,7 +25,6 @@
     <CUnit default="1" id="CStructureGenetron" parent="CBaseGenetron">
         <Facing value="45"/>
         <FlagArray index="Turnable" value="0"/>
-        <FlagArray index="Movable" value="0"/>
         <FlagArray index="PreventDefeat" value="1"/>
         <FlagArray index="PenaltyRevealed" value="1"/>
         <FlagArray index="TownAlert" value="1"/>
@@ -35,6 +34,7 @@
         <Collide index="Burrow" value="1"/>
         <Collide index="Structure" value="1"/>
         <Collide index="RoachBurrow" value="1"/>
+        <Collide index="Small" value="1"/>
         <Attributes index="Armored" value="1"/>
         <Attributes index="Structure" value="1"/>
         <LifeArmorName value="Unit/LifeArmorName/MechStructureArmor"/>
@@ -82,7 +82,6 @@
         <Collide index="Ground" value="0"/>
         <Collide index="ForceField" value="0"/>
         <Collide index="Flying" value="1"/>
-        <LifeArmor value="2"/>
         <LifeArmorName value="Unit/LifeArmorName/MechAirPlating"/>
         <Mover value="Fly"/>
         <Speed value="2.75"/>
@@ -419,10 +418,10 @@
         <AbilArray Link="Rally"/>
         <AbilArray Link="BuildAircraft"/>
         <AbilArray Link="UploaderSmartLink"/>
+        <AbilArray Link="UploaderAddonDummyBuild"/>
         <BehaviorArray Link="SchematicTransmit"/>
         <BehaviorArray Link="SchematicTransmit2"/>
         <BehaviorArray Link="SchematicTransmit3"/>
-        <BehaviorArray Link="UploaderStackCountDummy"/>
         <Radius value="1.875"/>
         <Footprint value="Footprint4x4ContourReduced"/>
         <PlacementFootprint value="Footprint4x4Contour"/>
@@ -450,6 +449,7 @@
             <LayoutButtons Face="Halt" Type="AbilCmd" AbilCmd="BuildInProgress,Halt" Row="2" Column="3"/>
             <LayoutButtons Face="SelectBuilder" Type="SelectBuilder" Row="1" Column="3"/>
         </CardLayouts>
+        <EffectArray index="Create" value="UploaderCountDummyCreateUnit4x4"/>
     </CUnit>
     <CUnit id="Eroder" parent="CUnitXayid">
         <LifeStart value="200"/>
@@ -475,7 +475,6 @@
     </CUnit>
     <CUnit id="Interdictor" parent="CStructureGenetron">
         <Facing value="315"/>
-        <FlagArray index="Movable" value="1"/>
         <FlagArray index="AIDefense" value="1"/>
         <LifeStart value="300"/>
         <LifeMax value="300"/>
@@ -615,7 +614,6 @@
         <FlagArray index="Invulnerable" value="1"/>
         <FlagArray index="ArmySelect" value="0"/>
         <EditorFlags index="NoPlacement" value="1"/>
-        <EditorFlags index="NoPalettes" value="1"/>
         <Collide index="Ground" value="0"/>
         <Collide index="ForceField" value="0"/>
         <Attributes index="Armored" value="1"/>
@@ -654,6 +652,7 @@
         <GlossaryPriority value="13"/>
         <GlossaryAlias value="Massalisk"/>
         <HotkeyCategory value=""/>
+        <LeaderAlias value=""/>
     </CUnit>
     <CUnit id="OutfittingStation" parent="CStructureGenetron">
         <Facing value="0"/>
@@ -690,7 +689,6 @@
     </CUnit>
     <CUnit id="Repulsor" parent="CStructureGenetron">
         <Facing value="0"/>
-        <FlagArray index="Movable" value="1"/>
         <FlagArray index="AIDefense" value="1"/>
         <LifeStart value="350"/>
         <LifeMax value="350"/>
@@ -889,28 +887,30 @@
         <GlossaryPriority value="20"/>
         <TacticalAIFilters value="-;Ally,Neutral,Enemy"/>
     </CUnit>
-    <CUnit id="UploaderCountDummy">
+    <CUnit id="Uploader3x3AddonDummy">
         <Race value="Gen"/>
-        <FlagArray index="Turnable" value="0"/>
-        <FlagArray index="Movable" value="0"/>
-        <FlagArray index="Uncommandable" value="1"/>
-        <FlagArray index="Unselectable" value="1"/>
-        <FlagArray index="Untargetable" value="1"/>
         <FlagArray index="NoDraw" value="1"/>
-        <FlagArray index="Undetectable" value="1"/>
-        <FlagArray index="KillCredit" value="0"/>
         <FlagArray index="Invulnerable" value="1"/>
-        <FlagArray index="NoScore" value="1"/>
-        <FlagArray index="Unstoppable" value="1"/>
-        <FlagArray index="CameraFollow" value="0"/>
-        <FlagArray index="NeverThink" value="1"/>
-        <BehaviorArray Link="UploaderStackCountDummyFate"/>
+        <AbilArray Link="BuildInProgress"/>
+        <Footprint value="Footprint3x3"/>
+        <PlacementFootprint value="Footprint3x3"/>
+        <AddedOnArray UnitLink="Manufacturer" BehaviorLink="UploaderAddonDummyFate"/>
         <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
         <EditorFlags index="NoPlacement" value="1"/>
         <LeaderAlias value=""/>
-        <HotkeyAlias value=""/>
-        <SelectAlias value=""/>
-        <SubgroupAlias value=""/>
+    </CUnit>
+    <CUnit id="Uploader4x4AddonDummy">
+        <Race value="Gen"/>
+        <FlagArray index="NoDraw" value="1"/>
+        <FlagArray index="Invulnerable" value="1"/>
+        <AbilArray Link="BuildInProgress"/>
+        <Footprint value="Footprint4x4"/>
+        <PlacementFootprint value="Footprint4x4"/>
+        <AddedOnArray UnitLink="Fabricator" BehaviorLink="UploaderAddonDummyFate"/>
+        <AddedOnArray UnitLink="AssemblyArray" BehaviorLink="UploaderAddonDummyFate"/>
+        <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
+        <EditorFlags index="NoPlacement" value="1"/>
+        <LeaderAlias value=""/>
     </CUnit>
     <CUnit id="ACR" parent="CUnitGenetron">
         <FlagArray index="Worker" value="1"/>
@@ -972,7 +972,6 @@
     </CUnit>
     <CUnit id="ProcessingCore" parent="CStructureGenetron">
         <Facing value="315"/>
-        <FlagArray index="Movable" value="1"/>
         <FlagArray index="PreventReveal" value="1"/>
         <FlagArray index="PenaltyRevealed" value="0"/>
         <FlagArray index="TownCamera" value="1"/>
@@ -1022,7 +1021,6 @@
         <TechTreeProducedUnitArray value="ACR"/>
         <TechTreeProducedUnitArray value="ProcessingDrone"/>
         <Mob value="Multiplayer"/>
-        <Collide index="Small" value="1"/>
         <StationaryTurningRate value="719.4726"/>
         <TurningRate value="719.4726"/>
         <SeparationRadius value="2.5"/>
@@ -1030,17 +1028,17 @@
     <CUnit id="Manufacturer" parent="CStructureGenetron">
         <LifeStart value="1000"/>
         <LifeMax value="1000"/>
-        <Sight value="10"/>
         <CostResource index="Minerals" value="150"/>
         <RepairTime value="65"/>
         <AbilArray Link="que5"/>
         <AbilArray Link="Rally"/>
         <AbilArray Link="TrainLightweightMechs"/>
         <AbilArray Link="UploaderSmartLink"/>
+        <AbilArray Link="UploaderAddonDummyBuild"/>
         <BehaviorArray Link="SchematicTransmit"/>
         <BehaviorArray Link="SchematicTransmit2"/>
         <BehaviorArray Link="SchematicTransmit3"/>
-        <BehaviorArray Link="UploaderStackCountDummy"/>
+        <EffectArray index="Create" value="UploaderCountDummyCreateUnit3x3"/>
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
             <LayoutButtons index="1" Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
@@ -1075,10 +1073,10 @@
         <AbilArray Link="Rally"/>
         <AbilArray Link="TrainHeavyweightMechs"/>
         <AbilArray Link="UploaderSmartLink"/>
+        <AbilArray Link="UploaderAddonDummyBuild"/>
         <BehaviorArray Link="SchematicTransmit"/>
         <BehaviorArray Link="SchematicTransmit2"/>
         <BehaviorArray Link="SchematicTransmit3"/>
-        <BehaviorArray Link="UploaderStackCountDummy"/>
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
             <LayoutButtons index="1" Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
@@ -1105,6 +1103,7 @@
         <TechTreeProducedUnitArray value="Inciter"/>
         <TechTreeProducedUnitArray value="Tesla"/>
         <TechTreeProducedUnitArray value="Virtus"/>
+        <EffectArray index="Create" value="UploaderCountDummyCreateUnit4x4"/>
     </CUnit>
     <CUnit id="Mole" parent="CUnitGenetron">
         <FlagArray index="AlwaysThreatens" value="1"/>
@@ -1192,7 +1191,6 @@
     </CUnit>
     <CUnit id="ProcessingNode" parent="CStructureGenetron">
         <Facing value="0"/>
-        <FlagArray index="Movable" value="1"/>
         <LifeStart value="400"/>
         <LifeMax value="400"/>
         <Sight value="10"/>
@@ -1471,7 +1469,6 @@
         <Attributes index="Armored" value="1"/>
         <LifeStart value="160"/>
         <LifeMax value="160"/>
-        <LifeArmor value="1"/>
         <Speed value="3.375"/>
         <StationaryTurningRate value="1440"/>
         <TurningRate value="1440"/>
@@ -1542,6 +1539,7 @@
         <GlossaryWeakArray value="Viper"/>
         <StationaryTurningRate value="720"/>
         <TurningRate value="720"/>
+        <LifeArmor value="2"/>
     </CUnit>
     <CUnit id="Boar" parent="CUnitGenetronAir">
         <Attributes index="Armored" value="1"/>
@@ -1580,14 +1578,12 @@
         <GlossaryWeakArray value="Hydralisk"/>
         <StationaryTurningRate value="1440"/>
         <TurningRate value="1440"/>
-        <LifeArmor value="1"/>
         <LateralAcceleration value="7"/>
     </CUnit>
     <CUnit id="Courier" parent="CUnitGenetronAir">
         <Attributes index="Armored" value="1"/>
         <LifeStart value="175"/>
         <LifeMax value="175"/>
-        <LifeArmor value="1"/>
         <EnergyStart value="50"/>
         <EnergyMax value="200"/>
         <EnergyRegenRate value="0.5625"/>

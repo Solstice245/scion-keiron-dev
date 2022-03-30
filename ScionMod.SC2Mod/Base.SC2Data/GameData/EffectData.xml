@@ -140,6 +140,38 @@
         <SpawnEffect value="MassaliskDummyAB"/>
         <SpawnUnit value="MassaliskDummy"/>
     </CEffectCreateUnit>
+    <CEffectCreateUnit id="UploaderCountDummyCreateUnit4x4">
+        <EditorCategories value="Race:Terran"/>
+        <CreateFlags index="OffsetByRadius" value="0"/>
+        <CreateFlags index="Placement" value="0"/>
+        <CreateFlags index="PlacementIgnoreBlockers" value="1"/>
+        <CreateFlags index="PlacementIgnoreCliffTest" value="1"/>
+        <SpawnEffect value="UploaderCountDummyPersistent"/>
+        <SpawnUnit value="Uploader4x4AddonDummy"/>
+        <SpawnOffset value="0,0"/>
+    </CEffectCreateUnit>
+    <CEffectCreatePersistent id="UploaderCountDummyPersistent">
+        <EditorCategories value="Race:Terran"/>
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <PeriodicValidator value="CasterAndTargetNotDead"/>
+        <PeriodicEffectArray value="UploaderCountDummyStack1"/>
+        <PeriodicEffectArray value="UploaderCountDummyStack2"/>
+        <PeriodicEffectArray value="UploaderCountDummyStack3"/>
+        <PeriodicPeriodArray value="0.0625"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0"/>
+        <WhichLocation Value="TargetUnit"/>
+    </CEffectCreatePersistent>
+    <CEffectCreateUnit id="UploaderCountDummyCreateUnit3x3">
+        <EditorCategories value="Race:Terran"/>
+        <CreateFlags index="OffsetByRadius" value="0"/>
+        <CreateFlags index="Placement" value="0"/>
+        <CreateFlags index="PlacementIgnoreBlockers" value="1"/>
+        <CreateFlags index="PlacementIgnoreCliffTest" value="1"/>
+        <SpawnEffect value="UploaderCountDummyPersistent"/>
+        <SpawnUnit value="Uploader3x3AddonDummy"/>
+        <SpawnOffset value="0,0"/>
+    </CEffectCreateUnit>
     <CEffectModifyUnit id="MassaliskDummySelection">
         <EditorCategories value="Race:Zerg"/>
         <ImpactUnit Value="Caster"/>
@@ -199,12 +231,16 @@
         <PeriodicOffsetArray value="0,1,0"/>
         <PeriodicPeriodArray value="0.0625"/>
     </CEffectCreatePersistent>
-    <CEffectSet id="JupiterRevenantBombImpactSet" parent="CEffectSetGenetron">
-        <EffectArray value="JupiterRevenantBombDamage"/>
-        <EffectArray value="JupiterNapalmCreatePersistent"/>
-        <EffectArray value="JupiterShellShockedSearch"/>
-        <TargetLocationType value="Point"/>
-    </CEffectSet>
+    <CEffectCreatePersistent id="JupiterRevenantBombImpact">
+        <EditorCategories value="Race:Genetron"/>
+        <PeriodCount value="3"/>
+        <PeriodicEffectArray value="JupiterShellShockedSearch"/>
+        <PeriodicEffectArray value="JupiterNapalmCreatePersistent"/>
+        <PeriodicEffectArray value="JupiterRevenantBombDamage"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
     <CEffectSet id="JupiterRevenantBombLaunchQuerySet" parent="CEffectSetGenetron">
         <ValidatorArray value="RevenantLaunchTargetDistances"/>
         <EffectArray value="JupiterRevenantBombDestroyChannel"/>
@@ -312,7 +348,6 @@
         <CaseArray Validator="DisguiseAsXayidling" Effect="DisguiseAsXayidlingCU"/>
     </CEffectSwitch>
     <CEffectApplyBehavior id="DownloadPhase" parent="CEffectApplyBehaviorGenetronTarget"/>
-    <CEffectApplyBehavior id="DownloadPhaseInit" parent="CEffectApplyBehaviorGenetronTarget"/>
     <CEffectEnumArea id="EMPSearch">
         <SearchFilters value="-;Hidden"/>
     </CEffectEnumArea>
@@ -680,6 +715,18 @@
         <Name value="Effect/Name/StratumMissilePodTM"/>
         <ValidatorArray index="0" value="TrackingMunitionsApplied"/>
     </CEffectLaunchMissile>
+    <CEffectDamage id="UploaderCountDummyStack1">
+        <ValidatorArray value="CasterUploaderCount1"/>
+        <EditorCategories value="Race:Terran"/>
+    </CEffectDamage>
+    <CEffectCreatePersistent id="UploaderCountDummyStack2">
+        <ValidatorArray value="CasterUploaderCount2"/>
+        <EditorCategories value="Race:Terran"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="UploaderCountDummyStack3">
+        <ValidatorArray value="CasterUploaderCount3"/>
+        <EditorCategories value="Race:Terran"/>
+    </CEffectCreatePersistent>
     <CEffectModifyUnit id="VengeanceMissileMU">
         <EditorCategories value="Race:Genetron"/>
         <LaunchUnit Value="Caster"/>
@@ -737,7 +784,7 @@
     </CEffectEnumArea>
     <CEffectLaunchMissile id="JupiterRevenantBombLaunchMissile" parent="CEffectLaunchMissileGenetron">
         <ImpactLocation Value="TargetPoint"/>
-        <ImpactEffect value="JupiterRevenantBombImpactSet"/>
+        <ImpactEffect value="JupiterRevenantBombImpact"/>
         <AmmoUnit value="RevenantBombLMWeapon"/>
     </CEffectLaunchMissile>
     <CEffectApplyBehavior id="JupiterNapalm" parent="CEffectApplyBehaviorGenetronTarget"/>
@@ -746,6 +793,7 @@
         <PeriodCount value="21"/>
         <PeriodicEffectArray value="JupiterNapalmSearchArea"/>
         <PeriodicPeriodArray value="0.575"/>
+        <InitialDelay value="0.575"/>
     </CEffectCreatePersistent>
     <CEffectDamage id="JupiterNapalmDamage" parent="CEffectDamageGenetronSpell">
         <AttributeBonus index="Structure" value="4"/>

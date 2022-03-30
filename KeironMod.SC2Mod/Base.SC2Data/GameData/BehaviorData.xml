@@ -21,7 +21,7 @@
         <DisplayDuration index="Neutral" value="1"/>
         <DisplayDuration index="Enemy" value="1"/>
         <Duration value="56"/>
-        <InitialEffect value="AegisShieldRestore"/>
+        <InitialEffect value="AegisShieldAuraActivationSet"/>
         <FinalEffect value="AegisShieldedUnmorph"/>
         <InfoFlags index="Hidden" value="1"/>
         <RemoveValidatorArray value="ShieldGZero"/>
@@ -70,6 +70,50 @@
     <CBehaviorBuff id="CarryHarvestableVespeneGeyserGasKeiron">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="AbilityorEffectType:Units"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="FuseFused">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <InitialEffect value="FuseFusionSet"/>
+        <Modification ShieldArmorBonus="1">
+            <VitalMaxIncreaseAffectsCurrentArray index="Shields" value="0"/>
+            <VitalMaxArray index="Shields" value="150"/>
+            <VitalRegenArray index="Shields" value="2.5"/>
+        </Modification>
+        <InfoIcon value="Assets\Textures\btn-ability-zerg-dehaka-essencecollector.dds"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="FuseFusedData">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <FinalEffect value="FuseUnfuseData"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="FuseFusedCaster">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <Modification>
+            <ModifyFlags index="DisableAbils" value="1"/>
+            <ModifyFlags index="SuppressMoving" value="1"/>
+            <StateFlags index="Invulnerable" value="1"/>
+        </Modification>
+        <DamageResponse Fatal="1" ModifyFraction="0" ModifyMinimumDamage="1">
+            <Chance value="1"/>
+        </DamageResponse>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="AegisShieldAuraKBFate">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <Duration value="1.3125"/>
+        <FinalEffect value="SuicideRemove"/>
+        <Modification>
+            <ModifyFlags index="DisableAbils" value="1"/>
+            <ModifyFlags index="SuppressMoving" value="1"/>
+            <ModifyFlags index="SuppressTurning" value="1"/>
+            <StateFlags index="Invulnerable" value="1"/>
+            <StateFlags index="SuppressCollision" value="1"/>
+            <StateFlags index="NoDraw" value="1"/>
+            <StateFlags index="Uncommandable" value="1"/>
+            <StateFlags index="Unselectable" value="1"/>
+            <StateFlags index="Untargetable" value="1"/>
+        </Modification>
     </CBehaviorBuff>
     <CBehaviorBuff id="OutletAurApeBase">
         <InfoFlags index="Hidden" value="1"/>
@@ -201,6 +245,7 @@
         <Modification MoveSpeedMultiplier="0.4">
             <WeaponDisableArray value="AuguryGuns"/>
         </Modification>
+        <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="HarbingerJudgementModeStart">
         <EditorCategories value="AbilityorEffectType:Units"/>
@@ -240,6 +285,11 @@
             <Kind index="NoProc" value="0"/>
             <Chance value="1"/>
         </DamageResponse>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="AegisShieldAuraKB">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <Duration value="3"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="UmbraStealthSuppress">
         <InfoFlags index="Hidden" value="1"/>

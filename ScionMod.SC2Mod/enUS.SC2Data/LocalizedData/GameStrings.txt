@@ -66,6 +66,7 @@ Abil/Name/TrainACR=Train ACR
 Abil/Name/TrainHeavyweightMechs=Train Heavyweight Mechs
 Abil/Name/TrainLightweightMechs=Train Lightweight Mechs
 Abil/Name/TransportFerrion=Transport
+Abil/Name/UploaderAddonDummyBuild=Uploader Addon Dummy Build
 Abil/Name/UploaderResearchFabricator=Research
 Abil/Name/UploaderResearchManufacL1=Research
 Abil/Name/UploaderSmartLink=Uploader Smart Link
@@ -74,7 +75,10 @@ Abil/Name/VolatileDischarge=Volatile Discharge
 Abil/Name/VolatileDischargeCancel=Volatile Discharge Cancel
 Abil/Name/XayidlingDash=Dash
 Abil/Name/que1Passive=Queue (1) Passive
-Actor/AddonIndicator/Reactor=R
+Actor/AddonIndicator/UploaderCount0=0
+Actor/AddonIndicator/UploaderCount1=1
+Actor/AddonIndicator/UploaderCount2=2
+Actor/AddonIndicator/UploaderCount3=3
 Alert/Text/BuildComplete_Xayi=Structure complete.
 Alert/Text/ResearchComplete_Gen=Research complete.
 Alert/Text/ResearchComplete_Xayi=Research complete.
@@ -121,7 +125,6 @@ Behavior/Name/StagnatingBileStun=Stagnating Bile Stun
 Behavior/Name/SuperChargeCannon=Super Charged
 Behavior/Name/SystemOffload=System Offload
 Behavior/Name/TrackingImplant=Tracking Implant
-Behavior/Name/UploaderStackCountDummyFate=Uploader Stack Count Dummy Fate
 Behavior/Name/VenomInjection=Venom Injection
 Behavior/Name/VirtusLockdownMode=Lockdown Mode
 Behavior/Name/VirtusLockdownModeDuration=Lockdown Mode Duration
@@ -485,7 +488,7 @@ Button/Tooltip/InterdictorBurrowed=Anti-air defensive structure. Can burrow, dis
 Button/Tooltip/InternalOptimization=<c val="FFFF80">Teslas</c> gain +100% charge constructon speed.
 Button/Tooltip/InternalRepairSystem=The <c val="FFFF80">Processing Drone</c> regenerates health while out of combat.
 Button/Tooltip/Jupiter=High speed bomber aircraft. Can use Revenant Bomb to damage enemies, and apply napalm on the ground for damage over time.
-Button/Tooltip/JupiterNapalm=Revenant Bomb applies napalm to the ground, dealing <d ref="Effect,RevenantBombNapalmDMG,Amount/Behavior,RevenantBombNapalm,Period"/> (+<d ref="Effect,RevenantBombNapalmDMG,AttributeBonus[Structure]/Behavior,RevenantBombNapalm,Period"/> vs Structures) damage per second in the area. Lasts <d ref="Effect,RevenantBombNapalmCP,PeriodCount*Effect,RevenantBombNapalmCP,PeriodicPeriodArray[0]" /> seconds.
+Button/Tooltip/JupiterNapalm=Revenant Bomb applies napalm to the ground, dealing <d ref="Effect,JupiterNapalmDamage,Amount/Behavior,JupiterNapalm,Period"/> (+<d ref="Effect,JupiterNapalmDamage,AttributeBonus[Structure]/Behavior,JupiterNapalm,Period"/> vs Structures) damage per second in the area. Lasts <d ref="Effect,JupiterNapalmCreatePersistent,PeriodCount*Effect,JupiterNapalmCreatePersistent,PeriodicPeriodArray[0]" /> seconds.
 Button/Tooltip/JupiterStealthSystems=The Jupiter becomes cloaked after accelerating for a time in a bombing run.
 Button/Tooltip/Kraken=A huge powerful beast, with a devastating attack. Can use Volatile Discharge.<n/><n/><c val="FFFF80">Can attack ground and air units.</c>
 Button/Tooltip/LaunchCloakCharge=Launches a <c val="FFFF80">Cloak Charge</c> to the target point.
@@ -577,7 +580,7 @@ Button/Tooltip/ResearchSubterraneanSensors=Adds a medium ranged radar system to 
 Button/Tooltip/ResearchTrackingMunitions=Causes attacks from ranged units produced from the <c val="FFFF80">Manufacturer</c> to apply a tracker on enemy units, allowing any of these units to attack it from a further range. The effect lasts <d ref="Behavior,TrackingImplant,Duration"/> seconds, and continued attacks will refresh the duration.
 Button/Tooltip/ResearchVengeanceMissile=Enables the use of <c val="FFFF80">Avengers</c> Vengeance Missile.
 Button/Tooltip/ResidualAcid=<c val="FFFF80">Acid Nests</c> now leave behind a puddle of acid upon death, dealing <d ref="200/Effect,ResidualAcidCP,PeriodicPeriodArray[0]/Effect,ResidualAcidCP,PeriodCount"/> damage per second, and slowing enemies by 30% in an area. Lasts <d ref="Behavior,ResidualAcid,Period*Effect,ResidualAcidCP,PeriodCount" precision="0"/> seconds.
-Button/Tooltip/RevenantBomb=Drops a bomb which deals <d ref="Effect,RevenantBombDMG,Amount"/> (+<d ref="Effect,RevenantBombDMG,AttributeBonus[Armored]"/> vs Armored) damage in the impact area. <n/><n/>Units hit directly by the bomb receive twice the damage.<n/><n/>Units in the impact area are unable to attack or cast spells for <d ref="Behavior,JupiterShellShocked,Duration"/> seconds.<n/><n/>The <c val="FFFF80">Jupiter</c> has increased speed during its run.
+Button/Tooltip/RevenantBomb=Drops a bomb which deals <d ref="Effect,JupiterRevenantBombDamage,Amount"/> (+<d ref="Effect,JupiterRevenantBombDamage,AttributeBonus[Armored]"/> vs Armored) damage in the impact area. <n/><n/>Units hit directly by the bomb receive twice the damage.<n/><n/>Units in the impact area are unable to attack or cast spells for <d ref="Behavior,JupiterShellShocked,Duration"/> seconds.<n/><n/>The <c val="FFFF80">Jupiter</c> has increased speed during its run.
 Button/Tooltip/RevenantBombLMWeapon=Marks a location for the <c val="FFFF80">Jupiter</c> to drop a bomb, which deals 30 damage in the impact area, and applies napalm to the ground, dealing <d ref="Effect,RevenantBombNapalmDMG,Amount/Behavior,RevenantBombNapalm,Period" precision="1"/> damage per second in the area. The napalm lasts <d ref="Effect,RevenantBombNapalmCP,PeriodCount*Effect,RevenantBombNapalmCP,PeriodicPeriodArray[0]" /> seconds.<n/>The <c val="FFFF80">Jupiter</c> has increased speed when it's run commences.
 Button/Tooltip/Reviler=Ranged attacker.<n/><n/><c val="FFFF80">Can attack ground and air units.</c>
 Button/Tooltip/Roamer=Quick ranged anti-light fighter. Can use Scour.<n/><n/><c val="FFFF80">Can attack ground units.</c>
@@ -724,7 +727,6 @@ Effect/Name/DashSpeed=Dash Apply Speed
 Effect/Name/DisguiseAsSpitfireCU=DisguiseAsSpitfire
 Effect/Name/DisguiseAsXayidlingCU=DisguiseAsXayidling
 Effect/Name/DownloadPhase=Download Phase
-Effect/Name/DownloadPhaseInit=Download Phase Init
 Effect/Name/DynamicCoatingDebuff=Dynamic Cloud
 Effect/Name/EnergyRegenerationBuff=Energy Grid
 Effect/Name/EnervatorSpores=Enervator Spores
@@ -799,7 +801,7 @@ Effect/Name/JupiterRevenantBombDamage=Jupiter - Revenant Bomb (Damage)
 Effect/Name/JupiterRevenantBombDestroyChannel=Jupiter - Revenant Bomb (Destroy Channel)
 Effect/Name/JupiterRevenantBombForce=Jupiter - Revenant Bomb (Force)
 Effect/Name/JupiterRevenantBombForceOffset=Jupiter - Revenant Bomb (Force Offset)
-Effect/Name/JupiterRevenantBombImpactSet=Jupiter - Revenant Bomb (Impact Set)
+Effect/Name/JupiterRevenantBombImpact=Jupiter - Revenant Bomb (Impact)
 Effect/Name/JupiterRevenantBombLaunchMissile=Jupiter - Revenant Bomb (Launch Missile)
 Effect/Name/JupiterRevenantBombLaunchQuerySet=Jupiter - Revenant Bomb (Launch Query Set)
 Effect/Name/JupiterShellShocked=Jupiter - Shell-Shocked (Apply Behavior)
@@ -946,6 +948,12 @@ Effect/Name/TrackingImplant=Tracking Munitions
 Effect/Name/TuskMachineGuns=Tusk Machine Guns
 Effect/Name/TwinP1Dash0Guns=Twin P1-0 Guns (Damage)
 Effect/Name/UploaderChargeStack=Schematic Transmit
+Effect/Name/UploaderCountDummyCreateUnit3x3=Uploader Count Dummy Create Unit 3x3
+Effect/Name/UploaderCountDummyCreateUnit4x4=Uploader Count Dummy Create Unit 4x4
+Effect/Name/UploaderCountDummyPersistent=Uploader Count Dummy Persistent
+Effect/Name/UploaderCountDummyStack1=Uploader Count Dummy Stack 1
+Effect/Name/UploaderCountDummyStack2=Uploader Count Dummy Stack 2
+Effect/Name/UploaderCountDummyStack3=Uploader Count Dummy Stack 3
 Effect/Name/VengeanceMissileLM=Vengeance Missile
 Effect/Name/VengeanceMissileLMImpact=Vengeance Missile
 Effect/Name/VengeanceMissileMU=Vengeance Missile
@@ -1042,6 +1050,7 @@ UI/HelpMenuDialogTechGlossary_Control_Unit/Category/GenetronUnits=Genetron Units
 UI/HelpMenuDialogTechGlossary_Control_Unit/Category/XayidUnits=Xayid Units
 UI/HelpMenuDialogTechTree_Control_Gen=Genetron Tech Tree
 UI/HelpMenuDialogTechTree_Control_Xayi=Xayid Tech Tree
+UI/Info/UploaderCount=<d ref="$BehaviorStackCount:UploaderChargeStack$"/>
 UI/Mutating=Mutating
 UI/Progress/Constructing=Constructing
 UI/Researching=Researching
@@ -1163,6 +1172,11 @@ Unit/Name/TheGreatEqualizerWeapon=Equalizer Missile
 Unit/Name/ThrasherSpineWeapon=Thrasher Spine Weapon
 Unit/Name/Torrent=Torrent
 Unit/Name/Uploader=Uploader
+Unit/Name/Uploader3x3AddonDummy=Uploader 3x3 Addon Dummy
+Unit/Name/UploaderAddonDummy0=Uploader Addon Dummy
+Unit/Name/UploaderAddonDummy1=Uploader Addon Dummy
+Unit/Name/UploaderAddonDummy2=Uploader Addon Dummy
+Unit/Name/UploaderAddonDummy3=Uploader Addon Dummy
 Unit/Name/VengeanceMissilesLMWeapon=Vengeance Missiles
 Unit/Name/Virtus=Virtus
 Unit/Name/VirulentSpitWeapon=Virulent Spit
