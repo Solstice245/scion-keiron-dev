@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
+    <CActorUnit default="1" id="GenetronBuilding" parent="TerranBuilding">
+        <?token id="buildTime" type="CString" value="1"?>
+        <On Terms="UnitConstruction.##unitName##.Start" Send="AnimPlay Birth Build,Start NonLooping -1.000000 -1.000000 -1.000000 AsAutomatic 0.000000 10"/>
+        <On Terms="UnitConstruction.##unitName##.Start" Send="AnimPlay Build Build,End PlayForever,NonLooping -1.000000 -1.000000 10000000.000000 AsDuration"/>
+        <On Terms="Abil.BuildInProgress.Pause" Send="AnimSetPaused Build"/>
+        <On Terms="Abil.BuildInProgress.Resume" Send="AnimSetPaused Build 0"/>
+        <On Terms="UnitConstruction.##unitName##.Start" Target="_GenetronBuildModel" Send="AnimBracketStart Work Work,Start Work Work,End 0 0.000000 AsTimeScale"/>
+        <On Terms="UnitConstruction.##unitName##.Stop" Target="_GenetronBuildModel" Send="AnimBracketClear Work"/>
+        <On Terms="Abil.BuildInProgress.Pause" Target="_GenetronBuildModel" Send="AnimBracketStop Work"/>
+        <On Terms="Abil.BuildInProgress.Resume" Target="_GenetronBuildModel" Send="AnimBracketResume Work"/>
+        <On Terms="AnimDone; AnimName Birth" Target="_GenetronBuildModel" Send="AnimSetTimeScale Work 1.000000"/>
+        <On Terms="AnimDone; AnimName Birth" Send="AnimSetDuration Build ##buildTime##"/>
+        <GroupIcon>
+            <Image value="Assets\Textures\wireframe-genetron-##unitName##.dds"/>
+        </GroupIcon>
+        <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-mechstructurearmor.dds"/>
+        <UnitIcon value="Assets\Textures\btn-building-genetron-##unitName##.dds"/>
+        <Wireframe>
+            <Image value="Assets\Textures\wireframe-genetron-##unitName##.dds"/>
+        </Wireframe>
+        <BuildModel value="##unitName##Placement"/>
+        <PlacementModel value="##unitName##Placement"/>
+        <PortraitModel value="GenetronAdjutantPortrait"/>
+        <PlacementActorModel value="GenetronPlacementModel"/>
+        <PlaceholderActorModel value="GenetronPlacementModel"/>
+        <PlacementSound value="Terran_BuildingPlacement"/>
+        <SoundArray index="Construction" value="Terran_ConstructionWhat"/>
+    </CActorUnit>
     <CActorRange default="1" id="RangeAbilStandard" parent="RangeAbil">
         <Icon value="Assets\Textures\RadarIcon2.dds"/>
         <IconArcLength value="3.250000"/>
     </CActorRange>
+    <CActorModel default="1" id="GenetronBuildingBuild" parent="TerranBuildingBuild">
+        <Aliases index="1" value="_GenetronBuildModel"/>
+        <On index="4" Terms="ActorCreation" Send="Create GenetronConstructionAttached"/>
+    </CActorModel>
     <CActorUnit default="1" id="XayidUnitStandard" parent="GenericUnitStandard">
         <DeathArray index="Normal" ModelLink="##unitName##Death" SoundLink="##unitName##_Explode"/>
         <ModelFlags index="OutlineEmitter" value="1"/>
@@ -147,6 +179,9 @@
             <Image value="Assets\Textures\wireframe-Xayid-massalisk.dds"/>
         </Wireframe>
     </CActorUnit>
+    <CActorModel id="GenetronPlacementModel" parent="PlacementModel">
+        <ModelFlags index="AutomateGlobalLoops" value="1"/>
+    </CActorModel>
     <CActorUnit id="ScavengerSpawn" parent="XayidUnitStandard" unitName="ScavengerSpawn">
         <Aliases value="_UnitSmall"/>
         <On Terms="Abil.DroneHarvest.Start" Send="AnimPlay Work Work PlayForever"/>
@@ -190,6 +225,17 @@
     <CActorDoodad id="SpaceSteamJet">
         <DoodadFlags index="DefaultToModelAABBBounds" value="0"/>
     </CActorDoodad>
+    <CActorProgress id="GenetronConstructionAttached">
+        <Supporter Subject="_GenetronBuildModel"/>
+        <On Terms="ProgressLevel.GenetronConstructionAttached.Start; Level 0" Send="SetTransferOverrideAnim Birth,A,Stand"/>
+        <On Terms="ProgressLevel.GenetronConstructionAttached.Stop; Level 0" Send="SetTransferOverrideAnim"/>
+        <StageArray AnimProps="Birth,A,Start" BlendTime="0.000000"/>
+        <StageArray AnimProps="Birth,A,Stand"/>
+        <StageArray AnimProps="Birth,B,Start"/>
+        <StageArray AnimProps="Birth,B,Stand"/>
+        <StageArray AnimProps="Birth,C,Start"/>
+        <StageArray AnimProps="Birth,C,Stand"/>
+    </CActorProgress>
     <CActorDoodad id="TerranTarmac">
         <DoodadFlags index="DefaultToModelAABBBounds" value="0"/>
     </CActorDoodad>
@@ -1675,10 +1721,7 @@
         <HostImpact Subject="_Unit" Scope="Target" Actor="Find"/>
         <HostImpactSiteOps Ops="SOpAttachHardPoint01"/>
     </CActorBeamSimple>
-    <CActorModel id="ManufacturerBuild" parent="TerranBuildingBuildSmall">
-        <Aliases index="1" value="_TerranBuildModel"/>
-        <On index="4" Terms="ActorCreation" Send="Create TerranConstructionAttached"/>
-    </CActorModel>
+    <CActorModel id="ManufacturerBuild" parent="GenetronBuildingBuild"/>
     <CActorSound id="UploaderSchematicTransmitSoundStart" parent="SoundOneShot">
         <On Terms="Effect.SchematicTransmitCP.Start" Send="Create"/>
         <Sound value="Uploader_SchematicTransmit_Start"/>
@@ -1956,8 +1999,8 @@
         <On Terms="Effect.SystemOffloadSA.Start" Send="Create"/>
         <Sound value="ProcessingDrone_SystemOffload_Sound"/>
     </CActorSound>
-    <CActorModel id="ProcessingNodeBuild" parent="TerranBuildingBuildSmall">
-        <On Terms="ActorCreation" Send="SetScale 1.350000"/>
+    <CActorModel id="ProcessingNodeBuild" parent="GenetronBuildingBuild">
+        <CreepHeightClass value="Small"/>
     </CActorModel>
     <CActorUnit id="ProcessingDrone" parent="GenericUnitStandard" unitName="ProcessingDrone">
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-aircraftplating-level0.dds"/>
@@ -1974,26 +2017,13 @@
         <ModelFlags index="OutlineEmitter" value="1"/>
         <HostSiteOps Ops="SOpBankerBanshee"/>
     </CActorUnit>
-    <CActorUnit id="ProcessingNode" parent="TerranBuilding" unitName="ProcessingNode">
-        <Baselines index="Stand" AnimProps="Stand,Attached"/>
-        <GroupIcon>
-            <Image value="Assets\Textures\wireframe-genetron-processingnode.dds"/>
-        </GroupIcon>
-        <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-mechstructurearmor.dds"/>
-        <UnitIcon value="Assets\Textures\btn-building-genetron-processingnode.dds"/>
-        <Wireframe>
-            <Image value="Assets\Textures\wireframe-genetron-processingnode.dds"/>
-        </Wireframe>
+    <CActorUnit id="ProcessingNode" parent="GenetronBuilding" buildTime="24.000000" unitName="ProcessingNode">
         <PlacementSound value="Terran_BuildingPlacementSmall"/>
-        <SoundArray index="Birth" value=""/>
         <SoundArray index="Ready" value="SupplyDepot_Ready"/>
         <SoundArray index="What" value="SupplyDepot_What"/>
-        <SoundArray index="Construction" value="Terran_ConstructionWhat"/>
         <DeathArray index="Normal" ModelLink="ReactorDeath" SoundLink="SupplyDepot_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeathSmall" SoundLink="SupplyDepot_Explode"/>
-        <PlacementModel value="ProcessingNodePlacement"/>
         <BarWidth value="85"/>
-        <PortraitModel value="GenetronAdjutantPortrait"/>
     </CActorUnit>
     <CActorModel id="BlazeAttackImpactFire" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Effect.IBF7FlamethrowerDMG.Start; At Target" Send="Create"/>
@@ -2003,21 +2033,10 @@
         <Scale value="1.200000"/>
         <ModelFlags index="AllowHitTest" value="0"/>
     </CActorModel>
-    <CActorModel id="ProcessingCoreBuild" parent="TerranBuildingBuildSmall">
-        <Aliases index="1" value="_TerranBuildModel"/>
-        <On index="4" Terms="ActorCreation" Send="Create TerranConstructionAttached"/>
-        <On Terms="ActorCreation" Send="SetScale 1.250000"/>
-    </CActorModel>
+    <CActorModel id="ProcessingCoreBuild" parent="GenetronBuildingBuild"/>
     <CActorMissile id="BadgerAttackMissile" parent="GenericAttackMissile" unitName="HellraiserGunsWeapon">
         <Model value="BadgerAttackMissileWeapon"/>
     </CActorMissile>
-    <!--                                                                                         -->
-    <!-- Construction                                                                            -->
-    <!--                                                                                         -->
-    <CActorProgress id="TerranConstruction">
-        <On Terms="Abil.MechStructures.BuiltStart" Send="Create"/>
-        <On Terms="Abil.BuildUploader.BuiltStart" Send="Create"/>
-    </CActorProgress>
     <CActorSplat id="TeslaShockChargeCursor" parent="TerranCursorSplat" abil="LaunchShockCharge">
         <Scale value="3.400000"/>
     </CActorSplat>
@@ -2163,7 +2182,7 @@
             <Image value="Assets\Textures\wireframe-genetron-acr.dds"/>
         </Wireframe>
     </CActorUnit>
-    <CActorUnit id="ProcessingCore" parent="TerranBuilding" unitName="ProcessingCore">
+    <CActorUnit id="ProcessingCore" parent="GenetronBuilding" buildTime="99.000000" unitName="ProcessingCore">
         <On Terms="AbilTrain.TrainACR.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
         <On Terms="AbilTrain.TrainACR.Finish" Send="AnimClear StandWork"/>
         <On Terms="AbilTrain.TrainACR.Start" Send="Create ACRConstruction"/>
@@ -2178,27 +2197,14 @@
         <On Terms="AbilTrain.BuildProcessingDrone.Finish" Target="ProcessingDroneConstruction" Send="Destroy Immediate"/>
         <BarOffset value="240"/>
         <BarWidth value="300"/>
-        <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-mechstructurearmor.dds"/>
-        <SoundArray index="Birth" value=""/>
         <SoundArray index="Ready" value="CommandCenter_Ready"/>
         <SoundArray index="What" value="CommandCenter_What"/>
-        <SoundArray index="Construction" value="Terran_ConstructionWhat"/>
-        <GroupIcon>
-            <Image value="Assets\Textures\wireframe-genetron-processingcore.dds"/>
-        </GroupIcon>
-        <UnitIcon value="Assets\Textures\btn-building-genetron-processingcore.dds"/>
-        <Wireframe>
-            <Image value="Assets\Textures\wireframe-genetron-processingcore.dds"/>
-        </Wireframe>
         <StatusHarvesterData Text="UI/HarvesterCountMinerals" SearchFilters="HarvestableResource;Player,Ally,Enemy" SearchRadius="8"/>
-        <PlacementSound value="Terran_BuildingPlacement"/>
         <DeathArray index="Normal" ModelLink="ProcessingCoreDeath" SoundLink="CommandCenter_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeathLarge" SoundLink="CommandCenter_Explode"/>
-        <PlacementModel value="ProcessingCorePlacement"/>
-        <PortraitModel value="GenetronAdjutantPortrait"/>
     </CActorUnit>
     <CActorSplat id="ProcessingCoreSplat" parent="GenericUnitSplat" unitName="ProcessingCore"/>
-    <CActorUnit id="Manufacturer" parent="TerranBuilding" unitName="Manufacturer">
+    <CActorUnit id="Manufacturer" parent="GenetronBuilding" buildTime="64.000000" unitName="Manufacturer">
         <On Terms="AbilTrain.TrainLightweightMechs.Start" Send="AnimPlay StandWork Stand,Work PlayForever,RandomStartOffset"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Finish" Send="AnimClear StandWork"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Spitfire" Send="Create SpitfireConstruction"/>
@@ -2222,26 +2228,12 @@
         <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Aquila" Send="StatusSet Fabricating 4"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Cancel; IsStatus Fabricating 4" Target="AquilaConstruction" Send="Destroy Immediate"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Finish; IsStatus Fabricating 4" Target="AquilaConstruction" Send="Destroy Immediate"/>
-        <SoundArray index="Birth" value=""/>
         <SoundArray index="Ready" value="Barracks_Ready"/>
         <SoundArray index="What" value="Barracks_What"/>
-        <SoundArray index="Construction" value="Terran_ConstructionWhat"/>
         <BarWidth value="160"/>
-        <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-mechstructurearmor.dds"/>
-        <GroupIcon>
-            <Image value="Assets\Textures\wireframe-genetron-manufacturer.dds"/>
-        </GroupIcon>
-        <UnitIcon value="Assets\Textures\btn-building-genetron-manufacturer.dds"/>
-        <Wireframe>
-            <Image value="Assets\Textures\wireframe-genetron-manufacturer.dds"/>
-        </Wireframe>
-        <PlacementSound value="Terran_BuildingPlacement"/>
         <DeathArray index="Normal" ModelLink="ManufacturerDeath" SoundLink="Barracks_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeathLarge" SoundLink="Barracks_Explode"/>
-        <PlacementModel value="ManufacturerPlacement"/>
-        <PortraitModel value="GenetronAdjutantPortrait"/>
         <BarOffset value="115"/>
-        <InfoText value="UI/Info/UploaderCount"/>
     </CActorUnit>
     <CActorUnit id="Fabricator" parent="TerranBuilding" unitName="Fabricator">
         <On Terms="AbilTrain.TrainHeavyweightMechs.Start" Send="AnimPlay StandWork Stand,Work PlayForever,RandomStartOffset"/>
