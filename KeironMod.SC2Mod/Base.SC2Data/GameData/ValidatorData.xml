@@ -29,6 +29,43 @@
         <Behavior value="ApertureRequirementDummy"/>
         <Compare value="NE"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitType id="CasterIsAtrium">
+        <WhichUnit Value="Caster"/>
+        <Value value="Atrium"/>
+    </CValidatorUnitType>
+    <CValidatorUnitType id="CasterIsOutlet">
+        <WhichUnit Value="Caster"/>
+        <Value value="Outlet"/>
+    </CValidatorUnitType>
+    <CValidatorUnitType id="CasterIsEdifice">
+        <WhichUnit Value="Caster"/>
+        <Value value="Edifice"/>
+    </CValidatorUnitType>
+    <CValidatorUnitType id="CasterIsFoundry">
+        <WhichUnit Value="Caster"/>
+        <Value value="Foundry"/>
+    </CValidatorUnitType>
+    <CValidatorUnitType id="CasterIsConduit">
+        <WhichUnit Value="Caster"/>
+        <Value value="Conduit"/>
+    </CValidatorUnitType>
+    <CValidatorUnitType id="CasterIsEmpyrean">
+        <WhichUnit Value="Caster"/>
+        <Value value="Empyrean"/>
+    </CValidatorUnitType>
+    <CValidatorUnitType id="CasterIsSanctum">
+        <WhichUnit Value="Caster"/>
+        <Value value="Sanctum"/>
+    </CValidatorUnitType>
+    <CValidatorUnitFilters id="GamutOrbTargetIsHidden">
+        <WhichUnit Effect="GamutOrb"/>
+        <Filters value="Hidden;-"/>
+    </CValidatorUnitFilters>
+    <CValidatorCombine id="InducerGamutOrbTarget">
+        <CombineArray value="GamutOrbTargetIsDead"/>
+        <CombineArray value="GamutOrbTargetIsHidden"/>
+        <CombineArray value="InducerGamutOrbTargetNotTeleported"/>
+    </CValidatorCombine>
     <CValidatorUnitType id="IsCitadelNormal">
         <ResultFailed value="Error,error/iscitadel"/>
         <Value value="Citadel"/>
@@ -365,6 +402,16 @@
         <Behavior value="FuseFused"/>
     </CValidatorUnitCompareBehaviorCount>
     <CValidatorLocationVision id="TargetLocationVisible"/>
+    <CValidatorUnitCompareBehaviorCount id="UnitChargeE1">
+        <WhichUnit Value="Caster"/>
+        <Value value="1"/>
+        <Behavior value="KeironUnitCharge"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="UnitChargeE2">
+        <WhichUnit Value="Caster"/>
+        <Value value="2"/>
+        <Behavior value="KeironUnitCharge"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="UnitChargeLT1">
         <WhichUnit Value="Caster"/>
         <Compare value="LT"/>
@@ -530,6 +577,11 @@
         <CombineArray value="RangeCheckLE3"/>
         <CombineArray value="TargetNotDead"/>
     </CValidatorCombine>
+    <CValidatorUnitType id="InducerGamutOrbTargetNotTeleported">
+        <WhichUnit Effect="GamutOrb"/>
+        <OtherUnit Effect="GamutOrbLM" Value="Target"/>
+        <Find value="0"/>
+    </CValidatorUnitType>
     <CValidatorPlayerRequirement id="UseElytraHangarAttackRequirement">
         <Find value="1"/>
         <Value value="UseElytraHangarAttack"/>

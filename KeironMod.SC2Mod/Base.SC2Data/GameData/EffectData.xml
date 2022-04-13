@@ -461,19 +461,75 @@
         <Death value="Electrocute"/>
     </CEffectDamage>
     <CEffectLaunchMissile id="AuguryGunsLM" parent="CEffectLaunchMissileKeiron"/>
-    <CEffectUserData id="InducerGamutOrbImpactUserData">
-        <EditorCategories value="Race:Keiron"/>
-        <Amount value="0"/>
-        <EffectSuccess value="GamutOrbRMImpact"/>
-    </CEffectUserData>
-    <CEffectUserData id="InducerGamutOrbReturnUserData">
-        <EditorCategories value="Race:Keiron"/>
-    </CEffectUserData>
-    <CEffectCreatePersistent id="InducerGamutOrbReturnUserDataDelay" parent="CEffectCreatePersistentKeironUnit">
-        <InitialEffect value="GamutOrbLMImpact"/>
-        <ExpireDelay value="0.5"/>
-        <ExpireEffect value="InducerGamutOrbImpactUserData"/>
-    </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="KeironChargeDummyHarParAB">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="EmpyreanHarParBase"/>
+    </CEffectApplyBehavior>
+    <CEffectCreateUnit id="KeironChargeDummyCU">
+        <EditorCategories value=""/>
+        <CreateFlags index="OffsetByRadius" value="0"/>
+        <CreateFlags index="Placement" value="0"/>
+        <CreateFlags index="ProvideFood" value="0"/>
+        <CreateFlags index="TechComplete" value="0"/>
+        <CreateFlags index="UseFood" value="0"/>
+        <CreateFlags index="NormalizeSpawnOffset" value="0"/>
+        <SpawnEffect value="KeironChargeDummyCUSet"/>
+        <SpawnUnit value="KeironChargeDummy"/>
+    </CEffectCreateUnit>
+    <CEffectSet id="KeironChargeDummyCUSet">
+        <EditorCategories value=""/>
+        <EffectArray value="KeironChargeDummySwitch"/>
+        <EffectArray value="KeironChargeDummyTS1"/>
+        <EffectArray value="KeironChargeDummyTS2"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="KeironChargeDummyIndMyrAB">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="AtriumIndMyrBase"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="KeironChargeDummyAurApeAB">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="OutletAurApeBase"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="KeironChargeDummyParVolAB">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="EdificeParVolBase"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="KeironChargeDummyPulSubAB">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="SanctumPulSubBase"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="KeironChargeDummyUmbraAB">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="FoundryUmbraBase"/>
+    </CEffectApplyBehavior>
+    <CEffectSwitch id="KeironChargeDummySwitch">
+        <EditorCategories value=""/>
+        <CaseArray Validator="CasterIsEdifice" Effect="KeironChargeDummyParVolAB"/>
+        <CaseArray Validator="CasterIsSanctum" Effect="KeironChargeDummyPulSubAB"/>
+        <CaseArray Validator="CasterIsFoundry" Effect="KeironChargeDummyUmbraAB"/>
+        <CaseArray Validator="CasterIsAtrium" Effect="KeironChargeDummyIndMyrAB"/>
+        <CaseArray Validator="CasterIsConduit" Effect="KeironChargeDummyEchoAB"/>
+        <CaseArray Validator="CasterIsOutlet" Effect="KeironChargeDummyAurApeAB"/>
+        <CaseArray Validator="CasterIsEmpyrean" Effect="KeironChargeDummyHarParAB"/>
+    </CEffectSwitch>
+    <CEffectApplyBehavior id="KeironChargeDummyTS1">
+        <EditorCategories value=""/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="KeironChargeDummyTS2">
+        <ValidatorArray index="0" value="KeironChargeDummyTS1TargetFilters"/>
+        <EditorCategories value=""/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="KeironChargeDummyEchoAB">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="ConduitEchoBase"/>
+    </CEffectApplyBehavior>
     <CEffectEnumMagazine id="MyriadDestroyElytraIterate">
         <EditorCategories value="Race:Protoss"/>
         <SearchFilters value="-;Self"/>
@@ -1359,19 +1415,23 @@
         <Amount value="30"/>
         <Death value="Electrocute"/>
         <AttributeBonus index="Massive" value="10"/>
+        <ValidatorArray value="NotInvulnerable"/>
+        <ValidatorArray value="NotStasis"/>
+        <ValidatorArray value="NotHidden"/>
+        <ImpactLocation Effect="GamutOrb"/>
     </CEffectDamage>
     <CEffectLaunchMissile id="GamutOrbRM" parent="CEffectLaunchMissileKeiron">
         <ImpactLocation Value="CasterUnit"/>
         <AmmoUnit value="ReturnGamutOrb"/>
         <ImpactEffect value=""/>
         <FinishEffect value="GamutOrbRMImpact"/>
-        <LaunchEffect value="InducerGamutOrbReturnUserData"/>
     </CEffectLaunchMissile>
     <CEffectRedirectMissile id="GamutOrbRedirect">
-        <ValidatorArray value="GamutOrbTargetIsDead"/>
+        <ValidatorArray value="InducerGamutOrbTarget"/>
         <EditorCategories value="Race:Keiron"/>
         <WhichUnit Value="Source"/>
         <ImpactLocation Value="CasterUnit"/>
+        <ImpactFilters value="-;Dead"/>
     </CEffectRedirectMissile>
     <CEffectRemoveBehavior id="InducerGamutOrb">
         <EditorCategories value="Race:Keiron"/>

@@ -204,6 +204,10 @@
         <On index="3" Terms="Abil.ProbeHarvest.Start; ValidateUnit {} 0 Probe"/>
         <On index="4" Terms="Abil.ProbeHarvest.Stop; ValidateUnit {} 0 Probe"/>
     </CActorSound>
+    <CActorUnit id="KeironChargeDummy" parent="GenericUnitEmpty" unitname="KeironChargeDummy">
+        <On Terms="UnitBirth.KeironChargeDummy" Send="Create"/>
+        <Model value="Invisible"/>
+    </CActorUnit>
     <CActorSound id="PulsarDampenerStartSound" parent="SoundOneShotKeiron" Behavior="PulsarDampener" Sub="On"/>
     <CActorModel id="UmbraShieldCompulsionModel" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Effect.UmbraShieldCompulsion.Start" Send="Create"/>
@@ -1674,12 +1678,8 @@
         <On index="6" Terms="Effect.GamutOrbRM.Start; At Source" Send="Create"/>
         <LaunchRequest Subject="InducerGamutOrbImpactSite" Actor="Find" FailOnNoHost="1"/>
         <LaunchAssets Model="" Sound=""/>
-        <Beam value="InducerGamutOrbAttackBeam"/>
         <Missile value="InducerReturnGamutOrb"/>
-        <ImpactMap index="None" Model="InducerAttackLaunchModel" Sound="InducerGamutOrbAttackImpact" ModelReaction="InducerGamutOrbAttackImpactReaction"/>
-        <ImpactMap index="Shield" Sound="InducerGamutOrbAttackImpactShield" ModelReaction="InducerGamutOrbAttackImpactReactionShield"/>
-        <DamageMap index="None" Model="InducerGamutOrbAttackDamage" Sound="InducerGamutOrbAttackDamage" ModelReaction="InducerGamutOrbAttackDamageReaction"/>
-        <DamageMap index="Shield" Sound="InducerGamutOrbAttackDamageShield" ModelReaction="InducerGamutOrbAttackDamageReactionShield"/>
+        <ImpactMap index="None" Model="InducerAttackLaunchModel" Sound="InducerGamutOrbAttackImpact"/>
         <ImpactModel value="InducerAttackLaunchModel"/>
     </CActorAction>
     <CActorMissile id="InducerReturnGamutOrb" parent="GenericAttackMissile" unitName="ReturnGamutOrb">
