@@ -206,7 +206,7 @@
         <MaxCount value="1"/>
     </CAbilSpecialize>
     <CAbilMorph id="MoleActivate">
-        <AbilSetId value="BrwD"/>
+        <AbilSetId value="MBrwD"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="DeployCannon"/>
         <ActorKey value="BurrowDown"/>
@@ -476,7 +476,7 @@
         <ConstructionMover value="Construction"/>
     </CAbilBuild>
     <CAbilMorph id="MoleDeactivate">
-        <AbilSetId value="BrwU"/>
+        <AbilSetId value="MBrwU"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="MobilizeCannon"/>
         <ActorKey value="BurrowUp"/>
@@ -497,9 +497,12 @@
         </InfoArray>
     </CAbilMorph>
     <CAbilMorph id="RepulsorBurrow">
-        <AbilSetId value="BrwD"/>
+        <AbilSetId value="GBrwD"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="StaticDBurrow"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="StaticDBurrow" Requirements="RepulsorNotConcealed">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+        <Flags index="AutoCast" value="1"/>
         <Flags index="IgnoreFacing" value="1"/>
         <Flags index="MoveBlockers" value="1"/>
         <Flags index="SuppressMovement" value="1"/>
@@ -514,16 +517,20 @@
                 <DurationArray index="Delay" value="2"/>
             </SectionArray>
         </InfoArray>
-        <AutoCastAcquireLevel value="Defensive"/>
-        <AutoCastValidatorArray value="NotAttacking"/>
+        <AutoCastValidatorArray value="RepulsorBurrow"/>
+        <AutoCastValidatorArray value="RepulsorInterdictorBurrowCD"/>
         <AutoCastCountMin value="1"/>
         <ValidatorArray value="IsRepulsor"/>
         <AbilClassDisableArray index="CAbilAttack" value="1"/>
+        <AutoCastRange value="7.5"/>
     </CAbilMorph>
     <CAbilMorph id="InterdictorBurrow">
-        <AbilSetId value="BrwD"/>
+        <AbilSetId value="GBrwD"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="StaticDBurrow"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="StaticDBurrow" Requirements="InterdictorNotConcealed">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+        <Flags index="AutoCast" value="1"/>
         <Flags index="IgnoreFacing" value="1"/>
         <Flags index="MoveBlockers" value="1"/>
         <InfoArray Unit="InterdictorBurrowed" RandomDelayMax="0.5">
@@ -537,19 +544,23 @@
                 <DurationArray index="Delay" value="2"/>
             </SectionArray>
         </InfoArray>
-        <AutoCastAcquireLevel value="Defensive"/>
-        <AutoCastValidatorArray value="NotAttacking"/>
+        <AutoCastValidatorArray value="InterdictorBurrow"/>
+        <AutoCastValidatorArray value="RepulsorInterdictorBurrowCD"/>
         <AutoCastCountMin value="1"/>
         <ValidatorArray value="IsInterdictor"/>
         <Cost>
             <Cooldown Link="Abil/InterdictorUnburrow"/>
         </Cost>
         <AbilClassDisableArray index="CAbilAttack" value="1"/>
+        <AutoCastRange value="7.5"/>
     </CAbilMorph>
     <CAbilMorph id="InterdictorUnburrow">
-        <AbilSetId value="BrwU"/>
+        <AbilSetId value="GBrwU"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="StaticDUnburrow"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="StaticDUnburrow" Requirements="InterdictorConcealed">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+        <Flags index="AutoCast" value="1"/>
         <Flags index="IgnoreFacing" value="1"/>
         <Flags index="MoveBlockers" value="1"/>
         <Flags index="SuppressMovement" value="1"/>
@@ -565,8 +576,8 @@
             </SectionArray>
         </InfoArray>
         <AutoCastFilters value="Air,Visible;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden"/>
-        <AutoCastValidatorArray value="TargetNotChangeling"/>
-        <AutoCastRange value="7"/>
+        <AutoCastValidatorArray value="InterdictorUnburrow"/>
+        <AutoCastRange value="7.5"/>
         <AutoCastCountMin value="1"/>
         <ValidatorArray value="IsBurrowedInterdictor"/>
         <AbilClassDisableArray index="CAbilAttack" value="1"/>
@@ -813,9 +824,12 @@
         </InfoArray>
     </CAbilTrain>
     <CAbilMorph id="RepulsorUnburrow">
-        <AbilSetId value="BrwU"/>
+        <AbilSetId value="GBrwU"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="StaticDUnburrow"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="StaticDUnburrow" Requirements="RepulserConcealed">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+        <Flags index="AutoCast" value="1"/>
         <Flags index="IgnoreFacing" value="1"/>
         <Flags index="MoveBlockers" value="1"/>
         <Flags index="SuppressMovement" value="1"/>
@@ -831,8 +845,8 @@
             </SectionArray>
         </InfoArray>
         <AutoCastFilters value="Ground;Player,Ally,Neutral,RawResource,HarvestableResource,Missile,Stasis,Dead,Hidden,Invulnerable"/>
-        <AutoCastValidatorArray value="TargetNotChangeling"/>
-        <AutoCastRange value="7"/>
+        <AutoCastValidatorArray value="RepulsorUnburrow"/>
+        <AutoCastRange value="7.5"/>
         <AutoCastCountMin value="1"/>
         <ValidatorArray value="IsBurrowedRepulsor"/>
         <AbilClassDisableArray index="CAbilAttack" value="1"/>

@@ -102,6 +102,35 @@
     <CValidatorUnitCompareBehaviorCount id="NoAnalyzeWeaknessBuff">
         <Behavior value="AnalyzeWeakness"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorCombine id="RepulsorBurrow">
+        <Type value="And"/>
+        <CombineArray value="RepulsorUnburrow"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="InterdictorBurrow">
+        <Type value="And"/>
+        <CombineArray value="InterdictorUnburrow"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareBehaviorCount id="RepulsorInterdictorBurrowCD">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="RepulsorInterdictorBurrowCD"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorLocationEnumArea id="RepulsorUnburrow">
+        <WhichLocation Value="CasterUnitOrPoint"/>
+        <AreaArray>
+            <Compare value="GT"/>
+            <Count value="0"/>
+            <Radius value="7.5"/>
+            <Validator value="TargetNotChangeling"/>
+        </AreaArray>
+        <SearchFilters value="Ground,Visible;Player,Ally,Neutral,Missile,Item,Stasis,Dead,Hidden,Invulnerable"/>
+    </CValidatorLocationEnumArea>
+    <CValidatorLocationEnumArea id="InterdictorUnburrow">
+        <WhichLocation Value="CasterUnitOrPoint"/>
+        <AreaArray Compare="GT" Count="0" Radius="7.5"/>
+        <SearchFilters value="Air,Visible;Player,Ally,Neutral,Missile,Item,Stasis,Dead,Hidden,Invulnerable"/>
+    </CValidatorLocationEnumArea>
     <CValidatorCombine id="RevenantLaunchTargetFastCombine">
         <Type value="And"/>
         <CombineArray value="RevenantLaunchTargetFast"/>

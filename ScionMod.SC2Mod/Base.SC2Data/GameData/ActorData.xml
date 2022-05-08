@@ -1208,7 +1208,7 @@
         <ModelFlags index="OutlineOccluder" value="1"/>
         <PortraitModel value="GenetronAdjutantPortrait"/>
     </CActorUnit>
-    <CActorAction id="RepulsorAttack" parent="GenericAttack" effectAttack="SuppressionCannons">
+    <CActorAction id="RepulsorAttack" parent="GenericAttack" effectAttack="RepulsorSuppressionCannonsDamage">
         <LaunchAttachQuery Methods="AMFilterBoar"/>
         <ImpactMap index="None" Sound="VikingFighter_AttackImpact"/>
     </CActorAction>
@@ -1348,14 +1348,14 @@
         <On Terms="AnimDone; AnimName Death" Send="ModelMaterialRemoveFrom ::Main"/>
         <On Terms="AnimDone; AnimName Death" Send="Destroy"/>
         <On Terms="Behavior.LockdownMode.On" Send="Create"/>
-        <On Terms="Behavior.LockdownMode.Off" Send="AnimBracketStop BSD"/>
+        <On Terms="Behavior.LockdownModeDuration.Destroy" Send="AnimBracketStop BSD"/>
         <On Terms="Behavior.VirtusLockdownModeDuration.Destroy" Send="AnimBracketStop BSD"/>
         <On Terms="Behavior.VirtusLockdownMode.On" Send="Create"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModelMaterial>
     <CActorSound id="MechStructureLockdownSoundLoop" parent="SoundContinuous">
         <On Terms="Behavior.LockdownMode.On" Send="Create"/>
-        <On Terms="Behavior.LockdownMode.Off" Send="Destroy"/>
+        <On Terms="Behavior.LockdownModeDuration.Destroy" Send="Destroy"/>
         <On Terms="Behavior.VirtusLockdownModeDuration.Destroy" Send="Destroy"/>
         <On Terms="Behavior.VirtusLockdownMode.On" Send="Create"/>
         <Sound value="LockDownMode_Loop"/>

@@ -144,6 +144,15 @@
         <EditorCategories value=""/>
         <WhichLocation Value="TargetUnitOrPoint"/>
     </CEffectCreatePersistent>
+    <CEffectSet id="RepulsorSuppressionCannons">
+        <EditorCategories value=""/>
+        <EffectArray value="RepulsorInterdictorBurrowCD"/>
+        <EffectArray value="RepulsorSuppressionCannonsDamage"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="RepulsorInterdictorBurrowCD">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+    </CEffectApplyBehavior>
     <CEffectCreateUnit id="UploaderCountDummyCreateUnit3x3">
         <ValidatorArray value="CasterNotDead"/>
         <EditorCategories value="Race:Terran"/>
@@ -523,13 +532,9 @@
         <PeriodCount value="2"/>
         <PeriodicEffectArray value="NemesisMissilesLM"/>
     </CEffectCreatePersistent>
-    <CEffectCreatePersistent id="NullifierMissilesCP">
-        <EditorCategories value="Race:Genetron"/>
-        <WhichLocation Value="TargetUnit"/>
-        <PeriodCount value="2"/>
-        <PeriodicEffectArray value="NullifierMissilesLM"/>
-    </CEffectCreatePersistent>
-    <CEffectLaunchMissile id="NullifierMissilesLM" parent="CEffectLaunchMissileGenetron"/>
+    <CEffectLaunchMissile id="NullifierMissilesLM" parent="CEffectLaunchMissileGenetron">
+        <LaunchEffect value="RepulsorInterdictorBurrowCD"/>
+    </CEffectLaunchMissile>
     <CEffectApplyBehavior id="EnergyRegenerationBuff" parent="CEffectApplyBehaviorGenetronTarget">
         <ValidatorArray index="0" value="TargetIsProcessingCore"/>
         <ValidatorArray value="StructureNotLockedDown"/>
@@ -967,7 +972,7 @@
         <Amount value="24"/>
         <Death value="Blast"/>
     </CEffectDamage>
-    <CEffectDamage id="SuppressionCannons" parent="CEffectDamageGenetronWeapon">
+    <CEffectDamage id="RepulsorSuppressionCannonsDamage" parent="CEffectDamageGenetronWeapon">
         <Amount value="20"/>
         <Death value="Blast"/>
     </CEffectDamage>
@@ -1237,6 +1242,9 @@
     </CEffectApplyForce>
     <CEffectApplyBehavior id="DashFrenzy" parent="ApplyBehaviorXayid"/>
     <CEffectApplyBehavior id="VirtusLockdownModeDuration" parent="CEffectApplyBehaviorGenetronCaster"/>
+    <CEffectApplyBehavior id="LockdownModeApplyDuration" parent="CEffectApplyBehaviorGenetronCaster">
+        <Behavior value="LockdownModeDuration"/>
+    </CEffectApplyBehavior>
     <CEffectApplyBehavior id="XayidSpawnTimedLife" parent="ApplyBehaviorXayid"/>
     <CEffectCreatePersistent id="XayidlingDash">
         <EditorCategories value="Race:Zerg"/>

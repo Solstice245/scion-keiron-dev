@@ -56,6 +56,30 @@
         <RemoveValidatorArray value="NotHaveOutfittingStation"/>
         <Duration value="15"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="LockdownModeDuration">
+        <InfoIcon value="Assets\Textures\btn-ability-genetron-structurelockdownmode.dds"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisplayDuration index="Ally" value="1"/>
+        <BuffFlags index="Countdown" value="0"/>
+        <Duration value="10"/>
+        <Modification>
+            <ModifyFlags index="DisableAbils" value="1"/>
+            <ModifyFlags index="DisableWeapons" value="1"/>
+            <StateFlags index="SuppressDropOff" value="1"/>
+            <StateFlags index="SuppressFoodMade" value="1"/>
+            <StateFlags index="SuppressEnergyRegen" value="1"/>
+        </Modification>
+        <DamageResponse ModifyFraction="0.4">
+            <Kind index="Spell" value="0"/>
+            <Chance value="1"/>
+        </DamageResponse>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="RepulsorInterdictorBurrowCD">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <Duration value="3"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="UploaderCountDummyInit3x3">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -311,11 +335,14 @@
             <StateFlags index="SuppressDropOff" value="1"/>
             <StateFlags index="SuppressFoodMade" value="1"/>
             <StateFlags index="SuppressEnergyRegen" value="1"/>
+            <BehaviorLinkDisableArray value="LockdownModeDuration"/>
         </Modification>
         <DamageResponse ModifyFraction="0.4">
             <Kind index="Spell" value="0"/>
             <Chance value="1"/>
         </DamageResponse>
+        <Period value="0.0625"/>
+        <PeriodicEffect value="LockdownModeApplyDuration"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="EnergyRegenerationBuff">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -378,10 +405,6 @@
         <DamageResponse ModifyFraction="0.4">
             <Kind index="Spell" value="0"/>
             <Chance value="1"/>
-            <Cost>
-                <Charge Link="Behavior/LockdownMode"/>
-                <Cooldown Link="Behavior/LockdownMode"/>
-            </Cost>
         </DamageResponse>
     </CBehaviorBuff>
     <CBehaviorBuff id="ProcessingNodeSearchBuff">
@@ -850,10 +873,6 @@
         <DamageResponse ModifyFraction="0.4">
             <Kind index="Spell" value="0"/>
             <Chance value="1"/>
-            <Cost>
-                <Charge Link="Behavior/LockdownMode"/>
-                <Cooldown Link="Behavior/LockdownMode"/>
-            </Cost>
         </DamageResponse>
         <Tooltip value="Behavior/Tooltip/VirtusLockdownMode"/>
     </CBehaviorBuff>
