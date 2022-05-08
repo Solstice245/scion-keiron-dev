@@ -140,6 +140,10 @@
         <SpawnEffect value="MassaliskDummyAB"/>
         <SpawnUnit value="MassaliskDummy"/>
     </CEffectCreateUnit>
+    <CEffectCreatePersistent id="NullifierMissilesDummy">
+        <EditorCategories value=""/>
+        <WhichLocation Value="TargetUnitOrPoint"/>
+    </CEffectCreatePersistent>
     <CEffectCreateUnit id="UploaderCountDummyCreateUnit3x3">
         <ValidatorArray value="CasterNotDead"/>
         <EditorCategories value="Race:Terran"/>
@@ -211,7 +215,7 @@
         <EffectArray value="ProcessingDroneFate"/>
         <EffectArray value="KillSource"/>
     </CEffectSet>
-    <CEffectCreatePersistent id="JupiterRevenantBombChannelFinalForceOptional">
+    <CEffectCreatePersistent id="JupiterRevenantBombFinalForceOptional">
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="CasterUnit"/>
         <OffsetVectorStartLocation Value="CasterUnit"/>
@@ -222,12 +226,12 @@
         <PeriodicOffsetArray value="0,1,0"/>
         <PeriodicPeriodArray value="0.0625"/>
     </CEffectCreatePersistent>
-    <CEffectCreatePersistent id="JupiterRevenantBombChannelFinalForceMandatory">
+    <CEffectCreatePersistent id="JupiterRevenantBombFinalForceMandatory">
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="CasterUnit"/>
         <OffsetVectorStartLocation Value="CasterUnit"/>
         <OffsetVectorEndLocation Value="CasterUnit"/>
-        <FinalEffect value="JupiterRevenantBombChannelFinalForceOptional"/>
+        <FinalEffect value="JupiterRevenantBombFinalForceOptional"/>
         <PeriodCount value="10"/>
         <PeriodicEffectArray value="JupiterRevenantBombForce"/>
         <PeriodicOffsetArray value="0,1,0"/>
@@ -245,6 +249,7 @@
     </CEffectCreatePersistent>
     <CEffectSet id="JupiterRevenantBombLaunchQuerySet" parent="CEffectSetGenetron">
         <ValidatorArray value="RevenantLaunchTargetDistances"/>
+        <EffectArray value="JupiterRevenantBombFinalForceMandatory"/>
         <EffectArray value="JupiterRevenantBombDestroyChannel"/>
         <EffectArray value="JupiterRevenantBombCooldownFinal"/>
         <EffectArray value="JupiterRevenantBombLaunchMissile"/>
@@ -477,7 +482,6 @@
     </CEffectEnumArea>
     <CEffectLaunchMissile id="HellraiserGuns" parent="CEffectLaunchMissileGenetron"/>
     <CEffectEnumArea id="IBF7Flamethrower">
-        <ValidatorArray value="IBF7FlamethrowerSATargetFilters"/>
         <EditorCategories value="Race:Genetron"/>
         <ImpactLocation Value="SourceUnit"/>
         <ExcludeArray Effect="IBF7FamethrowerSet" Value="Target"/>
@@ -821,7 +825,6 @@
         <Flags index="PersistUntilDestroyed" value="1"/>
         <InitialDelay value="0.0625"/>
         <InitialEffect value="JupiterRevenantBombCooldownInit"/>
-        <FinalEffect value="JupiterRevenantBombChannelFinalForceMandatory"/>
         <PeriodicEffectArray value="JupiterRevenantBombLaunchQuerySet"/>
         <PeriodicEffectArray value="JupiterRevenantBombForceOffset"/>
         <PeriodicEffectArray value="JupiterSpeed"/>
@@ -947,7 +950,7 @@
         <Death value="Blast"/>
     </CEffectDamage>
     <CEffectDamage id="NullifierMissilesLMImpact" parent="CEffectDamageGenetronWeapon">
-        <Amount value="15"/>
+        <Amount value="30"/>
         <Death value="Blast"/>
     </CEffectDamage>
     <CEffectDamage id="RiotGun" parent="CEffectDamageGenetronWeapon">
@@ -1174,24 +1177,23 @@
         <SearchFilters value="Ground;Player,Ally,Neutral,Structure,RawResource,HarvestableResource,Missile,Item,Stasis,Dead,Hidden"/>
         <AreaArray Radius="3.5" Effect="BlindingBurstSet"/>
     </CEffectEnumArea>
-    <CEffectApplyBehavior id="BlindingBurstAB" parent="ApplyBehaviorXayid"/>
+    <CEffectApplyBehavior id="BlindingBurstAB" parent="ApplyBehaviorXayid">
+        <ValidatorArray index="0" value="NotFrenzied"/>
+    </CEffectApplyBehavior>
     <CEffectDamage id="CleavingSpores">
         <EditorCategories value="Race:Zerg"/>
-        <ResponseFlags index="Acquire" value="1"/>
-        <ResponseFlags index="Flee" value="1"/>
-        <AttributeBonus index="Armored" value="1.667"/>
-        <Flags index="Notification" value="1"/>
         <Amount value="1"/>
         <Death value="Fire"/>
         <ValidatorArray value="NotStructureTarget"/>
     </CEffectDamage>
     <CEffectCreatePersistent id="CleavingSporesCP">
         <ValidatorArray value="CleavingSporesCompleted"/>
+        <ValidatorArray value="IsArmoredType"/>
         <EditorCategories value="Race:Zerg"/>
         <WhichLocation Value="TargetUnit"/>
-        <PeriodCount value="3"/>
+        <PeriodCount value="9"/>
         <PeriodicEffectArray value="CleavingSpores"/>
-        <PeriodicPeriodArray value="0.75"/>
+        <PeriodicPeriodArray value="0.389"/>
     </CEffectCreatePersistent>
     <CEffectLaunchMissile id="CorrosiveSpores">
         <EditorCategories value="Race:Zerg"/>
@@ -1204,7 +1206,7 @@
         <ResponseFlags index="Flee" value="1"/>
         <ArmorReduction value="1"/>
         <Flags index="Notification" value="1"/>
-        <Amount value="8"/>
+        <Amount value="9"/>
         <Death value="Fire"/>
         <Kind value="Ranged"/>
         <Visibility value="Visible"/>
@@ -1337,7 +1339,7 @@
     <CEffectApplyBehavior id="IncendiaryInfusionAG" parent="ApplyBehaviorXayid"/>
     <CEffectDamage id="IncendiaryInfusionDMG">
         <EditorCategories value="Race:Zerg"/>
-        <Amount value="10"/>
+        <Amount value="6"/>
         <Death value="Fire"/>
     </CEffectDamage>
     <CEffectDestroyPersistent id="ExplosiveGlobDP">
@@ -1406,11 +1408,10 @@
     </CEffectLaunchMissile>
     <CEffectDamage id="ExterminationDMG">
         <EditorCategories value="Race:Zerg"/>
-        <AttributeBonus index="Light" value="10"/>
         <ArmorReduction value="1"/>
-        <Amount value="18"/>
+        <Amount value="10"/>
         <Death value="Fire"/>
-        <AreaArray Radius="0.8" Fraction="0.5"/>
+        <AreaArray Radius="1" Fraction="0.5"/>
         <ExcludeArray Value="Target"/>
         <SearchFilters value="Air;Player,Ally,Hidden,Invulnerable"/>
         <ResponseFlags index="Acquire" value="1"/>
@@ -1418,6 +1419,7 @@
         <Flags index="Notification" value="1"/>
         <Kind value="Ranged"/>
         <Visibility value="Visible"/>
+        <KindSplash value="Splash"/>
     </CEffectDamage>
     <CEffectLaunchMissile id="Extermination">
         <EditorCategories value="Race:Zerg"/>
@@ -1426,7 +1428,7 @@
     </CEffectLaunchMissile>
     <CEffectApplyBehavior id="GlazeFire" parent="ApplyBehaviorXayid">
         <Flags index="UseDuration" value="1"/>
-        <Duration value="12.5"/>
+        <Duration value="11.25"/>
     </CEffectApplyBehavior>
     <CEffectApplyBehavior id="ResidualAcid" parent="ApplyBehaviorXayid"/>
     <CEffectCreatePersistent id="ResidualAcidCP">
@@ -1478,11 +1480,12 @@
         <AreaArray Radius="0.4" Fraction="0.5"/>
         <ExcludeArray Value="Target"/>
         <SearchFilters value="Ground;Player,Ally,Neutral,Missile,Stasis,Hidden,Invulnerable"/>
+        <KindSplash value="Splash"/>
     </CEffectDamage>
     <CEffectDamage id="MassiveSporeAirDMG">
         <EditorCategories value="Race:Zerg"/>
         <ArmorReduction value="1"/>
-        <Amount value="16"/>
+        <Amount value="24"/>
         <Death value="Disintegrate"/>
         <AreaArray Radius="0.4" Fraction="0.5"/>
         <ExcludeArray Value="Target"/>
@@ -1491,6 +1494,7 @@
         <ResponseFlags index="Flee" value="1"/>
         <Flags index="Notification" value="1"/>
         <Kind value="Ranged"/>
+        <KindSplash value="Splash"/>
     </CEffectDamage>
     <CEffectLaunchMissile id="MassiveSporeAG">
         <EditorCategories value="Race:Zerg"/>
@@ -1509,9 +1513,9 @@
         <EditorCategories value="Race:Zerg"/>
         <WhichLocation Value="TargetUnit"/>
         <InitialEffect value="MendBehavior"/>
-        <PeriodCount value="6"/>
+        <PeriodCount value="1"/>
         <PeriodicEffectArray value="MendMU"/>
-        <PeriodicPeriodArray value="0.5"/>
+        <PeriodicPeriodArray value="0"/>
     </CEffectCreatePersistent>
     <CEffectDamage id="ScavengerClaws">
         <EditorCategories value="Race:Zerg"/>
@@ -1552,7 +1556,7 @@
     <CEffectModifyUnit id="MendMU">
         <EditorCategories value="Race:Zerg"/>
         <VitalArray index="Life">
-            <Change value="5"/>
+            <Change value="20"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectCreatePersistent id="NeedleSpinesAntiGround">

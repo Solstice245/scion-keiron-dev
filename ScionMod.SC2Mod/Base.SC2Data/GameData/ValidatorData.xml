@@ -26,15 +26,15 @@
         <Value value="75"/>
         <Vital value="Energy"/>
     </CValidatorUnitCompareVital>
-    <CValidatorUnitCompareSpeed id="CasterIsMovingGTE10">
+    <CValidatorUnitCompareSpeed id="CasterIsMovingGTE8">
         <WhichUnit Value="Caster"/>
         <Compare value="GE"/>
         <Value value="8"/>
     </CValidatorUnitCompareSpeed>
-    <CValidatorUnitCompareSpeed id="CasterIsMovingLT10">
+    <CValidatorUnitCompareSpeed id="CasterIsMovingLT8">
         <WhichUnit Value="Caster"/>
         <Compare value="LT"/>
-        <Value value="10"/>
+        <Value value="8"/>
     </CValidatorUnitCompareSpeed>
     <CValidatorUnitCompareBehaviorCount id="CasterIsNotBlindedByProwler">
         <WhichUnit Value="Caster"/>
@@ -48,6 +48,9 @@
     <CValidatorUnitType id="IsJupiter">
         <Value value="Jupiter"/>
     </CValidatorUnitType>
+    <CValidatorUnitFilters id="IsArmoredType">
+        <Filters value="Armored;-"/>
+    </CValidatorUnitFilters>
     <CValidatorCombine id="IsTeslaCharge">
         <CombineArray value="IsTeslaCloakCharge"/>
         <CombineArray value="IsTeslaShockCharge"/>
@@ -75,6 +78,12 @@
         <Value value="30"/>
         <Behavior value="JupiterSpeed"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareVital id="LifeGTEDelta20">
+        <ResultFailed value="TooMuchLife"/>
+        <Compare value="GE"/>
+        <Type value="Delta"/>
+        <Value value="20"/>
+    </CValidatorUnitCompareVital>
     <CValidatorUnitCompareBehaviorCount id="MassaliskCasterIsHunkered">
         <WhichUnit Value="Caster"/>
         <Compare value="GT"/>
@@ -96,7 +105,7 @@
     <CValidatorCombine id="RevenantLaunchTargetFastCombine">
         <Type value="And"/>
         <CombineArray value="RevenantLaunchTargetFast"/>
-        <CombineArray value="CasterIsMovingGTE10"/>
+        <CombineArray value="CasterIsMovingGTE8"/>
     </CValidatorCombine>
     <CValidatorLocationCompareRange id="RevenantLaunchTargetSlow">
         <WhichLocation Value="TargetUnitOrPoint"/>
