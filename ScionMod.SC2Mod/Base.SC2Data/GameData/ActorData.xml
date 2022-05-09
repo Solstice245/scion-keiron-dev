@@ -864,7 +864,7 @@
         <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 45.000000 AsDuration"/>
         <Model value="Jupiter"/>
     </CActorModel>
-    <CActorUnit id="Interdictor" parent="TerranBuilding" unitName="Interdictor">
+    <CActorUnit id="Interdictor" parent="GenetronBuilding" buildTime="29.000000" unitName="Interdictor">
         <On index="65" Terms="WeaponStart.NullifierMissiles.AttackStart" Send="AnimPlay Attack Attack"/>
         <On Terms="ActorCreation" Send="Create InterdictorAddition"/>
         <On Terms="WeaponStart.NullifierMissiles.AttackStart" Send="TimerSet 2.500000,0.125000 TurretTimer"/>
@@ -884,25 +884,15 @@
         <On Terms="AbilMorph.*.Start; MorphTo Interdictor" Send="AnimGroupRemove Burrow"/>
         <On Terms="AbilMorph.*.Cancel; MorphTo InterdictorBurrowed" Send="AnimGroupRemove Burrow"/>
         <On Terms="AbilMorph.*.Cancel; MorphTo Interdictor" Send="AnimGroupApply Burrow Burrow Unburrow ClosingFull"/>
+        <On Terms="Behavior.LockdownMode.On" Target="InterdictorLookAt" Send="LookAtStop"/>
+        <On Terms="Behavior.LockdownMode.On" Target="InterdictorLookAtTurretY" Send="LookAtStart"/>
         <PlacementSound value="Terran_BuildingPlacementSmall"/>
         <DeathArray index="Normal" ModelLink="MissileTurretDeath" SoundLink="MissileTurret_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeathSmall" SoundLink="MissileTurret_Explode"/>
         <PlacementActorModel value="InterdictorPlacementModel"/>
-        <GroupIcon>
-            <Image value="Assets\Textures\wireframe-genetron-interdictor.dds"/>
-        </GroupIcon>
-        <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-mechstructurearmor.dds"/>
-        <UnitIcon value="Assets\Textures\btn-building-genetron-interdictor.dds"/>
-        <Wireframe>
-            <Image value="Assets\Textures\wireframe-genetron-interdictor.dds"/>
-        </Wireframe>
-        <PlacementModel value="InterdictorPlacement"/>
         <BarWidth value="85"/>
-        <SoundArray index="Birth" value=""/>
         <SoundArray index="Ready" value="MissileTurret_Ready"/>
         <SoundArray index="What" value="MissileTurret_What"/>
-        <SoundArray index="Construction" value="Terran_ConstructionWhat"/>
-        <PortraitModel value="GenetronAdjutantPortrait"/>
     </CActorUnit>
     <CActorAction id="InterdictorAttack" parent="GenericAttack" effectImpact="NullifierMissilesLMImpact" effectLaunch="NullifierMissilesLM">
         <LaunchAttachQuery Methods="AMPatternInterdictor"/>
@@ -1153,11 +1143,10 @@
         <Model value="ReaperJumpLaunchModel"/>
         <Scale value="2.000000"/>
     </CActorModel>
-    <CActorModel id="RepulsorBuild" parent="TerranBuildingBuildSmall">
-        <On Terms="ActorCreation" Send="SetScale 1.350000"/>
+    <CActorModel id="RepulsorBuild" parent="GenetronBuildingBuild">
+        <CreepHeightClass value="Small"/>
     </CActorModel>
-    <CActorModel id="InterdictorBuild" parent="TerranBuildingBuildSmall">
-        <On Terms="ActorCreation" Send="SetScale 1.350000"/>
+    <CActorModel id="InterdictorBuild" parent="GenetronBuildingBuild">
         <Model value="RepulsorBuild"/>
     </CActorModel>
     <CActorSound id="RepulsorBurrowSound" parent="SoundOneShot">
@@ -1170,43 +1159,25 @@
     <CActorTurret id="RepulsorTurret">
         <On Terms="TurretEnable.RepulsorTurret" Send="Create"/>
     </CActorTurret>
-    <CActorUnit id="Repulsor" parent="GenericBurrowerStandard" unitName="Repulsor">
-        <On index="70" Terms="UnitBirth.RepulsorBurrowed" Send="AnimGroupApply Burrow Burrow Unburrow ClosingFull,Instant"/>
-        <On Terms="AbilMorph; MorphTo RepulsorBurrowed" Send="AnimGroupApply Burrow Burrow Unburrow ClosingFull"/>
-        <On Terms="AbilMorph; MorphTo Repulsor" Send="AnimGroupRemove Burrow"/>
+    <CActorUnit id="Repulsor" parent="GenetronBuilding" buildTime="44" unitName="Repulsor">
+        <On index="89" Terms="AnimDone; AnimName Birth" Send="AnimSetDuration Build 44.000000"/>
         <On Terms="UnitDeathCustomize; ValidateUnit IsBurrowedUnit" Send="DeathCustomize Burrowed"/>
-        <On Terms="UnitConstruction.Repulsor.Start" Send="Create RepulsorBuild"/>
-        <On Terms="UnitConstruction.Repulsor.Start" Send="Create BuildingTerrainFlatten"/>
-        <On Terms="UnitConstruction.Repulsor.Cancel" Target="_BuildingTerrainFlatten" Send="Destroy"/>
-        <On Terms="UnitConstruction.Repulsor.Finish" Target="_BuildingTerrainFlatten" Send="Destroy"/>
+        <On Terms="UnitBirth.RepulsorBurrowed" Send="Create"/>
+        <On Terms="UnitBirth.RepulsorBurrowed" Send="AnimGroupApply Burrow Burrow Unburrow ClosingFull,Instant"/>
+        <On Terms="AbilMorph.*.Start; MorphTo RepulsorBurrowed" Send="AnimGroupApply Burrow Burrow Unburrow ClosingFull"/>
+        <On Terms="AbilMorph.*.Start; MorphTo Repulsor" Send="AnimGroupRemove Burrow"/>
+        <On Terms="AbilMorph.*.Cancel; MorphTo RepulsorBurrowed" Send="AnimGroupRemove Burrow"/>
+        <On Terms="AbilMorph.*.Cancel; MorphTo Repulsor" Send="AnimGroupApply Burrow Burrow Unburrow ClosingFull"/>
         <PlacementSound value="Terran_BuildingPlacementSmall"/>
-        <GroupIcon>
-            <Image value="Assets\Textures\wireframe-genetron-repulsor.dds"/>
-        </GroupIcon>
-        <UnitIcon value="Assets\Textures\btn-building-genetron-repulsor.dds"/>
-        <Wireframe>
-            <Image value="Assets\Textures\wireframe-genetron-repulsor.dds"/>
-        </Wireframe>
-        <Aliases value="_CreepEngulfable"/>
-        <CreepHeightClass value="Default"/>
-        <CreepRateGrow value="Grow"/>
-        <CreepRateShrink value="Shrink"/>
         <DeathArray index="Normal" ModelLink="RepulsorDeath" SoundLink="TechLab_Explode">
             <BodySquibs Model="RepulsorShrikeDeath">
                 <ModelSiteOps Ops="SOpMoveUpBy1"/>
             </BodySquibs>
         </DeathArray>
-        <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeath" SoundLink="TechLab_Explode"/>
         <PlacementActorModel value="RepulsorPlacementModel"/>
-        <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-mechstructurearmor.dds"/>
         <BarWidth value="85"/>
-        <SoundArray index="Birth" value=""/>
         <SoundArray index="Ready" value="Raven_AutoTurretReady"/>
         <SoundArray index="What" value="Raven_AutoTurretWhat"/>
-        <SoundArray index="Construction" value="Terran_ConstructionWhat"/>
-        <PlacementModel value="RepulsorPlacement"/>
-        <ModelFlags index="OutlineOccluder" value="1"/>
-        <PortraitModel value="GenetronAdjutantPortrait"/>
     </CActorUnit>
     <CActorAction id="RepulsorAttack" parent="GenericAttack" effectAttack="RepulsorSuppressionCannonsDamage">
         <LaunchAttachQuery Methods="AMFilterBoar"/>
@@ -1469,11 +1440,13 @@
         <On Terms="ActorCreation; ModelName InterdictorPlacement" Send="Create InterdictorWeaponRange"/>
         <On Terms="ActorCreation; ModelName Interdictor; ModelIsLowQuality" Send="Create InterdictorWeaponRange"/>
         <On Terms="ActorDestruction" Target="MissileTurretProtectRange" Send="Destroy"/>
+        <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModel>
     <CActorModel id="RepulsorPlacementModel" parent="PlacementModel">
         <On Terms="ActorCreation; ModelName RepulsorPlacement" Send="Create RepulsorWeaponRange"/>
         <On Terms="ActorCreation; ModelName Repulsor; ModelIsLowQuality" Send="Create RepulsorWeaponRange"/>
         <On Terms="ActorDestruction" Target="MissileTurretProtectRange" Send="Destroy"/>
+        <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModel>
     <CActorModel id="UploaderCastDelayModel" parent="ModelAnimationStyleContinuousUNIT">
         <On Terms="Behavior.DownloadPhase.On" Send="Create"/>
@@ -2740,7 +2713,7 @@
         <Inherits index="Visibility" value="0"/>
         <HostSiteOps Ops="SOpAttachHardPoint" HoldRotation="1"/>
         <Model value="WidowMineBurrowedSplat"/>
-        <Scale value="1.200000"/>
+        <Scale value="0.950000"/>
         <On index="0" Terms="ActorOrphan" Send="Destroy"/>
         <On index="1" Terms="UnitBirth.Repulsor" Send="Create"/>
         <On index="3" removed="1"/>
