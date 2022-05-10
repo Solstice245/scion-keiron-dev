@@ -737,12 +737,7 @@
         <HostSiteOps Ops="SOpTargetPoint"/>
         <Sound value="Blitzer_Reload"/>
     </CActorSound>
-    <CActorModel id="AssemblyArrayBuild" parent="TerranBuildingBuildSmall">
-        <Aliases index="1" value="_TerranBuildModel"/>
-        <On index="4" Terms="ActorCreation" Send="Create TerranConstructionAttached"/>
-        <On Terms="ActorCreation" Send="SetScale 1.250000"/>
-        <Scale value="0.800000"/>
-    </CActorModel>
+    <CActorModel id="AssemblyArrayBuild" parent="GenetronBuildingBuild"/>
     <CActorAction id="EqualizerAltAttack" parent="GenericAttack" effectImpact="StratumMissilePodDMG" effectLaunch="StratumMissilePod">
         <LaunchAttachQuery Methods="AMFilterEqualizer AMPatternEqualizerStratum"/>
         <LaunchAssets Model="VikingFighterAttackLaunch" Sound="Equalizer_Stratum_AttackLaunch"/>
@@ -865,19 +860,19 @@
         <Model value="Jupiter"/>
     </CActorModel>
     <CActorUnit id="Interdictor" parent="GenetronBuilding" buildTime="29.000000" unitName="Interdictor">
-        <On index="65" Terms="WeaponStart.NullifierMissiles.AttackStart" Send="AnimPlay Attack Attack"/>
+        <On index="65" Terms="WeaponStart.NeutralizerBeam.AttackStart" Send="AnimPlay Attack Attack"/>
         <On Terms="ActorCreation" Send="Create InterdictorAddition"/>
-        <On Terms="WeaponStart.NullifierMissiles.AttackStart" Send="TimerSet 2.500000,0.125000 TurretTimer"/>
-        <On Terms="WeaponStart.NullifierMissiles.AttackStart" Target="InterdictorLookAtTurretY" Send="LookAtStop"/>
-        <On Terms="WeaponStart.NullifierMissiles.AttackStart" Target="InterdictorLookAt" Send="LookAtEngage"/>
-        <On Terms="WeaponStop.NullifierMissiles.AttackStop" Send="TimerSet 2.500000,0.125000 TurretTimer"/>
+        <On Terms="WeaponStart.NeutralizerBeam.AttackStart" Send="TimerSet 2.500000,0.125000 TurretTimer"/>
+        <On Terms="WeaponStart.NeutralizerBeam.AttackStart" Target="InterdictorLookAtTurretY" Send="LookAtStop"/>
+        <On Terms="WeaponStart.NeutralizerBeam.AttackStart" Target="InterdictorLookAt" Send="LookAtEngage"/>
+        <On Terms="WeaponStop.NeutralizerBeam.AttackStop" Send="TimerSet 2.500000,0.125000 TurretTimer"/>
         <On Terms="TimerExpired; TimerName TurretTimer" Target="InterdictorLookAt" Send="LookAtStop"/>
         <On Terms="TimerExpired; TimerName TurretTimer" Target="InterdictorLookAtTurretY" Send="LookAtStart"/>
         <On Terms="ActorCreation" Send="StatusSet WeaponNext 0"/>
-        <On Terms="Effect.NullifierMissilesLM.Start; At Caster" Send="StatusIncrement WeaponNext"/>
-        <On Terms="Effect.NullifierMissilesLM.Start; At Caster; IsStatus WeaponNext 2" Send="StatusSet WeaponNext 0"/>
-        <On Terms="Effect.NullifierMissilesLM.Start; At Caster; IsStatus WeaponNext 0" Send="AnimPlay AttackLeft Spell,Left"/>
-        <On Terms="Effect.NullifierMissilesLM.Start; At Caster; IsStatus WeaponNext 1" Send="AnimPlay AttackRight Spell,Right"/>
+        <On Terms="Effect.NeutralizerBeamLM.Start; At Caster" Send="StatusIncrement WeaponNext"/>
+        <On Terms="Effect.NeutralizerBeamLM.Start; At Caster; IsStatus WeaponNext 2" Send="StatusSet WeaponNext 0"/>
+        <On Terms="Effect.NeutralizerBeamLM.Start; At Caster; IsStatus WeaponNext 0" Send="AnimPlay AttackLeft Spell,Left"/>
+        <On Terms="Effect.NeutralizerBeamLM.Start; At Caster; IsStatus WeaponNext 1" Send="AnimPlay AttackRight Spell,Right"/>
         <On Terms="UnitBirth.InterdictorBurrowed" Send="Create"/>
         <On Terms="UnitBirth.InterdictorBurrowed" Send="AnimGroupApply Burrow Burrow Unburrow ClosingFull,Instant"/>
         <On Terms="AbilMorph.*.Start; MorphTo InterdictorBurrowed" Send="AnimGroupApply Burrow Burrow Unburrow ClosingFull"/>
@@ -894,13 +889,13 @@
         <SoundArray index="Ready" value="MissileTurret_Ready"/>
         <SoundArray index="What" value="MissileTurret_What"/>
     </CActorUnit>
-    <CActorAction id="InterdictorAttack" parent="GenericAttack" effectImpact="NullifierMissilesLMImpact" effectLaunch="NullifierMissilesLM">
+    <CActorAction id="InterdictorAttack" parent="GenericAttack" effectImpact="NeutralizerBeamLMImpact" effectLaunch="NeutralizerBeamLM">
         <LaunchAttachQuery Methods="AMPatternInterdictor"/>
     </CActorAction>
-    <CActorMissile id="InterdictorAttackMissile" parent="GenericAttackMissile" unitName="NullifierMissilesLMWeapon">
+    <CActorMissile id="InterdictorAttackMissile" parent="GenericAttackMissile" unitName="NeutralizerBeamLMWeapon">
         <On Terms="ActorCreation" Send="AnimPlay Phase1 Stand PlayForever"/>
         <On Terms="MotionPhaseStart; MotionPhase 1" Send="AnimPlay Phase2 Turbo PlayForever"/>
-        <Model value="InterdictorMissileWeapon"/>
+        <Model value="InterdictorWeapon"/>
     </CActorMissile>
     <CActorSound id="InterdictorBurrowSound" parent="SoundOneShot">
         <On Terms="AbilMorph.InterdictorBurrow.Start" Send="Create"/>
@@ -914,7 +909,7 @@
         <On Terms="TimerExpired" Send="Destroy"/>
         <Sound value="Interdictor_Unburrow"/>
     </CActorSound>
-    <CActorRange id="InterdictorWeaponRange" parent="RangeWeapon" weapon="NullifierMissiles">
+    <CActorRange id="InterdictorWeaponRange" parent="RangeWeapon" weapon="NeutralizerBeam">
         <On Terms="SelectionLocalUpdate.Interdictor.Start" Send="Create"/>
         <On Terms="SelectionLocalUpdate.Interdictor.StartEditorGround" Send="Create"/>
         <On Terms="SelectionLocalUpdate.Interdictor.Stop" Send="Destroy"/>
@@ -1201,35 +1196,18 @@
         <On Terms="Behavior.ResourceTap.On" Send="Create"/>
         <On Terms="Behavior.ResourceTap.Off" Send="Destroy"/>
     </CActorModel>
-    <CActorUnit id="AnalysisTerminal" parent="TerranBuilding" unitName="AnalysisTerminal">
-        <Model value="AnalysisTerrminal"/>
-        <BuildModel value="AnalysisTerrminal"/>
-        <DeathArray index="Normal" ModelLink="EngineeringBayDeath" SoundLink="Armory_Explode"/>
+    <CActorUnit id="AnalysisTerminal" parent="GenetronBuilding" buildTime="64.000000" unitName="AnalysisTerminal">
+        <DeathArray index="Normal" ModelLink="AnalysisTerminalDeath" SoundLink="Armory_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeath" SoundLink="Armory_Explode"/>
-        <PlacementModel value="AnalysisTerminalPlacement"/>
-        <PlacementSound value="Terran_BuildingPlacement"/>
         <BarWidth value="130"/>
-        <GroupIcon>
-            <Image value="Assets\Textures\wireframe-genetron-analysisterminal.dds"/>
-        </GroupIcon>
-        <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-mechstructurearmor.dds"/>
-        <SoundArray index="Birth" value=""/>
         <SoundArray index="Ready" value="FusionCore_Ready"/>
         <SoundArray index="What" value="FusionCore_What"/>
-        <SoundArray index="Construction" value="Terran_ConstructionWhat"/>
-        <UnitIcon value="Assets\Textures\btn-building-genetron-analysisterminal.dds"/>
-        <Wireframe>
-            <Image value="Assets\Textures\wireframe-genetron-analysisterminal.dds"/>
-        </Wireframe>
         <On Terms="Abil.AnalysisTerminalResearch.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
         <On Terms="Abil.AnalysisTerminalResearch.Stop" Send="AnimClear StandWork"/>
         <BarOffset value="115"/>
-        <PortraitModel value="GenetronAdjutantPortrait"/>
     </CActorUnit>
     <CActorSplat id="AnalysisTerminalSplat" parent="GenericUnitSplat" unitName="AnalysisTerminal"/>
-    <CActorModel id="AnalysisTerminalBuild" parent="TerranBuildingBuildSmall">
-        <Aliases index="1" value="_TerranBuildModel"/>
-        <On index="4" Terms="ActorCreation" Send="Create TerranConstructionAttached"/>
+    <CActorModel id="AnalysisTerminalBuild" parent="GenetronBuildingBuild">
         <Model value="TechVaultBuild"/>
     </CActorModel>
     <CActorRange id="TeslaLaunchChargeRange" parent="RangeAbilStandard" abil="LaunchCloakCharge">
@@ -1331,31 +1309,16 @@
         <On Terms="Behavior.VirtusLockdownMode.On" Send="Create"/>
         <Sound value="LockDownMode_Loop"/>
     </CActorSound>
-    <CActorModel id="TechVaultBuild" parent="TerranBuildingBuildSmall">
-        <Aliases index="1" value="_TerranBuildModel"/>
-        <On index="4" Terms="ActorCreation" Send="Create TerranConstructionAttached"/>
-    </CActorModel>
-    <CActorUnit id="TechVault" parent="TerranBuilding" unitName="TechVault">
-        <PlacementSound value="Terran_BuildingPlacement"/>
+    <CActorModel id="TechVaultBuild" parent="GenetronBuildingBuild"/>
+    <CActorUnit id="TechVault" parent="GenetronBuilding" buildTime="59" unitName="TechVault">
         <BarWidth value="130"/>
-        <GroupIcon>
-            <Image value="Assets\Textures\wireframe-genetron-techvault.dds"/>
-        </GroupIcon>
-        <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-mechstructurearmor.dds"/>
-        <SoundArray index="Birth" value=""/>
         <SoundArray index="Ready" value="Bunker_Ready"/>
         <SoundArray index="What" value="Bunker_What"/>
-        <SoundArray index="Construction" value="Terran_ConstructionWhat"/>
-        <UnitIcon value="Assets\Textures\btn-building-genetron-techvault.dds"/>
-        <Wireframe>
-            <Image value="Assets\Textures\wireframe-genetron-techvault.dds"/>
-        </Wireframe>
         <DeathArray index="Normal" ModelLink="BunkerDeath" SoundLink="Armory_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeathSmall" SoundLink="Armory_Explode"/>
+        <On index="89" Terms="AnimDone; AnimName Birth" Send="AnimSetDuration Build 64.000000"/>
         <On Terms="Abil.TechVaultResearch.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
         <On Terms="Abil.TechVaultResearch.Stop" Send="AnimClear StandWork"/>
-        <PlacementModel value="TechVaultPlacement"/>
-        <PortraitModel value="GenetronAdjutantPortrait"/>
     </CActorUnit>
     <CActorModel id="OutfittingStationBuild" parent="GenetronBuildingBuild"/>
     <CActorUnit id="OutfittingStation" parent="GenetronBuilding" buildTime="49.000000" unitName="OutfittingStation">
@@ -1635,7 +1598,8 @@
     <CActorMissile id="BadgerAutogunMissile" parent="GenericAttackMissile" unitName="LancerAutogunWeapon">
         <Model value="BadgerAutogunWeaponMissile"/>
     </CActorMissile>
-    <CActorUnit id="AssemblyArray" parent="TerranBuilding" unitName="AssemblyArray">
+    <CActorUnit id="AssemblyArray" parent="GenetronBuilding" buildTime="64" unitName="AssemblyArray">
+        <On index="89" Terms="AnimDone; AnimName Birth" Send="AnimSetDuration Build 64.000000"/>
         <On Terms="AbilTrain.BuildAircraft.Start" Send="AnimPlay StandWork Stand,Work PlayForever,RandomStartOffset"/>
         <On Terms="AbilTrain.BuildAircraft.Finish" Send="AnimClear StandWork"/>
         <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced AvengerGenetron" Send="Create AvengerConstruction"/>
@@ -1665,23 +1629,10 @@
         <On Terms="AbilTrain.BuildAircraft.Finish; IsStatus Fabricating 6" Target="HornetConstruction" Send="Destroy Immediate"/>
         <BarOffset value="190"/>
         <BarWidth value="220"/>
-        <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-mechstructurearmor.dds"/>
-        <SoundArray index="Birth" value=""/>
         <SoundArray index="Ready" value="Starport_Ready"/>
         <SoundArray index="What" value="Starport_What"/>
-        <SoundArray index="Construction" value="Terran_ConstructionWhat"/>
-        <PlacementSound value="Terran_BuildingPlacement"/>
-        <GroupIcon>
-            <Image value="Assets\Textures\wireframe-genetron-assemblyarray.dds"/>
-        </GroupIcon>
-        <UnitIcon value="Assets\Textures\btn-building-genetron-assemblyarray.dds"/>
-        <Wireframe>
-            <Image value="Assets\Textures\wireframe-genetron-assemblyarray.dds"/>
-        </Wireframe>
         <DeathArray index="Normal" ModelLink="GhostAcademyDeath" SoundLink="GhostAcademy_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeath" SoundLink="GhostAcademy_Explode"/>
-        <PlacementModel value="AssemblyArrayPlacement"/>
-        <PortraitModel value="GenetronAdjutantPortrait"/>
     </CActorUnit>
     <CActorSplat id="AssemblyArraySplat" parent="GenericUnitSplat" unitName="AssemblyArray"/>
     <CActorBeamSimple id="AquilaMagnumAttackBeam" parent="GenericAttackBeam">

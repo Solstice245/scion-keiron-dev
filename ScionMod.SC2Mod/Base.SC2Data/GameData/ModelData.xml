@@ -21,6 +21,60 @@
         <ScaleMax value="0.750000,0.750000,0.750000"/>
         <ScaleMin value="0.750000,0.750000,0.750000"/>
     </CModel>
+    <CModel id="AnalysisTerminalDeath" parent="BuildingDeath">
+        <Model value="Assets\Buildings\Terran\EngineeringBayDeathEx1\EngineeringBayDeathEx1.m3"/>
+        <LowQualityModel value="TerranBuildingDeathLargeLow"/>
+        <EditorCategories value="Race:Genetron"/>
+        <Occlusion value="Show"/>
+        <ScaleMax value="0.800000,0.800000,0.800000"/>
+        <ScaleMin value="0.800000,0.800000,0.800000"/>
+    </CModel>
+    <CModel id="GenetronBuildingBuild" parent="TerranBuildingBuild">
+        <EditorCategories value="Race:Genetron"/>
+        <Model value="Assets\Buildings\Genetron\GenetronBuild.m3"/>
+        <Events>
+            <Anim value="Birth,A,Start"/>
+            <Name value="BuildStart1"/>
+            <Type value="Sound"/>
+            <Time value="0.000100"/>
+            <Payload value="Genetron_ConstructionStart"/>
+        </Events>
+        <Events>
+            <Anim value="Birth,A,Start"/>
+            <Name value="BuildStart2"/>
+            <Type value="Sound"/>
+            <Time value="1.000000"/>
+            <Payload value="Genetron_ConstructionStart2"/>
+        </Events>
+        <Events>
+            <Anim value="Birth,B,Start"/>
+            <Name value="BuildMove"/>
+            <Type value="Sound"/>
+            <Time value="0.000100"/>
+            <Payload value="Genetron_ConstructionMove"/>
+        </Events>
+        <Events>
+            <Anim value="Birth,C,Start"/>
+            <Name value="BuildMove"/>
+            <Type value="Sound"/>
+            <Time value="0.000100"/>
+            <Payload value="Genetron_ConstructionMove"/>
+        </Events>
+        <Events>
+            <Anim value="Birth,D,Start"/>
+            <Name value="BuildEnd"/>
+            <Type value="Sound"/>
+            <Time value="0.000100"/>
+            <Payload value="Genetron_ConstructionEnd"/>
+        </Events>
+        <Events>
+            <Anim value="Work"/>
+            <Name value="Work"/>
+            <Type value="Sound"/>
+            <Time value="0.000100"/>
+            <Payload value="Genetron_ConstructionWork"/>
+        </Events>
+    </CModel>
     <CModel id="ScavengerSpawn" parent="XayidUnit">
         <Model value="Assets\Units\ScavengerSpawn.m3"/>
         <SelectionRadius value="0.437500"/>
@@ -184,13 +238,14 @@
     </CModel>
     <CModel id="AnalysisTerminalPlacement" parent="Placement">
         <Model value="Assets\Buildings\Genetron\AnalysisTerminalPlacement.m3"/>
-        <LowQualityModel value="AnalysisTerrminal"/>
         <EditorCategories value="Race:Genetron"/>
         <Occlusion value="Show"/>
         <Radius value="1.500000"/>
         <SelectionLayer value="2"/>
         <SelectionRadius value="1.500000"/>
         <ShadowRadius value="1.500000"/>
+        <ScaleMax value="0.850000,0.850000,1.000000"/>
+        <ScaleMin value="0.850000,0.850000,1.000000"/>
     </CModel>
     <CModel id="Aquila" parent="Unit">
         <Model value="Assets\Units\Genetron\Aquila.m3"/>
@@ -566,7 +621,7 @@
         <Occlusion value="Show"/>
         <LowQualityModel value="TerranBuildingDeathLow"/>
     </CModel>
-    <CModel id="InterdictorMissileWeapon" parent="MissileFX">
+    <CModel id="InterdictorWeapon" parent="MissileFX">
         <Model value="Assets\Effects\Terran\PlanetaryFortressMissile\PlanetaryFortressMissile.m3"/>
         <EditorCategories value="Race:Genetron"/>
         <ScaleMax value="0.500000,1.250000,0.500000"/>
@@ -868,13 +923,11 @@
         <Flags index="Wait" value="1"/>
         <Priority value="32"/>
     </CModel>
-    <CModel id="AssemblyArrayBuild" parent="TerranBuildingBuildSmall">
-        <Model value="Assets\Buildings\Terran\TerranBuild\TerranBuild.m3"/>
-        <EditorCategories value="Race:Genetron"/>
+    <CModel id="AssemblyArrayBuild" parent="GenetronBuildingBuild">
+        <ScaleMax value="1.350000,1.350000,1.350000"/>
+        <ScaleMin value="1.350000,1.350000,1.350000"/>
     </CModel>
-    <CModel id="RepulsorBuild" parent="TerranBuildingBuildSmall">
-        <EditorCategories value="Race:Genetron"/>
-        <Model value="Assets\Buildings\Genetron\GenetronBuild.m3"/>
+    <CModel id="RepulsorBuild" parent="GenetronBuildingBuild">
         <ScaleMax value="0.750000,0.750000,0.750000"/>
         <ScaleMin value="0.750000,0.750000,0.750000"/>
     </CModel>
@@ -921,14 +974,14 @@
         <Flags index="Wait" value="1"/>
         <Priority value="32"/>
     </CModel>
-    <CModel id="AnalysisTerrminal" parent="Building">
+    <CModel id="AnalysisTerminal" parent="Building">
         <Model value="Assets\Buildings\Genetron\AnalysisTerminal.m3"/>
         <EditorCategories value="Race:Genetron"/>
+        <Radius value="1.250000"/>
         <ScaleMax value="0.850000,0.850000,1.000000"/>
         <ScaleMin value="0.850000,0.850000,1.000000"/>
         <SelectionLayer value="2"/>
         <SelectionRadius value="1.900000"/>
-        <Radius value="1.250000"/>
     </CModel>
     <CModel id="AnalysisTerminalSplat" parent="Splat">
         <Model value="Assets\Splats\Splat_Bunker\Splat_Bunker.m3"/>
@@ -946,6 +999,7 @@
         <ShadowRadius value="1.500000"/>
         <ScaleMax value="1.200000,1.200000,1.200000"/>
         <ScaleMin value="1.200000,1.200000,1.200000"/>
+        <SelectionLayer value="2"/>
     </CModel>
     <CModel id="TerranBuildingDeathLarge" parent="BuildingDeath" Race="Terran">
         <Model value="Assets\Buildings\Terran\TerranBuildingDeathEx1\TerranBuildingDeathEx1.m3"/>
@@ -1091,14 +1145,7 @@
         <ScaleMax value="0.800000,0.800000,0.800000"/>
         <ScaleMin value="0.800000,0.800000,0.800000"/>
     </CModel>
-    <CModel id="TechVaultBuild" parent="TerranBuildingBuildSmall">
-        <Model value="Assets\Buildings\Terran\TerranBuild\TerranBuild.m3"/>
-        <EditorCategories value="Race:Genetron"/>
-        <Radius value="0.500000"/>
-        <SelectionLayer value="0"/>
-        <SelectionRadius value="0.500000"/>
-        <ShadowRadius value="0.500000"/>
-    </CModel>
+    <CModel id="TechVaultBuild" parent="GenetronBuildingBuild"/>
     <CModel id="TechVault" parent="Building">
         <Model value="Assets\Buildings\Genetron\TechVault.m3"/>
         <EditorCategories value="Race:Genetron"/>
@@ -1108,11 +1155,9 @@
         <SelectionRadius value="1.300000"/>
         <Radius value="1.250000"/>
     </CModel>
-    <CModel id="OutfittingStationBuild" parent="TerranBuildingBuild">
-        <EditorCategories value="Race:Genetron"/>
+    <CModel id="OutfittingStationBuild" parent="GenetronBuildingBuild">
         <ScaleMax value="1.100000,1.100000,0.800000"/>
         <ScaleMin value="1.100000,1.100000,0.800000"/>
-        <Model value="Assets\Buildings\Genetron\GenetronBuild.m3"/>
     </CModel>
     <CModel id="OutfittingStation" parent="Building">
         <Model value="Assets\Buildings\Genetron\OutfittingStation.m3"/>
@@ -1135,8 +1180,9 @@
         <ScaleMax value="1.250000,1.250000,1.250000"/>
         <ScaleMin value="1.250000,1.250000,1.250000"/>
     </CModel>
-    <CModel id="UploaderBuild" parent="TerranBuildingBuildSmall">
-        <EditorCategories value="Race:Genetron"/>
+    <CModel id="UploaderBuild" parent="GenetronBuildingBuild">
+        <ScaleMax value="0.700000,0.700000,0.700000"/>
+        <ScaleMin value="0.700000,0.700000,0.700000"/>
     </CModel>
     <CModel id="UploaderCastDelayModel" parent="PersistentSpellFX">
         <Model value="Assets\Effects\Genetron\UploaderDownloadPhase.m3"/>
@@ -1326,9 +1372,7 @@
         <ScaleMax value="0.600000,0.600000,0.600000"/>
         <ScaleMin value="0.600000,0.600000,0.600000"/>
     </CModel>
-    <CModel id="ProcessingNodeBuild" parent="TerranBuildingBuildSmall">
-        <EditorCategories value="Race:Genetron"/>
-        <Model value="Assets\Buildings\Genetron\GenetronBuild.m3"/>
+    <CModel id="ProcessingNodeBuild" parent="GenetronBuildingBuild">
         <ScaleMax value="0.700000,0.700000,0.600000"/>
         <ScaleMin value="0.700000,0.700000,0.600000"/>
     </CModel>
@@ -1341,9 +1385,7 @@
         <ScaleMax value="0.900000,0.900000,0.900000"/>
         <ScaleMin value="0.900000,0.900000,0.900000"/>
     </CModel>
-    <CModel id="ProcessingCoreBuild" parent="TerranBuildingBuildSmall">
-        <Model value="Assets\Buildings\Genetron\GenetronBuild.m3"/>
-        <EditorCategories value="Race:Genetron"/>
+    <CModel id="ProcessingCoreBuild" parent="GenetronBuildingBuild">
         <ScaleMax value="1.700000,1.700000,1.400000"/>
         <ScaleMin value="1.700000,1.700000,1.400000"/>
     </CModel>
@@ -1381,11 +1423,9 @@
         <SelectionRadius value="2.000000"/>
         <Radius value="2.250000"/>
     </CModel>
-    <CModel id="ManufacturerBuild" parent="TerranBuildingBuild">
-        <EditorCategories value="Race:Genetron"/>
+    <CModel id="ManufacturerBuild" parent="GenetronBuildingBuild">
         <ScaleMax value="1.150000,1.150000,0.800000"/>
         <ScaleMin value="1.150000,1.150000,0.800000"/>
-        <Model value="Assets\Buildings\Genetron\GenetronBuild.m3"/>
     </CModel>
     <CModel id="ManufacturerSplat" parent="Splat">
         <Model value="Assets\Splats\Splat_MercCompound\Splat_MercCompound.m3"/>
