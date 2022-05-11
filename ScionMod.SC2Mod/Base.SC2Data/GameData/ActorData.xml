@@ -399,10 +399,11 @@
     <CActorModel id="AvengerVengeanceMissileAdd" parent="ModelAddition">
         <HostSiteOps Ops="SOpAttachHardPoint"/>
     </CActorModel>
-    <CActorUnit id="FilteringPlantRich" parent="TerranBuilding" unitName="FilteringPlantRich">
+    <CActorUnit id="FilteringPlantRich" parent="GenetronBuilding" unitName="FilteringPlantRich">
         <Aliases value="_UnitHuge"/>
         <Macros value="ExtractAnim"/>
         <On index="69" Terms="UnitConstruction.FilteringPlantRich.Start" Send="Create FilteringPlantBuild"/>
+        <On index="89" Terms="AnimDone; AnimName Birth" Send="AnimSetDuration Build 1.000000"/>
         <On Terms="Behavior.HarvestableVespeneGeyserGas.Deplete" Send="SetTintColor 255,170,170"/>
         <On Terms="Behavior.HarvestableVespeneGeyserGas.Deplete" Send="AnimGroupRemove D"/>
         <On Terms="Behavior.HarvestableVespeneGeyserGas.Deplete" Send="AnimGroupApply B"/>
@@ -418,25 +419,19 @@
         <DeathArray index="Normal" ModelLink="FilteringPlantDeath" SoundLink="Refinery_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeath" SoundLink="Refinery_Explode"/>
         <DeathCustoms ModelLink="FilteringPlantEmptyDeath" Name="Empty"/>
-        <PlacementModel value="FilteringPlantPlacement"/>
-        <PlacementSound value="Terran_BuildingPlacement"/>
-        <PortraitModel value="GenetronAdjutantPortrait"/>
         <BarOffset value="160"/>
-        <BarWidth value="120"/>
-        <GroupIcon>
-            <Image value="Assets\Textures\wireframe-genetron-filteringplant.dds"/>
-        </GroupIcon>
-        <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-mechstructurearmor.dds"/>
-        <NameOffset value="110"/>
-        <SoundArray index="Birth" value=""/>
+        <BarWidth value="130"/>
+        <NameOffset value="120"/>
         <SoundArray index="Ready" value="Refinery_Ready"/>
         <SoundArray index="What" value="Refinery_What"/>
-        <SoundArray index="Construction" value="Terran_ConstructionWhat"/>
         <StatusHarvesterData Text="UI/HarvesterCountVespene"/>
         <UnitFlags index="ShowBlobShadow" value="0"/>
-        <UnitIcon value="Assets\Textures\btn-building-genetron-filteringplant.dds"/>
+        <GroupIcon>
+            <Image index="0" value="Assets\Textures\wireframe-genetron-FilteringPlant.dds"/>
+        </GroupIcon>
+        <UnitIcon value="Assets\Textures\btn-building-genetron-FilteringPlant.dds"/>
         <Wireframe>
-            <Image value="Assets\Textures\wireframe-genetron-filteringplant.dds"/>
+            <Image index="0" value="Assets\Textures\wireframe-genetron-FilteringPlant.dds"/>
         </Wireframe>
     </CActorUnit>
     <CActorModel id="Genetron_Unit_TrackingMunitions_Beam_Hardpoint" parent="ModelAnimationStyleContinuousUNIT">
@@ -1425,7 +1420,7 @@
     <CActorSound id="ACRGatherSound" parent="SoundOneShot">
         <Sound value="ACR_GatherMineral"/>
     </CActorSound>
-    <CActorUnit id="FilteringPlant" parent="TerranBuilding" unitName="FilteringPlant">
+    <CActorUnit id="FilteringPlant" parent="GenetronBuilding" buildTime="29.000000" unitName="FilteringPlant">
         <Aliases value="_UnitHuge"/>
         <Macros value="ExtractAnim"/>
         <On Terms="Behavior.HarvestableVespeneGeyserGas.Deplete" Send="SetTintColor 255,170,170"/>
@@ -1443,33 +1438,18 @@
         <DeathArray index="Normal" ModelLink="FilteringPlantDeath" SoundLink="Refinery_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeath" SoundLink="Refinery_Explode"/>
         <DeathCustoms ModelLink="FilteringPlantEmptyDeath" Name="Empty"/>
-        <PlacementModel value="FilteringPlantPlacement"/>
-        <PlacementSound value="Terran_BuildingPlacement"/>
-        <PortraitModel value="GenetronAdjutantPortrait"/>
         <BarOffset value="160"/>
-        <BarWidth value="120"/>
-        <GroupIcon>
-            <Image value="Assets\Textures\wireframe-genetron-filteringplant.dds"/>
-        </GroupIcon>
-        <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-mechstructurearmor.dds"/>
-        <NameOffset value="110"/>
-        <SoundArray index="Birth" value=""/>
+        <BarWidth value="130"/>
+        <NameOffset value="120"/>
         <SoundArray index="Ready" value="Refinery_Ready"/>
         <SoundArray index="What" value="Refinery_What"/>
-        <SoundArray index="Construction" value="Terran_ConstructionWhat"/>
         <StatusHarvesterData Text="UI/HarvesterCountVespene"/>
         <UnitFlags index="ShowBlobShadow" value="0"/>
-        <UnitIcon value="Assets\Textures\btn-building-genetron-filteringplant.dds"/>
-        <Wireframe>
-            <Image value="Assets\Textures\wireframe-genetron-filteringplant.dds"/>
-        </Wireframe>
     </CActorUnit>
     <CActorSplat id="FilteringPlantSplat" parent="GenericUnitSplat" unitName="FilteringPlant">
         <On Terms="UnitBirth.FilteringPlantRich" Send="Create"/>
     </CActorSplat>
-    <CActorModel id="FilteringPlantBuild" parent="TerranBuildingBuildRefinery">
-        <Model value="RefineryBuild"/>
-    </CActorModel>
+    <CActorModel id="FilteringPlantBuild" parent="GenetronBuildingBuild"/>
     <CActorModel id="UploaderPlacementModel" parent="PlacementModel">
         <On Terms="ActorCreation; ModelName UploaderPlacement" Send="Create UploaderSchematicTransmitRange"/>
         <On Terms="ActorCreation; ModelName Uploader; ModelIsLowQuality" Send="Create UploaderSchematicTransmitRange"/>
@@ -1664,9 +1644,7 @@
         <HostForProps Subject="_Unit"/>
         <Sound value="MechFabricaitonSoundLoopAlt"/>
     </CActorSound>
-    <CActorModel id="UploaderBuild" parent="TerranBuildingBuildSmall">
-        <On Terms="ActorCreation" Send="SetScale 1.350000"/>
-    </CActorModel>
+    <CActorModel id="UploaderBuild" parent="GenetronBuildingBuild"/>
     <CActorBeamSimple id="UploaderSchematicTransmitBeam" parent="BeamSimpleAnimationStyleContinuous">
         <On Terms="Effect.SchematicTransmitCP.Start; At Caster" Send="Create"/>
         <On Terms="Effect.SchematicTransmitCP.Stop; FromEffectTreeDescendant" Send="AnimBracketStop BSD"/>
@@ -1692,34 +1670,20 @@
     <CActorSplat id="UploaderSplat" parent="GenericUnitSplat" unitName="ProcessingCore">
         <On index="2" Terms="UnitBirth.Uploader" Send="Create"/>
     </CActorSplat>
-    <CActorUnit id="Uploader" parent="TerranBuilding" unitName="Uploader">
+    <CActorUnit id="Uploader" parent="GenetronBuilding" buildTime="29" unitName="Uploader">
+        <On index="89" Terms="AnimDone; AnimName Birth" Send="AnimSetDuration Build 29.000000"/>
         <On Terms="Abil.UploaderResearchManufacL1.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
         <On Terms="Abil.UploaderResearchManufacL1.Stop" Send="AnimClear StandWork"/>
         <On Terms="Abil.UploaderResearchFabricator.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
         <On Terms="Abil.UploaderResearchFabricator.Stop" Send="AnimClear StandWork"/>
         <On Terms="Abil.ResearchAssemblyArray.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
         <On Terms="Abil.ResearchAssemblyArray.Stop" Send="AnimClear StandWork"/>
-        <PlacementActorModel value="UploaderPlacementModel"/>
-        <GroupIcon>
-            <Image value="Assets\Textures\wireframe-genetron-uploader.dds"/>
-        </GroupIcon>
-        <HeroIcon value="Assets\Textures\btn-building-terran-uploader.dds"/>
-        <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-mechstructurearmor.dds"/>
-        <UnitIcon value="Assets\Textures\btn-building-genetron-uploader.dds"/>
-        <Wireframe>
-            <Image value="Assets\Textures\wireframe-genetron-uploader.dds"/>
-        </Wireframe>
         <PlacementSound value="Terran_BuildingPlacementSmall"/>
-        <SoundArray index="Birth" value=""/>
         <SoundArray index="Ready" value="SensorTower_Ready"/>
         <SoundArray index="What" value="SensorTower_What"/>
-        <SoundArray index="Construction" value="Terran_ConstructionWhat"/>
         <DeathArray index="Normal" ModelLink="UploaderDeath" SoundLink="Reactor_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeathSmall" SoundLink="Reactor_Explode"/>
-        <PlacementModel value="UploaderPlacement"/>
-        <BarWidth value="85"/>
         <BarOffset value="115"/>
-        <PortraitModel value="GenetronAdjutantPortrait"/>
     </CActorUnit>
     <CActorModel id="JupiterNapalmImpact" parent="ModelAnimationStyleContinuousUNIT">
         <On Terms="Effect.JupiterNapalmCreatePersistent.Start" Target="RevenantBombNapalmCP" Send="Create"/>
