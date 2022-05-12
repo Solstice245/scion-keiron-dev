@@ -56,6 +56,52 @@
         <RemoveValidatorArray value="NotHaveOutfittingStation"/>
         <Duration value="15"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="GenetronTurretFreeze">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Terran,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="IsConstructing"/>
+        <Modification>
+            <TurretDisableArray value="Interdictor"/>
+            <TurretDisableArray value="InterdictorMovement"/>
+            <TurretDisableArray value="RepulsorTurret"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="LockdownModeDuration">
+        <InfoIcon value="Assets\Textures\btn-ability-genetron-structurelockdownmode.dds"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisplayDuration index="Ally" value="1"/>
+        <BuffFlags index="Countdown" value="0"/>
+        <Duration value="10"/>
+        <Modification>
+            <ModifyFlags index="DisableAbils" value="1"/>
+            <ModifyFlags index="DisableWeapons" value="1"/>
+            <StateFlags index="SuppressDropOff" value="1"/>
+            <StateFlags index="SuppressFoodMade" value="1"/>
+            <StateFlags index="SuppressEnergyRegen" value="1"/>
+            <TurretDisableArray value="Interdictor"/>
+            <TurretDisableArray value="InterdictorMovement"/>
+            <TurretDisableArray value="RepulsorTurret"/>
+        </Modification>
+        <DamageResponse ModifyFraction="0.4">
+            <Kind index="Spell" value="0"/>
+            <Chance value="1"/>
+        </DamageResponse>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="RepulsorInterdictorBurrowCD">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <Duration value="3"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="ResourceTapSearch">
+        <Tooltip value="Behavior/Tooltip/MiningPrioritySearch"/>
+        <Alignment value="Positive"/>
+        <InfoIcon value="Assets\Textures\btn-ability-genetron-miningtap.dds"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Duration value="15"/>
+        <Period value="0.5"/>
+        <PeriodicEffect value="MiningPrioritySearchArea"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="UploaderCountDummyInit3x3">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -311,11 +357,17 @@
             <StateFlags index="SuppressDropOff" value="1"/>
             <StateFlags index="SuppressFoodMade" value="1"/>
             <StateFlags index="SuppressEnergyRegen" value="1"/>
+            <BehaviorLinkDisableArray value="LockdownModeDuration"/>
+            <TurretDisableArray value="Interdictor"/>
+            <TurretDisableArray value="InterdictorMovement"/>
+            <TurretDisableArray value="RepulsorTurret"/>
         </Modification>
-        <DamageResponse ModifyFraction="0.3332">
+        <DamageResponse ModifyFraction="0.4">
             <Kind index="Spell" value="0"/>
             <Chance value="1"/>
         </DamageResponse>
+        <Period value="0.0625"/>
+        <PeriodicEffect value="LockdownModeApplyDuration"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="EnergyRegenerationBuff">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -355,11 +407,11 @@
     <CBehaviorBuff id="ResourceTap">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Modification>
-            <ResourceHarvestAmountBonus index="Minerals" value="1"/>
-            <ResourceHarvestAmountBonus index="Vespene" value="1"/>
+            <ResourceHarvestAmountBonus index="Minerals" value="2"/>
+            <ResourceHarvestAmountBonus index="Vespene" value="2"/>
         </Modification>
         <InfoIcon value="Assets\Textures\btn-ability-genetron-miningtap.dds"/>
-        <Duration value="15"/>
+        <Duration value="1"/>
         <Alignment value="Positive"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="VirtusLockdownMode">
@@ -375,13 +427,9 @@
         </Modification>
         <Period value="0.0625"/>
         <PeriodicEffect value="VirtusLockdownModeDuration"/>
-        <DamageResponse ModifyFraction="0.3332">
+        <DamageResponse ModifyFraction="0.4">
             <Kind index="Spell" value="0"/>
             <Chance value="1"/>
-            <Cost>
-                <Charge Link="Behavior/LockdownMode"/>
-                <Cooldown Link="Behavior/LockdownMode"/>
-            </Cost>
         </DamageResponse>
     </CBehaviorBuff>
     <CBehaviorBuff id="ProcessingNodeSearchBuff">
@@ -720,39 +768,16 @@
     <CBehaviorBuff id="IncendiaryInfusionAA">
         <InfoIcon value="Assets\Textures\btn-ability-Xayid-incendiaryinfusion.dds"/>
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
-        <Duration value="12.5"/>
-        <DamageResponse Handled="IncendiaryInfusionSAA">
-            <Kind index="Spell" value="0"/>
-            <Kind index="Splash" value="0"/>
-            <Kind index="NoProc" value="0"/>
-            <Chance value="1"/>
-            <Cost>
-                <Cooldown TimeStart="2.5" TimeUse="0.5"/>
-            </Cost>
-        </DamageResponse>
-        <Period value="2"/>
+        <Duration value="11.25"/>
+        <Period value="1.4"/>
         <PeriodicEffect value="IncendiaryInfusionSAA"/>
         <Alignment value="Negative"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="IncendiaryInfusionAG">
-        <Cost>
-            <Charge Link="Behavior/ExplosiveBloomAir"/>
-            <Cooldown Link="Behavior/ExplosiveBloomAir"/>
-        </Cost>
         <InfoIcon value="Assets\Textures\btn-ability-Xayid-incendiaryinfusion.dds"/>
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
-        <Duration value="12.5"/>
-        <DamageResponse Handled="IncendiaryInfusionSAG">
-            <Kind index="Spell" value="0"/>
-            <Kind index="Splash" value="0"/>
-            <Kind index="NoProc" value="0"/>
-            <Chance value="1"/>
-            <Cost>
-                <Charge Link="Behavior/ExplosiveBloomAir"/>
-                <Cooldown Link="Behavior/ExplosiveBloomAir" TimeStart="2.5" TimeUse="0.5"/>
-            </Cost>
-        </DamageResponse>
-        <Period value="2"/>
+        <Duration value="11.25"/>
+        <Period value="1.4"/>
         <PeriodicEffect value="IncendiaryInfusionSAG"/>
         <Alignment value="Negative"/>
     </CBehaviorBuff>
@@ -767,7 +792,8 @@
         <InfoIcon value="Assets\Textures\btn-ability-Xayid-coveringspray.dds"/>
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <DisplayDuration index="Self" value="1"/>
-        <Duration value="20"/>
+        <DisplayDuration index="Ally" value="1"/>
+        <Duration value="14"/>
         <Modification>
             <StateFlags index="Cloak" value="1"/>
         </Modification>
@@ -870,13 +896,9 @@
             <ModifyFlags index="SuppressTurning" value="1"/>
         </Modification>
         <BuffFlags index="Countdown" value="0"/>
-        <DamageResponse ModifyFraction="0.3332">
+        <DamageResponse ModifyFraction="0.4">
             <Kind index="Spell" value="0"/>
             <Chance value="1"/>
-            <Cost>
-                <Charge Link="Behavior/LockdownMode"/>
-                <Cooldown Link="Behavior/LockdownMode"/>
-            </Cost>
         </DamageResponse>
         <Tooltip value="Behavior/Tooltip/VirtusLockdownMode"/>
     </CBehaviorBuff>
@@ -962,20 +984,20 @@
     </CBehaviorCreepSource>
     <CBehaviorBuff id="MendBehavior">
         <Alignment value="Positive"/>
-        <InfoIcon value="Assets\Textures\btn-upgrade-zerg-abathur-improvedmend.dds"/>
+        <InfoIcon value="Assets\Textures\btn-ability-xayid-mendlingheal.dds"/>
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
-        <Duration value="3"/>
+        <Duration value="2.8"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="SacrificialMutationHeal">
+    <CBehaviorBuff id="SacrificialMutation">
+        <Alignment value="Positive"/>
         <InfoIcon value="Assets\Textures\btn-ability-zerg-ultralisk-revive.dds"/>
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <DisplayDuration index="Self" value="1"/>
         <DisplayDuration index="Ally" value="1"/>
-        <Duration value="12"/>
-        <Period value="1.5"/>
+        <Duration value="11.2"/>
+        <Period value="1.05"/>
         <PeriodicEffect value="SacrificialMutationHealSA"/>
         <ExpireEffect value="Suicide"/>
-        <Alignment value="Positive"/>
     </CBehaviorBuff>
     <CBehaviorCreepSource id="FeedingPoolCreep">
         <InfoFlags index="Hidden" value="1"/>

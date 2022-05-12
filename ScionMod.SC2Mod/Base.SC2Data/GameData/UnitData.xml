@@ -456,7 +456,7 @@
         <LifeMax value="200"/>
         <LifeArmor value="1"/>
         <Speed value="2.25"/>
-        <CostResource index="Minerals" value="125"/>
+        <CostResource index="Minerals" value="100"/>
         <CostResource index="Vespene" value="100"/>
         <WeaponArray Link="EnervatorSpores"/>
         <Radius value="0.625"/>
@@ -485,21 +485,26 @@
         <AbilArray Link="stop"/>
         <AbilArray Link="attack"/>
         <AbilArray Link="InterdictorBurrow"/>
+        <AbilArray Link="InterdictorUnburrow"/>
         <BehaviorArray Link="Detector11"/>
         <BehaviorArray Link="UnderConstruction"/>
-        <WeaponArray Link="NullifierMissiles" Turret="RepulsorTurret"/>
+        <BehaviorArray Link="RepulsorInterdictorBurrowCD"/>
+        <BehaviorArray Link="GenetronTurretFreeze"/>
+        <WeaponArray Link="NeutralizerBeam" Turret="Interdictor"/>
+        <WeaponArray Link="NeutralizerBeamDummy" Turret="InterdictorMovement"/>
         <CardLayouts index="0">
             <LayoutButtons index="2" Face="Detector" Type="Passive" Requirements="NotUnderConstruction" Row="2" Column="3"/>
             <LayoutButtons Face="Stop" Type="AbilCmd" AbilCmd="stop,Stop" Row="0" Column="1"/>
             <LayoutButtons Face="Attack" Type="AbilCmd" AbilCmd="attack,Execute" Row="0" Column="4"/>
             <LayoutButtons Face="StaticDBurrow" Type="AbilCmd" AbilCmd="InterdictorBurrow,Execute" Row="2" Column="1"/>
             <LayoutButtons Face="SelectBuilder" Type="SelectBuilder" Row="1" Column="3"/>
+            <LayoutButtons Face="StaticDUnburrow" Type="AbilCmd" AbilCmd="InterdictorUnburrow,Execute" Row="2" Column="2"/>
         </CardLayouts>
         <Radius value="1"/>
         <Footprint value="Footprint2x2Contour"/>
         <PlacementFootprint value="Footprint2x2"/>
         <SubgroupPriority value="4"/>
-        <MinimapRadius value="1"/>
+        <MinimapRadius value="0.75"/>
         <GlossaryCategory value="Unit/Category/GenetronUnits"/>
         <GlossaryPriority value="18"/>
         <GlossaryAlias value="Interdictor"/>
@@ -509,8 +514,9 @@
         <Name value="Unit/Name/InterdictorBurrowed"/>
         <Description value="Button/Tooltip/InterdictorBurrowed"/>
         <AbilArray index="2" Link="InterdictorUnburrow"/>
-        <AbilArray index="3" removed="1"/>
+        <AbilArray index="4" removed="1"/>
         <WeaponArray index="0" removed="1"/>
+        <WeaponArray index="1" removed="1"/>
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="Stop" Type="AbilCmd" AbilCmd="stop,Stop" Row="0" Column="1"/>
             <LayoutButtons index="1" Face="Attack" Type="AbilCmd" AbilCmd="attack,Execute" Row="0" Column="4"/>
@@ -522,10 +528,11 @@
                 <Row value="2"/>
                 <Column value="2"/>
             </LayoutButtons>
-            <LayoutButtons index="3" removed="1"/>
+            <LayoutButtons index="3" Face="StaticDBurrow" Type="AbilCmd" AbilCmd="InterdictorBurrow,Execute" Row="2" Column="1"/>
             <LayoutButtons index="4" removed="1"/>
             <LayoutButtons index="5" removed="1"/>
             <LayoutButtons index="6" removed="1"/>
+            <LayoutButtons index="7" removed="1"/>
         </CardLayouts>
         <Footprint value="Footprint2x2Underground"/>
         <PlacementFootprint value=""/>
@@ -541,6 +548,8 @@
         <ScoreKillCostFactor index="Minerals" value="0"/>
         <ScoreKillCostFactor index="Vespene" value="0"/>
         <TacticalAI value="InterdictorBurrowed"/>
+        <BehaviorArray index="3" removed="1"/>
+        <BehaviorArray index="4" removed="1"/>
     </CUnit>
     <CUnit id="Inciter" parent="CUnitGenetron">
         <Attributes index="Armored" value="1"/>
@@ -659,7 +668,7 @@
         <LifeStart value="850"/>
         <LifeMax value="850"/>
         <Sight value="10"/>
-        <CostResource index="Minerals" value="125"/>
+        <CostResource index="Minerals" value="150"/>
         <RepairTime value="50"/>
         <AbilArray Link="que5"/>
         <AbilArray Link="OutfittingStationResearch"/>
@@ -688,17 +697,17 @@
         <TechTreeUnlockedUnitArray value="Boar"/>
     </CUnit>
     <CUnit id="Repulsor" parent="CStructureGenetron">
-        <Facing value="0"/>
         <FlagArray index="AIDefense" value="1"/>
-        <LifeStart value="350"/>
-        <LifeMax value="350"/>
+        <LifeStart value="300"/>
+        <LifeMax value="300"/>
         <Sight value="10"/>
-        <CostResource index="Minerals" value="125"/>
-        <RepairTime value="40"/>
+        <CostResource index="Minerals" value="150"/>
+        <RepairTime value="45"/>
         <AttackTargetPriority value="20"/>
         <AbilArray Link="stop"/>
         <AbilArray Link="attack"/>
         <AbilArray Link="RepulsorBurrow"/>
+        <AbilArray Link="RepulsorUnburrow"/>
         <WeaponArray Link="SuppressionCannons" Turret="RepulsorTurret"/>
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="Stop" Type="AbilCmd" AbilCmd="stop,Stop" Row="0" Column="1"/>
@@ -707,16 +716,19 @@
             <LayoutButtons Face="Halt" Type="AbilCmd" AbilCmd="BuildInProgress,Halt" Row="2" Column="3"/>
             <LayoutButtons Face="StaticDBurrow" Type="AbilCmd" AbilCmd="RepulsorBurrow,Execute" Row="2" Column="1"/>
             <LayoutButtons Face="SelectBuilder" Type="SelectBuilder" Row="1" Column="3"/>
+            <LayoutButtons Face="StaticDUnburrow" Type="AbilCmd" AbilCmd="RepulsorUnburrow,Execute" Row="2" Column="2"/>
         </CardLayouts>
         <Radius value="1"/>
         <Footprint value="Footprint2x2Contour"/>
         <PlacementFootprint value="Footprint2x2"/>
         <SubgroupPriority value="4"/>
-        <MinimapRadius value="1"/>
+        <MinimapRadius value="0.875"/>
         <GlossaryCategory value="Unit/Category/GenetronUnits"/>
         <GlossaryPriority value="17"/>
         <GlossaryAlias value="Repulsor"/>
         <TechAliasArray value="Alias_Repulsor"/>
+        <BehaviorArray Link="RepulsorInterdictorBurrowCD"/>
+        <BehaviorArray Link="GenetronTurretFreeze"/>
     </CUnit>
     <CUnit id="RepulsorBurrowed" parent="Repulsor">
         <Name value="Unit/Name/RepulsorBurrowed"/>
@@ -724,20 +736,22 @@
         <FlagArray index="Buried" value="1"/>
         <AttackTargetPriority value="11"/>
         <AbilArray index="2" Link="RepulsorUnburrow"/>
-        <AbilArray index="3" removed="1"/>
+        <AbilArray index="4" removed="1"/>
         <WeaponArray index="0" removed="1"/>
         <CardLayouts index="0">
             <LayoutButtons index="2" Face="StaticDUnburrow" Type="AbilCmd" AbilCmd="RepulsorUnburrow,Execute" Row="2" Column="2"/>
-            <LayoutButtons index="3" removed="1"/>
+            <LayoutButtons index="3" Face="StaticDBurrow" Type="AbilCmd" AbilCmd="RepulsorBurrow,Execute" Row="2" Column="1"/>
             <LayoutButtons index="4" removed="1"/>
             <LayoutButtons index="5" removed="1"/>
+            <LayoutButtons index="6" removed="1"/>
         </CardLayouts>
-        <Radius value="0.75"/>
         <Footprint value="Footprint2x2Underground"/>
         <PlacementFootprint value=""/>
         <GlossaryCategory value=""/>
         <GlossaryAlias value=""/>
         <TacticalAI value="RepulsorBurrowed"/>
+        <BehaviorArray index="1" removed="1"/>
+        <BehaviorArray index="2" removed="1"/>
     </CUnit>
     <CUnit id="ScavengerSpawn" parent="CUnitXayid">
         <Description value="Button/Tooltip/BirthScavengerSpawn"/>
@@ -772,7 +786,7 @@
         <LifeStart value="1000"/>
         <LifeMax value="1000"/>
         <Sight value="10"/>
-        <CostResource index="Minerals" value="125"/>
+        <CostResource index="Minerals" value="150"/>
         <CostResource index="Vespene" value="75"/>
         <RepairTime value="65"/>
         <AbilArray Link="que5"/>
@@ -806,7 +820,7 @@
         <Collide index="Burrow3" value="1"/>
         <EnergyStart value="200"/>
         <EnergyMax value="200"/>
-        <EnergyRegenRate value="-7.5"/>
+        <EnergyRegenRate value="-10"/>
         <Sight value="4"/>
         <CostCategory value="Army"/>
         <Radius value="0.25"/>
@@ -835,11 +849,10 @@
         <TechTreeUnlockedUnitArray value="Badger"/>
     </CUnit>
     <CUnit id="Uploader" parent="CStructureGenetron">
-        <Facing value="225"/>
-        <LifeStart value="500"/>
-        <LifeMax value="500"/>
+        <LifeStart value="400"/>
+        <LifeMax value="400"/>
         <Sight value="10"/>
-        <CostResource index="Minerals" value="25"/>
+        <CostResource index="Minerals" value="50"/>
         <CostResource index="Vespene" value="50"/>
         <RepairTime value="30"/>
         <AbilArray Link="stop"/>
@@ -879,11 +892,11 @@
             <LayoutButtons Face="ResearchAAMDefenseTurret" Type="AbilCmd" AbilCmd="ResearchAssemblyArray,Research4" Row="0" Column="3"/>
             <LayoutButtons Face="ResearchVengeanceMissile" Type="AbilCmd" AbilCmd="ResearchAssemblyArray,Research2" Row="0" Column="1"/>
         </CardLayouts>
-        <Radius value="1"/>
-        <Footprint value="Footprint2x2Contour"/>
-        <PlacementFootprint value="Footprint2x2Contour"/>
+        <Radius value="0.625"/>
+        <Footprint value="Footprint1x1Contour"/>
+        <PlacementFootprint value="Footprint1x1Contour"/>
         <SubgroupPriority value="7"/>
-        <MinimapRadius value="1"/>
+        <MinimapRadius value="0.625"/>
         <GlossaryPriority value="20"/>
         <TacticalAIFilters value="-;Ally,Neutral,Enemy"/>
     </CUnit>
@@ -1241,7 +1254,6 @@
                 <Column value="0"/>
             </LayoutButtons>
         </CardLayouts>
-        <Radius value="0.5625"/>
         <InnerRadius value="0.5"/>
         <SubgroupPriority value="30"/>
         <MinimapRadius value="0.6875"/>
@@ -1283,6 +1295,7 @@
         <SelectAlias value="Changeling"/>
         <SubgroupAlias value="Changeling"/>
         <GlossaryCategory value=""/>
+        <Radius value="0.5625"/>
     </CUnit>
     <CUnit id="Tesla" parent="CUnitGenetron">
         <Attributes index="Armored" value="1"/>
@@ -1423,8 +1436,8 @@
         <Collide index="ForceField" value="0"/>
         <Attributes index="Armored" value="1"/>
         <Attributes index="Massive" value="1"/>
-        <LifeStart value="450"/>
-        <LifeMax value="450"/>
+        <LifeStart value="425"/>
+        <LifeMax value="425"/>
         <LifeArmor value="2"/>
         <Speed value="2.5"/>
         <Sight value="10"/>
@@ -1747,7 +1760,7 @@
     <CUnit id="LancerAutogunWeapon" parent="CProjectileGenetron"/>
     <CUnit id="LynxCannonWeapon" parent="CProjectileGenetron"/>
     <CUnit id="NemesisMissilesLMWeapon" parent="CProjectileGenetron"/>
-    <CUnit id="NullifierMissilesLMWeapon" parent="CProjectileGenetron"/>
+    <CUnit id="NeutralizerBeamLMWeapon" parent="CProjectileGenetron"/>
     <CUnit id="StingerDrillLMWeapon" parent="CProjectileGenetron"/>
     <CUnit id="StratumMissileLauncherWeapon" parent="CProjectileGenetron"/>
     <CUnit id="TheGreatEqualizerWeapon" parent="CProjectileGenetron"/>
@@ -1928,7 +1941,6 @@
             <LayoutButtons Face="AcquireMove" Type="AbilCmd" AbilCmd="move,AcquireMove" Row="0" Column="4"/>
             <LayoutButtons Face="StagnatingBile" Type="AbilCmd" AbilCmd="StagnatingBile,Execute" Row="2" Column="0"/>
             <LayoutButtons Face="ExplosiveGlob" Type="AbilCmd" AbilCmd="ExplosiveGlob,Execute" Row="2" Column="1"/>
-            <LayoutButtons Face="CoveringSpray" Type="AbilCmd" AbilCmd="CoveringSpray,Execute" Row="2" Column="2"/>
         </CardLayouts>
         <Radius value="0.6875"/>
         <SeparationRadius value="0.6875"/>
@@ -2057,7 +2069,7 @@
         <Attributes index="Light" value="1"/>
         <LifeStart value="100"/>
         <LifeMax value="100"/>
-        <Speed value="4.5"/>
+        <Speed value="4.25"/>
         <Food value="-1.5"/>
         <CostResource index="Minerals" value="75"/>
         <CostResource index="Vespene" value="75"/>
@@ -2113,9 +2125,9 @@
         <CardLayouts index="0">
             <LayoutButtons Face="IncendiaryInfusion" Type="AbilCmd" AbilCmd="IncendiaryInfusion,Execute" Row="2" Column="0"/>
         </CardLayouts>
-        <Radius value="0.8125"/>
-        <SeparationRadius value="0.8125"/>
-        <MinimapRadius value="0.8125"/>
+        <Radius value="0.75"/>
+        <SeparationRadius value="0.75"/>
+        <MinimapRadius value="0.75"/>
         <GlossaryPriority value="17"/>
         <SubgroupPriority value="75"/>
     </CUnit>
@@ -2357,14 +2369,14 @@
     </CUnit>
     <CUnit id="SacrificialMutation" parent="CUnitXayid">
         <Attributes index="Armored" value="1"/>
-        <LifeStart value="100"/>
-        <LifeMax value="100"/>
-        <LifeArmor value="10"/>
+        <LifeStart value="90"/>
+        <LifeMax value="90"/>
+        <LifeArmor value="5"/>
         <Sight value="6"/>
-        <Food value="-3"/>
-        <CostResource index="Minerals" value="75"/>
-        <CostResource index="Vespene" value="125"/>
-        <BehaviorArray Link="SacrificialMutationHeal"/>
+        <Food value="-2"/>
+        <CostResource index="Minerals" value="50"/>
+        <CostResource index="Vespene" value="100"/>
+        <BehaviorArray Link="SacrificialMutation"/>
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="SacrificialMutation" Type="Passive" AbilCmd="" Row="2" Column="0"/>
             <LayoutButtons index="1" removed="1"/>
@@ -2372,7 +2384,7 @@
             <LayoutButtons index="3" removed="1"/>
             <LayoutButtons index="4" removed="1"/>
         </CardLayouts>
-        <Radius value="0.6875"/>
+        <Radius value="0.625"/>
         <SeparationRadius value="0.6875"/>
         <CargoSize value="4"/>
         <SubgroupPriority value="42"/>
@@ -2423,8 +2435,8 @@
         </CardLayouts>
         <Description value="Button/Tooltip/BirthScavenger"/>
         <Attributes index="Light" value="1"/>
-        <LifeStart value="40"/>
-        <LifeMax value="40"/>
+        <LifeStart value="45"/>
+        <LifeMax value="45"/>
         <Speed value="2.8125"/>
         <Acceleration value="2.5"/>
         <Food value="-1"/>
@@ -2474,26 +2486,25 @@
     <CUnit id="ThrasherSpineWeapon" parent="XayidMISSILE"/>
     <CUnit id="Mendling" parent="CUnitXayid">
         <Attributes index="Psionic" value="1"/>
-        <LifeStart value="100"/>
-        <LifeMax value="100"/>
+        <LifeStart value="90"/>
+        <LifeMax value="90"/>
         <EnergyStart value="75"/>
         <EnergyMax value="200"/>
         <EnergyRegenRate value="0.5625"/>
-        <Speed value="2.5"/>
-        <Food value="-3"/>
-        <CostResource index="Minerals" value="75"/>
-        <CostResource index="Vespene" value="125"/>
+        <Speed value="3"/>
+        <Food value="-2"/>
+        <CostResource index="Minerals" value="50"/>
+        <CostResource index="Vespene" value="100"/>
         <AbilArray Link="Mend"/>
         <AbilArray Link="MendlingSacrificialMutation"/>
+        <AbilArray Link="CoveringSpray"/>
         <CardLayouts index="0">
             <LayoutButtons Face="Mend" Type="AbilCmd" AbilCmd="Mend,Execute" Row="2" Column="0"/>
-            <LayoutButtons Face="MutateintoSacrificialMutation" Type="AbilCmd" AbilCmd="MendlingSacrificialMutation,Execute" Row="2" Column="1"/>
+            <LayoutButtons Face="MutateintoSacrificialMutation" Type="AbilCmd" AbilCmd="MendlingSacrificialMutation,Execute" Row="2" Column="2"/>
+            <LayoutButtons Face="CoveringSpray" Type="AbilCmd" AbilCmd="CoveringSpray,Execute" Row="2" Column="1"/>
         </CardLayouts>
-        <Radius value="0.625"/>
-        <SeparationRadius value="0.625"/>
-        <InnerRadius value="0.5"/>
+        <InnerRadius value="0.375"/>
         <CargoSize value="2"/>
-        <MinimapRadius value="0.625"/>
         <WeaponArray Link="NeedleSpinesAntiAir"/>
         <WeaponArray Link="NeedleSpinesAntiGround"/>
         <WeaponArray Link="NeedleSpinesEquipment"/>
@@ -2571,12 +2582,12 @@
     </CUnit>
     <CUnit id="Scorpalisk" parent="CUnitXayid">
         <Attributes index="Armored" value="1"/>
-        <LifeStart value="175"/>
-        <LifeMax value="175"/>
+        <LifeStart value="160"/>
+        <LifeMax value="160"/>
         <LifeArmor value="2"/>
         <Speed value="2.8125"/>
         <Food value="-2"/>
-        <CostResource index="Minerals" value="125"/>
+        <CostResource index="Minerals" value="100"/>
         <CostResource index="Vespene" value="25"/>
         <WeaponArray Link="VenomousStrike"/>
         <CardLayouts index="0">
@@ -2590,7 +2601,7 @@
             </LayoutButtons>
             <LayoutButtons Face="VenomousInjection" Type="Passive" Row="2" Column="0"/>
         </CardLayouts>
-        <Radius value="0.625"/>
+        <Radius value="0.5625"/>
         <InnerRadius value="0.5"/>
         <MinimapRadius value="0.6875"/>
         <CargoSize value="2"/>

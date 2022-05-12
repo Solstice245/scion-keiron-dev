@@ -28,8 +28,8 @@
     <CAbilBuild id="BuildUploader">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <HaltCmdButton DefaultButtonFace="Halt"/>
-        <FlagArray index="Interruptible" value="1"/>
         <FlagArray index="PeonDisableCollision" value="1"/>
+        <FlagArray index="PeonMaintained" value="0"/>
         <InfoArray index="Build1" Unit="Uploader" Time="30">
             <Button DefaultButtonFace="Uploader" Requirements="HaveProcessingNode"/>
         </InfoArray>
@@ -206,7 +206,7 @@
         <MaxCount value="1"/>
     </CAbilSpecialize>
     <CAbilMorph id="MoleActivate">
-        <AbilSetId value="BrwD"/>
+        <AbilSetId value="MBrwD"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="DeployCannon"/>
         <ActorKey value="BurrowDown"/>
@@ -287,6 +287,8 @@
             <Cooldown TimeUse="40"/>
         </Cost>
         <CmdButtonArray index="Execute" DefaultButtonFace="MiningPriority"/>
+        <Effect index="0" value="MiningPrioritySearch"/>
+        <AINotifyEffect value="MiningPrioritySearchArea"/>
     </CAbilEffectInstant>
     <CAbilResearch id="OutfittingStationResearch">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -432,8 +434,8 @@
     <CAbilBuild id="MechStructures">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <HaltCmdButton DefaultButtonFace="Halt"/>
-        <FlagArray index="Interruptible" value="1"/>
         <FlagArray index="PeonDisableCollision" value="1"/>
+        <FlagArray index="PeonMaintained" value="0"/>
         <InfoArray index="Build1" Unit="ProcessingCore" Time="100">
             <Button DefaultButtonFace="ProcessingCore"/>
         </InfoArray>
@@ -453,11 +455,11 @@
         <InfoArray index="Build6" Unit="OutfittingStation" Time="50">
             <Button DefaultButtonFace="OutfittingStation" Requirements="HaveProcessingNode"/>
         </InfoArray>
-        <InfoArray index="Build7" Unit="Repulsor" Time="40">
-            <Button DefaultButtonFace="Repulsor" Requirements="HaveOutfittingStation"/>
+        <InfoArray index="Build7" Unit="Repulsor" Time="45">
+            <Button DefaultButtonFace="Repulsor" Requirements="HaveManufacturerAndOutfittingStation"/>
         </InfoArray>
         <InfoArray index="Build8" Unit="Interdictor" Time="30">
-            <Button DefaultButtonFace="Interdictor" Requirements="HaveOutfittingStation"/>
+            <Button DefaultButtonFace="Interdictor" Requirements="HaveManufacturerAndOutfittingStation"/>
         </InfoArray>
         <InfoArray index="Build10" Unit="Fabricator" Time="60">
             <Button DefaultButtonFace="Fabricator" Requirements="HaveManufacturer"/>
@@ -476,7 +478,7 @@
         <ConstructionMover value="Construction"/>
     </CAbilBuild>
     <CAbilMorph id="MoleDeactivate">
-        <AbilSetId value="BrwU"/>
+        <AbilSetId value="MBrwU"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="MobilizeCannon"/>
         <ActorKey value="BurrowUp"/>
@@ -497,9 +499,12 @@
         </InfoArray>
     </CAbilMorph>
     <CAbilMorph id="RepulsorBurrow">
-        <AbilSetId value="BrwD"/>
+        <AbilSetId value="GBrwD"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="StaticDBurrow"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="StaticDBurrow" Requirements="RepulsorNotConcealed">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+        <Flags index="AutoCast" value="1"/>
         <Flags index="IgnoreFacing" value="1"/>
         <Flags index="MoveBlockers" value="1"/>
         <Flags index="SuppressMovement" value="1"/>
@@ -514,16 +519,20 @@
                 <DurationArray index="Delay" value="2"/>
             </SectionArray>
         </InfoArray>
-        <AutoCastAcquireLevel value="Defensive"/>
-        <AutoCastValidatorArray value="NotAttacking"/>
+        <AutoCastValidatorArray value="RepulsorBurrow"/>
+        <AutoCastValidatorArray value="RepulsorInterdictorBurrowCD"/>
         <AutoCastCountMin value="1"/>
         <ValidatorArray value="IsRepulsor"/>
         <AbilClassDisableArray index="CAbilAttack" value="1"/>
+        <AutoCastRange value="7.5"/>
     </CAbilMorph>
     <CAbilMorph id="InterdictorBurrow">
-        <AbilSetId value="BrwD"/>
+        <AbilSetId value="GBrwD"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="StaticDBurrow"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="StaticDBurrow" Requirements="InterdictorNotConcealed">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+        <Flags index="AutoCast" value="1"/>
         <Flags index="IgnoreFacing" value="1"/>
         <Flags index="MoveBlockers" value="1"/>
         <InfoArray Unit="InterdictorBurrowed" RandomDelayMax="0.5">
@@ -537,19 +546,23 @@
                 <DurationArray index="Delay" value="2"/>
             </SectionArray>
         </InfoArray>
-        <AutoCastAcquireLevel value="Defensive"/>
-        <AutoCastValidatorArray value="NotAttacking"/>
+        <AutoCastValidatorArray value="InterdictorBurrow"/>
+        <AutoCastValidatorArray value="RepulsorInterdictorBurrowCD"/>
         <AutoCastCountMin value="1"/>
         <ValidatorArray value="IsInterdictor"/>
         <Cost>
             <Cooldown Link="Abil/InterdictorUnburrow"/>
         </Cost>
         <AbilClassDisableArray index="CAbilAttack" value="1"/>
+        <AutoCastRange value="7.5"/>
     </CAbilMorph>
     <CAbilMorph id="InterdictorUnburrow">
-        <AbilSetId value="BrwU"/>
+        <AbilSetId value="GBrwU"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="StaticDUnburrow"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="StaticDUnburrow" Requirements="InterdictorConcealed">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+        <Flags index="AutoCast" value="1"/>
         <Flags index="IgnoreFacing" value="1"/>
         <Flags index="MoveBlockers" value="1"/>
         <Flags index="SuppressMovement" value="1"/>
@@ -565,8 +578,8 @@
             </SectionArray>
         </InfoArray>
         <AutoCastFilters value="Air,Visible;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden"/>
-        <AutoCastValidatorArray value="TargetNotChangeling"/>
-        <AutoCastRange value="7"/>
+        <AutoCastValidatorArray value="InterdictorUnburrow"/>
+        <AutoCastRange value="7.5"/>
         <AutoCastCountMin value="1"/>
         <ValidatorArray value="IsBurrowedInterdictor"/>
         <AbilClassDisableArray index="CAbilAttack" value="1"/>
@@ -791,31 +804,34 @@
     <CAbilTrain id="TrainLightweightMechs">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Activity value="UI/Fabricating"/>
-        <InfoArray index="Train1" Time="32">
+        <InfoArray index="Train1" Time="35">
             <Button DefaultButtonFace="Spitfire"/>
             <Unit value="Spitfire"/>
         </InfoArray>
-        <InfoArray index="Train2" Time="40">
+        <InfoArray index="Train2" Time="42">
             <Button DefaultButtonFace="Equalizer" Requirements="HasAtLeast2LinkedUploadersOS"/>
             <Unit value="Equalizer"/>
         </InfoArray>
-        <InfoArray index="Train3" Time="40">
+        <InfoArray index="Train3" Time="42">
             <Button DefaultButtonFace="Blitzer" Requirements="HasAtLeast1LinkedUploader"/>
             <Unit value="Blitzer"/>
         </InfoArray>
-        <InfoArray index="Train4" Time="40">
+        <InfoArray index="Train4" Time="42">
             <Button DefaultButtonFace="Blaze" Requirements="HasAtLeast1LinkedUploaderOS"/>
             <Unit value="Blaze"/>
         </InfoArray>
-        <InfoArray index="Train5" Time="60">
+        <InfoArray index="Train5" Time="63">
             <Button DefaultButtonFace="Aquila" Requirements="HasAtLeast3LinkedUploaders"/>
             <Unit value="Aquila"/>
         </InfoArray>
     </CAbilTrain>
     <CAbilMorph id="RepulsorUnburrow">
-        <AbilSetId value="BrwU"/>
+        <AbilSetId value="GBrwU"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="StaticDUnburrow"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="StaticDUnburrow" Requirements="RepulserConcealed">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+        <Flags index="AutoCast" value="1"/>
         <Flags index="IgnoreFacing" value="1"/>
         <Flags index="MoveBlockers" value="1"/>
         <Flags index="SuppressMovement" value="1"/>
@@ -831,8 +847,8 @@
             </SectionArray>
         </InfoArray>
         <AutoCastFilters value="Ground;Player,Ally,Neutral,RawResource,HarvestableResource,Missile,Stasis,Dead,Hidden,Invulnerable"/>
-        <AutoCastValidatorArray value="TargetNotChangeling"/>
-        <AutoCastRange value="7"/>
+        <AutoCastValidatorArray value="RepulsorUnburrow"/>
+        <AutoCastRange value="7.5"/>
         <AutoCastCountMin value="1"/>
         <ValidatorArray value="IsBurrowedRepulsor"/>
         <AbilClassDisableArray index="CAbilAttack" value="1"/>
@@ -891,7 +907,7 @@
     </CAbilResearch>
     <CAbilResearch id="UploaderResearchManufacL1">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <InfoArray index="Research1" Time="170" Alert="ResearchComplete_Terr" Upgrade="CalibratedEngines">
+        <InfoArray index="Research1" Time="140" Alert="ResearchComplete_Terr" Upgrade="CalibratedEngines">
             <Resource index="Minerals" value="100"/>
             <Resource index="Vespene" value="100"/>
             <Button DefaultButtonFace="ResearchCalibratedEngines" Requirements="LearnCalibratedEngines">
@@ -1169,8 +1185,8 @@
             </Button>
         </InfoArray>
         <InfoArray index="Research6" Time="110" Upgrade="BileDucts">
-            <Resource index="Minerals" value="150"/>
-            <Resource index="Vespene" value="150"/>
+            <Resource index="Minerals" value="100"/>
+            <Resource index="Vespene" value="100"/>
             <Button DefaultButtonFace="MutateBileDucts" Requirements="LearnBileDucts">
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
@@ -1179,7 +1195,7 @@
     <CAbilEffectTarget id="CoveringSpray">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <Cost>
-            <Vital index="Energy" value="75"/>
+            <Vital index="Energy" value="100"/>
         </Cost>
         <TargetFilters value="-;Self,Neutral,Enemy,Structure,Missile,Cloaked,Stasis"/>
         <Range value="5"/>
@@ -1240,7 +1256,7 @@
     <CAbilEffectTarget id="IncendiaryInfusion">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <Cost>
-            <Cooldown TimeUse="45"/>
+            <Cooldown TimeUse="35"/>
         </Cost>
         <Range value="8"/>
         <FinishTime value="0.45"/>
@@ -1325,14 +1341,15 @@
         <Flags index="Smart" value="1"/>
         <Cost>
             <Vital index="Energy" value="15"/>
-            <Cooldown TimeUse="4.2"/>
+            <Cooldown TimeUse="2.8"/>
         </Cost>
         <TargetFilters value="Biological;Self,Neutral,Enemy"/>
         <Range value="4"/>
         <AutoCastFilters value="Biological,Visible;Neutral,Enemy"/>
         <AutoCastRange value="6"/>
         <AutoCastValidatorArray value="NotStructureTarget"/>
-        <CastOutroTime value="0.4375"/>
+        <AutoCastValidatorArray value="LifeGTEDelta20"/>
+        <CastOutroTime value="1.12"/>
         <UninterruptibleArray index="Channel" value="1"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="Mend"/>
         <SmartValidatorArray value="NotFullLife"/>
@@ -1344,6 +1361,7 @@
         </CmdButtonArray>
         <Flags index="BestUnit" value="1"/>
         <Flags index="IgnoreFacing" value="1"/>
+        <Flags index="Produce" value="1"/>
         <Flags index="ShowProgress" value="1"/>
         <Flags index="SuppressMovement" value="1"/>
         <InfoArray Unit="SacrificialMutation">
@@ -1360,9 +1378,6 @@
                 <DurationArray index="Delay" value="1"/>
             </SectionArray>
         </InfoArray>
-        <Cost>
-            <Vital index="Energy" value="75"/>
-        </Cost>
     </CAbilMorph>
     <CAbilMorph id="Mobile">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
@@ -1548,7 +1563,7 @@
         <Cost>
             <Resource index="Minerals" value="50"/>
             <Resource index="Vespene" value="50"/>
-            <Cooldown TimeStart="60" TimeUse="60"/>
+            <Cooldown TimeUse="60"/>
         </Cost>
         <Range value="8"/>
         <CastIntroTime value="0.4"/>
