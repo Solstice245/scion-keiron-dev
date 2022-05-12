@@ -35,6 +35,48 @@
     <CEffectSet default="1" id="CEffectSetGenetron">
         <EditorCategories value="Race:Genetron"/>
     </CEffectSet>
+    <CEffectApplyBehavior default="1" id="CEffectApplyBehaviorKeironTarget">
+        <EditorCategories value="Race:Keiron"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior default="1" id="CEffectApplyBehaviorKeironCaster" parent="CEffectApplyBehaviorKeironTarget">
+        <WhichUnit Value="Caster"/>
+    </CEffectApplyBehavior>
+    <CEffectDamage default="1" id="CEffectDamageKeironSpell">
+        <EditorCategories value="Race:Keiron"/>
+        <ResponseFlags index="Acquire" value="1"/>
+        <ResponseFlags index="Flee" value="1"/>
+        <Flags index="Notification" value="1"/>
+        <ExcludeArray Value="Target"/>
+        <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
+    </CEffectDamage>
+    <CEffectDamage default="1" id="CEffectDamageKeironWeapon" parent="CEffectDamageKeironSpell">
+        <ArmorReduction value="1"/>
+        <Kind value="Ranged"/>
+        <KindSplash value="Splash"/>
+    </CEffectDamage>
+    <CEffectDamage default="1" id="CEffectDamageKeironWeaponVisible" parent="CEffectDamageKeironWeapon">
+        <Visibility value="Visible"/>
+    </CEffectDamage>
+    <CEffectLaunchMissile default="1" id="CEffectLaunchMissileKeiron">
+        <EditorCategories value="Race:Keiron"/>
+        <ImpactEffect value="##id##Impact"/>
+    </CEffectLaunchMissile>
+    <CEffectLaunchMissile default="1" id="CEffectLaunchMissileKeironPoint" parent="CEffectLaunchMissileKeiron">
+        <ImpactLocation Value="TargetPoint"/>
+    </CEffectLaunchMissile>
+    <CEffectCreatePersistent default="1" id="CEffectCreatePersistentKeiron">
+        <EditorCategories value="Race:Keiron"/>
+        <InitialEffect value="##id##Init"/>
+        <ExpireEffect value="##id##Expire"/>
+        <FinalEffect value="##id##Final"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent default="1" id="CEffectCreatePersistentKeironUnit" parent="CEffectCreatePersistentKeiron">
+        <WhichLocation Value="TargetUnitOrPoint"/>
+    </CEffectCreatePersistent>
+    <CEffectEnumArea default="1" id="CEffectSearchAreaKeiron">
+        <EditorCategories value="Race:Keiron"/>
+        <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
+    </CEffectEnumArea>
     <CEffectModifyUnit id="ApplyChargeCC">
         <EditorCategories value="Race:Genetron"/>
         <ImpactUnit Value="Source"/>
@@ -369,10 +411,6 @@
     <CEffectCreateUnit id="DisguiseAsXayidlingCU" parent="DisguiseEx3CU">
         <SpawnUnit value="ChangelingXayidling"/>
     </CEffectCreateUnit>
-    <CEffectSwitch id="DisguiseEx3">
-        <CaseArray Validator="DisguiseAsSpitfire" Effect="DisguiseAsSpitfireCU"/>
-        <CaseArray Validator="DisguiseAsXayidling" Effect="DisguiseAsXayidlingCU"/>
-    </CEffectSwitch>
     <CEffectApplyBehavior id="DownloadPhase" parent="CEffectApplyBehaviorGenetronTarget"/>
     <CEffectEnumArea id="EMPSearch">
         <SearchFilters value="-;Hidden"/>
@@ -1710,4 +1748,2009 @@
         <ImpactEffect value="VolatileDischargeCU"/>
         <AmmoUnit value="VolatileDischargeMissile"/>
     </CEffectLaunchMissile>
+    <CEffectTeleport id="AegisRelocate">
+        <ValidatorArray value="IsCitadel"/>
+        <ValidatorArray value="NotUnderConstruction"/>
+        <EditorCategories value="Race:Protoss"/>
+        <WhichUnit Value="Caster"/>
+        <ClearQueuedOrders value="0"/>
+        <MinDistance value="2"/>
+        <PlacementArc value="360"/>
+        <TargetLocation Value="TargetUnit"/>
+        <TeleportEffect value="AegisShieldAuraKBCP"/>
+    </CEffectTeleport>
+    <CEffectTeleport id="AegisRelocateBirth">
+        <EditorCategories value="Race:Protoss"/>
+        <ClearQueuedOrders value="0"/>
+        <MinDistance value="0"/>
+        <PlacementArc value="360"/>
+        <PlacementAround Value="CasterPoint"/>
+        <TargetLocation Value="CasterPoint"/>
+        <TeleportFlags index="TestFog" value="0"/>
+    </CEffectTeleport>
+    <CEffectSet id="AegisShieldAuraActivationSet">
+        <EditorCategories value=""/>
+        <EffectArray value="AegisShieldRestore"/>
+        <EffectArray value="AegisShieldAuraKBCP"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="AegisShieldAuraKBAB">
+        <EditorCategories value=""/>
+        <WhichUnit Effect="AegisShieldAuraKBTarget"/>
+        <Behavior value="AegisShieldAuraKB"/>
+    </CEffectApplyBehavior>
+    <CEffectCreatePersistent id="AegisShieldAuraKBCP" parent="CEffectCreatePersistentKeironUnit">
+        <ValidatorArray value="CasterIsAegisShielded"/>
+        <Marker>
+            <MatchFlags index="Id" value="1"/>
+        </Marker>
+        <WhichLocation Value="CasterUnitOrPoint"/>
+        <PeriodCount value="8"/>
+        <PeriodicEffectArray value="AegisShieldAuraKBSA"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="AegisShieldAuraKBFate">
+        <EditorCategories value=""/>
+    </CEffectApplyBehavior>
+    <CEffectRemoveBehavior id="AegisShieldAuraKBRB">
+        <EditorCategories value=""/>
+        <WhichUnit Effect="AegisShieldAuraKBTarget"/>
+        <BehaviorLink value="AegisShieldAuraKB"/>
+    </CEffectRemoveBehavior>
+    <CEffectEnumArea id="AegisShieldAuraKBSA" parent="CEffectSearchAreaKeiron">
+        <SearchFilters value="-;Player,Ally,Structure,Missile,Buried,Stasis,Dead,Hidden,Invulnerable"/>
+        <AreaArray Radius="1" RadiusBonus="1" Effect="AegisShieldAuraKBTarget"/>
+    </CEffectEnumArea>
+    <CEffectCreatePersistent id="AegisShieldAuraKBTarget" parent="CEffectCreatePersistentKeironUnit">
+        <ValidatorArray value="noMarkers"/>
+        <ValidatorArray value="IsNotLarva"/>
+        <ValidatorArray value="IsNotEgg"/>
+        <ValidatorArray value="IsNotPhasedUnit"/>
+        <ValidatorArray value="IsNotWarpingIn"/>
+        <ValidatorArray value="IsNotEggUnit"/>
+        <ValidatorArray value="NotAbducted"/>
+        <ValidatorArray value="NoGravitonBeamInProgress"/>
+        <InitialEffect value="AegisShieldAuraKBCU"/>
+    </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="AegisShieldAuraReveal">
+        <EditorCategories value="Race:Protoss"/>
+    </CEffectApplyBehavior>
+    <CEffectSet id="AegisShieldAuraSASet">
+        <EditorCategories value=""/>
+        <EffectArray value="ShieldAura"/>
+        <EffectArray value="AegisShieldAuraRevealSA"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="AegisShieldRestore">
+        <EditorCategories value="Race:Protoss"/>
+        <VitalArray index="Shields">
+            <ChangeFraction value="1"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="ApertureTeleportLargeMU">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Energy">
+            <Change value="-40"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectSet id="ApertureTeleportMassSet">
+        <EditorCategories value=""/>
+        <EffectArray value="ApertureTeleportTP"/>
+        <EffectArray value="ApertureTeleportLoad"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="ApertureTeleportMassMU">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Energy">
+            <Change value="-80"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectSet id="ApertureTeleportLargeSet">
+        <EditorCategories value=""/>
+        <EffectArray value="ApertureTeleportTP"/>
+        <EffectArray value="ApertureTeleportLoad"/>
+    </CEffectSet>
+    <CEffectLoadContainer id="ApertureTeleportLoad">
+        <ValidatorArray value="TargetIsGround"/>
+        <EditorCategories value=""/>
+        <ContainerType value="Transport"/>
+        <ContainerAbil value="ApertureLoadUnload"/>
+    </CEffectLoadContainer>
+    <CEffectModifyUnit id="ApertureTeleportSmallMU">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Energy">
+            <Change value="-10"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="ApertureTeleportMedMU">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Energy">
+            <Change value="-20"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectSet id="ApertureTeleportSmallSet">
+        <EditorCategories value=""/>
+        <EffectArray value="ApertureTeleportTP"/>
+        <EffectArray value="ApertureTeleportLoad"/>
+    </CEffectSet>
+    <CEffectSet id="ApertureTeleportMedSet">
+        <EditorCategories value=""/>
+        <EffectArray value="ApertureTeleportTP"/>
+        <EffectArray value="ApertureTeleportLoad"/>
+    </CEffectSet>
+    <CEffectSwitch id="ApertureTeleportSwitch">
+        <ValidatorArray value="ApertureEnergy"/>
+        <ValidatorArray value="IsNotElytron"/>
+        <ValidatorArray value="NotMaterializing"/>
+        <ValidatorArray value="KeironCasterEnergyGE10"/>
+        <ValidatorArray value="NotBuildingCombine"/>
+        <EditorCategories value=""/>
+        <CaseArray Validator="Aperture1CargoAnd10Energy" Effect="ApertureTeleportSmallSet"/>
+        <CaseArray Validator="Aperture2CargoAnd20Energy" Effect="ApertureTeleportMedSet"/>
+        <CaseArray Validator="Aperture4CargoAnd40Energy" Effect="ApertureTeleportLargeSet"/>
+        <CaseArray Validator="Aperture8CargoAnd80Energy" Effect="ApertureTeleportMassSet"/>
+    </CEffectSwitch>
+    <CEffectSwitch id="ApertureTeleportEnergySwitch">
+        <ValidatorArray value="KeironCasterEnergyGE10"/>
+        <EditorCategories value=""/>
+        <CaseArray Validator="Aperture1CargoAnd10Energy" Effect="ApertureTeleportSmallMU"/>
+        <CaseArray Validator="Aperture2CargoAnd20Energy" Effect="ApertureTeleportMedMU"/>
+        <CaseArray Validator="Aperture4CargoAnd40Energy" Effect="ApertureTeleportLargeMU"/>
+        <CaseArray Validator="Aperture8CargoAnd80Energy" Effect="ApertureTeleportMassMU"/>
+    </CEffectSwitch>
+    <CEffectTeleport id="ApertureTeleportTP">
+        <EditorCategories value=""/>
+        <PlacementArc value="360"/>
+        <PlacementAround Value="CasterUnitOrPoint"/>
+        <PlacementRange value="3"/>
+        <SourceLocation Value="TargetUnitOrPoint"/>
+        <TargetLocation Value="CasterUnitOrPoint"/>
+        <TeleportFlags index="TestFog" value="0"/>
+        <TeleportEffect value="ApertureTeleportEnergySwitch"/>
+    </CEffectTeleport>
+    <CEffectApplyBehavior id="Beholder" parent="CEffectApplyBehaviorKeironCaster"/>
+    <CEffectApplyBehavior id="CitadelEnergize">
+        <EditorCategories value="Race:Protoss"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="CitadelEnergized">
+        <EditorCategories value="Race:Protoss"/>
+    </CEffectApplyBehavior>
+    <CEffectEnumArea id="CitadelEnergizedSearch">
+        <EditorCategories value="Race:Protoss"/>
+        <SearchFilters value="-;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
+        <AreaArray Radius="10" Effect="CitadelEnergized"/>
+    </CEffectEnumArea>
+    <CEffectSwitch id="Disguise">
+        <CaseArray Validator="DisguiseAsVolt" Effect="DisguiseAsVolt"/>
+    </CEffectSwitch>
+    <CEffectSet id="DisguiseAsVolt" parent="DisguiseSetDefault"/>
+    <CEffectIssueOrder id="DisguiseAsVoltIssueOrder" parent="DisguiseIssueOrderDefault">
+        <Abil value="DisguiseAsVolt"/>
+    </CEffectIssueOrder>
+    <CEffectCreateUnit id="DisguiseAsVoltCU" parent="DisguiseEx3CU">
+        <SpawnUnit value="ChangelingVolt"/>
+    </CEffectCreateUnit>
+    <CEffectSwitch id="DisguiseEx3">
+        <CaseArray Validator="DisguiseAsSpitfire" Effect="DisguiseAsSpitfireCU"/>
+        <CaseArray Validator="DisguiseAsXayidling" Effect="DisguiseAsXayidlingCU"/>
+        <CaseArray Validator="DisguiseAsVolt" Effect="DisguiseAsVoltCU"/>
+    </CEffectSwitch>
+    <CEffectLaunchMissile id="EmissaryOrb" parent="CEffectLaunchMissileKeiron">
+        <LaunchEffect value="EmissaryOrbFate"/>
+        <PeriodicEffect value="EmissaryOrbAB"/>
+        <AmmoUnit value="EmissaryOrb"/>
+    </CEffectLaunchMissile>
+    <CEffectApplyBehavior id="EmissaryOrbAB" parent="CEffectApplyBehaviorKeironTarget">
+        <EditorCategories value="Race:Protoss"/>
+        <WhichUnit Effect="EmissaryOrb"/>
+        <Behavior value="EmissaryOrbTint"/>
+    </CEffectApplyBehavior>
+    <CEffectDamage id="EmissaryOrbDMG" parent="CEffectDamageKeironSpell">
+        <Amount value="160"/>
+        <AreaArray Fraction="1"/>
+        <AreaArray Radius="0.625" Fraction="0.75"/>
+        <AreaArray Radius="1.25" Fraction="0.5"/>
+        <AreaArray Radius="2.5" Fraction="0.25"/>
+        <SearchFilters value="-;Missile,Stasis,Dead,Hidden,Invulnerable"/>
+    </CEffectDamage>
+    <CEffectApplyBehavior id="EmissaryOrbFate">
+        <EditorCategories value="Race:Protoss"/>
+        <WhichUnit Value="Source"/>
+    </CEffectApplyBehavior>
+    <CEffectSet id="FeedbackSet">
+        <ValidatorArray value="NotCitadel"/>
+        <ValidatorArray value="NotAegis"/>
+    </CEffectSet>
+    <CEffectCreatePersistent id="FuseFusion">
+        <ValidatorArray value="CanBeFused"/>
+        <ValidatorArray value="TargetIsNotFused"/>
+        <EditorCategories value=""/>
+        <WhichLocation Value="TargetUnit"/>
+        <ExpireDelay value="0.0625"/>
+        <ExpireEffect value="FuseFusionCooldown"/>
+        <PeriodCount value="2"/>
+        <PeriodicEffectArray value="FuseFusionAB"/>
+        <PeriodicEffectArray value="FuseFusionSelection"/>
+    </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="FuseFusionAB">
+        <EditorCategories value=""/>
+        <Behavior value="FuseFused"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="FuseFusionABData">
+        <EditorCategories value=""/>
+        <Behavior value="FuseFusedData"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="FuseFusionABCaster">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="FuseFusedCaster"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyKinetic id="FuseFusionAK">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Kinetic value="FollowTargetPosition"/>
+    </CEffectApplyKinetic>
+    <CEffectAddTrackedUnit id="FuseFusionATU">
+        <EditorCategories value=""/>
+        <BehaviorLink value="FuseTracker"/>
+        <TrackerUnit Value="Target"/>
+    </CEffectAddTrackedUnit>
+    <CEffectModifyUnit id="FuseFusionHide">
+        <EditorCategories value=""/>
+        <ModifyFlags index="Hide" value="1"/>
+        <ImpactUnit Value="Caster"/>
+    </CEffectModifyUnit>
+    <CEffectSet id="FuseFusionSet">
+        <EditorCategories value=""/>
+        <EffectArray value="FuseFusionHide"/>
+        <EffectArray value="FuseFusionShieldMU"/>
+        <EffectArray value="FuseFusionAK"/>
+        <EffectArray value="FuseFusionTP"/>
+        <EffectArray value="FuseFusionATU"/>
+        <EffectArray value="FuseFusionABCaster"/>
+        <EffectArray value="FuseFusionABData"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="FuseFusionShieldMU">
+        <EditorCategories value=""/>
+        <VitalArray index="Shields">
+            <Change value="0">
+                <AccumulatorArray value="FuseFusionShieldsApply"/>
+            </Change>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectTeleport id="FuseFusionTP">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <MinDistance value="0"/>
+        <TargetLocation Value="TargetUnit"/>
+        <TeleportFlags index="TestFog" value="0"/>
+    </CEffectTeleport>
+    <CEffectRemoveBehavior id="FuseUnfuseRB">
+        <EditorCategories value=""/>
+        <BehaviorLink value="FuseFused"/>
+    </CEffectRemoveBehavior>
+    <CEffectRemoveBehavior id="FuseUnfuse">
+        <EditorCategories value=""/>
+        <BehaviorLink value="FuseFusedData"/>
+    </CEffectRemoveBehavior>
+    <CEffectRemoveBehavior id="FuseUnfuseRBCaster">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <BehaviorLink value="FuseFusedCaster"/>
+    </CEffectRemoveBehavior>
+    <CEffectUserData id="FuseUnfuseData">
+        <EditorCategories value=""/>
+        <Amount value="0">
+            <AccumulatorArray value="FuseUnfuseArithmetic"/>
+        </Amount>
+        <Operation value="Set"/>
+        <EffectSuccess value="FuseUnfuseSet"/>
+        <EffectFailure value="FuseUnfuseSet"/>
+    </CEffectUserData>
+    <CEffectRemoveKinetic id="FuseUnfuseRK">
+        <EditorCategories value=""/>
+        <KineticLink value="FollowTargetPosition"/>
+        <ImpactUnit Value="Caster"/>
+    </CEffectRemoveKinetic>
+    <CEffectModifyUnit id="FuseUnfuseSelectionCooldown">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="FuseFusion,Execute" CooldownOperation="Add" CooldownTimeUse="5"/>
+        <SelectTransferUnit Value="Target"/>
+    </CEffectModifyUnit>
+    <CEffectCreatePersistent id="FuseUnfuseSet">
+        <EditorCategories value=""/>
+        <WhichLocation Value="TargetUnit"/>
+        <PeriodCount value="7"/>
+        <PeriodicEffectArray value="FuseUnfuseRB"/>
+        <PeriodicEffectArray value="FuseUnfuseRK"/>
+        <PeriodicEffectArray value="FuseUnfuseRBCaster"/>
+        <PeriodicEffectArray value="FuseUnfuseShieldMUCaster"/>
+        <PeriodicEffectArray value="FuseUnfuseShieldMUTarget"/>
+        <PeriodicEffectArray value="FuseUnfuseShow"/>
+        <PeriodicEffectArray value="FuseUnfuseSelectionCooldown"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0.5"/>
+    </CEffectCreatePersistent>
+    <CEffectModifyUnit id="FuseUnfuseShieldMUCaster">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Shields">
+            <ChangeFraction value="0.001">
+                <AccumulatorArray value="FuseUnfuseData"/>
+            </ChangeFraction>
+        </VitalArray>
+        <ModifyFlags index="SetVitals" value="1"/>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="FuseUnfuseShieldMUTarget">
+        <EditorCategories value=""/>
+        <VitalArray index="Shields">
+            <ChangeFraction value="0.001">
+                <AccumulatorArray value="FuseUnfuseData"/>
+            </ChangeFraction>
+        </VitalArray>
+        <ModifyFlags index="SetVitals" value="1"/>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="FuseUnfuseShow">
+        <EditorCategories value=""/>
+        <ModifyFlags index="Show" value="1"/>
+        <ImpactUnit Value="Caster"/>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="FuseFusionSelection">
+        <EditorCategories value=""/>
+        <Cost/>
+        <SelectTransferUnit Value="Caster"/>
+        <SelectTransferFlags index="DeselectSource" value="1"/>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="FuseFusionCooldown">
+        <EditorCategories value=""/>
+        <Cost Abil="FuseFusion,Execute" CooldownOperation="Set" CooldownTimeUse="0.0625"/>
+        <SelectTransferUnit Value="Caster"/>
+        <SelectTransferFlags index="DeselectSource" value="1"/>
+    </CEffectModifyUnit>
+    <CEffectRemoveBehavior id="HarbingerExitJudgementMode">
+        <EditorCategories value=""/>
+        <BehaviorLink value="HarbingerJudgementMode"/>
+    </CEffectRemoveBehavior>
+    <CEffectApplyBehavior id="HarbingerHeraldEnergyCannonsAOEAB" parent="CEffectApplyBehaviorKeironTarget">
+        <Behavior value="HarbingerHeraldEnergyCannonsAOE"/>
+    </CEffectApplyBehavior>
+    <CEffectCreatePersistent id="HarbingerHeraldEnergyCannonsAOECP" parent="CEffectCreatePersistentKeiron">
+        <ValidatorArray value="HarbingerJudgementModeOn"/>
+        <PeriodCount value="8"/>
+        <PeriodicEffectArray value="HarbingerHeraldEnergyCannonsSA"/>
+        <PeriodicPeriodArray value="0.25"/>
+    </CEffectCreatePersistent>
+    <CEffectDamage id="HarbingerHeraldEnergyCannonsAOEDMG" parent="CEffectDamageKeironSpell">
+        <Amount value="2.5"/>
+    </CEffectDamage>
+    <CEffectEnumArea id="HarbingerHeraldEnergyCannonsSA" parent="CEffectSearchAreaKeiron">
+        <ImpactLocation Value="TargetPoint"/>
+        <SearchFilters value="Air;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <AreaArray Radius="1.75" Effect="HarbingerHeraldEnergyCannonsAOEAB"/>
+    </CEffectEnumArea>
+    <CEffectSet id="HarbingerHeraldEnergyCannonsSet">
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="HeraldEnergyCannonsLMImpact"/>
+        <EffectArray value="HarbingerHeraldEnergyCannonsAOECP"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="HarbingerJudgementMode" parent="CEffectApplyBehaviorKeironCaster"/>
+    <CEffectApplyBehavior id="HarbingerJudgementModeStart" parent="CEffectApplyBehaviorKeironCaster">
+        <EditorCategories value=""/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="HarbingerJudgementModeStop" parent="CEffectApplyBehaviorKeironCaster">
+        <EditorCategories value=""/>
+    </CEffectApplyBehavior>
+    <CEffectLaunchMissile id="HeraldEnergyCannonsLM" parent="CEffectLaunchMissileKeiron">
+        <ImpactEffect value="HarbingerHeraldEnergyCannonsSet"/>
+    </CEffectLaunchMissile>
+    <CEffectDamage id="HeraldEnergyCannonsLMImpact" parent="CEffectDamageKeironWeaponVisible">
+        <Amount value="18"/>
+        <Death value="Electrocute"/>
+    </CEffectDamage>
+    <CEffectDamage id="ConverterDissolutionRay" parent="CEffectDamageKeironWeapon">
+        <EditorCategories value=""/>
+        <Kind value="Melee"/>
+        <Amount value="5"/>
+    </CEffectDamage>
+    <CEffectCreatePersistent id="AuguryGuns" parent="CEffectCreatePersistentKeironUnit">
+        <PeriodCount value="2"/>
+        <PeriodicEffectArray value="AuguryGunsLM"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
+    <CEffectDamage id="AuguryGunsLMImpact" parent="CEffectDamageKeironWeaponVisible">
+        <Amount value="11"/>
+        <Death value="Electrocute"/>
+    </CEffectDamage>
+    <CEffectLaunchMissile id="AuguryGunsLM" parent="CEffectLaunchMissileKeiron"/>
+    <CEffectApplyBehavior id="KeironChargeDummyHarParAB">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="EmpyreanHarParBase"/>
+    </CEffectApplyBehavior>
+    <CEffectCreateUnit id="KeironChargeDummyCU">
+        <EditorCategories value=""/>
+        <CreateFlags index="OffsetByRadius" value="0"/>
+        <CreateFlags index="Placement" value="0"/>
+        <CreateFlags index="ProvideFood" value="0"/>
+        <CreateFlags index="TechComplete" value="0"/>
+        <CreateFlags index="UseFood" value="0"/>
+        <CreateFlags index="NormalizeSpawnOffset" value="0"/>
+        <SpawnEffect value="KeironChargeDummyCUSet"/>
+        <SpawnUnit value="KeironChargeDummy"/>
+    </CEffectCreateUnit>
+    <CEffectSet id="KeironChargeDummyCUSet">
+        <EditorCategories value=""/>
+        <EffectArray value="KeironChargeDummySwitch"/>
+        <EffectArray value="KeironChargeDummyTS1"/>
+        <EffectArray value="KeironChargeDummyTS2"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="KeironChargeDummyIndMyrAB">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="AtriumIndMyrBase"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="KeironChargeDummyAurApeAB">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="OutletAurApeBase"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="KeironChargeDummyParVolAB">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="EdificeParVolBase"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="KeironChargeDummyPulSubAB">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="SanctumPulSubBase"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="KeironChargeDummyUmbraAB">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="FoundryUmbraBase"/>
+    </CEffectApplyBehavior>
+    <CEffectSwitch id="KeironChargeDummySwitch">
+        <EditorCategories value=""/>
+        <CaseArray Validator="CasterIsEdifice" Effect="KeironChargeDummyParVolAB"/>
+        <CaseArray Validator="CasterIsSanctum" Effect="KeironChargeDummyPulSubAB"/>
+        <CaseArray Validator="CasterIsFoundry" Effect="KeironChargeDummyUmbraAB"/>
+        <CaseArray Validator="CasterIsAtrium" Effect="KeironChargeDummyIndMyrAB"/>
+        <CaseArray Validator="CasterIsConduit" Effect="KeironChargeDummyEchoAB"/>
+        <CaseArray Validator="CasterIsOutlet" Effect="KeironChargeDummyAurApeAB"/>
+        <CaseArray Validator="CasterIsEmpyrean" Effect="KeironChargeDummyHarParAB"/>
+    </CEffectSwitch>
+    <CEffectApplyBehavior id="KeironChargeDummyTS1">
+        <EditorCategories value=""/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="KeironChargeDummyTS2">
+        <ValidatorArray index="0" value="KeironChargeDummyTS1TargetFilters"/>
+        <EditorCategories value=""/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="KeironChargeDummyEchoAB">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="ConduitEchoBase"/>
+    </CEffectApplyBehavior>
+    <CEffectEnumMagazine id="MyriadDestroyElytraIterate">
+        <EditorCategories value="Race:Protoss"/>
+        <SearchFilters value="-;Self"/>
+        <EffectExternal value="KillTargetDeathNormal"/>
+    </CEffectEnumMagazine>
+    <CEffectCreatePersistent id="OculusReveal">
+        <EditorCategories value="Race:Protoss"/>
+        <Flags index="Channeled" value="1"/>
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <RevealRadius value="9"/>
+        <RevealFlags index="Unfog" value="1"/>
+    </CEffectCreatePersistent>
+    <CEffectLaunchMissile id="ParagonAirWeapon">
+        <EditorCategories value=""/>
+        <ImpactEffect value="ParagonAirWeaponDMG"/>
+        <AmmoUnit value="ParagonAir"/>
+    </CEffectLaunchMissile>
+    <CEffectApplyBehavior id="ParagonDisableAntiAir" parent="CEffectApplyBehaviorKeironCaster"/>
+    <CEffectLaunchMissile id="ParagonGroundWeapon">
+        <EditorCategories value=""/>
+        <ImpactEffect value="ParagonGroundWeaponDMG"/>
+        <AmmoUnit value="ParagonGround"/>
+    </CEffectLaunchMissile>
+    <CEffectDamage id="ParagonAirWeaponDMG" parent="CEffectDamageKeironWeaponVisible">
+        <EditorCategories value=""/>
+        <Amount value="40"/>
+        <Death value="Blast"/>
+    </CEffectDamage>
+    <CEffectDamage id="ParagonGroundWeaponDMG" parent="CEffectDamageKeironWeaponVisible">
+        <EditorCategories value=""/>
+        <Amount value="12"/>
+    </CEffectDamage>
+    <CEffectRemoveBehavior id="PariahProjectionRemoveBehavior">
+        <EditorCategories value="Race:Protoss"/>
+        <BehaviorLink value="PariahProjectionFate"/>
+    </CEffectRemoveBehavior>
+    <CEffectLaunchMissile id="BulwarkBlast" parent="CEffectLaunchMissileKeiron"/>
+    <CEffectDamage id="BulwarkBlastImpact" parent="CEffectDamageKeironWeapon">
+        <Amount value="40"/>
+        <Death value="Blast"/>
+    </CEffectDamage>
+    <CEffectEnumArea id="AegisShieldAuraRevealSA" parent="CEffectSearchAreaKeiron">
+        <SearchFilters value="-;Self,Player,Ally,Neutral,Missile,Stasis,Dead,Hidden"/>
+        <AreaArray Radius="20" Effect="AegisShieldAuraReveal"/>
+    </CEffectEnumArea>
+    <CEffectIssueOrder id="AegisShieldedUnmorph">
+        <EditorCategories value="Race:Protoss"/>
+        <WhichUnit Value="Caster"/>
+        <Abil value="AegisMorphToNormal"/>
+        <Player Value="Caster"/>
+    </CEffectIssueOrder>
+    <CEffectApplyBehavior id="PulsarDampener" parent="CEffectApplyBehaviorKeironTarget"/>
+    <CEffectCreateUnit id="AegisShieldAuraKBCU">
+        <EditorCategories value=""/>
+        <WhichLocation Value="CasterUnit"/>
+        <Origin Value="TargetUnit"/>
+        <CreateFlags index="Birth" value="0"/>
+        <CreateFlags index="DropOff" value="0"/>
+        <CreateFlags index="PlacementIgnoreBlockers" value="1"/>
+        <CreateFlags index="Precursor" value="1"/>
+        <CreateFlags index="ProvideFood" value="0"/>
+        <CreateFlags index="TechComplete" value="0"/>
+        <CreateFlags index="UseFood" value="0"/>
+        <CreateFlags index="NormalizeSpawnOffset" value="0"/>
+        <SpawnOwner Value="Neutral"/>
+        <SpawnEffect value="AegisShieldAuraKBCUSet"/>
+        <SpawnRange value="14"/>
+        <SpawnOffset value="0,-10"/>
+        <TypeFallbackUnit Value="Target"/>
+    </CEffectCreateUnit>
+    <CEffectSet id="AegisShieldAuraKBCUSet">
+        <EditorCategories value=""/>
+        <EffectArray value="AegisShieldAuraKBFate"/>
+        <EffectArray value="AegisShieldAuraKBAB"/>
+        <EffectArray value="AegisShieldAuraKBLM"/>
+    </CEffectSet>
+    <CEffectLaunchMissile id="AegisShieldAuraKBLM">
+        <ValidatorArray index="0" value="AegisShieldAuraKBTargetNotDead"/>
+        <EditorCategories value=""/>
+        <LaunchLocation Effect="AegisShieldAuraKBTarget" Value="TargetUnit"/>
+        <ImpactEffect value="AegisShieldAuraKBImpactDelay"/>
+        <Flags index="2D" value="1"/>
+        <Flags index="TravelValidation" value="1"/>
+        <Flags index="ValidateAbil" value="0"/>
+        <Flags index="ValidateBenign" value="0"/>
+        <Flags index="ValidateTeleport" value="0"/>
+        <Flags index="ValidateWeapon" value="0"/>
+        <Movers Link="UnitKnockbackMover5"/>
+        <DeathType value="Unknown"/>
+    </CEffectLaunchMissile>
+    <CEffectCreatePersistent id="AegisShieldAuraKBImpactDelay">
+        <EditorCategories value=""/>
+        <WhichLocation Effect="AegisShieldAuraKBTarget" Value="TargetUnit"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="AegisShieldAuraKBRB"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
+    <CEffectRemoveBehavior id="UmbraShieldCompulsion">
+        <ValidatorArray index="0" value="NotCloaked"/>
+        <ValidatorArray value="NotEMPed"/>
+        <EditorCategories value="Race:Protoss"/>
+        <BehaviorLink value="UmbraStealthSuppress"/>
+    </CEffectRemoveBehavior>
+    <CEffectCreatePersistent id="ZenithParagonDelay">
+        <EditorCategories value=""/>
+        <InitialDelay value="0.0625"/>
+        <InitialEffect value="ZenithParagonSA"/>
+    </CEffectCreatePersistent>
+    <CEffectEnumArea id="ZenithParagonSA" parent="CEffectSearchAreaKeiron">
+        <ValidatorArray value="IsMaterializingOrSourceIsDead"/>
+        <EditorCategories value=""/>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Dead,Hidden"/>
+        <TargetSorts>
+            <SortArray value="HighestUnitCharge"/>
+        </TargetSorts>
+        <AreaArray MaxCount="1" Radius="500" Effect="ZenithParagonRB"/>
+    </CEffectEnumArea>
+    <CEffectCreatePersistent id="ZenithParagonDeathCP" parent="CEffectCreatePersistentKeironUnit">
+        <EditorCategories value=""/>
+        <WhichLocation Value="SourceUnitOrPoint"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="ZenithParagonDeathSet"/>
+    </CEffectCreatePersistent>
+    <CEffectModifyUnit id="ZenithParagonDeathRemoveCharge">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="KeironCitadelMaterialize,Train15" ChargeCountUse="1"/>
+    </CEffectModifyUnit>
+    <CEffectSet id="ZenithParagonDeathSet">
+        <ValidatorArray value="UnitChargeGT0"/>
+        <EditorCategories value=""/>
+        <EffectArray value="ZenithParagonDeathRemoveCharge"/>
+        <EffectArray value="ZenithParagonRB"/>
+    </CEffectSet>
+    <CEffectRemoveBehavior id="ZenithParagonRB">
+        <ValidatorArray index="0" value="IsZenith"/>
+        <ValidatorArray value="UnitChargeGT0"/>
+        <EditorCategories value=""/>
+        <BehaviorLink value="KeironUnitCharge"/>
+        <Count value="1"/>
+    </CEffectRemoveBehavior>
+    <CEffectApplyBehavior id="ZenithParagonAB" parent="CEffectApplyBehaviorKeironCaster">
+        <EditorCategories value=""/>
+        <Behavior value="ZenithParagonBase"/>
+    </CEffectApplyBehavior>
+    <CEffectModifyUnit id="ZenithParagonAddCharge">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="KeironCitadelMaterialize,Train15" ChargeCountUse="-1"/>
+    </CEffectModifyUnit>
+    <CEffectSet id="ZenithParagonSet">
+        <EditorCategories value=""/>
+        <EffectArray value="ZenithParagonAB"/>
+        <EffectArray value="KeironUnitChargeAB"/>
+        <EffectArray value="ZenithParagonAddCharge"/>
+    </CEffectSet>
+    <CEffectRemoveBehavior id="FormulatorRichRB">
+        <EditorCategories value="Race:Terran"/>
+        <WhichUnit Value="Caster"/>
+        <BehaviorLink value="HarvestableVespeneGeyserGasKeiron"/>
+    </CEffectRemoveBehavior>
+    <CEffectApplyBehavior id="AstralConduitEchoAB" parent="CEffectApplyBehaviorKeironCaster">
+        <EditorCategories value=""/>
+        <Behavior value="ConduitEchoBase"/>
+    </CEffectApplyBehavior>
+    <CEffectCreatePersistent id="EmpyreanHarParDelay">
+        <EditorCategories value=""/>
+        <InitialDelay value="0.0625"/>
+        <InitialEffect value="EmpyreanHarParSA"/>
+    </CEffectCreatePersistent>
+    <CEffectEnumArea id="EmpyreanHarParSA" parent="CEffectSearchAreaKeiron">
+        <ValidatorArray value="IsMaterializingOrSourceIsDead"/>
+        <EditorCategories value=""/>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Dead,Hidden"/>
+        <TargetSorts>
+            <SortArray value="HighestUnitCharge"/>
+        </TargetSorts>
+        <AreaArray MaxCount="1" Radius="500" Effect="EmpyreanHarParRB"/>
+    </CEffectEnumArea>
+    <CEffectCreatePersistent id="EmpyreanHarParDeathCP" parent="CEffectCreatePersistentKeironUnit">
+        <EditorCategories value=""/>
+        <WhichLocation Value="SourceUnitOrPoint"/>
+        <PeriodCount value="2"/>
+        <PeriodicEffectArray value="EmpyreanHarParDeathSet"/>
+    </CEffectCreatePersistent>
+    <CEffectModifyUnit id="EmpyreanHarParDeathRemoveCharge">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="KeironCitadelMaterialize,Train13" ChargeCountUse="1"/>
+    </CEffectModifyUnit>
+    <CEffectSet id="EmpyreanHarParDeathSet">
+        <ValidatorArray value="UnitChargeGT0"/>
+        <EditorCategories value=""/>
+        <EffectArray value="EmpyreanHarParDeathRemoveCharge"/>
+        <EffectArray value="EmpyreanHarParRB"/>
+    </CEffectSet>
+    <CEffectRemoveBehavior id="EmpyreanHarParRB">
+        <ValidatorArray index="0" value="IsEmpyrean"/>
+        <ValidatorArray value="UnitChargeGT0"/>
+        <EditorCategories value=""/>
+        <BehaviorLink value="KeironUnitCharge"/>
+        <Count value="1"/>
+    </CEffectRemoveBehavior>
+    <CEffectApplyBehavior id="EmpyreanHarParAB" parent="CEffectApplyBehaviorKeironCaster">
+        <EditorCategories value=""/>
+        <Behavior value="EmpyreanHarParBase"/>
+    </CEffectApplyBehavior>
+    <CEffectModifyUnit id="EmpyreanHarParAddCharge">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="KeironCitadelMaterialize,Train13" ChargeCountUse="-1"/>
+    </CEffectModifyUnit>
+    <CEffectCreatePersistent id="CelestialOutletAurApeDelay">
+        <EditorCategories value=""/>
+        <InitialDelay value="0.0625"/>
+        <InitialEffect value="CelestialOutletAurApeSA"/>
+    </CEffectCreatePersistent>
+    <CEffectEnumArea id="CelestialOutletAurApeSA" parent="CEffectSearchAreaKeiron">
+        <ValidatorArray value="IsMaterializingOrSourceIsDead"/>
+        <EditorCategories value=""/>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Dead,Hidden"/>
+        <TargetSorts>
+            <SortArray value="HighestUnitCharge"/>
+        </TargetSorts>
+        <AreaArray MaxCount="1" Radius="500" Effect="CelestialOutletAurApeRB"/>
+    </CEffectEnumArea>
+    <CEffectCreatePersistent id="CelestialOutletAurApeDeathCP" parent="CEffectCreatePersistentKeironUnit">
+        <EditorCategories value=""/>
+        <WhichLocation Value="SourceUnitOrPoint"/>
+        <PeriodCount value="2"/>
+        <PeriodicEffectArray value="CelestialOutletAurApeDeathSet"/>
+    </CEffectCreatePersistent>
+    <CEffectModifyUnit id="CelestialOutletAurApeDeathRemoveCharge">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="KeironCitadelMaterialize,Train11" ChargeCountUse="1"/>
+    </CEffectModifyUnit>
+    <CEffectSet id="CelestialOutletAurApeDeathSet">
+        <ValidatorArray value="UnitChargeGT0"/>
+        <EditorCategories value=""/>
+        <EffectArray value="CelestialOutletAurApeDeathRemoveCharge"/>
+        <EffectArray value="CelestialOutletAurApeRB"/>
+    </CEffectSet>
+    <CEffectRemoveBehavior id="CelestialOutletAurApeRB">
+        <ValidatorArray index="0" value="IsCelestialOutlet"/>
+        <ValidatorArray value="UnitChargeGT0"/>
+        <EditorCategories value=""/>
+        <BehaviorLink value="KeironUnitCharge"/>
+        <Count value="1"/>
+    </CEffectRemoveBehavior>
+    <CEffectApplyBehavior id="OutletAurApeAB" parent="CEffectApplyBehaviorKeironCaster">
+        <EditorCategories value=""/>
+        <Behavior value="OutletAurApeBase"/>
+    </CEffectApplyBehavior>
+    <CEffectModifyUnit id="AstralConduitEchoAddCharge">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="KeironCitadelMaterialize,Train10" ChargeCountUse="-1"/>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="OutletAurApeAddCharge">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="KeironCitadelMaterialize,Train11" ChargeCountUse="-1"/>
+    </CEffectModifyUnit>
+    <CEffectSet id="AstralConduitEchoSet">
+        <EditorCategories value=""/>
+        <EffectArray value="AstralConduitEchoAB"/>
+        <EffectArray value="KeironUnitChargeAB"/>
+        <EffectArray value="AstralConduitEchoAddCharge"/>
+    </CEffectSet>
+    <CEffectCreatePersistent id="AstralConduitEchoDeathCP" parent="CEffectCreatePersistentKeironUnit">
+        <EditorCategories value=""/>
+        <WhichLocation Value="SourceUnitOrPoint"/>
+        <PeriodCount value="3"/>
+        <PeriodicEffectArray value="AstralConduitEchoDeathSet"/>
+    </CEffectCreatePersistent>
+    <CEffectModifyUnit id="AstralConduitEchoDeathRemoveCharge">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="KeironCitadelMaterialize,Train10" ChargeCountUse="1"/>
+    </CEffectModifyUnit>
+    <CEffectSet id="AstralConduitEchoDeathSet">
+        <ValidatorArray value="UnitChargeGT0"/>
+        <EditorCategories value=""/>
+        <EffectArray value="AstralConduitEchoDeathRemoveCharge"/>
+        <EffectArray value="AstralConduitEchoRB"/>
+    </CEffectSet>
+    <CEffectRemoveBehavior id="AstralConduitEchoRB">
+        <ValidatorArray index="0" value="IsAstralConduit"/>
+        <ValidatorArray value="UnitChargeGT0"/>
+        <EditorCategories value=""/>
+        <BehaviorLink value="KeironUnitCharge"/>
+        <Count value="1"/>
+    </CEffectRemoveBehavior>
+    <CEffectCreatePersistent id="AstralConduitEchoDelay">
+        <EditorCategories value=""/>
+        <InitialDelay value="0.0625"/>
+        <InitialEffect value="AstralConduitEchoSA"/>
+    </CEffectCreatePersistent>
+    <CEffectEnumArea id="AstralConduitEchoSA" parent="CEffectSearchAreaKeiron">
+        <ValidatorArray value="IsMaterializingOrSourceIsDead"/>
+        <EditorCategories value=""/>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Dead,Hidden"/>
+        <TargetSorts>
+            <SortArray value="HighestUnitCharge"/>
+        </TargetSorts>
+        <AreaArray MaxCount="1" Radius="500" Effect="AstralConduitEchoRB"/>
+    </CEffectEnumArea>
+    <CEffectSet id="OutletAurApeSet">
+        <EditorCategories value=""/>
+        <EffectArray value="OutletAurApeAB"/>
+        <EffectArray value="KeironUnitChargeAB"/>
+        <EffectArray value="OutletAurApeAddCharge"/>
+    </CEffectSet>
+    <CEffectSet id="EmpyreanHarParSet">
+        <EditorCategories value=""/>
+        <EffectArray value="EmpyreanHarParAB"/>
+        <EffectArray value="KeironUnitChargeAB"/>
+        <EffectArray value="EmpyreanHarParAddCharge"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="EdificeParVolAB" parent="CEffectApplyBehaviorKeironCaster">
+        <EditorCategories value=""/>
+        <Behavior value="EdificeParVolBase"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="AtriumIndMyrAB" parent="CEffectApplyBehaviorKeironCaster">
+        <EditorCategories value=""/>
+        <Behavior value="AtriumIndMyrBase"/>
+    </CEffectApplyBehavior>
+    <CEffectModifyUnit id="AtriumIndMyrAddCharge">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="KeironCitadelMaterialize,Train7" ChargeCountUse="-1"/>
+    </CEffectModifyUnit>
+    <CEffectCreatePersistent id="EdificeParVolDeathCP" parent="CEffectCreatePersistentKeironUnit">
+        <EditorCategories value=""/>
+        <WhichLocation Value="SourceUnitOrPoint"/>
+        <PeriodCount value="3"/>
+        <PeriodicEffectArray value="EdificeParVolDeathSet"/>
+    </CEffectCreatePersistent>
+    <CEffectSet id="AtriumIndMyrSet">
+        <EditorCategories value=""/>
+        <EffectArray value="AtriumIndMyrAB"/>
+        <EffectArray value="KeironUnitChargeAB"/>
+        <EffectArray value="AtriumIndMyrAddCharge"/>
+    </CEffectSet>
+    <CEffectCreatePersistent id="AtriumIndMyrDeathCP" parent="CEffectCreatePersistentKeironUnit">
+        <EditorCategories value=""/>
+        <WhichLocation Value="SourceUnitOrPoint"/>
+        <PeriodCount value="2"/>
+        <PeriodicEffectArray value="AtriumIndMyrDeathSet"/>
+    </CEffectCreatePersistent>
+    <CEffectModifyUnit id="AtriumIndMyrDeathRemoveCharge">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="KeironCitadelMaterialize,Train7" ChargeCountUse="1"/>
+    </CEffectModifyUnit>
+    <CEffectSet id="AtriumIndMyrDeathSet">
+        <ValidatorArray value="UnitChargeGT0"/>
+        <EditorCategories value=""/>
+        <EffectArray value="AtriumIndMyrDeathRemoveCharge"/>
+        <EffectArray value="AtriumIndMyrRB"/>
+    </CEffectSet>
+    <CEffectRemoveBehavior id="AtriumIndMyrRB">
+        <ValidatorArray index="0" value="IsAtrium"/>
+        <ValidatorArray value="UnitChargeGT0"/>
+        <EditorCategories value=""/>
+        <BehaviorLink value="KeironUnitCharge"/>
+        <Count value="1"/>
+    </CEffectRemoveBehavior>
+    <CEffectCreatePersistent id="AtriumIndMyrDelay">
+        <EditorCategories value=""/>
+        <InitialDelay value="0.0625"/>
+        <InitialEffect value="AtriumIndMyrSA"/>
+    </CEffectCreatePersistent>
+    <CEffectEnumArea id="AtriumIndMyrSA" parent="CEffectSearchAreaKeiron">
+        <ValidatorArray value="IsMaterializingOrSourceIsDead"/>
+        <EditorCategories value=""/>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Dead,Hidden"/>
+        <TargetSorts>
+            <SortArray value="HighestUnitCharge"/>
+        </TargetSorts>
+        <AreaArray MaxCount="1" Radius="500" Effect="AtriumIndMyrRB"/>
+    </CEffectEnumArea>
+    <CEffectCreatePersistent id="KeironConstructionStart">
+        <EditorCategories value=""/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="KeironConstructionStop">
+        <EditorCategories value=""/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="MeridianConvergenceCP">
+        <EditorCategories value=""/>
+        <Flags index="Channeled" value="1"/>
+        <InitialDelay value="2.5"/>
+        <InitialEffect value="MeridianConvergenceSA"/>
+        <PeriodicValidator value="CasterNotDead"/>
+    </CEffectCreatePersistent>
+    <CEffectDamage id="MeridianConvergenceDMG" parent="CEffectDamageKeironSpell">
+        <EditorCategories value=""/>
+        <AttributeBonus index="Mechanical" value="50"/>
+        <Amount value="50"/>
+        <SearchFilters value="-;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <Death value="Electrocute"/>
+    </CEffectDamage>
+    <CEffectEnumArea id="MeridianConvergenceSA" parent="CEffectSearchAreaKeiron">
+        <EditorCategories value=""/>
+        <SearchFilters value="-;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <AreaArray Radius="2.25" Effect="MeridianConvergenceDMG"/>
+    </CEffectEnumArea>
+    <CEffectDamage id="MeridianLightningBoltDMG" parent="CEffectDamageKeironSpell">
+        <EditorCategories value=""/>
+        <Amount value="40"/>
+        <Death value="Electrocute"/>
+    </CEffectDamage>
+    <CEffectUserData id="MeridianLightningBoltData">
+        <EditorCategories value=""/>
+        <ValidateMax value="2"/>
+        <EffectSuccess value="MeridianLightningBoltSearchTarget"/>
+    </CEffectUserData>
+    <CEffectSet id="MeridianLightningBoltInit">
+        <EditorCategories value=""/>
+        <Marker>
+            <MatchFlags index="Id" value="1"/>
+        </Marker>
+        <EffectArray value="MeridianLightningBoltInitDMG"/>
+        <EffectArray value="MeridianLightningBoltData"/>
+    </CEffectSet>
+    <CEffectDamage id="MeridianLightningBoltInitDMG" parent="CEffectDamageKeironSpell">
+        <EditorCategories value=""/>
+        <Amount value="80"/>
+        <Death value="Electrocute"/>
+    </CEffectDamage>
+    <CEffectEnumArea id="MeridianLightningBoltSearchTarget" parent="CEffectSearchAreaKeiron">
+        <EditorCategories value=""/>
+        <SearchFilters value="-;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <AreaArray MaxCount="1" Radius="3" Effect="MeridianLightningBoltSet"/>
+        <TargetSorts>
+            <SortArray value="TSEnergyLargestFirst"/>
+        </TargetSorts>
+    </CEffectEnumArea>
+    <CEffectSet id="MeridianLightningBoltSet">
+        <ValidatorArray value="noMarkers"/>
+        <EditorCategories value=""/>
+        <EffectArray value="MeridianLightningBoltDMG"/>
+        <EffectArray value="MeridianLightningBoltData"/>
+    </CEffectSet>
+    <CEffectSet id="MeridianWeapon">
+        <EditorCategories value=""/>
+        <EffectArray value="MeridianWeaponDMG"/>
+        <EffectArray value="MeridianWeaponTargetMU"/>
+        <EffectArray value="MeridianWeaponLM"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="MeridianWeaponCasterMU">
+        <EditorCategories value=""/>
+        <VitalArray index="Energy">
+            <Change value="5"/>
+        </VitalArray>
+        <ValidatorArray value="MeridianAttackTargetNotStructure"/>
+    </CEffectModifyUnit>
+    <CEffectDamage id="MeridianWeaponDMG" parent="CEffectDamageKeironWeapon">
+        <EditorCategories value=""/>
+        <Amount value="15"/>
+    </CEffectDamage>
+    <CEffectLaunchMissile id="MeridianWeaponLM">
+        <EditorCategories value=""/>
+        <LaunchLocation Value="TargetUnit"/>
+        <ImpactLocation Value="CasterUnit"/>
+        <ImpactEffect value="MeridianWeaponCasterMU"/>
+        <AmmoUnit value="MeridianWeapon"/>
+    </CEffectLaunchMissile>
+    <CEffectModifyUnit id="MeridianWeaponTargetMU">
+        <EditorCategories value=""/>
+        <VitalArray index="Energy">
+            <Change value="-10"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectCreatePersistent id="PantheonTitanDelay">
+        <EditorCategories value=""/>
+        <InitialDelay value="0.0625"/>
+        <InitialEffect value="PantheonTitanSA"/>
+    </CEffectCreatePersistent>
+    <CEffectEnumArea id="PantheonTitanSA" parent="CEffectSearchAreaKeiron">
+        <ValidatorArray value="IsMaterializingOrSourceIsDead"/>
+        <EditorCategories value=""/>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Dead,Hidden"/>
+        <TargetSorts>
+            <SortArray value="HighestUnitCharge"/>
+        </TargetSorts>
+        <AreaArray MaxCount="1" Radius="500" Effect="PantheonTitanRB"/>
+    </CEffectEnumArea>
+    <CEffectCreatePersistent id="PantheonTitanDeathCP" parent="CEffectCreatePersistentKeironUnit">
+        <EditorCategories value=""/>
+        <WhichLocation Value="SourceUnitOrPoint"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="PantheonTitanDeathSet"/>
+    </CEffectCreatePersistent>
+    <CEffectModifyUnit id="PantheonTitanRemoveCharge">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="KeironCitadelMaterialize,Train9" ChargeCountUse="1"/>
+    </CEffectModifyUnit>
+    <CEffectSet id="PantheonTitanDeathSet">
+        <ValidatorArray value="UnitChargeGT0"/>
+        <EditorCategories value=""/>
+        <EffectArray value="PantheonTitanRemoveCharge"/>
+        <EffectArray value="PantheonTitanRB"/>
+    </CEffectSet>
+    <CEffectRemoveBehavior id="PantheonTitanRB">
+        <ValidatorArray index="0" value="IsPantheon"/>
+        <ValidatorArray value="UnitChargeGT0"/>
+        <EditorCategories value=""/>
+        <BehaviorLink value="KeironUnitCharge"/>
+        <Count value="1"/>
+    </CEffectRemoveBehavior>
+    <CEffectApplyBehavior id="PantheonTitanAB" parent="CEffectApplyBehaviorKeironCaster">
+        <EditorCategories value=""/>
+        <Behavior value="PantheonTitanBase"/>
+    </CEffectApplyBehavior>
+    <CEffectModifyUnit id="PantheonTitanAddCharge">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="KeironCitadelMaterialize,Train9" ChargeCountUse="-1"/>
+    </CEffectModifyUnit>
+    <CEffectSet id="PantheonTitanSet">
+        <EditorCategories value=""/>
+        <EffectArray value="PantheonTitanAB"/>
+        <EffectArray value="KeironUnitChargeAB"/>
+        <EffectArray value="PantheonTitanAddCharge"/>
+    </CEffectSet>
+    <CEffectCreatePersistent id="FoundryUmbraDelay">
+        <EditorCategories value=""/>
+        <InitialDelay value="0.0625"/>
+        <InitialEffect value="FoundryUmbraSA"/>
+    </CEffectCreatePersistent>
+    <CEffectEnumArea id="FoundryUmbraSA" parent="CEffectSearchAreaKeiron">
+        <ValidatorArray value="IsMaterializingOrSourceIsDead"/>
+        <EditorCategories value=""/>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Dead,Hidden"/>
+        <TargetSorts>
+            <SortArray value="HighestUnitCharge"/>
+        </TargetSorts>
+        <AreaArray MaxCount="1" Radius="500" Effect="FoundryUmbraRB"/>
+    </CEffectEnumArea>
+    <CEffectCreatePersistent id="FoundryUmbraDeathCP" parent="CEffectCreatePersistentKeironUnit">
+        <EditorCategories value=""/>
+        <WhichLocation Value="SourceUnitOrPoint"/>
+        <PeriodCount value="2"/>
+        <PeriodicEffectArray value="FoundryUmbraDeathSet"/>
+    </CEffectCreatePersistent>
+    <CEffectModifyUnit id="FoundryUmbraDeathRemoveCharge">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="KeironCitadelMaterialize,Train6" ChargeCountUse="1"/>
+    </CEffectModifyUnit>
+    <CEffectSet id="FoundryUmbraDeathSet">
+        <ValidatorArray value="UnitChargeGT0"/>
+        <EditorCategories value=""/>
+        <EffectArray value="FoundryUmbraDeathRemoveCharge"/>
+        <EffectArray value="FoundryUmbraRB"/>
+    </CEffectSet>
+    <CEffectRemoveBehavior id="FoundryUmbraRB">
+        <ValidatorArray index="0" value="IsFoundry"/>
+        <ValidatorArray value="UnitChargeGT0"/>
+        <EditorCategories value=""/>
+        <BehaviorLink value="KeironUnitCharge"/>
+        <Count value="1"/>
+    </CEffectRemoveBehavior>
+    <CEffectApplyBehavior id="FoundryUmbraAB" parent="CEffectApplyBehaviorKeironCaster">
+        <EditorCategories value=""/>
+        <Behavior value="FoundryUmbraBase"/>
+    </CEffectApplyBehavior>
+    <CEffectModifyUnit id="FoundryUmbraAddCharge">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="KeironCitadelMaterialize,Train6" ChargeCountUse="-1"/>
+    </CEffectModifyUnit>
+    <CEffectCreatePersistent id="ElysiumMeridianDeathCP" parent="CEffectCreatePersistentKeironUnit">
+        <EditorCategories value=""/>
+        <WhichLocation Value="SourceUnitOrPoint"/>
+        <PeriodCount value="2"/>
+        <PeriodicEffectArray value="ElysiumMeridianDeathSet"/>
+    </CEffectCreatePersistent>
+    <CEffectModifyUnit id="ElysiumMeridianDeathRemoveCharge">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="KeironCitadelMaterialize,Train5" ChargeCountUse="1"/>
+    </CEffectModifyUnit>
+    <CEffectSet id="ElysiumMeridianDeathSet">
+        <ValidatorArray value="UnitChargeGT0"/>
+        <EditorCategories value=""/>
+        <EffectArray value="ElysiumMeridianDeathRemoveCharge"/>
+        <EffectArray value="ElysiumMeridianRB"/>
+    </CEffectSet>
+    <CEffectCreatePersistent id="ElysiumMeridianDelay">
+        <EditorCategories value=""/>
+        <InitialDelay value="0.0625"/>
+        <InitialEffect value="ElysiumMeridianSA"/>
+    </CEffectCreatePersistent>
+    <CEffectRemoveBehavior id="ElysiumMeridianRB">
+        <ValidatorArray index="0" value="IsElysium"/>
+        <ValidatorArray value="UnitChargeGT0"/>
+        <EditorCategories value=""/>
+        <BehaviorLink value="KeironUnitCharge"/>
+        <Count value="1"/>
+    </CEffectRemoveBehavior>
+    <CEffectEnumArea id="ElysiumMeridianSA" parent="CEffectSearchAreaKeiron">
+        <ValidatorArray value="IsMaterializingOrSourceIsDead"/>
+        <EditorCategories value=""/>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Dead,Hidden"/>
+        <TargetSorts>
+            <SortArray value="HighestUnitCharge"/>
+        </TargetSorts>
+        <AreaArray MaxCount="1" Radius="500" Effect="ElysiumMeridianRB"/>
+    </CEffectEnumArea>
+    <CEffectApplyBehavior id="ElysiumMeridianAB" parent="CEffectApplyBehaviorKeironCaster">
+        <EditorCategories value=""/>
+        <Behavior value="ElysiumMeridianBase"/>
+    </CEffectApplyBehavior>
+    <CEffectModifyUnit id="ElysiumMeridianAddCharge">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="KeironCitadelMaterialize,Train5" ChargeCountUse="-1"/>
+    </CEffectModifyUnit>
+    <CEffectSet id="FoundryUmbraSet">
+        <EditorCategories value=""/>
+        <EffectArray value="FoundryUmbraAB"/>
+        <EffectArray value="KeironUnitChargeAB"/>
+        <EffectArray value="FoundryUmbraAddCharge"/>
+    </CEffectSet>
+    <CEffectCreatePersistent id="SanctumPulSubDeathCP" parent="CEffectCreatePersistentKeironUnit">
+        <EditorCategories value=""/>
+        <WhichLocation Value="SourceUnitOrPoint"/>
+        <PeriodCount value="2"/>
+        <PeriodicEffectArray value="SanctumPulSubDeathSet"/>
+    </CEffectCreatePersistent>
+    <CEffectSet id="SanctumPulSubDeathSet">
+        <ValidatorArray value="UnitChargeGT0"/>
+        <EditorCategories value=""/>
+        <EffectArray value="SanctumPulSubDeathRemoveCharge"/>
+        <EffectArray value="SanctumPulSubRB"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="SanctumPulSubDeathRemoveCharge">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="KeironCitadelMaterialize,Train3" ChargeCountUse="1"/>
+    </CEffectModifyUnit>
+    <CEffectCreatePersistent id="SanctumPulSubDelay">
+        <EditorCategories value=""/>
+        <InitialDelay value="0.0625"/>
+        <InitialEffect value="SanctumPulSubSA"/>
+    </CEffectCreatePersistent>
+    <CEffectRemoveBehavior id="SanctumPulSubRB">
+        <ValidatorArray index="0" value="IsSanctum"/>
+        <ValidatorArray value="UnitChargeGT0"/>
+        <EditorCategories value=""/>
+        <BehaviorLink value="KeironUnitCharge"/>
+        <Count value="1"/>
+    </CEffectRemoveBehavior>
+    <CEffectEnumArea id="SanctumPulSubSA" parent="CEffectSearchAreaKeiron">
+        <ValidatorArray value="IsMaterializingOrSourceIsDead"/>
+        <EditorCategories value=""/>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Dead,Hidden"/>
+        <TargetSorts>
+            <SortArray value="HighestUnitCharge"/>
+        </TargetSorts>
+        <AreaArray MaxCount="1" Radius="500" Effect="SanctumPulSubRB"/>
+    </CEffectEnumArea>
+    <CEffectApplyBehavior id="SanctumPulSubAB" parent="CEffectApplyBehaviorKeironCaster">
+        <EditorCategories value=""/>
+        <Behavior value="SanctumPulSubBase"/>
+    </CEffectApplyBehavior>
+    <CEffectModifyUnit id="SanctumPulSubAddCharge">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="KeironCitadelMaterialize,Train3" ChargeCountUse="-1"/>
+    </CEffectModifyUnit>
+    <CEffectSet id="SanctumPulSubSet">
+        <EditorCategories value=""/>
+        <EffectArray value="SanctumPulSubAB"/>
+        <EffectArray value="KeironUnitChargeAB"/>
+        <EffectArray value="SanctumPulSubAddCharge"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="KeironUnitChargeAB" parent="CEffectApplyBehaviorKeironCaster">
+        <EditorCategories value=""/>
+        <Behavior value="KeironUnitCharge"/>
+    </CEffectApplyBehavior>
+    <CEffectSet id="EdificeParVolDeathSet">
+        <ValidatorArray value="UnitChargeGT0"/>
+        <EditorCategories value=""/>
+        <EffectArray value="EdificeParVolDeathRemoveCharge"/>
+        <EffectArray value="EdificeParVolRB"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="EdificeParVolDeathRemoveCharge">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="KeironCitadelMaterialize,Train1" ChargeCountUse="1"/>
+    </CEffectModifyUnit>
+    <CEffectCreatePersistent id="EdificeParVolDelay">
+        <EditorCategories value=""/>
+        <InitialDelay value="0.0625"/>
+        <InitialEffect value="EdificeParVolSA"/>
+    </CEffectCreatePersistent>
+    <CEffectRemoveBehavior id="EdificeParVolRB">
+        <ValidatorArray index="0" value="IsEdifice"/>
+        <ValidatorArray value="UnitChargeGT0"/>
+        <EditorCategories value=""/>
+        <BehaviorLink value="KeironUnitCharge"/>
+        <Count value="1"/>
+    </CEffectRemoveBehavior>
+    <CEffectEnumArea id="EdificeParVolSA" parent="CEffectSearchAreaKeiron">
+        <ValidatorArray value="IsMaterializingOrSourceIsDead"/>
+        <EditorCategories value=""/>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Dead,Hidden"/>
+        <TargetSorts>
+            <SortArray value="HighestUnitCharge"/>
+        </TargetSorts>
+        <AreaArray MaxCount="1" Radius="500" Effect="EdificeParVolRB"/>
+    </CEffectEnumArea>
+    <CEffectSet id="EdificeParVolSet">
+        <EditorCategories value=""/>
+        <EffectArray value="EdificeParVolAB"/>
+        <EffectArray value="KeironUnitChargeAB"/>
+        <EffectArray value="EdificeParVolAddCharge"/>
+    </CEffectSet>
+    <CEffectEnumArea id="ElectronBoltBounceSA" parent="CEffectSearchAreaKeiron">
+        <Chance value="0"/>
+        <ExcludeArray Value="Outer"/>
+        <ExcludeArray Value="Target"/>
+        <SearchFilters value="-;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <AreaArray Radius="4" Effect="ElectronBoltBLM"/>
+        <MaxCount value="1"/>
+    </CEffectEnumArea>
+    <CEffectDamage id="ElectronBoltBDMG" parent="CEffectDamageKeironSpell">
+        <Amount value="2"/>
+        <Death value="Electrocute"/>
+    </CEffectDamage>
+    <CEffectSet id="ElectronBoltLMImpact">
+        <EditorCategories value="Race:Protoss"/>
+        <EffectArray value="ElectronBoltD"/>
+        <EffectArray value="ElectronBoltBounceSA"/>
+    </CEffectSet>
+    <CEffectLaunchMissile id="ElectronBoltLM" parent="CEffectLaunchMissileKeiron">
+        <AmmoUnit value="ElectronBoltWeapon"/>
+    </CEffectLaunchMissile>
+    <CEffectLaunchMissile id="ElectronBoltBLM" parent="CEffectLaunchMissileKeiron">
+        <ImpactEffect value="ElectronBoltBDMG"/>
+        <AmmoUnit value="ElectronBoltWeapon"/>
+        <Movers Link="ElectronBoltWeaponBounce"/>
+    </CEffectLaunchMissile>
+    <CEffectDamage id="ElectronBoltD" parent="CEffectDamageKeironWeapon"/>
+    <CEffectDamage id="ElectronBoltDMG" parent="CEffectDamageKeironWeapon">
+        <Amount value="8"/>
+        <Death value="Electrocute"/>
+    </CEffectDamage>
+    <CEffectSet id="ElectronBolt">
+        <EditorCategories value="Race:Protoss"/>
+        <EffectArray value="ElectronBoltLM"/>
+        <EffectArray value="ElectronBoltDMG"/>
+    </CEffectSet>
+    <CEffectRemoveBehavior id="ElytronAmmoUse">
+        <EditorCategories value="Race:Protoss"/>
+        <WhichUnit Value="Caster"/>
+        <BehaviorLink value="ElytraAmmoDummy"/>
+        <Count value="1"/>
+    </CEffectRemoveBehavior>
+    <CEffectApplyBehavior id="ElytronAmmoRecharge">
+        <EditorCategories value="Race:Protoss"/>
+        <Behavior value="ElytraAmmoDummy"/>
+        <Count value="3"/>
+    </CEffectApplyBehavior>
+    <CEffectModifyUnit id="ElytronRechargeHeal">
+        <EditorCategories value="Race:Protoss"/>
+        <VitalArray index="Life">
+            <ChangeFraction value="1"/>
+        </VitalArray>
+        <VitalArray index="Shields">
+            <ChangeFraction value="1"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectReturnMagazine id="ElytronReturn">
+        <ValidatorArray value="ElytraHasWeaponChargesRecall"/>
+        <EditorCategories value="Race:Protoss"/>
+        <WhichUnit Value="Target"/>
+        <MagazineEffect value="ElytronReleaseAM"/>
+    </CEffectReturnMagazine>
+    <CEffectUseMagazine id="ElytronReleaseAM">
+        <EditorCategories value="Race:Protoss"/>
+    </CEffectUseMagazine>
+    <CEffectCreateUnit id="CreateReverbCU">
+        <EditorCategories value="Race:Protoss"/>
+        <CreateFlags index="OffsetByRadius" value="0"/>
+        <CreateFlags index="PlacementIgnoreBlockers" value="1"/>
+        <CreateFlags index="PlacementIgnoreCliffTest" value="1"/>
+        <CreateFlags index="SetFacing" value="1"/>
+        <SpawnEffect value="CreateReverbTargetSet"/>
+        <SpawnUnit value="EchoReverb"/>
+    </CEffectCreateUnit>
+    <CEffectSet id="CreateReverb">
+        <EditorCategories value="Race:Protoss"/>
+        <EffectArray value="ReverbTeleportController"/>
+        <EffectArray value="ReverbRB"/>
+        <EffectArray value="CreateReverbCU"/>
+    </CEffectSet>
+    <CEffectSet id="CreateReverbTargetSet">
+        <EditorCategories value="Race:Protoss"/>
+        <EffectArray value="ReverbCasterController"/>
+        <EffectArray value="EchoReverbFate"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="DiscordZoneDebuff" parent="CEffectApplyBehaviorKeironTarget">
+        <ValidatorArray index="0" value="NotFrenzied"/>
+    </CEffectApplyBehavior>
+    <CEffectEnumArea id="DiscordZoneSA" parent="CEffectSearchAreaKeiron">
+        <EditorCategories value="Race:Neutral"/>
+        <SearchFilters value="-;Player,Ally,Stasis,Dead,Hidden"/>
+        <AreaArray Radius="6" Effect="DiscordZoneDebuff"/>
+    </CEffectEnumArea>
+    <CEffectRemoveBehavior id="ElytronAmmoClear">
+        <EditorCategories value="Race:Protoss"/>
+        <BehaviorLink value="ElytraAmmoDummy"/>
+        <Count value="3"/>
+    </CEffectRemoveBehavior>
+    <CEffectSet id="ElytronReturnSet">
+        <EditorCategories value="Race:Protoss"/>
+        <EffectArray value="ElytraSelectionToggle"/>
+        <EffectArray value="ElytronAmmoClear"/>
+        <EffectArray value="ElytronRechargeHeal"/>
+        <MinCount value="3"/>
+        <MaxCount value="3"/>
+    </CEffectSet>
+    <CEffectLaunchMissile id="EmanatorLM" parent="CEffectLaunchMissileKeiron">
+        <LaunchLocation Value="CasterUnit"/>
+        <FinishEffect value="RemovePrecursor"/>
+        <AmmoUnit value="EmanatorMissile"/>
+    </CEffectLaunchMissile>
+    <CEffectApplyBehavior id="EmanatorFateDelay" parent="CEffectApplyBehaviorKeironTarget"/>
+    <CEffectApplyBehavior id="EmanatorFate" parent="CEffectApplyBehaviorKeironTarget"/>
+    <CEffectCreateUnit id="Emanator">
+        <EditorCategories value="Race:Protoss"/>
+        <WhichLocation Value="TargetPoint"/>
+        <CreateFlags index="PlacementIgnoreBlockers" value="1"/>
+        <SpawnEffect value="EmanatorS"/>
+        <SpawnUnit value="Emanator"/>
+    </CEffectCreateUnit>
+    <CEffectSet id="EmanatorS">
+        <EditorCategories value="Race:Protoss"/>
+        <EffectArray value="EmanatorFateDelay"/>
+        <EffectArray value="EmanatorLM"/>
+        <EffectArray value="MakePrecursor"/>
+    </CEffectSet>
+    <CEffectCreatePersistent id="EnthrallerQuills">
+        <EditorCategories value="Race:Protoss"/>
+        <WhichLocation Value="TargetUnit"/>
+        <PeriodCount value="2"/>
+        <PeriodicEffectArray value="EnthrallerQuillsLM"/>
+        <PeriodicEffectArray value="EnthrallerQuillsLMR"/>
+    </CEffectCreatePersistent>
+    <CEffectDamage id="ForceBlast" parent="CEffectDamageKeironWeapon">
+        <Amount value="11"/>
+    </CEffectDamage>
+    <CEffectCreatePersistent id="ElytronRelease">
+        <EditorCategories value="Race:Protoss"/>
+        <WhichLocation Value="TargetUnit"/>
+        <TimeScaleSource Value="Caster"/>
+        <PeriodCount value="3"/>
+        <PeriodicValidator value="CasterNotDead"/>
+        <PeriodicEffectArray value="ElytronReleaseAM"/>
+        <PeriodicPeriodArray value="0.25"/>
+        <ValidatorArray value="UseElytraHangarAttackRequirement"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="GamutOrb" parent="CEffectCreatePersistentKeironUnit">
+        <WhichLocation Value="TargetUnit"/>
+        <InitialEffect value="GamutOrbLM"/>
+    </CEffectCreatePersistent>
+    <CEffectLaunchMissile id="GamutOrbLM" parent="CEffectLaunchMissileKeiron">
+        <ValidatorArray index="0" value="MustHaveInducerGamutOrb"/>
+        <FinishEffect value="GamutOrbRM"/>
+        <AmmoUnit value="InducerAttackMissile"/>
+        <LaunchEffect value="InducerGamutOrb"/>
+        <PeriodicEffect value="GamutOrbRedirect"/>
+    </CEffectLaunchMissile>
+    <CEffectApplyBehavior id="GamutOrbRMImpact" parent="CEffectApplyBehaviorKeironCaster">
+        <Behavior value="InducerGamutOrb"/>
+    </CEffectApplyBehavior>
+    <CEffectDamage id="GamutOrbLMImpact" parent="CEffectDamageKeironWeapon">
+        <Amount value="30"/>
+        <Death value="Electrocute"/>
+        <AttributeBonus index="Massive" value="10"/>
+        <ValidatorArray value="NotInvulnerable"/>
+        <ValidatorArray value="NotStasis"/>
+        <ValidatorArray value="NotHidden"/>
+        <ImpactLocation Effect="GamutOrb"/>
+    </CEffectDamage>
+    <CEffectLaunchMissile id="GamutOrbRM" parent="CEffectLaunchMissileKeiron">
+        <ImpactLocation Value="CasterUnit"/>
+        <AmmoUnit value="ReturnGamutOrb"/>
+        <ImpactEffect value=""/>
+        <FinishEffect value="GamutOrbRMImpact"/>
+    </CEffectLaunchMissile>
+    <CEffectRedirectMissile id="GamutOrbRedirect">
+        <ValidatorArray value="InducerGamutOrbTarget"/>
+        <EditorCategories value="Race:Keiron"/>
+        <WhichUnit Value="Source"/>
+        <ImpactLocation Value="CasterUnit"/>
+        <ImpactFilters value="-;Dead"/>
+    </CEffectRedirectMissile>
+    <CEffectRemoveBehavior id="InducerGamutOrb">
+        <EditorCategories value="Race:Keiron"/>
+        <WhichUnit Value="Caster"/>
+    </CEffectRemoveBehavior>
+    <CEffectCreatePersistent id="HalationPlasma" parent="CEffectCreatePersistentKeironUnit">
+        <Flags index="Channeled" value="1"/>
+        <InitialDelay value="0.125"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="HalationPlasmaLM"/>
+    </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="InvertFFieldAB">
+        <EditorCategories value=""/>
+        <Behavior value="InvertFField"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="InvertFFieldAB2">
+        <ValidatorArray index="0" value="InvertFFieldABTargetFilters"/>
+        <EditorCategories value=""/>
+        <Marker Link="Effect/InvertFFieldAB"/>
+        <Behavior value="InvertFField2"/>
+    </CEffectApplyBehavior>
+    <CEffectCreatePersistent id="InvertFFieldCP">
+        <EditorCategories value=""/>
+        <Flags index="Channeled" value="1"/>
+        <InitialEffect value="InvertFFieldChannelApply"/>
+        <FinalEffect value="InvertFFieldChannelRemove"/>
+        <PeriodCount value="100"/>
+        <PeriodicEffectArray value="InvertFFieldSA"/>
+        <PeriodicPeriodArray value="0.125"/>
+    </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="InvertFFieldChannelApply">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="InvertFFieldChannel"/>
+    </CEffectApplyBehavior>
+    <CEffectRemoveBehavior id="InvertFFieldChannelRemove">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <BehaviorLink value="InvertFFieldChannel"/>
+    </CEffectRemoveBehavior>
+    <CEffectApplyForce id="InvertFFieldForce">
+        <ValidatorArray value="InvertFFieldDistanceMinimum"/>
+        <EditorCategories value=""/>
+        <WhichLocation Effect="InvertFFieldCP" Value="TargetPoint"/>
+        <Amount value="-10"/>
+    </CEffectApplyForce>
+    <CEffectEnumArea id="InvertFFieldSA">
+        <EditorCategories value=""/>
+        <SearchFilters value="-;Player,Ally,Structure,Missile,Stasis,Dead,Hidden"/>
+        <AreaArray Radius="1.5" Effect="InvertFFieldDelay"/>
+    </CEffectEnumArea>
+    <CEffectCreatePersistent id="InvertFFieldDelay">
+        <EditorCategories value=""/>
+        <WhichLocation Value="TargetUnit"/>
+        <InitialEffect value="InvertFFieldForce"/>
+        <PeriodCount value="2"/>
+        <PeriodicEffectArray value="InvertFFieldAB"/>
+        <PeriodicEffectArray value="InvertFFieldAB2"/>
+        <PeriodicPeriodArray value="0.125"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
+    <CEffectDamage id="NullifierWeaponDMG" parent="CEffectDamageKeironWeapon">
+        <EditorCategories value=""/>
+        <ArmorReduction value="0.25"/>
+        <Amount value="4.25"/>
+        <Death value="Fire"/>
+    </CEffectDamage>
+    <CEffectDamage id="NullifierWeaponDisplay" parent="CEffectDamageKeironWeapon">
+        <EditorCategories value=""/>
+        <Amount value="18"/>
+    </CEffectDamage>
+    <CEffectApplyBehavior id="ParadoxShieldAB">
+        <EditorCategories value=""/>
+        <Behavior value="ParadoxShieldBoost"/>
+    </CEffectApplyBehavior>
+    <CEffectModifyUnit id="ParadoxShieldMU">
+        <EditorCategories value=""/>
+        <VitalArray index="Shields">
+            <Change value="100"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectApplyBehavior id="ParagonDropNoCreateAB">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="NoCreate"/>
+    </CEffectApplyBehavior>
+    <CEffectRemoveBehavior id="ParagonDropRemoveHasSpawnRB">
+        <ValidatorArray index="0" value="ParagonDropNoCreateABTargetFilters"/>
+        <EditorCategories value=""/>
+        <Marker Link="Effect/ParagonDropNoCreateAB"/>
+        <WhichUnit Value="Caster"/>
+        <BehaviorLink value="ParagonHasSpawn"/>
+    </CEffectRemoveBehavior>
+    <CEffectSet id="ParagonDropSet">
+        <EditorCategories value=""/>
+        <EffectArray value="ParagonDropNoCreateAB"/>
+        <EffectArray value="ParagonDropRemoveHasSpawnRB"/>
+    </CEffectSet>
+    <CEffectCreatePersistent id="ParagonSpawnFollowCP">
+        <EditorCategories value=""/>
+        <WhichLocation Value="TargetUnit"/>
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <PeriodicValidator value="ParagonSourceHasParagonFollow"/>
+        <PeriodicPeriodArray value="1"/>
+    </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="ParagonSpawnCountAB">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="ParagonSpawnCount"/>
+    </CEffectApplyBehavior>
+    <CEffectRemoveBehavior id="ParagonSpawnCountRB">
+        <ValidatorArray index="0" value="ParagonSpawnCountABTargetFilters"/>
+        <EditorCategories value=""/>
+        <Marker Link="Effect/ParagonSpawnCountAB"/>
+        <WhichUnit Value="Caster"/>
+        <BehaviorLink value="ParagonSpawnCount"/>
+        <Count value="1"/>
+    </CEffectRemoveBehavior>
+    <CEffectApplyBehavior id="ParagonSpawnDisconnectedNoCreateAB">
+        <ValidatorArray index="0" value="ParagonSpawnDisconnectedABTargetFilters"/>
+        <EditorCategories value=""/>
+        <Marker Link="Effect/ParagonSpawnDisconnectedAB"/>
+        <WhichUnit Effect="ParagonSpawnCU"/>
+        <Behavior value="NoCreate"/>
+    </CEffectApplyBehavior>
+    <CEffectSet id="ParagonSpawnDisconnectedSet">
+        <EditorCategories value=""/>
+        <EffectArray value="ParagonSpawnDisconnectedNoCreateAB"/>
+        <EffectArray value="ParagonSpawnDisconnectedAB"/>
+        <EffectArray value="ParagonSpawnDisconnectedRBHasSpawn"/>
+        <EffectArray value="ParagonSpawnCountRB"/>
+    </CEffectSet>
+    <CEffectCreatePersistent id="ParagonFindSpawnUnitIterate">
+        <ValidatorArray value="SourceNotDead"/>
+        <ValidatorArray value="ParagonNoCreate"/>
+        <EditorCategories value=""/>
+        <WhichLocation Effect="ParagonSpawnCUSet" Value="TargetUnit"/>
+        <PeriodCount value="2"/>
+        <PeriodicEffectArray value="ParagonFindSpawnUnitSwitch"/>
+        <PeriodicEffectArray value="ParagonHasSpawnSourceAB"/>
+        <PeriodicPeriodArray value="0.0625"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicValidator value="ParagonNoCreate"/>
+    </CEffectCreatePersistent>
+    <CEffectRemoveBehavior id="ParagonFindSpawnUnitRB">
+        <EditorCategories value=""/>
+        <WhichUnit Effect="ParagonFindSpawnUnitSwitch"/>
+        <BehaviorLink value="ParagonHasSpawn"/>
+    </CEffectRemoveBehavior>
+    <CEffectRemoveBehavior id="ParagonSpawnDisconnectedRBHasSpawn">
+        <ValidatorArray index="0" value="ParagonFindSpawnUnitRBTargetFilters"/>
+        <EditorCategories value=""/>
+        <Marker Link="Effect/ParagonFindSpawnUnitRB"/>
+        <WhichUnit Effect="ParagonSpawnCU"/>
+        <BehaviorLink value="ParagonHasSpawn"/>
+    </CEffectRemoveBehavior>
+    <CEffectSwitch id="ParagonFindSpawnUnitSwitch">
+        <EditorCategories value=""/>
+        <CaseArray Validator="ParagonDoesNotHaveHasSpawn" Effect="ParagonSpawnCU"/>
+        <CaseArray Effect="ParagonFindSpawnUnitRB"/>
+        <ValidatorArray value="ParagonSpawnCount"/>
+    </CEffectSwitch>
+    <CEffectApplyBehavior id="ParagonHasSpawnAB">
+        <EditorCategories value=""/>
+        <WhichUnit Effect="ParagonSpawnCU"/>
+        <Behavior value="ParagonHasSpawn"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="ParagonHasSpawnSourceAB">
+        <ValidatorArray index="0" value="ParagonHasSpawnABTargetFilters"/>
+        <EditorCategories value=""/>
+        <Marker Link="Effect/ParagonHasSpawnAB"/>
+        <WhichUnit Value="Source"/>
+        <Behavior value="ParagonHasSpawn"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="ParagonSpawnABFollow">
+        <EditorCategories value=""/>
+        <Behavior value="ParagonSpawnFollow"/>
+    </CEffectApplyBehavior>
+    <CEffectCreateUnit id="ParagonSpawnCU">
+        <EditorCategories value=""/>
+        <WhichLocation Effect="ParagonFindSpawnUnitSwitch"/>
+        <SpawnEffect value="ParagonSpawnCUSet"/>
+        <SpawnUnit value="ParagonSpawn"/>
+        <Origin Value="SourceUnit"/>
+    </CEffectCreateUnit>
+    <CEffectSet id="ParagonSpawnCUSet">
+        <ValidatorArray value="ParagonSpawnCUSetTargetFilters"/>
+        <EditorCategories value=""/>
+        <EffectArray value="ParagonSpawnABFollow"/>
+        <EffectArray value="ParagonHasSpawnAB"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="ParagonSpawnDisconnectedAB">
+        <EditorCategories value=""/>
+        <Behavior value="Disconnected"/>
+    </CEffectApplyBehavior>
+    <CEffectIssueOrder id="ParagonSpawnFollowOrder">
+        <EditorCategories value=""/>
+        <Abil value="ParagonSpawnMove"/>
+        <Target Effect="ParagonSpawnCU" Value="TargetUnit"/>
+    </CEffectIssueOrder>
+    <CEffectCreatePersistent id="ParagonSpawnFollowSet">
+        <EditorCategories value=""/>
+        <WhichLocation Effect="ParagonSpawnCU" Value="TargetUnit"/>
+        <PeriodCount value="2"/>
+        <PeriodicEffectArray value="ParagonSpawnCountAB"/>
+        <PeriodicEffectArray value="ParagonSpawnFollowCP"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="ProjectionCP">
+        <EditorCategories value="Race:Protoss"/>
+        <OffsetVectorStartLocation Value="TargetPoint"/>
+        <InitialEffect value="ProjectionIO"/>
+        <ExpireEffect value="ProjectionIM"/>
+    </CEffectCreatePersistent>
+    <CEffectIssueOrder id="ProjectionIM">
+        <EditorCategories value="Race:Protoss"/>
+        <WhichUnit Value="Caster"/>
+        <Abil value="ProjectionStart"/>
+        <Player Value="Caster"/>
+    </CEffectIssueOrder>
+    <CEffectIssueOrder id="ProjectionIME">
+        <EditorCategories value="Race:Protoss"/>
+        <WhichUnit Value="Caster"/>
+        <Abil value="ProjectionEnd"/>
+        <Player Value="Caster"/>
+    </CEffectIssueOrder>
+    <CEffectIssueOrder id="ProjectionIO">
+        <EditorCategories value="Race:Protoss"/>
+        <WhichUnit Value="Source"/>
+        <Abil value="attack"/>
+        <Player Value="Source"/>
+        <Target Value="TargetPoint"/>
+    </CEffectIssueOrder>
+    <CEffectDamage id="Psythe" parent="CEffectDamageKeironWeapon">
+        <Kind value="Melee"/>
+        <Amount value="7"/>
+        <Death value="Eviscerate"/>
+    </CEffectDamage>
+    <CEffectLaunchMissile id="EnthrallerQuillsLM" parent="CEffectLaunchMissileKeiron">
+        <Movers Link="MissileDefault" IfRangeLTE="1"/>
+        <Movers Link="IonCannonsWeaponLeft" IfRangeLTE="8"/>
+    </CEffectLaunchMissile>
+    <CEffectDamage id="EnthrallerQuillsLMImpact" parent="CEffectDamageKeironWeapon">
+        <Amount value="8"/>
+        <Death value="Electrocute"/>
+    </CEffectDamage>
+    <CEffectLaunchMissile id="EnthrallerQuillsLMR" parent="EnthrallerQuillsLM">
+        <Name value="Effect/Name/EnthrallerQuillsLMR"/>
+        <Movers index="1" Link="IonCannonsWeaponRight" IfRangeLTE="8"/>
+    </CEffectLaunchMissile>
+    <CEffectDamage id="Lunge" parent="CEffectDamageKeironWeapon">
+        <Kind value="Melee"/>
+        <Amount value="15"/>
+        <Death value="Eviscerate"/>
+    </CEffectDamage>
+    <CEffectSet id="Pulsar4DMCUSet">
+        <EditorCategories value=""/>
+        <EffectArray value="Pulsar4DMDelay"/>
+    </CEffectSet>
+    <CEffectDamage id="Pulsar4DMKill">
+        <EditorCategories value=""/>
+        <ImpactLocation Effect="Pulsar4DMCUSet"/>
+        <Flags index="Kill" value="1"/>
+    </CEffectDamage>
+    <CEffectCreatePersistent id="Pulsar4DMLeftDummy">
+        <EditorCategories value=""/>
+        <WhichLocation Value="CasterUnit"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="Pulsar4DMFrontDummy">
+        <EditorCategories value=""/>
+        <WhichLocation Value="CasterUnit"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="Pulsar4DMBackDummy">
+        <EditorCategories value=""/>
+        <WhichLocation Value="CasterUnit"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="Pulsar4DMRightDummy">
+        <EditorCategories value=""/>
+        <WhichLocation Value="CasterUnit"/>
+    </CEffectCreatePersistent>
+    <CEffectEnumArea id="Pulsar4DMRightSA">
+        <EditorCategories value=""/>
+        <DebugTrace value="1"/>
+        <LaunchLocation Value="CasterUnit"/>
+        <ImpactLocation Value="CasterUnit"/>
+        <IncludeArray Effect="Pulsar4DMCUSet" Value="Target"/>
+        <SearchFilters value="-;Player,Ally,Neutral,Enemy"/>
+        <AreaArray>
+            <Arc value="90"/>
+            <MaxCount value="1"/>
+            <Radius value="1"/>
+            <FacingAdjustment value="270"/>
+            <Effect value="Pulsar4DMABLeft"/>
+        </AreaArray>
+    </CEffectEnumArea>
+    <CEffectCreateUnit id="Pulsar4DMCU">
+        <EditorCategories value=""/>
+        <WhichLocation Value="CasterPoint"/>
+        <CreateFlags index="OffsetByRadius" value="0"/>
+        <CreateFlags index="Placement" value="0"/>
+        <CreateFlags index="ProvideFood" value="0"/>
+        <CreateFlags index="TechComplete" value="0"/>
+        <CreateFlags index="UseFood" value="0"/>
+        <CreateFlags index="NormalizeSpawnOffset" value="0"/>
+        <SpawnEffect value="Pulsar4DMCUSet"/>
+        <SpawnUnit value="Pulsar4DMDummy"/>
+    </CEffectCreateUnit>
+    <CEffectCreatePersistent id="Pulsar4DMDelay" parent="CEffectCreatePersistentKeiron">
+        <InitialDelay value="0.1875"/>
+        <InitialEffect value=""/>
+        <FinalEffect value="Pulsar4DMKill"/>
+        <PeriodCount value="4"/>
+        <PeriodicEffectArray value="Pulsar4DMFrontSA"/>
+        <PeriodicEffectArray value="Pulsar4DMBackSA"/>
+        <PeriodicEffectArray value="Pulsar4DMLeftSA"/>
+        <PeriodicEffectArray value="Pulsar4DMRightSA"/>
+    </CEffectCreatePersistent>
+    <CEffectEnumArea id="Pulsar4DMFrontSA">
+        <EditorCategories value=""/>
+        <DebugTrace value="1"/>
+        <LaunchLocation Value="CasterUnit"/>
+        <ImpactLocation Value="CasterUnit"/>
+        <IncludeArray Effect="Pulsar4DMCUSet" Value="Target"/>
+        <SearchFilters value="-;Player,Ally,Neutral,Enemy"/>
+        <AreaArray>
+            <Arc value="90"/>
+            <MaxCount value="1"/>
+            <Radius value="1"/>
+            <Effect value="Pulsar4DMABBack"/>
+        </AreaArray>
+    </CEffectEnumArea>
+    <CEffectEnumArea id="Pulsar4DMLeftSA">
+        <EditorCategories value=""/>
+        <DebugTrace value="1"/>
+        <LaunchLocation Value="CasterUnit"/>
+        <ImpactLocation Value="CasterUnit"/>
+        <IncludeArray Effect="Pulsar4DMCUSet" Value="Target"/>
+        <SearchFilters value="-;Player,Ally,Neutral,Enemy"/>
+        <AreaArray>
+            <Arc value="90"/>
+            <MaxCount value="1"/>
+            <Radius value="1"/>
+            <FacingAdjustment value="90"/>
+            <Effect value="Pulsar4DMABRight"/>
+        </AreaArray>
+    </CEffectEnumArea>
+    <CEffectEnumArea id="Pulsar4DMBackSA">
+        <EditorCategories value=""/>
+        <DebugTrace value="1"/>
+        <LaunchLocation Value="CasterUnit"/>
+        <ImpactLocation Value="CasterUnit"/>
+        <IncludeArray Effect="Pulsar4DMCUSet" Value="Target"/>
+        <SearchFilters value="-;Player,Ally,Neutral,Enemy"/>
+        <AreaArray>
+            <Arc value="90"/>
+            <MaxCount value="1"/>
+            <Radius value="1"/>
+            <FacingAdjustment value="180"/>
+            <Effect value="Pulsar4DMABForward"/>
+        </AreaArray>
+    </CEffectEnumArea>
+    <CEffectSet id="PulsarSeperationBeamSet">
+        <EditorCategories value="Race:Terran"/>
+        <EffectArray value="WeaponFacingDummyAB"/>
+        <EffectArray value="WeaponFacingDummyMU"/>
+        <EffectArray value="SeperationBeamSA"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="ReverbCasterController" parent="CEffectApplyBehaviorKeironCaster">
+        <Behavior value="EchoReverbCasterController"/>
+    </CEffectApplyBehavior>
+    <CEffectModifyUnit id="ReverbFateMU">
+        <EditorCategories value="Race:Protoss"/>
+        <ImpactUnit Value="Source"/>
+        <Cost Abil="SonicImage,255" CooldownOperation="Set" CooldownTimeUse="7"/>
+    </CEffectModifyUnit>
+    <CEffectSet id="ReverbFateBounds">
+        <EditorCategories value="Race:Protoss"/>
+        <EffectArray value="ReverbTeleportController"/>
+        <EffectArray value="ReverbRRB"/>
+        <TargetLocationType value="Point"/>
+    </CEffectSet>
+    <CEffectRemoveBehavior id="ReverbRRB">
+        <EditorCategories value="Race:Protoss"/>
+        <WhichUnit Effect="EchoReverbFate" Value="Source"/>
+        <BehaviorLink value="EchoReverbCasterController"/>
+    </CEffectRemoveBehavior>
+    <CEffectApplyBehavior id="ReverbTeleportController" parent="CEffectApplyBehaviorKeironCaster">
+        <Behavior value="EchoReverbTeleportController"/>
+    </CEffectApplyBehavior>
+    <CEffectSet id="ReverbFateSet">
+        <EditorCategories value="Race:Protoss"/>
+        <EffectArray value="ReverbTeleport"/>
+        <EffectArray value="ReverbFateMU"/>
+        <EffectArray value="ReverbRRB"/>
+        <EffectArray value="EchoReverbSuicide"/>
+        <TargetLocationType value="Point"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="EchoReverbFate" parent="CEffectApplyBehaviorKeironTarget"/>
+    <CEffectRemoveBehavior id="ReverbRB">
+        <EditorCategories value="Race:Protoss"/>
+        <WhichUnit Value="Caster"/>
+        <BehaviorLink value="EchoReverbCasterController"/>
+    </CEffectRemoveBehavior>
+    <CEffectTeleport id="ReverbTeleport">
+        <ValidatorArray value="EchoTeleportController"/>
+        <ValidatorArray value="EchoReverbFate"/>
+        <EditorCategories value="Race:Protoss"/>
+        <WhichUnit Value="Caster"/>
+        <TargetLocation Effect="ReverbCasterController" Value="TargetUnit"/>
+    </CEffectTeleport>
+    <CEffectDamage id="ReverberatorFlare" parent="CEffectDamageKeironWeaponVisible">
+        <Kind value="Melee"/>
+        <Amount value="10"/>
+        <Death value="Electrocute"/>
+    </CEffectDamage>
+    <CEffectDamage id="EchoReverbSuicide">
+        <EditorCategories value="Race:Protoss"/>
+        <ImpactLocation Effect="ReverbCasterController" Value="TargetUnit"/>
+        <Flags index="Kill" value="1"/>
+    </CEffectDamage>
+    <CEffectLaunchMissile id="HalationPlasmaLM" parent="CEffectLaunchMissileKeiron">
+        <AmmoUnit value="AuroraAttackMissile"/>
+    </CEffectLaunchMissile>
+    <CEffectDamage id="HalationPlasmaLMImpact" parent="CEffectDamageKeironWeaponVisible">
+        <Amount value="25"/>
+        <Death value="Electrocute"/>
+    </CEffectDamage>
+    <CEffectSet id="ElysiumMeridianSet">
+        <EditorCategories value=""/>
+        <EffectArray value="ElysiumMeridianAB"/>
+        <EffectArray value="KeironUnitChargeAB"/>
+        <EffectArray value="ElysiumMeridianAddCharge"/>
+    </CEffectSet>
+    <CEffectCreatePersistent id="SeperationBeam" parent="CEffectCreatePersistentKeironUnit">
+        <WhichLocation Value="TargetUnit"/>
+        <Flags index="Channeled" value="1"/>
+        <Flags index="Channeling" value="1"/>
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <InitialEffect value="PulsarSeperationBeamSet"/>
+        <PeriodicValidator value="RangeLE3AndTargetNotDead"/>
+        <PeriodicEffectArray value="WeaponFacingDummyMU"/>
+        <PeriodicEffectArray value="WeaponFacingDummyMU"/>
+        <PeriodicEffectArray value="WeaponFacingDummyMU"/>
+        <PeriodicEffectArray value="PulsarSeperationBeamSet"/>
+        <PeriodicPeriodArray value="0.125"/>
+    </CEffectCreatePersistent>
+    <CEffectDamage id="SeperationBeamD" parent="CEffectDamageKeironWeapon"/>
+    <CEffectDamage id="SeperationBeamDMG" parent="CEffectDamageKeironWeapon">
+        <Amount value="4"/>
+        <Death value="Electrocute"/>
+        <ExcludeArray index="0" removed="1"/>
+    </CEffectDamage>
+    <CEffectEnumArea id="ShieldAura" parent="CEffectSearchAreaKeiron">
+        <SearchFilters value="-;Self,Missile,Stasis,Dead,Hidden"/>
+        <AreaArray Radius="10" Effect="ShieldAuraS"/>
+    </CEffectEnumArea>
+    <CEffectApplyBehavior id="ShieldAuraAB" parent="CEffectApplyBehaviorKeironTarget">
+        <ValidatorArray index="0" value="NoAegisShieldAura"/>
+        <ValidatorArray value="FriendlyTarget"/>
+        <Behavior value="AegisShield"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyForce id="ShieldAuraAF">
+        <EditorCategories value="Race:Protoss"/>
+        <Amount value="1"/>
+    </CEffectApplyForce>
+    <CEffectCreatePersistent id="ShieldAuraCP" parent="CEffectCreatePersistentKeironUnit">
+        <ValidatorArray value="TargetIsEnemyOrNeutral"/>
+        <PeriodCount value="4"/>
+        <PeriodicEffectArray value="ShieldAuraAF"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
+    <CEffectSet id="ShieldAuraS">
+        <EditorCategories value="Race:Protoss"/>
+        <EffectArray value="ShieldAuraAB"/>
+        <EffectArray value="ShieldAuraCP"/>
+    </CEffectSet>
+    <CEffectCreatePersistent id="StratusWeaponCP" parent="CEffectCreatePersistentKeironUnit">
+        <EditorCategories value=""/>
+        <PeriodCount value="2"/>
+        <PeriodicEffectArray value="StratusWeaponLMRight"/>
+        <PeriodicEffectArray value="StratusWeaponLMLeft"/>
+    </CEffectCreatePersistent>
+    <CEffectDamage id="StratusWeaponDMG" parent="CEffectDamageKeironWeaponVisible">
+        <EditorCategories value=""/>
+        <Amount value="12"/>
+    </CEffectDamage>
+    <CEffectCreatePersistent id="StratusWeaponDummy">
+        <WhichLocation Value="TargetUnitOrPoint"/>
+    </CEffectCreatePersistent>
+    <CEffectLaunchMissile id="StratusWeaponLMLeft">
+        <EditorCategories value=""/>
+        <ImpactEffect value="StratusWeaponDMG"/>
+        <AmmoUnit value="WeaponStratus"/>
+    </CEffectLaunchMissile>
+    <CEffectLaunchMissile id="StratusWeaponLMRight">
+        <EditorCategories value=""/>
+        <ImpactEffect value="StratusWeaponDMG"/>
+        <AmmoUnit value="WeaponStratus"/>
+    </CEffectLaunchMissile>
+    <CEffectApplyBehavior id="TitanWeaponAB" parent="CEffectApplyBehaviorKeironTarget">
+        <EditorCategories value=""/>
+        <Behavior value="TitanWeapon"/>
+        <ValidatorArray index="0" value="NotFrenzied"/>
+    </CEffectApplyBehavior>
+    <CEffectCreatePersistent id="TitanWeaponCP">
+        <EditorCategories value=""/>
+        <WhichLocation Value="TargetUnit"/>
+        <Flags index="Channeled" value="1"/>
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <InitialEffect value="TitanWeaponSwitch"/>
+        <PeriodicEffectArray value="TitanWeaponSwitch"/>
+        <PeriodicPeriodArray value="0.5"/>
+        <ValidatorArray value="CasterAndTargetNotDead"/>
+        <TimeScaleSource Value="Caster"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="NullifierWeaponCP">
+        <ValidatorArray value="CasterAndTargetNotDead"/>
+        <EditorCategories value=""/>
+        <WhichLocation Value="TargetUnit"/>
+        <Flags index="Channeled" value="1"/>
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <InitialEffect value="NullifierWeaponDMG"/>
+        <PeriodicEffectArray value="NullifierWeaponDMG"/>
+        <PeriodicPeriodArray value="0.25"/>
+        <TimeScaleSource Value="Caster"/>
+    </CEffectCreatePersistent>
+    <CEffectDamage id="TitanWeaponDMG">
+        <EditorCategories value=""/>
+        <ArmorReduction value="1"/>
+        <Amount value="10"/>
+    </CEffectDamage>
+    <CEffectCreatePersistent id="TitanWeaponDummy" parent="CEffectCreatePersistentKeironUnit"/>
+    <CEffectCreatePersistent id="NullifierWeaponDummy" parent="CEffectCreatePersistentKeironUnit"/>
+    <CEffectEnumArea id="TitanWeaponSA" parent="CEffectSearchAreaKeiron">
+        <IncludeArray Value="Target"/>
+        <AreaArray Radius="1" Effect="TitanWeaponSet"/>
+    </CEffectEnumArea>
+    <CEffectSet id="TitanWeaponSet">
+        <EffectArray value="TitanWeaponAB"/>
+        <EffectArray value="TitanWeaponDMG"/>
+    </CEffectSet>
+    <CEffectSwitch id="TitanWeaponSwitch">
+        <CaseArray Validator="IsStructureOrMassive" Effect="TitanWeaponSet"/>
+        <CaseDefault value="TitanWeaponSA"/>
+    </CEffectSwitch>
+    <CEffectApplyBehavior id="Pulsar4DMABForward" parent="CEffectApplyBehaviorKeironTarget">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="WalkAnimForward"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="Pulsar4DMABRight" parent="CEffectApplyBehaviorKeironTarget">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="WalkAnimRight"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="Pulsar4DMABLeft" parent="CEffectApplyBehaviorKeironTarget">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="WalkAnimLeft"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="Pulsar4DMABBack" parent="CEffectApplyBehaviorKeironTarget">
+        <ValidatorArray index="0" removed="1"/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="WalkAnimBack"/>
+    </CEffectApplyBehavior>
+    <CEffectModifyUnit id="WeaponFacingDummyMU">
+        <EditorCategories value="Race:Protoss"/>
+        <ImpactUnit Value="Caster"/>
+        <ModifyFlags index="InterpolateFacing" value="1"/>
+        <FacingLocation Value="TargetUnit"/>
+        <FacingType value="LookAt"/>
+    </CEffectModifyUnit>
+    <CEffectEnumArea id="SeperationBeamSA" parent="CEffectSearchAreaKeiron">
+        <ImpactLocation Value="SourceUnit"/>
+        <IncludeArray Effect="SeperationBeam" Value="Target"/>
+        <AreaArray RectangleWidth="0.3" RectangleHeight="3.75" Effect="SeperationBeamDMG"/>
+        <AreaRelativeOffset value="0,-1.75"/>
+        <SearchFlags index="OffsetByUnitRadius" value="1"/>
+    </CEffectEnumArea>
+    <CEffectLaunchMissile id="TitanBlast" parent="CEffectLaunchMissileKeiron"/>
+    <CEffectLaunchMissile id="ShadowCannon" parent="CEffectLaunchMissileKeiron"/>
+    <CEffectDamage id="TitanBlastImpact" parent="CEffectDamageKeironWeapon">
+        <Amount value="15"/>
+        <Death value="Fire"/>
+        <AreaArray Radius="0.75" Fraction="1"/>
+        <AttributeBonus index="Light" value="7"/>
+    </CEffectDamage>
+    <CEffectDamage id="ShadowCannonImpact" parent="CEffectDamageKeironWeapon">
+        <AttributeBonus index="Armored" value="10"/>
+        <Amount value="20"/>
+        <Death value="Electrocute"/>
+    </CEffectDamage>
+    <CEffectSet id="TitanBlastS">
+        <ValidatorArray value="ElytraHasWeaponChargesSelf"/>
+        <EffectArray value="TitanBlast"/>
+        <EffectArray value="ElytronAmmoUse"/>
+        <MinCount value="2"/>
+        <MaxCount value="2"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="WeaponFacingDummyAB">
+        <EditorCategories value="Race:Protoss"/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="DisableTurning"/>
+    </CEffectApplyBehavior>
+    <CEffectCreatePersistent id="WeaponFacingDummy">
+        <EditorCategories value="Race:Protoss"/>
+        <WhichLocation Value="TargetUnit"/>
+        <InitialEffect value="WeaponFacingDummyAB"/>
+        <PeriodicEffectArray value="WeaponFacingDummyMU"/>
+        <PeriodCount value="1"/>
+    </CEffectCreatePersistent>
+    <CEffectModifyUnit id="EdificeParVolAddCharge">
+        <EditorCategories value=""/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="KeironCitadelMaterialize,Train1" ChargeCountUse="-1"/>
+    </CEffectModifyUnit>
 </Catalog>

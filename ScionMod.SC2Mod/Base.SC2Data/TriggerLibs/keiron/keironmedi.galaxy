@@ -1,0 +1,911 @@
+//==================================================================================================
+//  Keiron Medium Skirmish AI
+//==================================================================================================
+
+//--------------------------------------------------------------------------------------------------
+//  KeironUpgradesMedi
+//--------------------------------------------------------------------------------------------------
+void KeironUpgradesMedi (int player, int phase) {
+  int buildType;
+
+  if (phase < c_ldPhaseLate) {
+      buildType = AIGetUserInt(player, c_openingBuildType);
+  } else {
+      buildType = AIGetUserInt(player, c_lateGameBuildType);
+  }
+
+  if (buildType != e_buildType_Air) {
+
+
+      if (phase >= c_ldPhaseMid) {
+
+
+          if (phase >= c_ldPhaseLate) {
+
+              AISetStock( player, 1, c_KR_ModifiedGait );
+              AISetStock( player, 1 , c_KR_AmplifiedSphere );
+              AISetStock( player, 1, c_KR_BioWeapons1 );
+              AISetStock( player, 1, c_KR_BioArmor1 );
+
+              if (phase >= c_ldPhaseFinal) {
+
+                  AISetStock( player, 1, c_KR_ExaltedShield );
+                  AISetStock( player, 1, c_KR_LatentCharge );
+                  AISetStock( player, 1, c_KR_BioWeapons3 );
+                  AISetStock( player, 1, c_KR_BioArmor3 );
+                  AISetStock( player, 1, c_KR_MechWeapons2 );
+                  AISetStock( player, 1, c_KR_MechArmor2 );
+                  AISetStock( player, 1, c_KR_Shields2 );
+
+              }
+          }
+      }
+  }
+  else {  // (buildType == e_buildType_Air) 
+
+
+      if (phase >= c_ldPhaseMid) {
+
+
+          if (phase >= c_ldPhaseLate) {
+
+              AISetStock( player, 1, c_KR_BioWeapons1);
+              AISetStock( player, 1, c_KR_BioArmor1);
+
+              if (phase >= c_ldPhaseFinal) {
+
+                  if (AITechCount(player, c_KU_Volt, c_techCountInProgressOrBetter) >= 6) {
+                      AISetStock( player, 1, c_KR_ModifiedGait );
+                      AISetStock( player, 1, c_KR_ExaltedShield );
+                  }
+                  if (AITechCount(player, c_KU_Volt, c_techCountInProgressOrBetter) >= 6) {
+                      AISetStock( player, 1, c_KR_ModifiedGait );
+                      AISetStock( player, 1, c_KR_ExaltedShield );
+                  }
+
+                  AISetStock( player, 1, c_KR_BioWeapons3);
+                  AISetStock( player, 1, c_KR_BioArmor3);
+                  AISetStock( player, 1, c_KR_MechWeapons3);
+                  AISetStock( player, 1, c_KR_MechArmor3);
+                  AISetStock( player, 1, c_KR_Shields3);
+
+              }
+          }
+      }
+  }
+}
+
+//--------------------------------------------------------------------------------------------------
+//  KeironOpenArmyInitMedi
+//--------------------------------------------------------------------------------------------------
+int KeironOpenArmyInitMedi (int player, int buildType) {
+  int armyRoll = 0;
+  int duration = 0;
+
+  if (buildType == e_buildType_Rush) {
+      // next attack should be around 8 foodCost and 440 resCost after about 356 seconds
+      armyRoll = RandomInt(1, 2);
+      if (armyRoll <= 1) {
+          AIAddToStockArmy(player, c_KU_Volt, 6);
+          AIAddToStockArmy(player, c_KU_Pariah, 3);
+          // validation: above with average cost 9 food and 450 resources
+          duration = 360 + RandomInt(-15, 15);
+      }
+      else if (armyRoll <= 2) {
+        AIAddToStockArmy(player, c_KU_Volt, 3);
+        AIAddToStockArmy(player, c_KU_Pariah, 6);
+        // validation: above with average cost 9 food and 450 resources
+        duration = 360 + RandomInt(-15, 15);
+    }
+  }
+  else if (buildType == e_buildType_Timing) {
+      // next attack should be around 11 foodCost and 660 resCost after about 412 seconds
+      armyRoll = RandomInt(1, 2);
+      if (armyRoll <= 1) {
+          AIAddToStockArmy(player, c_KU_Volt, 6);
+          AIAddToStockArmy(player, c_KU_Pariah, 3);
+          AIAddToStockArmy(player, c_KU_Subjecter, 1);
+          // validation: 9 units above with average cost 10 food and 650 resources
+          duration = 410 + RandomInt(-20, 20);
+      }
+      else if (armyRoll <= 2) {
+          AIAddToStockArmy(player, c_KU_Volt, 8);
+          AIAddToStockArmy(player, c_KU_Pariah, 6);
+          // validation: units above with average cost 12 food and 700 resources
+          duration = 430 + RandomInt(-20, 20);
+      }
+  }
+  else if (buildType == e_buildType_Power) {
+      // next attack should be around 15 foodCost and 900 resCost after about 525 seconds
+      armyRoll = RandomInt(1, 2);
+      if (armyRoll <= 1) {
+          AIAddToStockArmy(player, c_KU_Volt, 10);
+          AIAddToStockArmy(player, c_KU_Pulsar, 10);
+          // validation: 8 units above with average cost 20 food and 1000 resources
+          duration = 540 + RandomInt(-20, 20);
+      }
+      else if (armyRoll <= 2) {
+          AIAddToStockArmy(player, c_KU_Volt, 4);
+          AIAddToStockArmy(player, c_KU_Subjecter, 2);
+          AIAddToStockArmy(player, c_KU_Pulsar, 3);
+          // validation: 9 units above with average cost 17 food and 1200 resources
+          duration = 560 + RandomInt(-20, 20);
+      }
+  }
+  else if (buildType == e_buildType_Macro) {
+      // next attack should be around 8 foodCost and 480 resCost after about 225 seconds
+      armyRoll = RandomInt(1, 2);
+      if (armyRoll <= 1) {
+          AIAddToStockArmy(player, c_KU_Pariah, 4);
+          AIAddToStockArmy(player, c_KU_Subjecter, 2);
+          // validation: 2 units above with average cost 8 food and 600 resources
+          duration = 230 + RandomInt(-10, 10);
+      }
+      if (armyRoll <= 2) {
+        AIAddToStockArmy(player, c_KU_Volt, 7);
+        AIAddToStockArmy(player, c_KU_Pulsar, 1);
+        // validation: 2 units above with average cost 9 food and 550 resources
+        duration = 220 + RandomInt(-10, 10);
+    }
+  }
+  else if (buildType == e_buildType_Air) {
+      // next attack should be around 9 foodCost and 900 resCost after about 543 seconds
+      AIAddToStockArmy(player, c_KU_Echo, 2);
+      AIAddToStockArmy(player, c_KU_Aurora, 2);
+      // validation: 4 units above with average cost 8 food and 950 resources
+      duration = 560 + RandomInt(-25, 25);
+  }
+  else {
+      return KeironOpenArmyInitMedi(player, e_buildType_Macro);
+  }
+
+  AISetUserInt(player, c_ldNextArmyRoll, armyRoll);
+  return duration;
+}
+
+//--------------------------------------------------------------------------------------------------
+//  KeironOpenInitMedi
+//--------------------------------------------------------------------------------------------------
+void KeironOpenInitMedi (int player) {
+  int buildType = 0;
+
+  AIChooseNextOpeningBuild(player);
+  buildType = AIGetUserInt(player, c_openingBuildType);
+  AISetupNextArmy (player, buildType, c_ldPhaseOpen, KeironOpenArmyInitMedi);
+
+  AISetMainState(player, e_mainState_Open, e_mainSubState_Build);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  KeironOpenBuildMedi
+//--------------------------------------------------------------------------------------------------
+void KeironOpenBuildMedi (int player) {
+  int buildType = AIGetUserInt(player, c_openingBuildType);
+  int armyRoll = AIGetUserInt(player, c_ldNextArmyRoll);
+  int timeOut = AIGetUserInt(player, c_nextArmyTime);
+  bool nextState = false;
+
+  if (AIHasPlayerChangedCurrentOpening(player)) {
+      AISetMainState(player, e_mainState_Open, e_mainSubState_Init);
+      return;
+  }
+
+  AIClearStock(player);
+
+  if (buildType == e_buildType_Rush) {
+      AISetStock( player, 1, c_KB_Citadel_Alias );
+      AISetStock( player, 16, c_KU_Converter );
+      AISetStock( player, 1, c_KB_Edifice );
+      AISetStock( player, 17, c_KU_Converter );
+      AISetStock( player, 1, c_KB_Formulator );
+      AISetStock( player, 18, c_KU_Converter );
+      AISetStock( player, 1, c_KU_Volt );
+      AISetStock( player, 1, c_KB_CitadelCharged );
+      AISetStock( player, 1, c_KB_Reliquary );
+      AISetStockFarms( player, c_KB_Edifice, c_stockNormalFarms);
+  }
+  else if (buildType == e_buildType_Timing) {
+      AISetStock( player, 1, c_KB_Citadel_Alias );
+      AISetStock( player, 16, c_KU_Converter );
+      AISetStock( player, 1, c_KB_Edifice );
+      AISetStock( player, 17, c_KU_Converter );
+      AISetStock( player, 1, c_KB_Formulator );
+      AISetStock( player, 18, c_KU_Converter );
+      AISetStock( player, 1, c_KU_Volt );
+      AISetStock( player, 1, c_KB_CitadelCharged );
+      AISetStock( player, 1, c_KB_Reliquary );
+      AISetStockFarms( player, c_KB_Edifice, c_stockNormalFarms);
+      AISetStock( player, 2, c_KB_Formulator );
+  }
+  else if (buildType == e_buildType_Power) {
+      AISetStock( player, 1, c_KB_Citadel_Alias );
+      AISetStock( player, 16, c_KU_Converter );
+      AISetStock( player, 1, c_KB_Edifice );
+      AISetStock( player, 17, c_KU_Converter );
+      AISetStock( player, 1, c_KB_Formulator );
+      AISetStock( player, 18, c_KU_Converter );
+      AISetStock( player, 1, c_KU_Volt );
+      AISetStock( player, 1, c_KB_CitadelCharged );
+      AISetStock( player, 1, c_KB_Reliquary );
+      AISetStock( player, 1, c_KB_Sanctum );
+      AISetStockFarms( player, c_KB_Edifice, c_stockNormalFarms);
+      AISetStock( player, 2, c_KB_Formulator );
+  }
+  else if (buildType == e_buildType_Macro) {
+      AISetStock( player, 1, c_KB_Citadel_Alias );
+      AISetStock( player, 16, c_KU_Converter );
+      AISetStock( player, 1, c_KB_Edifice );
+      AISetStock( player, 17, c_KU_Converter );
+      if (KeironMacroExpand(player)) { return; }
+      AISetStock( player, 1, c_KB_Formulator );
+      AISetStock( player, 18, c_KU_Converter );
+      AISetStock( player, 1, c_KU_Volt );
+      AISetStock( player, 1, c_KB_CitadelCharged );
+      AISetStock( player, 1, c_KB_Reliquary );
+      AISetStock( player, 1, c_KB_Sanctum );
+      AISetStockUnitNext( player, 24, c_KU_Converter, c_stockIdle );
+      AISetStockFarms( player, c_KB_Edifice, c_stockNormalFarms );
+      AISetStock( player, 2, c_KB_Formulator );
+  }
+  else if (buildType == e_buildType_Air) {
+      AISetStock( player, 1, c_KB_Citadel_Alias );
+      AISetStock( player, 16, c_KU_Converter );
+      AISetStock( player, 1, c_KB_Edifice );
+      AISetStock( player, 17, c_KU_Converter );
+      if (KeironMacroExpand(player)) { return; }
+      AISetStock( player, 1, c_KB_Formulator );
+      AISetStock( player, 18, c_KU_Converter );
+      AISetStock( player, 1, c_KB_Edifice );
+      AISetStock( player, 2, c_KB_Formulator );
+      AISetStock( player, 1, c_KB_Sanctum );
+      AISetStock( player, 1, c_KB_CitadelCharged );
+      AISetStockUnitNext( player, 24, c_KU_Converter, c_stockIdle );
+      AISetStockFarms( player, c_KB_Edifice, c_stockNormalFarms );
+      AISetStock( player, 1, c_KB_Conduit );
+      AISetStock( player, 1, c_KB_Outlet );
+  }
+
+  KeironBasicDefenseStock(player);
+
+  AISetStockArmyScale(player, 0.35);
+
+  KeironGeneralBuild(player, c_ldPhaseOpen);
+
+  AISetStockArmyScale(player, 0.70);
+
+  KeironUpgradesMedi(player, c_ldPhaseOpen);
+
+  AISetStockArmyScale(player, 1.00);
+
+  AILDStockWorkers( player, 24, c_KU_Converter);
+
+  KeironTechUp(player, c_ldPhaseOpen);
+
+  if (buildType == e_buildType_Air) {
+      AISetStock( player, 1, c_KU_Aperture );
+  }
+
+  AIEnableStock(player);
+
+  AILDGeneralSharedLogic(player);
+
+  nextState = AITestTimeout(player, timeOut, e_mainState_Mid, e_mainSubState_Init);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  KeironMidArmyInitMedi
+//--------------------------------------------------------------------------------------------------
+int KeironMidArmyInitMedi (int player, int buildType) {
+  int armyRoll = 0;
+  int duration = 0;
+
+  if (buildType == e_buildType_Rush) {
+      // next attack should be around 16 foodCost and 960 resCost after about 320 seconds
+      AIAddToStockArmy(player, c_KU_Volt, 3);
+      AIAddToStockArmy(player, c_KU_Pulsar, 2);
+      AIAddToStockArmy(player, c_KU_Subjecter, 2);
+      AIAddToStockArmy(player, AIPickFrom2(c_KU_Volt, c_KU_Pariah), 4);
+      // validation: 11 units above with average cost 17 food and 1050 resources
+      duration = 320 + RandomInt(-15, 15);
+  }
+  else if (buildType == e_buildType_Timing) {
+      // next attack should be around 20 foodCost and 1200 resCost after about 350 seconds
+      AIAddToStockArmy(player, c_KU_Volt, 6);
+      AIAddToStockArmy(player, c_KU_Pulsar, 2);
+      AIAddToStockArmy(player, AIPickFrom2(c_KU_Pulsar, c_KU_Subjecter), 2);
+      AIAddToStockArmy(player, AIPickFrom2(c_KU_Pulsar, c_KU_Subjecter), 1);
+      // validation: 6 units above with average cost 12 food and 1300 resources
+      duration = 355 + RandomInt(-15, 15);
+  }
+  else if (buildType == e_buildType_Power) {
+      // next attack should be around 21 foodCost and 1260 resCost after about 370 seconds
+      AIAddToStockArmy(player, c_KU_Volt, 9);
+      AIAddToStockArmy(player, c_KU_Pulsar, 2);
+      AIAddToStockArmy(player, AIPickFrom2(c_KU_Pulsar, c_KU_Subjecter), 1);
+      AIAddToStockArmy(player, AIPickFrom2(c_KU_Pulsar, c_KU_Subjecter), 1);
+      // validation: 12 units above with average cost 20 food and 1250 resources
+      duration = 360 + RandomInt(-15, 15);
+  }
+  else if (buildType == e_buildType_Macro) {
+      // next attack should be around 29 foodCost and 1740 resCost after about 543 seconds
+      // note: mid macro build did not send opening attack at 225 time
+      armyRoll = RandomInt(1, 3);
+      if (armyRoll <= 1) {
+          AIAddToStockArmy(player, c_KU_Volt, 10);
+          AIAddToStockArmy(player, c_KU_Pulsar, 4);
+          AIAddToStockArmyPickFrom2Count(player, c_KU_Subjecter, 1, c_KU_Pariah, 4);
+          AIAddToStockArmyPickFrom2Count(player, c_KU_Subjecter, 1, c_KU_Pariah, 4);
+          // validation: 19 units above with average cost 28 food and 1700 resources
+          duration = 540 + RandomInt(-30, 30);
+      }
+      if (armyRoll <= 2) {
+          AIAddToStockArmy(player, c_KU_Volt, 10);
+          AIAddToStockArmy(player, c_KU_Pulsar, 2);
+          AIAddToStockArmy(player, c_KU_Umbra, 2);
+          AIAddToStockArmyPickFrom2Count(player, c_KU_Subjecter, 1, c_KU_Pariah, 4);
+          AIAddToStockArmyPickFrom2Count(player, c_KU_Subjecter, 1, c_KU_Pariah, 4);
+          // validation: 15 units above with average cost 24 food and 1800 resources
+          duration = 550 + RandomInt(-30, 30);
+      }
+      if (armyRoll <= 3) {
+          AIAddToStockArmy(player, c_KU_Volt, 11);
+          AIAddToStockArmy(player, c_KU_Pulsar, 3);
+          AIAddToStockArmy(player, c_KU_Umbra, 3);
+          AIAddToStockArmyPickFrom2Count(player, c_KU_Subjecter, 2, c_KU_Pariah, 8);
+          // validation: 18 units above with average cost 30 food and 2300 resources
+          duration = 600 + RandomInt(-30, 30);
+      }
+  }
+  else if (buildType == e_buildType_Air) {
+      // next attack should be around 14 foodCost and 1300 resCost after about 350 seconds
+      armyRoll = RandomInt(1, 2);
+      if (armyRoll <= 1) {
+          AIAddToStockArmy(player, c_KU_Echo, 3);
+          AIAddToStockArmy(player, c_KU_Aurora, 3);
+          // validation: 6 units above with average cost 14 food and 1425 resources
+          duration = 360 + RandomInt(-15, 15);
+      }
+      else if (armyRoll <= 2) {
+          AIAddToStockArmy(player, c_KU_Echo, 2);
+          AIAddToStockArmy(player, c_KU_Aurora, 2);
+          AIAddToStockArmy(player, c_KU_Harbinger, 1);
+          // validation: 5 units above with average cost 12 food and 1325 resources
+          duration = 350 + RandomInt(-15, 15);
+      }
+  }
+  else {
+      return KeironMidArmyInitMedi(player, e_buildType_Macro);
+  }
+
+  AISetUserInt(player, c_ldNextArmyRoll, armyRoll);
+  return duration;
+}
+
+//--------------------------------------------------------------------------------------------------
+//  KeironMidInitMedi
+//--------------------------------------------------------------------------------------------------
+void KeironMidInitMedi (int player) {
+  int buildType = 0;
+
+  AIChooseNextOpeningBuild(player);
+  buildType = AIGetUserInt(player, c_openingBuildType);
+  AISetupNextArmy (player, buildType, c_ldPhaseMid, KeironMidArmyInitMedi);
+
+  AISetFlag(player, e_flagsScouting, true);
+  AISetFlag(player, e_flagsLateScout, true);
+  AISetFlag(player, e_flagsDetect, true);
+
+  AISetMainState(player, e_mainState_Mid, e_mainSubState_Build);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  KeironMidBuildMedi
+//--------------------------------------------------------------------------------------------------
+void KeironMidBuildMedi (int player) {
+  int buildType = AIGetUserInt(player, c_openingBuildType);
+  int armyRoll = AIGetUserInt(player, c_ldNextArmyRoll);
+  int timeOut = AIGetUserInt(player, c_nextArmyTime);
+  bool nextState = false;
+
+  if (AIHasPlayerChangedCurrentOpening(player)) {
+      AISetMainState(player, e_mainState_Mid, e_mainSubState_Init);
+      return;
+  }
+
+  AIClearStock(player);
+
+  KeironBasicEconomy(player, c_ldPhaseMid, 18);
+  if (buildType == e_buildType_Air) {
+      AISetStock( player, 1, c_KU_Aperture );
+  }
+  KeironBasicExpansion(player, c_ldPhaseMid, 5500, 1500);
+
+  KeironBasicDefenseStock(player);
+
+  AISetStockArmyScale(player, 0.35);
+
+  KeironGeneralBuild(player, c_ldPhaseMid);
+
+  AILDStockWorkers( player, 24, c_KU_Converter);
+
+  if (buildType == e_buildType_Rush) {
+      AISetStock( player, 1, c_KB_Sanctum );
+  }
+  else if (buildType == e_buildType_Timing) {
+      AISetStock( player, 1, c_KB_Sanctum );
+      AISetStockUnitNext( player, 2, c_KB_Edifice, c_stockIdle );
+  }
+  else if (buildType == e_buildType_Power) {
+      if (KeironMacroExpand(player)) { return; }
+      AISetStock( player, 1, c_KB_Foundry );
+      AISetStockUnitNext( player, 2, c_KB_Edifice, c_stockIdle );
+  }
+  else if (buildType == e_buildType_Macro) {
+      if (KeironMacroExpand(player)) { return; }
+      AISetStock( player, 1, c_KB_Foundry );
+      AISetStockUnitNext( player, 2, c_KB_Edifice, c_stockIdle );
+  }
+  else if (buildType == e_buildType_Air) {
+      if (KeironMacroExpand(player)) { return; }
+      AISetStock( player, 2, c_KB_Outlet );
+      AISetStock( player, 1, c_KB_Empyrean );
+  }
+
+  if (AINeedsDetection(player)) {
+      AISetStock( player, 1, c_KU_Paradox );
+  }
+
+  AISetStockArmyScale(player, 0.70);
+
+  AILDStockWorkers( player, 54, c_KU_Converter);
+
+  KeironUpgradesMedi(player, c_ldPhaseMid);
+
+  AISetStockArmyScale(player, 1.00);
+
+  AISetStock( player, 2, c_KU_Paradox );
+  AISetStock( player, 2, c_KB_CitadelCharged );
+
+  KeironTechUp(player, c_ldPhaseMid);
+
+  AIEnableStock(player);
+
+  AILDGeneralSharedLogic(player);
+
+  nextState = AITestTimeout(player, timeOut, e_mainState_Late, e_mainSubState_Init);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  KeironLateArmyInitMedi
+//--------------------------------------------------------------------------------------------------
+int KeironLateArmyInitMedi (int player, int buildType) {
+  int armyRoll = 0;
+  int duration = 0;
+
+  if (buildType == e_buildType_Core) {
+      // next attack should be around 29 foodCost and 1700 resCost after about 300 seconds
+      armyRoll = RandomInt(1,2);
+      if (armyRoll <= 1) {
+          AIAddToStockArmy(player, c_KU_Pariah, 8);
+          AIAddToStockArmy(player, c_KU_Pulsar, 2);
+          AIAddToStockArmyPickFrom2Count(player, c_KU_Subjecter, 1, c_KU_Volt, 4);
+          AIAddToStockArmyPickFrom2Count(player, c_KU_Subjecter, 1, c_KU_Volt, 4);
+          AIAddToStockArmyPickFrom2Count(player, c_KU_Subjecter, 1, c_KU_Volt, 4);
+          AIAddToStockArmyPickFrom2Count(player, c_KU_Subjecter, 1, c_KU_Volt, 4);
+          // validation: 12 units above with average cost 17 food and 1600 resources
+          duration = 290 + RandomInt(-15, 15);
+      }
+      else if (armyRoll <= 2) {
+          AIAddToStockArmy(player, c_KU_Pariah, 8);
+          AIAddToStockArmy(player, c_KU_Aurora, 2);
+          AIAddToStockArmyPickFrom2Count(player, c_KU_Subjecter, 1, c_KU_Volt, 4);
+          AIAddToStockArmyPickFrom2Count(player, c_KU_Subjecter, 1, c_KU_Volt, 4);
+          AIAddToStockArmyPickFrom2Count(player, c_KU_Subjecter, 1, c_KU_Volt, 4);
+          AIAddToStockArmyPickFrom2Count(player, c_KU_Subjecter, 1, c_KU_Volt, 4);
+          // validation: 12 units above with average cost 17 food and 1750 resources
+          duration = 320 + RandomInt(-15, 15);
+      }
+  }
+  else if (buildType == e_buildType_HighTech) {
+      // next attack should be around 26 foodCost and 1900 resCost after about 320 seconds
+      armyRoll = RandomInt(1,2);
+      if (armyRoll <= 1) {
+          AIAddToStockArmy(player, c_KU_Volt, 8);
+          AIAddToStockArmy(player, c_KU_Umbra, 3);
+          AIAddToStockArmy(player, c_KU_Inducer, 2);
+          // validation: 13 units above with average cost 20 food and 2050 resources
+          duration = 320 + RandomInt(-15, 15);
+      }
+      else if (armyRoll <= 2) {
+          AIAddToStockArmy(player, c_KU_Subjecter, 4);
+          AIAddToStockArmy(player, c_KU_Umbra, 2);
+          AIAddToStockArmy(player, c_KU_Inducer, 1);
+          AIAddToStockArmy(player, c_KU_Myriad, 1);
+          // validation: 7 units above with average cost 20 food and 2150 resources
+          duration = 350 + RandomInt(-15, 15);
+      }
+  }
+  else if (buildType == e_buildType_Special) {
+      // next attack should be around 35 foodCost and 2100 resCost after about 340 seconds
+      armyRoll = RandomInt(1,2);
+      if (armyRoll <= 1) {
+          AIAddToStockArmy(player, c_KU_Volt, 12);
+          AIAddToStockArmy(player, c_KU_Pulsar, 3);
+          AIAddToStockArmy(player, c_KU_Meridian, 3);
+          // validation: 18 units above with average cost 30 food and 2125 resources
+          duration = 350 + RandomInt(-15, 15);
+      }
+      else if (armyRoll <= 2) {
+          AIAddToStockArmy(player, c_KU_Volt, 6);
+          AIAddToStockArmy(player, c_KU_Umbra, 4);
+          AIAddToStockArmy(player, c_KU_Meridian, 4);
+          // validation: 14 units above with average cost 26 food and 2400 resources
+          duration = 380 + RandomInt(-15, 15);
+      }
+  }
+  else if (buildType == e_buildType_Mixed) {
+      // next attack should be around 37 foodCost and 2300 resCost after about 360 seconds
+      armyRoll = RandomInt(1, 3);
+      if (armyRoll <= 1) {
+          AIAddToStockArmy(player, c_KU_Pulsar, 3);
+          AIAddToStockArmy(player, c_KU_Subjecter, 2);
+          AIAddToStockArmy(player, c_KU_Harbinger, 2);
+          AIAddToStockArmyPickFrom2Count(player, c_KU_Meridian, 1, c_KU_Pariah, 6);
+          AIAddToStockArmyPickFrom2Count(player, c_KU_Meridian, 1, c_KU_Pariah, 6);
+          // validation: 13 units above with average cost 30 food and 2375 resources
+          duration = 360 + RandomInt(-15, 15);
+      }
+      else if (armyRoll <= 2) {
+          AIAddToStockArmy(player, c_KU_Volt, 8);
+          AIAddToStockArmy(player, c_KU_Subjecter, 3);
+          AIAddToStockArmy(player, c_KU_Pariah, 8);
+          AIAddToStockArmy(player, c_KU_Umbra, 2);
+          AIAddToStockArmy(player, c_KU_Aurora, 2);
+          // validation: 23 units above with average cost 30 food and 2450 resources
+          duration = 375 + RandomInt(-15, 15);
+      }
+      else if (armyRoll <= 3) {
+          AIAddToStockArmy(player, c_KU_Volt, 12);
+          AIAddToStockArmy(player, c_KU_Subjecter, 4);
+          AIAddToStockArmy(player, c_KU_Pulsar, 4);
+          AIAddToStockArmy(player, AIPickFrom2(c_KU_Paragon, c_KU_Titan), 1);
+          // validation: 21 units above with average cost 36 food and 2475 resources
+          duration = 380 + RandomInt(-15, 15);
+      }
+  }
+  else if (buildType == e_buildType_Air) {
+      // next attack should be around 23 foodCost and 2300 resCost after about 320 seconds
+      armyRoll = RandomInt(1,2);
+      if (armyRoll <= 1) {
+          AIAddToStockArmy(player, c_KU_Echo, 3);
+          AIAddToStockArmy(player, c_KU_Aurora, 3);
+          AIAddToStockArmy(player, c_KU_Harbinger, 2);
+          // validation: 7 units above with average cost 18 food and 2175 resources
+          duration = 310 + RandomInt(-15, 15);
+      }
+      else if (armyRoll <= 2) {
+          AIAddToStockArmy(player, c_KU_Echo, 2);
+          AIAddToStockArmy(player, c_KU_Aurora, 2);
+          AIAddToStockArmy(player, c_KU_Paragon, 2);
+          // validation: 2 units above with average cost 8 food and 2550 resources
+          duration = 340 + RandomInt(-15, 15);
+      }
+  }
+  else {
+      return KeironLateArmyInitMedi(player, e_buildType_Core);
+  }
+
+  AISetUserInt(player, c_ldNextArmyRoll, armyRoll);
+  return duration;
+}
+
+//--------------------------------------------------------------------------------------------------
+//  KeironFinalArmyInitMedi
+//--------------------------------------------------------------------------------------------------
+int KeironFinalArmyInitMedi (int player, int buildType) {
+  int armyRoll = 0;
+  int duration = 0;
+
+  if (buildType == e_buildType_Core) {
+      // next attack should be around 42 foodCost and 2700 resCost after about 280 seconds
+      armyRoll = RandomInt(1,2);
+      if (armyRoll <= 1) {
+          AIAddToStockArmy(player, c_KU_Pariah, 12);
+          AIAddToStockArmy(player, c_KU_Pulsar, 4);
+          AIAddToStockArmy(player, c_KU_Meridian, 2);
+          AIAddToStockArmyPickFrom2Count(player, c_KU_Subjecter, 1, c_KU_Volt, 4);
+          AIAddToStockArmyPickFrom2Count(player, c_KU_Subjecter, 1, c_KU_Volt, 4);
+          AIAddToStockArmyPickFrom2Count(player, c_KU_Subjecter, 1, c_KU_Volt, 4);
+          AIAddToStockArmyPickFrom2Count(player, c_KU_Subjecter, 1, c_KU_Volt, 4);
+          // validation: 20 units above with average cost 42 food and 2750 resources
+          duration = 280 + RandomInt(-15, 15);
+      }
+      else if (armyRoll <= 2) {
+          AIAddToStockArmy(player, c_KU_Volt, 18);
+          AIAddToStockArmy(player, c_KU_Subjecter, 4);
+          AIAddToStockArmy(player, c_KU_Aurora, 4);
+          // validation: 12 units above with average cost 17 food and 2800 resources
+          duration = 290 + RandomInt(-15, 15);
+      }
+  }
+  else if (buildType == e_buildType_HighTech) {
+      // next attack should be around 45 foodCost and 2900 resCost after about 300 seconds
+      armyRoll = RandomInt(1,2);
+      if (armyRoll <= 1) {
+          AIAddToStockArmy(player, c_KU_Volt, 8);
+          AIAddToStockArmy(player, c_KU_Umbra, 4);
+          AIAddToStockArmy(player, c_KU_Inducer, 2);
+          AIAddToStockArmy(player, c_KU_Myriad, 2);
+          // validation: 13 units above with average cost 20 food and 3200 resources
+          duration = 300 + RandomInt(-15, 15);
+      }
+      else if (armyRoll <= 2) {
+          AIAddToStockArmy(player, c_KU_Subjecter, 4);
+          AIAddToStockArmy(player, c_KU_Umbra, 2);
+          AIAddToStockArmy(player, c_KU_Inducer, 1);
+          AIAddToStockArmy(player, c_KU_Myriad, 1);
+          AIAddToStockArmy(player, c_KU_Titan, 2);
+          // validation: 7 units above with average cost 20 food and 3300 resources
+          duration = 320 + RandomInt(-15, 15);
+      }
+  }
+  else if (buildType == e_buildType_Special) {
+      // next attack should be around 49 foodCost and 3200 resCost after about 320 seconds
+      armyRoll = RandomInt(1,2);
+      if (armyRoll <= 1) {
+          AIAddToStockArmy(player, c_KU_Volt, 14);
+          AIAddToStockArmy(player, c_KU_Pulsar, 6);
+          AIAddToStockArmy(player, c_KU_Meridian, 6);
+          // validation: 26 units above with average cost 32 food and 3550 resources
+          duration = 320 + RandomInt(-15, 15);
+      }
+      else if (armyRoll <= 2) {
+          AIAddToStockArmy(player, c_KU_Volt, 16);
+          AIAddToStockArmy(player, c_KU_Umbra, 6);
+          AIAddToStockArmy(player, c_KU_Meridian, 5);
+          // validation: 14 units above with average cost 26 food and 3575 resources
+          duration = 330 + RandomInt(-15, 15);
+      }
+  }
+  else if (buildType == e_buildType_Mixed) {
+      // next attack should be around 52 foodCost and 3500 resCost after about 340 seconds
+      armyRoll = RandomInt(1, 3);
+      if (armyRoll <= 1) {
+          AIAddToStockArmy(player, c_KU_Pulsar, 22);
+          AIAddToStockArmy(player, c_KU_Subjecter, 3);
+          AIAddToStockArmy(player, c_KU_Harbinger, 3);
+          AIAddToStockArmyPickFrom2Count(player, c_KU_Meridian, 2, c_KU_Pariah, 11);
+          AIAddToStockArmyPickFrom2Count(player, c_KU_Meridian, 2, c_KU_Pariah, 11);
+          // validation: 13 units above with average cost 30 food and 3925 resources
+          duration = 340 + RandomInt(-15, 15);
+      }
+      else if (armyRoll <= 2) {
+          AIAddToStockArmy(player, c_KU_Volt, 16);
+          AIAddToStockArmy(player, c_KU_Subjecter, 3);
+          AIAddToStockArmy(player, c_KU_Pariah, 16);
+          AIAddToStockArmy(player, c_KU_Umbra, 4);
+          AIAddToStockArmy(player, c_KU_Aurora, 3);
+          // validation: 39 units above with average cost 30 food and 4025 resources
+          duration = 370 + RandomInt(-15, 15);
+      }
+      else if (armyRoll <= 3) {
+          AIAddToStockArmy(player, c_KU_Volt, 16);
+          AIAddToStockArmy(player, c_KU_Subjecter, 3);
+          AIAddToStockArmy(player, c_KU_Paragon, 1);
+          AIAddToStockArmy(player, c_KU_Titan, 1);
+          AIAddToStockArmyPickFrom2Count(player, c_KU_Paragon, 2, c_KU_Titan, 3);
+          // validation: 23 units above with average cost 51 food and 4375 resources
+          duration = 380 + RandomInt(-15, 15);
+      }
+  }
+  else if (buildType == e_buildType_Air) {
+      // next attack should be around 32 foodCost and 3200 resCost after about 300 seconds
+      armyRoll = RandomInt(1,2);
+      if (armyRoll <= 1) {
+          AIAddToStockArmy(player, c_KU_Echo, 4);
+          AIAddToStockArmy(player, c_KU_Aurora, 3);
+          AIAddToStockArmy(player, c_KU_Harbinger, 4);
+          // validation: 7 units above with average cost 18 food and 3125 resources
+          duration = 310 + RandomInt(-15, 15);
+      }
+      else if (armyRoll <= 2) {
+          AIAddToStockArmy(player, c_KU_Echo, 2);
+          AIAddToStockArmy(player, c_KU_Aurora, 3);
+          AIAddToStockArmy(player, c_KU_Paragon, 3);
+          // validation: 2 units above with average cost 8 food and 3625 resources
+          duration = 340 + RandomInt(-15, 15);
+      }
+  }
+  else {
+      return KeironFinalArmyInitMedi(player, e_buildType_Core);
+  }
+
+  AISetUserInt(player, c_ldNextArmyRoll, armyRoll);
+  return duration;
+}
+
+//--------------------------------------------------------------------------------------------------
+//  KeironLateInitMedi
+//--------------------------------------------------------------------------------------------------
+void KeironLateInitMedi (int player) {
+  int lateLoop = AIGetUserInt(player, c_ldNumLateLoops);
+  int curPhase = c_ldPhaseLate;
+  int buildType = 0;
+
+  AIChooseNextLateGameBuild(player);
+  buildType = AIGetUserInt(player, c_lateGameBuildType);
+
+  if (lateLoop <= 0) { // First Late Loop
+      AISetupNextArmy (player, buildType, curPhase, KeironLateArmyInitMedi);
+  } else {
+      curPhase = c_ldPhaseFinal + lateLoop;
+      AISetupNextArmy (player, buildType, curPhase, KeironFinalArmyInitMedi);
+  }
+
+  AISetFlag(player, e_flagsScouting, true);
+  AISetFlag(player, e_flagsClearObs, true);
+  AISetFlag(player, e_flagsLateScout, true);
+  AISetFlag(player, e_flagsDetect, true);
+
+  AISetMainState(player, e_mainState_Late, e_mainSubState_Build);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  KeironLateBuildMedi
+//--------------------------------------------------------------------------------------------------
+void KeironLateBuildMedi (int player) {
+  int lateLoop = AIGetUserInt(player, c_ldNumLateLoops);
+  int buildType = AIGetUserInt(player, c_lateGameBuildType);
+  int armyRoll = AIGetUserInt(player, c_ldNextArmyRoll);
+  int timeOut = AIGetUserInt(player, c_nextArmyTime);
+  bool nextState = false;
+
+  if (AIHasPlayerChangedCurrentLateGame(player)) {
+      AISetMainState(player, e_mainState_Late, e_mainSubState_Init);
+      return;
+  }
+
+  AIClearStock(player);
+
+  KeironBasicEconomy(player, c_ldPhaseLate, 18);
+  if (buildType == e_buildType_Air) {
+      AISetStock( player, 1, c_KU_Aperture );
+  }
+  KeironBasicExpansion(player, c_ldPhaseLate, 10000, 2500);
+
+  KeironBasicDefenseStock(player);
+
+  AISetStockArmyScale(player, 0.35);
+
+  KeironGeneralBuild(player, c_ldPhaseLate);
+
+  AILDStockWorkers( player, 24, c_KU_Converter);
+
+  if (buildType == e_buildType_Core) {
+      if (KeironMacroExpand(player)) { return; }
+      AISetStock( player, 3, c_KB_Edifice );
+      AISetStock( player, 1, c_KB_Sanctum );
+      AISetStock( player, 1, c_KB_Foundry );
+      AISetStock( player, 1, c_KB_Atrium );
+      AISetStock( player, 1, c_KB_Conduit );
+      AISetStock( player, 1, c_KB_Outlet );
+      AISetStock( player, 1, c_KB_Empyrean );
+  }
+  else if (buildType == e_buildType_HighTech) {
+      if (KeironMacroExpand(player)) { return; }
+      AISetStock( player, 3, c_KB_Edifice );
+      AISetStock( player, 1, c_KB_Sanctum );
+      AISetStock( player, 1, c_KB_Foundry );
+      AISetStock( player, 1, c_KB_Atrium );
+      AISetStock( player, 1, c_KB_Pantheon );
+      AISetStock( player, 1, c_KB_Conduit );
+      AISetStock( player, 1, c_KB_Outlet );
+      AISetStock( player, 1, c_KB_Empyrean );
+  }
+  else if (buildType == e_buildType_Special) {
+      if (KeironMacroExpand(player)) { return; }
+      AISetStock( player, 3, c_KB_Edifice );
+      AISetStock( player, 3, c_KB_Elysium );
+      AISetStock( player, 1, c_KB_Sanctum );
+      AISetStock( player, 1, c_KB_Foundry );
+      AISetStock( player, 1, c_KB_Atrium );
+      AISetStock( player, 1, c_KB_Conduit );
+      AISetStock( player, 1, c_KB_Outlet );
+      AISetStock( player, 1, c_KB_Empyrean );
+  }
+  else if (buildType == e_buildType_Mixed) {
+      if (KeironMacroExpand(player)) { return; }
+      AISetStock( player, 3, c_KB_Edifice );
+      AISetStock( player, 1, c_KB_Sanctum );
+      AISetStock( player, 1, c_KB_Foundry );
+      AISetStock( player, 1, c_KB_Atrium );
+      AISetStock( player, 1, c_KB_Conduit );
+      AISetStock( player, 1, c_KB_Outlet );
+      AISetStock( player, 1, c_KB_Empyrean );
+  }
+  else if (buildType == e_buildType_Air) {
+      if (KeironMacroExpand(player)) { return; }
+      AISetStock( player, 3, c_KB_Edifice );
+      AISetStock( player, 1, c_KB_Sanctum );
+      AISetStock( player, 2, c_KB_Conduit );
+      AISetStock( player, 2, c_KB_Outlet );
+      AISetStock( player, 2, c_KB_Empyrean );
+      AISetStock( player, 1, c_KB_Zenith );
+  }
+
+  AISetStock( player, 2, c_KU_Paradox );
+  AISetStock( player, 1, c_KB_CitadelCharged );
+
+  AISetStockArmyScale(player, 0.70);
+
+  AISetStock( player, 2, c_KU_Aperture );
+  AISetStock( player, 3, c_KU_Paradox );
+
+  AISetStockArmyScale(player, 1.00);
+
+  AILDStockWorkers( player, 50, c_KU_Converter);
+
+  if (lateLoop <= 0) { // First Late Loop
+      KeironUpgradesMedi(player, c_ldPhaseLate);
+      KeironTechUp(player, c_ldPhaseLate);
+  } else { // Remaining Loops
+      KeironUpgradesMedi(player, c_ldPhaseFinal);
+      KeironTechUp(player, c_ldPhaseFinal);
+  }
+
+  AIEnableStock(player);
+
+  AILDGeneralSharedLogic(player);
+
+  nextState = AITestTimeout(player, timeOut, e_mainState_Late, e_mainSubState_Init);
+  if (nextState) {
+      lateLoop += 1;
+      AISetUserInt(player, c_ldNumLateLoops, lateLoop);
+  }
+}
+
+//--------------------------------------------------------------------------------------------------
+//  KeironOpenMedi
+//--------------------------------------------------------------------------------------------------
+void KeironOpenMedi (int player) {
+  int mainSubState = AIState(player, e_mainSubState);
+
+  if (mainSubState != e_mainSubState_Build) {
+      KeironOpenInitMedi(player);
+      mainSubState = AIState(player, e_mainSubState);
+  }
+
+  if (mainSubState == e_mainSubState_Build) { KeironOpenBuildMedi(player); }
+  else { ErrorMeleeScript(player, "Invalid Open MainSubState KeironMedi"); }
+}
+
+//--------------------------------------------------------------------------------------------------
+//  KeironMidMedi
+//--------------------------------------------------------------------------------------------------
+void KeironMidMedi (int player) {
+  int mainSubState = AIState(player, e_mainSubState);
+
+  if (mainSubState != e_mainSubState_Build) {
+      KeironMidInitMedi(player);
+      mainSubState = AIState(player, e_mainSubState);
+  }
+
+  if (mainSubState == e_mainSubState_Build) { KeironMidBuildMedi(player);  }
+  else { ErrorMeleeScript(player, "Invalid Mid MainSubState KeironMedi"); }
+}
+
+//--------------------------------------------------------------------------------------------------
+//  KeironLateMedi
+//--------------------------------------------------------------------------------------------------
+void KeironLateMedi (int player) {
+  int mainSubState = AIState(player, e_mainSubState);
+
+  if (mainSubState != e_mainSubState_Build) {
+      KeironLateInitMedi(player);
+      mainSubState = AIState(player, e_mainSubState);
+  }
+
+  if (mainSubState == e_mainSubState_Build) { KeironLateBuildMedi(player);  }
+  else { ErrorMeleeScript(player, "Invalid Late MainSubState KeironMedi"); }
+}
+

@@ -476,6 +476,23 @@ void XayidBasicDefenseStock (int player) {
 }
 
 //--------------------------------------------------------------------------------------------------
+//  KeironBasicDefenseStock
+//--------------------------------------------------------------------------------------------------
+void KeironBasicDefenseStock (int player) {
+  if (!AINeedsDefending(player)) {
+      return;
+  }
+  
+  AISetStockFarms( player, c_KB_Edifice, c_stockNormalFarms);
+  AIAddEmergencyDefenseStock(player, 8, c_KU_Volt, false);
+  AISetStock( player, 1, c_KB_Formulator);
+  AIAddEmergencyDefenseStock(player, 4, c_KU_Aurora, true);
+  AIAddEmergencyDefenseStock(player, 4, c_KU_Umbra, true);
+  AIAddEmergencyDefenseStock(player, 4, c_KU_Subjecter, true);
+  AIAddEmergencyDefenseStock(player, 20, c_KU_Converter, true);
+}
+
+//--------------------------------------------------------------------------------------------------
 //  ZergBasicDefenseStock
 //--------------------------------------------------------------------------------------------------
 void ZergBasicDefenseStock (int player) {
@@ -548,6 +565,7 @@ include "TriggerLibs/MeleeHighAI"
 include "TriggerLibs/MeleeLowAI"
 include "TriggerLibs/Genetron/Genetron"
 include "TriggerLibs/Xayid/Xayid"
+include "TriggerLibs/Keiron/Keiron"
 include "TriggerLibs/Terran/Terran"
 include "TriggerLibs/Protoss/Protoss"
 include "TriggerLibs/Zerg/Zerg"

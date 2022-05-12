@@ -1,0 +1,338 @@
+//==================================================================================================
+//  Keiron Melee AI
+//==================================================================================================
+
+include "TriggerLibs/Keiron/KeironVyEy"
+include "TriggerLibs/Keiron/KeironEasy"
+include "TriggerLibs/Keiron/KeironMedi"
+include "TriggerLibs/Keiron/KeironMdHd"
+// include "TriggerLibs/Keiron/KeironHard"
+// include "TriggerLibs/Keiron/KeironHdVH"
+// include "TriggerLibs/Keiron/KeironVyHd"
+// include "TriggerLibs/Keiron/KeironChVi"
+// include "TriggerLibs/Keiron/KeironChRe"
+// include "TriggerLibs/Keiron/KeironChIn"
+
+//--------------------------------------------------------------------------------------------------
+//  Counter-Attack Units
+//--------------------------------------------------------------------------------------------------
+static void InitCounters (int player) {
+    // versus Protoss
+    AICounterUnitSetup(player, c_PU_Zealot,             0.75, c_KU_Pulsar,      0.75, c_KU_Pulsar);
+    AICounterUnitSetup(player, c_PU_Stalker,            0.75, c_KU_Umbra,       0.75, c_KU_Umbra);
+    AICounterUnitSetup(player, c_PU_Sentry,             3.00, c_KU_Pariah,      3.00, c_KU_Pariah);
+    AICounterUnitSetup(player, c_PU_HighTemplar,        3.00, c_KU_Pariah,      1.00, c_KU_Meridian);
+    AICounterUnitSetup(player, c_PU_DarkTemplar,        3.00, c_KU_Pariah,      1.00, c_KU_Meridian);
+    AICounterUnitSetup(player, c_PU_Archon,             1.00, c_KU_Meridian,    1.00, c_KU_Meridian);
+    AICounterUnitSetup(player, c_PU_Immortal,           4.00, c_KU_Volt,        4.00, c_KU_Volt);
+    AICounterUnitSetup(player, c_PU_Colossus,           3.00, c_KU_Umbra,       2.00, c_KU_Aurora);
+    AICounterUnitSetup(player, c_PU_Phoenix,            1.00, c_KU_Subjecter,   1.00, c_KU_Subjecter);
+    AICounterUnitSetup(player, c_PU_VoidRay,            2.00, c_KU_Subjecter,   2.00, c_KU_Echo);
+    AICounterUnitSetup(player, c_PU_Carrier,            3.00, c_KU_Echo,        3.00, c_KU_Echo);
+    AICounterUnitSetup(player, c_PB_PhotonCannon,       2.00, c_KU_Umbra,       1.00, c_KU_Paragon);
+    AICounterUnitSetup(player, c_PU_Mothership,         6.00, c_KU_Echo,        6.00, c_KU_Echo);
+    AICounterUnitSetup(player, c_PU_MothershipCore,     1.00, c_KU_Echo,        1.00, c_KU_Echo);
+    AICounterUnitSetup(player, c_PU_Oracle,             1.00, c_KU_Echo,        1.00, c_KU_Echo);
+    AICounterUnitSetup(player, c_PU_Tempest,            3.00, c_KU_Echo,        3.00, c_KU_Echo);
+    AICounterUnitSetup(player, c_PU_Adept,              1.00, c_KU_Subjecter,   1.00, c_KU_Subjecter);
+    AICounterUnitSetup(player, c_PU_Disruptor,          2.00, c_KU_Umbra,       0.75, c_KU_Titan);
+
+    // versus Terran
+    AICounterUnitSetup(player, c_TU_Marine,             1.00, c_KU_Pariah,      0.10, c_KU_Myriad);
+    AICounterUnitSetup(player, c_TU_Marauder,           3.00, c_KU_Pariah,      3.00, c_KU_Pariah);
+    AICounterUnitSetup(player, c_TU_Reaper,             0.50, c_KU_Umbra,       0.50, c_KU_Umbra);
+    AICounterUnitSetup(player, c_TU_Ghost,              1.00, c_KU_Meridian,    1.00, c_KU_Meridian);
+    AICounterUnitSetup(player, c_TU_Hellion,            0.60, c_KU_Subjecter,   0.60, c_KU_Subjecter);
+    AICounterUnitSetup(player, c_TU_SiegeTank_Alias,    2.00, c_KU_Umbra,       1.00, c_KU_Inducer);
+    AICounterUnitSetup(player, c_TU_Thor,               2.00, c_KU_Umbra,       1.00, c_KU_Titan);
+    AICounterUnitSetup(player, c_TU_Viking_Alias,       1.00, c_KU_Subjecter,   1.00, c_KU_Echo);
+    AICounterUnitSetup(player, c_TU_Medivac,            0.75, c_KU_Echo,        0.75, c_KU_Echo);
+    AICounterUnitSetup(player, c_TU_Raven,              0.75, c_KU_Echo,        0.75, c_KU_Echo);
+    AICounterUnitSetup(player, c_TU_Banshee,            0.75, c_KU_Echo,        0.75, c_KU_Echo);
+    AICounterUnitSetup(player, c_TU_Battlecruiser,      3.00, c_KU_Echo,        3.00, c_KU_Echo);
+    AICounterUnitSetup(player, c_TB_Bunker,             2.00, c_KU_Umbra,       1.00, c_KU_Paragon);
+    AICounterUnitSetup(player, c_TU_WidowMine,          0.10, c_KU_Pulsar,      0.30, c_KU_Paradox);
+    AICounterUnitSetup(player, c_TU_Cyclone,            3.00, c_KU_Volt,        1.00, c_KU_Meridian);
+    AICounterUnitSetup(player, c_TU_Liberator_Alias,    1.00, c_KU_Harbinger,   0.50, c_KU_Paragon);
+
+    // versus Zerg
+    AICounterUnitSetup(player, c_ZU_Zergling,           0.60, c_KU_Pariah,      0.25, c_KU_Pulsar);
+    AICounterUnitSetup(player, c_ZU_Baneling,           0.50, c_KU_Subjecter,   0.50, c_KU_Subjecter);
+    AICounterUnitSetup(player, c_ZU_Roach,              0.60, c_KU_Umbra,       0.60, c_KU_Umbra);
+    AICounterUnitSetup(player, c_ZU_Hydralisk,          2.00, c_KU_Pariah,      0.40, c_KU_Myriad);
+    AICounterUnitSetup(player, c_ZU_Infestor,           1.00, c_KU_Meridian,    1.00, c_KU_Meridian);
+    AICounterUnitSetup(player, c_ZU_Mutalisk,           1.00, c_KU_Subjecter,   0.60, c_KU_Harbinger);
+    AICounterUnitSetup(player, c_ZU_Corruptor,          1.00, c_KU_Subjecter,   1.00, c_KU_Subjecter);
+    AICounterUnitSetup(player, c_ZU_Ultralisk,          1.50, c_KU_Inducer,     2.00, c_KU_Aurora);
+    AICounterUnitSetup(player, c_ZU_BroodLord,          2.00, c_KU_Echo,        2.00, c_KU_Echo);
+    AICounterUnitSetup(player, c_ZB_SpineCrawler,       2.00, c_KU_Umbra,       0.50, c_KU_Paragon);
+    AICounterUnitSetup(player, c_ZU_SwarmHost,          3.00, c_KU_Volt,        0.50, c_KU_Myriad);
+    AICounterUnitSetup(player, c_ZU_Viper,              1.00, c_KU_Harbinger,   1.00, c_KU_Harbinger);
+    AICounterUnitSetup(player, c_ZU_Ravager,            0.60, c_KU_Umbra,       0.60, c_KU_Umbra);
+    AICounterUnitSetup(player, c_ZU_Lurker,             2.00, c_KU_Pulsar,      0.75, c_KU_Inducer);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  KeironSubStateName
+//--------------------------------------------------------------------------------------------------
+string KeironSubStateName (int state) {
+    // TODO Call the individual difficulties to return a real substate name
+    return "-" + IntToString(state) + "-";
+}
+
+//--------------------------------------------------------------------------------------------------
+//  DebugCallbackKeir
+//--------------------------------------------------------------------------------------------------
+void DebugCallbackKeir (int player) {
+    DebugAI("=====KEIRON=====\n");
+    DebugMelee(player);
+    DebugAI("e_mainState = "        + MainStateName(AIState(player, e_mainState))           +
+            ", e_mainSubState = "   + KeironSubStateName(AIState(player, e_mainSubState))   +
+            ", e_attackState = "    + AttackStateName(AIState(player, e_attackState))
+    );
+}
+
+//--------------------------------------------------------------------------------------------------
+//  AINewUnitKeir
+//--------------------------------------------------------------------------------------------------
+void AINewUnitKeir (int player, unit u) {
+    wave w;
+    string type = UnitGetType(u);
+
+    // ignored units
+    //
+    if (UnitTypeTestAttribute(type, c_unitAttributeStructure)) {
+        return;
+    }
+    if (UnitTypeTestFlag(type, c_unitFlagWorker)) {
+        return;
+    }
+
+    // units that stay near home
+    //
+    if (type == c_KU_Aperture) {
+      AIWaveAddUnitPriority(AIWaveGet(player, c_waveHome), u, c_prioWavePeon);
+      return;
+    }
+    
+    // detector
+    //
+    if (type == c_KU_Paradox) {
+        AINewDetector(player, u, false);
+        return;
+    }
+
+    // clear obstacle units
+    //
+    if (AIWaveNeedClearObsUnits(player)) {
+        if (type == c_KU_Volt || type == c_KU_Pariah || type == c_KU_Subjecter) {
+            AIMergeUnit(player, u, AIWaveGet(player, c_waveClearObs));
+            return;
+        }
+    }
+
+    // diversion units
+    if (AIGetFlag(player, e_flagsDiversion)) {
+        if (type == c_KU_Volt) {
+            AIMergeUnit(player, u, AIWaveGet(player, c_waveDivert1));
+            return;
+        }
+        if (type == c_KU_Aurora) {
+            AIMergeUnit(player, u, AIWaveGet(player, c_waveDivert2));
+            return;
+        }
+    }
+
+    // echo
+    //
+    if (type == c_KU_Echo) {
+        if (AINumEnemyBuildings(player) == 0) {
+            if (AIOfferNewScout(player, u)) {
+                return;
+            }
+        }
+
+        AIWaveAddUnitPriority(AIWaveGet(player, c_waveMain), u, c_prioWavePeon);
+        return;
+    }
+
+    // main wave units
+    //
+    AINewUnitDefault(player, u);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  AIGetScoutKeir
+//--------------------------------------------------------------------------------------------------
+unit AIGetScoutKeir (int player, int index, unit prev, bool allowWorkers) {
+  unit obs;
+  string prevType = UnitGetType(prev);
+  
+  if (!PlayerBeaconIsSet(player, c_beaconScout) &&
+      !AIGetFlag(player, e_flagsScouting)) {
+      // if no scouting beacons are set and we're not ready to scout, don't return a unit
+      return c_nullUnit;
+  }
+
+  if (index == 1 && PlayerBeaconIsSet(player, c_beaconScout)) {
+      AISetFlag(player, e_flagsScouting, true);
+      if (allowWorkers) {
+          // only return a worker, we want to claim a tower
+          if (prevType == c_KU_Converter) {
+              return prev;
+          } 
+          return AIGrabUnit(player, c_KU_Converter, c_prioScout, null);
+      }
+  }
+
+  if (prevType == c_KU_Echo) {
+      return prev;
+  }
+  obs = AIGrabUnit(player, c_KU_Echo, c_prioScout, null);
+  if (obs) {
+      return obs;
+  }
+  if (prev) {
+      return prev;
+  }
+  // back to allowing workers as late scouts
+  //if (AIGetFlag(player, e_flagsLateScout)) {
+  //    return c_nullUnit;
+  //}
+  if (!allowWorkers) {
+      return c_nullUnit;
+  }
+  return AIGrabUnit(player, c_KU_Converter, c_prioScout, null);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  AIEarlyDefScoutKeir
+//--------------------------------------------------------------------------------------------------
+unit AIEarlyDefScoutKeir (int player, unit prev, bool allowWorkers) {
+  unit obs;
+  string prevType;
+  
+  if (!AIGetFlag(player, e_flagsEarlyDefScout)) {
+      return c_nullUnit;
+  }
+  prevType = UnitGetType(prev);
+  if (prevType == c_KU_Echo) {
+      return prev;
+  }
+  obs = AIGrabUnit(player, c_KU_Echo, c_prioScout, null);
+  if (obs) {
+      return obs;
+  }
+  if (prevType == c_KU_Pariah) {
+      return prev;
+  }
+  obs = AIGrabUnit(player, c_KU_Pariah, c_prioScout, null);
+  if (obs) {
+      return obs;
+  }
+  if (prev) {
+      return prev;
+  }
+  if (!allowWorkers) {
+      return c_nullUnit;
+  }
+  return AIGrabUnit(player, c_KU_Converter, c_prioScout, null);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  AIWaveThinkKeir
+//--------------------------------------------------------------------------------------------------
+void AIWaveThinkKeir (int player, wave w, int type) {
+    AIWaveThinkDefault(player, w, type);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  Keiron Init
+//--------------------------------------------------------------------------------------------------
+static void KeironInit (int player) {
+
+    InitCounters(player);
+    AIMeleeSharedInit(player);
+    AISetFlag(player, e_flagsScouting, false);
+    AISetFlag(player, e_flagsEarlyDefScout, false);
+    AISetDefaultArmyUnit(player, c_KU_Volt);
+    AISetDefaultTownHall(player, c_KB_Citadel);
+
+    AISetMainState(player, e_mainState_Open, e_mainSubState_Init);
+
+    if (AIPlayerDifficulty(player) > c_skirHard) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringToText("Keiron AI: Difficulties above Harder are not supported at this time, please use at most Harder difficulty for this AI"));
+    }
+
+}
+
+//--------------------------------------------------------------------------------------------------
+void KeironOpen (int player);
+void KeironMid (int player);
+void KeironLate (int player);
+
+//--------------------------------------------------------------------------------------------------
+//  AIMeleeKeir
+//--------------------------------------------------------------------------------------------------
+void AIMeleeKeir (int player) {
+    int mainState = AIState(player, e_mainState);
+
+    if (AIPlayerDifficulty(player) >= c_skirChMoney) {
+        AIMeleeCheatResources(player);
+    }
+
+    if (mainState == e_mainState_Init)              { KeironInit(player);     }
+    else if (mainState == e_mainState_Open)         { KeironOpen(player);     }
+    else if (mainState == e_mainState_Mid)          { KeironMid(player);      }
+    else if (mainState == e_mainState_Late)         { KeironLate(player);     }
+    else { ErrorMeleeScript(player, "Invalid mainState"); }
+}
+
+
+void KeironOpen (int player) {
+    int diff = AIPlayerDifficulty(player);
+
+    if (diff == c_skirVeryEasy)       { KeironOpenVyEy(player); }
+    else if (diff == c_skirEasy)      { KeironOpenEasy(player); }
+    else if (diff == c_skirMedium)    { KeironOpenMedi(player); }
+    // else if (diff == c_skirMed_Hard)  { KeironOpenMdHd(player); }
+    // else if (diff == c_skirHard)      { KeironOpenHard(player); }
+    // else if (diff == c_skirHard_VH)   { KeironOpenHdVH(player); }
+    // else if (diff == c_skirVeryHard)  { KeironOpenVyHd(player); }
+    // else if (diff == c_skirChVision)  { KeironOpenChVi(player); }
+    // else if (diff == c_skirChMoney)   { KeironOpenChRe(player); }
+    // else                              { KeironOpenChIn(player); }
+    else { KeironOpenMdhd(player); }  // temp
+}
+
+void KeironMid (int player) {
+    int diff = AIPlayerDifficulty(player);
+
+    if (diff == c_skirVeryEasy)       { KeironMidVyEy(player); }
+    else if (diff == c_skirEasy)      { KeironMidEasy(player); }
+    else if (diff == c_skirMedium)    { KeironMidMedi(player); }
+    // else if (diff == c_skirMed_Hard)  { KeironMidMdHd(player); }
+    // else if (diff == c_skirHard)      { KeironMidHard(player); }
+    // else if (diff == c_skirHard_VH)   { KeironMidHdVH(player); }
+    // else if (diff == c_skirVeryHard)  { KeironMidVyHd(player); }
+    // else if (diff == c_skirChVision)  { KeironMidChVi(player); }
+    // else if (diff == c_skirChMoney)   { KeironMidChRe(player); }
+    // else                              { KeironMidChIn(player); }
+    else { KeironMidMdhd(player); }  // temp
+}
+
+void KeironLate (int player) {
+    int diff = AIPlayerDifficulty(player);
+
+    if (diff == c_skirVeryEasy)       { KeironLateVyEy(player); }
+    else if (diff == c_skirEasy)      { KeironLateEasy(player); }
+    else if (diff == c_skirMedium)    { KeironLateMedi(player); }
+    // else if (diff == c_skirMed_Hard)  { KeironLateMdHd(player); }
+    // else if (diff == c_skirHard)      { KeironLateHard(player); }
+    // else if (diff == c_skirHard_VH)   { KeironLateHdVH(player); }
+    // else if (diff == c_skirVeryHard)  { KeironLateVyHd(player); }
+    // else if (diff == c_skirChVision)  { KeironLateChVi(player); }
+    // else if (diff == c_skirChMoney)   { KeironLateChRe(player); }
+    // else                              { KeironLateChIn(player); }
+    else { KeironLateMdhd(player); }  // temp
+}

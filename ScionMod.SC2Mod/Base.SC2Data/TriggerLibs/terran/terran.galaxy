@@ -108,6 +108,11 @@ void AINewUnitTerr (int player, unit u) {
         AINewUnitXayi(player, u);
         return;
     }
+	
+    if (PlayerRace(player) == "Keir") {
+        AINewUnitKeir(player, u);
+        return;
+    }
 
     // ignored units
     //
@@ -178,6 +183,11 @@ unit AIGetScoutTerr (int player, int index, unit prev, bool allowWorkers) {
     if (PlayerRace(player) == "Xayi") {
         return AIGetScoutXayi(player, index, prev, allowWorkers);
     }
+	
+	
+    if (PlayerRace(player) == "Keir") {
+        return AIGetScoutKeir(player, index, prev, allowWorkers);
+    }
 
     if (!PlayerBeaconIsSet(player, c_beaconScout) &&
         !AIGetFlag(player, e_flagsScouting)) {
@@ -231,6 +241,10 @@ unit AIEarlyDefScoutTerr (int player, unit prev, bool allowWorkers) {
 
     if (PlayerRace(player) == "Xayi") {
         return AIEarlyDefScoutXayi(player, prev, allowWorkers);
+    }
+	
+    if (PlayerRace(player) == "Keir") {
+        return AIEarlyDefScoutKeir(player, prev, allowWorkers);
     }
     
     if (!AIGetFlag(player, e_flagsEarlyDefScout)) {
@@ -298,12 +312,17 @@ void AIMeleeTerr (int player) {
     if (PlayerRace(player) == "Gen") {
         AIMeleeGen(player);
         return;
-    }   
+    }
 
     if (PlayerRace(player) == "Xayi") {
         AIMeleeXayi(player);
         return;
-    }   
+    }
+	
+	if (PlayerRace(player) == "Keir") {
+        AIMeleeKeir(player);
+        return;
+    }
 
     if (AIPlayerDifficulty(player) >= c_skirChMoney) {
         AIMeleeCheatResources(player);
