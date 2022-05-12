@@ -3891,12 +3891,8 @@
         <On Terms="TimerExpired" Send="Destroy"/>
         <HostSiteOps Ops="SOpShadow"/>
     </CActorModel>
-    <CActorModel id="MendImpact" parent="ModelAnimationStyleContinuousUNIT">
-        <On Terms="Effect.Mend.Start; At Target" Send="Create"/>
-        <On Terms="Effect.Mend.Stop" Send="AnimBracketStop BSD"/>
-        <On Terms="ActorDestruction" Target="ScannerSweepVisual" Send="Destroy"/>
-        <On Terms="ActorCreation" Send="TimerSet 1.500000 Tim"/>
-        <On Terms="TimerExpired" Send="Destroy"/>
+    <CActorModel id="MendImpact" parent="ModelAnimationStyleOneShotUNIT">
+        <On Terms="Behavior.MendBehavior.On" Send="Create"/>
         <On Terms="Effect.SacrificialMutationHealCP.Start; At Target" Send="Create"/>
         <On Terms="Effect.FeedingPoolHealAuraCP.Start; At Target" Send="Create"/>
         <HostSiteOps Ops="SOpAttachOverhead" HoldRotation="1"/>
