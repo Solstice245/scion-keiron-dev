@@ -1624,13 +1624,7 @@
         <Model value="JupiterAttackSplat"/>
         <Scale value="0.700000"/>
     </CActorSplat>
-    <CActorModel id="FabricatorBuild" parent="TerranBuildingBuildSmall">
-        <Aliases index="1" value="_TerranBuildModel"/>
-        <On index="4" Terms="ActorCreation" Send="Create TerranConstructionAttached"/>
-        <On Terms="ActorCreation" Send="SetScale 1.250000"/>
-        <Model value="ProcessingCoreBuild"/>
-        <Scale value="0.800000"/>
-    </CActorModel>
+    <CActorModel id="FabricatorBuild" parent="GenetronBuildingBuild"/>
     <CActorSound id="MechUnitFabricationLoop" parent="SoundContinuous">
         <On Terms="AbilTrain.TrainLightweightMechs.Start" Send="Create"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Finish" Send="Destroy"/>
@@ -1684,6 +1678,7 @@
         <DeathArray index="Normal" ModelLink="UploaderDeath" SoundLink="Reactor_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeathSmall" SoundLink="Reactor_Explode"/>
         <BarOffset value="115"/>
+        <BarWidth value="50"/>
     </CActorUnit>
     <CActorModel id="JupiterNapalmImpact" parent="ModelAnimationStyleContinuousUNIT">
         <On Terms="Effect.JupiterNapalmCreatePersistent.Start" Target="RevenantBombNapalmCP" Send="Create"/>
@@ -2158,7 +2153,8 @@
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeathLarge" SoundLink="Barracks_Explode"/>
         <BarOffset value="115"/>
     </CActorUnit>
-    <CActorUnit id="Fabricator" parent="TerranBuilding" unitName="Fabricator">
+    <CActorUnit id="Fabricator" parent="GenetronBuilding" buildTime="64" unitName="Fabricator">
+        <On index="89" Terms="AnimDone; AnimName Birth" Send="AnimSetDuration Build 64.000000"/>
         <On Terms="AbilTrain.TrainHeavyweightMechs.Start" Send="AnimPlay StandWork Stand,Work PlayForever,RandomStartOffset"/>
         <On Terms="AbilTrain.TrainHeavyweightMechs.Finish" Send="AnimClear StandWork"/>
         <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Torrent" Send="Create TorrentConstruction"/>
@@ -2184,24 +2180,10 @@
         <On Terms="AbilTrain.TrainHeavyweightMechs.Finish; IsStatus Fabricating 5" Target="InciterConstruction" Send="Destroy Immediate"/>
         <BarOffset value="190"/>
         <BarWidth value="220"/>
-        <GroupIcon>
-            <Image value="Assets\Textures\wireframe-genetron-fabricator.dds"/>
-        </GroupIcon>
-        <HeroIcon value="Assets\Textures\btn-building-terran-fabricationstation.dds"/>
-        <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-mechstructurearmor.dds"/>
-        <SoundArray index="Birth" value=""/>
         <SoundArray index="Ready" value="Factory_Ready"/>
         <SoundArray index="What" value="Factory_What"/>
-        <SoundArray index="Construction" value="Terran_ConstructionWhat"/>
-        <UnitIcon value="Assets\Textures\btn-building-genetron-fabricator.dds"/>
-        <Wireframe>
-            <Image value="Assets\Textures\wireframe-genetron-fabricator.dds"/>
-        </Wireframe>
         <DeathArray index="Normal" ModelLink="FactoryDeath" SoundLink="Factory_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeathLarge" SoundLink="Factory_Explode"/>
-        <PlacementModel value="FabricatorPlacement"/>
-        <PlacementSound value="Terran_BuildingPlacement"/>
-        <PortraitModel value="GenetronAdjutantPortrait"/>
     </CActorUnit>
     <CActorSplat id="ManufacturerSplat" parent="GenericUnitSplat" unitName="Manufacturer"/>
     <CActorSplat id="FabricatorSplat" parent="GenericUnitSplat" unitName="Fabricator"/>
