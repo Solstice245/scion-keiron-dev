@@ -3729,27 +3729,23 @@
         <On Terms="ActorCreation; ValidatePlayer PiercingThrustCompleted" Send="SetTintColor {255,57,0 10.000000}"/>
     </CActorMissile>
     <CActorSound id="MendCastSound" parent="SoundOneShot">
-        <On Terms="Effect.Mend.Start; At Caster" Send="Create"/>
+        <On Terms="Abil.Mend.SourceCastStart" Send="Create"/>
         <Sound value="Queen_Transfusion"/>
     </CActorSound>
-    <CActorModel id="MendLaunch" parent="ModelAnimationStyleContinuous">
-        <On Terms="Effect.Mend.Start; At Caster" Send="Create"/>
-        <On Terms="Effect.Mend.Stop" Send="AnimBracketStop BSD"/>
-        <On Terms="ActorDestruction" Target="ScannerSweepVisual" Send="Destroy"/>
-        <On Terms="ActorCreation" Send="TimerSet 1.500000 Tim"/>
-        <On Terms="TimerExpired" Send="Destroy"/>
-        <HostSiteOps Ops="SOpShadow SoPMendImpactOffset"/>
+    <CActorModel id="MendLaunch" parent="ModelAnimationStyleOneShotUNIT">
+        <On Terms="Abil.Mend.SourceCastStart" Send="Create"/>
+        <HostSiteOps Ops="SOpAttachWeapon"/>
         <Model value="DevourerMPWeaponLaunch"/>
         <Scale value="2.000000,2.500000,2.000000"/>
     </CActorModel>
     <CActorUnit id="Mendling" parent="XayidUnitStandard" unitName="Mendling">
         <On index="61" Terms="WeaponStart.*.AttackStart" Send="AnimBracketStart Attack Spell,C"/>
-        <On Terms="Abil.Mend.SourceCastStart" Send="$Spell,B 0 -1.000000 -1.000000 0.625000 AsDuration"/>
+        <On Terms="Abil.Mend.SourceCastStart" Send="$Spell,B 0 -1.000000 -1.000000 1.200000 AsDuration"/>
         <On Terms="Abil.MendlingSacrificialMutation.Start" Send="AnimBracketStart Morph {} Morph {} ContentNonLooping"/>
         <On Terms="AbilMorph.*.Start" Send="Destroy"/>
         <PortraitModel value="QueenPortrait"/>
         <WalkAnimMoveSpeed value="2.5"/>
-        <BarOffset value="55"/>
+        <BarOffset value="50"/>
         <SoundArray index="Ready" value="LairViper_Ready"/>
         <SoundArray index="What" value="LairViper_What"/>
         <SoundArray index="Yes" value="LairViper_Yes"/>
@@ -3786,6 +3782,7 @@
             <AttachQuery Methods="AMFilterCenter"/>
             <Visuals TerrainPhysicsMaterial="Water" ActorModel="TerrainSquibHarnessContinuous" ModelLink="WaterRippleLarge"/>
         </TerrainSquibs>
+        <BarWidth value="55"/>
     </CActorUnit>
     <CActorUnit id="Prowler" parent="XayidUnitStandard" unitName="Prowler">
         <PortraitModel value="LurkerMPPortrait"/>
@@ -3893,7 +3890,7 @@
     </CActorModel>
     <CActorModel id="MendImpact" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Behavior.MendBehavior.On" Send="Create"/>
-        <On Terms="Effect.SacrificialMutationHealCP.Start; At Target" Send="Create"/>
+        <On Terms="Effect.SacrificialMutationHealMU.Start; At Target" Send="Create"/>
         <On Terms="Effect.FeedingPoolHealAuraCP.Start; At Target" Send="Create"/>
         <HostSiteOps Ops="SOpAttachOverhead" HoldRotation="1"/>
     </CActorModel>

@@ -171,6 +171,12 @@
     <CActorSound id="Fuse_Cast" parent="SoundOneShot">
         <On Terms="Abil.FuseFusion.SourceCastStart" Send="Create"/>
     </CActorSound>
+    <CActorModelMaterial id="TitanWeaponGlaze" parent="GlazeParent">
+        <On Terms="ActorCreation" Send="ModelMaterialApplyTo ::Main"/>
+        <On Terms="Behavior.TitanWeapon.On" Send="Create"/>
+        <On Terms="Behavior.TitanWeapon.Off" Send="AnimBracketStop BSD"/>
+        <ModelFlags index="AutomateGlobalLoops" value="1"/>
+    </CActorModelMaterial>
     <CActorBeamSimple id="KeironFusionBeam" parent="BeamSimpleAnimationStyleOneShot">
         <On Terms="Effect.FuseFusion.Start; At Target" Send="Create"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
@@ -1363,7 +1369,7 @@
     </CActorTurret>
     <CActorAction id="TitanWeaponAttack" parent="GenericAttackBase">
         <On Terms="Effect.TitanWeaponCP.Start" Send="Create"/>
-        <On Terms="Effect.TitanWeaponCP.Start; FromEffectTreeDescendant" Send="ActionDamage"/>
+        <On Terms="Effect.TitanWeaponDMG; FromEffectTreeDescendant" Send="ActionDamage"/>
         <On Terms="Effect.TitanWeaponCP.Stop" Send="Destroy WhenReady"/>
         <Beam value="TitanWeaponBeam"/>
         <AcquisitionYawHalfArc value="10.000000"/>
@@ -1371,11 +1377,13 @@
         <ActionFlags index="ImpactMonitorsTeleports" value="1"/>
         <ActionFlags index="LaunchForceSite" value="1"/>
         <Lifetime value="-1.000000"/>
+        <ImpactSiteOps Ops="SOpAttachHarness SOpAttachVolumeNoVizEnhance SOpForwardLaunchGuide"/>
     </CActorAction>
     <CActorBeamSimple id="TitanWeaponBeam" parent="BeamSimpleAnimationStyleContinuous">
-        <On Terms="Effect.TitanWeaponCP.Stop" Send="Destroy"/>
+        <On Terms="Effect.TitanWeaponCP.Stop; At Effect" Send="AnimBracketStop BSD"/>
         <Model value="TitanWeapon"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
+        <Macros value="ActionTargetTeleportDestroy"/>
     </CActorBeamSimple>
     <CActorModel id="KeironBuildModel" parent="ModelAddition">
         <Aliases value="_ZergBuildModel"/>

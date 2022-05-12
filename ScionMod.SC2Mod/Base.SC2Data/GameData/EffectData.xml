@@ -140,6 +140,13 @@
         <SpawnEffect value="MassaliskDummyAB"/>
         <SpawnUnit value="MassaliskDummy"/>
     </CEffectCreateUnit>
+    <CEffectSet id="Mend">
+        <ValidatorArray value="NotFullLife"/>
+        <ValidatorArray value="HasNoMendBehavior"/>
+        <EditorCategories value="Race:Zerg"/>
+        <EffectArray value="MendMU"/>
+        <EffectArray value="MendBehavior"/>
+    </CEffectSet>
     <CEffectCreatePersistent id="NullifierMissilesDummy">
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="TargetUnitOrPoint"/>
@@ -152,6 +159,9 @@
     <CEffectApplyBehavior id="RepulsorInterdictorBurrowCD">
         <EditorCategories value="Race:Genetron"/>
         <WhichUnit Value="Caster"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="MiningPrioritySearch" parent="CEffectApplyBehaviorGenetronTarget">
+        <Behavior value="ResourceTapSearch"/>
     </CEffectApplyBehavior>
     <CEffectCreateUnit id="UploaderCountDummyCreateUnit3x3">
         <ValidatorArray value="CasterNotDead"/>
@@ -520,11 +530,11 @@
         <Movers Link="LynxCannonWeapon" IfRangeLTE="15"/>
     </CEffectLaunchMissile>
     <CEffectApplyBehavior id="ResourceTap" parent="CEffectApplyBehaviorGenetronTarget"/>
-    <CEffectEnumArea id="MiningPriority">
+    <CEffectEnumArea id="MiningPrioritySearchArea">
+        <ValidatorArray value="ProcessingCoreMiningPriority"/>
         <EditorCategories value="Race:Genetron"/>
         <SearchFilters value="Worker;Ally,Neutral,Enemy,Structure,Missile,Stasis,Dead"/>
         <AreaArray Radius="8" Effect="ResourceTap"/>
-        <ValidatorArray value="ProcessingCoreMiningPriority"/>
     </CEffectEnumArea>
     <CEffectCreatePersistent id="NemesisMissilesCP">
         <EditorCategories value="Race:Genetron"/>
@@ -1196,9 +1206,9 @@
         <ValidatorArray value="IsArmoredType"/>
         <EditorCategories value="Race:Zerg"/>
         <WhichLocation Value="TargetUnit"/>
-        <PeriodCount value="9"/>
+        <PeriodCount value="10"/>
         <PeriodicEffectArray value="CleavingSpores"/>
-        <PeriodicPeriodArray value="0.389"/>
+        <PeriodicPeriodArray value="0.35"/>
     </CEffectCreatePersistent>
     <CEffectLaunchMissile id="CorrosiveSpores">
         <EditorCategories value="Race:Zerg"/>
@@ -1428,6 +1438,7 @@
         <Kind value="Ranged"/>
         <Visibility value="Visible"/>
         <KindSplash value="Splash"/>
+        <AttributeBonus index="Light" value="4"/>
     </CEffectDamage>
     <CEffectLaunchMissile id="Extermination">
         <EditorCategories value="Race:Zerg"/>
@@ -1515,16 +1526,6 @@
         <AmmoUnit value="MassaliskSporeWeaponAA"/>
     </CEffectLaunchMissile>
     <CEffectApplyBehavior id="MendBehavior" parent="ApplyBehaviorXayid"/>
-    <CEffectCreatePersistent id="Mend">
-        <ValidatorArray value="NotFullLife"/>
-        <ValidatorArray value="HasNoMendBehavior"/>
-        <EditorCategories value="Race:Zerg"/>
-        <WhichLocation Value="TargetUnit"/>
-        <InitialEffect value="MendBehavior"/>
-        <PeriodCount value="1"/>
-        <PeriodicEffectArray value="MendMU"/>
-        <PeriodicPeriodArray value="0"/>
-    </CEffectCreatePersistent>
     <CEffectDamage id="ScavengerClaws">
         <EditorCategories value="Race:Zerg"/>
         <ResponseFlags index="Acquire" value="1"/>
@@ -1553,31 +1554,23 @@
             <Change value="0.45"/>
         </VitalArray>
     </CEffectModifyUnit>
-    <CEffectCreatePersistent id="SacrificialMutationHealCP">
+    <CEffectModifyUnit id="SacrificialMutationHealMU">
         <ValidatorArray value="NotFullLife"/>
         <EditorCategories value="Race:Zerg"/>
-        <WhichLocation Value="TargetUnit"/>
-        <PeriodCount value="3"/>
-        <PeriodicEffectArray value="MendMU"/>
-        <PeriodicPeriodArray value="0.5"/>
-    </CEffectCreatePersistent>
+        <VitalArray index="Life">
+            <Change value="10"/>
+        </VitalArray>
+    </CEffectModifyUnit>
     <CEffectModifyUnit id="MendMU">
         <EditorCategories value="Race:Zerg"/>
         <VitalArray index="Life">
             <Change value="20"/>
         </VitalArray>
     </CEffectModifyUnit>
-    <CEffectCreatePersistent id="NeedleSpinesAntiGround">
-        <EditorCategories value="Race:Zerg"/>
-        <WhichLocation Value="TargetUnit"/>
-        <PeriodCount value="2"/>
-        <PeriodicEffectArray value="NeedleSpinesLM"/>
-        <PeriodicPeriodArray value="0.0625"/>
-    </CEffectCreatePersistent>
     <CEffectDamage id="NeedleSpinesDMG">
         <EditorCategories value="Race:Zerg"/>
         <ArmorReduction value="1"/>
-        <Amount value="6"/>
+        <Amount value="12"/>
         <ResponseFlags index="Acquire" value="1"/>
         <ResponseFlags index="Flee" value="1"/>
         <Flags index="Notification" value="1"/>
@@ -1586,13 +1579,12 @@
     <CEffectLaunchMissile id="NeedleSpinesLM">
         <EditorCategories value="Race:Zerg"/>
         <ImpactEffect value="NeedleSpinesDMG"/>
-        <AmmoUnit value="AcidSpinesWeapon"/>
+        <AmmoUnit value="NeedleSpinesWeapon"/>
     </CEffectLaunchMissile>
     <CEffectEnumArea id="SacrificialMutationHealSA">
         <EditorCategories value="Race:Zerg"/>
-        <ExcludeArray/>
         <SearchFilters value="Biological;Enemy,RawResource,HarvestableResource,Missile,Item,Stasis,Dead,Hidden,Invulnerable"/>
-        <AreaArray Radius="3" Effect="SacrificialMutationHealCP"/>
+        <AreaArray Radius="3" Effect="SacrificialMutationHealMU"/>
     </CEffectEnumArea>
     <CEffectCreatePersistent id="ScourCP">
         <EditorCategories value="Race:Zerg"/>
