@@ -513,17 +513,16 @@
     <CActorModel id="AvengerVengeanceMissileAdd" parent="ModelAddition">
         <HostSiteOps Ops="SOpAttachHardPoint"/>
     </CActorModel>
-    <CActorUnit id="FilteringPlantRich" parent="GenetronBuilding" unitName="FilteringPlantRich">
+    <CActorUnit id="FilteringPlantRich" parent="GenetronBuilding" buildTime="24.000000" unitName="FilteringPlantRich">
         <Aliases value="_UnitHuge"/>
         <Macros value="ExtractAnim"/>
         <On index="69" Terms="UnitConstruction.FilteringPlantRich.Start" Send="Create FilteringPlantBuild"/>
-        <On index="89" Terms="AnimDone; AnimName Birth" Send="AnimSetDuration Build 1.000000"/>
-        <On Terms="Behavior.HarvestableVespeneGeyserGas.Deplete" Send="SetTintColor 255,170,170"/>
-        <On Terms="Behavior.HarvestableVespeneGeyserGas.Deplete" Send="AnimGroupRemove D"/>
-        <On Terms="Behavior.HarvestableVespeneGeyserGas.Deplete" Send="AnimGroupApply B"/>
-        <On Terms="Behavior.HarvestableVespeneGeyserGas.Restore" Send="SetTintColor 255,255,255"/>
-        <On Terms="Behavior.HarvestableVespeneGeyserGas.Restore" Send="AnimGroupRemove B"/>
-        <On Terms="Behavior.HarvestableVespeneGeyserGas.Restore" Send="AnimGroupApply D"/>
+        <On Terms="Behavior.HarvestableRichVespeneGeyserGas.Deplete" Send="SetTintColor 255,170,170"/>
+        <On Terms="Behavior.HarvestableRichVespeneGeyserGas.Deplete" Send="AnimGroupRemove E"/>
+        <On Terms="Behavior.HarvestableRichVespeneGeyserGas.Deplete" Send="AnimGroupApply B"/>
+        <On Terms="Behavior.HarvestableRichVespeneGeyserGas.Restore" Send="SetTintColor 255,255,255"/>
+        <On Terms="Behavior.HarvestableRichVespeneGeyserGas.Restore" Send="AnimGroupRemove B"/>
+        <On Terms="Behavior.HarvestableRichVespeneGeyserGas.Restore" Send="AnimGroupApply E"/>
         <On Terms="Behavior.ColonyInfestation.On" Send="Create InfestationRefinery"/>
         <On Terms="UnitDeathCustomize; ValidateUnit NoVespene" Send="DeathCustomize Empty"/>
         <On Terms="UnitBirth.FilteringPlantRich" Send="TimerSet 0.100000 HideGeyser"/>
@@ -547,6 +546,8 @@
         <Wireframe>
             <Image index="0" value="Assets\Textures\wireframe-genetron-FilteringPlant.dds"/>
         </Wireframe>
+        <BuildModel value="FilteringPlantPlacement"/>
+        <PlacementModel value="FilteringPlantPlacement"/>
     </CActorUnit>
     <CActorModel id="Genetron_Unit_TrackingMunitions_Beam_Hardpoint" parent="ModelAnimationStyleContinuousUNIT">
         <HostSiteOps Ops="SOpAttachHardPoint"/>
