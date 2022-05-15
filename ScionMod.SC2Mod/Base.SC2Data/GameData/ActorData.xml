@@ -229,6 +229,12 @@
         <PortraitModel value="AquilaPortrait"/>
         <ModelFlags index="OutlineEmitter" value="1"/>
     </CActorUnit>
+    <CActorModel id="SpitterVolatileLaunch" parent="ModelAnimationStyleOneShot">
+        <On Terms="Effect.SpitterVolatileBurstDamage.Start; At Caster" Send="Create"/>
+    </CActorModel>
+    <CActorSound id="SpitterVolatileSound" parent="SoundOneShot">
+        <On Terms="Effect.SpitterVolatileBurstDamage.Start" Send="Create"/>
+    </CActorSound>
     <CActorDoodad id="Decal">
         <DoodadFlags index="DefaultToModelAABBBounds" value="0"/>
     </CActorDoodad>
@@ -3022,23 +3028,23 @@
         <ImpactMap index="None" Model="CasnoliskExplosiveGlobImpactModel" Scale="1.500000" Sound="Baneling_Suicide"/>
     </CActorAction>
     <CActorModel id="SunkenWarrenBuild" parent="ZergBuildingBuild"/>
-    <CActorUnit id="EvolutionPit" parent="ZergBuilding" unitName="EvolutionPit">
-        <On Terms="Abil.EvolutionPitResearch.Start" Send="AnimGroupApply Work"/>
-        <On Terms="Abil.EvolutionPitResearch.Stop" Send="AnimGroupRemove Work"/>
+    <CActorUnit id="CatalystPit" parent="ZergBuilding" unitName="CatalystPit">
+        <On Terms="Abil.CatalystPitResearch.Start" Send="AnimGroupApply Work"/>
+        <On Terms="Abil.CatalystPitResearch.Stop" Send="AnimGroupRemove Work"/>
         <DeathArray index="Normal" ModelLink="InfestationPitDeath" SoundLink="InfestationPit_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="ZergBuildingDeath" SoundLink="InfestationPit_Explode"/>
         <BarOffset value="120"/>
         <BarWidth value="150"/>
         <GroupIcon>
-            <Image value="Assets\Textures\wireframe-Xayid-evolutionpit.dds"/>
+            <Image value="Assets\Textures\wireframe-Xayid-catalystpit.dds"/>
         </GroupIcon>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-buildingarmor.dds"/>
         <SoundArray index="Birth" value=""/>
         <SoundArray index="Ready" value="InfestationPit_Ready"/>
         <SoundArray index="What" value="InfestationPit_What"/>
-        <UnitIcon value="Assets\Textures\btn-building-Xayid-evolutionpit.dds"/>
+        <UnitIcon value="Assets\Textures\btn-building-Xayid-catalystpit.dds"/>
         <Wireframe>
-            <Image value="Assets\Textures\wireframe-Xayid-evolutionpit.dds"/>
+            <Image value="Assets\Textures\wireframe-Xayid-catalystpit.dds"/>
         </Wireframe>
         <PortraitModel value="ZergBuildingEx2_Portrait"/>
     </CActorUnit>
@@ -3249,7 +3255,7 @@
         <ModelFlags index="OutlineEmitter" value="1"/>
         <HostSiteOps Ops="SOpBankerMutalisk"/>
     </CActorUnit>
-    <CActorAction id="RaptorAttack" parent="GenericAttack" effectImpact="CorrosiveSporesSET" effectLaunch="CorrosiveSpores">
+    <CActorAction id="RaptorAttack" parent="GenericAttack" effectImpact="SearingSporesSet" effectLaunch="SearingSpores">
         <LaunchAttachQuery Methods="AMFilterWeapon AMFilterWeapon01"/>
         <LaunchAssets Sound="ParasiticBombLaunch"/>
         <ImpactMap index="None" Model="RavagerWeaponImpact" Sound="Ravager_Attack_Impact"/>
@@ -3466,7 +3472,7 @@
         <On Terms="UnitBirth.BiomassCavern" Send="Create"/>
         <On Terms="UnitBirth.BiomassHatchery" Send="Create"/>
         <On Terms="UnitBirth.CasnoliskDen" Send="Create"/>
-        <On Terms="UnitBirth.EvolutionPit" Send="Create"/>
+        <On Terms="UnitBirth.CatalystPit" Send="Create"/>
         <On Terms="UnitBirth.MutagenChamber" Send="Create"/>
         <On Terms="UnitBirth.Siphoner" Send="Create"/>
         <On Terms="UnitBirth.SiphonerRich" Send="Create"/>
@@ -4043,10 +4049,11 @@
         <WalkAnimMoveSpeed value="2.8085"/>
     </CActorUnit>
     <CActorMissile id="SpitterAttackMissile" parent="GenericAttackMissile" unitName="SpitterAcidWeapon"/>
-    <CActorMissile id="RaptorAttackMissile" parent="GenericAttackMissile" unitName="CorrosiveSpore">
+    <CActorMissile id="RaptorAttackMissile" parent="GenericAttackMissile" unitName="SearingSpore">
         <On Terms="ActorCreation" Send="SetTintColor {255,64,0 10.000000}"/>
+        <Model value="SearingSpores"/>
     </CActorMissile>
-    <CActorAction id="SpitterAttack" parent="GenericAttack" effectImpact="SpitterSporesSA" effectLaunch="SpitterSpores">
+    <CActorAction id="SpitterAttack" parent="GenericAttack" effectImpact="SpitterSporesDMG" effectLaunch="SpitterSpores">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <LaunchAssets Sound="Ravager_AttackLaunch"/>
         <ImpactMap index="None" Model="SpitterAttackImpactModel" Sound="DevourerMP_AttackImpact"/>
@@ -4115,7 +4122,7 @@
         <BarWidth value="150"/>
     </CActorUnit>
     <CActorModel id="MutagenChamberBuild" parent="ZergBuildingBuild"/>
-    <CActorModel id="EvolutionPitBuild" parent="ZergBuildingBuild"/>
+    <CActorModel id="CatalystPitBuild" parent="ZergBuildingBuild"/>
     <CActorUnit id="Worm" parent="GenericUnitMorph" unitName="Worm">
         <ModelFlags index="OutlineEmitter" value="1"/>
         <DeathArray index="Normal" ModelLink="WormDeath" SoundLink="Larva_Explode" VoiceLink="Larva_Death"/>
