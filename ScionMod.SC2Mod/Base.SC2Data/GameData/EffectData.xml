@@ -193,6 +193,8 @@
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="TargetUnitOrPoint"/>
     </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="PulsarDampenerAutocast" parent="CEffectApplyBehaviorKeironCaster"/>
+    <CEffectApplyBehavior id="PulsarDampenerAlt" parent="CEffectApplyBehaviorKeironTarget"/>
     <CEffectSet id="RepulsorSuppressionCannons">
         <EditorCategories value="Race:Keiron"/>
         <EffectArray value="RepulsorInterdictorBurrowCD"/>
@@ -1003,7 +1005,7 @@
     </CEffectDamage>
     <CEffectDamage id="IBF7FlamethrowerDMG" parent="CEffectDamageGenetronWeapon">
         <AttributeBonus index="Light" value="6"/>
-        <Kind value="Melee"/>
+        <Kind value="Splash"/>
         <Amount value="10"/>
         <Death value="Fire"/>
     </CEffectDamage>
@@ -1665,13 +1667,6 @@
         <ImpactEffect value="SpitterSporesDMG"/>
         <AmmoUnit value="SpitterAcidWeapon"/>
     </CEffectLaunchMissile>
-    <CEffectEnumArea id="SpitterSporesSA">
-        <EditorCategories value="Race:Xayid"/>
-        <SearchFilters value="Ground;Missile,Item,Stasis,Dead,Hidden,Invulnerable"/>
-        <AreaArray Radius="0.75" Effect="SpitterSporesDMG"/>
-        <IncludeArray Value="Target"/>
-        <RevealerParams RadarFilters="-;Player,Ally"/>
-    </CEffectEnumArea>
     <CEffectApplyBehavior id="StagnatingBileStun" parent="ApplyBehaviorXayid">
         <ValidatorArray index="0" value="NotPlanetaryFortress"/>
         <ValidatorArray value="NotFrenzied"/>
@@ -2679,7 +2674,7 @@
         <VitalArray index="Energy">
             <Change value="5"/>
         </VitalArray>
-        <ValidatorArray value="MeridianAttackTargetNotStructure"/>
+        <ValidatorArray value="MeridianEnergyGainTargetFilters"/>
     </CEffectModifyUnit>
     <CEffectDamage id="MeridianWeaponDMG" parent="CEffectDamageKeironWeapon">
         <Amount value="15"/>
@@ -3541,6 +3536,7 @@
         <Amount value="4"/>
         <Death value="Electrocute"/>
         <ExcludeArray index="0" removed="1"/>
+        <Kind value="Splash"/>
     </CEffectDamage>
     <CEffectEnumArea id="ShieldAura" parent="CEffectSearchAreaKeiron">
         <SearchFilters value="-;Self,Missile,Stasis,Dead,Hidden"/>

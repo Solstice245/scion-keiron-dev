@@ -44,6 +44,12 @@
             <StateFlags index="Cloak" value="1"/>
         </Modification>
     </CBehaviorBuff>
+    <CBehaviorBuff id="Detector13" parent="Detector">
+        <Alignment value="Positive"/>
+        <InfoFlags index="Hidden" value="1"/>
+        <InfoIcon value="Assets\Textures\btn-status-detector.dds"/>
+        <Modification Detect="13"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="DownloadPhase">
         <InfoIcon value="Assets\Textures\btn-tips-visitthelab.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -87,6 +93,51 @@
             <Kind index="Spell" value="0"/>
             <Chance value="1"/>
         </DamageResponse>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="PulsarDampenerAutoTrigger">
+        <InfoFlags index="Hidden" value="1"/>
+        <InfoIcon value="Assets\Textures\btn-ability-keiron-dampener.dds"/>
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <InitialEffect value="PulsarDampenerAlt"/>
+        <Modification>
+            <BehaviorLinkDisableArray value="PulsarDampenerAutoTrigger"/>
+            <BehaviorLinkDisableArray value="PulsarDampenerAutoTriggerAlt"/>
+        </Modification>
+        <DamageResponse Handled="PulsarDampenerAutocast">
+            <Kind index="Melee" value="0"/>
+            <Kind index="Ranged" value="0"/>
+            <Kind index="NoProc" value="0"/>
+        </DamageResponse>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="PulsarDampenerAlt">
+        <InfoFlags index="Hidden" value="1"/>
+        <InfoIcon value="Assets\Textures\btn-ability-keiron-dampener.dds"/>
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <Duration value="4.2"/>
+        <DamageResponse ModifyFraction="0.25">
+            <RequireEffectArray value="InfernalFlameThrower"/>
+            <RequireEffectArray value="HellionTankDamage"/>
+            <RequireEffectArray value="ThermalLancesMU"/>
+            <RequireEffectArray value="TitanWeaponDMG"/>
+            <Chance value="1"/>
+        </DamageResponse>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="PulsarDampenerAutoTriggerAlt">
+        <InfoFlags index="Hidden" value="1"/>
+        <InfoIcon value="Assets\Textures\btn-ability-keiron-dampener.dds"/>
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <InitialEffect value="PulsarDampenerAlt"/>
+        <DamageResponse Handled="PulsarDampenerAutocast">
+            <RequireEffectArray value="InfernalFlameThrower"/>
+            <RequireEffectArray value="HellionTankDamage"/>
+            <RequireEffectArray value="ThermalLancesMU"/>
+            <RequireEffectArray value="TitanWeaponDMG"/>
+        </DamageResponse>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="PulsarDampenerAutocast">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <Duration value="0.5"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="RepulsorInterdictorBurrowCD">
         <InfoFlags index="Hidden" value="1"/>
@@ -1112,7 +1163,7 @@
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT3"/>
         <BuffFlags index="Countdown" value="0"/>
-        <Duration value="30"/>
+        <Duration value="35"/>
         <ExpireEffect value="AstralConduitEchoSet"/>
         <TimeScaleSource Effect="KeironChargeDummyCUSet"/>
     </CBehaviorBuff>
@@ -1214,7 +1265,7 @@
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT2"/>
         <BuffFlags index="Countdown" value="0"/>
-        <Duration value="60"/>
+        <Duration value="56"/>
         <ExpireEffect value="EmpyreanHarParSet"/>
         <TimeScaleSource Effect="KeironChargeDummyCUSet"/>
     </CBehaviorBuff>
@@ -1295,7 +1346,7 @@
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT2"/>
         <BuffFlags index="Countdown" value="0"/>
-        <Duration value="60"/>
+        <Duration value="63"/>
         <ExpireEffect value="AtriumIndMyrSet"/>
         <TimeScaleSource Effect="KeironChargeDummyCUSet"/>
     </CBehaviorBuff>
@@ -1356,13 +1407,14 @@
     <CBehaviorBuff id="PulsarDampener">
         <InfoIcon value="Assets\Textures\btn-ability-keiron-dampener.dds"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
-        <Duration value="4.2"/>
+        <Duration value="3.5"/>
         <DamageResponse ModifyFraction="0.25">
             <Kind index="Melee" value="0"/>
             <Kind index="Ranged" value="0"/>
             <Kind index="NoProc" value="0"/>
             <Chance value="1"/>
         </DamageResponse>
+        <InitialEffect value="PulsarDampenerAlt"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="AegisShieldAuraKB">
         <InfoFlags index="Hidden" value="1"/>
@@ -1383,7 +1435,7 @@
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT1"/>
         <BuffFlags index="Countdown" value="0"/>
-        <Duration value="75"/>
+        <Duration value="77"/>
         <ExpireEffect value="ZenithParagonSet"/>
     </CBehaviorBuff>
     <CBehaviorResource id="HarvestableRichVespeneGeyserGasKeiron">
@@ -1435,7 +1487,7 @@
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT2"/>
         <BuffFlags index="Countdown" value="0"/>
-        <Duration value="45"/>
+        <Duration value="49"/>
         <ExpireEffect value="FoundryUmbraSet"/>
         <TimeScaleSource Effect="KeironChargeDummyCUSet"/>
     </CBehaviorBuff>
@@ -1454,7 +1506,7 @@
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT2"/>
         <BuffFlags index="Countdown" value="0"/>
-        <Duration value="44.8"/>
+        <Duration value="56"/>
         <ExpireEffect value="SanctumPulSubSet"/>
         <TimeScaleSource Effect="KeironChargeDummyCUSet"/>
     </CBehaviorBuff>
@@ -1531,7 +1583,7 @@
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT3"/>
         <BuffFlags index="Countdown" value="0"/>
-        <Duration value="24"/>
+        <Duration value="30.8"/>
         <ExpireEffect value="EdificeParVolSet"/>
         <TimeScaleSource Effect="KeironChargeDummyCUSet"/>
     </CBehaviorBuff>
@@ -1610,7 +1662,7 @@
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT2"/>
         <BuffFlags index="Countdown" value="0"/>
-        <Duration value="50"/>
+        <Duration value="56"/>
         <ExpireEffect value="ElysiumMeridianSet"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="TitanWeapon">

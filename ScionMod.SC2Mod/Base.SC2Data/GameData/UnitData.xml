@@ -3457,7 +3457,6 @@
         <ShieldsStart value="300"/>
         <ShieldsMax value="300"/>
         <CostResource index="Minerals" value="200"/>
-        <CostResource index="Vespene" value="50"/>
         <AbilArray index="2" Link="KeironCitadelMaterialize"/>
         <AbilArray index="3" Link="ConduitResearch"/>
         <BehaviorArray Link="KeironChargeDummyCreation"/>
@@ -3483,9 +3482,11 @@
             <LayoutButtons Face="DevelopDissonanceProjector" Type="AbilCmd" AbilCmd="ConduitResearch,Research1" Row="0" Column="0"/>
         </CardLayouts>
         <GlossaryPriority value="61"/>
-        <ScoreMake value="250"/>
-        <ScoreKill value="250"/>
+        <ScoreMake value="200"/>
+        <ScoreKill value="200"/>
         <TechTreeUnlockedUnitArray value="Echo"/>
+        <TechTreeUnlockedUnitArray value="Fuse"/>
+        <Food value="6"/>
     </CUnit>
     <CUnit id="FormulatorRich" parent="Formulator">
         <BuiltOn index="0" value="RichVespeneGeyser"/>
@@ -3628,6 +3629,9 @@
         <LifeArmorName value="Unit/LifeArmorName/KeironBiologicalArmor"/>
         <FlagArray index="AICaster" value="1"/>
         <FlagArray index="AISupport" value="1"/>
+        <Sight value="10"/>
+        <Radius value="0.625"/>
+        <MinimapRadius value="0.75"/>
     </CUnit>
     <CUnit id="Elysium" parent="CBuildingKeiron">
         <Facing value="45"/>
@@ -3707,7 +3711,7 @@
         <ShieldsMax value="200"/>
         <Food value="0"/>
         <CostResource index="Minerals" value="75"/>
-        <CostResource index="Vespene" value="75"/>
+        <CostResource index="Vespene" value="50"/>
         <AbilArray index="1" Link="stop"/>
         <AbilArray index="2" Link="OculusReveal"/>
         <AbilArray index="3" removed="1"/>
@@ -3724,9 +3728,10 @@
         <MinimapRadius value="0.75"/>
         <BehaviorArray Link="Detector12"/>
         <GlossaryPriority value="53"/>
-        <Sight value="12"/>
-        <ScoreMake value="150"/>
-        <ScoreLost value="150"/>
+        <Sight value="13"/>
+        <ScoreMake value="125"/>
+        <ScoreLost value="125"/>
+        <VisionHeight value="4"/>
     </CUnit>
     <CUnit id="Paradox" parent="CUnitKeironFlyer">
         <FlagArray index="Turnable" value="0"/>
@@ -3908,12 +3913,20 @@
             <LayoutButtons Face="MaterializeVolt" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train2" Row="0" Column="1"/>
             <LayoutButtons Face="MaterializePulsar" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train3" Row="0" Column="2"/>
             <LayoutButtons Face="MaterializeSubjecter" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train4" Row="0" Column="3"/>
-            <LayoutButtons Face="MaterializeMeridian" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train5" Row="2" Column="0"/>
-            <LayoutButtons Face="MaterializeTitan" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train9" Row="2" Column="1"/>
+            <LayoutButtons Face="MaterializeTitan" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train9" Row="1" Column="3"/>
+            <LayoutButtons Face="MaterializeMeridian" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train5" Row="0" Column="4"/>
             <LayoutButtons Face="MaterializeUmbra" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train6" Row="1" Column="0"/>
             <LayoutButtons Face="MaterializeInducer" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train7" Row="1" Column="1"/>
             <LayoutButtons Face="MaterializeMyriad" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train8" Row="1" Column="2"/>
             <LayoutButtons Face="Cancel" Type="CancelSubmenu" Row="2" Column="4"/>
+            <LayoutButtons>
+                <Face value="MaterializeAirUnits"/>
+                <Type value="Submenu"/>
+                <SubmenuCardId value="0003"/>
+                <SubmenuIsSticky value="1"/>
+                <Row value="2"/>
+                <Column value="1"/>
+            </LayoutButtons>
         </CardLayouts>
         <CardLayouts CardId="0003">
             <LayoutButtons Face="MaterializeEcho" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train10" Row="0" Column="0"/>
@@ -3922,8 +3935,16 @@
             <LayoutButtons Face="MaterializeAperture" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train12" Row="0" Column="3"/>
             <LayoutButtons Face="MaterializeHarbinger" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train13" Row="1" Column="0"/>
             <LayoutButtons Face="MaterializeParadox" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train14" Row="1" Column="1"/>
-            <LayoutButtons Face="MaterializeParagon" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train15" Row="2" Column="0"/>
+            <LayoutButtons Face="MaterializeParagon" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train15" Row="1" Column="2"/>
             <LayoutButtons Face="Cancel" Type="CancelSubmenu" Row="2" Column="4"/>
+            <LayoutButtons>
+                <Face value="MaterializeGroundUnits"/>
+                <Type value="Submenu"/>
+                <SubmenuCardId value="0002"/>
+                <SubmenuIsSticky value="1"/>
+                <Row value="2"/>
+                <Column value="0"/>
+            </LayoutButtons>
         </CardLayouts>
         <Footprint value="Footprint5x5Contour"/>
         <PlacementFootprint value="Footprint5x5DropOff"/>
@@ -3953,11 +3974,13 @@
         <TechTreeProducedUnitArray value="Volt"/>
         <TechTreeProducedUnitArray value="Pulsar"/>
         <TechTreeProducedUnitArray value="Subjecter"/>
+        <TechTreeProducedUnitArray value="Meridian"/>
         <TechTreeProducedUnitArray value="Umbra"/>
         <TechTreeProducedUnitArray value="Inducer"/>
         <TechTreeProducedUnitArray value="Myriad"/>
         <TechTreeProducedUnitArray value="Titan"/>
         <TechTreeProducedUnitArray value="Echo"/>
+        <TechTreeProducedUnitArray value="Fuse"/>
         <TechTreeProducedUnitArray value="Aurora"/>
         <TechTreeProducedUnitArray value="Aperture"/>
         <TechTreeProducedUnitArray value="Harbinger"/>
@@ -3989,11 +4012,16 @@
                 <Column value="0"/>
             </LayoutButtons>
         </CardLayouts>
+        <CardLayouts index="1" CardId="0002">
+            <LayoutButtons index="4" Face="MaterializeMeridian" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train5" Row="0" Column="4"/>
+            <LayoutButtons index="5" Face="MaterializeTitan" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train9" Row="1" Column="3"/>
+        </CardLayouts>
         <CostResource index="Minerals" value="475"/>
         <CostResource index="Vespene" value="50"/>
         <ScoreMake value="525"/>
         <ScoreKill value="525"/>
         <EnergyStart value="50"/>
+        <Food value="20"/>
     </CUnit>
     <CUnit id="Converter" parent="CUnitKeiron">
         <LifeStart value="20"/>
@@ -4033,24 +4061,24 @@
         <CardLayouts CardId="0002">
             <LayoutButtons Face="Cancel" Type="CancelSubmenu" Row="2" Column="4"/>
             <LayoutButtons Face="Citadel" Type="AbilCmd" AbilCmd="KeironBuild,Build1" Row="0" Column="0"/>
-            <LayoutButtons Face="Sanctum" Type="AbilCmd" AbilCmd="KeironBuild,Build8" Row="1" Column="1"/>
-            <LayoutButtons Face="Reliquary" Type="AbilCmd" AbilCmd="KeironBuild,Build3" Row="1" Column="2"/>
+            <LayoutButtons Face="Sanctum" Type="AbilCmd" AbilCmd="KeironBuild,Build8" Row="1" Column="2"/>
             <LayoutButtons Face="Edifice" Type="AbilCmd" AbilCmd="KeironBuild,Build7" Row="1" Column="0"/>
             <LayoutButtons Face="Nullifier" Type="AbilCmd" AbilCmd="KeironBuild,Build4" Row="2" Column="1"/>
             <LayoutButtons Face="Oculus" Type="AbilCmd" AbilCmd="KeironBuild,Build6" Row="2" Column="0"/>
             <LayoutButtons Face="Formulator" Type="AbilCmd" AbilCmd="KeironBuild,Build2" Row="0" Column="1"/>
             <LayoutButtons Face="Stratus" Type="AbilCmd" AbilCmd="KeironBuild,Build5" Row="2" Column="2"/>
+            <LayoutButtons Face="Reliquary" Type="AbilCmd" AbilCmd="KeironBuild,Build3" Row="1" Column="1"/>
+            <LayoutButtons Face="Conduit" Type="AbilCmd" AbilCmd="KeironBuild,Build13" Row="1" Column="3"/>
         </CardLayouts>
         <CardLayouts CardId="0003">
             <LayoutButtons Face="Cancel" Type="CancelSubmenu" Row="2" Column="4"/>
             <LayoutButtons Face="Elysium" Type="AbilCmd" AbilCmd="KeironBuild,Build9" Row="0" Column="0"/>
             <LayoutButtons Face="Foundry" Type="AbilCmd" AbilCmd="KeironBuild,Build10" Row="1" Column="0"/>
-            <LayoutButtons Face="Conduit" Type="AbilCmd" AbilCmd="KeironBuild,Build13" Row="2" Column="0"/>
             <LayoutButtons Face="Atrium" Type="AbilCmd" AbilCmd="KeironBuild,Build11" Row="1" Column="1"/>
-            <LayoutButtons Face="Outlet" Type="AbilCmd" AbilCmd="KeironBuild,Build14" Row="2" Column="1"/>
+            <LayoutButtons Face="Outlet" Type="AbilCmd" AbilCmd="KeironBuild,Build14" Row="2" Column="0"/>
             <LayoutButtons Face="Pantheon" Type="AbilCmd" AbilCmd="KeironBuild,Build12" Row="1" Column="2"/>
-            <LayoutButtons Face="Empyrean" Type="AbilCmd" AbilCmd="KeironBuild,Build15" Row="2" Column="2"/>
-            <LayoutButtons Face="Zenith" Type="AbilCmd" AbilCmd="KeironBuild,Build16" Row="2" Column="3"/>
+            <LayoutButtons Face="Empyrean" Type="AbilCmd" AbilCmd="KeironBuild,Build15" Row="2" Column="1"/>
+            <LayoutButtons Face="Zenith" Type="AbilCmd" AbilCmd="KeironBuild,Build16" Row="2" Column="2"/>
         </CardLayouts>
         <Sight value="8"/>
         <MinimapRadius value="0.375"/>
@@ -4235,6 +4263,8 @@
         <TurningRate value="540"/>
         <SubgroupPriority value="28"/>
         <FlagArray index="AISplash" value="1"/>
+        <BehaviorArray Link="PulsarDampenerAutoTrigger"/>
+        <BehaviorArray Link="PulsarDampenerAutoTriggerAlt"/>
     </CUnit>
     <CUnit id="ReturnGamutOrb" parent="MISSILE_INVULNERABLE">
         <Race value="Keir"/>
@@ -4295,7 +4325,7 @@
         <LifeMax value="700"/>
         <ShieldsStart value="350"/>
         <ShieldsMax value="350"/>
-        <CostResource index="Minerals" value="225"/>
+        <CostResource index="Minerals" value="200"/>
         <AbilArray index="2" Link="KeironCitadelMaterialize"/>
         <AbilArray index="3" Link="SanctumResearch"/>
         <BehaviorArray Link="KeironChargeDummyCreation"/>
@@ -4313,6 +4343,7 @@
         <ScoreKill value="225"/>
         <TechTreeUnlockedUnitArray value="Pulsar"/>
         <TechTreeUnlockedUnitArray value="Subjecter"/>
+        <Food value="6"/>
     </CUnit>
     <CUnit id="MeridianWeapon" parent="MISSILE">
         <Race value="Keir"/>
@@ -4615,7 +4646,7 @@
         <LifeMax value="700"/>
         <ShieldsStart value="350"/>
         <ShieldsMax value="350"/>
-        <CostResource index="Minerals" value="225"/>
+        <CostResource index="Minerals" value="200"/>
         <BehaviorArray Link="KeironChargeDummyCreation"/>
         <EffectArray index="Death" value="EdificeParVolDeathCP"/>
         <CardLayouts index="0">
@@ -4633,6 +4664,7 @@
         <ScoreKill value="225"/>
         <TechTreeUnlockedUnitArray value="Pariah"/>
         <TechTreeUnlockedUnitArray value="Volt"/>
+        <Food value="6"/>
     </CUnit>
     <CUnit id="Foundry" parent="CBuildingKeiron">
         <Facing value="45"/>
