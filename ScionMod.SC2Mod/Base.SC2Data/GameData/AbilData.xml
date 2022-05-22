@@ -1031,11 +1031,11 @@
             <Unit value="Raptor"/>
         </InfoArray>
         <InfoArray index="Train3" Time="38">
-            <Button DefaultButtonFace="Exterminator" Requirements="HaveEvolutionPit"/>
+            <Button DefaultButtonFace="Exterminator" Requirements="HaveCatalystPit"/>
             <Unit value="Exterminator"/>
         </InfoArray>
         <InfoArray index="Train4" Time="40">
-            <Button DefaultButtonFace="Xayithoan" Requirements="HaveEvolutionPit"/>
+            <Button DefaultButtonFace="Xayithoan" Requirements="HaveCatalystPit"/>
             <Unit value="Xayithoan"/>
         </InfoArray>
         <InfoArray index="Train6" Time="65">
@@ -1220,7 +1220,7 @@
         <UninterruptibleArray index="Channel" value="1"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="Dash"/>
     </CAbilEffectTarget>
-    <CAbilResearch id="EvolutionPitResearch">
+    <CAbilResearch id="CatalystPitResearch">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <InfoArray index="Research1" Time="160" Alert="UpgradeComplete_Zerg" Upgrade="XayidFlyerAttacksLevel1">
             <Resource index="Minerals" value="100"/>
@@ -1313,11 +1313,11 @@
         <InfoArray index="Build10" Unit="AvianNest" Time="60">
             <Button DefaultButtonFace="AvianNest" Requirements="HaveMutagenChamber"/>
         </InfoArray>
-        <InfoArray index="Build11" Unit="EvolutionPit" Time="40">
-            <Button DefaultButtonFace="EvolutionPit" Requirements="HaveAvianNest"/>
+        <InfoArray index="Build11" Unit="CatalystPit" Time="40">
+            <Button DefaultButtonFace="CatalystPit" Requirements="HaveAvianNest"/>
         </InfoArray>
         <InfoArray index="Build12" Unit="SunkenWarren" Time="100">
-            <Button DefaultButtonFace="SunkenWarren" Requirements="HaveEvolutionPit"/>
+            <Button DefaultButtonFace="SunkenWarren" Requirements="HaveCatalystPit"/>
         </InfoArray>
         <InfoArray index="Build14" Unit="BilePit" Time="40">
             <Button DefaultButtonFace="BilePit" Requirements="HaveXayidDen"/>
@@ -1732,7 +1732,7 @@
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Flags index="RequireTargetVision" value="0"/>
         <Cost>
-            <Cooldown TimeUse="21"/>
+            <Cooldown TimeUse="10.5"/>
         </Cost>
         <Range value="40"/>
         <Arc value="360"/>
@@ -1758,11 +1758,17 @@
     </CAbilEffectInstant>
     <CAbilEffectInstant id="PulsarDampener">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <Flags index="AutoCast" value="1"/>
+        <Flags index="AutoCastOn" value="1"/>
         <Flags index="Transient" value="1"/>
         <Cost>
-            <Cooldown TimeUse="20"/>
+            <Cooldown TimeUse="14"/>
         </Cost>
         <CmdButtonArray index="Execute" DefaultButtonFace="PulsarDampener" Requirements="UseDampener"/>
+        <AutoCastAcquireLevel value="Defensive"/>
+        <AutoCastFilters value="-;Player,Ally"/>
+        <AutoCastRange value="1000"/>
+        <AutoCastValidatorArray value="PulsarAutocast"/>
     </CAbilEffectInstant>
     <CAbilRally id="RallyCitadel">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Structures"/>
@@ -2020,7 +2026,7 @@
         <InfoArray index="Build6" Unit="Oculus" Time="25">
             <Button DefaultButtonFace="Oculus" Requirements="HaveEdifice"/>
         </InfoArray>
-        <InfoArray index="Build7" Unit="Edifice" Time="65">
+        <InfoArray index="Build7" Unit="Edifice" Time="60">
             <Button DefaultButtonFace="Edifice" Requirements="HaveCitadel"/>
         </InfoArray>
         <InfoArray index="Build8" Unit="Sanctum" Time="60">
@@ -2039,13 +2045,13 @@
             <Button DefaultButtonFace="Pantheon" Requirements="HaveAtrium"/>
         </InfoArray>
         <InfoArray index="Build13" Unit="Conduit" Time="45">
-            <Button DefaultButtonFace="Conduit" Requirements="HaveSanctum"/>
+            <Button DefaultButtonFace="Conduit" Requirements="HaveEdifice"/>
         </InfoArray>
         <InfoArray index="Build14" Unit="Outlet" Time="70">
             <Button DefaultButtonFace="Outlet" Requirements="HaveSanctum"/>
         </InfoArray>
         <InfoArray index="Build15" Unit="Empyrean" Time="65">
-            <Button DefaultButtonFace="Empyrean" Requirements="HaveConduitOrOutlet"/>
+            <Button DefaultButtonFace="Empyrean" Requirements="HaveSanctum"/>
         </InfoArray>
         <InfoArray index="Build16" Unit="Zenith" Time="80">
             <Button DefaultButtonFace="Zenith" Requirements="HaveEmpyrean"/>

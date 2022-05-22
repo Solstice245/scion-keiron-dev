@@ -193,6 +193,8 @@
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="TargetUnitOrPoint"/>
     </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="PulsarDampenerAutocast" parent="CEffectApplyBehaviorKeironCaster"/>
+    <CEffectApplyBehavior id="PulsarDampenerAlt" parent="CEffectApplyBehaviorKeironTarget"/>
     <CEffectSet id="RepulsorSuppressionCannons">
         <EditorCategories value="Race:Keiron"/>
         <EffectArray value="RepulsorInterdictorBurrowCD"/>
@@ -205,6 +207,17 @@
     <CEffectApplyBehavior id="MiningPrioritySearch" parent="CEffectApplyBehaviorGenetronTarget">
         <Behavior value="ResourceTapSearch"/>
     </CEffectApplyBehavior>
+    <CEffectDamage id="SpitterVolatileBurstDamage">
+        <EditorCategories value="Race:Xayid"/>
+        <Flags index="Notification" value="1"/>
+        <Kind value="Splash"/>
+        <KindSplash value="Splash"/>
+        <Amount value="45"/>
+        <Death value="Disintegrate"/>
+        <AreaArray Radius="2" Fraction="1"/>
+        <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <ImpactLocation Value="SourceUnitOrPoint"/>
+    </CEffectDamage>
     <CEffectCreateUnit id="UploaderCountDummyCreateUnit3x3">
         <ValidatorArray value="CasterNotDead"/>
         <EditorCategories value="Race:Genetron"/>
@@ -373,13 +386,11 @@
     </CEffectModifyUnit>
     <CEffectModifyUnit id="JupiterRevenantBombCooldownFinal">
         <EditorCategories value="Race:Genetron"/>
-        <DebugTrace value="1"/>
         <ImpactUnit Value="Source"/>
         <Cost Abil="RevenantBomb,Execute" CooldownOperation="Set" CooldownTimeUse="10"/>
     </CEffectModifyUnit>
     <CEffectModifyUnit id="JupiterRevenantBombCooldownInit">
         <EditorCategories value="Race:Genetron"/>
-        <DebugTrace value="1"/>
         <ImpactUnit Value="Source"/>
         <Cost Abil="RevenantBomb,Execute" CooldownOperation="Set" CooldownTimeUse="0.0625"/>
     </CEffectModifyUnit>
@@ -994,7 +1005,7 @@
     </CEffectDamage>
     <CEffectDamage id="IBF7FlamethrowerDMG" parent="CEffectDamageGenetronWeapon">
         <AttributeBonus index="Light" value="6"/>
-        <Kind value="Melee"/>
+        <Kind value="Splash"/>
         <Amount value="10"/>
         <Death value="Fire"/>
     </CEffectDamage>
@@ -1167,7 +1178,7 @@
         <ValidatorArray index="0" value="CasterIsNotUnderConstruction"/>
         <EditorCategories value="Race:Xayid"/>
         <ImpactEffect value="BileGlobDMG"/>
-        <AmmoUnit value="CorrosiveSpore"/>
+        <AmmoUnit value="SearingSpore"/>
     </CEffectLaunchMissile>
     <CEffectLaunchMissile id="BileGlobLAG" parent="BileGlob">
         <Name value="Effect/Name/BileGlobLAG"/>
@@ -1249,25 +1260,25 @@
         <PeriodicEffectArray value="CleavingSpores"/>
         <PeriodicPeriodArray value="0.35"/>
     </CEffectCreatePersistent>
-    <CEffectLaunchMissile id="CorrosiveSpores">
+    <CEffectLaunchMissile id="SearingSpores">
         <EditorCategories value="Race:Xayid"/>
-        <ImpactEffect value="CorrosiveSporesSET"/>
-        <AmmoUnit value="CorrosiveSpore"/>
+        <ImpactEffect value="SearingSporesSet"/>
+        <AmmoUnit value="SearingSpore"/>
     </CEffectLaunchMissile>
-    <CEffectDamage id="CorrosiveSporesDMG">
+    <CEffectDamage id="SearingSporesDMG">
         <EditorCategories value="Race:Xayid"/>
         <ResponseFlags index="Acquire" value="1"/>
         <ResponseFlags index="Flee" value="1"/>
         <ArmorReduction value="1"/>
+        <Visibility value="Visible"/>
         <Flags index="Notification" value="1"/>
+        <Kind value="Ranged"/>
         <Amount value="9"/>
         <Death value="Fire"/>
-        <Kind value="Ranged"/>
-        <Visibility value="Visible"/>
     </CEffectDamage>
-    <CEffectSet id="CorrosiveSporesSET">
+    <CEffectSet id="SearingSporesSet">
         <EditorCategories value="Race:Xayid"/>
-        <EffectArray value="CorrosiveSporesDMG"/>
+        <EffectArray value="SearingSporesDMG"/>
         <EffectArray value="CleavingSporesCP"/>
     </CEffectSet>
     <CEffectApplyBehavior id="CoveringSprayAB" parent="ApplyBehaviorXayid"/>
@@ -1642,23 +1653,20 @@
         <ArmorReduction value="1"/>
         <Amount value="30"/>
         <Death value="Disintegrate"/>
-        <SearchFilters value="-;Player,Ally,Air,Hidden,Invulnerable"/>
+        <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <ResponseFlags index="Acquire" value="1"/>
         <ResponseFlags index="Flee" value="1"/>
         <Flags index="Notification" value="1"/>
         <Kind value="Ranged"/>
+        <AreaArray Radius="0.75" Fraction="1"/>
+        <IncludeArray Value="Target"/>
     </CEffectDamage>
     <CEffectLaunchMissile id="SpitterSpores">
         <EditorCategories value="Race:Xayid"/>
         <ImpactLocation Value="TargetPoint"/>
-        <ImpactEffect value="SpitterSporesSA"/>
+        <ImpactEffect value="SpitterSporesDMG"/>
         <AmmoUnit value="SpitterAcidWeapon"/>
     </CEffectLaunchMissile>
-    <CEffectEnumArea id="SpitterSporesSA">
-        <EditorCategories value="Race:Xayid"/>
-        <SearchFilters value="Ground;Missile,Item,Stasis,Dead,Hidden,Invulnerable"/>
-        <AreaArray Radius="0.75" Effect="SpitterSporesDMG"/>
-    </CEffectEnumArea>
     <CEffectApplyBehavior id="StagnatingBileStun" parent="ApplyBehaviorXayid">
         <ValidatorArray index="0" value="NotPlanetaryFortress"/>
         <ValidatorArray value="NotFrenzied"/>
@@ -2666,7 +2674,7 @@
         <VitalArray index="Energy">
             <Change value="5"/>
         </VitalArray>
-        <ValidatorArray value="MeridianAttackTargetNotStructure"/>
+        <ValidatorArray value="MeridianEnergyGainTargetFilters"/>
     </CEffectModifyUnit>
     <CEffectDamage id="MeridianWeaponDMG" parent="CEffectDamageKeironWeapon">
         <Amount value="15"/>
@@ -3113,9 +3121,7 @@
         <Behavior value="InvertFField"/>
     </CEffectApplyBehavior>
     <CEffectApplyBehavior id="InvertFFieldAB2">
-        <ValidatorArray index="0" value="InvertFFieldABTargetFilters"/>
         <EditorCategories value="Race:Keiron"/>
-        <Marker Link="Effect/InvertFFieldAB"/>
         <Behavior value="InvertFField2"/>
     </CEffectApplyBehavior>
     <CEffectCreatePersistent id="InvertFFieldCP">
@@ -3182,9 +3188,7 @@
         <Behavior value="NoCreate"/>
     </CEffectApplyBehavior>
     <CEffectRemoveBehavior id="ParagonDropRemoveHasSpawnRB">
-        <ValidatorArray index="0" value="ParagonDropNoCreateABTargetFilters"/>
         <EditorCategories value="Race:Keiron"/>
-        <Marker Link="Effect/ParagonDropNoCreateAB"/>
         <WhichUnit Value="Caster"/>
         <BehaviorLink value="ParagonHasSpawn"/>
     </CEffectRemoveBehavior>
@@ -3206,17 +3210,13 @@
         <Behavior value="ParagonSpawnCount"/>
     </CEffectApplyBehavior>
     <CEffectRemoveBehavior id="ParagonSpawnCountRB">
-        <ValidatorArray index="0" value="ParagonSpawnCountABTargetFilters"/>
         <EditorCategories value="Race:Keiron"/>
-        <Marker Link="Effect/ParagonSpawnCountAB"/>
         <WhichUnit Value="Caster"/>
         <BehaviorLink value="ParagonSpawnCount"/>
         <Count value="1"/>
     </CEffectRemoveBehavior>
     <CEffectApplyBehavior id="ParagonSpawnDisconnectedNoCreateAB">
-        <ValidatorArray index="0" value="ParagonSpawnDisconnectedABTargetFilters"/>
         <EditorCategories value="Race:Keiron"/>
-        <Marker Link="Effect/ParagonSpawnDisconnectedAB"/>
         <WhichUnit Effect="ParagonSpawnCU"/>
         <Behavior value="NoCreate"/>
     </CEffectApplyBehavior>
@@ -3245,9 +3245,7 @@
         <BehaviorLink value="ParagonHasSpawn"/>
     </CEffectRemoveBehavior>
     <CEffectRemoveBehavior id="ParagonSpawnDisconnectedRBHasSpawn">
-        <ValidatorArray index="0" value="ParagonFindSpawnUnitRBTargetFilters"/>
         <EditorCategories value="Race:Keiron"/>
-        <Marker Link="Effect/ParagonFindSpawnUnitRB"/>
         <WhichUnit Effect="ParagonSpawnCU"/>
         <BehaviorLink value="ParagonHasSpawn"/>
     </CEffectRemoveBehavior>
@@ -3263,9 +3261,7 @@
         <Behavior value="ParagonHasSpawn"/>
     </CEffectApplyBehavior>
     <CEffectApplyBehavior id="ParagonHasSpawnSourceAB">
-        <ValidatorArray index="0" value="ParagonHasSpawnABTargetFilters"/>
         <EditorCategories value="Race:Keiron"/>
-        <Marker Link="Effect/ParagonHasSpawnAB"/>
         <WhichUnit Value="Source"/>
         <Behavior value="ParagonHasSpawn"/>
     </CEffectApplyBehavior>
@@ -3281,7 +3277,6 @@
         <Origin Value="SourceUnit"/>
     </CEffectCreateUnit>
     <CEffectSet id="ParagonSpawnCUSet">
-        <ValidatorArray value="ParagonSpawnCUSetTargetFilters"/>
         <EditorCategories value="Race:Keiron"/>
         <EffectArray value="ParagonSpawnABFollow"/>
         <EffectArray value="ParagonHasSpawnAB"/>
@@ -3376,7 +3371,6 @@
     </CEffectCreatePersistent>
     <CEffectEnumArea id="Pulsar4DMRightSA">
         <EditorCategories value="Race:Keiron"/>
-        <DebugTrace value="1"/>
         <LaunchLocation Value="CasterUnit"/>
         <ImpactLocation Value="CasterUnit"/>
         <IncludeArray Effect="Pulsar4DMCUSet" Value="Target"/>
@@ -3413,7 +3407,6 @@
     </CEffectCreatePersistent>
     <CEffectEnumArea id="Pulsar4DMFrontSA">
         <EditorCategories value="Race:Keiron"/>
-        <DebugTrace value="1"/>
         <LaunchLocation Value="CasterUnit"/>
         <ImpactLocation Value="CasterUnit"/>
         <IncludeArray Effect="Pulsar4DMCUSet" Value="Target"/>
@@ -3427,7 +3420,6 @@
     </CEffectEnumArea>
     <CEffectEnumArea id="Pulsar4DMLeftSA">
         <EditorCategories value="Race:Keiron"/>
-        <DebugTrace value="1"/>
         <LaunchLocation Value="CasterUnit"/>
         <ImpactLocation Value="CasterUnit"/>
         <IncludeArray Effect="Pulsar4DMCUSet" Value="Target"/>
@@ -3442,7 +3434,6 @@
     </CEffectEnumArea>
     <CEffectEnumArea id="Pulsar4DMBackSA">
         <EditorCategories value="Race:Keiron"/>
-        <DebugTrace value="1"/>
         <LaunchLocation Value="CasterUnit"/>
         <ImpactLocation Value="CasterUnit"/>
         <IncludeArray Effect="Pulsar4DMCUSet" Value="Target"/>
@@ -3545,6 +3536,7 @@
         <Amount value="4"/>
         <Death value="Electrocute"/>
         <ExcludeArray index="0" removed="1"/>
+        <Kind value="Splash"/>
     </CEffectDamage>
     <CEffectEnumArea id="ShieldAura" parent="CEffectSearchAreaKeiron">
         <SearchFilters value="-;Self,Missile,Stasis,Dead,Hidden"/>
