@@ -20,7 +20,7 @@
         <Wireframe>
             <Image value="Assets\Textures\wireframe-genetron-##unitName##.dds"/>
         </Wireframe>
-        <BuildModel value="##unitName##Placement"/>
+        <BuildModel value="##unitName##Birth"/>
         <PlacementModel value="##unitName##Placement"/>
         <PortraitModel value="GenetronAdjutantPortrait"/>
         <PlacementActorModel value="GenetronPlacementModel"/>
@@ -990,7 +990,7 @@
         <On Terms="AbilMorph.*.Cancel; MorphTo InterdictorBurrowed" Send="AnimGroupRemove Burrow"/>
         <On Terms="AbilMorph.*.Cancel; MorphTo Interdictor" Send="AnimGroupApply Burrow Burrow Unburrow ClosingFull"/>
         <On Terms="Behavior.LockdownMode.On" Target="InterdictorLookAt" Send="LookAtStop"/>
-        <On Terms="Behavior.LockdownMode.On" Target="InterdictorLookAtTurretY" Send="LookAtStart"/>
+        <On Terms="Behavior.LockdownMode.Off" Target="InterdictorLookAtTurretY" Send="LookAtStart"/>
         <PlacementSound value="Terran_BuildingPlacementSmall"/>
         <DeathArray index="Normal" ModelLink="MissileTurretDeath" SoundLink="MissileTurret_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeathSmall" SoundLink="MissileTurret_Explode"/>
@@ -1261,8 +1261,7 @@
     <CActorTurret id="RepulsorTurret">
         <On Terms="TurretEnable.RepulsorTurret" Send="Create"/>
     </CActorTurret>
-    <CActorUnit id="Repulsor" parent="GenetronBuilding" buildTime="44" unitName="Repulsor">
-        <On index="89" Terms="AnimDone; AnimName Birth" Send="AnimSetDuration Build 44.000000"/>
+    <CActorUnit id="Repulsor" parent="GenetronBuilding" buildTime="44.000000" unitName="Repulsor">
         <On Terms="UnitDeathCustomize; ValidateUnit IsBurrowedUnit" Send="DeathCustomize Burrowed"/>
         <On Terms="UnitBirth.RepulsorBurrowed" Send="Create"/>
         <On Terms="UnitBirth.RepulsorBurrowed" Send="AnimGroupApply Burrow Burrow Unburrow ClosingFull,Instant"/>
@@ -1417,13 +1416,12 @@
         <Sound value="LockDownMode_Loop"/>
     </CActorSound>
     <CActorModel id="TechVaultBuild" parent="GenetronBuildingBuild"/>
-    <CActorUnit id="TechVault" parent="GenetronBuilding" buildTime="59" unitName="TechVault">
+    <CActorUnit id="TechVault" parent="GenetronBuilding" buildTime="59.000000" unitName="TechVault">
         <BarWidth value="130"/>
         <SoundArray index="Ready" value="Bunker_Ready"/>
         <SoundArray index="What" value="Bunker_What"/>
         <DeathArray index="Normal" ModelLink="BunkerDeath" SoundLink="Armory_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeathSmall" SoundLink="Armory_Explode"/>
-        <On index="89" Terms="AnimDone; AnimName Birth" Send="AnimSetDuration Build 64.000000"/>
         <On Terms="Abil.TechVaultResearch.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
         <On Terms="Abil.TechVaultResearch.Stop" Send="AnimClear StandWork"/>
     </CActorUnit>
@@ -1690,8 +1688,7 @@
     <CActorMissile id="BadgerAutogunMissile" parent="GenericAttackMissile" unitName="LancerAutogunWeapon">
         <Model value="BadgerAutogunWeaponMissile"/>
     </CActorMissile>
-    <CActorUnit id="AssemblyArray" parent="GenetronBuilding" buildTime="64" unitName="AssemblyArray">
-        <On index="89" Terms="AnimDone; AnimName Birth" Send="AnimSetDuration Build 64.000000"/>
+    <CActorUnit id="AssemblyArray" parent="GenetronBuilding" buildTime="64.000000" unitName="AssemblyArray">
         <On Terms="AbilTrain.BuildAircraft.Start" Send="AnimPlay StandWork Stand,Work PlayForever,RandomStartOffset"/>
         <On Terms="AbilTrain.BuildAircraft.Finish" Send="AnimClear StandWork"/>
         <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced AvengerGenetron" Send="Create AvengerConstruction"/>
@@ -1776,8 +1773,7 @@
     <CActorSplat id="UploaderSplat" parent="GenericUnitSplat" unitName="ProcessingCore">
         <On index="2" Terms="UnitBirth.Uploader" Send="Create"/>
     </CActorSplat>
-    <CActorUnit id="Uploader" parent="GenetronBuilding" buildTime="29" unitName="Uploader">
-        <On index="89" Terms="AnimDone; AnimName Birth" Send="AnimSetDuration Build 29.000000"/>
+    <CActorUnit id="Uploader" parent="GenetronBuilding" buildTime="29.000000" unitName="Uploader">
         <On Terms="Abil.UploaderResearchManufacL1.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
         <On Terms="Abil.UploaderResearchManufacL1.Stop" Send="AnimClear StandWork"/>
         <On Terms="Abil.UploaderResearchFabricator.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
@@ -2265,8 +2261,7 @@
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeathLarge" SoundLink="Barracks_Explode"/>
         <BarOffset value="115"/>
     </CActorUnit>
-    <CActorUnit id="Fabricator" parent="GenetronBuilding" buildTime="64" unitName="Fabricator">
-        <On index="89" Terms="AnimDone; AnimName Birth" Send="AnimSetDuration Build 64.000000"/>
+    <CActorUnit id="Fabricator" parent="GenetronBuilding" buildTime="64.000000" unitName="Fabricator">
         <On Terms="AbilTrain.TrainHeavyweightMechs.Start" Send="AnimPlay StandWork Stand,Work PlayForever,RandomStartOffset"/>
         <On Terms="AbilTrain.TrainHeavyweightMechs.Finish" Send="AnimClear StandWork"/>
         <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Torrent" Send="Create TorrentConstruction"/>
