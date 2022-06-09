@@ -140,6 +140,9 @@
         <EffectArray value="D15Magnum"/>
         <EffectArray value="TrackingImplant"/>
     </CEffectSet>
+    <CEffectApplyBehavior id="DashSpeed" parent="ApplyBehaviorXayid">
+        <WhichUnit Value="Caster"/>
+    </CEffectApplyBehavior>
     <CEffectIssueOrder id="GenetronSchematicTransmitIssueOrder">
         <ValidatorArray value="IsUploader"/>
         <EditorCategories value="Race:Genetron"/>
@@ -218,6 +221,11 @@
         <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <ImpactLocation Value="SourceUnitOrPoint"/>
     </CEffectDamage>
+    <CEffectSet id="TheGreatEqualizerTM" parent="CEffectSetGenetron">
+        <ValidatorArray value="TrackingMunitionsApplied"/>
+        <EffectArray value="TheGreatEqualizerDMG"/>
+        <EffectArray value="TrackingImplant"/>
+    </CEffectSet>
     <CEffectCreateUnit id="UploaderCountDummyCreateUnit3x3">
         <ValidatorArray value="CasterNotDead"/>
         <EditorCategories value="Race:Genetron"/>
@@ -629,7 +637,7 @@
         <ContainerType value="Transport"/>
         <ContainerUnit Effect="LaunchShockCharge" Value="Target"/>
     </CEffectLoadContainer>
-    <CEffectSet id="TheGreatEqualizerImpact" parent="CEffectSetGenetron">
+    <CEffectSet id="TheGreatEqualizer" parent="CEffectSetGenetron">
         <EffectArray value="TheGreatEqualizerDMG"/>
         <EffectArray value="TrackingImplant"/>
     </CEffectSet>
@@ -951,11 +959,6 @@
         <SearchFilters value="-;Player,Ally,Missile,Buried,Stasis,Dead,Hidden"/>
         <AreaArray Radius="3" Effect="ShockChargeSet"/>
     </CEffectEnumArea>
-    <CEffectLaunchMissile id="TheGreatEqualizer" parent="CEffectLaunchMissileGenetron"/>
-    <CEffectLaunchMissile id="TheGreatEqualizerLMTM" parent="TheGreatEqualizer">
-        <Name value="Effect/Name/TheGreatEqualizerLMTM"/>
-        <ValidatorArray index="0" value="TrackingMunitionsApplied"/>
-    </CEffectLaunchMissile>
     <CEffectSet id="VengeanceMissileS" parent="CEffectSetGenetron">
         <EffectArray value="VengeanceMissileMU"/>
         <EffectArray value="VengeanceMissileLM"/>
@@ -1287,9 +1290,6 @@
         <ImpactEffect value="CoveringSprayAB"/>
         <AmmoUnit value="CoveringSprayMissile"/>
     </CEffectLaunchMissile>
-    <CEffectApplyBehavior id="DashSpeed" parent="ApplyBehaviorXayid">
-        <WhichUnit Value="Caster"/>
-    </CEffectApplyBehavior>
     <CEffectCreatePersistent id="DashEffect">
         <EditorCategories value="Race:Xayid"/>
         <WhichLocation Value="SourceUnit"/>
@@ -1298,7 +1298,7 @@
     <CEffectApplyForce id="DashForce">
         <EditorCategories value="Race:Xayid"/>
         <WhichLocation Effect="DashEffect" Value="TargetPoint"/>
-        <Amount value="-2"/>
+        <Amount value="-5"/>
     </CEffectApplyForce>
     <CEffectApplyBehavior id="DashFrenzy" parent="ApplyBehaviorXayid"/>
     <CEffectApplyBehavior id="VirtusLockdownModeDuration" parent="CEffectApplyBehaviorGenetronCaster"/>
@@ -1310,17 +1310,11 @@
         <EditorCategories value="Race:Xayid"/>
         <Flags index="Channeled" value="1"/>
         <InitialEffect value="DashSpeed"/>
-        <FinalEffect value="DashRemoveSpeed"/>
+        <ExpireEffect value="XayidlingDashOrder"/>
         <PeriodCount value="4"/>
         <PeriodicEffectArray value="DashEffect"/>
         <PeriodicPeriodArray value="0.0625"/>
-        <ExpireDelay value="0.25"/>
     </CEffectCreatePersistent>
-    <CEffectRemoveBehavior id="DashRemoveSpeed">
-        <EditorCategories value="Race:Xayid"/>
-        <WhichUnit Value="Caster"/>
-        <BehaviorLink value="DashSpeed"/>
-    </CEffectRemoveBehavior>
     <CEffectApplyBehavior id="ProtectiveCloudAB" parent="ApplyBehaviorXayid">
         <ValidatorArray index="0" removed="1"/>
         <Flags index="UseDuration" value="1"/>
@@ -1685,10 +1679,6 @@
         <Amount value="11"/>
         <Death value="Eviscerate"/>
     </CEffectDamage>
-    <CEffectLaunchMissile id="ThrasherSpine">
-        <EditorCategories value="Race:Xayid"/>
-        <ImpactEffect value="ThrasherSpineDMG"/>
-    </CEffectLaunchMissile>
     <CEffectDamage id="EvisceratorSpinesDMGD">
         <EditorCategories value="Race:Xayid"/>
         <Kind value="Ranged"/>
@@ -2326,6 +2316,14 @@
         <EditorCategories value="Race:Keiron"/>
         <BehaviorLink value="UmbraStealthSuppress"/>
     </CEffectRemoveBehavior>
+    <CEffectIssueOrder id="XayidlingDashOrder">
+        <ValidatorArray value="CasterHasLE1Orders"/>
+        <EditorCategories value="Race:Xayid"/>
+        <WhichUnit Value="Source"/>
+        <Abil value="attack"/>
+        <Player Value="Caster"/>
+        <Target Value="TargetPoint"/>
+    </CEffectIssueOrder>
     <CEffectCreatePersistent id="ZenithParagonDelay">
         <EditorCategories value="Race:Keiron"/>
         <InitialDelay value="0.0625"/>

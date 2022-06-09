@@ -105,10 +105,11 @@
         <ModelFlags index="OutlineEmitter" value="1"/>
     </CActorUnit>
     <CActorUnit default="1" id="GenericUnitKeironStructure" parent="GenericUnitKeiron">
+        <?token id="buildTime" type="CString" value="1"?>
         <Aliases value="_CreepEngulfable"/>
         <Aliases value="_UnitHuge"/>
         <On index="69" Terms="UnitConstruction.##unitName##.Start" Send="Create KeironBuildModel"/>
-        <On index="70" Terms="UnitConstruction.##unitName##.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 21.000000 AsDuration 0.000000 100"/>
+        <On index="70" Terms="UnitConstruction.##unitName##.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 ##buildTime## AsDuration 0.000000 100"/>
         <On Terms="Abil.BuildInProgress.Pause" Send="AnimSetPaused Build"/>
         <On Terms="Abil.BuildInProgress.Resume" Send="AnimSetPaused Build 0"/>
         <On Terms="UnitDeathCustomize; CreepEngulfs" Send="CreepEngulfmentStopTransition"/>
@@ -229,6 +230,11 @@
         <PortraitModel value="AquilaPortrait"/>
         <ModelFlags index="OutlineEmitter" value="1"/>
     </CActorUnit>
+    <CActorAction id="EqualizerMainAttack" parent="GenericAttack" effectAttack="TheGreatEqualizerDMG">
+        <LaunchAssets Model="RepulsorAttackLaunch" Sound="Herc_AttackLaunch"/>
+        <ImpactMap index="None" Model="EqualizerAttackImpact" Sound="EqualizerAttackImpact"/>
+        <ImpactPhysics Name="EqualizerAttackImpact" MatchKeys="Basic" Physics="EqualizerAttackForce"/>
+    </CActorAction>
     <CActorModel id="SpitterVolatileLaunch" parent="ModelAnimationStyleOneShot">
         <On Terms="Effect.SpitterVolatileBurstDamage.Start; At Caster" Send="Create"/>
     </CActorModel>
@@ -2127,14 +2133,6 @@
         <DeathActorModel value="UnitDeathModelWithDeathMotionGround"/>
         <PortraitModel value="EqualizerPortrait"/>
     </CActorUnit>
-    <CActorAction id="EqualizerAttack" parent="GenericAttack" effectImpact="TheGreatEqualizerDMG" effectLaunch="TheGreatEqualizer">
-        <LaunchAssets Model="VikingFighterAttackLaunch" Sound="Herc_AttackLaunch"/>
-        <ImpactMap index="None" Sound="Equalizer_Missile_Impact"/>
-        <ImpactPhysics Name="EqualizerAttackImpact" MatchKeys="Basic" Physics="EqualizerAttackForce"/>
-    </CActorAction>
-    <CActorAction id="EqualizerAttackMT" parent="EqualizerAttack" effectLaunch="TheGreatEqualizerLMTM">
-        <On index="6" Terms="Effect.TheGreatEqualizerLMTM.Start; At Caster" Send="Create"/>
-    </CActorAction>
     <CActorUnit id="ACR" parent="GenericUnitStandard" unitName="ACR">
         <Aliases value="_UnitSmall"/>
         <Macros value="UnloadDropAnim"/>
@@ -3191,7 +3189,6 @@
     </CActorAction>
     <CActorModel id="CasnoliskExplosiveGlobImpactModel" parent="ModelAnimationStyleOneShot">
         <On Terms="Effect.ExplosiveGlobImpactSearch.Impact" Send="Create"/>
-        <Scale value="1.100000"/>
     </CActorModel>
     <CActorAction id="CasnoliskStagnatingBileCast" parent="GenericAttack" effectImpact="StagnatingBileSA" effectLaunch="StagnatingBile">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
@@ -4149,8 +4146,9 @@
             <Image value="Assets\Textures\wireframe-xayid-grub.dds"/>
         </Wireframe>
     </CActorUnit>
-    <CActorModel id="XayidThrasherSpineAttackImpact" parent="ModelAnimationStyleOneShot">
-        <On Terms="ActorCreation; ValidatePlayer PiercingThrustCompleted" Send="SetTintColor {255,57,0 10.000000}"/>
+    <CActorModel id="XayidlingAttackModel" parent="ModelAddition">
+        <On Terms="ActorCreation" Send="SetTintColor {255,255,255 5.000000}"/>
+        <On Terms="ActorCreation; ValidatePlayer XayidlingOcularAcuity" Send="SetTintColor {255,57,0 10.000000}"/>
     </CActorModel>
     <CActorModel id="SpitterAttackImpactModel" parent="ModelAnimationStyleOneShot">
         <On Terms="ActorCreation" Send="SetTintColor {160,255,66 1.250000}"/>
@@ -4195,10 +4193,10 @@
         </TerrainSquibs>
         <DeathArray index="Normal" ModelLink="Xayidling"/>
     </CActorUnit>
-    <CActorAction id="XayidlingAttack" parent="GenericAttack" effectImpact="ThrasherSpineDMG" effectLaunch="ThrasherSpine">
+    <CActorAction id="XayidlingAttack" parent="GenericAttack" effectAttack="ThrasherSpineDMG">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
-        <ImpactMap index="None" Model="XayidThrasherSpineAttackImpact"/>
-        <ImpactModel value="XayidThrasherSpineAttackImpact"/>
+        <ImpactModel value="XayidlingAttackModel"/>
+        <LaunchModel value="XayidlingAttackModel"/>
     </CActorAction>
     <CActorModel id="XayidlingDashModel" parent="ModelAddition">
         <On Terms="Behavior.DashSpeed.On" Send="Create"/>
@@ -4934,9 +4932,8 @@
     </CActorModel>
     <CActorSound id="Umbra_CloakOn" parent="SoundOneShotKeiron" Behavior="UmbraStealth" Sub="On"/>
     <CActorSound id="Umbra_CloakOff" parent="SoundOneShotKeiron" Behavior="UmbraStealth" Sub="Off"/>
-    <CActorUnit id="Zenith" parent="GenericUnitKeironStructureAir" unitName="Zenith">
+    <CActorUnit id="Zenith" parent="GenericUnitKeironStructureAir" buildTime="81.000000" unitName="Zenith">
         <BarOffset value="140"/>
-        <On index="70" Terms="UnitConstruction.Zenith.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 81.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
     <CActorBeamSimple id="KeironConstructionBeam" parent="BeamSimpleAnimationStyleContinuous">
         <On Terms="Effect.KeironConstructionStart.Start; At Target" Send="Create"/>
@@ -4995,8 +4992,7 @@
         <HostSiteOps Ops="SOpAttachHardPoint"/>
         <ModelFlags index="AllowHitTest" value="0"/>
     </CActorModel>
-    <CActorUnit id="Formulator" parent="GenericUnitKeironStructure" unitName="Formulator">
-        <On index="70" Terms="UnitConstruction.Formulator.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 26.000000 AsDuration 0.000000 100"/>
+    <CActorUnit id="Formulator" parent="GenericUnitKeironStructure" buildTime="26.000000" unitName="Formulator">
         <On Terms="Behavior.HarvestableVespeneGeyserGasKeiron.Deplete" Send="SetTintColor 255,170,170"/>
         <On Terms="Behavior.HarvestableVespeneGeyserGasKeiron.Deplete" Send="AnimGroupRemove D"/>
         <On Terms="Behavior.HarvestableVespeneGeyserGasKeiron.Deplete" Send="AnimGroupApply B"/>
@@ -5021,16 +5017,13 @@
         <BarOffset value="50"/>
         <BarWidth value="72"/>
     </CActorUnit>
-    <CActorUnit id="Outlet" parent="GenericUnitKeironStructureAir" unitName="Outlet">
+    <CActorUnit id="Outlet" parent="GenericUnitKeironStructureAir" buildTime="61.000000" unitName="Outlet">
         <BarOffset value="140"/>
-        <On index="70" Terms="UnitConstruction.Outlet.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 71.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
-    <CActorUnit id="Conduit" parent="GenericUnitKeironStructureAir" unitName="Conduit">
+    <CActorUnit id="Conduit" parent="GenericUnitKeironStructureAir" buildTime="46.000000" unitName="Conduit">
         <BarOffset value="140"/>
-        <On index="70" Terms="UnitConstruction.Conduit.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 46.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
-    <CActorUnit id="FormulatorRich" parent="GenericUnitKeironStructure" unitName="FormulatorRich">
-        <On index="70" Terms="UnitConstruction.FormulatorRich.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 26.000000 AsDuration 0.000000 100"/>
+    <CActorUnit id="FormulatorRich" parent="GenericUnitKeironStructure" buildTime="26.000000" unitName="FormulatorRich">
         <On Terms="Behavior.HarvestableRichVespeneGeyserGasKeiron.Deplete" Send="SetTintColor 255,170,170"/>
         <On Terms="Behavior.HarvestableRichVespeneGeyserGasKeiron.Deplete" Send="AnimGroupRemove E"/>
         <On Terms="Behavior.HarvestableRichVespeneGeyserGasKeiron.Deplete" Send="AnimGroupApply B"/>
@@ -5113,10 +5106,9 @@
         <ImpactMap index="None" Sound="MeridianWeapon_Impact"/>
     </CActorAction>
     <CActorSite id="MeridianWeaponSite"/>
-    <CActorUnit id="Nullifier" parent="GenericUnitKeironStructure" unitName="Nullifier">
+    <CActorUnit id="Nullifier" parent="GenericUnitKeironStructure" buildTime="51.000000" unitName="Nullifier">
         <Aliases index="4" value="_UnitLarge"/>
         <On index="69" Terms="UnitConstruction.Nullifier.Start" Send="Create KeironBuildModelSmall"/>
-        <On index="70" Terms="UnitConstruction.Nullifier.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 51.000000 AsDuration 0.000000 100"/>
         <On Terms="WeaponStart.NullifierWeapon.AttackStart" Target="NullifierLookAtTurretY" Send="LookAtStop"/>
         <On Terms="WeaponStart.NullifierWeapon.AttackStart" Target="NullifierLookAt" Send="LookAtEngage"/>
         <On Terms="WeaponStop.NullifierWeapon.AttackStop" Target="NullifierLookAt" Send="LookAtStop"/>
@@ -5188,11 +5180,10 @@
         <On Terms="TurretEnable.StratusMovement" Send="Create"/>
         <YawQuery Methods="TurretY 0"/>
     </CActorTurret>
-    <CActorUnit id="Stratus" parent="GenericUnitKeironStructureAir" unitName="Stratus">
+    <CActorUnit id="Stratus" parent="GenericUnitKeironStructureAir" buildTime="31.000000" unitName="Stratus">
         <On index="65" Terms="WeaponStart.StratusWeapon.AttackStart"/>
         <On index="67" Terms="WeaponStop.StratusWeapon.AttackStop"/>
         <On index="69" Terms="UnitConstruction.Stratus.Start" Send="Create KeironBuildModelAirSmall"/>
-        <On index="70" Terms="UnitConstruction.Stratus.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 31.000000 AsDuration 0.000000 100"/>
         <On Terms="WeaponStart.StratusWeapon.AttackStart" Target="StratusLookAtTurretY" Send="LookAtStop"/>
         <On Terms="WeaponStart.StratusWeapon.AttackStart" Target="StratusLookAt" Send="LookAtEngage"/>
         <On Terms="WeaponStop.StratusWeapon.AttackStop" Target="StratusLookAt" Send="LookAtStop"/>
@@ -5208,14 +5199,13 @@
         <Model value="Invisible"/>
         <ModelFlags index="AllowHitTest" value="0"/>
     </CActorModel>
-    <CActorUnit id="Oculus" parent="GenericUnitKeironStructure" unitName="Oculus">
+    <CActorUnit id="Oculus" parent="GenericUnitKeironStructure" buildTime="26.000000" unitName="Oculus">
         <Aliases index="4" value="_UnitLarge"/>
         <CreepHeightClass value="Tiny"/>
         <DeathArray index="Normal" ActorModel="KeironStructureDeathExplosionSmall" SoundLink="KeironStructureSmall_Death"/>
         <BarOffset value="110"/>
         <BarWidth value="85"/>
         <On index="69" Terms="UnitConstruction.Oculus.Start" Send="Create KeironBuildModelSmall"/>
-        <On index="70" Terms="UnitConstruction.Oculus.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 26.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
     <CActorModel id="PlaceholderModelKeiron" parent="PlacementModel">
         <On index="0" Terms="ActorCreation"/>
@@ -5381,10 +5371,9 @@
         <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-mechanicalarmorlevel0.dds"/>
     </CActorUnit>
-    <CActorUnit id="Atrium" parent="GenericUnitKeironStructure" unitName="Atrium">
+    <CActorUnit id="Atrium" parent="GenericUnitKeironStructure" buildTime="81.000000" unitName="Atrium">
         <BarOffset value="140"/>
         <BarWidth value="160"/>
-        <On index="70" Terms="UnitConstruction.Atrium.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 81.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
     <CActorModel id="KeironMaterializeModelSmall" parent="ModelAddition">
         <Aliases value="_ZergBuildModel"/>
@@ -5424,10 +5413,9 @@
         <DeathArray index="Normal" SoundLink="KeironUnitSmall_Death"/>
         <WalkAnimMoveSpeed value="3.3984"/>
     </CActorUnit>
-    <CActorUnit id="Elysium" parent="GenericUnitKeironStructure" unitName="Elysium">
+    <CActorUnit id="Elysium" parent="GenericUnitKeironStructure" buildTime="61.000000" unitName="Elysium">
         <BarOffset value="160"/>
         <BarWidth value="160"/>
-        <On index="70" Terms="UnitConstruction.Elysium.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 61.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
     <CActorUnit id="Paradox" parent="GenericUnitKeiron" unitName="Paradox">
         <On index="69" Terms="UnitConstruction.Paradox.Start" Send="Create KeironMaterializeModelAirMedium"/>
@@ -5448,10 +5436,9 @@
         <ModelFlags index="AllowHitTest" value="0"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModel>
-    <CActorUnit id="Empyrean" parent="GenericUnitKeironStructureAir" unitName="Empyrean">
+    <CActorUnit id="Empyrean" parent="GenericUnitKeironStructureAir" buildTime="66.000000" unitName="Empyrean">
         <BarOffset value="140"/>
         <On index="69" Terms="UnitConstruction.Empyrean.Start" Send="Create KeironBuildModelAirEmpyrean"/>
-        <On index="70" Terms="UnitConstruction.Empyrean.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 66.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
     <CActorUnit id="Pulsar4DMDummy" parent="GenericUnitEmpty" unitname="Pulsar4DMDummy">
         <On Terms="UnitBirth.Pulsar4DMDummy" Send="Create"/>
@@ -5558,16 +5545,11 @@
     <CActorModel id="KeironBuildModelSmall" parent="KeironBuildModel">
         <Scale value="0.660000"/>
     </CActorModel>
-    <CActorUnit id="Sanctum" parent="GenericUnitKeironStructure" unitName="Sanctum">
-        <On index="70" Terms="UnitConstruction.Sanctum.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 61.000000 AsDuration 0.000000 100"/>
-    </CActorUnit>
-    <CActorUnit id="Pantheon" parent="GenericUnitKeironStructure" unitName="Pantheon">
+    <CActorUnit id="Sanctum" parent="GenericUnitKeironStructure" buildTime="61.000000" unitName="Sanctum"/>
+    <CActorUnit id="Pantheon" parent="GenericUnitKeironStructure" buildTime="81.000000" unitName="Pantheon">
         <BarOffset value="150"/>
-        <On index="70" Terms="UnitConstruction.Pantheon.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 81.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
-    <CActorUnit id="Foundry" parent="GenericUnitKeironStructure" unitName="Foundry">
-        <On index="70" Terms="UnitConstruction.Foundry.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 51.000000 AsDuration 0.000000 100"/>
-    </CActorUnit>
+    <CActorUnit id="Foundry" parent="GenericUnitKeironStructure" buildTime="51.000000" unitName="Foundry"/>
     <CActorModelMaterial id="KeironConstructionGlaze" parent="GlazeParent">
         <On Terms="ActorCreation" Send="ModelMaterialApplyTo ::Main"/>
         <On Terms="Abil.KeironBuild.BuiltStart" Send="Create"/>
@@ -5667,9 +5649,8 @@
         <On Terms="ActorCreation" Send="SetTintColor 165,74,255"/>
         <HostSiteOps Ops="SOpAttachWeapon"/>
     </CActorModel>
-    <CActorUnit id="Citadel" parent="GenericUnitKeironStructure" unitName="Citadel">
+    <CActorUnit id="Citadel" parent="GenericUnitKeironStructure" buildTime="101.000000" unitName="Citadel">
         <On index="69" Terms="UnitConstruction.Citadel.Start" Send="Create KeironBuildModelLarge"/>
-        <On index="70" Terms="UnitConstruction.Citadel.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 101.000000 AsDuration 0.000000 100"/>
         <On Terms="AbilTrain.KeironCitadelTrain.Start" Send="AnimBracketStart Work Stand,Work,Start Stand,Work Stand,Work,End"/>
         <On Terms="AbilTrain.KeironCitadelTrain.Cancel" Send="AnimBracketStop Work"/>
         <On Terms="AbilTrain.KeironCitadelTrain.Finish" Send="AnimBracketStop Work"/>
@@ -6020,12 +6001,10 @@
         <ImpactSite value="VoltAttackImpactSite"/>
         <ImpactModel value="VoltAttackImpact"/>
     </CActorAction>
-    <CActorUnit id="Reliquary" parent="GenericUnitKeironStructure" unitName="Reliquary">
+    <CActorUnit id="Reliquary" parent="GenericUnitKeironStructure" buildTime="41.000000" unitName="Reliquary">
         <BarOffset value="160"/>
-        <On index="70" Terms="UnitConstruction.Reliquary.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 41.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
-    <CActorUnit id="Edifice" parent="GenericUnitKeironStructure" unitName="Edifice">
+    <CActorUnit id="Edifice" parent="GenericUnitKeironStructure" buildTime="61.000000" unitName="Edifice">
         <On index="69" Terms="UnitConstruction.Edifice.Start" Send="Create KeironBuildModelEdifice"/>
-        <On index="70" Terms="UnitConstruction.Edifice.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 61.000000 AsDuration 0.000000 100"/>
     </CActorUnit>
 </Catalog>
