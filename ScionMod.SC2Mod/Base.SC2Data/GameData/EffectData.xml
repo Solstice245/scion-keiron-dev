@@ -127,6 +127,10 @@
         <EffectArray value="ChargeRemove"/>
         <EffectArray value="EquippedRemove"/>
     </CEffectSet>
+    <CEffectMorph id="CitadelChargeMorph">
+        <EditorCategories value="Race:Keiron"/>
+        <MorphUnit value="CitadelCharged"/>
+    </CEffectMorph>
     <CEffectSet id="CloakChargeComplete2" parent="CEffectSetGenetron">
         <EffectArray value="Equipped"/>
         <EffectArray value="ApplyChargeCC"/>
@@ -173,18 +177,6 @@
         <EffectArray value="ChargeUse"/>
         <TargetLocationType value="UnitOrPoint"/>
     </CEffectSet>
-    <CEffectApplyBehavior id="MassaliskDummyAB">
-        <EditorCategories value="Race:Xayid"/>
-        <Behavior value="MassaliskDummy"/>
-    </CEffectApplyBehavior>
-    <CEffectCreateUnit id="MassaliskDummyCU">
-        <EditorCategories value="Race:Xayid"/>
-        <CreateFlags index="OffsetByRadius" value="0"/>
-        <CreateFlags index="Placement" value="0"/>
-        <CreateFlags index="NormalizeSpawnOffset" value="0"/>
-        <SpawnEffect value="MassaliskDummyAB"/>
-        <SpawnUnit value="MassaliskDummy"/>
-    </CEffectCreateUnit>
     <CEffectSet id="Mend">
         <ValidatorArray value="NotFullLife"/>
         <ValidatorArray value="HasNoMendBehavior"/>
@@ -260,12 +252,6 @@
         <PeriodicPeriodArray value="0"/>
         <WhichLocation Value="TargetUnit"/>
     </CEffectCreatePersistent>
-    <CEffectModifyUnit id="MassaliskDummySelection">
-        <EditorCategories value="Race:Xayid"/>
-        <ImpactUnit Value="Caster"/>
-        <SelectTransferUnit Value="Target"/>
-        <SelectTransferFlags index="DeselectSource" value="1"/>
-    </CEffectModifyUnit>
     <CEffectCreateUnit id="MoleTurnTurretCreateUnitDummy">
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="TargetPoint"/>
@@ -1300,7 +1286,9 @@
         <WhichLocation Effect="DashEffect" Value="TargetPoint"/>
         <Amount value="-5"/>
     </CEffectApplyForce>
-    <CEffectApplyBehavior id="DashFrenzy" parent="ApplyBehaviorXayid"/>
+    <CEffectApplyBehavior id="DashFrenzy" parent="ApplyBehaviorXayid">
+        <Chance value="0"/>
+    </CEffectApplyBehavior>
     <CEffectApplyBehavior id="VirtusLockdownModeDuration" parent="CEffectApplyBehaviorGenetronCaster"/>
     <CEffectApplyBehavior id="LockdownModeApplyDuration" parent="CEffectApplyBehaviorGenetronCaster">
         <Behavior value="LockdownModeDuration"/>

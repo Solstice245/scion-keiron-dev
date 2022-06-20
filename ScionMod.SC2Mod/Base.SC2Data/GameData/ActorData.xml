@@ -3628,8 +3628,6 @@
         <On Terms="AbilMorph.*.Start; MorphTo Massalisk" Send="Create BurrowUpLarge"/>
         <On Terms="AbilMorph.*.Start; MorphTo Massalisk" Send="Create LargeBurrowUpEffects"/>
         <On Terms="AbilMorph.*.Finish; MorphTo Massalisk" Target="PrimalTownHallBase" Send="Destroy"/>
-        <On Terms="AbilMorph.*.Start; MorphTo MassaliskHunkered" Send="ModelSwap MassaliskHunkered 255 PredecessorDestroyImmediate"/>
-        <On Terms="AbilMorph.*.Start; MorphTo Massalisk" Send="ModelSwap Massalisk 255 PredecessorDestroyImmediate"/>
         <ModelFlags index="OutlineEmitter" value="1"/>
         <EventDataFootprint index="0" Actor="UnitFootprint" Model="PrimalTownHallFootprint"/>
         <DeathArray index="Normal" ModelLink="MassaliskDeath" SoundLink="Massalisk_Explode"/>
@@ -4272,8 +4270,7 @@
         <BarOffset value="40"/>
     </CActorUnit>
     <CActorSound id="CitadelChargeFinish" parent="SoundOneShot">
-        <On Terms="AbilMorph.CitadelCharge.Finish" Send="Create"/>
-        <On Terms="AbilMorph.CitadelCharge.Cancel" Send="Destroy"/>
+        <On Terms="Effect.CitadelChargeMorph.Start" Send="Create"/>
     </CActorSound>
     <CActorSound id="Fuse_Impact" parent="SoundOneShot">
         <On Terms="Behavior.FuseFused.On" Send="Create"/>
@@ -5661,16 +5658,14 @@
         <On Terms="AbilTrain.KeironCitadelAegisTrain.Cancel" Send="AnimSetTimeScale Work 1.000000"/>
         <On Terms="AbilTrain.KeironCitadelAegisTrain.Finish" Send="AnimSetTimeScale Work 1.000000"/>
         <On Terms="UnitConstruction.Citadel.Start" Send="AnimPlay Cover Cover PlayForever"/>
+        <On Terms="Effect.CitadelChargeMorph.Start" Send="AnimBracketStart Morph Stand,Work,Start Stand,Work Stand,Work,End"/>
+        <On Terms="Effect.CitadelChargeMorph.Start" Send="AnimBracketStop Morph"/>
+        <On Terms="Effect.CitadelChargeMorph.Start" Send="AnimClear Cover"/>
         <On Terms="UnitBirth.Citadel" Send="AnimPlay Cover Cover PlayForever"/>
-        <On Terms="UnitBirth.CitadelCharged" Send="Create"/>
-        <On Terms="AbilMorph.CitadelCharge.Start" Send="AnimBracketStart Morph Stand,Work,Start Stand,Work Stand,Work,End"/>
-        <On Terms="AbilMorph.CitadelCharge.Finish" Send="AnimBracketStop Morph"/>
-        <On Terms="AbilMorph.CitadelCharge.Finish" Send="AnimClear Cover"/>
-        <On Terms="AbilMorph.CitadelCharge.Cancel" Send="AnimBracketStop Morph"/>
-        <On Terms="AbilMorph.CitadelCharge.Cancel" Send="AnimPlay Cover Cover PlayForever"/>
         <On Terms="UnitBirth.Citadel" Send="Create PlayerLogoDoodadList"/>
         <On Terms="UnitBirth.Citadel; PlayerHasClanDecal" Send="Create ProtossClanFlag"/>
         <On Terms="UnitBirth.Citadel; PlayerHasTrophy" Send="Create ProtossPlayerTrophy"/>
+        <On Terms="UnitBirth.CitadelCharged" Send="Create"/>
         <On Terms="UnitBirth.CitadelCharged" Send="Create PlayerLogoDoodadList"/>
         <On Terms="UnitBirth.CitadelCharged; PlayerHasClanDecal" Send="Create ProtossClanFlag"/>
         <On Terms="UnitBirth.CitadelCharged; PlayerHasTrophy" Send="Create ProtossPlayerTrophy"/>
