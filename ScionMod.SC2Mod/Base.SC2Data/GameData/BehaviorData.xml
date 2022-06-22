@@ -72,6 +72,13 @@
             <TurretDisableArray value="RepulsorTurret"/>
         </Modification>
     </CBehaviorBuff>
+    <CBehaviorBuff id="KeironChargeDummyDiscord">
+        <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
+        <DisableValidatorArray value="KeironStructureHasDiscordDebuff"/>
+        <RemoveValidatorArray value="CasterNotDead"/>
+        <FinalEffect value="Suicide"/>
+        <Modification TimeScale="0.5"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="LockdownModeDuration">
         <InfoIcon value="Assets\Textures\btn-ability-genetron-structurelockdownmode.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -1143,6 +1150,7 @@
         <DisplayDuration index="Self" value="1"/>
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT3"/>
+        <DisableValidatorArray value="NotContaminated"/>
         <BuffFlags index="Countdown" value="0"/>
         <Duration value="35"/>
         <ExpireEffect value="AstralConduitEchoSet"/>
@@ -1220,6 +1228,7 @@
         <DisplayDuration index="Self" value="1"/>
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT2"/>
+        <DisableValidatorArray value="NotContaminated"/>
         <BuffFlags index="Countdown" value="0"/>
         <Duration value="56"/>
         <ExpireEffect value="OutletAurApeSet"/>
@@ -1245,6 +1254,7 @@
         <DisplayDuration index="Self" value="1"/>
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT2"/>
+        <DisableValidatorArray value="NotContaminated"/>
         <BuffFlags index="Countdown" value="0"/>
         <Duration value="56"/>
         <ExpireEffect value="EmpyreanHarParSet"/>
@@ -1299,8 +1309,15 @@
         <BehaviorCategories index="Slow" value="1"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Duration value="0.3"/>
-        <Modification MoveSpeedMultiplier="0.75"/>
+        <Modification MoveSpeedMultiplier="0.75" AccelerationMultiplier="0.75">
+            <ResourceHarvestTimeMultiplier index="Minerals" value="0.5"/>
+            <ResourceHarvestTimeMultiplier index="Vespene" value="0.5"/>
+            <RateMultiplierArray index="Progress" value="0.5"/>
+            <RateMultiplierArray index="Queueable" value="0.5"/>
+            <RateMultiplierArray index="Spawn" value="0.5"/>
+        </Modification>
         <InfoFlags index="Hidden" value="1"/>
+        <TimeScaleSource Value="Global"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="DiscordZoneRadius">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
@@ -1326,6 +1343,7 @@
         <DisplayDuration index="Self" value="1"/>
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT2"/>
+        <DisableValidatorArray value="NotContaminated"/>
         <BuffFlags index="Countdown" value="0"/>
         <Duration value="63"/>
         <ExpireEffect value="AtriumIndMyrSet"/>
@@ -1467,6 +1485,7 @@
         <DisplayDuration index="Self" value="1"/>
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT2"/>
+        <DisableValidatorArray value="NotContaminated"/>
         <BuffFlags index="Countdown" value="0"/>
         <Duration value="49"/>
         <ExpireEffect value="FoundryUmbraSet"/>
@@ -1486,6 +1505,7 @@
         <DisplayDuration index="Self" value="1"/>
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT2"/>
+        <DisableValidatorArray value="NotContaminated"/>
         <BuffFlags index="Countdown" value="0"/>
         <Duration value="49"/>
         <ExpireEffect value="SanctumPulSubSet"/>
@@ -1563,6 +1583,7 @@
         <DisplayDuration index="Self" value="1"/>
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT3"/>
+        <DisableValidatorArray value="NotContaminated"/>
         <BuffFlags index="Countdown" value="0"/>
         <Duration value="28"/>
         <ExpireEffect value="EdificeParVolSet"/>

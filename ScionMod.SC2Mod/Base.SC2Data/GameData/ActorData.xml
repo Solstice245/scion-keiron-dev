@@ -230,6 +230,21 @@
         <PortraitModel value="AquilaPortrait"/>
         <ModelFlags index="OutlineEmitter" value="1"/>
     </CActorUnit>
+    <CActorBeamSimple id="EchoReverbBeam" parent="BeamSimpleAnimationStyleContinuous">
+        <Filter index="Ally" value="1"/>
+        <Filter index="Enemy" value="1"/>
+        <On Terms="Effect.CreateReverbTargetSet.Start; At Caster" Send="Create"/>
+        <On Terms="Behavior.EchoReverbCasterController.Off" Send="Destroy"/>
+        <On Terms="ActorCreation" Send="TimerSet 0.062500 BeamCycle"/>
+        <On Terms="TimerExpired; TimerName BeamCycle" Send="TimerSet 0.062500 BeamCycle"/>
+        <On Terms="TimerExpired; TimerName BeamCycle" Send="SetOpacity"/>
+        <On Terms="TimerExpired; TimerName BeamCycle; ScopeContains _ReverbBeamVisible" Send="SetOpacity 1.000000"/>
+        <On Terms="TimerExpired; TimerName BeamCycle; ValidateCreationEffect DistanceLT9" Send="SetTintColor 0,255,0"/>
+        <On Terms="TimerExpired; TimerName BeamCycle; ValidateCreationEffect DistanceGE9" Send="SetTintColor 255,255,0"/>
+        <On Terms="TimerExpired; TimerName BeamCycle; ValidateCreationEffect DistanceGE14" Send="SetTintColor 255,0,0"/>
+        <HostLaunchSiteOps Ops="SOpCasterUnit SOpAttachCenter"/>
+        <HostImpactSiteOps Ops="SOpTargetUnit SOpAttachCenter"/>
+    </CActorBeamSimple>
     <CActorAction id="EqualizerMainAttack" parent="GenericAttack" effectAttack="TheGreatEqualizerDMG">
         <LaunchAssets Model="RepulsorAttackLaunch" Sound="Herc_AttackLaunch"/>
         <ImpactMap index="None" Model="EqualizerAttackImpact" Sound="EqualizerAttackImpact"/>
@@ -5687,6 +5702,8 @@
         <On Terms="UnitBirth.EchoDM" Send="AnimBracketStart StandWork Stand,Work Stand,Work Stand,Work,End Instant"/>
         <On Terms="AbilMorph.EchoDiscordMode.Start" Send="AnimBracketStart StandWork Stand,Work,Start Stand,Work Stand,Work,End"/>
         <On Terms="AbilMorph.EchoFighterMode.Start" Send="AnimBracketStop StandWork"/>
+        <On Terms="SelectionLocalUpdate.*.Start; IsActorLocalPlayer" Send="AliasAdd _ReverbBeamVisible"/>
+        <On Terms="SelectionLocalUpdate.*.Stop; IsActorLocalPlayer" Send="AliasRemove _ReverbBeamVisible"/>
         <DeathArray index="Normal">
             <ActorModel value="KeironAirUnitDeathExplosionSmall"/>
             <ModelLink value="KeironSmallAirUnitDeath"/>
