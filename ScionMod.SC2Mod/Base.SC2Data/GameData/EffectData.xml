@@ -153,6 +153,16 @@
     <CEffectApplyBehavior id="DashSpeed" parent="ApplyBehaviorXayid">
         <WhichUnit Value="Caster"/>
     </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="DiscordZoneDebuffStructure" parent="CEffectApplyBehaviorKeironTarget"/>
+    <CEffectApplyBehavior id="DiscordZoneDebuffMissile" parent="CEffectApplyBehaviorKeironTarget"/>
+    <CEffectSwitch id="DiscordZoneSwitch">
+        <ValidatorArray value="NotDummyUnit"/>
+        <ValidatorArray value="NotFrenzied"/>
+        <EditorCategories value="Race:Keiron"/>
+        <CaseArray Validator="IsMissile" Effect="DiscordZoneDebuffMissile"/>
+        <CaseArray Validator="IsStructure" Effect="DiscordZoneDebuffStructure"/>
+        <CaseDefault value="DiscordZoneDebuff"/>
+    </CEffectSwitch>
     <CEffectIssueOrder id="GenetronSchematicTransmitIssueOrder">
         <ValidatorArray value="IsUploader"/>
         <EditorCategories value="Race:Genetron"/>
@@ -2996,7 +3006,7 @@
     </CEffectApplyBehavior>
     <CEffectEnumArea id="DiscordZoneSA" parent="CEffectSearchAreaKeiron">
         <SearchFilters value="-;Player,Ally,Stasis,Dead,Hidden"/>
-        <AreaArray Radius="6" Effect="DiscordZoneDebuff"/>
+        <AreaArray Radius="6" Effect="DiscordZoneSwitch"/>
     </CEffectEnumArea>
     <CEffectRemoveBehavior id="ElytronAmmoClear">
         <EditorCategories value="Race:Keiron"/>

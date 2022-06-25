@@ -230,6 +230,17 @@
         <PortraitModel value="AquilaPortrait"/>
         <ModelFlags index="OutlineEmitter" value="1"/>
     </CActorUnit>
+    <CActorModel id="EchoDiscordZoneImpactStructure" parent="ModelAnimationStyleContinuous">
+        <Inherits index="BaseModelScale" value="1"/>
+        <Inherits index="Scale" value="1"/>
+        <On Terms="Behavior.DiscordZoneDebuffStructure.On" Send="Create"/>
+        <On Terms="Behavior.DiscordZoneDebuffStructure.Off" Send="AnimBracketStop BSD"/>
+        <On Terms="ActorCreation" Send="SetTintColor 128,0,255"/>
+        <Host Subject="_Selectable"/>
+        <AutoScaleFromSelectionFactor value="1.000000"/>
+        <ModelFlags index="AllowHitTest" value="0"/>
+        <ModelFlags index="AutomateGlobalLoops" value="1"/>
+    </CActorModel>
     <CActorBeamSimple id="EchoReverbBeam" parent="BeamSimpleAnimationStyleContinuous">
         <Filter index="Ally" value="1"/>
         <Filter index="Enemy" value="1"/>
@@ -239,11 +250,14 @@
         <On Terms="TimerExpired; TimerName BeamCycle" Send="TimerSet 0.062500 BeamCycle"/>
         <On Terms="TimerExpired; TimerName BeamCycle" Send="SetOpacity"/>
         <On Terms="TimerExpired; TimerName BeamCycle; ScopeContains _ReverbBeamVisible" Send="SetOpacity 1.000000"/>
-        <On Terms="TimerExpired; TimerName BeamCycle; ValidateCreationEffect DistanceLT9" Send="SetTintColor 0,255,0"/>
-        <On Terms="TimerExpired; TimerName BeamCycle; ValidateCreationEffect DistanceGE9" Send="SetTintColor 255,255,0"/>
-        <On Terms="TimerExpired; TimerName BeamCycle; ValidateCreationEffect DistanceGE14" Send="SetTintColor 255,0,0"/>
+        <On Terms="TimerExpired; TimerName BeamCycle" Send="AnimGroupRemoveAll"/>
+        <On Terms="TimerExpired; TimerName BeamCycle; ValidateCreationEffect DistanceLT9" Send="AnimGroupApply A"/>
+        <On Terms="TimerExpired; TimerName BeamCycle; ValidateCreationEffect DistanceGE9" Send="AnimGroupApply B"/>
+        <On Terms="TimerExpired; TimerName BeamCycle; ValidateCreationEffect DistanceGE14" Send="AnimGroupApply C"/>
+        <On Terms="ActorCreation" Send="$Spell PlayForever"/>
         <HostLaunchSiteOps Ops="SOpCasterUnit SOpAttachCenter"/>
         <HostImpactSiteOps Ops="SOpTargetUnit SOpAttachCenter"/>
+        <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorBeamSimple>
     <CActorAction id="EqualizerMainAttack" parent="GenericAttack" effectAttack="TheGreatEqualizerDMG">
         <LaunchAssets Model="RepulsorAttackLaunch" Sound="Herc_AttackLaunch"/>
