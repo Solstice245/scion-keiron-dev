@@ -97,11 +97,17 @@
         <WhichLocation Value="SourceUnitOrPoint"/>
         <InitialEffect value="BlindingBurst"/>
     </CEffectCreatePersistent>
-    <CEffectApplyBehavior id="BoreDrill" parent="CEffectApplyBehaviorGenetronTarget"/>
+    <CEffectApplyBehavior id="BoreDrill1" parent="CEffectApplyBehaviorGenetronTarget">
+        <Behavior value="BoreDrill"/>
+    </CEffectApplyBehavior>
     <CEffectApplyBehavior id="BoreDrill2" parent="CEffectApplyBehaviorGenetronTarget"/>
     <CEffectApplyBehavior id="BoreDrill3" parent="CEffectApplyBehaviorGenetronTarget"/>
     <CEffectApplyBehavior id="BoreDrill4" parent="CEffectApplyBehaviorGenetronTarget"/>
     <CEffectApplyBehavior id="BoreDrill5" parent="CEffectApplyBehaviorGenetronTarget"/>
+    <CEffectApplyBehavior id="BoreDrillBase" parent="CEffectApplyBehaviorGenetronTarget">
+        <ValidatorArray index="0" value="NotStructureTarget"/>
+        <Behavior value="HornrtBoreDrillBase"/>
+    </CEffectApplyBehavior>
     <CEffectSet id="ChargeCannonSet" parent="CEffectSetGenetron">
         <EffectArray value="ChargeCannonDMG"/>
         <EffectArray value="TrackingImplant"/>
@@ -498,10 +504,11 @@
     <CEffectSet id="StingerDrillLMImpact" parent="CEffectSetGenetron">
         <EffectArray value="StingerDrillDMG"/>
         <EffectArray value="StingerDrillSw"/>
+        <EffectArray value="BoreDrillBase"/>
     </CEffectSet>
     <CEffectSwitch id="StingerDrillSw">
         <EditorCategories value="Race:Genetron"/>
-        <CaseArray Validator="ArmorIs1" Effect="BoreDrill"/>
+        <CaseArray Validator="ArmorIs1" Effect="BoreDrill1"/>
         <CaseArray Validator="ArmorIs2" Effect="BoreDrill2"/>
         <CaseArray Validator="ArmorIs3" Effect="BoreDrill3"/>
         <CaseArray Validator="ArmorIs4" Effect="BoreDrill4"/>
