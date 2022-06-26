@@ -106,7 +106,7 @@
     <CEffectApplyBehavior id="BoreDrill5" parent="CEffectApplyBehaviorGenetronTarget"/>
     <CEffectApplyBehavior id="BoreDrillBase" parent="CEffectApplyBehaviorGenetronTarget">
         <ValidatorArray index="0" value="NotStructureTarget"/>
-        <Behavior value="HornrtBoreDrillBase"/>
+        <Behavior value="HornetBoreDrillBase"/>
     </CEffectApplyBehavior>
     <CEffectSet id="ChargeCannonSet" parent="CEffectSetGenetron">
         <EffectArray value="ChargeCannonDMG"/>
@@ -558,6 +558,7 @@
     <CEffectApplyBehavior id="NaniteGrenadeAB" parent="CEffectApplyBehaviorGenetronTarget"/>
     <CEffectLaunchMissile id="NaniteGrenade" parent="CEffectLaunchMissileGenetron">
         <ImpactLocation Value="TargetPoint"/>
+        <AmmoOwner Value="Caster"/>
     </CEffectLaunchMissile>
     <CEffectEnumArea id="NaniteGrenadeImpact">
         <EditorCategories value="Race:Genetron"/>
@@ -829,6 +830,7 @@
         <AmmoUnit value="VengeanceMissilesLMWeapon"/>
         <RetargetFilters value="Missile,Visible;Player,Ally,Neutral,Structure,Stasis,Dead,Hidden,Invulnerable"/>
         <RetargetRange value="10"/>
+        <AmmoOwner Value="Caster"/>
     </CEffectLaunchMissile>
     <CEffectCreatePersistent id="HurricaneMissilesCPNormal">
         <EditorCategories value="Race:Genetron"/>
@@ -872,6 +874,7 @@
         <ImpactLocation Value="TargetPoint"/>
         <ImpactEffect value="JupiterRevenantBombImpact"/>
         <AmmoUnit value="RevenantBombLMWeapon"/>
+        <AmmoOwner Value="Caster"/>
     </CEffectLaunchMissile>
     <CEffectApplyBehavior id="JupiterNapalm" parent="CEffectApplyBehaviorGenetronTarget"/>
     <CEffectCreatePersistent id="JupiterNapalmCreatePersistent">
@@ -1020,8 +1023,8 @@
         <Death value="Fire"/>
     </CEffectDamage>
     <CEffectDamage id="LynxCannonImpact" parent="CEffectDamageGenetronWeapon">
-        <AttributeBonus index="Armored" value="10"/>
-        <Amount value="35"/>
+        <AttributeBonus index="Armored" value="12"/>
+        <Amount value="36"/>
         <Death value="Blast"/>
     </CEffectDamage>
     <CEffectDamage id="NeutralizerBeamLMImpact" parent="CEffectDamageGenetronWeapon">
@@ -1083,11 +1086,13 @@
     <CEffectLaunchMissile id="LaunchCloakCharge" parent="CEffectLaunchMissileGenetronPoint">
         <Movers Link="TeslaChargeMoverLow" IfRangeLTE="4"/>
         <Movers Link="LaunchShockChargeWeapon" IfRangeLTE="8"/>
+        <AmmoOwner Value="Caster"/>
     </CEffectLaunchMissile>
     <CEffectLaunchMissile id="LaunchShockCharge" parent="CEffectLaunchMissileGenetronPoint">
         <Movers Link="TeslaChargeMoverLow" IfRangeLTE="4"/>
         <Movers Link="LaunchShockChargeWeapon" IfRangeLTE="8"/>
         <ImpactLocation Value="TargetUnitOrPoint"/>
+        <AmmoOwner Value="Caster"/>
     </CEffectLaunchMissile>
     <CEffectSet id="AcidNestAttack">
         <EditorCategories value="Race:Xayid"/>
@@ -1378,6 +1383,7 @@
         <EditorCategories value="Race:Xayid"/>
         <ImpactEffect value="IncendiaryInfusionSet"/>
         <AmmoUnit value="IncendiaryInfusionMissile"/>
+        <AmmoOwner Value="Caster"/>
     </CEffectLaunchMissile>
     <CEffectSet id="IncendiaryInfusionSet">
         <EditorCategories value="Race:Xayid"/>
@@ -1459,6 +1465,7 @@
         <AmmoUnit value="ExplosiveGlobMissile"/>
         <PeriodicEffect value="ExplosiveGlobSA"/>
         <FinishEffect value="ExplosiveGlobImpactSearch"/>
+        <AmmoOwner Value="Caster"/>
     </CEffectLaunchMissile>
     <CEffectDamage id="ExterminationDMG">
         <EditorCategories value="Race:Xayid"/>
@@ -1662,6 +1669,7 @@
         <ImpactLocation Value="TargetPoint"/>
         <ImpactEffect value="StagnatingBileSA"/>
         <AmmoUnit value="StagnatingBileMissile"/>
+        <AmmoOwner Value="Caster"/>
     </CEffectLaunchMissile>
     <CEffectEnumArea id="StagnatingBileSA">
         <EditorCategories value="Race:Xayid"/>
@@ -1738,6 +1746,7 @@
         <ImpactLocation Value="TargetPoint"/>
         <ImpactEffect value="VolatileDischargeCU"/>
         <AmmoUnit value="VolatileDischargeMissile"/>
+        <AmmoOwner Value="Caster"/>
     </CEffectLaunchMissile>
     <CEffectTeleport id="AegisRelocate">
         <ValidatorArray value="IsCitadel"/>
@@ -1931,6 +1940,7 @@
         <LaunchEffect value="EmissaryOrbFate"/>
         <PeriodicEffect value="EmissaryOrbAB"/>
         <AmmoUnit value="EmissaryOrb"/>
+        <AmmoOwner Value="Caster"/>
     </CEffectLaunchMissile>
     <CEffectApplyBehavior id="EmissaryOrbAB" parent="CEffectApplyBehaviorKeironTarget">
         <WhichUnit Effect="EmissaryOrb"/>
@@ -2617,7 +2627,7 @@
         <Death value="Electrocute"/>
     </CEffectDamage>
     <CEffectEnumArea id="MeridianConvergenceSA" parent="CEffectSearchAreaKeiron">
-        <SearchFilters value="-;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <SearchFilters value="-;Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <AreaArray Radius="2.25" Effect="MeridianConvergenceDMG"/>
     </CEffectEnumArea>
     <CEffectDamage id="MeridianLightningBoltDMG" parent="CEffectDamageKeironSpell">
@@ -3025,6 +3035,7 @@
         <LaunchLocation Value="CasterUnit"/>
         <FinishEffect value="RemovePrecursor"/>
         <AmmoUnit value="EmanatorMissile"/>
+        <AmmoOwner Value="Caster"/>
     </CEffectLaunchMissile>
     <CEffectApplyBehavior id="EmanatorFateDelay" parent="CEffectApplyBehaviorKeironTarget"/>
     <CEffectApplyBehavior id="EmanatorFate" parent="CEffectApplyBehaviorKeironTarget"/>

@@ -242,7 +242,6 @@
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModel>
     <CActorBeamSimple id="EchoReverbBeam" parent="BeamSimpleAnimationStyleContinuous">
-        <Filter index="Ally" value="1"/>
         <Filter index="Enemy" value="1"/>
         <On Terms="Effect.CreateReverbTargetSet.Start; At Caster" Send="Create"/>
         <On Terms="Behavior.EchoReverbCasterController.Off" Send="Destroy"/>
@@ -4320,12 +4319,14 @@
         <On Terms="Behavior.AegisShieldAuraKB.Off" Target="_Unit" Send="AnimClear KnockbackFlail"/>
         <On Terms="Behavior.AegisShieldAuraKB.Off" Send="Destroy"/>
     </CActorSimple>
-    <CActorModel id="FusionBuff" parent="ModelAnimationStyleContinuousUNIT">
+    <CActorModel id="FusionBuff" parent="ModelAddition">
+        <Inherits index="TintColor" value="0"/>
         <On Terms="Behavior.FuseFused.On" Send="Create"/>
         <On Terms="Behavior.FuseFused.Off" Send="AnimBracketStop BSD"/>
         <HostSiteOps Ops="SOpAttachCenter"/>
         <MaxScale value="2.250000"/>
         <AutoScaleFactor value="1.000000"/>
+        <ModelFlags index="AllowHitTest" value="0"/>
     </CActorModel>
     <CActorSound id="Fuse_Cast" parent="SoundOneShot">
         <On Terms="Abil.FuseFusion.SourceCastStart" Send="Create"/>
@@ -5716,8 +5717,8 @@
         <On Terms="UnitBirth.EchoDM" Send="AnimBracketStart StandWork Stand,Work Stand,Work Stand,Work,End Instant"/>
         <On Terms="AbilMorph.EchoDiscordMode.Start" Send="AnimBracketStart StandWork Stand,Work,Start Stand,Work Stand,Work,End"/>
         <On Terms="AbilMorph.EchoFighterMode.Start" Send="AnimBracketStop StandWork"/>
-        <On Terms="SelectionLocalUpdate.*.Start; IsActorLocalPlayer" Send="AliasAdd _ReverbBeamVisible"/>
-        <On Terms="SelectionLocalUpdate.*.Stop; IsActorLocalPlayer" Send="AliasRemove _ReverbBeamVisible"/>
+        <On Terms="SelectionLocalUpdate.*.Start" Send="AliasAdd _ReverbBeamVisible"/>
+        <On Terms="SelectionLocalUpdate.*.Stop" Send="AliasRemove _ReverbBeamVisible"/>
         <DeathArray index="Normal">
             <ActorModel value="KeironAirUnitDeathExplosionSmall"/>
             <ModelLink value="KeironSmallAirUnitDeath"/>
