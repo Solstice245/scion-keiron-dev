@@ -285,6 +285,10 @@
         <HostSiteOps Ops="SOpShadow"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModel>
+    <CActorSound id="ParadoxAnnexLoop" parent="SoundContinuousKeiron" Behavior="ParadoxAnnexCaster"/>
+    <CActorSound id="ParadoxAnnexStop" parent="SoundOneShot">
+        <On Terms="Behavior.ParadoxAnnexCaster.Off" Send="Create"/>
+    </CActorSound>
     <CActorSimple id="ParadoxAnnexed">
         <On Terms="Behavior.ParadoxAnnexed.On" Send="Create"/>
         <On Terms="Behavior.ParadoxAnnexed.Off" Send="Destroy"/>
@@ -298,13 +302,16 @@
         <Type value="Absolute"/>
         <BaseRadiusPeriod value="3.000000"/>
         <EndYawPeriod value="2.000000,1.000000"/>
-        <EndRadiusInner value="0.650000"/>
-        <EndRadiusOuter value="0.750000"/>
+        <EndRadiusInner value="0.500000"/>
+        <EndRadiusOuter value="0.600000"/>
     </CActorSiteOpOrbiter>
     <CActorUnit id="ParadoxAnnexDummy" parent="GenericUnitEmpty" unitname="Pulsar4DMDummy">
         <On Terms="UnitBirth.ParadoxAnnexDummy" Send="Create"/>
         <Model value="Invisible"/>
     </CActorUnit>
+    <CActorSound id="ParadoxAnnexStart" parent="SoundOneShot">
+        <On Terms="Behavior.ParadoxAnnexCaster.On" Send="Create"/>
+    </CActorSound>
     <CActorModel id="SpitterVolatileLaunch" parent="ModelAnimationStyleOneShot">
         <On Terms="Effect.SpitterVolatileBurstDamage.Start; At Caster" Send="Create"/>
     </CActorModel>
