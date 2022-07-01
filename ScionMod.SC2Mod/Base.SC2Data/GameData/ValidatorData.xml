@@ -3,6 +3,22 @@
     <CValidatorLocationEnumArea id="ACR">
         <AreaArray Radius="6"/>
     </CValidatorLocationEnumArea>
+    <CValidatorEffectTreeUserData id="AnnexCapNotReached">
+        <CheckExistence value="0"/>
+        <Compare value="LT"/>
+        <Key value="Annex"/>
+        <Value value="10"/>
+        <BehaviorScope Behavior="ParadoxAnnexCaster"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorLocationCompareRange id="AnnexCasterCloserThan2range">
+        <Compare value="LT"/>
+        <Range value="2"/>
+    </CValidatorLocationCompareRange>
+    <CValidatorUnitCompareBehaviorCount id="AnnexDummyUnitIsAlive">
+        <WhichUnit Effect="ParadoxAnnexCUSet"/>
+        <Compare value="GT"/>
+        <Behavior value="ParadoxAnnexDummy"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorCombine id="AvengerTacticalAI">
         <CombineArray value="InRangeCurrentTargetOfTarget"/>
         <CombineArray value="hasEnergy"/>
@@ -26,6 +42,14 @@
         <Value value="75"/>
         <Vital value="Energy"/>
     </CValidatorUnitCompareVital>
+    <CValidatorUnitCompareBehaviorCount id="CasterIsAnnexing">
+        <WhichUnit Value="Caster"/>
+        <Compare value="GT"/>
+        <Behavior value="ParadoxAnnexCaster"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="NotAnnexed">
+        <Behavior value="ParadoxAnnexed"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareSpeed id="CasterIsMovingGTE8">
         <WhichUnit Value="Caster"/>
         <Compare value="GE"/>
@@ -118,6 +142,20 @@
     <CValidatorUnitCompareBehaviorCount id="NotDummyUnit">
         <Behavior value="DummyUnit"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareVital id="ShieldLT50P">
+        <ResultFailed value="TooMuchLife"/>
+        <Compare value="LT"/>
+        <Type value="Fraction"/>
+        <Value value="0.5"/>
+        <Vital value="Shields"/>
+    </CValidatorUnitCompareVital>
+    <CValidatorUnitCompareVital id="ShieldGTE50P">
+        <ResultFailed value="TooMuchLife"/>
+        <Compare value="GE"/>
+        <Type value="Fraction"/>
+        <Value value="0.5"/>
+        <Vital value="Shields"/>
+    </CValidatorUnitCompareVital>
     <CValidatorPlayerRequirement id="XayidlingDexterousJoints">
         <Find value="1"/>
         <Value value="UseDexterousJoints"/>

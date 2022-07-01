@@ -135,6 +135,46 @@
             <Chance value="1"/>
         </DamageResponse>
     </CBehaviorBuff>
+    <CBehaviorBuff id="ParadoxAnnexCaster">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <Duration value="10"/>
+        <Period value="0.125"/>
+        <PeriodicEffect value="ParadoxAnnexSA"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="ParadoxAnnexDummy">
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="AnnexCasterCloserThan2range"/>
+        <RemoveValidatorArray value="CasterIsAnnexing"/>
+        <Period value="0.0625"/>
+        <FinalEffect value="ParadoxAnnexDummySuicide"/>
+        <PeriodicEffect value="ParadoxAnnexDummyOrder"/>
+        <Modification>
+            <StateFlags index="SuppressCollision" value="1"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="ParadoxAnnexed">
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="AnnexDummyUnitIsAlive"/>
+        <RemoveValidatorArray value="AnnexCasterCloserThan2range"/>
+        <Period value="0.0625"/>
+        <FinalEffect value="ParadoxAnnexFinalSet"/>
+        <Modification>
+            <RadiusMultiplier value="0"/>
+            <Height value="0.5"/>
+            <MoveSpeedMaximum value="2.75"/>
+            <MoveSpeedMinimum value="2.75"/>
+            <ModifyFlags index="DisableAbils" value="1"/>
+            <ModifyFlags index="DisableWeapons" value="1"/>
+            <ModifyFlags index="SuppressTurning" value="1"/>
+            <StateFlags index="Stun" value="1"/>
+            <StateFlags index="Uncommandable" value="1"/>
+            <HeightTime index="Start" value="1"/>
+            <HeightTime index="Stop" value="0.25"/>
+        </Modification>
+        <InitialEffect value="ParadoxAnnexAK"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="PulsarDampenerAutoTrigger">
         <InfoFlags index="Hidden" value="1"/>
         <InfoIcon value="Assets\Textures\btn-ability-keiron-dampener.dds"/>

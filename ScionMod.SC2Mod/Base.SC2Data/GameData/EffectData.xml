@@ -77,6 +77,10 @@
         <EditorCategories value="Race:Keiron"/>
         <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
     </CEffectEnumArea>
+    <CEffectIssueOrder id="ApertureTranportUnloadOrder">
+        <EditorCategories value="Race:Keiron"/>
+        <Abil value="stop"/>
+    </CEffectIssueOrder>
     <CEffectModifyUnit id="ApplyChargeCC">
         <EditorCategories value="Race:Genetron"/>
         <ImpactUnit Value="Source"/>
@@ -208,6 +212,105 @@
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="TargetUnitOrPoint"/>
     </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="ParadoxAnnexAB" parent="CEffectApplyBehaviorKeironTarget">
+        <WhichUnit Effect="ParadoxAnnexDataInc"/>
+        <Behavior value="ParadoxAnnexed"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="ParadoxAnnex" parent="CEffectApplyBehaviorKeironCaster">
+        <Behavior value="ParadoxAnnexCaster"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="ParadoxAnnexABDummy">
+        <EditorCategories value="Race:Keiron"/>
+        <Behavior value="ParadoxAnnexDummy"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyKinetic id="ParadoxAnnexAK">
+        <EditorCategories value="Race:Keiron"/>
+        <Kinetic value="FollowAnnexDummy"/>
+    </CEffectApplyKinetic>
+    <CEffectCreateUnit id="ParadoxAnnexCU">
+        <EditorCategories value="Race:Keiron"/>
+        <Origin Value="TargetUnit"/>
+        <SpawnOwner Value="Caster"/>
+        <SpawnEffect value="ParadoxAnnexCUSet"/>
+        <SpawnUnit value="ParadoxAnnexDummy"/>
+        <SpawnRange value="1.5"/>
+    </CEffectCreateUnit>
+    <CEffectSet id="ParadoxAnnexCUSet">
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="ParadoxAnnexABDummy"/>
+        <EffectArray value="ParadoxAnnexAB"/>
+    </CEffectSet>
+    <CEffectUserData id="ParadoxAnnexDataInc">
+        <ValidatorArray value="NotMassive"/>
+        <ValidatorArray value="NotAnnexed"/>
+        <ValidatorArray value="AnnexCapNotReached"/>
+        <EditorCategories value="Race:Keiron"/>
+        <Key value="Annex"/>
+        <SourceKey value="Annex"/>
+        <ValidateMax value="10"/>
+        <EffectSuccess value="ParadoxAnnexCU"/>
+        <BehaviorScope Behavior="ParadoxAnnexCaster"/>
+    </CEffectUserData>
+    <CEffectUserData id="ParadoxAnnexDataDec">
+        <EditorCategories value="Race:Keiron"/>
+        <Key value="Annex"/>
+        <SourceKey value="Annex"/>
+        <Operation value="Subtract"/>
+        <BehaviorScope Behavior="ParadoxAnnexCaster"/>
+    </CEffectUserData>
+    <CEffectIssueOrder id="ParadoxAnnexDummyOrder">
+        <EditorCategories value="Race:Keiron"/>
+        <WhichUnit Effect="ParadoxAnnexCUSet"/>
+        <Abil value="move"/>
+        <Target Value="CasterPoint"/>
+    </CEffectIssueOrder>
+    <CEffectModifyUnit id="ParadoxAnnexDummySuicide">
+        <EditorCategories value="Race:Keiron"/>
+        <ImpactUnit Effect="ParadoxAnnexCUSet"/>
+        <ModifyFlags index="Remove" value="1"/>
+    </CEffectModifyUnit>
+    <CEffectSet id="ParadoxAnnexFinalSet">
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="ParadoxAnnexDataDec"/>
+        <EffectArray value="ParadoxAnnexRK"/>
+        <EffectArray value="ParadoxAnnexTP"/>
+        <EffectArray value="ParadoxAnnexHeight"/>
+        <EffectArray value="ParadoxAnnexInturruptOrder"/>
+        <EffectArray value="ParadoxAnnexDummySuicide"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="ParadoxAnnexHeight">
+        <EditorCategories value="Race:Keiron"/>
+        <ImpactUnit Effect="ParadoxAnnexDataInc"/>
+        <Height value="-8"/>
+    </CEffectModifyUnit>
+    <CEffectIssueOrder id="ParadoxAnnexInturruptOrder">
+        <EditorCategories value="Race:Keiron"/>
+        <WhichUnit Effect="ParadoxAnnexDataInc"/>
+        <Abil value="move"/>
+        <Player Effect="ParadoxAnnexDataInc"/>
+        <Target Value="TargetPoint"/>
+    </CEffectIssueOrder>
+    <CEffectRemoveKinetic id="ParadoxAnnexRK">
+        <EditorCategories value="Race:Keiron"/>
+        <KineticLink value="FollowAnnexDummy"/>
+    </CEffectRemoveKinetic>
+    <CEffectEnumArea id="ParadoxAnnexSA" parent="CEffectSearchAreaKeiron">
+        <DebugTrace value="1"/>
+        <SearchFilters value="Ground;Structure,Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <AreaArray Radius="1" Effect="ParadoxAnnexDataInc"/>
+    </CEffectEnumArea>
+    <CEffectTeleport id="ParadoxAnnexTP">
+        <EditorCategories value="Race:Keiron"/>
+        <WhichUnit Effect="ParadoxAnnexDataInc"/>
+        <ClearQueuedOrders value="0"/>
+        <MinDistance value="0.1"/>
+        <PlacementArc value="360"/>
+        <PlacementAround Effect="ParadoxAnnexDataInc" Value="TargetUnit"/>
+        <PlacementRange value="3"/>
+        <SourceLocation Effect="ParadoxAnnexDataInc" Value="TargetUnit"/>
+        <TargetLocation Effect="ParadoxAnnexDataInc" Value="TargetUnit"/>
+        <TeleportFlags index="TestFog" value="0"/>
+    </CEffectTeleport>
     <CEffectApplyBehavior id="PulsarDampenerAutocast" parent="CEffectApplyBehaviorKeironCaster"/>
     <CEffectApplyBehavior id="PulsarDampenerAlt" parent="CEffectApplyBehaviorKeironTarget"/>
     <CEffectSet id="RepulsorSuppressionCannons">
