@@ -322,8 +322,8 @@
         <Type value="Absolute"/>
         <BaseRadiusPeriod value="3.000000"/>
         <EndYawPeriod value="2.000000,1.000000"/>
-        <EndRadiusInner value="0.500000"/>
-        <EndRadiusOuter value="0.600000"/>
+        <EndRadiusInner value="0.450000"/>
+        <EndRadiusOuter value="0.550000"/>
     </CActorSiteOpOrbiter>
     <CActorUnit id="ParadoxAnnexDummy" parent="GenericUnitEmpty" unitname="Pulsar4DMDummy">
         <On Terms="UnitBirth.ParadoxAnnexDummy" Send="Create"/>
@@ -4542,7 +4542,7 @@
     <CActorSound id="AegisShieldLoop" parent="SoundContinuousKeiron" Behavior="AegisShieldAura"/>
     <CActorRange id="NullifierRange" parent="RangeWeapon" weapon="NullifierWeapon"/>
     <CActorSound id="ParadoxPrisonInit" parent="SoundOneShot">
-        <On Terms="Effect.InvertFFieldCP.Start" Send="Create"/>
+        <On Terms="Effect.PrisonDuration.Start" Send="Create"/>
     </CActorSound>
     <CActorModel id="ParagonEmissaryOrbChargeModel" parent="ModelAnimationStyleContinuousUNIT">
         <On Terms="Abil.EmissaryOrb.SourcePrepStart" Send="Create"/>
@@ -5528,8 +5528,8 @@
     <CActorUnit id="Paradox" parent="GenericUnitKeiron" unitName="Paradox">
         <On index="69" Terms="UnitConstruction.Paradox.Start" Send="Create KeironMaterializeModelAirMedium"/>
         <On Terms="Abil.ParadoxShield.SourceChannelStart" Send="$Spell"/>
-        <On Terms="Abil.InvertFField.SourceCastStart" Send="$Spell PlayForever"/>
-        <On Terms="Abil.InvertFField.SourceFinishStart" Send="AnimClear Spell"/>
+        <On Terms="Abil.Prison.SourceCastStart" Send="$Spell PlayForever"/>
+        <On Terms="Abil.Prison.SourceFinishStart" Send="AnimClear Spell"/>
         <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMedium" SoundLink="KeironUnit_Death"/>
         <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-mechanicalarmorlevel0.dds"/>
@@ -5552,12 +5552,12 @@
         <On Terms="UnitBirth.Pulsar4DMDummy" Send="Create"/>
         <Model value="Invisible"/>
     </CActorUnit>
-    <CActorModel id="InvertForceField" parent="ModelAnimationStyleContinuous">
-        <On Terms="Effect.InvertFFieldCP.Start" Send="Create"/>
-        <On Terms="Effect.InvertFFieldCP.Stop" Send="Destroy"/>
+    <CActorModel id="ParadoxPrison" parent="ModelAnimationStyleContinuous">
+        <On Terms="Effect.PrisonDuration.Start" Send="Create"/>
+        <On Terms="Effect.PrisonDuration.Stop" Send="Destroy"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModel>
-    <CActorSplat id="InvertForceFieldSplat" parent="ProtossCursorSplat" abil="InvertFField"/>
+    <CActorSplat id="ParadoxPrisonCursor" parent="KeironCursorSplat" abil="Prison"/>
     <CActorUnit id="Paragon" parent="GenericUnitKeiron" unitName="Paragon">
         <On index="69" Terms="UnitConstruction.Paragon.Start" Send="Create KeironMaterializeModelAirParagon"/>
         <On index="70" Terms="UnitConstruction.Paragon.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 10.500000 AsDuration 0.000000 100"/>

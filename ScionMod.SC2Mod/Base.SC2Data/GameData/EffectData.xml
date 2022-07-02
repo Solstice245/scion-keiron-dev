@@ -3220,51 +3220,51 @@
         <PeriodCount value="1"/>
         <PeriodicEffectArray value="HalationPlasmaLM"/>
     </CEffectCreatePersistent>
-    <CEffectApplyBehavior id="InvertFFieldAB">
+    <CEffectApplyBehavior id="PrisonApplyFast">
         <EditorCategories value="Race:Keiron"/>
-        <Behavior value="InvertFField"/>
+        <Behavior value="PrisonFast"/>
     </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="InvertFFieldAB2">
+    <CEffectApplyBehavior id="PrisonApplySlow">
         <EditorCategories value="Race:Keiron"/>
-        <Behavior value="InvertFField2"/>
+        <Behavior value="PrisonSlow"/>
     </CEffectApplyBehavior>
-    <CEffectCreatePersistent id="InvertFFieldCP">
+    <CEffectCreatePersistent id="PrisonDuration">
         <EditorCategories value="Race:Keiron"/>
         <Flags index="Channeled" value="1"/>
-        <InitialEffect value="InvertFFieldChannelApply"/>
-        <FinalEffect value="InvertFFieldChannelRemove"/>
+        <InitialEffect value="PrisonChannelApplyBehavior"/>
+        <FinalEffect value="PrisonChannelRemoveBehavior"/>
         <PeriodCount value="100"/>
-        <PeriodicEffectArray value="InvertFFieldSA"/>
+        <PeriodicEffectArray value="PrisonSearch"/>
         <PeriodicPeriodArray value="0.125"/>
     </CEffectCreatePersistent>
-    <CEffectApplyBehavior id="InvertFFieldChannelApply">
+    <CEffectApplyBehavior id="PrisonChannelApplyBehavior">
         <EditorCategories value="Race:Keiron"/>
         <WhichUnit Value="Caster"/>
-        <Behavior value="InvertFFieldChannel"/>
+        <Behavior value="PrisonChannel"/>
     </CEffectApplyBehavior>
-    <CEffectRemoveBehavior id="InvertFFieldChannelRemove">
+    <CEffectRemoveBehavior id="PrisonChannelRemoveBehavior">
         <EditorCategories value="Race:Keiron"/>
         <WhichUnit Value="Caster"/>
-        <BehaviorLink value="InvertFFieldChannel"/>
+        <BehaviorLink value="PrisonChannel"/>
     </CEffectRemoveBehavior>
-    <CEffectApplyForce id="InvertFFieldForce">
+    <CEffectApplyForce id="PrisonForce">
         <ValidatorArray value="InvertFFieldDistanceMinimum"/>
         <EditorCategories value="Race:Keiron"/>
-        <WhichLocation Effect="InvertFFieldCP" Value="TargetPoint"/>
+        <WhichLocation Effect="PrisonDuration" Value="TargetPoint"/>
         <Amount value="-10"/>
     </CEffectApplyForce>
-    <CEffectEnumArea id="InvertFFieldSA">
+    <CEffectEnumArea id="PrisonSearch">
         <EditorCategories value="Race:Keiron"/>
         <SearchFilters value="-;Player,Ally,Structure,Missile,Stasis,Dead,Hidden"/>
-        <AreaArray Radius="1.5" Effect="InvertFFieldDelay"/>
+        <AreaArray Radius="1.5" Effect="PrisonDelay"/>
     </CEffectEnumArea>
-    <CEffectCreatePersistent id="InvertFFieldDelay">
+    <CEffectCreatePersistent id="PrisonDelay">
         <EditorCategories value="Race:Keiron"/>
         <WhichLocation Value="TargetUnit"/>
-        <InitialEffect value="InvertFFieldForce"/>
+        <InitialEffect value="PrisonForce"/>
         <PeriodCount value="2"/>
-        <PeriodicEffectArray value="InvertFFieldAB"/>
-        <PeriodicEffectArray value="InvertFFieldAB2"/>
+        <PeriodicEffectArray value="PrisonApplyFast"/>
+        <PeriodicEffectArray value="PrisonApplySlow"/>
         <PeriodicPeriodArray value="0.125"/>
         <PeriodicPeriodArray value="0.0625"/>
     </CEffectCreatePersistent>
