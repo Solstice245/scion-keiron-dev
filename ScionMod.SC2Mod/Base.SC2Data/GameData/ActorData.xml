@@ -298,6 +298,18 @@
         <ModelFlags index="AllowHitTest" value="0"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModel>
+    <CActorModel id="ParadoxShackle" parent="ModelAnimationStyleOneShot">
+        <On Terms="Effect.ParadoxShackle.Start" Send="Create"/>
+    </CActorModel>
+    <CActorModel id="ParadoxShackled" parent="ModelAddition">
+        <Inherits index="TintColor" value="0"/>
+        <On Terms="Behavior.ParadoxShackled.On" Send="Create"/>
+        <On Terms="Behavior.ParadoxShackled.Off" Send="Destroy"/>
+        <HostSiteOps Ops="SOpAttachCenter" HoldRotation="1"/>
+        <AutoScaleFactor value="1.000000"/>
+        <ModelFlags index="AllowHitTest" value="0"/>
+    </CActorModel>
+    <CActorRange id="ParadoxShackleRange" parent="RangeAbil" abil="ParadoxShackle"/>
     <CActorModel id="ParadoxAnnexBeam" parent="ModelAddition">
         <Inherits index="TintColor" value="0"/>
         <On Terms="Behavior.ParadoxAnnexCaster.On" Send="Create"/>
@@ -332,6 +344,9 @@
     <CActorSound id="ParadoxAnnexStart" parent="SoundOneShot">
         <On Terms="Behavior.ParadoxAnnexCaster.On" Send="Create"/>
     </CActorSound>
+    <CActorSplat id="ParadoxShackleCursor" parent="KeironCursorSplat" abil="ParadoxShackle">
+        <On index="0" Terms="Abil.##abil##.Cursor" Send="Create"/>
+    </CActorSplat>
     <CActorSiteOpLocalOffset id="SOpMoveBackByDot1">
         <LocalOffset value="0.000000,0.100000,0.000000"/>
     </CActorSiteOpLocalOffset>
@@ -5196,7 +5211,6 @@
         <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
     </CActorModel>
     <CActorRange id="MeridianLightningBoltRange" parent="RangeAbil" abil="MeridianLightningBolt"/>
-    <CActorRange id="MeridianLightningBoltRange2" parent="RangeAbil" abil="MeridianLightningBolt"/>
     <CActorAction id="MeridianWeaponAttack" parent="GenericAttack" effectAttack="MeridianWeaponDMG">
         <ImpactSite value="MeridianWeaponSite"/>
         <ImpactMap index="None" Sound="MeridianWeapon_Launch"/>
