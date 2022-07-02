@@ -273,9 +273,29 @@
         <On Terms="TimerExpired; TimerName FuseShield; ValidateUnit ShieldGTE50P" Send="SetOpacity 1.000000 0.250000 FuseShield"/>
         <On Terms="TimerExpired; TimerName FuseShield; ValidateUnit ShieldLT50P" Send="SetOpacity 0.350000 0.250000 FuseShield"/>
         <On Terms="TimerExpired; TimerName FuseShield; ValidateUnit ShieldEqualsZero" Send="SetOpacity 0.000000 0.250000 FuseShield"/>
+        <On Terms="TimerExpired; TimerName FuseShield" Send="DestroyParticles"/>
+        <On Terms="ActorCreation; ValidateUnit IsConverter" Send="SetScale 0.620000,0.940000,0.620000"/>
+        <On Terms="ActorCreation; ValidateUnit IsConverter" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveBackByDot1}"/>
+        <On Terms="ActorCreation; ValidateUnit IsPariahCombine" Send="SetScale 0.550000,0.550000,0.870000"/>
+        <On Terms="ActorCreation; ValidateUnit IsPariahCombine" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveDownByDot1 SOpMoveDownByDot05} 0 1"/>
+        <On Terms="ActorCreation; ValidateUnit IsVolt" Send="SetScale 0.630000,0.630000,0.900000"/>
+        <On Terms="ActorCreation; ValidateUnit IsVolt" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveDownByDot1 SOpMoveDownByDot025} 0 1"/>
+        <On Terms="ActorCreation; ValidateUnit IsPulsar" Send="SetScale 1.000000,1.000000,0.600000"/>
+        <On Terms="ActorCreation; ValidateUnit IsPulsar" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveDownByDot15} 0 1"/>
+        <On Terms="ActorCreation; ValidateUnit IsSubjecter" Send="SetScale 0.800000"/>
+        <On Terms="ActorCreation; ValidateUnit IsSubjecter" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveDownByDot025} 0 1"/>
+        <On Terms="ActorCreation; ValidateUnit IsMeridian" Send="SetScale 0.900000,0.900000,1.100000"/>
+        <On Terms="ActorCreation; ValidateUnit IsMeridian" Send="HostSiteOpsSet ::Host {SOpMoveUpByDot5 SOpMoveUpByDot25} 0 1"/>
+        <On Terms="ActorCreation; ValidateUnit IsUmbra" Send="SetScale 0.600000"/>
+        <On Terms="ActorCreation; ValidateUnit IsUmbra" Send="HostSiteOpsSet ::Host SOpAttachCenter 0 1"/>
+        <On Terms="ActorCreation; ValidateUnit IsMyriad" Send="SetScale 0.680000,0.820000,0.680000"/>
+        <On Terms="ActorCreation; ValidateUnit IsMyriad" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveDownByDot25}"/>
+        <On Terms="ActorCreation; ValidateUnit IsInducer" Send="SetScale 0.880000,1.100000,0.880000"/>
+        <On Terms="ActorCreation; ValidateUnit IsInducer" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveBackByDot25}"/>
         <HostSiteOps Ops="SOpAttachCenter" HoldRotation="1"/>
         <Model value="ParadoxShield"/>
         <AutoScaleFactor value="1.000000"/>
+        <ModelFlags index="AllowHitTest" value="0"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModel>
     <CActorModel id="ParadoxAnnexBeam" parent="ModelAddition">
@@ -312,6 +332,18 @@
     <CActorSound id="ParadoxAnnexStart" parent="SoundOneShot">
         <On Terms="Behavior.ParadoxAnnexCaster.On" Send="Create"/>
     </CActorSound>
+    <CActorSiteOpLocalOffset id="SOpMoveBackByDot1">
+        <LocalOffset value="0.000000,0.100000,0.000000"/>
+    </CActorSiteOpLocalOffset>
+    <CActorSiteOpLocalOffset id="SOpMoveDownByDot01">
+        <LocalOffset value="0.000000,0.000000,-0.010000"/>
+    </CActorSiteOpLocalOffset>
+    <CActorSiteOpLocalOffset id="SOpMoveDownByDot05">
+        <LocalOffset value="0.000000,0.000000,-0.050000"/>
+    </CActorSiteOpLocalOffset>
+    <CActorSiteOpLocalOffset id="SOpMoveDownByDot025">
+        <LocalOffset value="0.000000,0.000000,-0.025000"/>
+    </CActorSiteOpLocalOffset>
     <CActorModel id="SpitterVolatileLaunch" parent="ModelAnimationStyleOneShot">
         <On Terms="Effect.SpitterVolatileBurstDamage.Start; At Caster" Send="Create"/>
     </CActorModel>
