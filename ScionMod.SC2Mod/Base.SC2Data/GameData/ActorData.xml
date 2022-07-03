@@ -293,51 +293,50 @@
         <On Terms="ActorCreation; ValidateUnit IsInducer" Send="SetScale 0.880000,1.100000,0.880000"/>
         <On Terms="ActorCreation; ValidateUnit IsInducer" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveBackByDot25}"/>
         <HostSiteOps Ops="SOpAttachCenter" HoldRotation="1"/>
-        <Model value="ParadoxShield"/>
         <AutoScaleFactor value="1.000000"/>
         <ModelFlags index="AllowHitTest" value="0"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModel>
-    <CActorAction id="ParadoxShackleAttack" parent="GenericAttack" effectImpact="ParadoxShackleImpact" effectLaunch="ParadoxShackle">
+    <CActorAction id="GyreShackleAttack" parent="GenericAttack" effectImpact="GyreShackleImpactCP" effectLaunch="GyreShackleLM">
         <LaunchSiteOps Ops="SOpAttachHarness SOpMoveDownByDot05"/>
         <LaunchAttachQuery Methods="AMFilterHardpoint01"/>
-        <Missile value="ParadoxShackleWeapon"/>
+        <Missile value="GyreShackleWeapon"/>
         <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpMoveUpBy3 SOpMoveUpBy1 SOpRotationRandomDisc"/>
-        <ImpactMap index="None" Model="ParadoxShackle"/>
-        <ImpactModel value="ParadoxShackleImpactActor"/>
+        <ImpactMap index="None" Model="GyreShackle"/>
+        <ImpactModel value="GyreShackleImpactActor"/>
     </CActorAction>
-    <CActorModel id="ParadoxShackleImpactActor" parent="ModelAnimationStyleOneShot">
+    <CActorModel id="GyreShackleImpactActor" parent="ModelAnimationStyleOneShot">
         <On index="0" Terms="ActorCreation" Send="AnimBracketStart BSD Birth {} Death ContentPlayOnce"/>
     </CActorModel>
-    <CActorModel id="ParadoxShackled" parent="ModelAddition">
+    <CActorModel id="GyreShackled" parent="ModelAddition">
         <Inherits index="TintColor" value="0"/>
-        <On Terms="Behavior.ParadoxShackled.On" Send="Create"/>
-        <On Terms="Behavior.ParadoxShackled.Off" Send="Destroy"/>
+        <On Terms="Behavior.GyreShackled.On" Send="Create"/>
+        <On Terms="Behavior.GyreShackled.Off" Send="Destroy"/>
         <HostSiteOps Ops="SOpAttachCenter" HoldRotation="1"/>
         <AutoScaleFactor value="1.000000"/>
         <ModelFlags index="AllowHitTest" value="0"/>
     </CActorModel>
-    <CActorRange id="ParadoxShackleRange" parent="RangeAbil" abil="ParadoxShackle"/>
-    <CActorModel id="ParadoxAnnexBeam" parent="ModelAddition">
+    <CActorRange id="GyreShackleRange" parent="RangeAbil" abil="GyreShackle"/>
+    <CActorModel id="GyreAnnexBeam" parent="ModelAddition">
         <Inherits index="TintColor" value="0"/>
-        <On Terms="Behavior.ParadoxAnnexCaster.On" Send="Create"/>
-        <On Terms="Behavior.ParadoxAnnexCaster.Off" Send="Destroy"/>
+        <On Terms="Behavior.GyreAnnexCaster.On" Send="Create"/>
+        <On Terms="Behavior.GyreAnnexCaster.Off" Send="Destroy"/>
         <HostSiteOps Ops="SOpAttachCenter SOpMoveDownBy2 SOpMoveDownBy2"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModel>
-    <CActorSound id="ParadoxAnnexLoop" parent="SoundContinuousKeiron" Behavior="ParadoxAnnexCaster"/>
-    <CActorSound id="ParadoxAnnexStop" parent="SoundOneShot">
-        <On Terms="Behavior.ParadoxAnnexCaster.Off" Send="Create"/>
+    <CActorSound id="GyreAnnexLoop" parent="SoundContinuousKeiron" Behavior="GyreAnnexCaster"/>
+    <CActorSound id="GyreAnnexStop" parent="SoundOneShot">
+        <On Terms="Behavior.GyreAnnexCaster.Off" Send="Create"/>
     </CActorSound>
-    <CActorSimple id="ParadoxAnnexed">
-        <On Terms="Behavior.ParadoxAnnexed.On" Send="Create"/>
-        <On Terms="Behavior.ParadoxAnnexed.Off" Send="Destroy"/>
+    <CActorSimple id="GyreAnnexed">
+        <On Terms="Behavior.GyreAnnexed.On" Send="Create"/>
+        <On Terms="Behavior.GyreAnnexed.Off" Send="Destroy"/>
         <On Terms="ActorCreation" Target="_Selectable" Send="AnimPlay Flail Flail PlayForever"/>
-        <On Terms="ActorCreation" Target="_Selectable" Send="HostSiteOpsSet ::Host ParadoxAnnexOrbit"/>
+        <On Terms="ActorCreation" Target="_Selectable" Send="HostSiteOpsSet ::Host GyreAnnexOrbit"/>
         <On Terms="ActorDestruction" Target="_Selectable" Send="AnimClear Flail"/>
         <On Terms="ActorDestruction" Target="_Selectable" Send="HostSiteOpsSet ::Host"/>
     </CActorSimple>
-    <CActorSiteOpOrbiter id="ParadoxAnnexOrbit">
+    <CActorSiteOpOrbiter id="GyreAnnexOrbit">
         <HoldRotation value="1"/>
         <Type value="Absolute"/>
         <BaseRadiusPeriod value="3.000000"/>
@@ -345,16 +344,17 @@
         <EndRadiusInner value="0.450000"/>
         <EndRadiusOuter value="0.550000"/>
     </CActorSiteOpOrbiter>
-    <CActorUnit id="ParadoxAnnexDummy" parent="GenericUnitEmpty" unitname="Pulsar4DMDummy">
-        <On Terms="UnitBirth.ParadoxAnnexDummy" Send="Create"/>
+    <CActorUnit id="GyreAnnexDummy" parent="GenericUnitEmpty" unitname="Pulsar4DMDummy">
+        <On Terms="UnitBirth.GyreAnnexDummy" Send="Create"/>
         <Model value="Invisible"/>
     </CActorUnit>
-    <CActorSound id="ParadoxAnnexStart" parent="SoundOneShot">
-        <On Terms="Behavior.ParadoxAnnexCaster.On" Send="Create"/>
+    <CActorSound id="GyreAnnexStart" parent="SoundOneShot">
+        <On Terms="Behavior.GyreAnnexCaster.On" Send="Create"/>
     </CActorSound>
-    <CActorSplat id="ParadoxShackleCursor" parent="KeironCursorSplat" abil="ParadoxShackle"/>
-    <CActorMissile id="ParadoxShackleWeapon" parent="GenericAttackMissile" unitName="ParadoxShackleWeapon">
+    <CActorSplat id="GyreShackleCursor" parent="KeironCursorSplat" abil="GyreShackle"/>
+    <CActorMissile id="GyreShackleWeapon" parent="GenericAttackMissile" unitName="ParadoxShackleWeapon">
         <On Terms="UnitBirth" Send="AnimSetTimeScaleAbsolute Lifetime 1.000000"/>
+        <Model value="GyreShackleWeapon"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorMissile>
     <CActorSiteOpLocalOffset id="SOpMoveBackByDot1">
@@ -4487,8 +4487,8 @@
         <HostSiteOps Ops="SOpAttachShield"/>
     </CActorModel>
     <CActorSound id="UmbraShieldCompulsionSound" parent="SoundOneShotKeiron" Effect="UmbraShieldCompulsion"/>
-    <CActorSound id="ParadoxShieldBoostImpact" parent="SoundOneShot">
-        <On Terms="Behavior.ParadoxShieldBoost.On" Send="Create"/>
+    <CActorSound id="GyreShieldBoostImpact" parent="SoundOneShot">
+        <On Terms="Behavior.GyreShieldBoost.On" Send="Create"/>
         <Host Subject="_Selectable"/>
         <HostSiteOps Ops="SOpAttachOriginStationary"/>
     </CActorSound>
@@ -4566,8 +4566,8 @@
     </CActorSound>
     <CActorSound id="AegisShieldLoop" parent="SoundContinuousKeiron" Behavior="AegisShieldAura"/>
     <CActorRange id="NullifierRange" parent="RangeWeapon" weapon="NullifierWeapon"/>
-    <CActorSound id="ParadoxPrisonInit" parent="SoundOneShot">
-        <On Terms="Effect.PrisonDuration.Start" Send="Create"/>
+    <CActorSound id="GyrePrisonInit" parent="SoundOneShot">
+        <On Terms="Effect.GyrePrisonDuration.Start" Send="Create"/>
     </CActorSound>
     <CActorModel id="ParagonEmissaryOrbChargeModel" parent="ModelAnimationStyleContinuousUNIT">
         <On Terms="Abil.EmissaryOrb.SourcePrepStart" Send="Create"/>
@@ -5548,24 +5548,38 @@
         <BarOffset value="160"/>
         <BarWidth value="160"/>
     </CActorUnit>
-    <CActorUnit id="Paradox" parent="GenericUnitKeiron" unitName="Paradox">
-        <On index="69" Terms="UnitConstruction.Paradox.Start" Send="Create KeironMaterializeModelAirMedium"/>
-        <On Terms="Abil.ParadoxShield.SourceChannelStart" Send="$Spell"/>
-        <On Terms="Abil.Prison.SourceCastStart" Send="$Spell PlayForever"/>
-        <On Terms="Abil.Prison.SourceFinishStart" Send="AnimClear Spell"/>
-        <On Terms="Abil.ParadoxShackle.TargetCastStart" Send="$Spell"/>
-        <On Terms="Behavior.ParadoxAnnexCaster.On" Send="$Spell PlayForever"/>
-        <On Terms="Behavior.ParadoxAnnexCaster.Off" Send="AnimClear Spell"/>
+    <CActorUnit id="Gyre" parent="GenericUnitKeiron" unitName="Gyre">
+        <On index="69" Terms="UnitConstruction.Gyre.Start" Send="Create KeironMaterializeModelAirMedium"/>
+        <On Terms="Abil.GyreShield.SourceChannelStart" Send="$Spell"/>
+        <On Terms="Abil.GyrePrison.SourceCastStart" Send="$Spell PlayForever"/>
+        <On Terms="Abil.GyrePrison.SourceFinishStart" Send="AnimClear Spell"/>
+        <On Terms="Abil.GyreShackle.TargetCastStart" Send="$Spell"/>
+        <On Terms="Behavior.GyreAnnexCaster.On" Send="$Spell PlayForever"/>
+        <On Terms="Behavior.GyreAnnexCaster.Off" Send="AnimClear Spell"/>
         <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMedium" SoundLink="KeironUnit_Death"/>
         <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
+        <GroupIcon>
+            <Image index="0" value="Assets\Textures\wireframe-keiron-Paradox.dds"/>
+        </GroupIcon>
+        <HeroIcon value="Assets\Textures\btn-unit-keiron-Paradox.dds"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-mechanicalarmorlevel0.dds"/>
+        <UnitIcon value="Assets\Textures\btn-unit-keiron-Paradox.dds"/>
+        <Wireframe>
+            <Image index="0" value="Assets\Textures\wireframe-keiron-Paradox.dds"/>
+        </Wireframe>
+        <WireframeShield>
+            <Image index="0" value="Assets\Textures\wireframe-keiron-Paradox-shield1.dds"/>
+            <Image index="1" value="Assets\Textures\wireframe-keiron-Paradox-shield2.dds"/>
+            <Image index="2" value="Assets\Textures\wireframe-keiron-Paradox-shield3.dds"/>
+        </WireframeShield>
     </CActorUnit>
-    <CActorModel id="ParadoxShield" parent="ModelAddition">
+    <CActorModel id="GyreShield" parent="ModelAddition">
         <Inherits index="Opacity" value="0"/>
         <Inherits index="TintColor" value="0"/>
-        <On Terms="Behavior.ParadoxShieldBoost.On" Send="Create"/>
-        <On Terms="Behavior.ParadoxShieldBoost.Off" Send="Destroy"/>
+        <On Terms="Behavior.GyreShieldBoost.On" Send="Create"/>
+        <On Terms="Behavior.GyreShieldBoost.Off" Send="Destroy"/>
         <HostSiteOps Ops="SOpAttachCenter"/>
+        <Model value="FuseFusionBuffShield"/>
         <AutoScaleFactor value="1.000000"/>
         <ModelFlags index="AllowHitTest" value="0"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
@@ -5578,12 +5592,12 @@
         <On Terms="UnitBirth.Pulsar4DMDummy" Send="Create"/>
         <Model value="Invisible"/>
     </CActorUnit>
-    <CActorModel id="ParadoxPrison" parent="ModelAnimationStyleContinuous">
-        <On Terms="Effect.PrisonDuration.Start" Send="Create"/>
-        <On Terms="Effect.PrisonDuration.Stop" Send="Destroy"/>
+    <CActorModel id="GyrePrison" parent="ModelAnimationStyleContinuous">
+        <On Terms="Effect.GyrePrisonDuration.Start" Send="Create"/>
+        <On Terms="Effect.GyrePrisonDuration.Stop" Send="Destroy"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModel>
-    <CActorSplat id="ParadoxPrisonCursor" parent="KeironCursorSplat" abil="Prison"/>
+    <CActorSplat id="GyrePrisonCursor" parent="KeironCursorSplat" abil="GyrePrison"/>
     <CActorUnit id="Paragon" parent="GenericUnitKeiron" unitName="Paragon">
         <On index="69" Terms="UnitConstruction.Paragon.Start" Send="Create KeironMaterializeModelAirParagon"/>
         <On index="70" Terms="UnitConstruction.Paragon.Start" Send="AnimPlay Build Build 0 -1.000000 -1.000000 10.500000 AsDuration 0.000000 100"/>

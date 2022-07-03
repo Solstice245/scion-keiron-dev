@@ -135,31 +135,34 @@
             <Chance value="1"/>
         </DamageResponse>
     </CBehaviorBuff>
-    <CBehaviorBuff id="ParadoxAnnexCaster">
+    <CBehaviorBuff id="GyreAnnexCaster">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <DisplayDuration index="Self" value="1"/>
         <Duration value="10"/>
         <Period value="0.125"/>
-        <PeriodicEffect value="ParadoxAnnexSA"/>
+        <PeriodicEffect value="GyreAnnexSA"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="ParadoxAnnexDummy">
+    <CBehaviorBuff id="GyreAnnexDummy">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <RemoveValidatorArray value="AnnexCasterCloserThan2range"/>
         <RemoveValidatorArray value="CasterIsAnnexing"/>
         <Period value="0.0625"/>
-        <FinalEffect value="ParadoxAnnexDummySuicide"/>
-        <PeriodicEffect value="ParadoxAnnexDummyOrder"/>
+        <PeriodicEffect value="GyreAnnexFollowOrder"/>
+        <FinalEffect value="GyreAnnexDummySuicide"/>
         <Modification>
             <StateFlags index="SuppressCollision" value="1"/>
         </Modification>
     </CBehaviorBuff>
-    <CBehaviorBuff id="ParadoxAnnexed">
+    <CBehaviorBuff id="GyreAnnexed">
+        <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <RemoveValidatorArray value="AnnexDummyUnitIsAlive"/>
         <RemoveValidatorArray value="AnnexCasterCloserThan2range"/>
         <Period value="0.5"/>
-        <FinalEffect value="ParadoxAnnexFinalSet"/>
+        <InitialEffect value="GyreAnnexAK"/>
+        <PeriodicEffect value="GyreAnnexDamage"/>
+        <FinalEffect value="GyreAnnexFinalSet"/>
         <Modification>
             <RadiusMultiplier value="0"/>
             <Height value="0.5"/>
@@ -173,18 +176,16 @@
             <HeightTime index="Start" value="1"/>
             <HeightTime index="Stop" value="0.25"/>
         </Modification>
-        <InitialEffect value="ParadoxAnnexAK"/>
-        <PeriodicEffect value="ParadoxAnnexDamage"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="ParadoxShackled">
+    <CBehaviorBuff id="GyreShackled">
         <Alignment value="Negative"/>
         <InfoIcon value="Assets\Textures\btn-ability-zeratul-stalker-phasebattery.dds"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <MaxStackCount value="5"/>
         <Duration value="5"/>
         <Modification MoveSpeedMultiplier="0.6"/>
-        <MaxStackCount value="5"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="ParadoxShackledSupress">
+    <CBehaviorBuff id="GyreShackledSupress">
         <Alignment value="Negative"/>
         <InfoFlags index="Hidden" value="1"/>
         <InfoIcon value="Assets\Textures\btn-ability-zeratul-stalker-phasebattery.dds"/>
@@ -1643,8 +1644,8 @@
         <MaxStackCount value="0"/>
         <Duration value="12.5"/>
         <Period value="0.0625"/>
-        <InitialEffect value="PrisonForce"/>
-        <PeriodicEffect value="PrisonForce"/>
+        <InitialEffect value="GyrePrisonForce"/>
+        <PeriodicEffect value="GyrePrisonForce"/>
         <Modification MoveSpeedMaximum="1"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="PrisonSlow">
@@ -1656,8 +1657,8 @@
         <MaxStackCount value="0"/>
         <Duration value="12.5"/>
         <Period value="0.0625"/>
-        <InitialEffect value="PrisonForce"/>
-        <PeriodicEffect value="PrisonForce"/>
+        <InitialEffect value="GyrePrisonForce"/>
+        <PeriodicEffect value="GyrePrisonForce"/>
         <Modification MoveSpeedMaximum="0.3007"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="PrisonChannel">
@@ -1700,11 +1701,11 @@
             <BehaviorLinkDisableArray value="IsParagon"/>
         </Modification>
     </CBehaviorBuff>
-    <CBehaviorBuff id="ParadoxShieldBoost">
+    <CBehaviorBuff id="GyreShieldBoost">
         <InfoIcon value="Assets\Textures\btn-ability-zeratul-warpprism-shieldboosters.dds"/>
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
         <Duration value="20"/>
-        <RefreshEffect value="ParadoxShieldMU"/>
+        <RefreshEffect value="GyreShieldMU"/>
         <Modification ShieldArmorBonus="1">
             <VitalMaxArray index="Shields" value="100"/>
         </Modification>

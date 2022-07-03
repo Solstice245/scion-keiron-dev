@@ -218,44 +218,44 @@
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="TargetUnitOrPoint"/>
     </CEffectCreatePersistent>
-    <CEffectApplyBehavior id="ParadoxAnnexAB" parent="CEffectApplyBehaviorKeironTarget">
-        <WhichUnit Effect="ParadoxAnnexDataInc"/>
-        <Behavior value="ParadoxAnnexed"/>
+    <CEffectApplyBehavior id="GyreAnnexAB" parent="CEffectApplyBehaviorKeironTarget">
+        <WhichUnit Effect="GyreAnnexDataInc"/>
+        <Behavior value="GyreAnnexed"/>
     </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="ParadoxAnnex" parent="CEffectApplyBehaviorKeironCaster">
-        <Behavior value="ParadoxAnnexCaster"/>
+    <CEffectApplyBehavior id="GyreAnnexABCaster" parent="CEffectApplyBehaviorKeironCaster">
+        <Behavior value="GyreAnnexCaster"/>
     </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="ParadoxAnnexABDummy">
+    <CEffectApplyBehavior id="GyreAnnexABDummy">
         <EditorCategories value="Race:Keiron"/>
-        <Behavior value="ParadoxAnnexDummy"/>
+        <Behavior value="GyreAnnexDummy"/>
     </CEffectApplyBehavior>
-    <CEffectApplyKinetic id="ParadoxAnnexAK">
+    <CEffectApplyKinetic id="GyreAnnexAK">
         <EditorCategories value="Race:Keiron"/>
         <Kinetic value="FollowAnnexDummy"/>
     </CEffectApplyKinetic>
-    <CEffectSet id="ParadoxAnnexApplySet">
+    <CEffectSet id="GyreAnnexApplySet">
         <EditorCategories value="Race:Keiron"/>
         <EffectArray value="InstantUnburrow"/>
-        <EffectArray value="ParadoxAnnexCU"/>
+        <EffectArray value="GyreAnnexCU"/>
     </CEffectSet>
-    <CEffectCreateUnit id="ParadoxAnnexCU">
+    <CEffectCreateUnit id="GyreAnnexCU">
         <EditorCategories value="Race:Keiron"/>
         <Origin Value="TargetUnit"/>
         <SpawnOwner Value="Caster"/>
-        <SpawnEffect value="ParadoxAnnexCUSet"/>
-        <SpawnUnit value="ParadoxAnnexDummy"/>
+        <SpawnEffect value="GyreAnnexCUSet"/>
+        <SpawnUnit value="GyreAnnexDummy"/>
         <SpawnRange value="1.5"/>
     </CEffectCreateUnit>
-    <CEffectSet id="ParadoxAnnexCUSet">
+    <CEffectSet id="GyreAnnexCUSet">
         <EditorCategories value="Race:Keiron"/>
-        <EffectArray value="ParadoxAnnexABDummy"/>
-        <EffectArray value="ParadoxAnnexAB"/>
+        <EffectArray value="GyreAnnexABDummy"/>
+        <EffectArray value="GyreAnnexAB"/>
     </CEffectSet>
-    <CEffectDamage id="ParadoxAnnexDamage" parent="CEffectDamageKeironSpell">
+    <CEffectDamage id="GyreAnnexDamage" parent="CEffectDamageKeironSpell">
         <ValidatorArray value="EnemyTarget"/>
         <Amount value="2"/>
     </CEffectDamage>
-    <CEffectUserData id="ParadoxAnnexDataInc">
+    <CEffectUserData id="GyreAnnexDataInc">
         <ValidatorArray value="NotMassive"/>
         <ValidatorArray value="NotAnnexed"/>
         <ValidatorArray value="AnnexCapNotReached"/>
@@ -263,94 +263,97 @@
         <Key value="Annex"/>
         <SourceKey value="Annex"/>
         <ValidateMax value="10"/>
-        <EffectSuccess value="ParadoxAnnexApplySet"/>
-        <BehaviorScope Behavior="ParadoxAnnexCaster"/>
+        <EffectSuccess value="GyreAnnexApplySet"/>
+        <BehaviorScope Behavior="GyreAnnexCaster"/>
     </CEffectUserData>
-    <CEffectUserData id="ParadoxAnnexDataDec">
+    <CEffectUserData id="GyreAnnexDataDec">
         <EditorCategories value="Race:Keiron"/>
         <Key value="Annex"/>
         <SourceKey value="Annex"/>
         <Operation value="Subtract"/>
-        <BehaviorScope Behavior="ParadoxAnnexCaster"/>
+        <BehaviorScope Behavior="GyreAnnexCaster"/>
     </CEffectUserData>
-    <CEffectIssueOrder id="ParadoxAnnexDummyOrder">
+    <CEffectIssueOrder id="GyreAnnexFollowOrder">
         <EditorCategories value="Race:Keiron"/>
-        <WhichUnit Effect="ParadoxAnnexCUSet"/>
+        <WhichUnit Effect="GyreAnnexCUSet"/>
         <Abil value="move"/>
         <Target Value="CasterPoint"/>
     </CEffectIssueOrder>
-    <CEffectModifyUnit id="ParadoxAnnexDummySuicide">
+    <CEffectModifyUnit id="GyreAnnexDummySuicide">
         <EditorCategories value="Race:Keiron"/>
-        <ImpactUnit Effect="ParadoxAnnexCUSet"/>
+        <ImpactUnit Effect="GyreAnnexCUSet"/>
         <ModifyFlags index="Remove" value="1"/>
     </CEffectModifyUnit>
-    <CEffectSet id="ParadoxAnnexFinalSet">
+    <CEffectSet id="GyreAnnexFinalSet">
         <EditorCategories value="Race:Keiron"/>
-        <EffectArray value="ParadoxAnnexDataDec"/>
-        <EffectArray value="ParadoxAnnexRK"/>
-        <EffectArray value="ParadoxAnnexTP"/>
-        <EffectArray value="ParadoxAnnexHeight"/>
-        <EffectArray value="ParadoxAnnexInturruptOrder"/>
-        <EffectArray value="ParadoxAnnexDummySuicide"/>
+        <EffectArray value="GyreAnnexDataDec"/>
+        <EffectArray value="GyreAnnexRK"/>
+        <EffectArray value="GyreAnnexTP"/>
+        <EffectArray value="GyreAnnexHeight"/>
+        <EffectArray value="GyreAnnexInturruptOrder"/>
+        <EffectArray value="GyreAnnexDummySuicide"/>
     </CEffectSet>
-    <CEffectModifyUnit id="ParadoxAnnexHeight">
+    <CEffectModifyUnit id="GyreAnnexHeight">
         <EditorCategories value="Race:Keiron"/>
-        <ImpactUnit Effect="ParadoxAnnexDataInc"/>
+        <ImpactUnit Effect="GyreAnnexDataInc"/>
         <Height value="-8"/>
     </CEffectModifyUnit>
-    <CEffectIssueOrder id="ParadoxAnnexInturruptOrder">
+    <CEffectIssueOrder id="GyreAnnexInturruptOrder">
         <EditorCategories value="Race:Keiron"/>
-        <WhichUnit Effect="ParadoxAnnexDataInc"/>
+        <WhichUnit Effect="GyreAnnexDataInc"/>
         <Abil value="move"/>
-        <Player Effect="ParadoxAnnexDataInc"/>
+        <Player Effect="GyreAnnexDataInc"/>
         <Target Value="TargetPoint"/>
     </CEffectIssueOrder>
-    <CEffectRemoveKinetic id="ParadoxAnnexRK">
+    <CEffectRemoveKinetic id="GyreAnnexRK">
         <EditorCategories value="Race:Keiron"/>
         <KineticLink value="FollowAnnexDummy"/>
     </CEffectRemoveKinetic>
-    <CEffectEnumArea id="ParadoxAnnexSA" parent="CEffectSearchAreaKeiron">
+    <CEffectEnumArea id="GyreAnnexSA" parent="CEffectSearchAreaKeiron">
         <SearchFilters value="Ground;Structure,Missile,Stasis,Dead,Hidden,Invulnerable"/>
-        <AreaArray Radius="1" Effect="ParadoxAnnexDataInc"/>
+        <AreaArray Radius="1" Effect="GyreAnnexDataInc"/>
     </CEffectEnumArea>
-    <CEffectTeleport id="ParadoxAnnexTP">
+    <CEffectTeleport id="GyreAnnexTP">
         <EditorCategories value="Race:Keiron"/>
-        <WhichUnit Effect="ParadoxAnnexDataInc"/>
+        <WhichUnit Effect="GyreAnnexDataInc"/>
         <ClearQueuedOrders value="0"/>
         <MinDistance value="0.1"/>
         <PlacementArc value="360"/>
-        <PlacementAround Effect="ParadoxAnnexDataInc" Value="TargetUnit"/>
-        <PlacementRange value="3"/>
-        <SourceLocation Effect="ParadoxAnnexDataInc" Value="TargetUnit"/>
-        <TargetLocation Effect="ParadoxAnnexDataInc" Value="TargetUnit"/>
+        <PlacementAround Effect="GyreAnnexDataInc" Value="TargetUnit"/>
+        <PlacementRange value="4"/>
+        <SourceLocation Effect="GyreAnnexDataInc" Value="TargetUnit"/>
+        <TargetLocation Effect="GyreAnnexDataInc" Value="TargetUnit"/>
         <TeleportFlags index="TestFog" value="0"/>
     </CEffectTeleport>
-    <CEffectApplyBehavior id="ParadoxShackleABSupress" parent="CEffectApplyBehaviorKeironTarget">
-        <Behavior value="ParadoxShackledSupress"/>
+    <CEffectApplyBehavior id="GyreShackleABSupress" parent="CEffectApplyBehaviorKeironTarget">
+        <Behavior value="GyreShackledSupress"/>
     </CEffectApplyBehavior>
-    <CEffectCreatePersistent id="ParadoxShackleTargetCP">
+    <CEffectCreatePersistent id="GyreShackleTargetCP">
         <EditorCategories value="Race:Keiron"/>
         <WhichLocation Value="TargetUnit"/>
         <ExpireDelay value="0.125"/>
-        <ExpireEffect value="ParadoxShackleABSupress"/>
+        <ExpireEffect value="GyreShackleABSupress"/>
         <PeriodCount value="5"/>
-        <PeriodicEffectArray value="ParadoxShackleAB"/>
+        <PeriodicEffectArray value="GyreShackleAB"/>
         <PeriodicPeriodArray value="0.25"/>
     </CEffectCreatePersistent>
-    <CEffectEnumArea id="ParadoxShackleSA">
+    <CEffectEnumArea id="GyreShackleSA">
         <EditorCategories value="Race:Keiron"/>
         <ImpactLocation Value="TargetPoint"/>
         <SearchFilters value="Air;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden,Invulnerable"/>
-        <AreaArray Radius="2.5" Effect="ParadoxShackleTargetCP"/>
+        <AreaArray Radius="2.5" Effect="GyreShackleTargetCP"/>
     </CEffectEnumArea>
-    <CEffectApplyBehavior id="ParadoxShackleAB">
+    <CEffectApplyBehavior id="GyreShackleAB">
         <EditorCategories value="Race:Keiron"/>
-        <Behavior value="ParadoxShackled"/>
+        <Behavior value="GyreShackled"/>
     </CEffectApplyBehavior>
-    <CEffectLaunchMissile id="ParadoxShackle" parent="CEffectLaunchMissileKeironPoint"/>
-    <CEffectCreatePersistent id="ParadoxShackleImpact" parent="CEffectCreatePersistentKeiron">
+    <CEffectLaunchMissile id="GyreShackleLM" parent="CEffectLaunchMissileKeironPoint">
+        <ImpactEffect value="GyreShackleImpactCP"/>
+        <AmmoUnit value="ParadoxShackleWeapon"/>
+    </CEffectLaunchMissile>
+    <CEffectCreatePersistent id="GyreShackleImpactCP" parent="CEffectCreatePersistentKeiron">
         <PeriodCount value="3"/>
-        <PeriodicEffectArray value="ParadoxShackleSA"/>
+        <PeriodicEffectArray value="GyreShackleSA"/>
         <PeriodicPeriodArray value="0.25"/>
     </CEffectCreatePersistent>
     <CEffectApplyBehavior id="PulsarDampenerAutocast" parent="CEffectApplyBehaviorKeironCaster"/>
@@ -3263,51 +3266,51 @@
         <PeriodCount value="1"/>
         <PeriodicEffectArray value="HalationPlasmaLM"/>
     </CEffectCreatePersistent>
-    <CEffectApplyBehavior id="PrisonApplyFast">
+    <CEffectApplyBehavior id="GyrePrisonApplyFast">
         <EditorCategories value="Race:Keiron"/>
         <Behavior value="PrisonFast"/>
     </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="PrisonApplySlow">
+    <CEffectApplyBehavior id="GyrePrisonApplySlow">
         <EditorCategories value="Race:Keiron"/>
         <Behavior value="PrisonSlow"/>
     </CEffectApplyBehavior>
-    <CEffectCreatePersistent id="PrisonDuration">
+    <CEffectCreatePersistent id="GyrePrisonDuration">
         <EditorCategories value="Race:Keiron"/>
         <Flags index="Channeled" value="1"/>
-        <InitialEffect value="PrisonChannelApplyBehavior"/>
-        <FinalEffect value="PrisonChannelRemoveBehavior"/>
+        <InitialEffect value="GyrePrisonChannelApplyBehavior"/>
+        <FinalEffect value="GyrePrisonChannelRemoveBehavior"/>
         <PeriodCount value="100"/>
-        <PeriodicEffectArray value="PrisonSearch"/>
+        <PeriodicEffectArray value="GyrePrisonSearch"/>
         <PeriodicPeriodArray value="0.125"/>
     </CEffectCreatePersistent>
-    <CEffectApplyBehavior id="PrisonChannelApplyBehavior">
+    <CEffectApplyBehavior id="GyrePrisonChannelApplyBehavior">
         <EditorCategories value="Race:Keiron"/>
         <WhichUnit Value="Caster"/>
         <Behavior value="PrisonChannel"/>
     </CEffectApplyBehavior>
-    <CEffectRemoveBehavior id="PrisonChannelRemoveBehavior">
+    <CEffectRemoveBehavior id="GyrePrisonChannelRemoveBehavior">
         <EditorCategories value="Race:Keiron"/>
         <WhichUnit Value="Caster"/>
         <BehaviorLink value="PrisonChannel"/>
     </CEffectRemoveBehavior>
-    <CEffectApplyForce id="PrisonForce">
+    <CEffectApplyForce id="GyrePrisonForce">
         <ValidatorArray value="InvertFFieldDistanceMinimum"/>
         <EditorCategories value="Race:Keiron"/>
-        <WhichLocation Effect="PrisonDuration" Value="TargetPoint"/>
+        <WhichLocation Effect="GyrePrisonDuration" Value="TargetPoint"/>
         <Amount value="-10"/>
     </CEffectApplyForce>
-    <CEffectEnumArea id="PrisonSearch">
+    <CEffectEnumArea id="GyrePrisonSearch">
         <EditorCategories value="Race:Keiron"/>
         <SearchFilters value="-;Player,Ally,Structure,Missile,Stasis,Dead,Hidden"/>
-        <AreaArray Radius="1.5" Effect="PrisonDelay"/>
+        <AreaArray Radius="1.5" Effect="GyrePrisonDelay"/>
     </CEffectEnumArea>
-    <CEffectCreatePersistent id="PrisonDelay">
+    <CEffectCreatePersistent id="GyrePrisonDelay">
         <EditorCategories value="Race:Keiron"/>
         <WhichLocation Value="TargetUnit"/>
-        <InitialEffect value="PrisonForce"/>
+        <InitialEffect value="GyrePrisonForce"/>
         <PeriodCount value="2"/>
-        <PeriodicEffectArray value="PrisonApplyFast"/>
-        <PeriodicEffectArray value="PrisonApplySlow"/>
+        <PeriodicEffectArray value="GyrePrisonApplyFast"/>
+        <PeriodicEffectArray value="GyrePrisonApplySlow"/>
         <PeriodicPeriodArray value="0.125"/>
         <PeriodicPeriodArray value="0.0625"/>
     </CEffectCreatePersistent>
@@ -3319,11 +3322,11 @@
     <CEffectDamage id="NullifierWeaponDisplay" parent="CEffectDamageKeironWeapon">
         <Amount value="18"/>
     </CEffectDamage>
-    <CEffectApplyBehavior id="ParadoxShieldAB">
+    <CEffectApplyBehavior id="GyreShieldAB">
         <EditorCategories value="Race:Keiron"/>
-        <Behavior value="ParadoxShieldBoost"/>
+        <Behavior value="GyreShieldBoost"/>
     </CEffectApplyBehavior>
-    <CEffectModifyUnit id="ParadoxShieldMU">
+    <CEffectModifyUnit id="GyreShieldMU">
         <EditorCategories value="Race:Keiron"/>
         <VitalArray index="Shields">
             <Change value="100"/>
