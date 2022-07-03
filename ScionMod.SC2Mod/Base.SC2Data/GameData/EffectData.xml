@@ -183,6 +183,9 @@
         <EffectArray value="IBF7Flamethrower"/>
         <EffectArray value="IBF7FlamethrowerDMG"/>
     </CEffectSet>
+    <CEffectSet id="InstantUnburrow">
+        <EffectArray value="MoleUnburrow"/>
+    </CEffectSet>
     <CEffectApplyBehavior id="JupiterStealth" parent="CEffectApplyBehaviorGenetronCaster">
         <ValidatorArray index="0" value="JupiterStealthSpeedCost"/>
         <Chance value="0"/>
@@ -201,6 +204,9 @@
         <EffectArray value="ChargeUse"/>
         <TargetLocationType value="UnitOrPoint"/>
     </CEffectSet>
+    <CEffectIssueOrder id="MoleUnburrow">
+        <Abil value="MoleDeactivate"/>
+    </CEffectIssueOrder>
     <CEffectSet id="Mend">
         <ValidatorArray value="NotFullLife"/>
         <ValidatorArray value="HasNoMendBehavior"/>
@@ -227,6 +233,11 @@
         <EditorCategories value="Race:Keiron"/>
         <Kinetic value="FollowAnnexDummy"/>
     </CEffectApplyKinetic>
+    <CEffectSet id="ParadoxAnnexApplySet">
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="InstantUnburrow"/>
+        <EffectArray value="ParadoxAnnexCU"/>
+    </CEffectSet>
     <CEffectCreateUnit id="ParadoxAnnexCU">
         <EditorCategories value="Race:Keiron"/>
         <Origin Value="TargetUnit"/>
@@ -252,7 +263,7 @@
         <Key value="Annex"/>
         <SourceKey value="Annex"/>
         <ValidateMax value="10"/>
-        <EffectSuccess value="ParadoxAnnexCU"/>
+        <EffectSuccess value="ParadoxAnnexApplySet"/>
         <BehaviorScope Behavior="ParadoxAnnexCaster"/>
     </CEffectUserData>
     <CEffectUserData id="ParadoxAnnexDataDec">
