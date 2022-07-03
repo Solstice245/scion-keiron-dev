@@ -317,7 +317,7 @@
     <CEffectApplyBehavior id="ParadoxShackleABSupress" parent="CEffectApplyBehaviorKeironTarget">
         <Behavior value="ParadoxShackledSupress"/>
     </CEffectApplyBehavior>
-    <CEffectCreatePersistent id="ParadoxShackleCP">
+    <CEffectCreatePersistent id="ParadoxShackleTargetCP">
         <EditorCategories value="Race:Keiron"/>
         <WhichLocation Value="TargetUnit"/>
         <ExpireDelay value="0.125"/>
@@ -326,17 +326,22 @@
         <PeriodicEffectArray value="ParadoxShackleAB"/>
         <PeriodicPeriodArray value="0.25"/>
     </CEffectCreatePersistent>
-    <CEffectEnumArea id="ParadoxShackleImpact">
+    <CEffectEnumArea id="ParadoxShackleSA">
         <EditorCategories value="Race:Keiron"/>
         <ImpactLocation Value="TargetPoint"/>
         <SearchFilters value="Air;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden,Invulnerable"/>
-        <AreaArray Radius="2.5" Effect="ParadoxShackleCP"/>
+        <AreaArray Radius="2.5" Effect="ParadoxShackleTargetCP"/>
     </CEffectEnumArea>
     <CEffectApplyBehavior id="ParadoxShackleAB">
         <EditorCategories value="Race:Keiron"/>
         <Behavior value="ParadoxShackled"/>
     </CEffectApplyBehavior>
     <CEffectLaunchMissile id="ParadoxShackle" parent="CEffectLaunchMissileKeironPoint"/>
+    <CEffectCreatePersistent id="ParadoxShackleImpact" parent="CEffectCreatePersistentKeiron">
+        <PeriodCount value="3"/>
+        <PeriodicEffectArray value="ParadoxShackleSA"/>
+        <PeriodicPeriodArray value="0.25"/>
+    </CEffectCreatePersistent>
     <CEffectApplyBehavior id="PulsarDampenerAutocast" parent="CEffectApplyBehaviorKeironCaster"/>
     <CEffectApplyBehavior id="PulsarDampenerAlt" parent="CEffectApplyBehaviorKeironTarget"/>
     <CEffectSet id="RepulsorSuppressionCannons">
