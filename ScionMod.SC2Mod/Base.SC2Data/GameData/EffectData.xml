@@ -240,6 +240,10 @@
         <EffectArray value="ParadoxAnnexABDummy"/>
         <EffectArray value="ParadoxAnnexAB"/>
     </CEffectSet>
+    <CEffectDamage id="ParadoxAnnexDamage" parent="CEffectDamageKeironSpell">
+        <ValidatorArray value="EnemyTarget"/>
+        <Amount value="2"/>
+    </CEffectDamage>
     <CEffectUserData id="ParadoxAnnexDataInc">
         <ValidatorArray value="NotMassive"/>
         <ValidatorArray value="NotAnnexed"/>
@@ -310,16 +314,29 @@
         <TargetLocation Effect="ParadoxAnnexDataInc" Value="TargetUnit"/>
         <TeleportFlags index="TestFog" value="0"/>
     </CEffectTeleport>
-    <CEffectEnumArea id="ParadoxShackle">
+    <CEffectApplyBehavior id="ParadoxShackleABSupress" parent="CEffectApplyBehaviorKeironTarget">
+        <Behavior value="ParadoxShackledSupress"/>
+    </CEffectApplyBehavior>
+    <CEffectCreatePersistent id="ParadoxShackleCP">
+        <EditorCategories value="Race:Keiron"/>
+        <WhichLocation Value="TargetUnit"/>
+        <ExpireDelay value="0.125"/>
+        <ExpireEffect value="ParadoxShackleABSupress"/>
+        <PeriodCount value="5"/>
+        <PeriodicEffectArray value="ParadoxShackleAB"/>
+        <PeriodicPeriodArray value="0.25"/>
+    </CEffectCreatePersistent>
+    <CEffectEnumArea id="ParadoxShackleImpact">
         <EditorCategories value="Race:Keiron"/>
         <ImpactLocation Value="TargetPoint"/>
         <SearchFilters value="Air;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden,Invulnerable"/>
-        <AreaArray Radius="3" Effect="ParadoxShackleAB"/>
+        <AreaArray Radius="2.5" Effect="ParadoxShackleCP"/>
     </CEffectEnumArea>
     <CEffectApplyBehavior id="ParadoxShackleAB">
         <EditorCategories value="Race:Keiron"/>
         <Behavior value="ParadoxShackled"/>
     </CEffectApplyBehavior>
+    <CEffectLaunchMissile id="ParadoxShackle" parent="CEffectLaunchMissileKeironPoint"/>
     <CEffectApplyBehavior id="PulsarDampenerAutocast" parent="CEffectApplyBehaviorKeironCaster"/>
     <CEffectApplyBehavior id="PulsarDampenerAlt" parent="CEffectApplyBehaviorKeironTarget"/>
     <CEffectSet id="RepulsorSuppressionCannons">

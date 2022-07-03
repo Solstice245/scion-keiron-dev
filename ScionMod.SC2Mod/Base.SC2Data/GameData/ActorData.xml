@@ -298,8 +298,16 @@
         <ModelFlags index="AllowHitTest" value="0"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModel>
-    <CActorModel id="ParadoxShackle" parent="ModelAnimationStyleOneShot">
-        <On Terms="Effect.ParadoxShackle.Start" Send="Create"/>
+    <CActorAction id="ParadoxShackleAttack" parent="GenericAttack" effectImpact="ParadoxShackleImpact" effectLaunch="ParadoxShackle">
+        <LaunchSiteOps Ops="SOpAttachHarness SOpMoveDownByDot05"/>
+        <LaunchAttachQuery Methods="AMFilterHardpoint01"/>
+        <Missile value="ParadoxShackleWeapon"/>
+        <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpMoveUpBy3 SOpMoveUpBy1 SOpRotationRandomDisc"/>
+        <ImpactMap index="None" Model="ParadoxShackle"/>
+        <ImpactModel value="ParadoxShackleImpactActor"/>
+    </CActorAction>
+    <CActorModel id="ParadoxShackleImpactActor" parent="ModelAnimationStyleOneShot">
+        <On index="0" Terms="ActorCreation" Send="AnimBracketStart BSD Birth {} Death ContentPlayOnce"/>
     </CActorModel>
     <CActorModel id="ParadoxShackled" parent="ModelAddition">
         <Inherits index="TintColor" value="0"/>
@@ -314,7 +322,7 @@
         <Inherits index="TintColor" value="0"/>
         <On Terms="Behavior.ParadoxAnnexCaster.On" Send="Create"/>
         <On Terms="Behavior.ParadoxAnnexCaster.Off" Send="Destroy"/>
-        <HostSiteOps Ops="SOpShadow"/>
+        <HostSiteOps Ops="SOpAttachCenter SOpMoveDownBy2 SOpMoveDownBy2"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModel>
     <CActorSound id="ParadoxAnnexLoop" parent="SoundContinuousKeiron" Behavior="ParadoxAnnexCaster"/>
@@ -344,9 +352,11 @@
     <CActorSound id="ParadoxAnnexStart" parent="SoundOneShot">
         <On Terms="Behavior.ParadoxAnnexCaster.On" Send="Create"/>
     </CActorSound>
-    <CActorSplat id="ParadoxShackleCursor" parent="KeironCursorSplat" abil="ParadoxShackle">
-        <On index="0" Terms="Abil.##abil##.Cursor" Send="Create"/>
-    </CActorSplat>
+    <CActorSplat id="ParadoxShackleCursor" parent="KeironCursorSplat" abil="ParadoxShackle"/>
+    <CActorMissile id="ParadoxShackleWeapon" parent="GenericAttackMissile" unitName="ParadoxShackleWeapon">
+        <On Terms="UnitBirth" Send="AnimSetTimeScaleAbsolute Lifetime 1.000000"/>
+        <ModelFlags index="AutomateGlobalLoops" value="1"/>
+    </CActorMissile>
     <CActorSiteOpLocalOffset id="SOpMoveBackByDot1">
         <LocalOffset value="0.000000,0.100000,0.000000"/>
     </CActorSiteOpLocalOffset>
@@ -4791,9 +4801,8 @@
     </CActorMissile>
     <CActorAction id="HarbingerAirAttack" parent="GenericAttack" effectImpact="HeraldEnergyCannonsLMImpact" effectLaunch="HeraldEnergyCannonsLM">
         <LaunchAttachQuery Methods="AMPatternHarbingerAir"/>
-        <LaunchAssets Sound="HarbingerGroundAttackLaunch2"/>
         <LaunchModel value="HarbingerAirAttackLaunchModel"/>
-        <ImpactMap index="None" Sound="HarbingerGroundAttackImpact2" ModelReaction="SubjugatorAirAttackImpactReaction"/>
+        <ImpactMap index="None" ModelReaction="SubjugatorAirAttackImpactReaction"/>
         <ImpactMap index="Shield" Sound="SubjugatorAirAttackImpactShield" ModelReaction="SubjugatorAirAttackImpactReactionShield"/>
         <ImpactModel value="HarbingerAirAttackImpactModel"/>
         <DamageMap index="None" Model="SubjugatorAirAttackDamage" Sound="SubjugatorAirAttackDamage" ModelReaction="SubjugatorAirAttackDamageReaction"/>
@@ -5544,6 +5553,9 @@
         <On Terms="Abil.ParadoxShield.SourceChannelStart" Send="$Spell"/>
         <On Terms="Abil.Prison.SourceCastStart" Send="$Spell PlayForever"/>
         <On Terms="Abil.Prison.SourceFinishStart" Send="AnimClear Spell"/>
+        <On Terms="Abil.ParadoxShackle.TargetCastStart" Send="$Spell"/>
+        <On Terms="Behavior.ParadoxAnnexCaster.On" Send="$Spell PlayForever"/>
+        <On Terms="Behavior.ParadoxAnnexCaster.Off" Send="AnimClear Spell"/>
         <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMedium" SoundLink="KeironUnit_Death"/>
         <PlaceholderActorModel value="PlaceholderModelKeironAir"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-mechanicalarmorlevel0.dds"/>
