@@ -157,6 +157,11 @@
     <CEffectApplyBehavior id="DashSpeed" parent="ApplyBehaviorXayid">
         <WhichUnit Value="Caster"/>
     </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="DisableShieldRegen4s">
+        <Behavior value="DisableShieldRegen"/>
+        <Flags index="UseDuration" value="1"/>
+        <Duration value="4"/>
+    </CEffectApplyBehavior>
     <CEffectApplyBehavior id="DiscordZoneDebuffStructure" parent="CEffectApplyBehaviorKeironTarget"/>
     <CEffectApplyBehavior id="DiscordZoneDebuffMissile" parent="CEffectApplyBehaviorKeironTarget"/>
     <CEffectSwitch id="DiscordZoneSwitch">
@@ -237,7 +242,6 @@
     <CEffectApplyKinetic id="GyreAnnexAK">
         <EditorCategories value="Race:Keiron"/>
         <Kinetic value="FollowAnnexDummy"/>
-        <ImpactUnit Effect="GyreAnnexDataInc"/>
     </CEffectApplyKinetic>
     <CEffectSet id="GyreAnnexApplySet">
         <EditorCategories value="Race:Keiron"/>
@@ -292,13 +296,12 @@
     </CEffectModifyUnit>
     <CEffectSet id="GyreAnnexFinalSet">
         <EditorCategories value="Race:Keiron"/>
-        <EffectArray value="GyreAnnexRK"/>
         <EffectArray value="GyreAnnexDataDec"/>
+        <EffectArray value="GyreAnnexRK"/>
         <EffectArray value="GyreAnnexTP"/>
         <EffectArray value="GyreAnnexHeight"/>
         <EffectArray value="GyreAnnexInturruptOrder"/>
         <EffectArray value="GyreAnnexDummySuicide"/>
-        <EffectArray value="GyreAnnexRK"/>
     </CEffectSet>
     <CEffectModifyUnit id="GyreAnnexHeight">
         <EditorCategories value="Race:Keiron"/>
@@ -315,7 +318,6 @@
     <CEffectRemoveKinetic id="GyreAnnexRK">
         <EditorCategories value="Race:Keiron"/>
         <KineticLink value="FollowAnnexDummy"/>
-        <ImpactUnit Effect="GyreAnnexDataInc"/>
     </CEffectRemoveKinetic>
     <CEffectEnumArea id="GyreAnnexSA" parent="CEffectSearchAreaKeiron">
         <SearchFilters value="Ground;Structure,Missile,Stasis,Dead,Hidden,Invulnerable"/>
@@ -324,10 +326,11 @@
     <CEffectTeleport id="GyreAnnexTP">
         <EditorCategories value="Race:Keiron"/>
         <WhichUnit Effect="GyreAnnexDataInc"/>
+        <ClearQueuedOrders value="0"/>
         <MinDistance value="0.1"/>
         <PlacementArc value="360"/>
         <PlacementAround Effect="GyreAnnexDataInc" Value="TargetUnit"/>
-        <PlacementRange value="5"/>
+        <PlacementRange value="4"/>
         <SourceLocation Effect="GyreAnnexDataInc" Value="TargetUnit"/>
         <TargetLocation Effect="GyreAnnexDataInc" Value="TargetUnit"/>
         <TeleportFlags index="TestFog" value="0"/>
