@@ -273,7 +273,6 @@
         <On Terms="TimerExpired; TimerName FuseShield; ValidateUnit ShieldGTE50P" Send="SetOpacity 1.000000 0.250000 FuseShield"/>
         <On Terms="TimerExpired; TimerName FuseShield; ValidateUnit ShieldLT50P" Send="SetOpacity 0.350000 0.250000 FuseShield"/>
         <On Terms="TimerExpired; TimerName FuseShield; ValidateUnit ShieldEqualsZero" Send="SetOpacity 0.000000 0.250000 FuseShield"/>
-        <On Terms="TimerExpired; TimerName FuseShield" Send="DestroyParticles"/>
         <On Terms="ActorCreation; ValidateUnit IsConverter" Send="SetScale 0.620000,0.940000,0.620000"/>
         <On Terms="ActorCreation; ValidateUnit IsConverter" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveBackByDot1}"/>
         <On Terms="ActorCreation; ValidateUnit IsPariahCombine" Send="SetScale 0.550000,0.550000,0.870000"/>
@@ -292,10 +291,36 @@
         <On Terms="ActorCreation; ValidateUnit IsMyriad" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveDownByDot25}"/>
         <On Terms="ActorCreation; ValidateUnit IsInducer" Send="SetScale 0.880000,1.100000,0.880000"/>
         <On Terms="ActorCreation; ValidateUnit IsInducer" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveBackByDot25}"/>
+        <On Terms="ActorCreation; ValidateUnit IsTitan" Send="SetScale"/>
+        <On Terms="ActorCreation; ValidateUnit IsTitan" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveDownByDot75}"/>
+        <On Terms="ActorCreation; ValidateUnit IsEcho" Send="SetScale 0.750000,0.950000,0.750000"/>
+        <On Terms="ActorCreation; ValidateUnit IsEcho" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveDownByDot25}"/>
+        <On Terms="ActorCreation; ValidateUnit IsEchoDiscord" Send="SetScale 0.750000,0.750000,0.950000"/>
+        <On Terms="ActorCreation; ValidateUnit IsEchoDiscord" Send="HostSiteOpsSet ::Host SOpAttachCenter"/>
+        <On Terms="ActorCreation; ValidateUnit IsAurora" Send="SetScale 0.800000,1.050000,0.750000"/>
+        <On Terms="ActorCreation; ValidateUnit IsAurora" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveDownByDot25}"/>
+        <On Terms="ActorCreation; ValidateUnit IsAperture" Send="SetScale 1.000000,1.250000,0.900000"/>
+        <On Terms="ActorCreation; ValidateUnit IsAperture" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveDownByDot25}"/>
+        <On Terms="ActorCreation; ValidateUnit IsHarbinger" Send="SetScale 1.000000,1.050000,0.700000"/>
+        <On Terms="ActorCreation; ValidateUnit IsHarbinger" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveDownByDot25 SOpMoveBackByDot25}"/>
+        <On Terms="ActorCreation; ValidateUnit IsGyre" Send="SetScale"/>
+        <On Terms="ActorCreation; ValidateUnit IsGyre" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveDownByDot5}"/>
+        <On Terms="ActorCreation; ValidateUnit IsParagon" Send="SetScale 0.850000,1.000000,0.800000"/>
+        <On Terms="ActorCreation; ValidateUnit IsParagon" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveDownByDot5 SOpMoveByDot25}"/>
+        <On Terms="AbilMorph.*.Start; MorphTo Echo" Send="SetScale 0.750000,0.950000,0.750000 0.750000"/>
+        <On Terms="AbilMorph.*.Start; MorphTo Echo" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveDownByDot25}"/>
+        <On Terms="AbilMorph.*.Start; MorphTo EchoDM" Send="SetScale 0.750000,0.750000,0.950000 0.750000"/>
+        <On Terms="AbilMorph.*.Start; MorphTo EchoDM" Send="HostSiteOpsSet ::Host SOpAttachCenter"/>
         <HostSiteOps Ops="SOpAttachCenter" HoldRotation="1"/>
         <AutoScaleFactor value="1.000000"/>
         <ModelFlags index="AllowHitTest" value="0"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
+    </CActorModel>
+    <CActorModel id="GyreAnnexedModel" parent="ModelAnimationStyleContinuousUNIT">
+        <On Terms="Behavior.GyreAnnexed.On" Send="Create"/>
+        <On Terms="Behavior.GyreAnnexed.Off" Send="Destroy"/>
+        <HostSiteOps Ops="SOpAttachCenter"/>
+        <AutoScaleFactor value="1.000000"/>
     </CActorModel>
     <CActorAction id="GyreShackleAttack" parent="GenericAttack" effectImpact="GyreShackleImpactCP" effectLaunch="GyreShackleLM">
         <LaunchSiteOps Ops="SOpAttachHarness SOpMoveDownByDot05"/>
