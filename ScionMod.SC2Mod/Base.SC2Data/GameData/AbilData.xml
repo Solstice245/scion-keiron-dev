@@ -12,35 +12,30 @@
         <InfoArray index="Research2" Time="80" Alert="ResearchComplete_Terr" Upgrade="IntegratedOptics">
             <Resource index="Minerals" value="150"/>
             <Resource index="Vespene" value="150"/>
-            <Button DefaultButtonFace="ResearchIntegratedOptics" Requirements="LearnIntegratedOptics">
+            <Button DefaultButtonFace="ResearchProcessingDroneIntegratedOptics" Requirements="LearnIntegratedOptics">
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
         </InfoArray>
     </CAbilResearch>
+    <CAbilEffectInstant id="BlitzerOverdrive">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Flags index="Transient" value="1"/>
+        <Cost>
+            <Vital index="Energy" value="10"/>
+            <Cooldown TimeUse="5"/>
+        </Cost>
+        <CmdButtonArray index="Execute" DefaultButtonFace="BlitzerSupercharge"/>
+    </CAbilEffectInstant>
     <CAbilBuildable id="BuildInProgress">
         <CmdButtonArray index="Halt" DefaultButtonFace="Halt">
             <Flags index="ToSelection" value="1"/>
         </CmdButtonArray>
     </CAbilBuildable>
-    <CAbilBuild id="BuildUploader">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <HaltCmdButton DefaultButtonFace="Halt"/>
-        <FlagArray index="PeonDisableCollision" value="1"/>
-        <FlagArray index="PeonMaintained" value="0"/>
-        <InfoArray index="Build1" Unit="Uploader" Time="30">
-            <Button DefaultButtonFace="Uploader" Requirements="HaveProcessingNode"/>
-        </InfoArray>
-        <FidgetDelayMin value="5"/>
-        <FidgetDelayMax value="10"/>
-        <ConstructionMover value="Construction"/>
-        <EffectArray index="Finish" value="DownloadPhase"/>
-    </CAbilBuild>
     <CAbilEffectInstant id="CitadelChargeMorph">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Flags index="Transient" value="1"/>
         <Cost>
-            <Resource index="Minerals" value="75"/>
-            <Resource index="Vespene" value="50"/>
+            <Resource index="Minerals" value="125"/>
         </Cost>
         <CmdButtonArray index="Execute" DefaultButtonFace="ChargeCitadel"/>
     </CAbilEffectInstant>
@@ -65,14 +60,6 @@
             </SectionArray>
         </InfoArray>
     </CAbilMorph>
-    <CAbilBehavior id="EqualizerWeaponMode">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <CmdButtonArray index="On" DefaultButtonFace="ExplosiveOrdnanceMode"/>
-        <CmdButtonArray index="Off" DefaultButtonFace="HeavyOrdnanceMode"/>
-        <Flags index="Toggle" value="1"/>
-        <Flags index="Transient" value="1"/>
-        <BehaviorArray value="EqualizerWeaponModeSwitch"/>
-    </CAbilBehavior>
     <CAbilEffectTarget id="Feedback">
         <TargetFilters index="0" value="CanHaveEnergy,Visible,HasEnergy;Self,Player,Ally,Neutral,Missile,Stasis,Dead,Hidden"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
@@ -149,15 +136,48 @@
         </OrderArray>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Structures"/>
     </CAbilRally>
+    <CAbilEffectTarget id="FixerRepair">
+        <Alignment value="Positive"/>
+        <AbilSetId value="Repair"/>
+        <EditorCategories value="Race:Terran,AbilityorEffectType:Units"/>
+        <Flags index="AutoCast" value="1"/>
+        <Flags index="AutoCastOffOwnerLeave" value="1"/>
+        <Flags index="BestUnit" value="0"/>
+        <Flags index="ReExecutable" value="1"/>
+        <Flags index="Smart" value="1"/>
+        <Flags index="PassengerAcquirePassengers" value="1"/>
+        <TargetFilters value="Mechanical,Visible;Self,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
+        <RangeSlop value="0.375"/>
+        <AutoCastAcquireLevel value="Defensive"/>
+        <AutoCastFilters value="Visible;Neutral,Enemy"/>
+        <AutoCastRange value="7"/>
+        <Marker>
+            <MatchFlags index="Link" value="0"/>
+            <MismatchFlags index="Id" value="0"/>
+        </Marker>
+        <UseMarkerArray index="Approach" value="0"/>
+        <UseMarkerArray index="Prep" value="0"/>
+        <UseMarkerArray index="Cast" value="0"/>
+        <UseMarkerArray index="Channel" value="0"/>
+        <InheritAttackPriorityArray index="Prep" value="1"/>
+        <InheritAttackPriorityArray index="Cast" value="1"/>
+        <InheritAttackPriorityArray index="Channel" value="1"/>
+        <DefaultError value="RequiresRepairTarget"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Repair" Requirements="FixerUseFusionWelders">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+        <AcquirePriority value="1"/>
+    </CAbilEffectTarget>
     <CAbilEffectInstant id="SuperCharge">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Effect index="0" value="SuperChargeCannon"/>
+        <Effect index="0" value="Supercharge"/>
         <Flags index="Transient" value="1"/>
         <Cost>
+            <Vital index="Energy" value="10"/>
             <Charge Link="Abil/CannonReset"/>
-            <Cooldown Link="Abil/CannonReset" TimeUse="14"/>
+            <Cooldown Link="Abil/CannonReset"/>
         </Cost>
-        <CmdButtonArray index="Execute" DefaultButtonFace="BlitzerSupercharge" Requirements="IsNotSuperCharged"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="BlitzerSupercharge" Requirements="IsNotSupercharged"/>
     </CAbilEffectInstant>
     <CAbilBehavior id="CourierCloak">
         <AbilSetId value="Clok"/>
@@ -267,6 +287,17 @@
         <CursorEffect value="NaniteGrenadeImpact"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="NaniteGrenade"/>
     </CAbilEffectTarget>
+    <CAbilEffectInstant id="SuperChargeAquila">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Effect index="0" value="Supercharge"/>
+        <Flags index="Transient" value="1"/>
+        <Cost>
+            <Vital index="Energy" value="25"/>
+            <Charge Link="Abil/CannonReset"/>
+            <Cooldown Link="Abil/CannonReset"/>
+        </Cost>
+        <CmdButtonArray index="Execute" DefaultButtonFace="BlitzerSupercharge" Requirements="IsNotSupercharged"/>
+    </CAbilEffectInstant>
     <CAbilEffectInstant id="TorrentHeavyOutputModeOff">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Effect index="0" value="TorrentHeavyOutputOffSet"/>
@@ -310,6 +341,7 @@
         <CmdButtonArray index="UnloadAt" DefaultButtonFace="CourierUnloadAll"/>
         <MaxCargoCount value="10"/>
         <TotalCargoSpace value="10"/>
+        <UnloadCargoEffect value="CargoUnloadStopOrder"/>
     </CAbilTransport>
     <CAbilEffectInstant id="MiningPriority">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -480,7 +512,7 @@
         <InfoArray index="Build4" Unit="Manufacturer" Time="65">
             <Button DefaultButtonFace="Manufacturer" Requirements="HaveProcessingNode"/>
         </InfoArray>
-        <InfoArray index="Build5" Unit="Uploader" Time="15">
+        <InfoArray index="Build5" Unit="Uploader" Time="30">
             <Button DefaultButtonFace="Uploader" Requirements="HaveProcessingNode"/>
         </InfoArray>
         <InfoArray index="Build6" Unit="OutfittingStation" Time="50">
@@ -507,6 +539,7 @@
         <FidgetDelayMin value="5"/>
         <FidgetDelayMax value="10"/>
         <ConstructionMover value="Construction"/>
+        <EffectArray index="Start" value="GenetronConstructionInit"/>
     </CAbilBuild>
     <CAbilMorph id="MoleDeactivate">
         <AbilSetId value="MBrwU"/>
@@ -620,35 +653,35 @@
         <InfoArray index="Research1" Time="110" Alert="ResearchComplete_Terr" Upgrade="StealthSystems">
             <Resource index="Minerals" value="100"/>
             <Resource index="Vespene" value="100"/>
-            <Button DefaultButtonFace="ResearchStealthSystems" Requirements="LearnStealthSystems">
+            <Button DefaultButtonFace="ResearchCourierStealthSystems" Requirements="LearnStealthSystems">
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
         </InfoArray>
         <InfoArray index="Research2" Time="110" Alert="ResearchComplete_Terr" Upgrade="VengeanceMissile">
             <Resource index="Minerals" value="100"/>
             <Resource index="Vespene" value="100"/>
-            <Button DefaultButtonFace="ResearchVengeanceMissile" Requirements="LearnVengeanceMissile">
+            <Button DefaultButtonFace="ResearchAvengerVengeanceMissile" Requirements="LearnVengeanceMissile">
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
         </InfoArray>
         <InfoArray index="Research3" Time="110" Alert="ResearchComplete_Terr" Upgrade="ShapedHull">
             <Resource index="Minerals" value="150"/>
             <Resource index="Vespene" value="150"/>
-            <Button DefaultButtonFace="ResearchShapedHull" Requirements="LearnShapedHull">
+            <Button DefaultButtonFace="ResearchBoarShapedHull" Requirements="LearnShapedHull">
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
         </InfoArray>
         <InfoArray index="Research4" Time="140" Alert="ResearchComplete_Terr" Upgrade="AAMDefenseTurret">
             <Resource index="Minerals" value="200"/>
             <Resource index="Vespene" value="200"/>
-            <Button DefaultButtonFace="ResearchAAMDefenseTurret" Requirements="LearnAAMDefenseTurret">
+            <Button DefaultButtonFace="ResearchBadgerAAMDefenseTurret" Requirements="LearnAAMDefenseTurret">
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
         </InfoArray>
         <InfoArray index="Research5" Time="140" Alert="ResearchComplete_Terr" Upgrade="BoreDrills">
             <Resource index="Minerals" value="100"/>
             <Resource index="Vespene" value="100"/>
-            <Button DefaultButtonFace="ResearchBoreDrills" Requirements="LearnBoreDrills">
+            <Button DefaultButtonFace="ResearchHornetBoreDrills" Requirements="LearnBoreDrills">
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
         </InfoArray>
@@ -698,6 +731,7 @@
             <Cooldown TimeUse="10"/>
         </Cost>
         <CmdButtonArray index="Execute" DefaultButtonFace="SpeedCloak"/>
+        <SharedFlags index="RegisterCooldownEvent" value="1"/>
     </CAbilEffectInstant>
     <CAbilEffectTarget id="SystemOffload">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -855,6 +889,10 @@
             <Button DefaultButtonFace="Aquila" Requirements="HasAtLeast3LinkedUploaders"/>
             <Unit value="Aquila"/>
         </InfoArray>
+        <InfoArray index="Train6" Time="42">
+            <Button DefaultButtonFace="Fixer" Requirements="HasAtLeast1LinkedUploaderOS"/>
+            <Unit value="Fixer"/>
+        </InfoArray>
     </CAbilTrain>
     <CAbilMorph id="RepulsorUnburrow">
         <AbilSetId value="GBrwU"/>
@@ -912,71 +950,67 @@
         <InfoArray index="Research1" Time="80" Alert="ResearchComplete_Terr" Upgrade="EnhancedTargeting">
             <Resource index="Minerals" value="150"/>
             <Resource index="Vespene" value="150"/>
-            <Button DefaultButtonFace="ResearchEnhancedTargeting" Requirements="LearnEnhancedTargeting">
+            <Button DefaultButtonFace="ResearchTorrentEnhancedTargeting" Requirements="LearnEnhancedTargeting">
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
         </InfoArray>
         <InfoArray index="Research2" Time="110" Alert="ResearchComplete" Upgrade="SelffixProtocol">
             <Resource index="Minerals" value="150"/>
             <Resource index="Vespene" value="150"/>
-            <Button DefaultButtonFace="ResearchSelfFixProtocol" Requirements="LearnSelfFixProtocol">
+            <Button DefaultButtonFace="ResearchVirtusSelfFixProtocol" Requirements="LearnSelfFixProtocol">
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
         </InfoArray>
         <InfoArray index="Research3" Time="110" Alert="ResearchComplete_Terr" Upgrade="SubterraneanSensors">
             <Resource index="Minerals" value="150"/>
             <Resource index="Vespene" value="150"/>
-            <Button DefaultButtonFace="ResearchSubterraneanSensors" Requirements="LearnSubterraneanSensors">
+            <Button DefaultButtonFace="ResearchMoleSubterraneanSensors" Requirements="LearnSubterraneanSensors">
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
         </InfoArray>
         <InfoArray index="Research4" Time="80" Upgrade="InternalProducers">
             <Resource index="Minerals" value="150"/>
             <Resource index="Vespene" value="150"/>
-            <Button DefaultButtonFace="ResearchInternalOptimization" Requirements="LearnInternalOptimization"/>
+            <Button DefaultButtonFace="ResearchTeslaInternalOptimization" Requirements="LearnInternalOptimization"/>
         </InfoArray>
     </CAbilResearch>
     <CAbilResearch id="UploaderResearchManufacL1">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <InfoArray index="Research1" Time="140" Alert="ResearchComplete_Terr" Upgrade="CalibratedEngines">
+        <InfoArray index="Research1" Time="170" Upgrade="CalibratedEngines">
             <Resource index="Minerals" value="100"/>
             <Resource index="Vespene" value="100"/>
-            <Button DefaultButtonFace="ResearchCalibratedEngines" Requirements="LearnCalibratedEngines">
+            <Button DefaultButtonFace="ResearchSpitfireCalibratedEngines" Requirements="LearnCalibratedEngines">
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
         </InfoArray>
-        <InfoArray index="Research2" Time="140" Alert="ResearchComplete_Terr" Upgrade="TrackingMunitions">
-            <Resource index="Minerals" value="200"/>
-            <Resource index="Vespene" value="200"/>
-            <Button DefaultButtonFace="ResearchTrackingMunitions" Requirements="LearnTrackingMunitions">
-                <Flags index="ShowInGlossary" value="1"/>
-            </Button>
-        </InfoArray>
-        <InfoArray index="Research3" Time="110" Alert="ResearchComplete_Terr" Upgrade="FirewallShield">
+        <InfoArray index="Research2" Time="140" Upgrade="SpitfireMadcapRounds">
             <Resource index="Minerals" value="150"/>
             <Resource index="Vespene" value="150"/>
-            <Button DefaultButtonFace="ResearchFirewallShield" Requirements="LearnFirewallShield">
-                <Flags index="ShowInGlossary" value="1"/>
-            </Button>
+            <Button DefaultButtonFace="ResearchSpitfireMadcapRounds" Requirements="LearnSpitfireMadcapRounds"/>
         </InfoArray>
-        <InfoArray index="Research4" Time="140" Alert="ResearchComplete_Terr" Upgrade="RefittedNozzles">
-            <Resource index="Minerals" value="200"/>
-            <Resource index="Vespene" value="200"/>
-            <Button DefaultButtonFace="ResearchRefittedNozzles" Requirements="LearnRefittedNozzles">
-                <Flags index="ShowInGlossary" value="1"/>
-            </Button>
-        </InfoArray>
-        <InfoArray index="Research5" Time="140" Alert="ResearchComplete_Terr" Upgrade="ReinforcedPlating">
+        <InfoArray index="Research3" Time="110" Upgrade="BlitzerBoreanReactor">
             <Resource index="Minerals" value="150"/>
             <Resource index="Vespene" value="150"/>
-            <Button DefaultButtonFace="ResearchReinforcedPlating" Requirements="LearnReinforcedPlating">
+            <Button DefaultButtonFace="ResearchBlitzerBoreanReactor" Requirements="BlitzerLearnBoreanReactor"/>
+        </InfoArray>
+        <InfoArray index="Research4" Time="110" Upgrade="FixerReactiveArmor">
+            <Resource index="Minerals" value="100"/>
+            <Resource index="Vespene" value="100"/>
+            <Button DefaultButtonFace="ResearchFixerReactiveArmor" Requirements="FixerLearnReactiveArmor">
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
         </InfoArray>
-        <InfoArray index="Research6" Time="80" Alert="ResearchComplete_Terr" Upgrade="PhalanxReactor">
-            <Resource index="Minerals" value="200"/>
-            <Resource index="Vespene" value="200"/>
-            <Button DefaultButtonFace="ResearchPhalanxReactor" Requirements="LearnFirewallShield2">
+        <InfoArray index="Research5" Time="80" Upgrade="FixerFusionWelders">
+            <Resource index="Minerals" value="100"/>
+            <Resource index="Vespene" value="100"/>
+            <Button DefaultButtonFace="FixerResearchFusionWelders" Requirements="FixerLearnFusionWelders">
+                <Flags index="ShowInGlossary" value="1"/>
+            </Button>
+        </InfoArray>
+        <InfoArray index="Research6" Time="80" Upgrade="PhalanxReactor">
+            <Resource index="Minerals" value="150"/>
+            <Resource index="Vespene" value="150"/>
+            <Button DefaultButtonFace="ResearchAquilaPhalanxReactor" Requirements="LearnPhalanxReactor">
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
         </InfoArray>
@@ -1591,6 +1625,7 @@
             <Flags index="Hidden" value="0"/>
         </CmdButtonArray>
         <LoadTransportBehavior value=""/>
+        <UnloadCargoEffect value="CargoUnloadStopOrder"/>
     </CAbilTransport>
     <CAbilEffectTarget id="VolatileDischarge">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
@@ -2459,7 +2494,6 @@
     <CAbilTransport id="ApertureLoadUnload">
         <AbilSetId value="ULdM"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
-        <DataCollection value="WarpPrismTransport"/>
         <CmdButtonArray index="Load" DefaultButtonFace="ApetureLoad"/>
         <CmdButtonArray index="UnloadAll" DefaultButtonFace="BunkerUnloadAll">
             <Flags index="ToSelection" value="1"/>
@@ -2477,12 +2511,8 @@
         <TotalCargoSpace value="8"/>
         <TargetFilters value="Visible;Ally,Neutral,Enemy,Buried,UnderConstruction,Dead,Hidden"/>
         <LoadValidatorArray value="NotWidowMineTarget"/>
-        <TargetSorts>
-            <SortArray value="TSInterruptible"/>
-            <SortArray value="TSDistance"/>
-        </TargetSorts>
         <LoadCargoEffect value="MyriadDestroyElytraIterate"/>
-        <UnloadCargoEffect value="ApertureTranportUnloadOrder"/>
+        <UnloadCargoEffect value="CargoUnloadStopOrder"/>
     </CAbilTransport>
     <CAbilEffectInstant id="UmbraShieldCompulsion">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>

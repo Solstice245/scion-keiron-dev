@@ -96,6 +96,13 @@
     <CBehaviorBuff id="DummyUnit">
         <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="GenetronConstruction">
+        <InfoIcon value="Assets\Textures\btn-ability-genetron-structurelockdownmode.dds"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="TargetInCombat"/>
+        <RemoveValidatorArray value="IsConstructing"/>
+        <Modification TimeScale="0.5"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="GenetronTurretFreeze">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -105,6 +112,17 @@
             <TurretDisableArray value="InterdictorMovement"/>
             <TurretDisableArray value="RepulsorTurret"/>
         </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="FixerReactiveArmor">
+        <InfoIcon value="Assets\Textures\btn-upgrade-genetron-reactivearmor.dds"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DamageResponse>
+            <Kind index="Spell" value="0"/>
+            <Kind index="Melee" value="0"/>
+            <Kind index="Splash" value="0"/>
+            <ModifyAmount value="-2"/>
+        </DamageResponse>
+        <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="HornetBoreDrillBase">
         <Alignment value="Negative"/>
@@ -204,6 +222,16 @@
         <Modification>
             <ModifyFlags index="SuppressMoving" value="1"/>
         </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="BlitzerOverdrive">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisplayDuration index="Ally" value="1"/>
+        <Duration value="5.6"/>
+        <Modification MoveSpeedMultiplier="1.5"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="Pause">
+        <Modification TimeScale="0.01"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="PulsarDampenerAutoTrigger">
         <InfoFlags index="Hidden" value="1"/>
@@ -330,16 +358,6 @@
             <StateFlags index="SuppressCloak" value="1"/>
         </Modification>
     </CBehaviorBuff>
-    <CBehaviorBuff id="EqualizerWeaponModeSwitch">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Modification>
-            <WeaponEnableArray value="StratumMissilePod"/>
-            <WeaponEnableArray value="StratumMissilePodTM"/>
-            <WeaponDisableArray value="TheGreatEqualizer"/>
-            <WeaponDisableArray value="TheGreatEqualizerTM"/>
-        </Modification>
-        <InfoFlags index="Hidden" value="1"/>
-    </CBehaviorBuff>
     <CBehaviorBuff id="Equipped">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="AbilityorEffectType:Units,Race:Genetron"/>
@@ -457,9 +475,9 @@
         <InfoIcon value="Assets\Textures\btn-ability-genetron-cannonreset.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Duration value="5"/>
-        <FinalEffect value="SuperChargeCannonFinal"/>
         <Modification RangedWeaponRange="2" WeaponScanBonus="2" CriticalAttackChanceUnscaledBonus="1"/>
         <Alignment value="Positive"/>
+        <RemoveValidatorArray value="NotEMPed"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="CourierCloak">
         <Alignment value="Positive"/>
@@ -1569,7 +1587,7 @@
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
         <RemoveValidatorArray value="IsConstructing"/>
         <Modification SightMaximum="0.0625">
-            <VitalMaxArray index="Shields" value="-500000"/>
+            <StateFlags index="SuppressShields" value="1"/>
         </Modification>
     </CBehaviorBuff>
     <CBehaviorBuff id="PantheonTitanBase">

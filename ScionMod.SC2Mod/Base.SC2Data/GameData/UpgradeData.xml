@@ -93,6 +93,8 @@
         <EffectArray Reference="Unit,Aquila,LifeArmorLevel" Value="1"/>
         <EffectArray Reference="Unit,Blaze,LifeArmor" Value="1"/>
         <EffectArray Reference="Unit,Blaze,LifeArmorLevel" Value="1"/>
+        <EffectArray Reference="Unit,Fixer,LifeArmor" Value="1"/>
+        <EffectArray Reference="Unit,Fixer,LifeArmorLevel" Value="1"/>
         <EffectArray Reference="Unit,Blitzer,LifeArmor" Value="1"/>
         <EffectArray Reference="Unit,Blitzer,LifeArmorLevel" Value="1"/>
         <EffectArray Reference="Unit,Equalizer,LifeArmor" Value="1"/>
@@ -117,6 +119,7 @@
         <EffectArray Operation="Set" Reference="Actor,Blaze,LifeArmorIcon" Value="##Icon##"/>
         <EffectArray Operation="Set" Reference="Actor,Blitzer,LifeArmorIcon" Value="##Icon##"/>
         <EffectArray Operation="Set" Reference="Actor,Equalizer,LifeArmorIcon" Value="##Icon##"/>
+        <EffectArray Operation="Set" Reference="Actor,Fixer,LifeArmorIcon" Value="##Icon##"/>
         <EffectArray Operation="Set" Reference="Actor,Mole,LifeArmorIcon" Value="##Icon##"/>
         <EffectArray Operation="Set" Reference="Actor,ACR,LifeArmorIcon" Value="##Icon##"/>
         <EffectArray Operation="Set" Reference="Actor,Spitfire,LifeArmorIcon" Value="##Icon##"/>
@@ -182,25 +185,28 @@
         <ScoreValue value="WeaponTechnologyValue"/>
         <ScoreResult value="BuildOrder"/>
         <LeaderAlias value="GenetronLightWeapons"/>
-        <EffectArray Reference="Effect,ChargeCannonDMG,Amount" Value="1"/>
-        <EffectArray Reference="Effect,D15Magnum,Amount" Value="4"/>
+        <EffectArray Reference="Effect,ChargeCannon,Amount" Value="1"/>
+        <EffectArray Reference="Effect,D15Magnum,Amount" Value="2"/>
+        <EffectArray Reference="Effect,D15MagnumSC,Amount" Value="6"/>
         <EffectArray Reference="Effect,IBF7FlamethrowerDMG,Amount" Value="1"/>
         <EffectArray Reference="Effect,IBF7FlamethrowerDMG,AttributeBonus[Light]" Value="1"/>
+        <EffectArray Reference="Effect,FixerFlashGun,Amount" Value="2"/>
+        <!--<EffectArray Reference="Effect,FixerFlashGun,AttributeBonus[Light]" Value="1"/>-->
         <EffectArray Reference="Effect,RiotGun,Amount" Value="1"/>
-        <EffectArray Reference="Effect,SuperChargeCannonDMG,Amount" Value="2"/>
-        <EffectArray Reference="Effect,StratumMissilePodDMG,Amount" Value="1"/>
-        <EffectArray Reference="Effect,TheGreatEqualizerDMG,Amount" Value="3"/>
-        <EffectArray Reference="Effect,TheGreatEqualizerDMG,AttributeBonus[Armored]" Value="2"/>
+        <EffectArray Reference="Effect,ChargeCannonSC,Amount" Value="2"/>
+        <EffectArray Reference="Effect,StratumMissilePodImpact,Amount" Value="3"/>
+        <EffectArray Reference="Effect,StratumMissilePodImpact,AttributeBonus[Armored]" Value="2"/>
         <EffectArray Reference="Weapon,ChargeCannon,Level" Value="1"/>
         <EffectArray Reference="Weapon,D15Magnum,Level" Value="1"/>
         <EffectArray Reference="Weapon,IBF7Flamethrower,Level" Value="1"/>
+        <EffectArray Reference="Weapon,FixerFlashGun,Level" Value="1"/>
         <EffectArray Reference="Weapon,RiotGun,Level" Value="1"/>
         <EffectArray Reference="Weapon,StratumMissilePod,Level" Value="1"/>
         <EffectArray Reference="Weapon,TheGreatEqualizer,Level" Value="1"/>
         <EffectArray Operation="Set" Reference="Weapon,D15Magnum,Icon" Value="##Icon##"/>
         <EffectArray Operation="Set" Reference="Weapon,IBF7Flamethrower,Icon" Value="##Icon##"/>
+        <EffectArray Operation="Set" Reference="Weapon,FixerFlashGun,Icon" Value="##Icon##"/>
         <EffectArray Operation="Set" Reference="Weapon,ChargeCannon,Icon" Value="##Icon##"/>
-        <EffectArray Operation="Set" Reference="Weapon,TheGreatEqualizer,Icon" Value="##Icon##"/>
         <EffectArray Operation="Set" Reference="Weapon,RiotGun,Icon" Value="##Icon##"/>
         <EffectArray Operation="Set" Reference="Weapon,StratumMissilePod,Icon" Value="##Icon##"/>
         <EditorCategories value="Race:Genetron,UpgradeType:AttackBonus"/>
@@ -281,7 +287,7 @@
         <EffectArray Reference="Effect,MassiveSporeAirDMG,Amount" Value="2"/>
         <EffectArray Reference="Effect,MassiveSporeAGDMG,Amount" Value="4"/>
         <EffectArray Reference="Effect,NeedleSpinesDMG,Amount" Value="1"/>
-        <EffectArray Reference="Effect,EvisceratorSpinesDMG,Amount" Value="0.4"/>
+        <EffectArray Reference="Effect,EvisceratorSpinesDMG,Amount" Value="2"/>
         <EffectArray Reference="Effect,VirulentSpitDMG,Amount" Value="1"/>
         <EffectArray Reference="Effect,VenomousStrikeDMG,Amount" Value="1"/>
         <EffectArray Reference="Effect,SpitterSporesDMG,Amount" Value="3"/>
@@ -289,7 +295,6 @@
         <!--<EffectArray Reference="Effect,ThrasherSpineDMG,AttributeBonus[Armored]" Value="1"/>-->
         <EffectArray Reference="Effect,SpitterSporesDMG,AttributeBonus[Armored]" Value="1"/>
         <EffectArray Reference="Effect,VenomousStrikeDMG,AttributeBonus[Light]" Value="1"/>
-        <EffectArray Reference="Effect,EvisceratorSpinesDMGD,Amount" Value="2"/>
         <EffectArray Reference="Effect,EnervatorSporesDMG,Amount" Value="3"/>
         <EffectArray Reference="Effect,EnervatorSporesDMG,AttributeBonus[Light]" Value="-1"/>
         <EffectArray Reference="Weapon,MassiveSporeAA,Level" Value="1"/>
@@ -735,6 +740,25 @@
         <AffectedUnitArray value="AegisShielded"/>
         <LeaderAlias value="KeironShields"/>
     </CUpgrade>
+    <CUpgrade id="BlitzerBoreanReactor" parent="ResearchGenetron">
+        <Icon value="Assets\Textures\btn-upgrade-genetron-boreanreactor.dds"/>
+        <ScoreAmount value="300"/>
+        <EffectArray Reference="Unit,Blitzer,EnergyMax" Value="15"/>
+        <EffectArray Reference="Unit,Blitzer,EnergyStart" Value="15"/>
+        <AffectedUnitArray value="Blitzer"/>
+    </CUpgrade>
+    <CUpgrade id="FixerFusionWelders" parent="ResearchGenetron">
+        <Icon value="Assets\Textures\btn-upgrade-genetron-fusionwelders.dds"/>
+        <ScoreAmount value="200"/>
+        <EditorCategories value="Race:Genetron,UpgradeType:SpellResearch"/>
+        <AffectedUnitArray value="Fixer"/>
+    </CUpgrade>
+    <CUpgrade id="FixerReactiveArmor" parent="ResearchGenetron">
+        <Icon value="Assets\Textures\btn-upgrade-genetron-reactivearmor.dds"/>
+        <ScoreAmount value="200"/>
+        <EffectArray Reference="Behavior,FixerReactiveArmor,DamageResponse.Chance" Value="1"/>
+        <AffectedUnitArray value="Fixer"/>
+    </CUpgrade>
     <CUpgrade id="GenetronAircraftPlatingLevel1" parent="GenetronAircraftPlating" Icon="Assets\Textures\btn-upgrade-genetron-aircraftplating-level1.dds">
         <ScoreAmount value="200"/>
         <LeaderLevel value="1"/>
@@ -854,6 +878,15 @@
     <CUpgrade id="KeironShieldsLevel3" parent="KeironShields" Level="3" Icon="Assets\Textures\btn-upgrade-keiron-shields-level3.dds">
         <ScoreAmount value="600"/>
         <LeaderLevel value="3"/>
+    </CUpgrade>
+    <CUpgrade id="SpitfireMadcapRounds" parent="ResearchGenetron">
+        <Icon value="Assets\Textures\btn-tips-terran-penetrator.dds"/>
+        <Alert value="UpgradeComplete"/>
+        <ScoreAmount value="300"/>
+        <EffectArray Reference="Weapon,RiotGun,Range" Value="1"/>
+        <EffectArray Reference="Weapon,RiotGun,MinScanRange" Value="0.5"/>
+        <EffectArray Reference="Weapon,RiotGun,Period" Value="-0.112000"/>
+        <AffectedUnitArray value="Spitfire"/>
     </CUpgrade>
     <CUpgrade id="XayidFlyerAttacksLevel1" parent="XayidFlyerAttacks" Icon="Assets\Textures\btn-upgrade-xayid-airweaponslevel1.dds">
         <ScoreAmount value="200"/>
@@ -1000,14 +1033,14 @@
     <CUpgrade id="CalibratedEngines" parent="ResearchGenetron">
         <Icon value="Assets\Textures\btn-upgrade-genetron-calibratedengines.dds"/>
         <ScoreAmount value="200"/>
-        <EffectArray Reference="Unit,Spitfire,Speed" Value="1.500000"/>
+        <EffectArray Reference="Unit,Spitfire,Speed" Value="1.49"/>
         <AffectedUnitArray value="Spitfire"/>
     </CUpgrade>
     <CUpgrade id="ReinforcedPlating" parent="ResearchGenetron">
         <Icon value="Assets\Textures\btn-upgrade-genetron-reinforcedplating.dds"/>
         <ScoreAmount value="300"/>
-        <EffectArray Reference="Unit,Equalizer,LifeMax" Value="25"/>
-        <EffectArray Reference="Unit,Equalizer,LifeStart" Value="25"/>
+        <EffectArray Reference="Unit,Equalizer,LifeMax" Value="0"/>
+        <EffectArray Operation="Multiply" Reference="Unit,Equalizer,LifeStart" Value="1"/>
         <EffectArray Reference="Unit,Blitzer,LifeMax" Value="25"/>
         <EffectArray Reference="Unit,Blitzer,LifeStart" Value="25"/>
         <AffectedUnitArray value="Equalizer"/>
@@ -1041,23 +1074,10 @@
     </CUpgrade>
     <CUpgrade id="PhalanxReactor" parent="ResearchGenetron">
         <Icon value="Assets\Textures\btn-upgrade-genetron-phalanxreactor.dds"/>
-        <ScoreAmount value="400"/>
+        <ScoreAmount value="300"/>
         <EffectArray Reference="Unit,Aquila,EnergyRegenRate" Value="0.281200"/>
         <EffectArray Reference="Unit,Aquila,EnergyStart" Value="50"/>
         <AffectedUnitArray value="Aquila"/>
-    </CUpgrade>
-    <CUpgrade id="TrackingMunitions" parent="ResearchGenetron">
-        <Icon value="Assets\Textures\btn-tips-terran-penetrator.dds"/>
-        <ScoreAmount value="400"/>
-        <AffectedUnitArray value="Aquila"/>
-        <AffectedUnitArray value="Blitzer"/>
-        <AffectedUnitArray value="Equalizer"/>
-        <AffectedUnitArray value="Spitfire"/>
-        <EffectArray Operation="Set" Reference="Weapon,D15Magnum,Tip" Value="Weapon/Tip/D15MagnumTM"/>
-        <EffectArray Operation="Set" Reference="Weapon,ChargeCannon,Tip" Value="Weapon/Tip/ChargeCannonTM"/>
-        <EffectArray Operation="Set" Reference="Weapon,StratumMissilePod,Tip" Value="Weapon/Tip/StratumMissileLauncherTM"/>
-        <EffectArray Operation="Set" Reference="Weapon,TheGreatEqualizer,Tip" Value="Weapon/Tip/TheGreatEqualizerTM"/>
-        <EffectArray Operation="Set" Reference="Weapon,RiotGun,Tip" Value="Weapon/Tip/RiotGunTM"/>
     </CUpgrade>
     <CUpgrade id="EnhancedTargeting" parent="ResearchGenetron">
         <Icon value="Assets\Textures\btn-upgrade-genetron-enhancedtargeting.dds"/>
