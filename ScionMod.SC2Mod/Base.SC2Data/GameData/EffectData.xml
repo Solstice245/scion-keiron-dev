@@ -239,6 +239,21 @@
         <EffectArray value="MendMU"/>
         <EffectArray value="MendBehavior"/>
     </CEffectSet>
+    <CEffectApplyBehavior id="MyriadElytronRecall" parent="CEffectApplyBehaviorKeironTarget"/>
+    <CEffectLoadContainer id="MyriadElytronTrackerRecallMagazine">
+        <EditorCategories value="Race:Keiron"/>
+        <OwningPlayer Value="Caster"/>
+    </CEffectLoadContainer>
+    <CEffectReleaseMagazine id="MyriadElytronTrackerReleaseMagazine">
+        <EditorCategories value="Race:Keiron"/>
+        <WhichUnit Value="Target"/>
+    </CEffectReleaseMagazine>
+    <CEffectSet id="MyriadElytronTrackerRecallSet">
+        <ValidatorArray value="NotHidden"/>
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="MyriadElytronTrackerReleaseMagazine"/>
+        <EffectArray value="MyriadElytronTrackerRecallMagazine"/>
+    </CEffectSet>
     <CEffectCreatePersistent id="NullifierMissilesDummy">
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="TargetUnitOrPoint"/>
@@ -2396,11 +2411,6 @@
         <WhichUnit Value="Caster"/>
         <Behavior value="ConduitEchoBase"/>
     </CEffectApplyBehavior>
-    <CEffectEnumMagazine id="MyriadDestroyElytraIterate">
-        <EditorCategories value="Race:Keiron"/>
-        <SearchFilters value="-;Self"/>
-        <EffectExternal value="KillTargetDeathNormal"/>
-    </CEffectEnumMagazine>
     <CEffectCreatePersistent id="OculusReveal">
         <EditorCategories value="Race:Keiron"/>
         <Flags index="Channeled" value="1"/>
@@ -3152,6 +3162,7 @@
     </CEffectReturnMagazine>
     <CEffectUseMagazine id="ElytronReleaseAM">
         <EditorCategories value="Race:Keiron"/>
+        <AmmoEffect value="MyriadElytronRecall"/>
     </CEffectUseMagazine>
     <CEffectCreateUnit id="CreateReverbCU">
         <EditorCategories value="Race:Keiron"/>

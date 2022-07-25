@@ -479,6 +479,13 @@
         <Model value="GyreShackleWeapon"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorMissile>
+    <CActorModel id="MyriadRecallElytraModel" parent="ModelAnimationStyleOneShot">
+        <On Terms="Effect.MyriadElytronTrackerRecallSet.Start" Send="Create"/>
+        <On Terms="ActorCreation" Send="SetTintColor {255,255,0 1.500000}"/>
+        <HostSiteOps HoldPosition="1" HoldRotation="1"/>
+        <Model value="ApertureLoadModel"/>
+        <Scale value="0.600000"/>
+    </CActorModel>
     <CActorAction id="RevilerDummyAttack" parent="GenericAttack" effectImpact="EvisceratorSpinesDamageDummy" effectLaunch="EvisceratorSpinesLMDummy">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <LaunchAssets Sound="Spell_SpineVolley_Launch"/>
@@ -5139,6 +5146,7 @@
     <CActorSound id="ApertureLoadSound" parent="SoundOneShot">
         <On Terms="Effect.ApertureTeleportTP.Start; At Caster" Send="Create"/>
         <On Terms="AbilTransport.ApertureLoadUnload.TransportLoad" Send="Create"/>
+        <On Terms="Effect.MyriadElytronTrackerDummy.Start; At Target" Send="Create"/>
         <Host Subject="_Selectable"/>
         <HostSiteOps Ops="SOpAttachOriginStationary"/>
         <Sound value="ApertureLoad"/>
