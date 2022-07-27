@@ -175,12 +175,18 @@
         <On Terms="Effect.##Effect##.##Sub##" Send="Create"/>
         <On Terms="Behavior.##Behavior##.##Sub##" Send="Create"/>
     </CActorSound>
+    <CActorModel id="BlitzerOverdrive" parent="ModelAnimationStyleOneShotUNIT">
+        <On Terms="Behavior.BlitzerOverdrive.On" Send="Create"/>
+        <HostSiteOps Ops="SOpAttachOrigin SOpMoveUpByDot25 SOpMoveBackByDot25"/>
+    </CActorModel>
+    <CActorSound id="Blitzer_Overdrive" parent="SoundOneShot">
+        <On Terms="Behavior.BlitzerOverdrive.On" Send="Create"/>
+    </CActorSound>
     <CActorUnit id="Fixer" parent="GenericUnitStandard" unitName="Fixer">
         <Aliases value="_UnitMedium"/>
         <Macros value="UnloadDropAnim"/>
         <Macros value="PhysicsDeathsSwarmGround"/>
         <Macros value="PhysicsDeathsVoidGround"/>
-        <Macros value="_ShieldOrange"/>
         <On index="65" Terms="WeaponStart.*.AttackStart; AnimPlaying Birth" Send="AnimClear Birth"/>
         <On index="66" Terms="Abil.attack.ReadyStop" Send="AnimGroupRemove Ready"/>
         <On index="67" Terms="UnitHeightUpdate.*.Land" Send="Create Warhound_Land"/>
@@ -212,8 +218,12 @@
         <On Terms="Upgrade.FixerFusionWelders.Remove" Send="SetGroupIcon 0 Assets\Textures\wireframe-genetron-fixer.dds"/>
         <On Terms="Upgrade.FixerFusionWelders.Remove" Send="SetWireframe 0 Assets\Textures\wireframe-genetron-fixer.dds"/>
         <ModelFlags index="OutlineEmitter" value="1"/>
-        <DeathArray index="Normal" ModelLink="BlazeDeath" SoundLink="Hellion_Explode"/>
-        <DeathCustoms ModelLink="BlazeDeathRagdoll" Name="RagdollBasic">
+        <DeathArray index="Normal" ModelLink="FixerDeath" SoundLink="Hellion_Explode"/>
+        <DeathCustoms>
+            <ActorModel value="FixerDeathActor"/>
+            <AnimProps value="Alternate"/>
+            <ModelLink value="FixerDeath"/>
+            <Name value="RagdollBasic"/>
             <BodySquibs Name="Basic" Model="TerranSquibDeathRagdoll"/>
         </DeathCustoms>
         <DeathCustoms Name="RagdollSiegeTank" InheritsFrom="RagdollBasic"/>
@@ -293,7 +303,7 @@
         </DeathCustoms>
         <DeathCustoms ModelLink="TerranLargeUnitDeathLow" Name="Low"/>
         <WalkAnimMoveSpeed value="3.5"/>
-        <BarOffset value="55"/>
+        <BarOffset value="52"/>
         <GroupIcon>
             <Image value="Assets\Textures\wireframe-genetron-aquila.dds"/>
         </GroupIcon>
@@ -307,7 +317,7 @@
         </Wireframe>
         <PortraitModel value="AquilaPortrait"/>
         <ModelFlags index="OutlineEmitter" value="1"/>
-        <BarWidth value="50"/>
+        <BarWidth value="48"/>
     </CActorUnit>
     <CActorBeamSimple id="AquilaMagnumAttackBeamSupercharge" parent="GenericAttackBeam">
         <Model value="AquilaMagnumAttackBeamModel"/>
@@ -507,6 +517,12 @@
     <CActorSiteOpLocalOffset id="SOpMoveDownByDot025">
         <LocalOffset value="0.000000,0.000000,-0.025000"/>
     </CActorSiteOpLocalOffset>
+    <CActorForceSphere id="FixerDeathDetonationForce" parent="DeathRagdollDetonationForce">
+        <HostSiteOps Ops="SOpRandomPointInSphereDot5"/>
+        <Duration value="0.250000"/>
+        <Magnitude value="8.000000,6.000000"/>
+        <Radius value="1.000000,0.500000"/>
+    </CActorForceSphere>
     <CActorModel id="SpitterVolatileLaunch" parent="ModelAnimationStyleOneShot">
         <On Terms="Effect.SpitterVolatileBurstDamage.Start; At Caster" Send="Create"/>
     </CActorModel>
@@ -1125,7 +1141,7 @@
     </CActorSound>
     <CActorModel id="AssemblyArrayBuild" parent="GenetronBuildingBuild"/>
     <CActorAction id="EqualizerAltAttack" parent="GenericAttack" effectImpact="StratumMissilePodImpact" effectLaunch="StratumMissilePod">
-        <LaunchAttachQuery Methods="AMFilterEqualizer AMPatternEqualizerStratum"/>
+        <LaunchAttachQuery Methods="AMPatternEqualizerStratum"/>
         <LaunchAssets Model="VikingFighterAttackLaunch" Sound="Equalizer_Stratum_AttackLaunch"/>
         <Missile value="EqualizerStratumAttackMissile"/>
         <ImpactMap index="None" Model="EqualizerStratumMissileImpact" Sound="Equalizer_Stratum_AttackImpact"/>
@@ -1133,7 +1149,7 @@
     </CActorAction>
     <CActorAction id="EqualizerAltAttackTM" parent="EqualizerAltAttack" effectLaunch="StratumMissilePodTM">
         <On index="6" Terms="Effect.StratumMissilePodTM.Start; At Caster" Send="Create"/>
-        <LaunchAttachQuery Methods="AMFilterEqualizer AMPatternEqualizerStratumTracker"/>
+        <LaunchAttachQuery Methods="AMFilterEqualizer "/>
     </CActorAction>
     <CActorMissile id="EqualizerStratumAttackMissile" parent="GenericAttackMissile" unitName="StratumMissileLauncherWeapon">
         <Model value="EqualizerStratumMissile"/>
@@ -2335,12 +2351,12 @@
         <SoundArray index="Movement" value="Disruptor_Movement"/>
         <BarOffset value="45"/>
         <GroupIcon>
-            <Image value="Assets\Textures\wireframe-genetron-equalizer.dds"/>
+            <Image value="Assets\Textures\wireframe-genetron-equalizer-v2.dds"/>
         </GroupIcon>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-groundmechplating-level0.dds"/>
-        <UnitIcon value="Assets\Textures\btn-unit-genetron-equalizer.dds"/>
+        <UnitIcon value="Assets\Textures\btn-unit-genetron-equalizer-v2.dds"/>
         <Wireframe>
-            <Image value="Assets\Textures\wireframe-genetron-equalizer.dds"/>
+            <Image value="Assets\Textures\wireframe-genetron-equalizer-v2.dds"/>
         </Wireframe>
         <DeathArray index="Normal" ModelLink="EqualizerDeath" SoundLink="Hellion_Explode" VoiceLink="Equalizer_Death"/>
         <Aliases value="_UnitMedium"/>
@@ -2507,6 +2523,10 @@
         <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Aquila" Send="StatusSet Fabricating 4"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Cancel; IsStatus Fabricating 4" Target="AquilaConstruction" Send="Destroy Immediate"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Finish; IsStatus Fabricating 4" Target="AquilaConstruction" Send="Destroy Immediate"/>
+        <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Fixer" Send="Create FixerConstruction"/>
+        <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Fixer" Send="StatusSet Fabricating 6"/>
+        <On Terms="AbilTrain.TrainLightweightMechs.Cancel; IsStatus Fabricating 6" Target="FixerConstruction" Send="Destroy Immediate"/>
+        <On Terms="AbilTrain.TrainLightweightMechs.Finish; IsStatus Fabricating 6" Target="FixerConstruction" Send="Destroy Immediate"/>
         <SoundArray index="Ready" value="Barracks_Ready"/>
         <SoundArray index="What" value="Barracks_What"/>
         <BarWidth value="160"/>
@@ -2621,20 +2641,28 @@
         <ImpactPhysics Name="BulletImpact" MatchKeys="Basic" Physics="SpitfireAttackForce"/>
     </CActorAction>
     <CActorModel id="AquilaConstruction" parent="GenetronConstructionBase" Model="Aquila">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 60.000000 AsDuration"/>
+        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 56.000000 AsDuration"/>
     </CActorModel>
     <CActorModel id="ACRConstruction" parent="GenetronConstructionBase" Model="ACR">
         <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 17.000000 AsDuration"/>
         <HostSiteOps Ops="SOpAttachHardPoint SOpMoveDownByDot25 SOpMoveDownByDot1"/>
     </CActorModel>
     <CActorModel id="BlazeConstruction" parent="GenetronConstructionBase" Model="Blaze">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 40.000000 AsDuration"/>
+        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 42.000000 AsDuration"/>
     </CActorModel>
     <CActorModel id="BlitzerConstruction" parent="GenetronConstructionBase" Model="Blitzer">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 40.000000 AsDuration"/>
+        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 42.000000 AsDuration"/>
     </CActorModel>
     <CActorModel id="EqualizerConstruction" parent="GenetronConstructionBase" Model="Equalizer">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 40.000000 AsDuration"/>
+        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 42.000000 AsDuration"/>
+    </CActorModel>
+    <CActorModel id="FixerConstruction" parent="GenetronConstructionBase" Model="Fixer">
+        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 42.000000 AsDuration"/>
+        <On Terms="ActorCreation" Send="AnimPlay CoverA Cover,A,Stand PlayForever 0.000000"/>
+        <On Terms="ActorCreation; ValidatePlayer FixerNoFusionWelders" Send="AnimPlay NoWelders Cover,B PlayForever 0.000000"/>
+        <On Terms="Upgrade.FixerFusionWelders.Add" Send="AnimClear NoWelders"/>
+        <On Terms="Upgrade.FixerFusionWelders.Remove" Send="AnimPlay NoWelders Cover,B PlayForever"/>
+        <On Terms="ActorCreation" Send="AnimPlay NoReactiveArmor Cover,C PlayForever 0.000000"/>
     </CActorModel>
     <CActorModel id="InciterConstruction" parent="GenetronConstructionBase" Model="Inciter">
         <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 55.000000 AsDuration"/>
@@ -2643,7 +2671,7 @@
         <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 40.000000 AsDuration"/>
     </CActorModel>
     <CActorModel id="SpitfireConstruction" parent="GenetronConstructionBase" Model="Spitfire">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 32.000000 AsDuration"/>
+        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 38.000000 AsDuration"/>
     </CActorModel>
     <CActorModel id="TeslaConstruction" parent="GenetronConstructionBase" Model="Tesla">
         <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 45.000000 AsDuration"/>
@@ -5167,6 +5195,10 @@
         <On Terms="Behavior.EmissaryOrbTint.Off" Target="_Unit" Send="ClearTintColor 0.500000 EmissaryOrbTint"/>
         <On Terms="Behavior.EmissaryOrbTint.Off" Send="Destroy"/>
     </CActorSimple>
+    <CActorModel id="FixerDeathActor" parent="UnitDeathRagdoll">
+        <On Terms="ActorCreation; ValidatePlayer FixerNoReactiveArmor" Send="AnimPlay NoReactiveArmor Cover,C PlayForever 0.000000"/>
+        <On Terms="ActorCreation" Send="Create FixerDeathDetonationForce"/>
+    </CActorModel>
     <CActorRange id="StratusRange" parent="RangeWeapon" weapon="StratusWeapon"/>
     <CActorSound id="TitanAttack_Start" parent="SoundOneShotKeiron" Effect="TitanWeaponCP">
         <On index="2" Terms="Effect.TitanWeaponCP.Stop" Send="Destroy"/>
