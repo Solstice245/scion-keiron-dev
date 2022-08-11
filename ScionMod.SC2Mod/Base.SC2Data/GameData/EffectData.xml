@@ -208,7 +208,7 @@
         <EffectArray value="IBF7FlamethrowerDMG"/>
     </CEffectSet>
     <CEffectSet id="InstantUnburrow">
-        <EffectArray value="MoleUnburrow"/>
+        <EffectArray value="MoleUnburrowSet"/>
     </CEffectSet>
     <CEffectApplyBehavior id="JupiterStealth" parent="CEffectApplyBehaviorGenetronCaster">
         <ValidatorArray index="0" value="JupiterStealthSpeedCost"/>
@@ -229,6 +229,16 @@
         <EffectArray value="ChargeUse"/>
         <TargetLocationType value="UnitOrPoint"/>
     </CEffectSet>
+    <CEffectApplyBehavior id="MoleBuried">
+        <EditorCategories value="Race:Genetron"/>
+    </CEffectApplyBehavior>
+    <CEffectRemoveBehavior id="MoleBuryRemove">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="MoleBury"/>
+    </CEffectRemoveBehavior>
+    <CEffectApplyBehavior id="MoleBury">
+        <EditorCategories value="Race:Genetron"/>
+    </CEffectApplyBehavior>
     <CEffectIssueOrder id="MoleUnburrow">
         <Abil value="MoleDeactivate"/>
     </CEffectIssueOrder>
@@ -239,6 +249,14 @@
         <EffectArray value="MendMU"/>
         <EffectArray value="MendBehavior"/>
     </CEffectSet>
+    <CEffectSet id="MoleUnburrowSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="MoleUnbury"/>
+        <EffectArray value="MoleUnburrow"/>
+    </CEffectSet>
+    <CEffectIssueOrder id="MoleUnbury">
+        <Abil value="MoleUnbury"/>
+    </CEffectIssueOrder>
     <CEffectApplyBehavior id="MyriadElytronRecall" parent="CEffectApplyBehaviorKeironTarget"/>
     <CEffectLoadContainer id="MyriadElytronTrackerRecallMagazine">
         <EditorCategories value="Race:Keiron"/>
@@ -406,7 +424,7 @@
         <AreaArray Radius="0.6875" Fraction="0.5"/>
         <ExcludeArray Value="Outer"/>
         <ExcludeArray Value="Target"/>
-        <SearchFilters value="-;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <SearchFlags index="OffsetByUnitRadius" value="0"/>
         <SearchFlags index="SameCliff" value="0"/>
     </CEffectDamage>
@@ -419,11 +437,11 @@
         <ValidatorArray value="NotVortexd"/>
         <ValidatorArray value="NotStasis"/>
         <EditorCategories value="Race:Terran"/>
-        <DrainResourceCostFactor index="Minerals" value="0.125"/>
-        <DrainResourceCostFactor index="Vespene" value="0.125"/>
-        <DrainResourceCostFactor index="Terrazine" value="0.125"/>
-        <DrainResourceCostFactor index="Custom" value="0.125"/>
-        <RechargeVitalRate value="2"/>
+        <DrainResourceCostFactor index="Minerals" value="0.0832"/>
+        <DrainResourceCostFactor index="Vespene" value="0.0832"/>
+        <DrainResourceCostFactor index="Terrazine" value="0.0832"/>
+        <DrainResourceCostFactor index="Custom" value="0.0832"/>
+        <RechargeVitalRate value="3"/>
         <TimeFactor value="1"/>
     </CEffectCreateHealer>
     <CEffectSet id="RepulsorSuppressionCannons">
@@ -951,7 +969,7 @@
         <ValidatorArray value="CasterHasEnergy"/>
         <EditorCategories value="Race:Genetron"/>
         <DrainVital value="Energy"/>
-        <DrainVitalCostFactor value="0.66"/>
+        <DrainVitalCostFactor value="1"/>
         <RechargeVital value="Energy"/>
         <RechargeVitalRate value="25"/>
     </CEffectCreateHealer>
@@ -966,7 +984,7 @@
         <DrainVital value="Energy"/>
         <DrainVitalCostFactor value="1"/>
         <RechargeVital value="Energy"/>
-        <RechargeVitalRate value="45"/>
+        <RechargeVitalRate value="50"/>
     </CEffectCreateHealer>
     <CEffectLaunchMissile id="StratumMissilePod" parent="CEffectLaunchMissileGenetron">
         <AmmoUnit value="StratumMissileLauncherWeapon"/>

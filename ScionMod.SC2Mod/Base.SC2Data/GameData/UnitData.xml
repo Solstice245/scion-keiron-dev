@@ -1110,7 +1110,7 @@
         <ResourceDropOff index="Custom" value="1"/>
         <LifeStart value="1500"/>
         <LifeMax value="1500"/>
-        <EnergyMax value="200"/>
+        <EnergyMax value="300"/>
         <Sight value="11"/>
         <Food value="15"/>
         <CostCategory value="Economy"/>
@@ -1275,11 +1275,11 @@
         <KillDisplay value="Always"/>
     </CUnit>
     <CUnit id="MoleBurrowed" parent="Mole">
-        <Name value="Unit/Name/MoleBurrowed"/>
         <Speed value="0"/>
         <AbilArray index="0" Link="stop"/>
         <AbilArray index="1" Link="attack"/>
         <AbilArray index="2" Link="MoleDeactivate"/>
+        <AbilArray Link="MoleBury"/>
         <AbilArray Link="MoleTurnTurret"/>
         <BehaviorArray Link="MoleBurrowed"/>
         <TurretArray index="0" removed="1"/>
@@ -1298,7 +1298,7 @@
                 <Column value="2"/>
             </LayoutButtons>
             <LayoutButtons index="4" Face="Turn" Type="AbilCmd" AbilCmd="MoleTurnTurret,Execute" Row="1" Column="4"/>
-            <LayoutButtons index="5" removed="1"/>
+            <LayoutButtons index="5" Face="MoleConceal" Type="AbilCmd" AbilCmd="MoleBury,Execute" Row="2" Column="3"/>
             <LayoutButtons index="6" removed="1"/>
             <LayoutButtons index="7" removed="1"/>
         </CardLayouts>
@@ -1311,6 +1311,19 @@
         <Collide index="Burrow" value="1"/>
         <Collide index="Structure" value="1"/>
         <EquipmentArray index="0" removed="1"/>
+    </CUnit>
+    <CUnit id="MoleBuried" parent="MoleBurrowed">
+        <Name value="Unit/Name/MoleBurrowed"/>
+        <FlagArray index="Cloaked" value="1"/>
+        <FlagArray index="Buried" value="1"/>
+        <Collide index="Ground" value="0"/>
+        <Collide index="Structure" value="0"/>
+        <Collide index="ForceField" value="0"/>
+        <AbilArray index="3" Link="MoleUnbury"/>
+        <BehaviorArray Link="MoleBuried"/>
+        <CardLayouts index="0">
+            <LayoutButtons index="5" Face="MoleReveal" Type="AbilCmd" AbilCmd="MoleUnbury,Execute" Row="2" Column="4"/>
+        </CardLayouts>
     </CUnit>
     <CUnit id="ProcessingNode" parent="CStructureGenetron">
         <Facing value="0"/>
@@ -2454,14 +2467,13 @@
         <Mover value="StagnatingBileMover"/>
     </CUnit>
     <CUnit id="SacrificialMutation" parent="CUnitXayid">
-        <Attributes index="Armored" value="1"/>
-        <LifeStart value="90"/>
-        <LifeMax value="90"/>
-        <LifeArmor value="5"/>
+        <LifeStart value="70"/>
+        <LifeMax value="70"/>
+        <LifeArmor value="1"/>
         <Sight value="6"/>
         <Food value="-2"/>
-        <CostResource index="Minerals" value="50"/>
-        <CostResource index="Vespene" value="100"/>
+        <CostResource index="Minerals" value="25"/>
+        <CostResource index="Vespene" value="75"/>
         <BehaviorArray Link="SacrificialMutation"/>
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="SacrificialMutation" Type="Passive" AbilCmd="" Row="2" Column="0"/>
@@ -2470,8 +2482,6 @@
             <LayoutButtons index="3" removed="1"/>
             <LayoutButtons index="4" removed="1"/>
         </CardLayouts>
-        <Radius value="0.625"/>
-        <SeparationRadius value="0.6875"/>
         <CargoSize value="4"/>
         <SubgroupPriority value="42"/>
         <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
@@ -2571,16 +2581,17 @@
     </CUnit>
     <CUnit id="ThrasherSpineWeapon" parent="XayidMISSILE"/>
     <CUnit id="Mendling" parent="CUnitXayid">
+        <Attributes index="Light" value="1"/>
         <Attributes index="Psionic" value="1"/>
-        <LifeStart value="90"/>
-        <LifeMax value="90"/>
+        <LifeStart value="70"/>
+        <LifeMax value="70"/>
         <EnergyStart value="75"/>
         <EnergyMax value="200"/>
         <EnergyRegenRate value="0.5625"/>
         <Speed value="3"/>
         <Food value="-2"/>
-        <CostResource index="Minerals" value="50"/>
-        <CostResource index="Vespene" value="100"/>
+        <CostResource index="Minerals" value="25"/>
+        <CostResource index="Vespene" value="75"/>
         <AbilArray Link="Mend"/>
         <AbilArray Link="MendlingSacrificialMutation"/>
         <AbilArray Link="CoveringSpray"/>
@@ -2596,10 +2607,11 @@
         <WeaponArray Link="NeedleSpinesEquipment"/>
         <GlossaryPriority value="6"/>
         <SubgroupPriority value="73"/>
-        <LifeArmor value="1"/>
         <FlagArray index="AICaster" value="1"/>
         <FlagArray index="AISupport" value="1"/>
         <GlossaryAlias value="Mendling"/>
+        <Radius value="0.4375"/>
+        <MinimapRadius value="0.4375"/>
     </CUnit>
     <CUnit id="Prowler" parent="CUnitXayid">
         <LifeStart value="125"/>

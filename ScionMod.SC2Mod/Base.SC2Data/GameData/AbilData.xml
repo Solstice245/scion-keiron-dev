@@ -64,6 +64,25 @@
         <TargetFilters index="0" value="CanHaveEnergy,Visible,HasEnergy;Self,Player,Ally,Neutral,Missile,Stasis,Dead,Hidden"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
     </CAbilEffectTarget>
+    <CAbilMorph id="MoleBury">
+        <AbilSetId value="MBrwD"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="MoleConceal"/>
+        <Flags index="Interruptible" value="1"/>
+        <Flags index="IgnoreFacing" value="1"/>
+        <Flags index="SuppressMovement" value="1"/>
+        <InfoArray Unit="MoleBuried">
+            <SectionArray index="Actor">
+                <DurationArray index="Duration" value="1.4"/>
+                <EffectArray index="Start" value="MoleBury"/>
+                <EffectArray index="Finish" value="MoleBuryRemove"/>
+                <EffectArray index="Cancel" value="MoleBuryRemove"/>
+            </SectionArray>
+            <SectionArray index="Stats">
+                <DurationArray index="Delay" value="1.4"/>
+            </SectionArray>
+        </InfoArray>
+    </CAbilMorph>
     <CAbilEffectTarget id="MoleTurnTurret">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Flags index="BestUnit" value="0"/>
@@ -98,6 +117,24 @@
             <Vital index="Energy" value="75"/>
         </Cost>
     </CAbilEffectTarget>
+    <CAbilMorph id="MoleUnbury">
+        <AbilSetId value="MBrwU"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="MoleReveal"/>
+        <Flags index="IgnoreFacing" value="1"/>
+        <Flags index="SuppressMovement" value="1"/>
+        <InfoArray Unit="MoleBurrowed">
+            <SectionArray index="Actor">
+                <DurationArray index="Duration" value="1.4"/>
+                <EffectArray index="Start" value="MoleBury"/>
+                <EffectArray index="Finish" value="MoleBuryRemove"/>
+                <EffectArray index="Cancel" value="MoleBuryRemove"/>
+            </SectionArray>
+            <SectionArray index="Stats">
+                <DurationArray index="Duration" value="1.4"/>
+            </SectionArray>
+        </InfoArray>
+    </CAbilMorph>
     <CAbilEffectTarget id="ProcessingDroneAnalyzeWeakness">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Effect index="0" value="ProcessingDroneAnalyzeWeaknessSA"/>
@@ -142,12 +179,13 @@
         <EditorCategories value="Race:Terran,AbilityorEffectType:Units"/>
         <Flags index="AutoCast" value="1"/>
         <Flags index="AutoCastOffOwnerLeave" value="1"/>
+        <Flags index="AutoCastOn" value="1"/>
         <Flags index="BestUnit" value="0"/>
         <Flags index="ReExecutable" value="1"/>
         <Flags index="Smart" value="1"/>
         <Flags index="PassengerAcquirePassengers" value="1"/>
         <TargetFilters value="Mechanical,Visible;Self,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
-        <RangeSlop value="0.375"/>
+        <RangeSlop value="0.25"/>
         <AutoCastAcquireLevel value="Defensive"/>
         <AutoCastFilters value="Visible;Neutral,Enemy"/>
         <AutoCastRange value="7"/>
@@ -167,6 +205,7 @@
             <Flags index="ToSelection" value="1"/>
         </CmdButtonArray>
         <AcquirePriority value="1"/>
+        <Range value="0.25"/>
     </CAbilEffectTarget>
     <CAbilEffectInstant id="SuperCharge">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -278,7 +317,7 @@
         <Cost>
             <Vital index="Energy" value="25"/>
             <Charge Link="Abil/FlashGrenade"/>
-            <Cooldown Link="Abil/FlashGrenade" TimeUse="14"/>
+            <Cooldown Link="Abil/FlashGrenade" TimeUse="2"/>
         </Cost>
         <Range value="9"/>
         <FinishTime value="1"/>
@@ -346,8 +385,8 @@
     <CAbilEffectInstant id="MiningPriority">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Cost>
-            <Vital index="Energy" value="50"/>
-            <Cooldown TimeUse="40"/>
+            <Vital index="Energy" value="100"/>
+            <Cooldown TimeUse="30"/>
         </Cost>
         <CmdButtonArray index="Execute" DefaultButtonFace="MiningPriority"/>
         <Effect index="0" value="MiningPrioritySearch"/>
@@ -546,13 +585,8 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="MobilizeCannon"/>
         <ActorKey value="BurrowUp"/>
-        <Flags index="Interruptible" value="1"/>
         <Flags index="IgnoreFacing" value="1"/>
         <Flags index="SuppressMovement" value="1"/>
-        <Cost>
-            <Charge Link="Abil/DeployCannon"/>
-            <Cooldown Link="Abil/DeployCannon"/>
-        </Cost>
         <InfoArray Unit="Mole" RandomDelayMax="0.5">
             <SectionArray index="Actor">
                 <DurationArray index="Duration" value="0.75"/>
@@ -946,15 +980,15 @@
             </Button>
         </InfoArray>
         <InfoArray index="Research2" Time="140" Upgrade="SpitfireMadcapRounds">
-            <Resource index="Minerals" value="150"/>
-            <Resource index="Vespene" value="150"/>
+            <Resource index="Minerals" value="200"/>
+            <Resource index="Vespene" value="200"/>
             <Button DefaultButtonFace="ResearchSpitfireMadcapRounds">
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
         </InfoArray>
         <InfoArray index="Research3" Time="110" Upgrade="BlitzerBoreanReactor">
-            <Resource index="Minerals" value="150"/>
-            <Resource index="Vespene" value="150"/>
+            <Resource index="Minerals" value="200"/>
+            <Resource index="Vespene" value="200"/>
             <Button DefaultButtonFace="ResearchBlitzerBoreanReactor">
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
@@ -966,7 +1000,7 @@
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
         </InfoArray>
-        <InfoArray index="Research5" Time="80" Upgrade="FixerFusionWelders">
+        <InfoArray index="Research5" Time="60" Upgrade="FixerFusionWelders">
             <Resource index="Minerals" value="100"/>
             <Resource index="Vespene" value="100"/>
             <Button DefaultButtonFace="FixerResearchFusionWelders"/>
@@ -1519,9 +1553,9 @@
             <Vital index="Energy" value="15"/>
             <Cooldown TimeUse="2.8"/>
         </Cost>
-        <TargetFilters value="Biological;Self,Neutral,Enemy"/>
+        <TargetFilters value="Biological;Self,Neutral,Enemy,Missile,Stasis,Dead"/>
         <Range value="4"/>
-        <AutoCastFilters value="Biological,Visible;Neutral,Enemy"/>
+        <AutoCastFilters value="Biological,Visible;Neutral,Enemy,Invulnerable"/>
         <AutoCastRange value="6"/>
         <AutoCastValidatorArray value="NotStructureTarget"/>
         <AutoCastValidatorArray value="LifeGTEDelta20"/>

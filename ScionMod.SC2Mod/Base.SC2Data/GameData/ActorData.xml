@@ -1149,7 +1149,7 @@
     </CActorAction>
     <CActorAction id="EqualizerAltAttackTM" parent="EqualizerAltAttack" effectLaunch="StratumMissilePodTM">
         <On index="6" Terms="Effect.StratumMissilePodTM.Start; At Caster" Send="Create"/>
-        <LaunchAttachQuery Methods="AMFilterEqualizer "/>
+        <LaunchAttachQuery Methods="AMFilterEqualizer"/>
     </CActorAction>
     <CActorMissile id="EqualizerStratumAttackMissile" parent="GenericAttackMissile" unitName="StratumMissileLauncherWeapon">
         <Model value="EqualizerStratumMissile"/>
@@ -1511,7 +1511,7 @@
     </CActorUnit>
     <CActorTurret id="MoleTurret">
         <On Terms="TurretEnable.MoleTurret" Send="Create"/>
-        <On Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed" Send="Destroy"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed; MorphTo Mole" Send="Destroy"/>
     </CActorTurret>
     <CActorRange id="MoleSubterraneanSensorsRange">
         <Filter index="Neutral" value="1"/>
@@ -1520,7 +1520,7 @@
         <FogVisibility value="Visible"/>
         <On Terms="Behavior.MoleBurrowed.On; ValidateUnit MoleSubterraneanSensorsUpgraded" Send="Create"/>
         <On Terms="Behavior.MoleBurrowed.Off" Send="Destroy"/>
-        <Range value="22.000000"/>
+        <Range value="25.000000"/>
         <Icon value="Assets\Textures\radaricon1.dds"/>
         <IconArcLength value="3.250000"/>
     </CActorRange>
@@ -2980,8 +2980,19 @@
         <On index="79" Terms="Abil.attack.ReadyStop" Send="TimerSet 2.000000"/>
         <On index="80" Terms="TimerExpired; ValidateUnit CasterNotAttacking" Send="AnimClear Inferior"/>
         <On Terms="TimerExpired; ValidateUnit CasterNotAttacking" Send="AnimClear Superior"/>
-        <On Terms="AbilMorph.*.Finish; MorphTo MoleBurrowed" Send="Create"/>
-        <On Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed" Send="Destroy"/>
+        <On Terms="AbilMorph.*.Finish; MorphTo MoleBurrowed; MorphFrom Mole" Send="Create"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed; MorphTo Mole" Send="Destroy"/>
+        <On Terms="UnitDeathCustomize; ValidateUnit IsMoleBuried" Send="DeathCustomize Upgrade"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed; MorphTo MoleBuried" Send="AnimClear Inferior"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed; MorphTo MoleBuried" Send="AnimClear Superior"/>
+        <On Terms="UnitBirth.MoleBuried" Send="Create"/>
+        <On Terms="UnitRevive.MoleBuried" Send="Create"/>
+        <On Terms="UnitRevive.MoleBuried" Send="RefSet ::HostTurretBody _Selectable"/>
+        <On Terms="UnitConstruction.MoleBuried" Send="Create"/>
+        <On Terms="UnitConstruction.MoleBuried" Send="AnimPlay ConstructionDeath Stand,Birth,Death FullMatch"/>
+        <On Terms="UnitBirth.MoleBuried" Send="AnimBracketStart Burrow Burrow,Cover,Start Burrow,Cover Burrow,Cover,End Instant"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed; MorphTo MoleBuried" Send="AnimBracketStart Burrow Burrow,Cover,Start Burrow,Cover Burrow,Cover,End"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom MoleBuried; MorphTo MoleBurrowed" Send="AnimBracketStop Burrow"/>
         <Baselines index="Stand" AnimProps="Stand,Burrow"/>
         <DeathArray index="Normal" AnimProps="Death,Burrow" ModelLink="MoleBurrowedDeath"/>
         <HighlightTooltip value="Unit/Name/MoleBurrowed"/>
@@ -2991,6 +3002,9 @@
             <ModelLink value="MoleBurrowedDeath"/>
             <Name value="RagdollBasic"/>
             <BodySquibs index="0" Name="TerranSquibDeathRagdoll" Model="BurrowedSplat"/>
+        </DeathCustoms>
+        <DeathCustoms ActorModel="MoleDeathActor" ModelLink="MoleBurrowedUnderDeath" Name="Upgrade">
+            <BodySquibs Name="TerranSquibDeathRagdoll" Model="BurrowedSplat"/>
         </DeathCustoms>
         <AnimBlendTime value="0.000000"/>
     </CActorUnit>
@@ -3095,9 +3109,11 @@
         <Radius value="0.800000,0.400000"/>
     </CActorForceSphere>
     <CActorSplat id="MoleBurrowedSplat" parent="BurrowedSplat" unitName="Mole">
-        <Inherits index="Visibility" value="0"/>
-        <HostSiteOps Ops="SOpAttachHardPoint"/>
-        <Scale value="0.750000"/>
+        <Scale value="0.700000"/>
+        <On index="3" Terms="AbilMorph.*.Start; MorphTo MoleBurrowed; MorphFrom Mole" Send="Create"/>
+        <On index="4" Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed; MorphTo Mole" Send="RefClear ::Host"/>
+        <On index="5" Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed; MorphTo Mole" Send="TimerSet 4.000000,2.000000 DelayDestroy"/>
+        <On Terms="UnitBirth.MoleBuried" Send="Create"/>
     </CActorSplat>
     <CActorSplat id="XayidBuildingSplat5x5" parent="GenericUnitSplat">
         <On index="0" Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand Death"/>
