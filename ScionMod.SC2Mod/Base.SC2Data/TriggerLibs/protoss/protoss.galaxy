@@ -107,6 +107,12 @@ void AINewUnitProt (int player, unit u) {
         AINewUnitXayi(player, u);
         return;
     }
+	
+	
+	if (PlayerRace(player) == "Keir") {
+        AINewUnitKeir(player, u);
+        return;
+    }
 
     // ignored units
     //
@@ -159,6 +165,11 @@ unit AIGetScoutProt (int player, int index, unit prev, bool allowWorkers) {
     if (PlayerRace(player) == "Xayi") {
         return AIGetScoutXayi(player, index, prev, allowWorkers);
     }
+	
+	
+    if (PlayerRace(player) == "Keir") {
+        return AIGetScoutKeir(player, index, prev, allowWorkers);
+    }
 
     if (!PlayerBeaconIsSet(player, c_beaconScout) &&
         !AIGetFlag(player, e_flagsScouting)) {
@@ -210,6 +221,10 @@ unit AIEarlyDefScoutProt (int player, unit prev, bool allowWorkers) {
 
     if (PlayerRace(player) == "Xayi") {
         return AIEarlyDefScoutGen(player, prev, allowWorkers);
+    }
+	
+	if (PlayerRace(player) == "Keir") {
+        return AIEarlyDefScoutKeir(player, prev, allowWorkers);
     }
     
     if (!AIGetFlag(player, e_flagsEarlyDefScout)) {
@@ -281,6 +296,11 @@ void AIMeleeProt (int player) {
 
     if (PlayerRace(player) == "Xayi") {
         AIMeleeXayi(player);
+        return;
+    }
+	
+    if (PlayerRace(player) == "Keir") {
+        AIMeleeKeir(player);
         return;
     }
 
