@@ -96,6 +96,17 @@
     <CBehaviorBuff id="DummyUnit">
         <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="GeneratorEnergyRegenerationBuff">
+        <InfoFlags index="Hidden" value="1"/>
+        <InfoIcon value="Assets\Textures\btn-tips-computerterminals.dds"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <MaxStackCount value="65535"/>
+        <MaxStackCountPerCaster value="1"/>
+        <Duration value="1.001"/>
+        <Modification>
+            <VitalRegenArray index="Energy" value="1.125"/>
+        </Modification>
+    </CBehaviorBuff>
     <CBehaviorBuff id="GenetronConstruction">
         <InfoIcon value="Assets\Textures\btn-ability-genetron-structurelockdownmode.dds"/>
         <EditorCategories value="AbilityorEffectType:Units"/>
@@ -123,6 +134,42 @@
             <ModifyAmount value="-2"/>
         </DamageResponse>
         <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="GenetronUnitEnergyRegenBase">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="EnergyNotFull"/>
+        <DisableValidatorArray value="DefaultDataE0"/>
+        <DisableValidatorArray value="HasCoreOrRelay"/>
+        <Period value="0.5"/>
+        <PeriodicEffect value="GenetronUnitEnergyRegenSA"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="AquilaEnergyRegenBase">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="EnergyNotFull"/>
+        <DisableValidatorArray value="DefaultDataE0"/>
+        <DisableValidatorArray value="HasCoreOrRelay"/>
+        <Period value="0.5"/>
+        <PeriodicEffect value="AquilaEnergyRegenSA"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="GenetronUnitEnergyRegenDrain">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="hasEnergy"/>
+        <RemoveValidatorArray value="EnergyNotFullCaster"/>
+        <MaxStackCount value="0"/>
+        <MaxStackCountPerCaster value="1"/>
+        <Period value="1"/>
+        <PeriodicEffect value="GenetronUnitEnergyRegenSet"/>
+        <FinalEffect value="GenetronUnitEnergyRegenDataReset"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="AquilaEnergyRegenDrain">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="hasEnergy"/>
+        <RemoveValidatorArray value="EnergyNotFullCaster"/>
+        <MaxStackCount value="0"/>
+        <MaxStackCountPerCaster value="1"/>
+        <Period value="1"/>
+        <PeriodicEffect value="GenetronUnitEnergyRegenSet"/>
+        <FinalEffect value="GenetronUnitEnergyRegenDataReset"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="HornetBoreDrillBase">
         <Alignment value="Negative"/>
@@ -256,6 +303,15 @@
     </CBehaviorBuff>
     <CBehaviorBuff id="Pause">
         <Modification TimeScale="0.01"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="GeneratorSearchBuff">
+        <InfoFlags index="Hidden" value="1"/>
+        <InfoIcon value="Assets\Textures\btn-tips-computerterminals.dds"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="NotUnderConstruction"/>
+        <DisableValidatorArray value="StructureNotLockedDown"/>
+        <Period value="1"/>
+        <PeriodicEffect value="GeneratorProcessingPowerSA"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="PulsarDampenerAutoTrigger">
         <InfoFlags index="Hidden" value="1"/>
@@ -604,6 +660,7 @@
         <InfoIcon value="Assets\Textures\btn-ability-genetron-miningtap.dds"/>
         <Duration value="1"/>
         <Alignment value="Positive"/>
+        <TimeScaleSource Value="Global"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="VirtusLockdownMode">
         <InfoIcon value="Assets\Textures\btn-ability-genetron-structurelockdownmode.dds"/>

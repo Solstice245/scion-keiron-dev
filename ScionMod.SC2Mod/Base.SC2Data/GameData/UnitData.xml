@@ -305,9 +305,8 @@
         <LifeStart value="100"/>
         <LifeMax value="100"/>
         <LifeArmor value="0"/>
-        <EnergyStart value="25"/>
+        <EnergyStart value="75"/>
         <EnergyMax value="75"/>
-        <EnergyRegenRate value="0.5625"/>
         <Sight value="11"/>
         <Food value="-3"/>
         <CostResource index="Minerals" value="100"/>
@@ -345,6 +344,7 @@
         <InnerRadius value="0.375"/>
         <Radius value="0.4375"/>
         <MinimapRadius value="0.4375"/>
+        <BehaviorArray Link="AquilaEnergyRegenBase"/>
     </CUnit>
     <CUnit id="Blaze" parent="CUnitGenetron">
         <Attributes index="Light" value="1"/>
@@ -481,7 +481,7 @@
         <Speed value="2.75"/>
         <EnergyStart value="10"/>
         <EnergyMax value="10"/>
-        <EnergyRegenRate value="0.5625"/>
+        <BehaviorArray Link="GenetronUnitEnergyRegenBase"/>
     </CUnit>
     <CUnit id="GenetronResearchGlossaryDummy">
         <Race value="Gen"/>
@@ -819,8 +819,26 @@
         <InnerRadius value="0.25"/>
         <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
     </CUnit>
-    <CUnit id="RelayTower" parent="CStructureGenetron"/>
-    <CUnit id="Generator" parent="CStructureGenetron"/>
+    <CUnit id="RelayTower" parent="CStructureGenetron">
+        <LifeStart value="1000"/>
+        <LifeMax value="1000"/>
+        <EnergyMax value="300"/>
+        <AbilArray Link="RelayTowerLongRangeTransfer"/>
+        <AbilArray Link="CoreSystemRecharge"/>
+        <CardLayouts index="0">
+            <LayoutButtons Face="RelayTowerLongRangeTransfer" Type="AbilCmd" AbilCmd="RelayTowerLongRangeTransfer,Execute" Row="0" Column="0"/>
+            <LayoutButtons Face="EnergyGridInput" Type="Passive" Row="2" Column="0"/>
+            <LayoutButtons Face="CoreSystemRecharge" Type="AbilCmd" AbilCmd="CoreSystemRecharge,Execute" Row="2" Column="1"/>
+        </CardLayouts>
+    </CUnit>
+    <CUnit id="Generator" parent="CStructureGenetron">
+        <LifeStart value="1000"/>
+        <LifeMax value="1000"/>
+        <BehaviorArray Link="GeneratorSearchBuff"/>
+        <CardLayouts index="0">
+            <LayoutButtons Face="GeneratorEnergyGrid" Type="Passive" Row="2" Column="0"/>
+        </CardLayouts>
+    </CUnit>
     <CUnit id="Repulsor" parent="CStructureGenetron">
         <FlagArray index="AIDefense" value="1"/>
         <LifeStart value="300"/>
@@ -1074,7 +1092,7 @@
             <LayoutButtons Face="GenetronBuild" Type="Submenu" SubmenuCardId="0002" Row="2" Column="0"/>
             <LayoutButtons Face="GenetronBuildAdvanced" Type="Submenu" SubmenuCardId="0003" Row="2" Column="1"/>
             <LayoutButtons Face="Halt" Type="AbilCmd" AbilCmd="MechStructures,Halt" Row="2" Column="4"/>
-            <LayoutButtons Face="Halt" Type="AbilCmd" AbilCmd="BuildUploader,Halt" Row="2" Column="4"/>
+            <LayoutButtons Face="Halt" Type="AbilCmd" AbilCmd="BuildUploader,255" Row="2" Column="4"/>
             <LayoutButtons Face="Spray" Type="AbilCmd" AbilCmd="SprayTerran,Execute" Row="2" Column="3"/>
         </CardLayouts>
         <CardLayouts CardId="0002">
@@ -1087,6 +1105,7 @@
             <LayoutButtons Face="OutfittingStation" Type="AbilCmd" AbilCmd="MechStructures,Build6" Row="1" Column="1"/>
             <LayoutButtons Face="Repulsor" Type="AbilCmd" AbilCmd="MechStructures,Build7" Row="2" Column="0"/>
             <LayoutButtons Face="Interdictor" Type="AbilCmd" AbilCmd="MechStructures,Build8" Row="2" Column="1"/>
+            <LayoutButtons Face="BuildRelayTower" Type="AbilCmd" AbilCmd="MechStructures,Build9" Row="1" Column="3"/>
         </CardLayouts>
         <CardLayouts CardId="0003">
             <LayoutButtons Face="Cancel" Type="CancelSubmenu" Row="2" Column="4"/>
@@ -1094,6 +1113,7 @@
             <LayoutButtons Face="TechVault" Type="AbilCmd" AbilCmd="MechStructures,Build11" Row="0" Column="1"/>
             <LayoutButtons Face="AssemblyArray" Type="AbilCmd" AbilCmd="MechStructures,Build12" Row="1" Column="0"/>
             <LayoutButtons Face="AnalysisTerminal" Type="AbilCmd" AbilCmd="MechStructures,Build13" Row="1" Column="1"/>
+            <LayoutButtons Face="BuildGenerator" Type="AbilCmd" AbilCmd="MechStructures,Build14" Row="0" Column="2"/>
         </CardLayouts>
         <Radius value="0.375"/>
         <InnerRadius value="0.375"/>
@@ -1613,9 +1633,8 @@
         <Attributes index="Massive" value="1"/>
         <LifeStart value="325"/>
         <LifeMax value="325"/>
-        <EnergyStart value="50"/>
+        <EnergyStart value="100"/>
         <EnergyMax value="100"/>
-        <EnergyRegenRate value="0.5625"/>
         <Speed value="2.5"/>
         <Acceleration value="2"/>
         <Sight value="10"/>
@@ -1652,6 +1671,7 @@
         <StationaryTurningRate value="720"/>
         <TurningRate value="720"/>
         <LifeArmor value="2"/>
+        <BehaviorArray Link="GenetronUnitEnergyRegenBase"/>
     </CUnit>
     <CUnit id="Boar" parent="CUnitGenetronAir">
         <Attributes index="Armored" value="1"/>
@@ -1696,9 +1716,8 @@
         <Attributes index="Armored" value="1"/>
         <LifeStart value="175"/>
         <LifeMax value="175"/>
-        <EnergyStart value="50"/>
+        <EnergyStart value="200"/>
         <EnergyMax value="200"/>
-        <EnergyRegenRate value="0.5625"/>
         <Speed value="3.25"/>
         <Acceleration value="1"/>
         <Deceleration value="1.5"/>
@@ -1731,6 +1750,7 @@
         <Mob value="Multiplayer"/>
         <FlagArray index="AISupport" value="1"/>
         <MinimapRadius value="0.6875"/>
+        <BehaviorArray Link="GenetronUnitEnergyRegenBase"/>
     </CUnit>
     <CUnit id="Hornet" parent="CUnitGenetronAir">
         <FlagArray index="PreventDestroy" value="0"/>
@@ -1796,9 +1816,9 @@
         <GlossaryWeakArray value="ThorAP"/>
         <GlossaryWeakArray value="Mutalisk"/>
         <StationaryTurningRate value="720"/>
-        <EnergyStart value="50"/>
+        <EnergyStart value="100"/>
         <EnergyMax value="100"/>
-        <EnergyRegenRate value="0.5625"/>
+        <BehaviorArray Link="GenetronUnitEnergyRegenBase"/>
     </CUnit>
     <CUnit id="ProcessingDrone" parent="CUnitGenetronAir">
         <Response value="Flee"/>
@@ -1807,7 +1827,6 @@
         <LifeArmor value="0"/>
         <LifeRegenDelay value="10"/>
         <LifeRegenRate value="1.25"/>
-        <EnergyStart value="50"/>
         <EnergyMax value="200"/>
         <Speed value="4.25"/>
         <Sight value="11"/>
@@ -1820,6 +1839,7 @@
         <AbilArray Link="ProcessingDroneSystemRecharge"/>
         <BehaviorArray Link="IntegratedOptics"/>
         <BehaviorArray Link="CloakingGenerator"/>
+        <BehaviorArray Link="GenetronUnitEnergyRegenBase"/>
         <CardLayouts index="0">
             <LayoutButtons Face="AcquireMove" Type="AbilCmd" AbilCmd="move,AcquireMove" Row="0" Column="4"/>
             <LayoutButtons Face="AnalyzeWeakness" Type="AbilCmd" AbilCmd="ProcessingDroneAnalyzeWeakness,Execute" Row="2" Column="0"/>

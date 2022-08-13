@@ -207,6 +207,23 @@
         <AcquirePriority value="1"/>
         <Range value="0.25"/>
     </CAbilEffectTarget>
+    <CAbilEffectTarget id="RelayTowerLongRangeTransfer">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Flags index="AutoCast" value="1"/>
+        <Flags index="AutoCastOn" value="1"/>
+        <Cost>
+            <Vital index="Energy" value="25"/>
+            <Cooldown TimeUse="1"/>
+        </Cost>
+        <TargetFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
+        <Range value="500"/>
+        <Arc value="360"/>
+        <AutoCastFilters value="-;Self,Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
+        <AutoCastRange value="500"/>
+        <AutoCastValidatorArray value="CasterEnergyGE125"/>
+        <AutoCastValidatorArray value="TargetEnergyLT100"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="RelayTowerLongRangeTransfer" Requirements="NotUnderConstruction"/>
+    </CAbilEffectTarget>
     <CAbilEffectInstant id="SuperCharge">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Effect index="0" value="Supercharge"/>
@@ -563,6 +580,9 @@
         <InfoArray index="Build8" Unit="Interdictor" Time="30">
             <Button DefaultButtonFace="Interdictor" Requirements="HaveManufacturerAndOutfittingStation"/>
         </InfoArray>
+        <InfoArray index="Build9" Unit="RelayTower" Time="1">
+            <Button DefaultButtonFace="BuildRelayTower"/>
+        </InfoArray>
         <InfoArray index="Build10" Unit="Fabricator" Time="60">
             <Button DefaultButtonFace="Fabricator" Requirements="HaveManufacturer"/>
         </InfoArray>
@@ -574,6 +594,9 @@
         </InfoArray>
         <InfoArray index="Build13" Unit="AnalysisTerminal" Time="65">
             <Button DefaultButtonFace="AnalysisTerminal" Requirements="HaveTechVault"/>
+        </InfoArray>
+        <InfoArray index="Build14" Unit="Generator" Time="1">
+            <Button DefaultButtonFace="BuildGenerator"/>
         </InfoArray>
         <FidgetDelayMin value="5"/>
         <FidgetDelayMax value="10"/>

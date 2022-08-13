@@ -170,6 +170,11 @@
         <CaseArray Validator="IsStructure" Effect="DiscordZoneDebuffStructure"/>
         <CaseDefault value="DiscordZoneDebuff"/>
     </CEffectSwitch>
+    <CEffectApplyBehavior id="GeneratorEnergyRegenerationBuff" parent="CEffectApplyBehaviorGenetronTarget">
+        <ValidatorArray index="0" value="TargetIsRelayTowerOrProcessingCore"/>
+        <ValidatorArray value="StructureNotLockedDown"/>
+        <ValidatorArray value="EnergyNotFull"/>
+    </CEffectApplyBehavior>
     <CEffectDamage id="EvisceratorSpinesDamageDummy">
         <EditorCategories value="Race:Xayid"/>
     </CEffectDamage>
@@ -193,6 +198,84 @@
         <Player Value="Caster"/>
         <Target Value="CasterUnit"/>
     </CEffectIssueOrder>
+    <CEffectApplyBehavior id="GenetronUnitEnergyRegenAB" parent="CEffectApplyBehaviorGenetronTarget">
+        <Behavior value="GenetronUnitEnergyRegenDrain"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="AquilaEnergyRegenAB" parent="CEffectApplyBehaviorGenetronTarget">
+        <Behavior value="AquilaEnergyRegenDrain"/>
+    </CEffectApplyBehavior>
+    <CEffectUserData id="GenetronUnitEnergyRegenData">
+        <ValidatorArray value="TargetIsRelayTowerOrProcessingCore"/>
+        <ValidatorArray value="hasEnergy"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectSuccess value="GenetronUnitEnergyRegenAB"/>
+        <EffectFailure value="GenetronUnitEnergyRegenAB"/>
+    </CEffectUserData>
+    <CEffectUserData id="AquilaEnergyRegenData">
+        <ValidatorArray value="TargetIsRelayTowerOrProcessingCore"/>
+        <ValidatorArray value="hasEnergy"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectSuccess value="AquilaEnergyRegenAB"/>
+        <EffectFailure value="AquilaEnergyRegenAB"/>
+    </CEffectUserData>
+    <CEffectUserData id="GenetronUnitEnergyRegenDataReset">
+        <EditorCategories value="Race:Genetron"/>
+        <Amount value="0"/>
+        <Operation value="Set"/>
+    </CEffectUserData>
+    <CEffectUserData id="GenetronUnitEnergyRegenDataRefund">
+        <EditorCategories value="Race:Genetron"/>
+        <Key value="RefundEnergy"/>
+        <Amount value="0">
+            <AccumulatorArray value="GenetronUnitEnergyRegenRefundArith"/>
+        </Amount>
+        <SourceKey value="RefundEnergy"/>
+        <Operation value="Set"/>
+    </CEffectUserData>
+    <CEffectModifyUnit id="GenetronUnitEnergyRegenMURefund">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="0">
+                <AccumulatorArray value="RefundEnergyDataAdd"/>
+            </Change>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="GenetronUnitEnergyRegenMUTake">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-0.5625"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="GenetronUnitEnergyRegenMUReceive">
+        <EditorCategories value="Race:Genetron"/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Energy">
+            <Change value="0.5625"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectEnumArea id="GenetronUnitEnergyRegenSA">
+        <EditorCategories value="Race:Genetron"/>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
+        <TargetSorts>
+            <SortArray value="PrioritizeRelayTower"/>
+        </TargetSorts>
+        <AreaArray MaxCount="1" Radius="500" Effect="GenetronUnitEnergyRegenData"/>
+    </CEffectEnumArea>
+    <CEffectEnumArea id="AquilaEnergyRegenSA">
+        <EditorCategories value="Race:Genetron"/>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
+        <TargetSorts>
+            <SortArray value="PrioritizeRelayTower"/>
+        </TargetSorts>
+        <AreaArray MaxCount="1" Radius="500" Effect="AquilaEnergyRegenData"/>
+    </CEffectEnumArea>
+    <CEffectSet id="GenetronUnitEnergyRegenSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="GenetronUnitEnergyRegenDataRefund"/>
+        <EffectArray value="GenetronUnitEnergyRegenMUTake"/>
+        <EffectArray value="GenetronUnitEnergyRegenMUReceive"/>
+        <EffectArray value="GenetronUnitEnergyRegenMURefund"/>
+    </CEffectSet>
     <CEffectSet id="GyreAnnexInitSet">
         <EditorCategories value="Race:Keiron"/>
         <EffectArray value="GyreAnnexAK"/>
@@ -428,6 +511,15 @@
         <SearchFlags index="OffsetByUnitRadius" value="0"/>
         <SearchFlags index="SameCliff" value="0"/>
     </CEffectDamage>
+    <CEffectEnumArea id="GeneratorProcessingPowerSA">
+        <EditorCategories value="Race:Genetron"/>
+        <ImpactLocation Value="TargetUnit"/>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
+        <TargetSorts>
+            <SortArray value="PrioritizeRelayTower"/>
+        </TargetSorts>
+        <AreaArray MaxCount="1" Radius="500" Effect="GeneratorEnergyRegenerationBuff"/>
+    </CEffectEnumArea>
     <CEffectApplyBehavior id="PulsarDampenerAutocast" parent="CEffectApplyBehaviorKeironCaster"/>
     <CEffectApplyBehavior id="PulsarDampenerAlt" parent="CEffectApplyBehaviorKeironTarget"/>
     <CEffectCreateHealer id="FixerRepair">
@@ -444,6 +536,42 @@
         <RechargeVitalRate value="3"/>
         <TimeFactor value="1"/>
     </CEffectCreateHealer>
+    <CEffectUserData id="RelayTowerLongRangeTransferData">
+        <EditorCategories value="Race:Genetron"/>
+        <Key value="RefundEnergy"/>
+        <Amount value="0">
+            <AccumulatorArray value="RelayTowerLongRangeTransferArith"/>
+        </Amount>
+        <SourceKey value="RefundEnergy"/>
+    </CEffectUserData>
+    <CEffectCreatePersistent id="RelayTowerLongRangeTransfer">
+        <ValidatorArray value="TargetIsRelayTowerOrProcessingCore"/>
+        <ValidatorArray value="EnergyNotFull"/>
+        <ValidatorArray value="StructureNotLockedDown"/>
+        <ValidatorArray value="NotUnderConstruction"/>
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="TargetUnit"/>
+        <InitialEffect value="RelayTowerLongRangeTransferData"/>
+        <ExpireDelay value="0.0625"/>
+        <FinalEffect value="RelayTowerLongRangeTransferMURefund"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="RelayTowerLongRangeTransferMU"/>
+    </CEffectCreatePersistent>
+    <CEffectModifyUnit id="RelayTowerLongRangeTransferMU">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="25"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="RelayTowerLongRangeTransferMURefund">
+        <EditorCategories value="Race:Genetron"/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Energy">
+            <Change value="0">
+                <AccumulatorArray value="RefundEnergyDataAdd"/>
+            </Change>
+        </VitalArray>
+    </CEffectModifyUnit>
     <CEffectSet id="RepulsorSuppressionCannons">
         <EditorCategories value="Race:Keiron"/>
         <EffectArray value="RepulsorInterdictorBurrowCD"/>
@@ -834,7 +962,7 @@
         <LaunchEffect value="RepulsorInterdictorBurrowCD"/>
     </CEffectLaunchMissile>
     <CEffectApplyBehavior id="EnergyRegenerationBuff" parent="CEffectApplyBehaviorGenetronTarget">
-        <ValidatorArray index="0" value="TargetIsProcessingCore"/>
+        <ValidatorArray index="0" value="TargetIsRelayTowerOrProcessingCore"/>
         <ValidatorArray value="StructureNotLockedDown"/>
         <ValidatorArray value="EnergyNotFull"/>
     </CEffectApplyBehavior>
@@ -997,7 +1125,7 @@
         <ImpactLocation Value="TargetUnit"/>
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
         <TargetSorts>
-            <SortArray value="TSDistance"/>
+            <SortArray value="PrioritizeRelayTower"/>
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="EnergyRegenerationBuff"/>
     </CEffectEnumArea>
