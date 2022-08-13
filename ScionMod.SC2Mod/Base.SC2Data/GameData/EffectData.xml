@@ -520,6 +520,29 @@
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="GeneratorEnergyRegenerationBuff"/>
     </CEffectEnumArea>
+    <CEffectApplyBehavior id="UploaderResearchDrainAB" parent="CEffectApplyBehaviorGenetronCaster">
+        <Behavior value="UploaderResearchStall"/>
+    </CEffectApplyBehavior>
+    <CEffectModifyUnit id="UploaderResearchDrainMU">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-0.5"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectRemoveBehavior id="UploaderResearchDrainRB">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Caster"/>
+        <BehaviorLink value="UploaderResearchStall"/>
+    </CEffectRemoveBehavior>
+    <CEffectEnumArea id="UploaderResearchDrainSA">
+        <EditorCategories value="Race:Genetron"/>
+        <ImpactLocation Value="TargetUnit"/>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
+        <TargetSorts>
+            <SortArray value="PrioritizeRelayTower"/>
+        </TargetSorts>
+        <AreaArray MaxCount="1" Radius="500" Effect="UploaderResearchDrainSet"/>
+    </CEffectEnumArea>
     <CEffectApplyBehavior id="PulsarDampenerAutocast" parent="CEffectApplyBehaviorKeironCaster"/>
     <CEffectApplyBehavior id="PulsarDampenerAlt" parent="CEffectApplyBehaviorKeironTarget"/>
     <CEffectCreateHealer id="FixerRepair">
@@ -1141,6 +1164,18 @@
         <ValidatorArray value="CasterUploaderCount3"/>
         <EditorCategories value="Race:Genetron"/>
     </CEffectCreatePersistent>
+    <CEffectSet id="UploaderResearchDrainSet">
+        <ValidatorArray value="IsRelayTowerOrProcessingCoreAndHasEnergy"/>
+        <ValidatorArray value="StructureNotLockedDown"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="UploaderResearchDrainMU"/>
+        <EffectArray value="UploaderResearchDrainRB"/>
+    </CEffectSet>
+    <CEffectSwitch id="UploaderResearchDrainSwitch">
+        <EditorCategories value="Race:Genetron"/>
+        <CaseArray Validator="UploaderCanTakeEnergy" Effect="UploaderResearchDrainSA"/>
+        <CaseDefault value="UploaderResearchDrainAB"/>
+    </CEffectSwitch>
     <CEffectModifyUnit id="VengeanceMissileMU">
         <EditorCategories value="Race:Genetron"/>
         <LaunchUnit Value="Caster"/>
