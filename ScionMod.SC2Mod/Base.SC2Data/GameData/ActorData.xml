@@ -175,6 +175,7 @@
         <On Terms="Effect.##Effect##.##Sub##" Send="Create"/>
         <On Terms="Behavior.##Behavior##.##Sub##" Send="Create"/>
     </CActorSound>
+    <CActorModel id="GeneratorBuild" parent="GenetronBuildingBuild"/>
     <CActorUnit id="RelayTower" parent="GenetronBuilding" buildTime="30" unitName="RelayTower">
         <On index="89" Terms="AnimDone; AnimName Birth" Send="AnimSetDuration Build 30.000000"/>
     </CActorUnit>
@@ -499,8 +500,10 @@
         <Model value="ApertureLoadModel"/>
         <Scale value="0.600000"/>
     </CActorModel>
-    <CActorUnit id="Generator" parent="GenetronBuilding" buildTime="30" unitName="Generator">
-        <On index="89" Terms="AnimDone; AnimName Birth" Send="AnimSetDuration Build 30.000000"/>
+    <CActorUnit id="Generator" parent="GenetronBuilding" buildTime="9.000000" unitName="Generator">
+        <On Terms="Behavior.LockdownMode.On" Send="AnimGroupApply Unpowered"/>
+        <On Terms="Behavior.LockdownModeDuration.Off" Send="AnimGroupRemove Unpowered"/>
+        <BarWidth value="130"/>
     </CActorUnit>
     <CActorAction id="RevilerDummyAttack" parent="GenericAttack" effectImpact="EvisceratorSpinesDamageDummy" effectLaunch="EvisceratorSpinesLMDummy">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
