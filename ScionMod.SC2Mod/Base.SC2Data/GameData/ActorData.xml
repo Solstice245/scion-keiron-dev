@@ -178,6 +178,8 @@
     <CActorModel id="GeneratorBuild" parent="GenetronBuildingBuild"/>
     <CActorUnit id="RelayTower" parent="GenetronBuilding" buildTime="30" unitName="RelayTower">
         <On index="89" Terms="AnimDone; AnimName Birth" Send="AnimSetDuration Build 30.000000"/>
+        <BarOffset value="125"/>
+        <BarWidth value="75"/>
     </CActorUnit>
     <CActorModel id="BlitzerOverdrive" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Behavior.BlitzerOverdrive.On" Send="Create"/>
@@ -503,7 +505,8 @@
     <CActorUnit id="Generator" parent="GenetronBuilding" buildTime="9.000000" unitName="Generator">
         <On Terms="Behavior.LockdownMode.On" Send="AnimGroupApply Unpowered"/>
         <On Terms="Behavior.LockdownModeDuration.Off" Send="AnimGroupRemove Unpowered"/>
-        <BarWidth value="130"/>
+        <BarWidth value="135"/>
+        <BarOffset value="110"/>
     </CActorUnit>
     <CActorAction id="RevilerDummyAttack" parent="GenericAttack" effectImpact="EvisceratorSpinesDamageDummy" effectLaunch="EvisceratorSpinesLMDummy">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
@@ -1439,7 +1442,7 @@
         <HostForProps Subject="_Unit" Scope="Caster" Actor="Find"/>
         <Host Subject="_Unit" Scope="Caster" Actor="Find"/>
         <HostLaunch Subject="_Unit" Scope="Caster" Actor="Find"/>
-        <HostLaunchSiteOps Ops="SOpAttachCenter"/>
+        <HostLaunchSiteOps Ops="SOpAttachHardPoint"/>
         <HostImpact Subject="_Unit" Scope="Target" Actor="Find"/>
         <HostImpactSiteOps Ops="SOpAttachCenter"/>
     </CActorBeamSimple>
@@ -2972,7 +2975,7 @@
         </Wireframe>
     </CActorUnit>
     <CActorSound id="MoleBurrowSound" parent="SoundOneShot">
-        <On Terms="AbilMorph.*.Start; MorphTo MoleBurrowed" Send="Create"/>
+        <On Terms="AbilMorph.*.Start; MorphTo MoleBurrowed; MorphFrom Mole" Send="Create"/>
         <Host Subject="_Unit"/>
         <HostSiteOps Ops="SOpAttachOriginStationary"/>
         <Sound value="WidowMine_Burrow"/>
