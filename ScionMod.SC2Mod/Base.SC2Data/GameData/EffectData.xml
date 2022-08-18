@@ -198,61 +198,95 @@
         <Player Value="Caster"/>
         <Target Value="CasterUnit"/>
     </CEffectIssueOrder>
-    <CEffectApplyBehavior id="GenetronUnitEnergyRegenAB" parent="CEffectApplyBehaviorGenetronTarget">
-        <Behavior value="GenetronUnitEnergyRegenDrain"/>
-    </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="AquilaEnergyRegenAB" parent="CEffectApplyBehaviorGenetronTarget">
-        <Behavior value="AquilaEnergyRegenDrain"/>
-    </CEffectApplyBehavior>
+    <CEffectCreateHealer id="GenetronUnitEnergyRegenHealer">
+        <EditorCategories value="Race:Genetron"/>
+        <LaunchUnit Value="Target"/>
+        <ImpactUnit Value="Caster"/>
+        <Flags index="Channeled" value="0"/>
+        <PeriodicValidator value="HasEnergyAndCasterEnergyNotFull"/>
+        <DrainVital value="Energy"/>
+        <DrainVitalCostFactor value="1"/>
+        <RechargeVital value="Energy"/>
+        <RechargeVitalRate value="0.5625"/>
+        <FinalEffect value="GenetronUnitEnergyRegenDataReset"/>
+    </CEffectCreateHealer>
+    <CEffectCreateHealer id="AquilaEnergyRegenHealer">
+        <EditorCategories value="Race:Genetron"/>
+        <LaunchUnit Value="Target"/>
+        <ImpactUnit Value="Caster"/>
+        <Flags index="Channeled" value="0"/>
+        <PeriodicValidator value="HasEnergyAndCasterEnergyNotFull"/>
+        <DrainVital value="Energy"/>
+        <DrainVitalCostFactor value="1"/>
+        <RechargeVital value="Energy"/>
+        <RechargeVitalRate value="0.5625"/>
+        <FinalEffect value="GenetronUnitEnergyRegenDataReset"/>
+    </CEffectCreateHealer>
+    <CEffectCreateHealer id="GenetronUnitEnergyRegenx2Healer">
+        <EditorCategories value="Race:Genetron"/>
+        <LaunchUnit Value="Target"/>
+        <ImpactUnit Value="Caster"/>
+        <Flags index="Channeled" value="0"/>
+        <PeriodicValidator value="HasEnergyAndCasterEnergyNotFull"/>
+        <DrainVital value="Energy"/>
+        <DrainVitalCostFactor value="1"/>
+        <RechargeVital value="Energy"/>
+        <RechargeVitalRate value="1.125"/>
+        <FinalEffect value="GenetronUnitEnergyRegenDataReset"/>
+    </CEffectCreateHealer>
+    <CEffectCreateHealer id="GenetronUnitEnergyRegenx3Healer">
+        <EditorCategories value="Race:Genetron"/>
+        <LaunchUnit Value="Target"/>
+        <ImpactUnit Value="Caster"/>
+        <Flags index="Channeled" value="0"/>
+        <PeriodicValidator value="HasEnergyAndCasterEnergyNotFull"/>
+        <DrainVital value="Energy"/>
+        <DrainVitalCostFactor value="1"/>
+        <RechargeVital value="Energy"/>
+        <RechargeVitalRate value="1.6875"/>
+        <FinalEffect value="GenetronUnitEnergyRegenDataReset"/>
+    </CEffectCreateHealer>
+    <CEffectUserData id="GenetronUnitEnergyRegenx3Data">
+        <ValidatorArray value="TargetIsRelayTowerOrProcessingCore"/>
+        <ValidatorArray value="hasEnergy"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectSuccess value="GenetronUnitEnergyRegenx3Healer"/>
+        <EffectFailure value="GenetronUnitEnergyRegenx3Healer"/>
+    </CEffectUserData>
+    <CEffectEnumArea id="GenetronUnitEnergyRegenx3SA">
+        <EditorCategories value="Race:Genetron"/>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
+        <TargetSorts>
+            <SortArray value="PrioritizeRelayTower"/>
+        </TargetSorts>
+        <AreaArray MaxCount="1" Radius="500" Effect="GenetronUnitEnergyRegenx3Data"/>
+    </CEffectEnumArea>
     <CEffectUserData id="GenetronUnitEnergyRegenData">
         <ValidatorArray value="TargetIsRelayTowerOrProcessingCore"/>
         <ValidatorArray value="hasEnergy"/>
         <EditorCategories value="Race:Genetron"/>
-        <EffectSuccess value="GenetronUnitEnergyRegenAB"/>
-        <EffectFailure value="GenetronUnitEnergyRegenAB"/>
+        <EffectSuccess value="GenetronUnitEnergyRegenHealer"/>
+        <EffectFailure value="GenetronUnitEnergyRegenHealer"/>
     </CEffectUserData>
     <CEffectUserData id="AquilaEnergyRegenData">
         <ValidatorArray value="TargetIsRelayTowerOrProcessingCore"/>
         <ValidatorArray value="hasEnergy"/>
         <EditorCategories value="Race:Genetron"/>
-        <EffectSuccess value="AquilaEnergyRegenAB"/>
-        <EffectFailure value="AquilaEnergyRegenAB"/>
+        <EffectSuccess value="AquilaEnergyRegenHealer"/>
+        <EffectFailure value="AquilaEnergyRegenHealer"/>
+    </CEffectUserData>
+    <CEffectUserData id="GenetronUnitEnergyRegenx2Data">
+        <ValidatorArray value="TargetIsRelayTowerOrProcessingCore"/>
+        <ValidatorArray value="hasEnergy"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectSuccess value="GenetronUnitEnergyRegenx2Healer"/>
+        <EffectFailure value="GenetronUnitEnergyRegenx2Healer"/>
     </CEffectUserData>
     <CEffectUserData id="GenetronUnitEnergyRegenDataReset">
         <EditorCategories value="Race:Genetron"/>
         <Amount value="0"/>
         <Operation value="Set"/>
     </CEffectUserData>
-    <CEffectUserData id="GenetronUnitEnergyRegenDataRefund">
-        <EditorCategories value="Race:Genetron"/>
-        <Key value="RefundEnergy"/>
-        <Amount value="0">
-            <AccumulatorArray value="GenetronUnitEnergyRegenRefundArith"/>
-        </Amount>
-        <SourceKey value="RefundEnergy"/>
-        <Operation value="Set"/>
-    </CEffectUserData>
-    <CEffectModifyUnit id="GenetronUnitEnergyRegenMURefund">
-        <EditorCategories value="Race:Genetron"/>
-        <VitalArray index="Energy">
-            <Change value="0">
-                <AccumulatorArray value="RefundEnergyDataAdd"/>
-            </Change>
-        </VitalArray>
-    </CEffectModifyUnit>
-    <CEffectModifyUnit id="GenetronUnitEnergyRegenMUTake">
-        <EditorCategories value="Race:Genetron"/>
-        <VitalArray index="Energy">
-            <Change value="-0.5625"/>
-        </VitalArray>
-    </CEffectModifyUnit>
-    <CEffectModifyUnit id="GenetronUnitEnergyRegenMUReceive">
-        <EditorCategories value="Race:Genetron"/>
-        <ImpactUnit Value="Caster"/>
-        <VitalArray index="Energy">
-            <Change value="0.5625"/>
-        </VitalArray>
-    </CEffectModifyUnit>
     <CEffectEnumArea id="GenetronUnitEnergyRegenSA">
         <EditorCategories value="Race:Genetron"/>
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
@@ -269,13 +303,14 @@
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="AquilaEnergyRegenData"/>
     </CEffectEnumArea>
-    <CEffectSet id="GenetronUnitEnergyRegenSet">
+    <CEffectEnumArea id="GenetronUnitEnergyRegenx2SA">
         <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="GenetronUnitEnergyRegenDataRefund"/>
-        <EffectArray value="GenetronUnitEnergyRegenMUTake"/>
-        <EffectArray value="GenetronUnitEnergyRegenMUReceive"/>
-        <EffectArray value="GenetronUnitEnergyRegenMURefund"/>
-    </CEffectSet>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
+        <TargetSorts>
+            <SortArray value="PrioritizeRelayTower"/>
+        </TargetSorts>
+        <AreaArray MaxCount="1" Radius="500" Effect="GenetronUnitEnergyRegenx2Data"/>
+    </CEffectEnumArea>
     <CEffectSet id="GyreAnnexInitSet">
         <EditorCategories value="Race:Keiron"/>
         <EffectArray value="GyreAnnexAK"/>
