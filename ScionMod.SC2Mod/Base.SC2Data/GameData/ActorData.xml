@@ -176,10 +176,11 @@
         <On Terms="Behavior.##Behavior##.##Sub##" Send="Create"/>
     </CActorSound>
     <CActorModel id="GeneratorBuild" parent="GenetronBuildingBuild"/>
-    <CActorUnit id="RelayTower" parent="GenetronBuilding" buildTime="30" unitName="RelayTower">
-        <On index="89" Terms="AnimDone; AnimName Birth" Send="AnimSetDuration Build 30.000000"/>
+    <CActorModel id="RelayTowerBuild" parent="GenetronBuildingBuild"/>
+    <CActorUnit id="RelayTower" parent="GenetronBuilding" buildTime="30.000000" unitName="RelayTower">
         <BarOffset value="125"/>
         <BarWidth value="75"/>
+        <DeathArray index="Normal" ModelLink="MissileTurretDeath" SoundLink="MissileTurret_Explode"/>
     </CActorUnit>
     <CActorModel id="BlitzerOverdrive" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Behavior.BlitzerOverdrive.On" Send="Create"/>
@@ -502,11 +503,13 @@
         <Model value="ApertureLoadModel"/>
         <Scale value="0.600000"/>
     </CActorModel>
-    <CActorUnit id="Generator" parent="GenetronBuilding" buildTime="9.000000" unitName="Generator">
+    <CActorUnit id="Generator" parent="GenetronBuilding" buildTime="40.00000" unitName="Generator">
+        <On index="89" Terms="AnimDone; AnimName Birth" Send="AnimSetDuration Build 40.000000"/>
         <On Terms="Behavior.LockdownMode.On" Send="AnimGroupApply Unpowered"/>
         <On Terms="Behavior.LockdownModeDuration.Off" Send="AnimGroupRemove Unpowered"/>
         <BarWidth value="135"/>
         <BarOffset value="110"/>
+        <DeathArray index="Normal" ModelLink="FusionCoreDeath" SoundLink="FusionCore_Explode"/>
     </CActorUnit>
     <CActorAction id="RevilerDummyAttack" parent="GenericAttack" effectImpact="EvisceratorSpinesDamageDummy" effectLaunch="EvisceratorSpinesLMDummy">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>

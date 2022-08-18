@@ -171,7 +171,7 @@
         <CaseDefault value="DiscordZoneDebuff"/>
     </CEffectSwitch>
     <CEffectApplyBehavior id="GeneratorEnergyRegenerationBuff" parent="CEffectApplyBehaviorGenetronTarget">
-        <ValidatorArray index="0" value="TargetIsRelayTowerOrProcessingCore"/>
+        <ValidatorArray index="0" value="IsProcessingCoreOrRelayTower"/>
         <ValidatorArray value="StructureNotLockedDown"/>
         <ValidatorArray value="EnergyNotFull"/>
     </CEffectApplyBehavior>
@@ -247,7 +247,7 @@
         <FinalEffect value="GenetronUnitEnergyRegenDataReset"/>
     </CEffectCreateHealer>
     <CEffectUserData id="GenetronUnitEnergyRegenx3Data">
-        <ValidatorArray value="TargetIsRelayTowerOrProcessingCore"/>
+        <ValidatorArray value="IsProcessingCoreOrRelayTower"/>
         <ValidatorArray value="hasEnergy"/>
         <EditorCategories value="Race:Genetron"/>
         <EffectSuccess value="GenetronUnitEnergyRegenx3Healer"/>
@@ -262,21 +262,21 @@
         <AreaArray MaxCount="1" Radius="500" Effect="GenetronUnitEnergyRegenx3Data"/>
     </CEffectEnumArea>
     <CEffectUserData id="GenetronUnitEnergyRegenData">
-        <ValidatorArray value="TargetIsRelayTowerOrProcessingCore"/>
+        <ValidatorArray value="IsProcessingCoreOrRelayTower"/>
         <ValidatorArray value="hasEnergy"/>
         <EditorCategories value="Race:Genetron"/>
         <EffectSuccess value="GenetronUnitEnergyRegenHealer"/>
         <EffectFailure value="GenetronUnitEnergyRegenHealer"/>
     </CEffectUserData>
     <CEffectUserData id="AquilaEnergyRegenData">
-        <ValidatorArray value="TargetIsRelayTowerOrProcessingCore"/>
+        <ValidatorArray value="IsProcessingCoreOrRelayTower"/>
         <ValidatorArray value="hasEnergy"/>
         <EditorCategories value="Race:Genetron"/>
         <EffectSuccess value="AquilaEnergyRegenHealer"/>
         <EffectFailure value="AquilaEnergyRegenHealer"/>
     </CEffectUserData>
     <CEffectUserData id="GenetronUnitEnergyRegenx2Data">
-        <ValidatorArray value="TargetIsRelayTowerOrProcessingCore"/>
+        <ValidatorArray value="IsProcessingCoreOrRelayTower"/>
         <ValidatorArray value="hasEnergy"/>
         <EditorCategories value="Race:Genetron"/>
         <EffectSuccess value="GenetronUnitEnergyRegenx2Healer"/>
@@ -603,7 +603,7 @@
         <SourceKey value="RefundEnergy"/>
     </CEffectUserData>
     <CEffectCreatePersistent id="RelayTowerLongRangeTransfer">
-        <ValidatorArray value="TargetIsRelayTowerOrProcessingCore"/>
+        <ValidatorArray value="IsProcessingCoreOrRelayTower"/>
         <ValidatorArray value="EnergyNotFull"/>
         <ValidatorArray value="StructureNotLockedDown"/>
         <ValidatorArray value="NotUnderConstruction"/>
@@ -1020,7 +1020,7 @@
         <LaunchEffect value="RepulsorInterdictorBurrowCD"/>
     </CEffectLaunchMissile>
     <CEffectApplyBehavior id="EnergyRegenerationBuff" parent="CEffectApplyBehaviorGenetronTarget">
-        <ValidatorArray index="0" value="TargetIsRelayTowerOrProcessingCore"/>
+        <ValidatorArray index="0" value="IsProcessingCoreOrRelayTower"/>
         <ValidatorArray value="StructureNotLockedDown"/>
         <ValidatorArray value="EnergyNotFull"/>
     </CEffectApplyBehavior>
@@ -1150,8 +1150,6 @@
         <ValidatorArray value="NotVortexd"/>
         <ValidatorArray value="NotUncommandable"/>
         <ValidatorArray value="SourceNotHidden"/>
-        <ValidatorArray value="TargetNotProcessingDrone"/>
-        <ValidatorArray value="TargetNotProcessingCore"/>
         <ValidatorArray value="CasterHasEnergy"/>
         <EditorCategories value="Race:Genetron"/>
         <DrainVital value="Energy"/>
@@ -1164,7 +1162,7 @@
         <ValidatorArray value="NotVortexd"/>
         <ValidatorArray value="NotUncommandable"/>
         <ValidatorArray value="SourceNotHidden"/>
-        <ValidatorArray value="TargetNotProcessingCore"/>
+        <ValidatorArray value="IsNotProcessingCore"/>
         <ValidatorArray value="CasterHasEnergy"/>
         <EditorCategories value="Race:Genetron"/>
         <DrainVital value="Energy"/>

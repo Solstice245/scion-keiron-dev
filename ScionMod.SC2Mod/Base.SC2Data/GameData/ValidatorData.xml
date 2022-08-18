@@ -52,10 +52,26 @@
         <CombineArray value="NotDead"/>
         <CombineArray value="CasterNotDead"/>
     </CValidatorCombine>
+    <CValidatorUnitType id="IsNotRelayTower">
+        <Value value="RelayTower"/>
+        <Find value="0"/>
+    </CValidatorUnitType>
     <CValidatorCombine id="IsRelayTowerOrProcessingCoreAndHasEnergy">
         <Type value="And"/>
-        <CombineArray value="TargetIsRelayTowerOrProcessingCore"/>
+        <CombineArray value="IsProcessingCoreOrRelayTower"/>
         <CombineArray value="hasEnergy"/>
+    </CValidatorCombine>
+    <CValidatorUnitType id="IsNotTeslaCloakCharge">
+        <Value value="CloakCharge"/>
+        <Find value="0"/>
+    </CValidatorUnitType>
+    <CValidatorUnitType id="IsNotTeslaShockCharge">
+        <Value value="ShockCharge"/>
+    </CValidatorUnitType>
+    <CValidatorCombine id="IsNotTeslaCharge">
+        <Type value="And"/>
+        <CombineArray value="IsNotTeslaCloakCharge"/>
+        <CombineArray value="IsNotTeslaShockCharge"/>
     </CValidatorCombine>
     <CValidatorUnitCompareVital id="TargetEnergyLT100">
         <Compare value="LT"/>
@@ -247,12 +263,12 @@
         <Value value="0.5"/>
         <Vital value="Shields"/>
     </CValidatorUnitCompareVital>
-    <CValidatorUnitType id="TargetIsRelayTower">
+    <CValidatorUnitType id="IsRelayTower">
         <Value value="RelayTower"/>
     </CValidatorUnitType>
-    <CValidatorCombine id="TargetIsRelayTowerOrProcessingCore">
-        <CombineArray value="TargetIsProcessingCore"/>
-        <CombineArray value="TargetIsRelayTower"/>
+    <CValidatorCombine id="IsProcessingCoreOrRelayTower">
+        <CombineArray value="IsProcessingCore"/>
+        <CombineArray value="IsRelayTower"/>
     </CValidatorCombine>
     <CValidatorLocationEnumArea id="UploaderCanTakeEnergy">
         <AreaArray>
@@ -902,21 +918,21 @@
         <CombineArray value="RevenantLaunchTargetFastCombine"/>
         <CombineArray value="RevenantLaunchTargetSlow"/>
     </CValidatorCombine>
-    <CValidatorUnitType id="TargetIsProcessingCore">
+    <CValidatorUnitType id="IsProcessingCore">
         <Value value="ProcessingCore"/>
     </CValidatorUnitType>
-    <CValidatorUnitType id="TargetIsProcessingDrone">
+    <CValidatorUnitType id="IsProcessingDrone">
         <Value value="ProcessingDrone"/>
     </CValidatorUnitType>
-    <CValidatorUnitType id="TargetNotProcessingDrone">
-        <Value value="ProcessingDrone"/>
-        <Find value="0"/>
+    <CValidatorUnitType id="IsNotProcessingDrone">
         <ResultFailed value="Error,Error/NotProcessingDrone"/>
+        <Value value="ProcessingDrone"/>
+        <Find value="0"/>
     </CValidatorUnitType>
-    <CValidatorUnitType id="TargetNotProcessingCore">
+    <CValidatorUnitType id="IsNotProcessingCore">
+        <ResultFailed value="Error,Error/NotProcessingCore"/>
         <Value value="ProcessingCore"/>
         <Find value="0"/>
-        <ResultFailed value="Error,Error/NotProcessingCore"/>
     </CValidatorUnitType>
     <CValidatorUnitCompareBehaviorCount id="TrackingMunitionsApplied">
         <Compare value="NE"/>
