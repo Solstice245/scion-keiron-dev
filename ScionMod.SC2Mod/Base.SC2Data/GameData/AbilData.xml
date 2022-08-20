@@ -272,7 +272,7 @@
             <Unit value="Boar"/>
         </InfoArray>
         <InfoArray index="Train5" Time="56">
-            <Button DefaultButtonFace="Badger" Requirements="HasAtLeast3LinkedUploadersAndAnalysisTerminal"/>
+            <Button DefaultButtonFace="Badger" Requirements="HasAtLeast3LinkedUploaders"/>
             <Unit value="Badger"/>
         </InfoArray>
         <InfoArray index="Train7" Time="35">
@@ -404,7 +404,7 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Cost>
             <Vital index="Energy" value="100"/>
-            <Cooldown TimeUse="30"/>
+            <Cooldown TimeUse="21"/>
         </Cost>
         <CmdButtonArray index="Execute" DefaultButtonFace="MiningPriority"/>
         <Effect index="0" value="MiningPrioritySearch"/>
@@ -916,7 +916,7 @@
         <Alignment value="Positive"/>
         <TargetSorts RequestCount="1">
             <SortArray value="TSAlliancePassive"/>
-            <SortArray value="TSLifeFraction"/>
+            <SortArray value="TSEnergyFraction"/>
             <SortArray value="TSDistance"/>
         </TargetSorts>
         <Arc value="14.9963"/>
@@ -932,17 +932,29 @@
         <Effect index="0" value="SystemRechargeCoreCH"/>
         <Flags index="AutoCast" value="1"/>
         <Flags index="AutoCastOn" value="1"/>
-        <Flags index="NoDeceleration" value="1"/>
+        <Flags index="ReExecutable" value="1"/>
         <Flags index="Smart" value="1"/>
         <TargetFilters value="CanHaveEnergy;Self,Ally,Neutral,Enemy,Missile,Stasis,Dead,Hidden"/>
         <Range value="8"/>
         <Arc value="360"/>
+        <SmartValidatorArray value="healSmartTargetFilters"/>
         <SmartValidatorArray value="NotWarpingIn"/>
-        <AutoCastFilters value="Visible;Ally,Neutral,Enemy"/>
+        <AutoCastFilters value="Visible;Neutral,Enemy,Missile,Stasis,Dead,Invulnerable"/>
         <AutoCastRange value="8"/>
         <AutoCastValidatorArray value="healCasterMinEnergy"/>
-        <AutoCastValidatorArray value="IsNotTeslaCharge"/>
+        <AutoCastValidatorArray value="NotWarpingIn"/>
+        <AutoCastValidatorArray value="IsNotProcessingCore"/>
+        <AutoCastValidatorArray value="IsNotRelayTower"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="CoreSystemRecharge"/>
+        <TargetSorts RequestCount="1">
+            <SortArray value="TSAlliancePassive"/>
+            <SortArray value="TSEnergyFraction"/>
+            <SortArray value="TSDistance"/>
+        </TargetSorts>
+        <AutoCastAcquireLevel value="Defensive"/>
+        <UseMarkerArray index="Approach" value="0"/>
+        <UseMarkerArray index="Prep" value="0"/>
+        <AINotifyEffect value="SystemRechargeCoreCH"/>
     </CAbilEffectTarget>
     <CAbilResearch id="TechVaultResearch">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -2809,4 +2821,18 @@
         <TargetFilters value="-;Ally,Neutral,Enemy,Structure,Stasis,Dead,Hidden"/>
         <AINotifyEffect value="FuseUnfuseRB"/>
     </CAbilEffectInstant>
+    <CAbilEffectTarget id="ELORProtocol">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Flags index="AllowMovement" value="1"/>
+        <Flags index="BestUnit" value="0"/>
+        <Flags index="RequireTargetVision" value="0"/>
+        <Cost>
+            <Vital index="Energy" value="75"/>
+        </Cost>
+        <TargetFilters value="-;Missile,Dead,Hidden"/>
+        <Range value="9"/>
+        <AINotifyEffect value="ELORProtocolLM"/>
+        <EffectRange index="0" value="1,500"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="ELORProtocol"/>
+    </CAbilEffectTarget>
 </Catalog>

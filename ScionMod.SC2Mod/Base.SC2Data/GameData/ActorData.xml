@@ -176,18 +176,23 @@
         <On Terms="Behavior.##Behavior##.##Sub##" Send="Create"/>
     </CActorSound>
     <CActorModel id="GeneratorBuild" parent="GenetronBuildingBuild"/>
+    <CActorSound id="SystemRechargeSoundStart" parent="SoundOneShot">
+        <Sound value="SystemRecharge_LoopStart"/>
+    </CActorSound>
     <CActorModel id="RelayTowerBuild" parent="GenetronBuildingBuild"/>
     <CActorUnit id="RelayTower" parent="GenetronBuilding" buildTime="30.000000" unitName="RelayTower">
         <BarOffset value="125"/>
         <BarWidth value="75"/>
         <DeathArray index="Normal" ModelLink="MissileTurretDeath" SoundLink="MissileTurret_Explode"/>
+        <On Terms="Abil.CoreSystemRecharge.SourceChannelStart" Send="$Spell PlayForever"/>
+        <On Terms="Abil.CoreSystemRecharge.SourceChannelStop" Send="AnimClear Spell"/>
     </CActorUnit>
     <CActorModel id="BlitzerOverdrive" parent="ModelAnimationStyleOneShotUNIT">
-        <On Terms="Behavior.BlitzerOverdrive.On" Send="Create"/>
+        <On Terms="Abil.BlitzerOverdrive.SourceCastStart" Send="Create"/>
         <HostSiteOps Ops="SOpAttachOrigin SOpMoveUpByDot25 SOpMoveBackByDot25"/>
     </CActorModel>
     <CActorSound id="Blitzer_Overdrive" parent="SoundOneShot">
-        <On Terms="Behavior.BlitzerOverdrive.On" Send="Create"/>
+        <On Terms="Abil.BlitzerOverdrive.SourceCastStart" Send="Create"/>
     </CActorSound>
     <CActorUnit id="Fixer" parent="GenericUnitStandard" unitName="Fixer">
         <Aliases value="_UnitMedium"/>
@@ -692,6 +697,9 @@
         <StageArray AnimProps="Birth,C,Start"/>
         <StageArray AnimProps="Birth,C,Stand"/>
     </CActorProgress>
+    <CActorSound id="SystemRechargeSoundStop" parent="SoundOneShot">
+        <Sound value="SystemRecharge_LoopStop"/>
+    </CActorSound>
     <CActorDoodad id="TerranTarmac">
         <DoodadFlags index="DefaultToModelAABBBounds" value="0"/>
     </CActorDoodad>
@@ -1414,27 +1422,14 @@
         <On Terms="Effect.ProcessingDroneSystemRechargeCH.TargetStart; At Target" Send="Create"/>
         <On Terms="Effect.ProcessingDroneSystemRechargeCH.TargetStop; At Target" Send="Destroy"/>
         <On Terms="ActorOrphan" Send="Destroy"/>
-        <On Terms="ActorCreation" Send="Create MedivacHealSoundStart"/>
-        <On Terms="ActorDestruction" Send="Create MedivacHealSoundStop"/>
+        <On Terms="ActorCreation" Send="Create SystemRechargeSoundStart"/>
+        <On Terms="ActorDestruction" Send="Create SystemRechargeSoundStop"/>
         <On Terms="Effect.SystemRechargeCoreCH.TargetStart; At Target" Send="Create"/>
         <On Terms="Effect.SystemRechargeCoreCH.TargetStop; At Target" Send="Destroy"/>
         <Host Subject="_Selectable"/>
         <HostSiteOps Ops="SOpAttachOverhead"/>
-        <Sound value="Medivac_HealLoop"/>
+        <Sound value="SystemRecharge_Loop"/>
     </CActorSound>
-    <CActorModel id="SystemRechargeModel" parent="ModelAnimationStyleOneShotUNIT">
-        <Flags index="SuppressSaveLoad" value="0"/>
-        <On index="0" Send="AnimBracketStart BSD Birth Stand Death"/>
-        <On index="1" Terms="ActorOrphan"/>
-        <On index="2" Terms="AnimBracketState.*.AfterClosing; !AnimBracketExitReason ModelSwap; AnimName BSD" Send="Destroy"/>
-        <On Terms="ActorCreation" Send="$Birth PlayForever"/>
-        <On Terms="Effect.ProcessingDroneSystemRechargeCH.TargetStart; At Target" Send="Create"/>
-        <On Terms="Effect.ProcessingDroneSystemRechargeCH.TargetStop; At Target" Send="Destroy"/>
-        <On Terms="ActorOrphan" Send="Destroy"/>
-        <On Terms="Effect.SystemRechargeCoreCH.TargetStart; At Target" Send="Create"/>
-        <On Terms="Effect.SystemRechargeCoreCH.TargetStop; At Target" Send="Destroy"/>
-        <HostSiteOps Ops="SOpAttachOverhead"/>
-    </CActorModel>
     <CActorBeamSimple id="SystemRechargeBeam" parent="BeamSimpleAnimationStyleContinuous">
         <Inherits index="Visibility" value="1"/>
         <Supporter Subject="_Unit" Scope="Caster" Actor="Find"/>
@@ -1501,6 +1496,8 @@
         <On Terms="Behavior.InciterJump.LandUp" Send="AnimBracketStop Jump"/>
         <On Terms="Behavior.InciterJump.LandUp" Send="AnimBlendTimeApply"/>
         <On Terms="UnitHeightUpdate.*.Land" Send="Create SiegeTank_Land"/>
+        <On Terms="Abil.ELORProtocol.SourceCastStart" Send="AnimBracketStart Jump Jump,Start Jump Jump,End"/>
+        <On Terms="Abil.ELORProtocol.SourceChannelStop" Send="AnimBracketStop Jump"/>
         <BarOffset value="80"/>
         <BarWidth value="80"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-groundmechplating-level0.dds"/>
@@ -1519,6 +1516,11 @@
         <DeathArray index="Normal" ModelLink="InciterDeath" SoundLink="SiegeTank_Explode"/>
         <PortraitModel value="InciterPortrait"/>
         <ModelFlags index="OutlineEmitter" value="1"/>
+        <DeathCustoms index="0" ModelLink="Invisible" Name="Vortex"/>
+        <DeathCustoms index="1" removed="1"/>
+        <DeathCustoms index="2" removed="1"/>
+        <DeathCustoms index="3" removed="1"/>
+        <DeathCustoms index="4" removed="1"/>
     </CActorUnit>
     <CActorAction id="InciterAttack" parent="GenericAttack" effectImpact="HalifaxGrenadesLMImpact" effectLaunch="HalifaxGrenadesLMR">
         <On index="6" Terms="Effect.HalifaxGrenadesLM.Start; At Caster" Send="Create"/>
@@ -6348,4 +6350,24 @@
     <CActorUnit id="Edifice" parent="GenericUnitKeironStructure" buildTime="61.000000" unitName="Edifice">
         <On index="69" Terms="UnitConstruction.Edifice.Start" Send="Create KeironBuildModelEdifice"/>
     </CActorUnit>
+    <CActorUnit id="InciterELORProtocolTargetDummy" parent="GenericUnitStandard" unitName="InciterELORProtocolTargetDummy">
+        <Model value="Invisible"/>
+        <ModelFlags index="OutlineEmitter" value="1"/>
+    </CActorUnit>
+    <CActorModel id="InciterJumpJetsFireModel" parent="ModelAnimationStyleOneShot">
+        <On Terms="Effect.ELORProtocolSA.Start" Send="Create"/>
+        <On Terms="Effect.ELORProtocolLM.Start; At Source" Send="Create"/>
+        <HostSiteOps Ops="SOpCasterPoint" HoldPosition="1"/>
+        <Model value="InciterJumpJetsImpactModel"/>
+        <ModelFlags index="AllowHitTest" value="0"/>
+    </CActorModel>
+    <CActorSound id="InciterELORJumpLaunchSound" parent="SoundOneShot">
+        <On Terms="Effect.ELORProtocolLM.Start" Send="Create"/>
+        <HostSiteOps Ops="SOpCasterPoint"/>
+        <Sound value="Inciter_JumpLaunch"/>
+    </CActorSound>
+    <CActorSound id="InciterELORJumpLandSound" parent="SoundOneShot">
+        <On Terms="Effect.ELORProtocolSA.Start" Send="Create"/>
+        <Sound value="Inciter_JumpLand"/>
+    </CActorSound>
 </Catalog>
