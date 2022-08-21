@@ -508,10 +508,11 @@
         <Model value="ApertureLoadModel"/>
         <Scale value="0.600000"/>
     </CActorModel>
-    <CActorUnit id="Generator" parent="GenetronBuilding" buildTime="40.00000" unitName="Generator">
-        <On index="89" Terms="AnimDone; AnimName Birth" Send="AnimSetDuration Build 40.000000"/>
+    <CActorUnit id="Generator" parent="GenetronBuilding" buildTime="40.000000" unitName="Generator">
         <On Terms="Behavior.LockdownMode.On" Send="AnimGroupApply Unpowered"/>
         <On Terms="Behavior.LockdownModeDuration.Off" Send="AnimGroupRemove Unpowered"/>
+        <On Terms="Abil.GeneratorResearch.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
+        <On Terms="Abil.GeneratorResearch.Stop" Send="AnimClear StandWork"/>
         <BarWidth value="135"/>
         <BarOffset value="110"/>
         <DeathArray index="Normal" ModelLink="FusionCoreDeath" SoundLink="FusionCore_Explode"/>
