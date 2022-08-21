@@ -83,15 +83,35 @@
         <Compare value="GT"/>
         <AbilLink value="BuildAircraft"/>
     </CValidatorUnitCompareOrderCount>
+    <CValidatorCombine id="GenetronCasterEnergyRegenNotSuppressed">
+        <Type value="And"/>
+        <CombineArray value="CasterNoCourierCloak"/>
+        <CombineArray value="CasterNoProcessingDroneDetectionMode"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareBehaviorCount id="CasterNoCourierCloak">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="CourierCloak"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="CasterHasHighOutputMode">
         <WhichUnit Value="Caster"/>
         <Compare value="GT"/>
         <Behavior value="GenetronHighOutputMode"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="CasterNoProcessingDroneDetectionMode">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="PDDetector"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="CasterNoPowerOutage">
         <WhichUnit Value="Caster"/>
         <Behavior value="GenetronPowerOutage"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareVital id="CasterEnergyGTE5">
+        <ResultFailed value="NotEnoughEnergy"/>
+        <WhichUnit Value="Caster"/>
+        <Compare value="GE"/>
+        <Value value="5"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
     <CValidatorUnitCompareOrderCount id="FabricatorIsTraining1">
         <ResultNoUnit value="OKPlaceholder"/>
         <Compare value="GT"/>
@@ -130,11 +150,13 @@
         <Value value="HasCoreOrRelay"/>
     </CValidatorPlayerRequirement>
     <CValidatorCombine id="GenetronRegenValidators">
-        <CombineArray value="hasEnergy"/>
+        <CombineArray value="EnergyGTE5"/>
         <CombineArray value="EnergyNotFullCaster"/>
         <CombineArray value="NotDead"/>
         <CombineArray value="CasterNotDead"/>
         <CombineArray value="NotHidden"/>
+        <CombineArray value="GenetronCasterEnergyRegenNotSuppressed"/>
+        <Type value="And"/>
     </CValidatorCombine>
     <CValidatorUnitType id="IsNotRelayTower">
         <Value value="RelayTower"/>
@@ -1819,4 +1841,10 @@
         <Find value="1"/>
         <Value value="UseOcularAcuity"/>
     </CValidatorPlayerRequirement>
+    <CValidatorUnitCompareVital id="EnergyGTE5">
+        <ResultFailed value="NotEnoughEnergy"/>
+        <Compare value="GE"/>
+        <Value value="5"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
 </Catalog>
