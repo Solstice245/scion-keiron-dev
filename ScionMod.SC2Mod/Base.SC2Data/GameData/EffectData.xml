@@ -191,6 +191,34 @@
         <EffectArray value="GenetronConstruction"/>
         <EffectArray value="DownloadPhase"/>
     </CEffectSet>
+    <CEffectSet id="GenetronHighOutputMode">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="GenetronStandardOutputModeRB"/>
+        <EffectArray value="GenetronLowOutputModeRB"/>
+        <EffectArray value="GenetronHighOutputModeAB"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="GenetronHighOutputModeAB" parent="CEffectApplyBehaviorGenetronCaster">
+        <Behavior value="GenetronHighOutputMode"/>
+    </CEffectApplyBehavior>
+    <CEffectRemoveBehavior id="GenetronHighOutputModeRB">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Caster"/>
+        <BehaviorLink value="GenetronHighOutputMode"/>
+    </CEffectRemoveBehavior>
+    <CEffectSet id="GenetronLowOutputMode">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="GenetronHighOutputModeRB"/>
+        <EffectArray value="GenetronStandardOutputModeRB"/>
+        <EffectArray value="GenetronLowOutputModeAB"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="GenetronLowOutputModeAB" parent="CEffectApplyBehaviorGenetronCaster">
+        <Behavior value="GenetronLowOutputMode"/>
+    </CEffectApplyBehavior>
+    <CEffectRemoveBehavior id="GenetronLowOutputModeRB">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Caster"/>
+        <BehaviorLink value="GenetronLowOutputMode"/>
+    </CEffectRemoveBehavior>
     <CEffectIssueOrder id="GenetronSchematicTransmitIssueOrder">
         <ValidatorArray value="IsUploader"/>
         <EditorCategories value="Race:Genetron"/>
@@ -198,6 +226,27 @@
         <Player Value="Caster"/>
         <Target Value="CasterUnit"/>
     </CEffectIssueOrder>
+    <CEffectSet id="GenetronStandardOutputMode">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="GenetronHighOutputModeRB"/>
+        <EffectArray value="GenetronLowOutputModeRB"/>
+        <EffectArray value="GenetronStandardOutputModeAB"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="GenetronStandardOutputModeAB" parent="CEffectApplyBehaviorGenetronCaster">
+        <Behavior value="GenetronStandardOutputMode"/>
+    </CEffectApplyBehavior>
+    <CEffectRemoveBehavior id="GenetronStandardOutputModeRB">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Caster"/>
+        <BehaviorLink value="GenetronStandardOutputMode"/>
+    </CEffectRemoveBehavior>
+    <CEffectModifyUnit id="GenetronTrainingEnergyDrainHighMU">
+        <ValidatorArray value="CasterHasHighOutputMode"/>
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-0.5"/>
+        </VitalArray>
+    </CEffectModifyUnit>
     <CEffectCreateHealer id="GenetronUnitEnergyRegenHealer">
         <EditorCategories value="Race:Genetron"/>
         <LaunchUnit Value="Target"/>
@@ -258,6 +307,7 @@
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
         <TargetSorts>
             <SortArray value="PrioritizeRelayTower"/>
+            <SortArray value="TSDistance"/>
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="GenetronUnitEnergyRegenx3Data"/>
     </CEffectEnumArea>
@@ -292,6 +342,7 @@
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
         <TargetSorts>
             <SortArray value="PrioritizeRelayTower"/>
+            <SortArray value="TSDistance"/>
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="GenetronUnitEnergyRegenData"/>
     </CEffectEnumArea>
@@ -308,6 +359,7 @@
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
         <TargetSorts>
             <SortArray value="PrioritizeRelayTower"/>
+            <SortArray value="TSDistance"/>
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="GenetronUnitEnergyRegenx2Data"/>
     </CEffectEnumArea>
@@ -556,7 +608,10 @@
         <AreaArray MaxCount="1" Radius="500" Effect="GeneratorEnergyRegenerationBuff"/>
     </CEffectEnumArea>
     <CEffectApplyBehavior id="UploaderResearchDrainAB" parent="CEffectApplyBehaviorGenetronCaster">
-        <Behavior value="UploaderResearchStall"/>
+        <Behavior value="GenetronPowerOutage"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="GenetronTrainingEnergyDrainAB" parent="CEffectApplyBehaviorGenetronCaster">
+        <Behavior value="GenetronPowerOutage"/>
     </CEffectApplyBehavior>
     <CEffectModifyUnit id="UploaderResearchDrainMU">
         <EditorCategories value="Race:Genetron"/>
@@ -564,10 +619,22 @@
             <Change value="-0.5"/>
         </VitalArray>
     </CEffectModifyUnit>
+    <CEffectModifyUnit id="GenetronTrainingEnergyDrainStandardMU">
+        <ValidatorArray value="CasterHasStandardOutputMode"/>
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-0.25"/>
+        </VitalArray>
+    </CEffectModifyUnit>
     <CEffectRemoveBehavior id="UploaderResearchDrainRB">
         <EditorCategories value="Race:Genetron"/>
         <WhichUnit Value="Caster"/>
-        <BehaviorLink value="UploaderResearchStall"/>
+        <BehaviorLink value="GenetronPowerOutage"/>
+    </CEffectRemoveBehavior>
+    <CEffectRemoveBehavior id="GenetronTrainingEnergyDrainRB">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Caster"/>
+        <BehaviorLink value="GenetronPowerOutage"/>
     </CEffectRemoveBehavior>
     <CEffectEnumArea id="UploaderResearchDrainSA">
         <EditorCategories value="Race:Genetron"/>
@@ -575,6 +642,7 @@
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
         <TargetSorts>
             <SortArray value="PrioritizeRelayTower"/>
+            <SortArray value="TSDistance"/>
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="UploaderResearchDrainSet"/>
     </CEffectEnumArea>
@@ -1201,6 +1269,16 @@
         <ValidatorArray value="CasterUploaderCount3"/>
         <EditorCategories value="Race:Genetron"/>
     </CEffectCreatePersistent>
+    <CEffectEnumArea id="GenetronTrainingEnergyDrainSA">
+        <EditorCategories value="Race:Genetron"/>
+        <ImpactLocation Value="CasterUnitOrPoint"/>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
+        <TargetSorts>
+            <SortArray value="PrioritizeRelayTower"/>
+            <SortArray value="TSDistance"/>
+        </TargetSorts>
+        <AreaArray MaxCount="1" Radius="500" Effect="GenetronTrainingEnergyDrainSet"/>
+    </CEffectEnumArea>
     <CEffectSet id="UploaderResearchDrainSet">
         <ValidatorArray value="IsRelayTowerOrProcessingCoreAndHasEnergy"/>
         <ValidatorArray value="StructureNotLockedDown"/>
@@ -1208,10 +1286,24 @@
         <EffectArray value="UploaderResearchDrainMU"/>
         <EffectArray value="UploaderResearchDrainRB"/>
     </CEffectSet>
+    <CEffectSet id="GenetronTrainingEnergyDrainSet">
+        <ValidatorArray value="IsRelayTowerOrProcessingCoreAndHasEnergy"/>
+        <ValidatorArray value="StructureNotLockedDown"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="GenetronTrainingEnergyDrainStandardMU"/>
+        <EffectArray value="GenetronTrainingEnergyDrainHighMU"/>
+        <EffectArray value="GenetronTrainingEnergyDrainRB"/>
+    </CEffectSet>
     <CEffectSwitch id="UploaderResearchDrainSwitch">
         <EditorCategories value="Race:Genetron"/>
-        <CaseArray Validator="UploaderCanTakeEnergy" Effect="UploaderResearchDrainSA"/>
+        <CaseArray Validator="PlayerHasRelayTowerOrProcessingCoreWithEnergy" Effect="UploaderResearchDrainSA"/>
         <CaseDefault value="UploaderResearchDrainAB"/>
+    </CEffectSwitch>
+    <CEffectSwitch id="GenetronTrainingEnergyDrainSwitch">
+        <ValidatorArray value="CasterNoLowOutputMode"/>
+        <EditorCategories value="Race:Genetron"/>
+        <CaseArray Validator="PlayerHasRelayTowerOrProcessingCoreWithEnergy" Effect="GenetronTrainingEnergyDrainSA"/>
+        <CaseDefault value="GenetronTrainingEnergyDrainAB"/>
     </CEffectSwitch>
     <CEffectModifyUnit id="VengeanceMissileMU">
         <EditorCategories value="Race:Genetron"/>

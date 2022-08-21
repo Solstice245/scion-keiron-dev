@@ -96,6 +96,15 @@
     <CBehaviorBuff id="DummyUnit">
         <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="AssemblyArrayIsTraining">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="AssemblyArrayIsTraining"/>
+        <TimeScaleSource Value="Global"/>
+        <Period value="0.25"/>
+        <PeriodicEffect value="GenetronTrainingEnergyDrainSwitch"/>
+        <Modification QueueCount="-2"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="GeneratorEnergyRegenerationBuff">
         <InfoFlags index="Hidden" value="1"/>
         <InfoIcon value="Assets\Textures\btn-tips-computerterminals.dds"/>
@@ -109,10 +118,24 @@
     </CBehaviorBuff>
     <CBehaviorBuff id="GenetronConstruction">
         <InfoIcon value="Assets\Textures\btn-ability-genetron-structurelockdownmode.dds"/>
-        <EditorCategories value="AbilityorEffectType:Units"/>
+        <EditorCategories value="AbilityorEffectType:Units,Race:Genetron"/>
         <DisableValidatorArray value="TargetInCombat"/>
         <RemoveValidatorArray value="IsConstructing"/>
         <Modification TimeScale="0.5"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="GenetronLowOutputMode">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="NotUnderConstruction"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="GenetronStandardOutputMode">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="NotUnderConstruction"/>
+        <Modification QueueCount="1" TimeScale="1.5"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="GenetronHighOutputMode">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="NotUnderConstruction"/>
+        <Modification QueueCount="2" TimeScale="2"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="GenetronTurretFreeze">
         <InfoFlags index="Hidden" value="1"/>
@@ -278,6 +301,24 @@
         <Alignment value="Positive"/>
         <InfoIcon value="Assets\Textures\btn-ability-stetmann-stetelliteoverloadspeed.dds"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="ManufacturerIsTraining">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="ManufacturerIsTraining"/>
+        <TimeScaleSource Value="Global"/>
+        <Period value="0.25"/>
+        <PeriodicEffect value="GenetronTrainingEnergyDrainSwitch"/>
+        <Modification QueueCount="-2"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="FabricatorIsTraining">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="FabricatorIsTraining"/>
+        <TimeScaleSource Value="Global"/>
+        <Period value="0.25"/>
+        <PeriodicEffect value="GenetronTrainingEnergyDrainSwitch"/>
+        <Modification QueueCount="-2"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="MoleBury">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -421,7 +462,7 @@
         <Period value="0.5"/>
         <PeriodicEffect value="UploaderResearchDrainSwitch"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="UploaderResearchStall">
+    <CBehaviorBuff id="GenetronPowerOutage">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <TimeScaleSource Value="Global"/>
@@ -1370,6 +1411,7 @@
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT3"/>
         <DisableValidatorArray value="NotContaminated"/>
+        <DisableValidatorArray value="NotHidden"/>
         <BuffFlags index="Countdown" value="0"/>
         <Duration value="35"/>
         <ExpireEffect value="AstralConduitEchoSet"/>
@@ -1449,6 +1491,7 @@
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT2"/>
         <DisableValidatorArray value="NotContaminated"/>
+        <DisableValidatorArray value="NotHidden"/>
         <BuffFlags index="Countdown" value="0"/>
         <Duration value="56"/>
         <ExpireEffect value="OutletAurApeSet"/>
@@ -1476,6 +1519,7 @@
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT2"/>
         <DisableValidatorArray value="NotContaminated"/>
+        <DisableValidatorArray value="NotHidden"/>
         <BuffFlags index="Countdown" value="0"/>
         <Duration value="56"/>
         <ExpireEffect value="EmpyreanHarParSet"/>
@@ -1562,6 +1606,7 @@
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT2"/>
         <DisableValidatorArray value="NotContaminated"/>
+        <DisableValidatorArray value="NotHidden"/>
         <BuffFlags index="Countdown" value="0"/>
         <Duration value="63"/>
         <ExpireEffect value="AtriumIndMyrSet"/>
@@ -1644,6 +1689,8 @@
         <DisplayDuration index="Self" value="1"/>
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT1"/>
+        <DisableValidatorArray value="NotContaminated"/>
+        <DisableValidatorArray value="NotHidden"/>
         <BuffFlags index="Countdown" value="0"/>
         <Duration value="77"/>
         <ExpireEffect value="ZenithParagonSet"/>
@@ -1686,6 +1733,8 @@
         <DisplayDuration index="Self" value="1"/>
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT1"/>
+        <DisableValidatorArray value="NotContaminated"/>
+        <DisableValidatorArray value="NotHidden"/>
         <BuffFlags index="Countdown" value="0"/>
         <Duration value="70"/>
         <ExpireEffect value="PantheonTitanSet"/>
@@ -1697,6 +1746,7 @@
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT2"/>
         <DisableValidatorArray value="NotContaminated"/>
+        <DisableValidatorArray value="NotHidden"/>
         <BuffFlags index="Countdown" value="0"/>
         <Duration value="49"/>
         <ExpireEffect value="FoundryUmbraSet"/>
@@ -1717,6 +1767,7 @@
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT2"/>
         <DisableValidatorArray value="NotContaminated"/>
+        <DisableValidatorArray value="NotHidden"/>
         <BuffFlags index="Countdown" value="0"/>
         <Duration value="49"/>
         <ExpireEffect value="SanctumPulSubSet"/>
@@ -1795,6 +1846,7 @@
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT3"/>
         <DisableValidatorArray value="NotContaminated"/>
+        <DisableValidatorArray value="NotHidden"/>
         <BuffFlags index="Countdown" value="0"/>
         <Duration value="28"/>
         <ExpireEffect value="EdificeParVolSet"/>
@@ -1874,6 +1926,8 @@
         <DisplayDuration index="Self" value="1"/>
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="UnitChargeLT2"/>
+        <DisableValidatorArray value="NotContaminated"/>
+        <DisableValidatorArray value="NotHidden"/>
         <BuffFlags index="Countdown" value="0"/>
         <Duration value="56"/>
         <ExpireEffect value="ElysiumMeridianSet"/>
