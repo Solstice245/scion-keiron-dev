@@ -175,8 +175,23 @@
         <On Terms="Effect.##Effect##.##Sub##" Send="Create"/>
         <On Terms="Behavior.##Behavior##.##Sub##" Send="Create"/>
     </CActorSound>
+    <CActorModelMaterial id="GlazeSelfFixProtocol" parent="GlazeParent">
+        <On index="0" Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand Death OpeningPlayForever"/>
+        <On Terms="ActorCreation" Send="ModelMaterialApplyTo ::Main"/>
+        <On Terms="AnimDone; AnimName Death" Send="ModelMaterialRemoveFrom ::Main"/>
+        <On Terms="AnimDone; AnimName Death" Send="Destroy"/>
+        <On Terms="Behavior.VirtusSelffixProtocol.On" Send="Create"/>
+        <On Terms="Behavior.VirtusSelffixProtocol.Off" Send="AnimBracketStop BSD"/>
+        <Model value="GlazeLockdownMode"/>
+        <ModelFlags index="AutomateGlobalLoops" value="1"/>
+    </CActorModelMaterial>
     <CActorRange id="InciterELORProtocolRange" parent="RangeAbilStandard" abil="ELORProtocol"/>
     <CActorModel id="GeneratorBuild" parent="GenetronBuildingBuild"/>
+    <CActorSound id="SelfFixProtocolSoundLoop" parent="SoundContinuous">
+        <On Terms="Behavior.VirtusSelffixProtocol.On" Send="Create"/>
+        <On Terms="Behavior.VirtusSelffixProtocol.Off" Send="Destroy"/>
+        <Sound value="LockDownMode_Loop"/>
+    </CActorSound>
     <CActorSound id="SystemRechargeSoundStart" parent="SoundOneShot">
         <Sound value="SystemRecharge_LoopStart"/>
     </CActorSound>
@@ -1723,15 +1738,11 @@
         <On Terms="AnimDone; AnimName Death" Send="Destroy"/>
         <On Terms="Behavior.LockdownMode.On" Send="Create"/>
         <On Terms="Behavior.LockdownModeDuration.Destroy" Send="AnimBracketStop BSD"/>
-        <On Terms="Behavior.VirtusLockdownModeDuration.Destroy" Send="AnimBracketStop BSD"/>
-        <On Terms="Behavior.VirtusLockdownMode.On" Send="Create"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModelMaterial>
     <CActorSound id="MechStructureLockdownSoundLoop" parent="SoundContinuous">
         <On Terms="Behavior.LockdownMode.On" Send="Create"/>
         <On Terms="Behavior.LockdownModeDuration.Destroy" Send="Destroy"/>
-        <On Terms="Behavior.VirtusLockdownModeDuration.Destroy" Send="Destroy"/>
-        <On Terms="Behavior.VirtusLockdownMode.On" Send="Create"/>
         <Sound value="LockDownMode_Loop"/>
     </CActorSound>
     <CActorModel id="TechVaultBuild" parent="GenetronBuildingBuild"/>

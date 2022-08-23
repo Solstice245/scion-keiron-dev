@@ -87,6 +87,7 @@
         <Type value="And"/>
         <CombineArray value="CasterNoCourierCloak"/>
         <CombineArray value="CasterNoProcessingDroneDetectionMode"/>
+        <CombineArray value="CasterNoSelfFixProtocol"/>
     </CValidatorCombine>
     <CValidatorUnitCompareBehaviorCount id="CasterNoCourierCloak">
         <WhichUnit Value="Caster"/>
@@ -237,6 +238,10 @@
         <WhichUnit Value="Caster"/>
         <Compare value="GT"/>
         <Behavior value="GenetronStandardOutputMode"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="CasterNoSelfFixProtocol">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="VirtusSelffixProtocol"/>
     </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareVital id="TargetEnergyLT100">
         <Compare value="LT"/>
@@ -886,18 +891,6 @@
         <Value value="1"/>
         <Behavior value="SchematicTransmitAL3"/>
     </CValidatorUnitCompareBehaviorCount>
-    <CValidatorCombine id="VirtusLockedDown">
-        <CombineArray value="VirtusLockedDownFull"/>
-        <CombineArray value="VirtusLockedDownTimed"/>
-    </CValidatorCombine>
-    <CValidatorUnitCompareBehaviorCount id="VirtusLockedDownFull">
-        <Behavior value="VirtusLockdownMode"/>
-        <Value value="1"/>
-    </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitCompareBehaviorCount id="VirtusLockedDownTimed">
-        <Behavior value="VirtusLockdownModeDuration"/>
-        <Value value="1"/>
-    </CValidatorUnitCompareBehaviorCount>
     <CValidatorPlayerRequirement id="VirtusSelfFixProtocolUpgraded">
         <ResultNoPlayer value="Error"/>
         <Find value="1"/>
@@ -1056,7 +1049,7 @@
     <CValidatorUnitCompareVital id="VirtusLockdownHealthThreshhold">
         <ResultFailed value="TooMuchLife"/>
         <Compare value="LT"/>
-        <Value value="76"/>
+        <Value value="100"/>
     </CValidatorUnitCompareVital>
     <CValidatorLocationEnumArea id="NoGroundHostilesNearby">
         <AreaArray Count="0" Radius="7"/>
@@ -1240,11 +1233,6 @@
         <Compare value="LT"/>
         <Value value="0.75"/>
         <Type value="Fraction"/>
-    </CValidatorUnitCompareVital>
-    <CValidatorUnitCompareVital id="VirtusLockdownRegenThreshhold">
-        <ResultFailed value="TooMuchLife"/>
-        <Compare value="LT"/>
-        <Value value="75"/>
     </CValidatorUnitCompareVital>
     <CValidatorCombine id="Aperture1CargoAnd10Energy">
         <Type value="And"/>

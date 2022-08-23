@@ -401,6 +401,23 @@
         <Period value="0.5"/>
         <PeriodicEffect value="MiningPrioritySearchArea"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="VirtusSelffixProtocol">
+        <InfoIcon value="Assets\Textures\btn-upgrade-swann-regenerativebiosteel.dds"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="NotFullLife"/>
+        <RemoveValidatorArray value="CasterHasEnergy"/>
+        <Modification SightBonus="-8">
+            <ModifyFlags index="DisableWeapons" value="1"/>
+            <ModifyFlags index="SuppressMoving" value="1"/>
+            <ModifyFlags index="SuppressTurning" value="1"/>
+            <VitalRegenArray index="Life" value="12"/>
+            <VitalRegenArray index="Energy" value="-4"/>
+            <AbilClassDisableArray index="CAbilAttack" value="1"/>
+            <AbilClassDisableArray index="CAbilEffectInstant" value="1"/>
+            <AbilClassDisableArray index="CAbilEffectTarget" value="1"/>
+            <AbilClassDisableArray index="CAbilMove" value="1"/>
+        </Modification>
+    </CBehaviorBuff>
     <CBehaviorBuff id="SpitterFate">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
@@ -546,15 +563,6 @@
         </DamageResponse>
         <DisableValidatorArray value="BlindingBurstCooldownComplete"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="SelffixProtocol">
-        <InfoIcon value="Assets\Textures\btn-upgrade-swann-regenerativebiosteel.dds"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="VirtusSelfFixProtocolUpgraded"/>
-        <DisableValidatorArray value="VirtusLockedDown"/>
-        <Modification>
-            <VitalRegenArray index="Life" value="3.5703"/>
-        </Modification>
-    </CBehaviorBuff>
     <CBehaviorResource id="MineralFieldMineralsBGH" parent="MineralFieldMinerals">
         <Name value="Behavior/Name/MineralFieldMineralsBGH"/>
         <Capacity value="20000"/>
@@ -696,24 +704,6 @@
         <Duration value="1"/>
         <Alignment value="Positive"/>
         <TimeScaleSource Value="Global"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="VirtusLockdownMode">
-        <InfoIcon value="Assets\Textures\btn-ability-genetron-structurelockdownmode.dds"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="VirtusLockdownHealthThreshhold"/>
-        <Modification SightBonus="-8">
-            <ModifyFlags index="DisableAbils" value="1"/>
-            <ModifyFlags index="DisableWeapons" value="1"/>
-            <ModifyFlags index="SuppressMoving" value="1"/>
-            <ModifyFlags index="SuppressTurning" value="1"/>
-            <BehaviorLinkDisableArray value="VirtusLockdownModeDuration"/>
-        </Modification>
-        <Period value="0.0625"/>
-        <PeriodicEffect value="VirtusLockdownModeDuration"/>
-        <DamageResponse ModifyFraction="0.4">
-            <Kind index="Spell" value="0"/>
-            <Chance value="1"/>
-        </DamageResponse>
     </CBehaviorBuff>
     <CBehaviorBuff id="ProcessingNodePower">
         <InfoFlags index="Hidden" value="1"/>
@@ -1161,25 +1151,6 @@
         <BuffFlags index="RefreshStack" value="1"/>
         <InfoIcon value="Assets\Textures\btn-ability-Xayid-venomousinjection.dds"/>
         <RemoveValidatorArray value="NotMassive"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="VirtusLockdownModeDuration">
-        <InfoIcon value="Assets\Textures\btn-ability-genetron-structurelockdownmode.dds"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisplayDuration index="Self" value="1"/>
-        <DisplayDuration index="Ally" value="1"/>
-        <Duration value="10"/>
-        <Modification SightBonus="-8">
-            <ModifyFlags index="DisableAbils" value="1"/>
-            <ModifyFlags index="DisableWeapons" value="1"/>
-            <ModifyFlags index="SuppressMoving" value="1"/>
-            <ModifyFlags index="SuppressTurning" value="1"/>
-        </Modification>
-        <BuffFlags index="Countdown" value="0"/>
-        <DamageResponse ModifyFraction="0.4">
-            <Kind index="Spell" value="0"/>
-            <Chance value="1"/>
-        </DamageResponse>
-        <Tooltip value="Behavior/Tooltip/VirtusLockdownMode"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="VolatileDischargeAB">
         <InfoIcon value="Assets\Textures\btn-ability-Xayid-volatiledischarge.dds"/>
