@@ -207,7 +207,6 @@ void gf_TesterLeaderboardAddIcon (string lp_unitType, int lp_column, int lp_row)
 //--------------------------------------------------------------------------------------------------
 // Trigger Variables
 //--------------------------------------------------------------------------------------------------
-trigger gt_debug;
 trigger gt_Init;
 trigger gt_CtrlOff;
 trigger gt_CtrlOn;
@@ -1485,26 +1484,6 @@ bool auto_gf_TesterLeaderboardAddIcon_TriggerFunc (bool testConds, bool runActio
 }
 
 //--------------------------------------------------------------------------------------------------
-// Trigger: debug
-//--------------------------------------------------------------------------------------------------
-bool gt_debug_Func (bool testConds, bool runActions) {
-    // Automatic Variable Declarations
-    // Actions
-    if (!runActions) {
-        return true;
-    }
-
-    UnitGroupSelect(UnitGroupFromId(1), 1, true);
-    return true;
-}
-
-//--------------------------------------------------------------------------------------------------
-void gt_debug_Init () {
-    gt_debug = TriggerCreate("gt_debug_Func");
-    TriggerAddEventChatMessage(gt_debug, c_playerAny, "test", true);
-}
-
-//--------------------------------------------------------------------------------------------------
 // Trigger: Init
 //--------------------------------------------------------------------------------------------------
 bool gt_Init_Func (bool testConds, bool runActions) {
@@ -1722,26 +1701,26 @@ bool gt_Init_Func (bool testConds, bool runActions) {
     gf_AddUpgradeData(AbilityCommand("InfestationPitResearch", 3));
     gf_AddUpgradeData(AbilityCommand("UltraliskCavernResearch", 2));
     gf_AddUpgradeData(AbilityCommand("UltraliskCavernResearch", 0));
-    gf_AddLeveledUpgradeData(AbilityCommand("OutfittingStationResearch", 3), AbilityCommand("OutfittingStationResearch", 4), AbilityCommand("OutfittingStationResearch", 5));
-    gf_AddLeveledUpgradeData(AbilityCommand("OutfittingStationResearch", 0), AbilityCommand("OutfittingStationResearch", 1), AbilityCommand("OutfittingStationResearch", 2));
+    gf_AddLeveledUpgradeData(AbilityCommand("AnalysisTerminalResearch", 3), AbilityCommand("AnalysisTerminalResearch", 4), AbilityCommand("AnalysisTerminalResearch", 5));
+    gf_AddLeveledUpgradeData(AbilityCommand("AnalysisTerminalResearch", 0), AbilityCommand("AnalysisTerminalResearch", 1), AbilityCommand("AnalysisTerminalResearch", 2));
     gf_AddLeveledUpgradeData(AbilityCommand("TechVaultResearch", 0), AbilityCommand("TechVaultResearch", 1), AbilityCommand("TechVaultResearch", 2));
     gf_AddLeveledUpgradeData(AbilityCommand("TechVaultResearch", 6), AbilityCommand("TechVaultResearch", 7), AbilityCommand("TechVaultResearch", 8));
     gf_AddLeveledUpgradeData(AbilityCommand("TechVaultResearch", 3), AbilityCommand("TechVaultResearch", 4), AbilityCommand("TechVaultResearch", 5));
-    gf_AddUpgradeData(AbilityCommand("UploaderResearchManufacL1", 0));
-    gf_AddUpgradeData(AbilityCommand("UploaderResearchManufacL1", 1));
-    gf_AddUpgradeData(AbilityCommand("UploaderResearchManufacL1", 2));
-    gf_AddUpgradeData(AbilityCommand("UploaderResearchManufacL1", 4));
-    gf_AddUpgradeData(AbilityCommand("UploaderResearchManufacL1", 3));
-    gf_AddUpgradeData(AbilityCommand("UploaderResearchManufacL1", 5));
-    gf_AddUpgradeData(AbilityCommand("UploaderResearchFabricator", 0));
-    gf_AddUpgradeData(AbilityCommand("UploaderResearchFabricator", 2));
-    gf_AddUpgradeData(AbilityCommand("UploaderResearchFabricator", 1));
-    gf_AddUpgradeData(AbilityCommand("ResearchAssemblyArray", 1));
-    gf_AddUpgradeData(AbilityCommand("ResearchAssemblyArray", 0));
-    gf_AddUpgradeData(AbilityCommand("ResearchAssemblyArray", 2));
-    gf_AddUpgradeData(AbilityCommand("ResearchAssemblyArray", 3));
-    gf_AddUpgradeData(AbilityCommand("AnalysisTerminalResearch", 1));
-    gf_AddUpgradeData(AbilityCommand("AnalysisTerminalResearch", 0));
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 0));
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 1));
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 2));
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 4));
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 3));
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 5));
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 6));
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 8));
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 7));
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 11));
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 10));
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 12));
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 13));
+    gf_AddUpgradeData(AbilityCommand("GeneratorResearch", 1));
+    gf_AddUpgradeData(AbilityCommand("GeneratorResearch", 0));
     gf_AddLeveledUpgradeData(AbilityCommand("ReliquaryResearch", 0), AbilityCommand("ReliquaryResearch", 1), AbilityCommand("ReliquaryResearch", 2));
     gf_AddLeveledUpgradeData(AbilityCommand("ReliquaryResearch", 3), AbilityCommand("ReliquaryResearch", 4), AbilityCommand("ReliquaryResearch", 5));
     gf_AddLeveledUpgradeData(AbilityCommand("ReliquaryResearch", 6), AbilityCommand("ReliquaryResearch", 7), AbilityCommand("ReliquaryResearch", 8));
@@ -2992,7 +2971,6 @@ void gt_LeaderboardUnitRemoved_Init () {
 // Trigger Initialization
 //--------------------------------------------------------------------------------------------------
 void InitTriggers () {
-    gt_debug_Init();
     gt_Init_Init();
     gt_CtrlOff_Init();
     gt_CtrlOn_Init();

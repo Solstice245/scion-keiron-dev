@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
+    <CAbilSpecialize id="AvengerConstructVengeanceMissile">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <InfoArray index="Specialize1" Time="14" Effect="AvengerConstructVengeanceMissile">
+            <Vital index="Energy" value="25"/>
+            <Button DefaultButtonFace="ConstructVengeanceMissile" Requirements="AvengerNoVengeanceMissileAmmo"/>
+            <Flags index="AutoCast" value="1"/>
+            <Flags index="AutoCastOn" value="1"/>
+        </InfoArray>
+        <MaxCount value="1"/>
+    </CAbilSpecialize>
     <CAbilResearch id="GeneratorResearch">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <InfoArray index="Research1" Time="110" Alert="ResearchComplete_Terr" Upgrade="CloakingGenerator">
@@ -165,7 +175,8 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Flags index="Transient" value="1"/>
         <Cost>
-            <Cooldown TimeUse="16.8"/>
+            <Vital index="Energy" value="50"/>
+            <Cooldown TimeUse="4.2"/>
         </Cost>
         <CmdButtonArray index="Execute" DefaultButtonFace="IgnitionBlast"/>
     </CAbilEffectInstant>
@@ -213,7 +224,7 @@
         <InheritAttackPriorityArray index="Cast" value="1"/>
         <InheritAttackPriorityArray index="Channel" value="1"/>
         <DefaultError value="RequiresRepairTarget"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="Repair" Requirements="FixerUseFusionWelders">
+        <CmdButtonArray index="Execute" DefaultButtonFace="Repair">
             <Flags index="ToSelection" value="1"/>
         </CmdButtonArray>
         <AcquirePriority value="1"/>
@@ -245,12 +256,15 @@
             <Charge Link="Abil/CannonReset"/>
             <Cooldown Link="Abil/CannonReset"/>
         </Cost>
-        <CmdButtonArray index="Execute" DefaultButtonFace="BlitzerSupercharge" Requirements="IsNotSupercharged"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="BlitzerSupercharge" Requirements="IsNotSupercharged">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+        <AbilSetId value="Supercharge"/>
     </CAbilEffectInstant>
     <CAbilBehavior id="CourierCloak">
         <AbilSetId value="Clok"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <CmdButtonArray index="On" DefaultButtonFace="CloakOnCourier" Requirements="UseStealthSystems">
+        <CmdButtonArray index="On" DefaultButtonFace="CloakOnCourier">
             <Flags index="ToSelection" value="1"/>
         </CmdButtonArray>
         <CmdButtonArray index="Off" DefaultButtonFace="CloakOffCourier">
@@ -276,15 +290,15 @@
             <Unit value="Courier"/>
         </InfoArray>
         <InfoArray index="Train3" Time="42">
-            <Button DefaultButtonFace="Jupiter"/>
+            <Button DefaultButtonFace="Jupiter" Requirements="IsStandardOrOverclockedConfigurationAndHaveOutfittingStation"/>
             <Unit value="Jupiter"/>
         </InfoArray>
         <InfoArray index="Train4" Time="35">
-            <Button DefaultButtonFace="Boar"/>
+            <Button DefaultButtonFace="Boar" Requirements="IsStandardOrOverclockedConfigurationAndHaveOutfittingStation"/>
             <Unit value="Boar"/>
         </InfoArray>
         <InfoArray index="Train5" Time="56">
-            <Button DefaultButtonFace="Badger"/>
+            <Button DefaultButtonFace="Badger" Requirements="IsOverclockedConfigurationAndHaveTechVault"/>
             <Unit value="Badger"/>
         </InfoArray>
         <InfoArray index="Train7" Time="35">
@@ -365,7 +379,10 @@
             <Charge Link="Abil/CannonReset"/>
             <Cooldown Link="Abil/CannonReset"/>
         </Cost>
-        <CmdButtonArray index="Execute" DefaultButtonFace="BlitzerSupercharge" Requirements="IsNotSupercharged"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="BlitzerSupercharge" Requirements="IsNotSupercharged">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+        <AbilSetId value="Supercharge"/>
     </CAbilEffectInstant>
     <CAbilEffectInstant id="TorrentHeavyOutputModeOff">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -416,7 +433,7 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Cost>
             <Vital index="Energy" value="100"/>
-            <Cooldown TimeUse="21"/>
+            <Cooldown TimeUse="46.2"/>
         </Cost>
         <CmdButtonArray index="Execute" DefaultButtonFace="MiningPriority"/>
         <Effect index="0" value="MiningPrioritySearch"/>
@@ -1003,15 +1020,15 @@
             <Unit value="Mole"/>
         </InfoArray>
         <InfoArray index="Train3" Time="42">
-            <Button DefaultButtonFace="Tesla"/>
+            <Button DefaultButtonFace="Tesla" Requirements="IsStandardOrOverclockedConfigurationAndHaveOutfittingStation"/>
             <Unit value="Tesla"/>
         </InfoArray>
         <InfoArray index="Train4" Time="56">
-            <Button DefaultButtonFace="Inciter"/>
+            <Button DefaultButtonFace="Inciter" Requirements="IsStandardOrOverclockedConfigurationAndHaveOutfittingStation"/>
             <Unit value="Inciter"/>
         </InfoArray>
         <InfoArray index="Train5" Time="56">
-            <Button DefaultButtonFace="Virtus"/>
+            <Button DefaultButtonFace="Virtus" Requirements="IsOverclockedConfigurationAndHaveTechVault"/>
             <Unit value="Virtus"/>
         </InfoArray>
     </CAbilTrain>
@@ -1030,23 +1047,23 @@
             <Unit value="Spitfire"/>
         </InfoArray>
         <InfoArray index="Train2" Time="42">
-            <Button DefaultButtonFace="Equalizer"/>
+            <Button DefaultButtonFace="Equalizer" Requirements="IsStandardOrOverclockedConfigurationAndHaveOutfittingStation"/>
             <Unit value="Equalizer"/>
         </InfoArray>
         <InfoArray index="Train3" Time="42">
-            <Button DefaultButtonFace="Blitzer"/>
+            <Button DefaultButtonFace="Blitzer" Requirements="IsStandardOrOverclockedConfiguration"/>
             <Unit value="Blitzer"/>
         </InfoArray>
         <InfoArray index="Train4" Time="42">
-            <Button DefaultButtonFace="Blaze"/>
+            <Button DefaultButtonFace="Blaze" Requirements="IsStandardOrOverclockedConfiguration"/>
             <Unit value="Blaze"/>
         </InfoArray>
         <InfoArray index="Train5" Time="56">
-            <Button DefaultButtonFace="Aquila"/>
+            <Button DefaultButtonFace="Aquila" Requirements="IsOverclockedConfigurationAndHaveTechVault"/>
             <Unit value="Aquila"/>
         </InfoArray>
         <InfoArray index="Train6" Time="42">
-            <Button DefaultButtonFace="Fixer"/>
+            <Button DefaultButtonFace="Fixer" Requirements="IsStandardOrOverclockedConfiguration"/>
             <Unit value="Fixer"/>
         </InfoArray>
     </CAbilTrain>
@@ -1212,12 +1229,12 @@
         <Flags index="NoDeceleration" value="1"/>
         <Flags index="TransientPreferred" value="1"/>
         <Cost>
-            <Cooldown TimeUse="28"/>
+            <Charge CountMax="1" CountStart="1" CountUse="1"/>
         </Cost>
         <TargetFilters value="-;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <Range value="8"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="VengeanceMissile" Requirements="UseVengeanceMissile"/>
-        <SharedFlags index="RegisterCooldownEvent" value="1"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="VengeanceMissile"/>
+        <SharedFlags index="RegisterChargeEvent" value="1"/>
         <Arc value="360"/>
     </CAbilEffectTarget>
     <CAbilQueue id="que1Passive">
@@ -2730,10 +2747,10 @@
         <Flags index="BestUnit" value="0"/>
         <Flags index="RequireTargetVision" value="0"/>
         <Cost>
-            <Vital index="Energy" value="75"/>
+            <Vital index="Energy" value="50"/>
         </Cost>
         <TargetFilters value="-;Missile,Dead,Hidden"/>
-        <Range value="9"/>
+        <Range value="10"/>
         <AINotifyEffect value="ELORProtocolLM"/>
         <EffectRange index="0" value="1,500"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="ELORProtocol"/>

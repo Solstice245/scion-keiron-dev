@@ -175,6 +175,7 @@
         <On Terms="Effect.##Effect##.##Sub##" Send="Create"/>
         <On Terms="Behavior.##Behavior##.##Sub##" Send="Create"/>
     </CActorSound>
+    <CActorRange id="InciterELORProtocolRange" parent="RangeAbilStandard" abil="ELORProtocol"/>
     <CActorModel id="GeneratorBuild" parent="GenetronBuildingBuild"/>
     <CActorSound id="SystemRechargeSoundStart" parent="SoundOneShot">
         <Sound value="SystemRecharge_LoopStart"/>
@@ -208,9 +209,9 @@
         <On Terms="Behavior.SpeedCloak.Off" Send="AnimClear SpeedCloakSpell"/>
         <On Terms="AnimDone.*.Cleared; AnimName SpeedCloakSpell" Send="AnimBracketStart SpeedCloak Cover,A,Start Cover,A,Stand Cover,A,End"/>
         <On Terms="AbilCooldown.SpeedCloak.Regen" Send="AnimBracketStop SpeedCloak"/>
-        <On Terms="ActorCreation; ValidatePlayer FixerNoFusionWelders" Send="AnimPlay NoWelders Cover,B PlayForever 0.000000"/>
+        <!--<On Terms="ActorCreation; ValidatePlayer FixerNoFusionWelders" Send="AnimPlay NoWelders Cover,B PlayForever 0.000000"/>
         <On Terms="Upgrade.FixerFusionWelders.Add" Send="AnimClear NoWelders"/>
-        <On Terms="Upgrade.FixerFusionWelders.Remove" Send="AnimPlay NoWelders Cover,B PlayForever"/>
+        <On Terms="Upgrade.FixerFusionWelders.Remove" Send="AnimPlay NoWelders Cover,B PlayForever"/>-->
         <On Terms="ActorCreation; ValidatePlayer FixerNoReactiveArmor" Send="AnimPlay NoReactiveArmor Cover,C PlayForever 0.000000"/>
         <On Terms="Upgrade.FixerReactiveArmor.Add" Send="AnimClear NoReactiveArmor"/>
         <On Terms="Upgrade.FixerReactiveArmor.Remove" Send="AnimPlay NoReactiveArmor Cover,C PlayForever"/>
@@ -225,10 +226,10 @@
         <On Terms="UnitMovementUpdate.*.Walk" Send="AnimClear AttackRight"/>
         <On Terms="ActorCreation; ValidatePlayer FixerNoReactiveArmor" Send="SetGroupIcon 0 Assets\Textures\wireframe-genetron-fixer.dds"/>
         <On Terms="ActorCreation; ValidatePlayer FixerNoReactiveArmor" Send="SetWireframe 0 Assets\Textures\wireframe-genetron-fixer.dds"/>
-        <On Terms="Upgrade.FixerFusionWelders.Add" Send="SetGroupIcon 0 Assets\Textures\wireframe-genetron-fixer-welder.dds"/>
+        <!--<On Terms="Upgrade.FixerFusionWelders.Add" Send="SetGroupIcon 0 Assets\Textures\wireframe-genetron-fixer-welder.dds"/>
         <On Terms="Upgrade.FixerFusionWelders.Add" Send="SetWireframe 0 Assets\Textures\wireframe-genetron-fixer-welder.dds"/>
         <On Terms="Upgrade.FixerFusionWelders.Remove" Send="SetGroupIcon 0 Assets\Textures\wireframe-genetron-fixer.dds"/>
-        <On Terms="Upgrade.FixerFusionWelders.Remove" Send="SetWireframe 0 Assets\Textures\wireframe-genetron-fixer.dds"/>
+        <On Terms="Upgrade.FixerFusionWelders.Remove" Send="SetWireframe 0 Assets\Textures\wireframe-genetron-fixer.dds"/>-->
         <ModelFlags index="OutlineEmitter" value="1"/>
         <DeathArray index="Normal" ModelLink="FixerDeath" SoundLink="Hellion_Explode"/>
         <DeathCustoms>
@@ -1626,8 +1627,8 @@
         <BarWidth value="130"/>
         <SoundArray index="Ready" value="FusionCore_Ready"/>
         <SoundArray index="What" value="FusionCore_What"/>
-        <On Terms="Abil.GeneratorResearch.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
-        <On Terms="Abil.GeneratorResearch.Stop" Send="AnimClear StandWork"/>
+        <On Terms="Abil.AnalysisTerminalResearch.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
+        <On Terms="Abil.AnalysisTerminalResearch.Stop" Send="AnimClear StandWork"/>
         <BarOffset value="115"/>
     </CActorUnit>
     <CActorSplat id="AnalysisTerminalSplat" parent="GenericUnitSplat" unitName="AnalysisTerminal"/>
@@ -1745,8 +1746,8 @@
     </CActorUnit>
     <CActorModel id="OutfittingStationBuild" parent="GenetronBuildingBuild"/>
     <CActorUnit id="OutfittingStation" parent="GenetronBuilding" buildTime="49.000000" unitName="OutfittingStation">
-        <On Terms="Abil.AnalysisTerminalResearch.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
-        <On Terms="Abil.AnalysisTerminalResearch.Stop" Send="AnimClear StandWork"/>
+        <On Terms="Abil.OutfittingStationResearch.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
+        <On Terms="Abil.OutfittingStationResearch.Stop" Send="AnimClear StandWork"/>
         <BarWidth value="130"/>
         <SoundArray index="Ready" value="EngineeringBay_Ready"/>
         <SoundArray index="What" value="EngineeringBay_What"/>
@@ -1943,11 +1944,8 @@
         <Wireframe>
             <Image value="Assets\Textures\wireframe-genetron-avenger.dds"/>
         </Wireframe>
-        <On Terms="AbilCooldown.VengeanceMissile.Regen" Send="Create AvengerVengeanceMissileAdd"/>
-        <On Terms="ActorCreation; ValidatePlayer AvengerVengeanceMissileUpgraded" Send="Create AvengerVengeanceMissileAdd"/>
-        <On Terms="Upgrade.VengeanceMissile.Add" Send="Create AvengerVengeanceMissileAdd"/>
-        <On Terms="Upgrade.VengeanceMissile.Remove" Target="AvengerVengeanceMissileAdd" Send="Destroy"/>
-        <On Terms="AbilCooldown.VengeanceMissile.Spend" Target="AvengerVengeanceMissileAdd" Send="Destroy"/>
+        <On Terms="AbilCharge.VengeanceMissile.Regen" Send="Create AvengerVengeanceMissileAdd"/>
+        <On Terms="AbilCharge.VengeanceMissile.Spend" Target="AvengerVengeanceMissileAdd" Send="Destroy"/>
         <PortraitModel value="GenetronAdjutantPortrait"/>
     </CActorUnit>
     <CActorMissile id="AvengerVengeanceMissileAttackMissile" parent="GenericAttackMissile" unitName="VengeanceMissilesLMWeapon">
