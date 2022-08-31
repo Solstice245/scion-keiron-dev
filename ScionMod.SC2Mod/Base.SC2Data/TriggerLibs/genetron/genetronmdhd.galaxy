@@ -28,7 +28,7 @@ void GenetronUpgradesMdHd (int player, int phase) {
                 AISetStock( player, 1, c_GR_GroundArmor2 );
                 AISetStock( player, 1, c_GR_HeavyWeapons1 );
 
-                if (AITechCount(player, c_GU_Blaze, c_techCountInProgressOrBetter) >= 5) {
+                if (AITechCount(player, c_GU_Fixer, c_techCountInProgressOrBetter) >= 5) {
                     AISetStock( player, 1, c_GR_FirewallShield );
                     AISetStock( player, 1, c_GR_RefittedNozzles );
                 }
@@ -110,7 +110,7 @@ void GenetronUpgradesMdHd (int player, int phase) {
                 AISetStock( player, 1, c_GR_GroundArmor1 );
                 AISetStock( player, 1, c_GR_HeavyWeapons1 );
 
-                if (AITechCount(player, c_GU_Blaze, c_techCountInProgressOrBetter) >= 5) {
+                if (AITechCount(player, c_GU_Fixer, c_techCountInProgressOrBetter) >= 5) {
                     AISetStock( player, 1, c_GR_FirewallShield );
                     AISetStock( player, 1, c_GR_RefittedNozzles );
                 }
@@ -164,7 +164,7 @@ int GenetronOpenArmyInitMdHd (int player, int buildType) {
         armyRoll = RandomInt(1,3);
         if (armyRoll <= 2) {
             AIAddToStockArmy(player, c_GU_Spitfire, 3);
-            AIAddToStockArmy(player, c_GU_Blaze, 2);
+            AIAddToStockArmy(player, c_GU_Fixer, 2);
             // validation: 5 units above with cost 10 food and 550 resources
             duration = 340 + RandomInt(-15, 15);
         } else {
@@ -399,8 +399,8 @@ int GenetronMidArmyInitMdHd (int player, int buildType) {
             AIAddToStockArmy(player, c_GU_Spitfire, 2);
             AIAddToStockArmy(player, c_GU_Blitzer, 2);
             AIAddToStockArmy(player, c_GU_Inciter, 2);
-            AIAddToStockArmy(player, AIPickFrom2(c_GU_Blaze, c_GU_Blitzer), 2);
-            AIAddToStockArmy(player, AIPickFrom2(c_GU_Blaze, c_GU_Blitzer), 2);
+            AIAddToStockArmy(player, AIPickFrom2(c_GU_Fixer, c_GU_Blitzer), 2);
+            AIAddToStockArmy(player, AIPickFrom2(c_GU_Fixer, c_GU_Blitzer), 2);
             // validation: 10 units above with average cost 22 food and 1750 resources
             duration = 380 + RandomInt(-15, 15);
         }
@@ -569,8 +569,8 @@ int GenetronLateArmyInitMdHd (int player, int buildType) {
         if (armyRoll <= 3) {
             AIAddToStockArmy(player, c_GU_Spitfire, 8);
             AIAddToStockArmy(player, c_GU_Blitzer, 4);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Spitfire, 3, c_GU_Blaze, 3);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Blitzer, 3, c_GU_Blaze, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Spitfire, 3, c_GU_Fixer, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Blitzer, 3, c_GU_Fixer, 3);
             // validation: 2275 resources
             duration = 280 + RandomInt(-15, 15);
         } else if (armyRoll <= 4) {
@@ -580,7 +580,7 @@ int GenetronLateArmyInitMdHd (int player, int buildType) {
             // validation: 2675 resources
             duration = 310 + RandomInt(-15, 15);
         } else {
-            AIAddToStockArmy(player, c_GU_Blaze, 6);
+            AIAddToStockArmy(player, c_GU_Fixer, 6);
             AIAddToStockArmy(player, c_GU_Blitzer, 6);
             AIAddToStockArmy(player, c_GU_Mole_Alias, 3);
             // validation: 2475 resources
@@ -597,14 +597,14 @@ int GenetronLateArmyInitMdHd (int player, int buildType) {
             // validation: 3100 resources
             duration = 340 + RandomInt(-15, 15);
         } else if (armyRoll <= 4) {
-            AIAddToStockArmy(player, c_GU_Blaze, 4);
+            AIAddToStockArmy(player, c_GU_Fixer, 4);
             AIAddToStockArmy(player, c_GU_Blitzer, 6);
             AIAddToStockArmy(player, c_GU_Mole_Alias, 3);
             AIAddToStockArmy(player, c_GU_Virtus, 2);
             // validation: 3025 resources
             duration = 340 + RandomInt(-15, 15);
         } else {
-            AIAddToStockArmy(player, c_GU_Blaze, 4);
+            AIAddToStockArmy(player, c_GU_Fixer, 4);
             AIAddToStockArmy(player, c_GU_Blitzer, 5);
             AIAddToStockArmy(player, c_GU_Equalizer, 4);
             AIAddToStockArmy(player, c_GU_Hornet, 4);
@@ -616,8 +616,8 @@ int GenetronLateArmyInitMdHd (int player, int buildType) {
         if (armyRoll <= 1) {
             AIAddToStockArmy(player, c_GU_Spitfire, 8);
             AIAddToStockArmy(player, c_GU_Aquila, 6);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Blaze, 4, c_GU_Blitzer, 3);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Blaze, 4, c_GU_Blitzer, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Fixer, 4, c_GU_Blitzer, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Fixer, 4, c_GU_Blitzer, 3);
             // validation: 3250 resources
             duration = 380 + RandomInt(-15, 15);
         } else if (armyRoll <= 2) {
@@ -634,7 +634,7 @@ int GenetronLateArmyInitMdHd (int player, int buildType) {
         if (armyRoll <= 2) {
             AIAddToStockArmy(player, c_GU_Spitfire, 4);
             AIAddToStockArmy(player, c_GU_Blitzer, 3);
-            AIAddToStockArmy(player, c_GU_Blaze, 4);
+            AIAddToStockArmy(player, c_GU_Fixer, 4);
             AIAddToStockArmy(player, c_GU_Equalizer, 5);
             AIAddToStockArmy(player, c_GU_Aquila, 4);
             // validation: 3400 resources
@@ -696,8 +696,8 @@ int GenetronFinalArmyInitMdHd (int player, int buildType) {
         if (armyRoll <= 3) {
             AIAddToStockArmy(player, c_GU_Spitfire, 12);
             AIAddToStockArmy(player, c_GU_Blitzer, 8);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Spitfire, 4, c_GU_Blaze, 4);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Blitzer, 3, c_GU_Blaze, 4);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Spitfire, 4, c_GU_Fixer, 4);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Blitzer, 3, c_GU_Fixer, 4);
             // validation: 3600 resources
             duration = 280 + RandomInt(-15, 15);
         } else if (armyRoll <= 4) {
@@ -707,7 +707,7 @@ int GenetronFinalArmyInitMdHd (int player, int buildType) {
             // validation: 3500 resources
             duration = 290 + RandomInt(-15, 15);
         } else {
-            AIAddToStockArmy(player, c_GU_Blaze, 11);
+            AIAddToStockArmy(player, c_GU_Fixer, 11);
             AIAddToStockArmy(player, c_GU_Blitzer, 8);
             AIAddToStockArmy(player, c_GU_Mole_Alias, 4);
             // validation: 3675 resources
@@ -724,7 +724,7 @@ int GenetronFinalArmyInitMdHd (int player, int buildType) {
             // validation: 3700 resources
             duration = 300 + RandomInt(-15, 15);
         } else if (armyRoll <= 4) {
-            AIAddToStockArmy(player, c_GU_Blaze, 4);
+            AIAddToStockArmy(player, c_GU_Fixer, 4);
             AIAddToStockArmy(player, c_GU_Blitzer, 3);
             AIAddToStockArmy(player, c_GU_Torrent, 4);
             AIAddToStockArmy(player, c_GU_Mole_Alias, 4);
@@ -732,7 +732,7 @@ int GenetronFinalArmyInitMdHd (int player, int buildType) {
             // validation: 3775 resources
             duration = 320 + RandomInt(-15, 15);
         } else {
-            AIAddToStockArmy(player, c_GU_Blaze, 4);
+            AIAddToStockArmy(player, c_GU_Fixer, 4);
             AIAddToStockArmy(player, c_GU_Blitzer, 6);
             AIAddToStockArmy(player, c_GU_Equalizer, 4);
             AIAddToStockArmy(player, c_GU_Hornet, 4);
@@ -745,8 +745,8 @@ int GenetronFinalArmyInitMdHd (int player, int buildType) {
         if (armyRoll <= 1) {
             AIAddToStockArmy(player, c_GU_Spitfire, 12);
             AIAddToStockArmy(player, c_GU_Aquila, 8);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Blaze, 4, c_GU_Blitzer, 3);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Blaze, 4, c_GU_Blitzer, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Fixer, 4, c_GU_Blitzer, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Fixer, 4, c_GU_Blitzer, 3);
             // validation: 4200 resources
             duration = 340 + RandomInt(-15, 15);
         } else if (armyRoll <= 2) {
@@ -763,7 +763,7 @@ int GenetronFinalArmyInitMdHd (int player, int buildType) {
         if (armyRoll <= 2) {
             AIAddToStockArmy(player, c_GU_Spitfire, 4);
             AIAddToStockArmy(player, c_GU_Blitzer, 4);
-            AIAddToStockArmy(player, c_GU_Blaze, 4);
+            AIAddToStockArmy(player, c_GU_Fixer, 4);
             AIAddToStockArmy(player, c_GU_Equalizer, 5);
             AIAddToStockArmy(player, c_GU_Aquila, 4);
             AIAddToStockArmy(player, c_GU_Tesla, 3);
@@ -780,7 +780,7 @@ int GenetronFinalArmyInitMdHd (int player, int buildType) {
             duration = 340 + RandomInt(-15, 15);
         } else if (armyRoll <= 5) {
             AIAddToStockArmy(player, c_GU_Blitzer, 8);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Blaze, 7, c_GU_Equalizer, 5);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Fixer, 7, c_GU_Equalizer, 5);
             AIAddToStockArmy(player, AIPickFrom2(c_GU_Boar, c_GU_Jupiter), 3);
             AIAddToStockArmy(player, AIPickFrom2(c_GU_Badger, c_GU_Virtus), 3);
             // validation: 4675 resources

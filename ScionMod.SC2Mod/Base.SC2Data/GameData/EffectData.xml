@@ -210,34 +210,30 @@
         <EffectArray value="GenetronConstruction"/>
         <EffectArray value="DownloadPhase"/>
     </CEffectSet>
-    <CEffectSet id="GenetronHighOutputMode">
+    <CEffectSet id="GenetronProductionModeOverclock">
         <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="GenetronStandardOutputModeRB"/>
-        <EffectArray value="GenetronLowOutputModeRB"/>
-        <EffectArray value="GenetronHighOutputModeAB"/>
+        <EffectArray value="GenetronProductionModeStandardRB"/>
+        <EffectArray value="GenetronProductionModePerformanceRB"/>
+        <EffectArray value="GenetronProductionModeOverclockBuff"/>
     </CEffectSet>
-    <CEffectApplyBehavior id="GenetronHighOutputModeAB" parent="CEffectApplyBehaviorGenetronCaster">
-        <Behavior value="GenetronHighOutputMode"/>
-    </CEffectApplyBehavior>
-    <CEffectRemoveBehavior id="GenetronHighOutputModeRB">
+    <CEffectApplyBehavior id="GenetronProductionModeOverclockBuff" parent="CEffectApplyBehaviorGenetronCaster"/>
+    <CEffectRemoveBehavior id="GenetronProductionModeOverclockRB">
         <EditorCategories value="Race:Genetron"/>
         <WhichUnit Value="Caster"/>
-        <BehaviorLink value="GenetronHighOutputMode"/>
+        <BehaviorLink value="GenetronProductionModeOverclockBuff"/>
     </CEffectRemoveBehavior>
-    <CEffectSet id="GenetronLowOutputMode">
+    <CEffectSet id="GenetronProductionModePerformance">
         <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="GenetronHighOutputModeRB"/>
-        <EffectArray value="GenetronStandardOutputModeRB"/>
-        <EffectArray value="GenetronLowOutputModeAB"/>
+        <EffectArray value="GenetronProductionModeOverclockRB"/>
+        <EffectArray value="GenetronProductionModeStandardRB"/>
+        <EffectArray value="GenetronProductionModePerformanceBuff"/>
     </CEffectSet>
-    <CEffectApplyBehavior id="GenetronLowOutputModeAB" parent="CEffectApplyBehaviorGenetronCaster">
-        <Behavior value="GenetronLowOutputMode"/>
-    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="GenetronProductionModePerformanceBuff" parent="CEffectApplyBehaviorGenetronCaster"/>
     <CEffectApplyBehavior id="AvengerVengeanceMissileAmmo" parent="CEffectApplyBehaviorGenetronCaster"/>
-    <CEffectRemoveBehavior id="GenetronLowOutputModeRB">
+    <CEffectRemoveBehavior id="GenetronProductionModePerformanceRB">
         <EditorCategories value="Race:Genetron"/>
         <WhichUnit Value="Caster"/>
-        <BehaviorLink value="GenetronLowOutputMode"/>
+        <BehaviorLink value="GenetronProductionModePerformanceBuff"/>
     </CEffectRemoveBehavior>
     <CEffectIssueOrder id="GenetronSchematicTransmitIssueOrder">
         <ValidatorArray value="IsUploader"/>
@@ -246,22 +242,20 @@
         <Player Value="Caster"/>
         <Target Value="CasterUnit"/>
     </CEffectIssueOrder>
-    <CEffectSet id="GenetronStandardOutputMode">
+    <CEffectSet id="GenetronProductionModeStandard">
         <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="GenetronHighOutputModeRB"/>
-        <EffectArray value="GenetronLowOutputModeRB"/>
-        <EffectArray value="GenetronStandardOutputModeAB"/>
+        <EffectArray value="GenetronProductionModeOverclockRB"/>
+        <EffectArray value="GenetronProductionModePerformanceRB"/>
+        <EffectArray value="GenetronProductionModeStandardBuff"/>
     </CEffectSet>
-    <CEffectApplyBehavior id="GenetronStandardOutputModeAB" parent="CEffectApplyBehaviorGenetronCaster">
-        <Behavior value="GenetronStandardOutputMode"/>
-    </CEffectApplyBehavior>
-    <CEffectRemoveBehavior id="GenetronStandardOutputModeRB">
+    <CEffectApplyBehavior id="GenetronProductionModeStandardBuff" parent="CEffectApplyBehaviorGenetronCaster"/>
+    <CEffectRemoveBehavior id="GenetronProductionModeStandardRB">
         <EditorCategories value="Race:Genetron"/>
         <WhichUnit Value="Caster"/>
-        <BehaviorLink value="GenetronStandardOutputMode"/>
+        <BehaviorLink value="GenetronProductionModeStandardBuff"/>
     </CEffectRemoveBehavior>
     <CEffectModifyUnit id="GenetronTrainingEnergyDrainHighMU">
-        <ValidatorArray value="CasterHasHighOutputMode"/>
+        <ValidatorArray value="CasterProductionModeIsOverclock"/>
         <EditorCategories value="Race:Genetron"/>
         <VitalArray index="Energy">
             <Change value="-0.5"/>
@@ -621,7 +615,7 @@
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectModifyUnit id="GenetronTrainingEnergyDrainStandardMU">
-        <ValidatorArray value="CasterHasStandardOutputMode"/>
+        <ValidatorArray value="CasterProductionModeIsStandard"/>
         <EditorCategories value="Race:Genetron"/>
         <VitalArray index="Energy">
             <Change value="-0.25"/>
@@ -1104,31 +1098,6 @@
         <ContainerType value="Transport"/>
         <ContainerUnit Effect="LaunchShockCharge" Value="Target"/>
     </CEffectLoadContainer>
-    <CEffectApplyBehavior id="TorrentAAWeaponSwitchHeavyOutputOff" parent="CEffectApplyBehaviorGenetronCaster">
-        <Behavior value="TorrentAAWeaponSwitch"/>
-        <Flags index="UseDuration" value="1"/>
-        <Duration value="0.42"/>
-    </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="TorrentAAWeaponSwitchHeavyOutputOn" parent="CEffectApplyBehaviorGenetronCaster">
-        <Behavior value="TorrentAAWeaponSwitch"/>
-        <Flags index="UseDuration" value="1"/>
-        <Duration value="4.2"/>
-    </CEffectApplyBehavior>
-    <CEffectRemoveBehavior id="TorrentHeavyOutputOff">
-        <EditorCategories value="Race:Genetron"/>
-        <BehaviorLink value="HeavyOutputActive"/>
-    </CEffectRemoveBehavior>
-    <CEffectSet id="TorrentHeavyOutputOffSet" parent="CEffectSetGenetron">
-        <EffectArray value="TorrentAAWeaponSwitchHeavyOutputOff"/>
-        <EffectArray value="TorrentHeavyOutputOff"/>
-    </CEffectSet>
-    <CEffectApplyBehavior id="TorrentHeavyOutputOn" parent="CEffectApplyBehaviorGenetronCaster">
-        <Behavior value="HeavyOutputActive"/>
-    </CEffectApplyBehavior>
-    <CEffectSet id="TorrentHeavyOutputOnSet" parent="CEffectSetGenetron">
-        <EffectArray value="TorrentAAWeaponSwitchHeavyOutputOn"/>
-        <EffectArray value="TorrentHeavyOutputOn"/>
-    </CEffectSet>
     <CEffectDamage id="TwinP1Dash0Guns" parent="CEffectDamageGenetronWeapon">
         <Amount value="6"/>
     </CEffectDamage>
@@ -1297,7 +1266,7 @@
         <CaseDefault value="UploaderResearchDrainAB"/>
     </CEffectSwitch>
     <CEffectSwitch id="GenetronTrainingEnergyDrainSwitch">
-        <ValidatorArray value="CasterNoLowOutputMode"/>
+        <ValidatorArray value="CasterProductionModeIsPerformance"/>
         <EditorCategories value="Race:Genetron"/>
         <CaseArray Validator="PlayerHasRelayTowerOrProcessingCoreWithEnergy" Effect="GenetronTrainingEnergyDrainSA"/>
         <CaseDefault value="GenetronTrainingEnergyDrainAB"/>
@@ -1318,21 +1287,17 @@
     <CEffectLaunchMissile id="VengeanceMissileLM" parent="CEffectLaunchMissileGenetron">
         <Flags index="Retarget" value="1"/>
         <AmmoUnit value="VengeanceMissilesLMWeapon"/>
-        <RetargetFilters value="Missile,Visible;Player,Ally,Neutral,Structure,Stasis,Dead,Hidden,Invulnerable"/>
-        <RetargetRange value="10"/>
+        <RetargetFilters value="Visible;Player,Ally,Neutral,Structure,Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <RetargetRange value="4"/>
         <AmmoOwner Value="Caster"/>
     </CEffectLaunchMissile>
-    <CEffectCreatePersistent id="HurricaneMissilesCPNormal">
+    <CEffectCreatePersistent id="HurricaneMissiles">
+        <ValidatorArray value="CasterNotDead"/>
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="TargetUnit"/>
         <PeriodCount value="2"/>
         <PeriodicEffectArray value="HurricaneMissilesLM"/>
         <PeriodicPeriodArray value="0.0625"/>
-        <ValidatorArray value="CasterNotDead"/>
-    </CEffectCreatePersistent>
-    <CEffectCreatePersistent id="HurricaneMissilesCPHigh" parent="HurricaneMissilesCPNormal">
-        <Name value="Effect/Name/HurricaneMissilesCPHigh"/>
-        <PeriodCount value="8"/>
     </CEffectCreatePersistent>
     <CEffectLaunchMissile id="HurricaneMissilesLM" parent="CEffectLaunchMissileGenetron"/>
     <CEffectApplyForce id="JupiterRevenantBombForce">
@@ -1464,15 +1429,6 @@
         <EffectArray value="AvengerVengeanceMissileAmmoCasterRemove"/>
         <EffectArray value="VengeanceMissileLM"/>
     </CEffectSet>
-    <CEffectEnumArea id="VengeanceMissileST">
-        <EditorCategories value="Race:Genetron"/>
-        <ImpactLocation Value="TargetUnit"/>
-        <SearchFilters value="-;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden,Invulnerable"/>
-        <TargetSorts>
-            <SortArray value="TSRandom"/>
-        </TargetSorts>
-        <AreaArray MaxCount="1" Radius="10" Effect="VengeanceMissileLM"/>
-    </CEffectEnumArea>
     <CEffectDamage id="330mmStrikeCannon" parent="CEffectDamageGenetronWeapon">
         <Amount value="45"/>
         <Death value="Blast"/>
