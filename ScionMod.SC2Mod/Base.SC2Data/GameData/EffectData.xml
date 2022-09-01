@@ -77,6 +77,78 @@
         <EditorCategories value="Race:Keiron"/>
         <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
     </CEffectEnumArea>
+    <CEffectApplyBehavior id="ApertureTeleportAB" parent="CEffectApplyBehaviorKeironTarget">
+        <Behavior value="ApertureTeleportTarget"/>
+    </CEffectApplyBehavior>
+    <CEffectSet id="ApertureTeleportCheckIfCargo">
+        <ValidatorArray value="IsHidden"/>
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="ApertureTeleportData"/>
+    </CEffectSet>
+    <CEffectUserData id="ApertureTeleportData">
+        <EditorCategories value="Race:Keiron"/>
+    </CEffectUserData>
+    <CEffectUserData id="ApertureTeleportDataInit">
+        <EditorCategories value="Race:Keiron"/>
+        <Amount value="0"/>
+    </CEffectUserData>
+    <CEffectSwitch id="ApertureTeleportRefundSwitch">
+        <ValidatorArray value="DefaultDataE0"/>
+        <EditorCategories value="Race:Keiron"/>
+        <CaseArray Validator="IsCargoSize1OrSmallKeironAir" Effect="ApertureTeleportSmallRefund"/>
+        <CaseArray Validator="IsCargoSize2OrMediumKeironAir" Effect="ApertureTeleportMedRefund"/>
+        <CaseArray Validator="IsCargoSize4OrLargeKeironAir" Effect="ApertureTeleportLargeRefund"/>
+        <CaseArray Validator="IsCargoSize8OrHugeKeironAir" Effect="ApertureTeleportMassRefund"/>
+    </CEffectSwitch>
+    <CEffectSet id="ApertureTeleport">
+        <ValidatorArray value="ApertureEnergy"/>
+        <ValidatorArray value="IsNotElytron"/>
+        <ValidatorArray value="NotMaterializing"/>
+        <ValidatorArray value="KeironCasterEnergyGE10"/>
+        <ValidatorArray value="NotBuildingCombine"/>
+        <ValidatorArray value="ApertureHasEnoughEnergy"/>
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="ApertureTeleportDataInit"/>
+        <EffectArray value="ApertureTeleportEnergySwitch"/>
+        <EffectArray value="ApertureTeleportAB"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="ApertureTeleportLargeRefund">
+        <EditorCategories value="Race:Keiron"/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Energy">
+            <Change value="40"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="ApertureTeleportMassRefund">
+        <EditorCategories value="Race:Keiron"/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Energy">
+            <Change value="80"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="ApertureTeleportMedRefund">
+        <EditorCategories value="Race:Keiron"/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Energy">
+            <Change value="20"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectSet id="ApertureTeleportSet">
+        <ValidatorArray value="CasterNotDead"/>
+        <ValidatorArray value="NotDead"/>
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="ApertureTeleportTP"/>
+        <EffectArray value="ApertureTeleportLoad"/>
+        <EffectArray value="ApertureTeleportCheckIfCargo"/>
+        <EffectArray value="ApertureTeleportRefundSwitch"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="ApertureTeleportSmallRefund">
+        <EditorCategories value="Race:Keiron"/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Energy">
+            <Change value="10"/>
+        </VitalArray>
+    </CEffectModifyUnit>
     <CEffectModifyUnit id="AvengerChargeApplyVengeanceMissile">
         <EditorCategories value="Race:Genetron"/>
         <ImpactUnit Value="Source"/>
@@ -185,6 +257,12 @@
         <CaseArray Validator="IsStructure" Effect="DiscordZoneDebuffStructure"/>
         <CaseDefault value="DiscordZoneDebuff"/>
     </CEffectSwitch>
+    <CEffectDamage id="FuseUnfuseCargoSuicide">
+        <ValidatorArray value="IsHidden"/>
+        <EditorCategories value="Race:Keiron"/>
+        <ImpactLocation Value="CasterUnit"/>
+        <Flags index="Kill" value="1"/>
+    </CEffectDamage>
     <CEffectModifyUnit id="GeneratorPowerModifyUnit">
         <ValidatorArray value="IsProcessingCoreOrRelayTower"/>
         <ValidatorArray value="StructureNotLockedDown"/>
@@ -2275,11 +2353,6 @@
             <Change value="-40"/>
         </VitalArray>
     </CEffectModifyUnit>
-    <CEffectSet id="ApertureTeleportMassSet">
-        <EditorCategories value="Race:Keiron"/>
-        <EffectArray value="ApertureTeleportTP"/>
-        <EffectArray value="ApertureTeleportLoad"/>
-    </CEffectSet>
     <CEffectModifyUnit id="ApertureTeleportMassMU">
         <EditorCategories value="Race:Keiron"/>
         <ImpactUnit Value="Caster"/>
@@ -2287,11 +2360,6 @@
             <Change value="-80"/>
         </VitalArray>
     </CEffectModifyUnit>
-    <CEffectSet id="ApertureTeleportLargeSet">
-        <EditorCategories value="Race:Keiron"/>
-        <EffectArray value="ApertureTeleportTP"/>
-        <EffectArray value="ApertureTeleportLoad"/>
-    </CEffectSet>
     <CEffectLoadContainer id="ApertureTeleportLoad">
         <ValidatorArray value="TargetIsGround"/>
         <EditorCategories value="Race:Keiron"/>
@@ -2312,30 +2380,7 @@
             <Change value="-20"/>
         </VitalArray>
     </CEffectModifyUnit>
-    <CEffectSet id="ApertureTeleportSmallSet">
-        <EditorCategories value="Race:Keiron"/>
-        <EffectArray value="ApertureTeleportTP"/>
-        <EffectArray value="ApertureTeleportLoad"/>
-    </CEffectSet>
-    <CEffectSet id="ApertureTeleportMedSet">
-        <EditorCategories value="Race:Keiron"/>
-        <EffectArray value="ApertureTeleportTP"/>
-        <EffectArray value="ApertureTeleportLoad"/>
-    </CEffectSet>
-    <CEffectSwitch id="ApertureTeleportSwitch">
-        <ValidatorArray value="ApertureEnergy"/>
-        <ValidatorArray value="IsNotElytron"/>
-        <ValidatorArray value="NotMaterializing"/>
-        <ValidatorArray value="KeironCasterEnergyGE10"/>
-        <ValidatorArray value="NotBuildingCombine"/>
-        <EditorCategories value="Race:Keiron"/>
-        <CaseArray Validator="Aperture1CargoAnd10Energy" Effect="ApertureTeleportSmallSet"/>
-        <CaseArray Validator="Aperture2CargoAnd20Energy" Effect="ApertureTeleportMedSet"/>
-        <CaseArray Validator="Aperture4CargoAnd40Energy" Effect="ApertureTeleportLargeSet"/>
-        <CaseArray Validator="Aperture8CargoAnd80Energy" Effect="ApertureTeleportMassSet"/>
-    </CEffectSwitch>
     <CEffectSwitch id="ApertureTeleportEnergySwitch">
-        <ValidatorArray value="KeironCasterEnergyGE10"/>
         <EditorCategories value="Race:Keiron"/>
         <CaseArray Validator="Aperture1CargoAnd10Energy" Effect="ApertureTeleportSmallMU"/>
         <CaseArray Validator="Aperture2CargoAnd20Energy" Effect="ApertureTeleportMedMU"/>
@@ -2350,7 +2395,7 @@
         <SourceLocation Value="TargetUnitOrPoint"/>
         <TargetLocation Value="CasterUnitOrPoint"/>
         <TeleportFlags index="TestFog" value="0"/>
-        <TeleportEffect value="ApertureTeleportEnergySwitch"/>
+        <TeleportEffect value="ApertureTeleportData"/>
     </CEffectTeleport>
     <CEffectApplyBehavior id="Beholder" parent="CEffectApplyBehaviorKeironCaster"/>
     <CEffectApplyBehavior id="CitadelEnergize">
@@ -2506,21 +2551,15 @@
     <CEffectCreatePersistent id="FuseUnfuseSet">
         <EditorCategories value="Race:Keiron"/>
         <WhichLocation Value="TargetUnit"/>
+        <FinalEffect value="FuseUnfuseSelectionCooldown"/>
         <PeriodCount value="7"/>
         <PeriodicEffectArray value="FuseUnfuseRB"/>
         <PeriodicEffectArray value="FuseUnfuseRK"/>
         <PeriodicEffectArray value="FuseUnfuseRBCaster"/>
         <PeriodicEffectArray value="FuseUnfuseShieldMUCaster"/>
         <PeriodicEffectArray value="FuseUnfuseShieldMUTarget"/>
+        <PeriodicEffectArray value="FuseUnfuseCargoSuicide"/>
         <PeriodicEffectArray value="FuseUnfuseShow"/>
-        <PeriodicEffectArray value="FuseUnfuseSelectionCooldown"/>
-        <PeriodicPeriodArray value="0"/>
-        <PeriodicPeriodArray value="0"/>
-        <PeriodicPeriodArray value="0"/>
-        <PeriodicPeriodArray value="0"/>
-        <PeriodicPeriodArray value="0"/>
-        <PeriodicPeriodArray value="0"/>
-        <PeriodicPeriodArray value="0.5"/>
     </CEffectCreatePersistent>
     <CEffectModifyUnit id="FuseUnfuseShieldMUCaster">
         <EditorCategories value="Race:Keiron"/>
