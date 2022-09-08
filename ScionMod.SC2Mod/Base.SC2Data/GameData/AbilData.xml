@@ -163,7 +163,7 @@
         <InfoArray index="Research2" Time="80" Alert="ResearchComplete_Terr" Upgrade="IntegratedOptics">
             <Resource index="Minerals" value="150"/>
             <Resource index="Vespene" value="150"/>
-            <Button DefaultButtonFace="ResearchProcessingDroneIntegratedOptics" Requirements="LearnIntegratedOptics">
+            <Button DefaultButtonFace="ResearchProcessorIntegratedOptics" Requirements="LearnIntegratedOptics">
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
         </InfoArray>
@@ -378,9 +378,9 @@
             </Button>
         </InfoArray>
     </CAbilResearch>
-    <CAbilEffectTarget id="ProcessingDroneAnalyzeWeakness">
+    <CAbilEffectTarget id="ProcessorAnalyzeWeakness">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Effect index="0" value="ProcessingDroneAnalyzeWeaknessSA"/>
+        <Effect index="0" value="ProcessorAnalyzeWeaknessSA"/>
         <Flags index="AllowMovement" value="1"/>
         <Flags index="RequireTargetVision" value="0"/>
         <Cost>
@@ -389,7 +389,7 @@
             <Cooldown Link="Abil/AnalyzeWeakness"/>
         </Cost>
         <Range value="9"/>
-        <CursorEffect value="ProcessingDroneAnalyzeWeaknessSA"/>
+        <CursorEffect value="ProcessorAnalyzeWeaknessSA"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="AnalyzeWeakness"/>
     </CAbilEffectTarget>
     <CAbilEffectInstant id="IgnitionBlast">
@@ -651,10 +651,10 @@
             <Cooldown Link="Abil/MechStructures"/>
             <Button DefaultButtonFace="ProcessingCore"/>
         </InfoArray>
-        <InfoArray index="Build2" Unit="ProcessingNode" Time="25">
+        <InfoArray index="Build2" Unit="Node" Time="25">
             <Charge Link="Abil/MechStructures"/>
             <Cooldown Link="Abil/MechStructures"/>
-            <Button DefaultButtonFace="ProcessingNode" Requirements="HaveProcessingCore"/>
+            <Button DefaultButtonFace="Node" Requirements="HaveProcessingCore"/>
         </InfoArray>
         <InfoArray index="Build3" Unit="FilteringPlant" Time="30">
             <Charge Link="Abil/MechStructures"/>
@@ -665,12 +665,12 @@
         <InfoArray index="Build4" Unit="Manufacturer" Time="65">
             <Charge Link="Abil/MechStructures"/>
             <Cooldown Link="Abil/MechStructures"/>
-            <Button DefaultButtonFace="Manufacturer" Requirements="HaveProcessingNode"/>
+            <Button DefaultButtonFace="Manufacturer" Requirements="HaveNode"/>
         </InfoArray>
         <InfoArray index="Build5" Unit="Uploader" Time="30">
             <Charge Link="Abil/MechStructures"/>
             <Cooldown Link="Abil/MechStructures"/>
-            <Button DefaultButtonFace="Uploader" Requirements="HaveProcessingNode"/>
+            <Button DefaultButtonFace="Uploader" Requirements="HaveNode"/>
         </InfoArray>
         <InfoArray index="Build6" Unit="OutfittingStation" Time="50">
             <Charge Link="Abil/MechStructures"/>
@@ -710,7 +710,7 @@
         <InfoArray index="Build13" Unit="AnalysisTerminal" Time="50">
             <Charge Link="Abil/MechStructures"/>
             <Cooldown Link="Abil/MechStructures"/>
-            <Button DefaultButtonFace="AnalysisTerminal" Requirements="HaveProcessingNode"/>
+            <Button DefaultButtonFace="AnalysisTerminal" Requirements="HaveNode"/>
         </InfoArray>
         <InfoArray index="Build14" Unit="Generator" Time="40">
             <Charge Link="Abil/MechStructures"/>
@@ -899,7 +899,6 @@
             <Cooldown TimeUse="10"/>
         </Cost>
         <CursorEffect value="JupiterRevenantBombDamage"/>
-        <AINotifyEffect value="RevenantBombRunSet"/>
         <PostEffectBehavior Behavior="RevenantBombAbilityChannel"/>
     </CAbilEffectTarget>
     <CAbilHarvest id="ACRGather">
@@ -945,9 +944,9 @@
         </Cost>
         <AINotifyEffect value="SystemOffloadSA"/>
     </CAbilEffectTarget>
-    <CAbilEffectTarget id="ProcessingDroneSystemRecharge">
+    <CAbilEffectTarget id="ProcessorSystemRecharge">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Effect index="0" value="ProcessingDroneSystemRechargeCH"/>
+        <Effect index="0" value="ProcessorSystemRechargeCH"/>
         <Flags index="AllowMovement" value="1"/>
         <Flags index="AutoCast" value="1"/>
         <Flags index="NoDeceleration" value="1"/>
@@ -975,7 +974,7 @@
         <AutoCastAcquireLevel value="Defensive"/>
         <UseMarkerArray index="Approach" value="0"/>
         <UseMarkerArray index="Prep" value="0"/>
-        <AINotifyEffect value="ProcessingDroneSystemRechargeCH"/>
+        <AINotifyEffect value="ProcessorSystemRechargeCH"/>
         <AcquireAttackers value="1"/>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="CoreSystemRecharge">
@@ -1057,7 +1056,7 @@
             <Button DefaultButtonFace="UpgradeAircraftWeaponsLevel3" Requirements="LearnMechAircraftWeaponsLevel3"/>
         </InfoArray>
     </CAbilResearch>
-    <CAbilBehavior id="ProcessingDroneToggleDetection">
+    <CAbilBehavior id="ProcessorToggleDetection">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <CmdButtonArray index="On" DefaultButtonFace="ToggleDetector" Requirements="IntegratedOpticsNotComplete"/>
         <CmdButtonArray index="Off" DefaultButtonFace="Cancel" Requirements="IntegratedOpticsNotComplete"/>
@@ -1100,8 +1099,8 @@
             <Unit value="ACR"/>
         </InfoArray>
         <InfoArray index="Train2" Time="17">
-            <Button DefaultButtonFace="ProcessingDrone" Requirements="HaveRelayTower"/>
-            <Unit value="ProcessingDrone"/>
+            <Button DefaultButtonFace="Processor" Requirements="HaveRelayTower"/>
+            <Unit value="Processor"/>
         </InfoArray>
     </CAbilTrain>
     <CAbilTrain id="TrainLightweightMechs">
@@ -1198,18 +1197,16 @@
         <SharedFlags index="RegisterChargeEvent" value="1"/>
         <Arc value="360"/>
     </CAbilEffectTarget>
-    <CAbilBehavior id="VirtusSelfFixProtocol">
+    <CAbilEffectInstant id="VirtusSelffixProtocol">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <CmdButtonArray index="On" DefaultButtonFace="SelfFixProtocol"/>
-        <CmdButtonArray index="Off" DefaultButtonFace="Cancel"/>
-        <Flags index="AutoCast" value="1"/>
-        <Flags index="AutoCastOn" value="1"/>
-        <Flags index="Toggle" value="1"/>
-        <BehaviorArray value="VirtusSelffixProtocol"/>
-        <ValidatorArray value="NotFullLife"/>
-        <AutoCastToggleOnValidatorArray value="VirtusLockdownHealthThreshhold"/>
-        <AutoCastToggleOnValidatorArray value="CasterHas10Energy"/>
-    </CAbilBehavior>
+        <Cost>
+            <Vital index="Energy" value="100"/>
+        </Cost>
+        <CastOutroTime value="5.6"/>
+        <UninterruptibleArray index="Cast" value="1"/>
+        <UninterruptibleArray index="Channel" value="1"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="SelfFixProtocol"/>
+    </CAbilEffectInstant>
     <CAbilQueue id="que1Passive">
         <EditorCategories value="Race:Neutral,AbilityorEffectType:Structures"/>
         <QueueSize value="1"/>

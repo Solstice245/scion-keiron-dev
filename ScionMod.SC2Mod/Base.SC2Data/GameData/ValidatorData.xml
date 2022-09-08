@@ -93,8 +93,7 @@
     <CValidatorCombine id="GenetronCasterEnergyRegenNotSuppressed">
         <Type value="And"/>
         <CombineArray value="CasterNoCourierCloak"/>
-        <CombineArray value="CasterNoProcessingDroneDetectionMode"/>
-        <CombineArray value="CasterNoSelfFixProtocol"/>
+        <CombineArray value="CasterNoProcessorDetectionMode"/>
     </CValidatorCombine>
     <CValidatorUnitCompareBehaviorCount id="CasterNoCourierCloak">
         <WhichUnit Value="Caster"/>
@@ -105,7 +104,7 @@
         <Compare value="GT"/>
         <Behavior value="GenetronProductionModeOverclockBuff"/>
     </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitCompareBehaviorCount id="CasterNoProcessingDroneDetectionMode">
+    <CValidatorUnitCompareBehaviorCount id="CasterNoProcessorDetectionMode">
         <WhichUnit Value="Caster"/>
         <Behavior value="PDDetector"/>
     </CValidatorUnitCompareBehaviorCount>
@@ -246,9 +245,10 @@
         <Compare value="GT"/>
         <Behavior value="GenetronProductionModeStandardBuff"/>
     </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitCompareBehaviorCount id="CasterNoSelfFixProtocol">
+    <CValidatorUnitCompareBehaviorCount id="CasterHasSelfFixProtocol">
         <WhichUnit Value="Caster"/>
-        <Behavior value="VirtusSelffixProtocol"/>
+        <Compare value="NE"/>
+        <Behavior value="VirtusSelffixProtocolBuff"/>
     </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareVital id="TargetEnergyLT100">
         <Compare value="LT"/>
@@ -568,7 +568,7 @@
         <Find value="1"/>
         <Value value="UseDexterousJoints"/>
     </CValidatorPlayerRequirement>
-    <CValidatorCombine id="ProcessingDroneAutocastFilter">
+    <CValidatorCombine id="ProcessorAutocastFilter">
         <CombineArray value="IsAquila"/>
         <CombineArray value="IsJupiter"/>
         <CombineArray value="IsBlitzer"/>
@@ -673,17 +673,17 @@
         <SearchFlags index="ExtendByUnitRadius" value="1"/>
         <SearchFilters value="Air,Visible;Player,Ally,Neutral,Worker,Missile,Stasis,Dead,Hidden,Invulnerable"/>
     </CValidatorLocationEnumArea>
-    <CValidatorCombine id="TacticalAIProcessingDroneAnalyzeWeakness">
+    <CValidatorCombine id="TacticalAIProcessorAnalyzeWeakness">
         <Type value="And"/>
-        <CombineArray value="TacticalAIProcessingDroneSupport"/>
+        <CombineArray value="TacticalAIProcessorSupport"/>
         <CombineArray value="CasterEnergyGE100"/>
     </CValidatorCombine>
-    <CValidatorCombine id="TacticalAIProcessingDroneDetectionOn">
+    <CValidatorCombine id="TacticalAIProcessorDetectionOn">
         <Type value="And"/>
-        <CombineArray value="TacticalAIProcessingDroneSupport"/>
+        <CombineArray value="TacticalAIProcessorSupport"/>
         <CombineArray value="UndetectedEnemyCloakedUnitsNearby"/>
     </CValidatorCombine>
-    <CValidatorLocationEnumArea id="TacticalAIProcessingDroneSupport">
+    <CValidatorLocationEnumArea id="TacticalAIProcessorSupport">
         <WhichLocation Value="CasterUnit"/>
         <AreaArray>
             <Compare value="GT"/>
@@ -1095,12 +1095,12 @@
     <CValidatorUnitType id="IsProcessingCore">
         <Value value="ProcessingCore"/>
     </CValidatorUnitType>
-    <CValidatorUnitType id="IsProcessingDrone">
-        <Value value="ProcessingDrone"/>
+    <CValidatorUnitType id="IsProcessor">
+        <Value value="Processor"/>
     </CValidatorUnitType>
-    <CValidatorUnitType id="IsNotProcessingDrone">
-        <ResultFailed value="Error,Error/NotProcessingDrone"/>
-        <Value value="ProcessingDrone"/>
+    <CValidatorUnitType id="IsNotProcessor">
+        <ResultFailed value="Error,Error/NotProcessor"/>
+        <Value value="Processor"/>
         <Find value="0"/>
     </CValidatorUnitType>
     <CValidatorUnitType id="IsNotProcessingCore">

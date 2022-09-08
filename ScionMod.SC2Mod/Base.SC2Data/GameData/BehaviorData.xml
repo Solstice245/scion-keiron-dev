@@ -3,8 +3,8 @@
     <CBehaviorBuff id="Active">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <InitialEffect value="ProcessingDroneActive"/>
-        <FinalEffect value="ProcessingDroneFateSet"/>
+        <InitialEffect value="ProcessorActive"/>
+        <FinalEffect value="ProcessorFateSet"/>
         <RemoveValidatorArray value="CasterNotDead"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="ApertureTeleportTarget">
@@ -58,7 +58,7 @@
     </CBehaviorBuff>
     <CBehaviorBuff id="CloakingGenerator">
         <InfoFlags index="Hidden" value="1"/>
-        <InfoIcon value="Assets\Textures\btn-upgrade-genetron-processingdronecloak.dds"/>
+        <InfoIcon value="Assets\Textures\btn-upgrade-genetron-Processorcloak.dds"/>
         <BehaviorCategories index="Cloak" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Requirements value="UseCloakingGenerator"/>
@@ -428,22 +428,17 @@
         <Period value="0.5"/>
         <PeriodicEffect value="MiningPrioritySearchArea"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="VirtusSelffixProtocol">
+    <CBehaviorBuff id="VirtusSelffixProtocolBuff">
         <InfoIcon value="Assets\Textures\btn-upgrade-swann-regenerativebiosteel.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <RemoveValidatorArray value="NotFullLife"/>
-        <RemoveValidatorArray value="CasterHasEnergy"/>
-        <Modification SightBonus="-8">
-            <ModifyFlags index="DisableWeapons" value="1"/>
-            <ModifyFlags index="SuppressMoving" value="1"/>
-            <ModifyFlags index="SuppressTurning" value="1"/>
-            <VitalRegenArray index="Life" value="30"/>
-            <VitalRegenArray index="Energy" value="-10"/>
-            <AbilClassDisableArray index="CAbilAttack" value="1"/>
-            <AbilClassDisableArray index="CAbilEffectInstant" value="1"/>
-            <AbilClassDisableArray index="CAbilEffectTarget" value="1"/>
-            <AbilClassDisableArray index="CAbilMove" value="1"/>
-        </Modification>
+        <DamageResponse ModifyFraction="0.75">
+            <Kind index="Spell" value="0"/>
+            <Chance value="1"/>
+            <Cost>
+                <Charge Link="Behavior/LockdownModeDuration"/>
+                <Cooldown Link="Behavior/LockdownModeDuration"/>
+            </Cost>
+        </DamageResponse>
     </CBehaviorBuff>
     <CBehaviorBuff id="SpitterFate">
         <InfoFlags index="Hidden" value="1"/>
@@ -711,7 +706,7 @@
         <LandCheckRadius value="10"/>
         <InfoIcon value="Assets\Textures\btn-ability-genetron-incitercliffjump.dds"/>
     </CBehaviorJump>
-    <CBehaviorBuff id="ProcessingDroneActive">
+    <CBehaviorBuff id="ProcessorActive">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
@@ -726,15 +721,15 @@
         <Alignment value="Positive"/>
         <TimeScaleSource Value="Global"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="ProcessingNodePower">
+    <CBehaviorBuff id="NodePower">
         <InfoFlags index="Hidden" value="1"/>
         <InfoIcon value="Assets\Textures\btn-tips-computerterminals.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="StructureNotLockedDown"/>
         <Period value="1.4"/>
-        <InitialEffect value="ProcessingNodePowerSearchArea"/>
-        <PeriodicEffect value="ProcessingNodePowerSearchArea"/>
+        <InitialEffect value="NodePowerSearchArea"/>
+        <PeriodicEffect value="NodePowerSearchArea"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="RevenantBombAbilityChannel">
         <InfoFlags index="Hidden" value="1"/>

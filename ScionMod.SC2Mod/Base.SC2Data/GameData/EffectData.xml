@@ -672,7 +672,7 @@
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="GeneratorPowerModifyUnit"/>
     </CEffectEnumArea>
-    <CEffectModifyUnit id="ProcessingNodePowerModifyUnit">
+    <CEffectModifyUnit id="NodePowerModifyUnit">
         <ValidatorArray value="IsProcessingCoreOrRelayTower"/>
         <ValidatorArray value="StructureNotLockedDown"/>
         <ValidatorArray value="EnergyNotFull"/>
@@ -681,6 +681,22 @@
             <Change value="1"/>
         </VitalArray>
     </CEffectModifyUnit>
+    <CEffectRemoveBehavior id="VirtusSelffixProtocolBuffRemove">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="VirtusSelffixProtocolBuff"/>
+    </CEffectRemoveBehavior>
+    <CEffectCreateHealer id="VirtusSelffixProtocol">
+        <EditorCategories value="Race:Genetron"/>
+        <Flags index="Channeled" value="0"/>
+        <Flags index="Channeling" value="1"/>
+        <Flags index="ContinueWhenFull" value="1"/>
+        <RechargeVitalRate value="35.5585"/>
+        <InitialEffect value="VirtusSelffixProtocolBuff"/>
+        <FinalEffect value="VirtusSelffixProtocolBuffRemove"/>
+    </CEffectCreateHealer>
+    <CEffectApplyBehavior id="VirtusSelffixProtocolBuff">
+        <EditorCategories value="Race:Genetron"/>
+    </CEffectApplyBehavior>
     <CEffectApplyBehavior id="UploaderResearchDrainAB" parent="CEffectApplyBehaviorGenetronCaster">
         <Behavior value="GenetronPowerOutage"/>
     </CEffectApplyBehavior>
@@ -852,8 +868,8 @@
             <Target Effect="MoleTurnTurretChannel" Value="TargetUnit"/>
         </ModifyTurret>
     </CEffectModifyUnit>
-    <CEffectSet id="ProcessingDroneFateSet" parent="CEffectSetGenetron">
-        <EffectArray value="ProcessingDroneFate"/>
+    <CEffectSet id="ProcessorFateSet" parent="CEffectSetGenetron">
+        <EffectArray value="ProcessorFate"/>
         <EffectArray value="KillSource"/>
     </CEffectSet>
     <CEffectCreatePersistent id="JupiterRevenantBombFinalForceOptional">
@@ -1071,16 +1087,16 @@
         <CaseArray Validator="ArmorIs5OrGreaterThan" Effect="BoreDrill5"/>
         <ValidatorArray value="NotStructureTarget"/>
     </CEffectSwitch>
-    <CEffectApplyBehavior id="ProcessingDroneActivated" parent="CEffectApplyBehaviorGenetronTarget">
+    <CEffectApplyBehavior id="ProcessorActivated" parent="CEffectApplyBehaviorGenetronTarget">
         <Behavior value="Active"/>
     </CEffectApplyBehavior>
-    <CEffectRemoveBehavior id="ProcessingDroneFate">
+    <CEffectRemoveBehavior id="ProcessorFate">
         <EditorCategories value="Race:Genetron"/>
         <WhichUnit Value="Caster"/>
-        <BehaviorLink value="ProcessingDroneActive"/>
+        <BehaviorLink value="ProcessorActive"/>
     </CEffectRemoveBehavior>
     <CEffectDamage id="IgnitionBlastDMG" parent="CEffectDamageGenetronSpell">
-        <Amount value="20"/>
+        <Amount value="15"/>
         <Death value="Eviscerate"/>
         <ValidatorArray value="CasterIsMovingGTE3"/>
     </CEffectDamage>
@@ -1259,7 +1275,7 @@
         <WhichUnit Value="Caster"/>
         <BehaviorLink value="SuperChargeCannon"/>
     </CEffectRemoveBehavior>
-    <CEffectCreateHealer id="ProcessingDroneSystemRechargeCH">
+    <CEffectCreateHealer id="ProcessorSystemRechargeCH">
         <ValidatorArray value="noMarkers"/>
         <ValidatorArray value="NotWarpingIn"/>
         <ValidatorArray value="NotVortexd"/>
@@ -1293,14 +1309,14 @@
         <Movers Link="StratumMissileLauncherWeaponMed" IfRangeLTE="7"/>
         <Movers Link="StratumMissileLauncherWeaponHigh" IfRangeLTE="-1"/>
     </CEffectLaunchMissile>
-    <CEffectEnumArea id="ProcessingNodePowerSearchArea">
+    <CEffectEnumArea id="NodePowerSearchArea">
         <EditorCategories value="Race:Genetron"/>
         <ImpactLocation Value="TargetUnit"/>
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
         <TargetSorts>
             <SortArray value="PrioritizeRelayTower"/>
         </TargetSorts>
-        <AreaArray MaxCount="1" Radius="500" Effect="ProcessingNodePowerModifyUnit"/>
+        <AreaArray MaxCount="1" Radius="500" Effect="NodePowerModifyUnit"/>
     </CEffectEnumArea>
     <CEffectDamage id="UploaderCountDummyStack1">
         <ValidatorArray value="CasterUploaderCount1"/>
@@ -1465,7 +1481,7 @@
     <CEffectApplyBehavior id="SystemOffloadAB" parent="CEffectApplyBehaviorGenetronTarget">
         <Behavior value="SystemOffload"/>
     </CEffectApplyBehavior>
-    <CEffectEnumArea id="ProcessingDroneAnalyzeWeaknessSA">
+    <CEffectEnumArea id="ProcessorAnalyzeWeaknessSA">
         <EditorCategories value="Race:Genetron"/>
         <AINotifyFlags index="HelpFriend" value="1"/>
         <ImpactLocation Value="TargetPoint"/>
@@ -1593,7 +1609,7 @@
         <Death value="Eviscerate"/>
     </CEffectDamage>
     <CEffectApplyBehavior id="IgnitionBlast" parent="CEffectApplyBehaviorGenetronCaster"/>
-    <CEffectApplyBehavior id="ProcessingDroneActive" parent="CEffectApplyBehaviorGenetronCaster"/>
+    <CEffectApplyBehavior id="ProcessorActive" parent="CEffectApplyBehaviorGenetronCaster"/>
     <CEffectApplyBehavior id="SchematicTransmitAL1" parent="CEffectApplyBehaviorGenetronCaster"/>
     <CEffectApplyBehavior id="SchematicTransmitAL2" parent="CEffectApplyBehaviorGenetronCaster"/>
     <CEffectApplyBehavior id="SchematicTransmitAL3" parent="CEffectApplyBehaviorGenetronCaster"/>

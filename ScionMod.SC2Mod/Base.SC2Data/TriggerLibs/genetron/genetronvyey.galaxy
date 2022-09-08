@@ -107,65 +107,65 @@ void GenetronOpenBuildVyEy (int player) {
     if (buildType == e_buildType_Rush) {
         AISetStock( player, 1, c_GB_ProcessingCore );
         AISetStock( player, 14, c_GU_ACR );
-        AISetStock( player, 1, c_GB_ProcessingNode );
+        AISetStock( player, 1, c_GB_Node );
         AISetStock( player, 1, c_GB_Manufacturer );
         AISetStock( player, 1, c_GB_FilteringPlant );
         AISetStock( player, 1, c_GU_Spitfire );
         AISetStock( player, 1, c_GB_Uploader );
-        AISetStock( player, 2, c_GB_ProcessingNode );
-        AISetStockFarms( player, c_GB_ProcessingNode, c_stockNormalFarms);
+        AISetStock( player, 2, c_GB_Node );
+        AISetStockFarms( player, c_GB_Node, c_stockNormalFarms);
     }
     else if (buildType == e_buildType_Timing) {
         AISetStock( player, 1, c_GB_ProcessingCore );
         AISetStock( player, 14, c_GU_ACR );
-        AISetStock( player, 1, c_GB_ProcessingNode );
+        AISetStock( player, 1, c_GB_Node );
         AISetStock( player, 1, c_GB_Manufacturer );
         AISetStock( player, 1, c_GB_FilteringPlant );
         AISetStock( player, 1, c_GU_Spitfire );
         AISetStock( player, 1, c_GB_Uploader );
-        AISetStock( player, 2, c_GB_ProcessingNode );
-        AISetStockFarms( player, c_GB_ProcessingNode, c_stockNormalFarms);
+        AISetStock( player, 2, c_GB_Node );
+        AISetStockFarms( player, c_GB_Node, c_stockNormalFarms);
         AISetStock( player, 2, c_GB_FilteringPlant );
     }
     else if (buildType == e_buildType_Power) {
         AISetStock( player, 1, c_GB_ProcessingCore );
         AISetStock( player, 14, c_GU_ACR );
-        AISetStock( player, 1, c_GB_ProcessingNode );
+        AISetStock( player, 1, c_GB_Node );
         AISetStock( player, 1, c_GB_Manufacturer );
         AISetStock( player, 1, c_GB_FilteringPlant );
         AISetStock( player, 1, c_GU_Spitfire );
         AISetStock( player, 1, c_GB_Uploader );
-        AISetStock( player, 2, c_GB_ProcessingNode );
-        AISetStockFarms( player, c_GB_ProcessingNode, c_stockNormalFarms);
+        AISetStock( player, 2, c_GB_Node );
+        AISetStockFarms( player, c_GB_Node, c_stockNormalFarms);
         AISetStock( player, 2, c_GB_FilteringPlant );
     }
     else if (buildType == e_buildType_Macro) {
         AISetStock( player, 1, c_GB_ProcessingCore );
         AISetStock( player, 14, c_GU_ACR );
-        AISetStock( player, 1, c_GB_ProcessingNode );
+        AISetStock( player, 1, c_GB_Node );
         AISetStock( player, 1, c_GB_Manufacturer );
         if (GenetronMacroExpand(player)) { return; }
         AISetStock( player, 1, c_GU_Spitfire );
         AISetStock( player, 1, c_GB_Uploader );
-        AISetStock( player, 2, c_GB_ProcessingNode );
+        AISetStock( player, 2, c_GB_Node );
         AISetStock( player, 1, c_GB_FilteringPlant );
         AISetStockUnitNext( player, 20, c_GU_ACR, c_stockIdle );
-        AISetStockFarms( player, c_GB_ProcessingNode, c_stockNormalFarms);
+        AISetStockFarms( player, c_GB_Node, c_stockNormalFarms);
         AISetStock( player, 2, c_GB_FilteringPlant );
     }
     else if (buildType == e_buildType_Air) {
         AISetStock( player, 1, c_GB_ProcessingCore );
         AISetStock( player, 14, c_GU_ACR );
-        AISetStock( player, 1, c_GB_ProcessingNode );
+        AISetStock( player, 1, c_GB_Node );
         if (GenetronMacroExpand(player)) { return; }
         AISetStock( player, 1, c_GB_FilteringPlant );
         AISetStock( player, 1, c_GB_Manufacturer );
         AISetStock( player, 2, c_GB_FilteringPlant );
-        AISetStock( player, 2, c_GB_ProcessingNode );
+        AISetStock( player, 2, c_GB_Node );
         AISetStock( player, 1, c_GB_Fabricator );
         AISetStock( player, 2, c_GB_Uploader );
         AISetStockUnitNext( player, 20, c_GU_ACR, c_stockIdle );
-        AISetStockFarms( player, c_GB_ProcessingNode, c_stockNormalFarms);
+        AISetStockFarms( player, c_GB_Node, c_stockNormalFarms);
         AISetStock( player, 1, c_GB_AssemblyArray );
         AISetStock( player, 4, c_GB_Uploader );
     }
@@ -313,7 +313,7 @@ void GenetronMidBuildVyEy (int player) {
     }
 
     if (AINeedsDetection(player)) {
-        AISetStock( player, 1, c_GU_ProcessingDrone );
+        AISetStock( player, 1, c_GU_Processor );
     }
 
     AISetStockArmyScale(player, 0.70);
@@ -324,7 +324,7 @@ void GenetronMidBuildVyEy (int player) {
 
     AISetStockArmyScale(player, 1.00);
 
-    AISetStock( player, 2, c_GU_ProcessingDrone );
+    AISetStock( player, 2, c_GU_Processor );
     AISetStock( player, 4, c_GB_Uploader );
 
     GenetronTechUp(player, c_ldPhaseMid);
@@ -387,7 +387,7 @@ int GenetronLateArmyInitVyEy (int player, int buildType) {
         else if (armyRoll <= 2) {
             AIAddToStockArmy(player, c_GU_Spitfire, 2);
             AIAddToStockArmy(player, c_GU_Mole_Alias, 1);
-            AIAddToStockArmy(player, c_GU_ProcessingDrone, 1);
+            AIAddToStockArmy(player, c_GU_Processor, 1);
             // validation: 6 units above with average cost 9 food and 775 resources
             duration = 379 + RandomInt(-12, 18);
         }
@@ -497,7 +497,7 @@ int GenetronFinalArmyInitVyEy (int player, int buildType) {
         else if (armyRoll <= 2) {
             AIAddToStockArmy(player, c_GU_Spitfire, 3);
             AIAddToStockArmy(player, c_GU_Mole_Alias, 2);
-            AIAddToStockArmy(player, c_GU_ProcessingDrone, 1);
+            AIAddToStockArmy(player, c_GU_Processor, 1);
             // validation: 9 units above with average cost 14 food and 1150 resources
             duration = 343 + RandomInt(-11, 17);
         }
@@ -628,13 +628,13 @@ void GenetronLateBuildVyEy (int player) {
         if (GenetronMacroExpand(player)) { return; }
     }
 
-    AISetStock( player, 2, c_GU_ProcessingDrone );
+    AISetStock( player, 2, c_GU_Processor );
     AISetStock( player, 9, c_GB_Uploader );
 
     AISetStockArmyScale(player, 0.70);
 
     AISetStock( player, 2, c_GU_Courier );
-    AISetStock( player, 3, c_GU_ProcessingDrone );
+    AISetStock( player, 3, c_GU_Processor );
 
     AISetStockArmyScale(player, 1.00);
 

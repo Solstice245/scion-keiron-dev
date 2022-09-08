@@ -136,9 +136,9 @@ void AINewUnitGen (int player, unit u) {
         }
     }
 
-    // processing drone
+    // Processor
     //
-    if (type == c_GU_ProcessingDrone) {
+    if (type == c_GU_Processor) {
 
         AINewDetector(player, u, false);
 
@@ -161,7 +161,7 @@ void AINewUnitGen (int player, unit u) {
 //  AIGetScoutGen
 //--------------------------------------------------------------------------------------------------
 unit AIGetScoutGen (int player, int index, unit prev, bool allowWorkers) {
-    unit processingDrone;
+    unit Processor;
     string prevType = UnitGetType(prev);
     
     if (!PlayerBeaconIsSet(player, c_beaconScout) &&
@@ -184,12 +184,12 @@ unit AIGetScoutGen (int player, int index, unit prev, bool allowWorkers) {
     if (AINumEnemyBuildings(player) == 0) {
         // only use medivac scouts if we don't know of any enemy buildings
         //   (ie we need a flying scout to check other islands etc).
-        if (prevType == c_GU_ProcessingDrone) {
+        if (prevType == c_GU_Processor) {
             return prev;
         }
-        processingDrone = AIGrabUnit(player, c_GU_ProcessingDrone, c_prioScout, null);
-        if (processingDrone) {
-            return processingDrone;
+        Processor = AIGrabUnit(player, c_GU_Processor, c_prioScout, null);
+        if (Processor) {
+            return Processor;
         }
     }
 
@@ -218,10 +218,10 @@ unit AIEarlyDefScoutGen (int player, unit prev, bool allowWorkers) {
         return c_nullUnit;
     }
     prevType = UnitGetType(prev);
-    if (prevType == c_GU_ProcessingDrone) {
+    if (prevType == c_GU_Processor) {
         return prev;
     }
-    obs = AIGrabUnit(player, c_GU_ProcessingDrone, c_prioScout, null);
+    obs = AIGrabUnit(player, c_GU_Processor, c_prioScout, null);
     if (obs) {
         return obs;
     }

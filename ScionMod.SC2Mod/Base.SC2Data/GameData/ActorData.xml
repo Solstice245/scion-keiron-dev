@@ -716,6 +716,10 @@
     <CActorDoodad id="TerranTarmac">
         <DoodadFlags index="DefaultToModelAABBBounds" value="0"/>
     </CActorDoodad>
+    <CActorSound id="VirtusSelfFixProtocol_Loop" parent="SoundContinuous">
+        <On Terms="Behavior.VirtusSelffixProtocolBuff.On" Send="Create"/>
+        <On Terms="Behavior.VirtusSelffixProtocolBuff.Off" Send="Destroy"/>
+    </CActorSound>
     <CActorAction id="TorrentAGAttack" parent="GenericAttack" effectAttack="TwinP1Dash0Guns">
         <LaunchAttachQuery Methods="AMFilterWeaponSetA1 AMPatternTorrentAG"/>
     </CActorAction>
@@ -841,13 +845,26 @@
         <Model value="UploaderCastDelayModel"/>
         <Scale value="1.500000"/>
     </CActorModel>
+    <CActorModel id="VirtusSelfFixProtocolA" parent="ModelAnimationStyleContinuousUNIT">
+        <On Terms="Behavior.VirtusSelffixProtocolBuff.On" Send="Create"/>
+        <On Terms="Behavior.VirtusSelffixProtocolBuff.Off" Send="AnimBracketStop BSD"/>
+    </CActorModel>
+    <CActorModel id="VirtusSelfFixProtocolB" parent="ModelAnimationStyleContinuousUNIT">
+        <On index="0" Terms="ActorCreation" Send="AnimBracketStart BSD Birth Birth Death"/>
+        <On Terms="Behavior.VirtusSelffixProtocolBuff.On" Send="Create"/>
+        <On Terms="Behavior.VirtusSelffixProtocolBuff.Off" Send="AnimBracketStop BSD"/>
+        <HostSiteOps Ops="SOpAttachCenter"/>
+    </CActorModel>
+    <CActorSound id="VirtusSelfFixProtocol_Init" parent="SoundOneShot">
+        <On Terms="Behavior.VirtusSelffixProtocolBuff.On" Send="Create"/>
+    </CActorSound>
     <CActorRange id="XayidlingDashRange" parent="RangeAbilStandard" abil="XayidlingDash">
         <Abil Link=""/>
         <Range value="3.000000"/>
     </CActorRange>
     <CActorRange id="AvengerVengeanceMissileRange" parent="RangeAbilStandard" abil="VengeanceMissile"/>
     <CActorRange id="JupiterRevenantBombRange" parent="RangeAbilStandard" abil="RevenantBomb"/>
-    <CActorRange id="ProcessingDroneAnalyzeWeaknessRange" parent="RangeAbilStandard" abil="ProcessingDroneAnalyzeWeakness"/>
+    <CActorRange id="ProcessorAnalyzeWeaknessRange" parent="RangeAbilStandard" abil="ProcessorAnalyzeWeakness"/>
     <CActorModel id="AvengerVengeanceMissileAdd" parent="ModelAddition">
         <HostSiteOps Ops="SOpAttachHardPoint"/>
     </CActorModel>
@@ -899,7 +916,7 @@
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
         <ModelFlags index="AnimationsDontResetOnUnhide" value="1"/>
     </CActorModelMaterial>
-    <CActorRange id="ProcessingDroneSystemRechargeRange" parent="RangeAbilStandard" abil="ProcessingDroneSystemRecharge"/>
+    <CActorRange id="ProcessorSystemRechargeRange" parent="RangeAbilStandard" abil="ProcessorSystemRecharge"/>
     <CActorRange id="ProcessingCoreSystemRechargeRange" parent="RangeAbilStandard" abil="CoreSystemRecharge"/>
     <!--<CActorModel id="JupiterConstruction2" parent="ModelAddition">-->
     <!--        <Inherits index="BaseModelScale" value="0"/>-->
@@ -1243,14 +1260,14 @@
         <Model value="TorrentMissile"/>
         <On Terms="ActorCreation; ValidatePlayer TorrentRangeUpgrade" Send="ModelSwap TorrentMissileUpgraded"/>
     </CActorMissile>
-    <CActorModelMaterial id="GlazeProcessingDroneRegen" parent="GlazeParent">
+    <CActorModelMaterial id="GlazeProcessorRegen" parent="GlazeParent">
         <On index="0" Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand Death OpeningPlayForever"/>
         <On Terms="ActorCreation" Send="ModelMaterialApplyTo ::Main"/>
         <On Terms="AnimDone; AnimName Death" Send="ModelMaterialRemoveFrom ::Main"/>
         <On Terms="AnimDone; AnimName Death" Send="Destroy"/>
-        <On Terms="UnitRegen.ProcessingDrone.LifeOn" Send="Create"/>
-        <On Terms="UnitRegen.ProcessingDrone.LifeOff" Send="AnimBracketStop BSD"/>
-        <Model value="GlazeProcessingDroneRegeneration"/>
+        <On Terms="UnitRegen.Processor.LifeOn" Send="Create"/>
+        <On Terms="UnitRegen.Processor.LifeOff" Send="AnimBracketStop BSD"/>
+        <Model value="GlazeProcessorRegeneration"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModelMaterial>
     <CActorUnit id="Hornet" parent="GenericUnitStandard" unitName="Hornet">
@@ -1386,12 +1403,12 @@
         <Host Subject="_Missile"/>
         <Model value="PointDefenseBeamImpact"/>
     </CActorModel>
-    <CActorModel id="ProcessingDroneDetectonOn" parent="ModelAnimationStyleContinuousUNIT">
+    <CActorModel id="ProcessorDetectonOn" parent="ModelAnimationStyleContinuousUNIT">
         <FogVisibility value="Hidden"/>
         <On Terms="Behavior.PDDetector.On" Send="Create"/>
         <On Terms="Behavior.PDDetector.Off" Send="AnimBracketStop BSD"/>
         <HostSiteOps Ops="SOpAttachOverhead" HoldRotation="1"/>
-        <Model value="ProcessingDroneDetectionIndicator"/>
+        <Model value="ProcessorDetectionIndicator"/>
         <Scale value="2.250000"/>
         <Inherits index="Visibility" value="1"/>
     </CActorModel>
@@ -1400,8 +1417,8 @@
         <On Terms="Behavior.SuperChargeCannon.Off" Send="AnimBracketStop BSD"/>
         <HostSiteOps Ops="SOpAttachWeapon02 SOpMoveUpByDot1" HoldRotation="1"/>
     </CActorModel>
-    <CActorSound id="ProcessingDroneRegenSound" parent="SoundOneShot">
-        <On Terms="UnitRegen.ProcessingDrone.LifeOn" Send="Create"/>
+    <CActorSound id="ProcessorRegenSound" parent="SoundOneShot">
+        <On Terms="UnitRegen.Processor.LifeOn" Send="Create"/>
         <Sound value="Spell_CombatDrugs_Launch"/>
     </CActorSound>
     <CActorTurret id="BlitzerTurret">
@@ -1416,8 +1433,8 @@
         <VisualDirectionless value="ProtossShieldFull"/>
     </CActorShieldImpact>
     <CActorSound id="SystemRechargeSound" parent="SoundContinuous">
-        <On Terms="Effect.ProcessingDroneSystemRechargeCH.TargetStart; At Target" Send="Create"/>
-        <On Terms="Effect.ProcessingDroneSystemRechargeCH.TargetStop; At Target" Send="Destroy"/>
+        <On Terms="Effect.ProcessorSystemRechargeCH.TargetStart; At Target" Send="Create"/>
+        <On Terms="Effect.ProcessorSystemRechargeCH.TargetStop; At Target" Send="Destroy"/>
         <On Terms="ActorOrphan" Send="Destroy"/>
         <On Terms="ActorCreation" Send="Create SystemRechargeSoundStart"/>
         <On Terms="ActorDestruction" Send="Create SystemRechargeSoundStop"/>
@@ -1430,8 +1447,8 @@
     <CActorBeamSimple id="SystemRechargeBeam" parent="BeamSimpleAnimationStyleContinuous">
         <Inherits index="Visibility" value="1"/>
         <Supporter Subject="_Unit" Scope="Caster" Actor="Find"/>
-        <On Terms="Effect.ProcessingDroneSystemRechargeCH.TargetStart" Send="Create"/>
-        <On Terms="Effect.ProcessingDroneSystemRechargeCH.TargetStop" Send="Destroy"/>
+        <On Terms="Effect.ProcessorSystemRechargeCH.TargetStart" Send="Create"/>
+        <On Terms="Effect.ProcessorSystemRechargeCH.TargetStop" Send="Destroy"/>
         <On Terms="Effect.SystemRechargeCoreCH.TargetStart" Send="Create"/>
         <On Terms="Effect.SystemRechargeCoreCH.TargetStop" Send="Destroy"/>
         <HostForProps Subject="_Unit" Scope="Caster" Actor="Find"/>
@@ -1792,7 +1809,7 @@
     <CActorMissile id="InciterAttackMissile" parent="GenericAttackMissile" unitName="HalifaxGrenadesLMWeapon">
         <Model value="InciterAttackMissile"/>
     </CActorMissile>
-    <CActorSplat id="ProcessingDroneAnalyzeWeaknessCursor" parent="TerranCursorSplat" abil="ProcessingDroneAnalyzeWeakness">
+    <CActorSplat id="ProcessorAnalyzeWeaknessCursor" parent="TerranCursorSplat" abil="ProcessorAnalyzeWeakness">
         <Scale value="3.750000"/>
     </CActorSplat>
     <CActorRange id="TeslaCloakChargeRangeEnemy" parent="TeslaCloakChargeRangeFriendly">
@@ -2245,17 +2262,17 @@
         <HostSiteOps Ops="SOpTargetPoint"/>
         <Sound value="DOM_Fire_Large_Loops"/>
     </CActorSound>
-    <CActorSound id="ProcessingDroneAnalyzeWeaknessSound" parent="SoundOneShot">
-        <On Terms="Effect.ProcessingDroneAnalyzeWeaknessSA.Start" Send="Create"/>
-        <Sound value="ProcessingDrone_Analyze_Sound"/>
+    <CActorSound id="ProcessorAnalyzeWeaknessSound" parent="SoundOneShot">
+        <On Terms="Effect.ProcessorAnalyzeWeaknessSA.Start" Send="Create"/>
+        <Sound value="Processor_Analyze_Sound"/>
     </CActorSound>
-    <CActorBeamStandard id="ProcessingDroneSystemOffloadBeam" parent="BeamStandardAnimationStyleOneShot">
+    <CActorBeamStandard id="ProcessorSystemOffloadBeam" parent="BeamStandardAnimationStyleOneShot">
         <Beam value="BeamStandard"/>
     </CActorBeamStandard>
-    <CActorBeamStandard id="ProcessingDroneAnalyzeWeaknessBeam" parent="BeamStandardAnimationStyleOneShot">
+    <CActorBeamStandard id="ProcessorAnalyzeWeaknessBeam" parent="BeamStandardAnimationStyleOneShot">
         <Beam value="BeamStandard"/>
     </CActorBeamStandard>
-    <CActorModel id="ProcessingDroneSystemOffloadImpact" parent="ModelAnimationStyleContinuousUNIT">
+    <CActorModel id="ProcessorSystemOffloadImpact" parent="ModelAnimationStyleContinuousUNIT">
         <Inherits index="BaseModelScale" value="1"/>
         <Inherits index="Scale" value="1"/>
         <On Terms="Behavior.SystemOffload.On" Send="Create"/>
@@ -2263,7 +2280,7 @@
         <HostSiteOps Ops="SOpAttachCenter"/>
         <ModelFlags index="AllowHitTest" value="0"/>
     </CActorModel>
-    <CActorModel id="ProcessingDroneAnalyzeWeaknessImpact" parent="ModelAnimationStyleContinuousUNIT">
+    <CActorModel id="ProcessorAnalyzeWeaknessImpact" parent="ModelAnimationStyleContinuousUNIT">
         <Inherits index="BaseModelScale" value="1"/>
         <Inherits index="Scale" value="1"/>
         <On Terms="Behavior.AnalyzeWeakness.On" Send="Create"/>
@@ -2271,29 +2288,29 @@
         <HostSiteOps Ops="SOpAttachCenter"/>
         <ModelFlags index="AllowHitTest" value="0"/>
     </CActorModel>
-    <CActorSound id="ProcessingDroneSystemOffloadSound" parent="SoundOneShot">
+    <CActorSound id="ProcessorSystemOffloadSound" parent="SoundOneShot">
         <On Terms="Effect.SystemOffloadSA.Start" Send="Create"/>
-        <Sound value="ProcessingDrone_SystemOffload_Sound"/>
+        <Sound value="Processor_SystemOffload_Sound"/>
     </CActorSound>
-    <CActorModel id="ProcessingNodeBuild" parent="GenetronBuildingBuild">
+    <CActorModel id="NodeBuild" parent="GenetronBuildingBuild">
         <CreepHeightClass value="Small"/>
     </CActorModel>
-    <CActorUnit id="ProcessingDrone" parent="GenericUnitStandard" unitName="ProcessingDrone">
+    <CActorUnit id="Processor" parent="GenericUnitStandard" unitName="Processor">
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-aircraftplating-level0.dds"/>
         <GroupIcon>
-            <Image value="Assets\Textures\wireframe-genetron-processingdrone.dds"/>
+            <Image value="Assets\Textures\wireframe-genetron-Processor.dds"/>
         </GroupIcon>
-        <UnitIcon value="Assets\Textures\btn-unit-genetron-processingdrone.dds"/>
+        <UnitIcon value="Assets\Textures\btn-unit-genetron-Processor.dds"/>
         <Wireframe>
-            <Image value="Assets\Textures\wireframe-genetron-processingdrone.dds"/>
+            <Image value="Assets\Textures\wireframe-genetron-Processor.dds"/>
         </Wireframe>
         <BarOffset value="45"/>
-        <DeathArray index="Normal" ModelLink="ProcessingDroneDeath" SoundLink="Viking_Explode"/>
+        <DeathArray index="Normal" ModelLink="ProcessorDeath" SoundLink="Viking_Explode"/>
         <SoundArray index="Birth" value=""/>
         <ModelFlags index="OutlineEmitter" value="1"/>
         <HostSiteOps Ops="SOpBankerBanshee"/>
     </CActorUnit>
-    <CActorUnit id="ProcessingNode" parent="GenetronBuilding" buildTime="24.000000" unitName="ProcessingNode">
+    <CActorUnit id="Node" parent="GenetronBuilding" buildTime="24.000000" unitName="Node">
         <PlacementSound value="Terran_BuildingPlacementSmall"/>
         <SoundArray index="Ready" value="SupplyDepot_Ready"/>
         <SoundArray index="What" value="SupplyDepot_What"/>
@@ -2453,7 +2470,7 @@
         <On Terms="AbilTrain.ProcessingCoreTrain.Finish" Send="AnimClear StandWork"/>
         <On Terms="AbilTrain.ProcessingCoreTrain.Cancel" Send="AnimClear StandWork"/>
         <On Terms="AbilTrain.ProcessingCoreTrain.Start; AbilTrainProduced ACR" Send="Create ACRConstruction"/>
-        <On Terms="AbilTrain.ProcessingCoreTrain.Start; AbilTrainProduced ProcessingDrone" Send="Create ProcessingDroneConstruction"/>
+        <On Terms="AbilTrain.ProcessingCoreTrain.Start; AbilTrainProduced Processor" Send="Create ProcessorConstruction"/>
         <On Terms="AbilTrain.ProcessingCoreTrain.Cancel" Target="_GenetronUnitConstruction" Send="Destroy Immediate"/>
         <On Terms="AbilTrain.ProcessingCoreTrain.Finish" Target="_GenetronUnitConstruction" Send="Destroy Immediate"/>
         <BarOffset value="240"/>
@@ -2603,7 +2620,7 @@
     <CActorModel id="ACRConstruction" parent="GenetronConstructionBase" buildTime="17.000000" Model="ACR">
         <HostSiteOps Ops="SOpAttachHardPoint SOpMoveDownByDot25 SOpMoveDownByDot1"/>
     </CActorModel>
-    <CActorModel id="ProcessingDroneConstruction" parent="GenetronConstructionBase" buildTime="17.000000" Model="ProcessingDrone"/>
+    <CActorModel id="ProcessorConstruction" parent="GenetronConstructionBase" buildTime="17.000000" Model="Processor"/>
     <CActorModel id="BlazeConstruction" parent="GenetronConstructionBase" buildTime="42.000000" Model="Blaze"/>
     <CActorModel id="BlitzerConstruction" parent="GenetronConstructionBase" buildTime="42.000000" Model="Blitzer"/>
     <CActorModel id="EqualizerConstruction" parent="GenetronConstructionBase" buildTime="56.000000" Model="Equalizer"/>
