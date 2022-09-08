@@ -176,6 +176,16 @@
         <On Terms="Effect.##Effect##.##Sub##" Send="Create"/>
         <On Terms="Behavior.##Behavior##.##Sub##" Send="Create"/>
     </CActorSound>
+    <CActorModel id="GenetronProductionMode" parent="ModelAddition">
+        <Inherits index="TimeScale" value="0"/>
+        <HostSiteOps Ops="SOpAttachHardPoint01"/>
+    </CActorModel>
+    <CActorEventMacro id="GenetronProductionModeMacro">
+        <On Terms="UnitBirth" Send="Create GenetronProductionMode"/>
+        <On Terms="Behavior.GenetronProductionModePerformanceBuff.On" Target="GenetronProductionMode" Send="$Stand,A PlayForever"/>
+        <On Terms="Behavior.GenetronProductionModeStandardBuff.On" Target="GenetronProductionMode" Send="$Stand,B PlayForever"/>
+        <On Terms="Behavior.GenetronProductionModeOverclockBuff.On" Target="GenetronProductionMode" Send="$Stand,C PlayForever"/>
+    </CActorEventMacro>
     <CActorRange id="InciterELORProtocolRange" parent="RangeAbilStandard" abil="ELORProtocol"/>
     <CActorModel id="GeneratorBuild" parent="GenetronBuildingBuild"/>
     <CActorSound id="SystemRechargeSoundStart" parent="SoundOneShot">
@@ -1971,42 +1981,6 @@
     <CActorMissile id="BadgerAutogunMissile" parent="GenericAttackMissile" unitName="LancerAutogunWeapon">
         <Model value="BadgerAutogunWeaponMissile"/>
     </CActorMissile>
-    <CActorUnit id="AssemblyArray" parent="GenetronBuilding" buildTime="64.000000" unitName="AssemblyArray">
-        <On Terms="AbilTrain.BuildAircraft.Start" Send="AnimPlay StandWork Stand,Work PlayForever,RandomStartOffset"/>
-        <On Terms="AbilTrain.BuildAircraft.Finish" Send="AnimClear StandWork"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced AvengerGenetron" Send="Create AvengerConstruction"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced AvengerGenetron" Send="StatusSet Fabricating 1"/>
-        <On Terms="AbilTrain.BuildAircraft.Cancel; IsStatus Fabricating 1" Target="AvengerConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildAircraft.Finish; IsStatus Fabricating 1" Target="AvengerConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildAircraft.Cancel" Send="AnimClear StandWork"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Badger" Send="Create BadgerConstruction"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Badger" Send="StatusSet Fabricating 2"/>
-        <On Terms="AbilTrain.BuildAircraft.Cancel; IsStatus Fabricating 2" Target="BadgerConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildAircraft.Finish; IsStatus Fabricating 2" Target="BadgerConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Jupiter" Send="Create JupiterConstruction"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Jupiter" Send="StatusSet Fabricating 3"/>
-        <On Terms="AbilTrain.BuildAircraft.Cancel; IsStatus Fabricating 3" Target="JupiterConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildAircraft.Finish; IsStatus Fabricating 3" Target="JupiterConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Courier" Send="Create CourierConstruction"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Courier" Send="StatusSet Fabricating 4"/>
-        <On Terms="AbilTrain.BuildAircraft.Cancel; IsStatus Fabricating 4" Target="CourierConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildAircraft.Finish; IsStatus Fabricating 4" Target="CourierConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Boar" Send="Create BoarConstruction"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Boar" Send="StatusSet Fabricating 5"/>
-        <On Terms="AbilTrain.BuildAircraft.Cancel; IsStatus Fabricating 5" Target="BoarConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildAircraft.Finish; IsStatus Fabricating 5" Target="BoarConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Hornet" Send="Create HornetConstruction"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Hornet" Send="StatusSet Fabricating 6"/>
-        <On Terms="AbilTrain.BuildAircraft.Cancel; IsStatus Fabricating 6" Target="HornetConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildAircraft.Finish; IsStatus Fabricating 6" Target="HornetConstruction" Send="Destroy Immediate"/>
-        <BarOffset value="190"/>
-        <BarWidth value="220"/>
-        <SoundArray index="Ready" value="Starport_Ready"/>
-        <SoundArray index="What" value="Starport_What"/>
-        <DeathArray index="Normal" ModelLink="GhostAcademyDeath" SoundLink="GhostAcademy_Explode"/>
-        <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeath" SoundLink="GhostAcademy_Explode"/>
-    </CActorUnit>
-    <CActorSplat id="AssemblyArraySplat" parent="GenericUnitSplat" unitName="AssemblyArray"/>
     <CActorBeamSimple id="AquilaMagnumAttackBeam" parent="GenericAttackBeam">
         <Model value="AquilaMagnumAttackBeamModel"/>
     </CActorBeamSimple>
@@ -2475,18 +2449,13 @@
         </Wireframe>
     </CActorUnit>
     <CActorUnit id="ProcessingCore" parent="GenetronBuilding" buildTime="99.000000" unitName="ProcessingCore">
-        <On Terms="AbilTrain.TrainACR.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
-        <On Terms="AbilTrain.TrainACR.Finish" Send="AnimClear StandWork"/>
-        <On Terms="AbilTrain.TrainACR.Start" Send="Create ACRConstruction"/>
-        <On Terms="AbilTrain.TrainACR.Cancel" Target="ACRConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainACR.Finish" Target="ACRConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainACR.Cancel" Send="AnimClear StandWork"/>
-        <On Terms="AbilTrain.BuildProcessingDrone.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
-        <On Terms="AbilTrain.BuildProcessingDrone.Cancel" Send="AnimClear StandWork"/>
-        <On Terms="AbilTrain.BuildProcessingDrone.Finish" Send="AnimClear StandWork"/>
-        <On Terms="AbilTrain.BuildProcessingDrone.Start" Send="Create ProcessingDroneConstruction"/>
-        <On Terms="AbilTrain.BuildProcessingDrone.Cancel" Target="ProcessingDroneConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildProcessingDrone.Finish" Target="ProcessingDroneConstruction" Send="Destroy Immediate"/>
+        <On Terms="AbilTrain.ProcessingCoreTrain.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
+        <On Terms="AbilTrain.ProcessingCoreTrain.Finish" Send="AnimClear StandWork"/>
+        <On Terms="AbilTrain.ProcessingCoreTrain.Cancel" Send="AnimClear StandWork"/>
+        <On Terms="AbilTrain.ProcessingCoreTrain.Start; AbilTrainProduced ACR" Send="Create ACRConstruction"/>
+        <On Terms="AbilTrain.ProcessingCoreTrain.Start; AbilTrainProduced ProcessingDrone" Send="Create ProcessingDroneConstruction"/>
+        <On Terms="AbilTrain.ProcessingCoreTrain.Cancel" Target="_GenetronUnitConstruction" Send="Destroy Immediate"/>
+        <On Terms="AbilTrain.ProcessingCoreTrain.Finish" Target="_GenetronUnitConstruction" Send="Destroy Immediate"/>
         <BarOffset value="240"/>
         <BarWidth value="300"/>
         <SoundArray index="Ready" value="CommandCenter_Ready"/>
@@ -2499,71 +2468,65 @@
     <CActorUnit id="Manufacturer" parent="GenetronBuilding" buildTime="64.000000" unitName="Manufacturer">
         <On Terms="AbilTrain.TrainLightweightMechs.Start" Send="AnimPlay StandWork Stand,Work PlayForever,RandomStartOffset"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Finish" Send="AnimClear StandWork"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Spitfire" Send="Create SpitfireConstruction"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Spitfire" Send="StatusSet Fabricating 1"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Cancel; IsStatus Fabricating 1" Target="SpitfireConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Finish; IsStatus Fabricating 1" Target="SpitfireConstruction" Send="Destroy Immediate"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Cancel" Send="AnimClear StandWork"/>
+        <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Spitfire" Send="Create SpitfireConstruction"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Equalizer" Send="Create EqualizerConstruction"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Equalizer" Send="StatusSet Fabricating 2"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Cancel; IsStatus Fabricating 2" Target="EqualizerConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Finish; IsStatus Fabricating 2" Target="EqualizerConstruction" Send="Destroy Immediate"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Blitzer" Send="Create BlitzerConstruction"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Blitzer" Send="StatusSet Fabricating 3"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Cancel; IsStatus Fabricating 3" Target="BlitzerConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Finish; IsStatus Fabricating 3" Target="BlitzerConstruction" Send="Destroy Immediate"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Blaze" Send="Create BlazeConstruction"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Blaze" Send="StatusSet Fabricating 5"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Cancel; IsStatus Fabricating 5" Target="BlazeConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Finish; IsStatus Fabricating 5" Target="BlazeConstruction" Send="Destroy Immediate"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Aquila" Send="Create AquilaConstruction"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Aquila" Send="StatusSet Fabricating 4"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Cancel; IsStatus Fabricating 4" Target="AquilaConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Finish; IsStatus Fabricating 4" Target="AquilaConstruction" Send="Destroy Immediate"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Fixer" Send="Create FixerConstruction"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Fixer" Send="StatusSet Fabricating 6"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Cancel; IsStatus Fabricating 6" Target="FixerConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Finish; IsStatus Fabricating 6" Target="FixerConstruction" Send="Destroy Immediate"/>
+        <On Terms="AbilTrain.TrainLightweightMechs.Cancel" Target="_GenetronUnitConstruction" Send="Destroy Immediate"/>
+        <On Terms="AbilTrain.TrainLightweightMechs.Finish" Target="_GenetronUnitConstruction" Send="Destroy Immediate"/>
         <SoundArray index="Ready" value="Barracks_Ready"/>
         <SoundArray index="What" value="Barracks_What"/>
         <BarWidth value="160"/>
         <DeathArray index="Normal" ModelLink="ManufacturerDeath" SoundLink="Barracks_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeathLarge" SoundLink="Barracks_Explode"/>
         <BarOffset value="115"/>
+        <Macros value="GenetronProductionModeMacro"/>
     </CActorUnit>
+    <CActorSplat id="ManufacturerSplat" parent="GenericUnitSplat" unitName="Manufacturer"/>
     <CActorUnit id="Fabricator" parent="GenetronBuilding" buildTime="64.000000" unitName="Fabricator">
         <On Terms="AbilTrain.TrainHeavyweightMechs.Start" Send="AnimPlay StandWork Stand,Work PlayForever,RandomStartOffset"/>
         <On Terms="AbilTrain.TrainHeavyweightMechs.Finish" Send="AnimClear StandWork"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Torrent" Send="Create TorrentConstruction"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Torrent" Send="StatusSet Fabricating 1"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Cancel; IsStatus Fabricating 1" Target="TorrentConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Finish; IsStatus Fabricating 1" Target="TorrentConstruction" Send="Destroy Immediate"/>
         <On Terms="AbilTrain.TrainHeavyweightMechs.Cancel" Send="AnimClear StandWork"/>
+        <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Torrent" Send="Create TorrentConstruction"/>
         <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Mole" Send="Create MoleConstruction"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Mole" Send="StatusSet Fabricating 2"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Cancel; IsStatus Fabricating 2" Target="MoleConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Finish; IsStatus Fabricating 2" Target="MoleConstruction" Send="Destroy Immediate"/>
         <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Tesla" Send="Create TeslaConstruction"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Tesla" Send="StatusSet Fabricating 3"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Cancel; IsStatus Fabricating 3" Target="TeslaConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Finish; IsStatus Fabricating 3" Target="TeslaConstruction" Send="Destroy Immediate"/>
         <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Virtus" Send="Create VirtusConstruction"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Virtus" Send="StatusSet Fabricating 4"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Cancel; IsStatus Fabricating 4" Target="VirtusConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Finish; IsStatus Fabricating 4" Target="VirtusConstruction" Send="Destroy Immediate"/>
         <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Inciter" Send="Create InciterConstruction"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Inciter" Send="StatusSet Fabricating 5"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Cancel; IsStatus Fabricating 5" Target="InciterConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Finish; IsStatus Fabricating 5" Target="InciterConstruction" Send="Destroy Immediate"/>
+        <On Terms="AbilTrain.TrainHeavyweightMechs.Cancel" Target="_GenetronUnitConstruction" Send="Destroy Immediate"/>
+        <On Terms="AbilTrain.TrainHeavyweightMechs.Finish" Target="_GenetronUnitConstruction" Send="Destroy Immediate"/>
         <BarOffset value="190"/>
         <BarWidth value="220"/>
         <SoundArray index="Ready" value="Factory_Ready"/>
         <SoundArray index="What" value="Factory_What"/>
         <DeathArray index="Normal" ModelLink="FactoryDeath" SoundLink="Factory_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeathLarge" SoundLink="Factory_Explode"/>
+        <Macros value="GenetronProductionModeMacro"/>
     </CActorUnit>
-    <CActorSplat id="ManufacturerSplat" parent="GenericUnitSplat" unitName="Manufacturer"/>
     <CActorSplat id="FabricatorSplat" parent="GenericUnitSplat" unitName="Fabricator"/>
+    <CActorUnit id="AssemblyArray" parent="GenetronBuilding" buildTime="64.000000" unitName="AssemblyArray">
+        <On Terms="AbilTrain.BuildAircraft.Start" Send="AnimPlay StandWork Stand,Work PlayForever,RandomStartOffset"/>
+        <On Terms="AbilTrain.BuildAircraft.Finish" Send="AnimClear StandWork"/>
+        <On Terms="AbilTrain.BuildAircraft.Cancel" Send="AnimClear StandWork"/>
+        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced AvengerGenetron" Send="Create AvengerConstruction"/>
+        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Badger" Send="Create BadgerConstruction"/>
+        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Jupiter" Send="Create JupiterConstruction"/>
+        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Courier" Send="Create CourierConstruction"/>
+        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Boar" Send="Create BoarConstruction"/>
+        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Hornet" Send="Create HornetConstruction"/>
+        <On Terms="AbilTrain.BuildAircraft.Cancel" Target="_GenetronUnitConstruction" Send="Destroy Immediate"/>
+        <On Terms="AbilTrain.BuildAircraft.Finish" Target="_GenetronUnitConstruction" Send="Destroy Immediate"/>
+        <BarOffset value="190"/>
+        <BarWidth value="220"/>
+        <SoundArray index="Ready" value="Starport_Ready"/>
+        <SoundArray index="What" value="Starport_What"/>
+        <DeathArray index="Normal" ModelLink="GhostAcademyDeath" SoundLink="GhostAcademy_Explode"/>
+        <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeath" SoundLink="GhostAcademy_Explode"/>
+        <Macros value="GenetronProductionModeMacro"/>
+    </CActorUnit>
+    <CActorSplat id="AssemblyArraySplat" parent="GenericUnitSplat" unitName="AssemblyArray"/>
     <CActorAction id="MoleAttack" parent="GenericAttack" effectAttack="" effectImpact="LynxCannonImpact" effectLaunch="LynxCannon">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <ImpactMap index="None" Model="ThorAAAttackImpactLance"/>
@@ -5158,7 +5121,7 @@
         <Sound value="ApertureUnload"/>
     </CActorSound>
     <CActorModel id="ApertureLoadModel" parent="ModelAnimationStyleOneShotUNIT">
-        <On Terms="Effect.ApertureTeleportTP.Start; At Target" Send="Create"/>
+        <On Terms="Effect.ApertureTeleportEnergySwitch.Start; At Target" Send="Create"/>
         <On Terms="AbilTransport.ApertureLoadUnload.CargoLoad" Send="Create"/>
         <On Terms="ActorCreation" Send="SetTintColor {255,255,0 1.500000}"/>
         <HostSiteOps Ops="SOpAttachOriginStationary"/>
