@@ -53,12 +53,13 @@
         </Wireframe>
     </CActorUnit>
     <CActorModel default="1" id="GenetronConstructionBase" parent="ModelAddition">
-        <?token id="Model"?>
+        <?token id="Model" type="ModelLink"?>
+        <?token id="buildTime" type="CString" value="1.000000"?>
         <Aliases value="_GenetronUnitConstruction"/>
         <Inherits index="BaseModelScale" value="0"/>
         <On index="0" Terms="ActorOrphan" Send="Destroy"/>
         <On index="1" Terms="ActorCreation" Send="Create GlazeGenetronConstruction"/>
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 -1.000000 AsDuration"/>
+        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 ##buildTime## AsDuration"/>
         <HostSiteOps Ops="SOpAttachHardPoint"/>
         <Model value="##Model##"/>
         <ModelFlags index="AnimationsDontResetOnUnhide" value="1"/>
@@ -105,7 +106,7 @@
         <ModelFlags index="OutlineEmitter" value="1"/>
     </CActorUnit>
     <CActorUnit default="1" id="GenericUnitKeironStructure" parent="GenericUnitKeiron">
-        <?token id="buildTime" type="CString" value="1"?>
+        <?token id="buildTime" type="CString" value="1.000000"?>
         <Aliases value="_CreepEngulfable"/>
         <Aliases value="_UnitHuge"/>
         <On index="69" Terms="UnitConstruction.##unitName##.Start" Send="Create KeironBuildModel"/>
@@ -175,12 +176,43 @@
         <On Terms="Effect.##Effect##.##Sub##" Send="Create"/>
         <On Terms="Behavior.##Behavior##.##Sub##" Send="Create"/>
     </CActorSound>
+    <CActorModel id="ApertureKeyholeTargetEnd" parent="ModelAnimationStyleOneShotUNIT">
+        <On Terms="ActorCreation" Send="SetTintColor {155,255,0 1.500000}"/>
+        <On Terms="Effect.ApertureTeleportTP.Start; At Target" Send="Create"/>
+        <On Terms="Effect.ApertureTeleportLoad.Start; At Target" Send="Create"/>
+        <HostSiteOps Ops="SOpAttachOriginStationary"/>
+        <MaxScale value="2.500000"/>
+        <AutoScaleFactor value="0.800000"/>
+    </CActorModel>
+    <CActorModel id="GenetronProductionMode" parent="ModelAddition">
+        <Inherits index="TimeScale" value="0"/>
+        <HostSiteOps Ops="SOpAttachHardPoint01"/>
+    </CActorModel>
+    <CActorEventMacro id="GenetronProductionModeMacro">
+        <On Terms="UnitBirth" Send="Create GenetronProductionMode"/>
+        <On Terms="Behavior.GenetronProductionModePerformanceBuff.On" Target="GenetronProductionMode" Send="$Stand,A PlayForever"/>
+        <On Terms="Behavior.GenetronProductionModeStandardBuff.On" Target="GenetronProductionMode" Send="$Stand,B PlayForever"/>
+        <On Terms="Behavior.GenetronProductionModeOverclockBuff.On" Target="GenetronProductionMode" Send="$Stand,C PlayForever"/>
+    </CActorEventMacro>
+    <CActorRange id="InciterELORProtocolRange" parent="RangeAbilStandard" abil="ELORProtocol"/>
+    <CActorModel id="GeneratorBuild" parent="GenetronBuildingBuild"/>
+    <CActorSound id="SystemRechargeSoundStart" parent="SoundOneShot">
+        <Sound value="SystemRecharge_LoopStart"/>
+    </CActorSound>
+    <CActorModel id="RelayTowerBuild" parent="GenetronBuildingBuild"/>
+    <CActorUnit id="RelayTower" parent="GenetronBuilding" buildTime="30.000000" unitName="RelayTower">
+        <BarOffset value="125"/>
+        <BarWidth value="75"/>
+        <DeathArray index="Normal" ModelLink="MissileTurretDeath" SoundLink="MissileTurret_Explode"/>
+        <On Terms="Abil.CoreSystemRecharge.SourceChannelStart" Send="$Spell PlayForever"/>
+        <On Terms="Abil.CoreSystemRecharge.SourceChannelStop" Send="AnimClear Spell"/>
+    </CActorUnit>
     <CActorModel id="BlitzerOverdrive" parent="ModelAnimationStyleOneShotUNIT">
-        <On Terms="Behavior.BlitzerOverdrive.On" Send="Create"/>
+        <On Terms="Abil.BlitzerOverdrive.SourceCastStart" Send="Create"/>
         <HostSiteOps Ops="SOpAttachOrigin SOpMoveUpByDot25 SOpMoveBackByDot25"/>
     </CActorModel>
     <CActorSound id="Blitzer_Overdrive" parent="SoundOneShot">
-        <On Terms="Behavior.BlitzerOverdrive.On" Send="Create"/>
+        <On Terms="Abil.BlitzerOverdrive.SourceCastStart" Send="Create"/>
     </CActorSound>
     <CActorUnit id="Fixer" parent="GenericUnitStandard" unitName="Fixer">
         <Aliases value="_UnitMedium"/>
@@ -196,9 +228,9 @@
         <On Terms="Behavior.SpeedCloak.Off" Send="AnimClear SpeedCloakSpell"/>
         <On Terms="AnimDone.*.Cleared; AnimName SpeedCloakSpell" Send="AnimBracketStart SpeedCloak Cover,A,Start Cover,A,Stand Cover,A,End"/>
         <On Terms="AbilCooldown.SpeedCloak.Regen" Send="AnimBracketStop SpeedCloak"/>
-        <On Terms="ActorCreation; ValidatePlayer FixerNoFusionWelders" Send="AnimPlay NoWelders Cover,B PlayForever 0.000000"/>
+        <!--<On Terms="ActorCreation; ValidatePlayer FixerNoFusionWelders" Send="AnimPlay NoWelders Cover,B PlayForever 0.000000"/>
         <On Terms="Upgrade.FixerFusionWelders.Add" Send="AnimClear NoWelders"/>
-        <On Terms="Upgrade.FixerFusionWelders.Remove" Send="AnimPlay NoWelders Cover,B PlayForever"/>
+        <On Terms="Upgrade.FixerFusionWelders.Remove" Send="AnimPlay NoWelders Cover,B PlayForever"/>-->
         <On Terms="ActorCreation; ValidatePlayer FixerNoReactiveArmor" Send="AnimPlay NoReactiveArmor Cover,C PlayForever 0.000000"/>
         <On Terms="Upgrade.FixerReactiveArmor.Add" Send="AnimClear NoReactiveArmor"/>
         <On Terms="Upgrade.FixerReactiveArmor.Remove" Send="AnimPlay NoReactiveArmor Cover,C PlayForever"/>
@@ -213,10 +245,10 @@
         <On Terms="UnitMovementUpdate.*.Walk" Send="AnimClear AttackRight"/>
         <On Terms="ActorCreation; ValidatePlayer FixerNoReactiveArmor" Send="SetGroupIcon 0 Assets\Textures\wireframe-genetron-fixer.dds"/>
         <On Terms="ActorCreation; ValidatePlayer FixerNoReactiveArmor" Send="SetWireframe 0 Assets\Textures\wireframe-genetron-fixer.dds"/>
-        <On Terms="Upgrade.FixerFusionWelders.Add" Send="SetGroupIcon 0 Assets\Textures\wireframe-genetron-fixer-welder.dds"/>
+        <!--<On Terms="Upgrade.FixerFusionWelders.Add" Send="SetGroupIcon 0 Assets\Textures\wireframe-genetron-fixer-welder.dds"/>
         <On Terms="Upgrade.FixerFusionWelders.Add" Send="SetWireframe 0 Assets\Textures\wireframe-genetron-fixer-welder.dds"/>
         <On Terms="Upgrade.FixerFusionWelders.Remove" Send="SetGroupIcon 0 Assets\Textures\wireframe-genetron-fixer.dds"/>
-        <On Terms="Upgrade.FixerFusionWelders.Remove" Send="SetWireframe 0 Assets\Textures\wireframe-genetron-fixer.dds"/>
+        <On Terms="Upgrade.FixerFusionWelders.Remove" Send="SetWireframe 0 Assets\Textures\wireframe-genetron-fixer.dds"/>-->
         <ModelFlags index="OutlineEmitter" value="1"/>
         <DeathArray index="Normal" ModelLink="FixerDeath" SoundLink="Hellion_Explode"/>
         <DeathCustoms>
@@ -496,6 +528,15 @@
         <Model value="ApertureLoadModel"/>
         <Scale value="0.600000"/>
     </CActorModel>
+    <CActorUnit id="Generator" parent="GenetronBuilding" buildTime="40.000000" unitName="Generator">
+        <On Terms="Behavior.LockdownMode.On" Send="AnimGroupApply Unpowered"/>
+        <On Terms="Behavior.LockdownModeDuration.Off" Send="AnimGroupRemove Unpowered"/>
+        <On Terms="Abil.GeneratorResearch.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
+        <On Terms="Abil.GeneratorResearch.Stop" Send="AnimClear StandWork"/>
+        <BarWidth value="135"/>
+        <BarOffset value="110"/>
+        <DeathArray index="Normal" ModelLink="GeneratorDeath" SoundLink="FusionCore_Explode"/>
+    </CActorUnit>
     <CActorAction id="RevilerDummyAttack" parent="GenericAttack" effectImpact="EvisceratorSpinesDamageDummy" effectLaunch="EvisceratorSpinesLMDummy">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <LaunchAssets Sound="Spell_SpineVolley_Launch"/>
@@ -677,9 +718,16 @@
         <StageArray AnimProps="Birth,C,Start"/>
         <StageArray AnimProps="Birth,C,Stand"/>
     </CActorProgress>
+    <CActorSound id="SystemRechargeSoundStop" parent="SoundOneShot">
+        <Sound value="SystemRecharge_LoopStop"/>
+    </CActorSound>
     <CActorDoodad id="TerranTarmac">
         <DoodadFlags index="DefaultToModelAABBBounds" value="0"/>
     </CActorDoodad>
+    <CActorSound id="VirtusSelfFixProtocol_Loop" parent="SoundContinuous">
+        <On Terms="Behavior.VirtusSelffixProtocolBuff.On" Send="Create"/>
+        <On Terms="Behavior.VirtusSelffixProtocolBuff.Off" Send="Destroy"/>
+    </CActorSound>
     <CActorAction id="TorrentAGAttack" parent="GenericAttack" effectAttack="TwinP1Dash0Guns">
         <LaunchAttachQuery Methods="AMFilterWeaponSetA1 AMPatternTorrentAG"/>
     </CActorAction>
@@ -797,13 +845,34 @@
         <PlacementModel value="Invisible"/>
         <AddonIndicator value="Actor/AddonIndicator/UploaderCount3"/>
     </CActorUnit>
+    <CActorModel id="GenetronPowerOutage" parent="ModelAnimationStyleContinuousUNIT">
+        <On Terms="Behavior.GenetronPowerOutage.On" Send="Create"/>
+        <On Terms="Behavior.GenetronPowerOutage.Off" Send="Destroy"/>
+        <On Terms="ActorCreation" Send="SetTintColor 255,0,0"/>
+        <HostSiteOps Ops="SOpAttachHardPoint"/>
+        <Model value="UploaderCastDelayModel"/>
+        <Scale value="1.500000"/>
+    </CActorModel>
+    <CActorModel id="VirtusSelfFixProtocolA" parent="ModelAnimationStyleContinuousUNIT">
+        <On Terms="Behavior.VirtusSelffixProtocolBuff.On" Send="Create"/>
+        <On Terms="Behavior.VirtusSelffixProtocolBuff.Off" Send="AnimBracketStop BSD"/>
+    </CActorModel>
+    <CActorModel id="VirtusSelfFixProtocolB" parent="ModelAnimationStyleContinuousUNIT">
+        <On index="0" Terms="ActorCreation" Send="AnimBracketStart BSD Birth Birth Death"/>
+        <On Terms="Behavior.VirtusSelffixProtocolBuff.On" Send="Create"/>
+        <On Terms="Behavior.VirtusSelffixProtocolBuff.Off" Send="AnimBracketStop BSD"/>
+        <HostSiteOps Ops="SOpAttachCenter"/>
+    </CActorModel>
+    <CActorSound id="VirtusSelfFixProtocol_Init" parent="SoundOneShot">
+        <On Terms="Behavior.VirtusSelffixProtocolBuff.On" Send="Create"/>
+    </CActorSound>
     <CActorRange id="XayidlingDashRange" parent="RangeAbilStandard" abil="XayidlingDash">
         <Abil Link=""/>
         <Range value="3.000000"/>
     </CActorRange>
     <CActorRange id="AvengerVengeanceMissileRange" parent="RangeAbilStandard" abil="VengeanceMissile"/>
     <CActorRange id="JupiterRevenantBombRange" parent="RangeAbilStandard" abil="RevenantBomb"/>
-    <CActorRange id="ProcessingDroneAnalyzeWeaknessRange" parent="RangeAbilStandard" abil="ProcessingDroneAnalyzeWeakness"/>
+    <CActorRange id="ProcessorAnalyzeWeaknessRange" parent="RangeAbilStandard" abil="ProcessorAnalyzeWeakness"/>
     <CActorModel id="AvengerVengeanceMissileAdd" parent="ModelAddition">
         <HostSiteOps Ops="SOpAttachHardPoint"/>
     </CActorModel>
@@ -855,7 +924,7 @@
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
         <ModelFlags index="AnimationsDontResetOnUnhide" value="1"/>
     </CActorModelMaterial>
-    <CActorRange id="ProcessingDroneSystemRechargeRange" parent="RangeAbilStandard" abil="ProcessingDroneSystemRecharge"/>
+    <CActorRange id="ProcessorSystemRechargeRange" parent="RangeAbilStandard" abil="ProcessorSystemRecharge"/>
     <CActorRange id="ProcessingCoreSystemRechargeRange" parent="RangeAbilStandard" abil="CoreSystemRecharge"/>
     <!--<CActorModel id="JupiterConstruction2" parent="ModelAddition">-->
     <!--        <Inherits index="BaseModelScale" value="0"/>-->
@@ -1199,24 +1268,16 @@
         <Model value="TorrentMissile"/>
         <On Terms="ActorCreation; ValidatePlayer TorrentRangeUpgrade" Send="ModelSwap TorrentMissileUpgraded"/>
     </CActorMissile>
-    <CActorModelMaterial id="GlazeProcessingDroneRegen" parent="GlazeParent">
+    <CActorModelMaterial id="GlazeProcessorRegen" parent="GlazeParent">
         <On index="0" Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand Death OpeningPlayForever"/>
         <On Terms="ActorCreation" Send="ModelMaterialApplyTo ::Main"/>
         <On Terms="AnimDone; AnimName Death" Send="ModelMaterialRemoveFrom ::Main"/>
         <On Terms="AnimDone; AnimName Death" Send="Destroy"/>
-        <On Terms="UnitRegen.ProcessingDrone.LifeOn" Send="Create"/>
-        <On Terms="UnitRegen.ProcessingDrone.LifeOff" Send="AnimBracketStop BSD"/>
-        <Model value="GlazeProcessingDroneRegeneration"/>
+        <On Terms="UnitRegen.Processor.LifeOn" Send="Create"/>
+        <On Terms="UnitRegen.Processor.LifeOff" Send="AnimBracketStop BSD"/>
+        <Model value="GlazeProcessorRegeneration"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModelMaterial>
-    <CActorModel id="HornetConstruction" parent="GenetronConstructionBase">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 40.000000 AsDuration"/>
-        <Model value="Hornet"/>
-    </CActorModel>
-    <CActorModel id="BoarConstruction" parent="GenetronConstructionBase">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 40.000000 AsDuration"/>
-        <Model value="Boar"/>
-    </CActorModel>
     <CActorUnit id="Hornet" parent="GenericUnitStandard" unitName="Hornet">
         <On Terms="WeaponStart.*.AttackStart; WeaponTargetDistance LE 2.000000" Send="AnimPlay Inferior Inferior,02 0 -1.000000 1.000000 2.000000 AsDuration"/>
         <On Terms="WeaponStart.*.AttackStart; WeaponTargetDistance GE 2.000000" Send="AnimPlay Inferior Inferior,01 0 -1.000000 0.666700 2.000000 AsDuration"/>
@@ -1257,10 +1318,6 @@
         <On Terms="BehaviorStackItem.JupiterSpeed.Add; ValidateUnit CasterIsMovingGTE8; IsStatus JupiterSound 0" Send="StatusSet JupiterSound 1"/>
         <On Terms="BehaviorStackItem.JupiterSpeed.Remove; ValidateUnit CasterIsMovingLT8; IsStatus JupiterSound 1" Send="Destroy"/>
     </CActorSound>
-    <CActorModel id="JupiterConstruction" parent="GenetronConstructionBase">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 45.000000 AsDuration"/>
-        <Model value="Jupiter"/>
-    </CActorModel>
     <CActorUnit id="Interdictor" parent="GenetronBuilding" buildTime="29.000000" unitName="Interdictor">
         <On index="65" Terms="WeaponStart.NeutralizerBeam.AttackStart" Send="AnimPlay Attack Attack"/>
         <On Terms="ActorCreation" Send="Create InterdictorAddition"/>
@@ -1354,16 +1411,12 @@
         <Host Subject="_Missile"/>
         <Model value="PointDefenseBeamImpact"/>
     </CActorModel>
-    <CActorModel id="ProcessingDroneConstruction" parent="GenetronConstructionBase">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 17.000000 AsDuration"/>
-        <Model value="ProcessingDrone"/>
-    </CActorModel>
-    <CActorModel id="ProcessingDroneDetectonOn" parent="ModelAnimationStyleContinuousUNIT">
+    <CActorModel id="ProcessorDetectonOn" parent="ModelAnimationStyleContinuousUNIT">
         <FogVisibility value="Hidden"/>
         <On Terms="Behavior.PDDetector.On" Send="Create"/>
         <On Terms="Behavior.PDDetector.Off" Send="AnimBracketStop BSD"/>
         <HostSiteOps Ops="SOpAttachOverhead" HoldRotation="1"/>
-        <Model value="ProcessingDroneDetectionIndicator"/>
+        <Model value="ProcessorDetectionIndicator"/>
         <Scale value="2.250000"/>
         <Inherits index="Visibility" value="1"/>
     </CActorModel>
@@ -1372,8 +1425,8 @@
         <On Terms="Behavior.SuperChargeCannon.Off" Send="AnimBracketStop BSD"/>
         <HostSiteOps Ops="SOpAttachWeapon02 SOpMoveUpByDot1" HoldRotation="1"/>
     </CActorModel>
-    <CActorSound id="ProcessingDroneRegenSound" parent="SoundOneShot">
-        <On Terms="UnitRegen.ProcessingDrone.LifeOn" Send="Create"/>
+    <CActorSound id="ProcessorRegenSound" parent="SoundOneShot">
+        <On Terms="UnitRegen.Processor.LifeOn" Send="Create"/>
         <Sound value="Spell_CombatDrugs_Launch"/>
     </CActorSound>
     <CActorTurret id="BlitzerTurret">
@@ -1388,51 +1441,34 @@
         <VisualDirectionless value="ProtossShieldFull"/>
     </CActorShieldImpact>
     <CActorSound id="SystemRechargeSound" parent="SoundContinuous">
-        <On Terms="Effect.ProcessingDroneSystemRechargeCH.TargetStart; At Target" Send="Create"/>
-        <On Terms="Effect.ProcessingDroneSystemRechargeCH.TargetStop; At Target" Send="Destroy"/>
+        <On Terms="Effect.ProcessorSystemRechargeCH.TargetStart; At Target" Send="Create"/>
+        <On Terms="Effect.ProcessorSystemRechargeCH.TargetStop; At Target" Send="Destroy"/>
         <On Terms="ActorOrphan" Send="Destroy"/>
-        <On Terms="ActorCreation" Send="Create MedivacHealSoundStart"/>
-        <On Terms="ActorDestruction" Send="Create MedivacHealSoundStop"/>
+        <On Terms="ActorCreation" Send="Create SystemRechargeSoundStart"/>
+        <On Terms="ActorDestruction" Send="Create SystemRechargeSoundStop"/>
         <On Terms="Effect.SystemRechargeCoreCH.TargetStart; At Target" Send="Create"/>
         <On Terms="Effect.SystemRechargeCoreCH.TargetStop; At Target" Send="Destroy"/>
         <Host Subject="_Selectable"/>
         <HostSiteOps Ops="SOpAttachOverhead"/>
-        <Sound value="Medivac_HealLoop"/>
+        <Sound value="SystemRecharge_Loop"/>
     </CActorSound>
-    <CActorModel id="SystemRechargeModel" parent="ModelAnimationStyleOneShotUNIT">
-        <Flags index="SuppressSaveLoad" value="0"/>
-        <On index="0" Send="AnimBracketStart BSD Birth Stand Death"/>
-        <On index="1" Terms="ActorOrphan"/>
-        <On index="2" Terms="AnimBracketState.*.AfterClosing; !AnimBracketExitReason ModelSwap; AnimName BSD" Send="Destroy"/>
-        <On Terms="ActorCreation" Send="$Birth PlayForever"/>
-        <On Terms="Effect.ProcessingDroneSystemRechargeCH.TargetStart; At Target" Send="Create"/>
-        <On Terms="Effect.ProcessingDroneSystemRechargeCH.TargetStop; At Target" Send="Destroy"/>
-        <On Terms="ActorOrphan" Send="Destroy"/>
-        <On Terms="Effect.SystemRechargeCoreCH.TargetStart; At Target" Send="Create"/>
-        <On Terms="Effect.SystemRechargeCoreCH.TargetStop; At Target" Send="Destroy"/>
-        <HostSiteOps Ops="SOpAttachOverhead"/>
-    </CActorModel>
     <CActorBeamSimple id="SystemRechargeBeam" parent="BeamSimpleAnimationStyleContinuous">
         <Inherits index="Visibility" value="1"/>
         <Supporter Subject="_Unit" Scope="Caster" Actor="Find"/>
-        <On Terms="Effect.ProcessingDroneSystemRechargeCH.TargetStart" Send="Create"/>
-        <On Terms="Effect.ProcessingDroneSystemRechargeCH.TargetStop" Send="Destroy"/>
+        <On Terms="Effect.ProcessorSystemRechargeCH.TargetStart" Send="Create"/>
+        <On Terms="Effect.ProcessorSystemRechargeCH.TargetStop" Send="Destroy"/>
         <On Terms="Effect.SystemRechargeCoreCH.TargetStart" Send="Create"/>
         <On Terms="Effect.SystemRechargeCoreCH.TargetStop" Send="Destroy"/>
         <HostForProps Subject="_Unit" Scope="Caster" Actor="Find"/>
         <Host Subject="_Unit" Scope="Caster" Actor="Find"/>
         <HostLaunch Subject="_Unit" Scope="Caster" Actor="Find"/>
-        <HostLaunchSiteOps Ops="SOpAttachCenter"/>
+        <HostLaunchSiteOps Ops="SOpAttachHardPoint"/>
         <HostImpact Subject="_Unit" Scope="Target" Actor="Find"/>
         <HostImpactSiteOps Ops="SOpAttachCenter"/>
     </CActorBeamSimple>
     <CActorMissile id="MoleAttackMissile" parent="GenericAttackMissile" unitName="LynxCannonWeapon">
         <Model value="MoleAttackMissileWeapon"/>
     </CActorMissile>
-    <CActorModel id="CourierConstruction" parent="GenetronConstructionBase">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 38.000000 AsDuration"/>
-        <Model value="Courier"/>
-    </CActorModel>
     <CActorAction id="BoarBoosterBlastImpact" parent="GenericAttack" effectAttack="IgnitionBlastDMG">
         <ImpactMap index="None" Model="MetalTargetImpact" Sound="BoarBoosterBlastImpactMetal"/>
         <ImpactMap index="Flesh" Model="ZergMediumUnitDeath" Sound="BoarBoosterBlastImpactSoundFlesh"/>
@@ -1478,8 +1514,10 @@
         <On Terms="Behavior.InciterJump.LandUp" Send="AnimBracketStop Jump"/>
         <On Terms="Behavior.InciterJump.LandUp" Send="AnimBlendTimeApply"/>
         <On Terms="UnitHeightUpdate.*.Land" Send="Create SiegeTank_Land"/>
-        <BarOffset value="80"/>
-        <BarWidth value="80"/>
+        <On Terms="Abil.ELORProtocol.SourceCastStart" Send="AnimBracketStart Jump Jump,Start Jump Jump,End"/>
+        <On Terms="Abil.ELORProtocol.SourceChannelStop" Send="AnimBracketStop Jump"/>
+        <BarOffset value="74"/>
+        <BarWidth value="82"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-groundmechplating-level0.dds"/>
         <GroupIcon>
             <Image value="Assets\Textures\wireframe-genetron-inciter.dds"/>
@@ -1496,6 +1534,11 @@
         <DeathArray index="Normal" ModelLink="InciterDeath" SoundLink="SiegeTank_Explode"/>
         <PortraitModel value="InciterPortrait"/>
         <ModelFlags index="OutlineEmitter" value="1"/>
+        <DeathCustoms index="0" ModelLink="Invisible" Name="Vortex"/>
+        <DeathCustoms index="1" removed="1"/>
+        <DeathCustoms index="2" removed="1"/>
+        <DeathCustoms index="3" removed="1"/>
+        <DeathCustoms index="4" removed="1"/>
     </CActorUnit>
     <CActorAction id="InciterAttack" parent="GenericAttack" effectImpact="HalifaxGrenadesLMImpact" effectLaunch="HalifaxGrenadesLMR">
         <On index="6" Terms="Effect.HalifaxGrenadesLM.Start; At Caster" Send="Create"/>
@@ -1614,10 +1657,6 @@
         <On Terms="Abil.LaunchShockCharge.ButtonHoverOn" Send="Create"/>
         <On Terms="Abil.LaunchShockCharge.ButtonHoverOn" Send="Destroy"/>
     </CActorRange>
-    <CActorModel id="AvengerConstruction" parent="GenetronConstructionBase">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 34.000000 AsDuration"/>
-        <Model value="AvengerGenetron"/>
-    </CActorModel>
     <CActorModel id="AquilaNaniteGreandeStunImpact" parent="ModelAnimationStyleContinuousUNIT">
         <On Terms="Behavior.NaniteGrenadeAB.On" Send="Create"/>
         <On Terms="Behavior.NaniteGrenadeAB.Off" Send="AnimBracketStop BSD"/>
@@ -1641,10 +1680,6 @@
         <HostSiteOps Ops="SOpTargetPoint"/>
     </CActorModel>
     <CActorRange id="AquilaNaniteGrenadeRange" parent="RangeAbilStandard" abil="NaniteGrenade"/>
-    <CActorModel id="BadgerConstruction" parent="GenetronConstructionBase">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 60.000000 AsDuration"/>
-        <Model value="Badger"/>
-    </CActorModel>
     <CActorUnit id="Boar" parent="GenericUnitStandard" unitName="Boar">
         <On Terms="Behavior.IgnitionBlast.On" Send="AnimBracketStart Spell Spell,Start Spell Spell,End OpeningPlayForever"/>
         <On Terms="Behavior.IgnitionBlast.Off" Send="AnimBracketStop Spell"/>
@@ -1782,7 +1817,7 @@
     <CActorMissile id="InciterAttackMissile" parent="GenericAttackMissile" unitName="HalifaxGrenadesLMWeapon">
         <Model value="InciterAttackMissile"/>
     </CActorMissile>
-    <CActorSplat id="ProcessingDroneAnalyzeWeaknessCursor" parent="TerranCursorSplat" abil="ProcessingDroneAnalyzeWeakness">
+    <CActorSplat id="ProcessorAnalyzeWeaknessCursor" parent="TerranCursorSplat" abil="ProcessorAnalyzeWeakness">
         <Scale value="3.750000"/>
     </CActorSplat>
     <CActorRange id="TeslaCloakChargeRangeEnemy" parent="TeslaCloakChargeRangeFriendly">
@@ -1917,11 +1952,8 @@
         <Wireframe>
             <Image value="Assets\Textures\wireframe-genetron-avenger.dds"/>
         </Wireframe>
-        <On Terms="AbilCooldown.VengeanceMissile.Regen" Send="Create AvengerVengeanceMissileAdd"/>
-        <On Terms="ActorCreation; ValidatePlayer AvengerVengeanceMissileUpgraded" Send="Create AvengerVengeanceMissileAdd"/>
-        <On Terms="Upgrade.VengeanceMissile.Add" Send="Create AvengerVengeanceMissileAdd"/>
-        <On Terms="Upgrade.VengeanceMissile.Remove" Target="AvengerVengeanceMissileAdd" Send="Destroy"/>
-        <On Terms="AbilCooldown.VengeanceMissile.Spend" Target="AvengerVengeanceMissileAdd" Send="Destroy"/>
+        <On Terms="AbilCharge.VengeanceMissile.Regen" Send="Create AvengerVengeanceMissileAdd"/>
+        <On Terms="AbilCharge.VengeanceMissile.Spend" Target="AvengerVengeanceMissileAdd" Send="Destroy"/>
         <PortraitModel value="GenetronAdjutantPortrait"/>
     </CActorUnit>
     <CActorMissile id="AvengerVengeanceMissileAttackMissile" parent="GenericAttackMissile" unitName="VengeanceMissilesLMWeapon">
@@ -1974,42 +2006,6 @@
     <CActorMissile id="BadgerAutogunMissile" parent="GenericAttackMissile" unitName="LancerAutogunWeapon">
         <Model value="BadgerAutogunWeaponMissile"/>
     </CActorMissile>
-    <CActorUnit id="AssemblyArray" parent="GenetronBuilding" buildTime="64.000000" unitName="AssemblyArray">
-        <On Terms="AbilTrain.BuildAircraft.Start" Send="AnimPlay StandWork Stand,Work PlayForever,RandomStartOffset"/>
-        <On Terms="AbilTrain.BuildAircraft.Finish" Send="AnimClear StandWork"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced AvengerGenetron" Send="Create AvengerConstruction"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced AvengerGenetron" Send="StatusSet Fabricating 1"/>
-        <On Terms="AbilTrain.BuildAircraft.Cancel; IsStatus Fabricating 1" Target="AvengerConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildAircraft.Finish; IsStatus Fabricating 1" Target="AvengerConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildAircraft.Cancel" Send="AnimClear StandWork"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Badger" Send="Create BadgerConstruction"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Badger" Send="StatusSet Fabricating 2"/>
-        <On Terms="AbilTrain.BuildAircraft.Cancel; IsStatus Fabricating 2" Target="BadgerConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildAircraft.Finish; IsStatus Fabricating 2" Target="BadgerConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Jupiter" Send="Create JupiterConstruction"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Jupiter" Send="StatusSet Fabricating 3"/>
-        <On Terms="AbilTrain.BuildAircraft.Cancel; IsStatus Fabricating 3" Target="JupiterConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildAircraft.Finish; IsStatus Fabricating 3" Target="JupiterConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Courier" Send="Create CourierConstruction"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Courier" Send="StatusSet Fabricating 4"/>
-        <On Terms="AbilTrain.BuildAircraft.Cancel; IsStatus Fabricating 4" Target="CourierConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildAircraft.Finish; IsStatus Fabricating 4" Target="CourierConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Boar" Send="Create BoarConstruction"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Boar" Send="StatusSet Fabricating 5"/>
-        <On Terms="AbilTrain.BuildAircraft.Cancel; IsStatus Fabricating 5" Target="BoarConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildAircraft.Finish; IsStatus Fabricating 5" Target="BoarConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Hornet" Send="Create HornetConstruction"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Hornet" Send="StatusSet Fabricating 6"/>
-        <On Terms="AbilTrain.BuildAircraft.Cancel; IsStatus Fabricating 6" Target="HornetConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildAircraft.Finish; IsStatus Fabricating 6" Target="HornetConstruction" Send="Destroy Immediate"/>
-        <BarOffset value="190"/>
-        <BarWidth value="220"/>
-        <SoundArray index="Ready" value="Starport_Ready"/>
-        <SoundArray index="What" value="Starport_What"/>
-        <DeathArray index="Normal" ModelLink="GhostAcademyDeath" SoundLink="GhostAcademy_Explode"/>
-        <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeath" SoundLink="GhostAcademy_Explode"/>
-    </CActorUnit>
-    <CActorSplat id="AssemblyArraySplat" parent="GenericUnitSplat" unitName="AssemblyArray"/>
     <CActorBeamSimple id="AquilaMagnumAttackBeam" parent="GenericAttackBeam">
         <Model value="AquilaMagnumAttackBeamModel"/>
     </CActorBeamSimple>
@@ -2274,17 +2270,17 @@
         <HostSiteOps Ops="SOpTargetPoint"/>
         <Sound value="DOM_Fire_Large_Loops"/>
     </CActorSound>
-    <CActorSound id="ProcessingDroneAnalyzeWeaknessSound" parent="SoundOneShot">
-        <On Terms="Effect.ProcessingDroneAnalyzeWeaknessSA.Start" Send="Create"/>
-        <Sound value="ProcessingDrone_Analyze_Sound"/>
+    <CActorSound id="ProcessorAnalyzeWeaknessSound" parent="SoundOneShot">
+        <On Terms="Effect.ProcessorAnalyzeWeaknessSA.Start" Send="Create"/>
+        <Sound value="Processor_Analyze_Sound"/>
     </CActorSound>
-    <CActorBeamStandard id="ProcessingDroneSystemOffloadBeam" parent="BeamStandardAnimationStyleOneShot">
+    <CActorBeamStandard id="ProcessorSystemOffloadBeam" parent="BeamStandardAnimationStyleOneShot">
         <Beam value="BeamStandard"/>
     </CActorBeamStandard>
-    <CActorBeamStandard id="ProcessingDroneAnalyzeWeaknessBeam" parent="BeamStandardAnimationStyleOneShot">
+    <CActorBeamStandard id="ProcessorAnalyzeWeaknessBeam" parent="BeamStandardAnimationStyleOneShot">
         <Beam value="BeamStandard"/>
     </CActorBeamStandard>
-    <CActorModel id="ProcessingDroneSystemOffloadImpact" parent="ModelAnimationStyleContinuousUNIT">
+    <CActorModel id="ProcessorSystemOffloadImpact" parent="ModelAnimationStyleContinuousUNIT">
         <Inherits index="BaseModelScale" value="1"/>
         <Inherits index="Scale" value="1"/>
         <On Terms="Behavior.SystemOffload.On" Send="Create"/>
@@ -2292,7 +2288,7 @@
         <HostSiteOps Ops="SOpAttachCenter"/>
         <ModelFlags index="AllowHitTest" value="0"/>
     </CActorModel>
-    <CActorModel id="ProcessingDroneAnalyzeWeaknessImpact" parent="ModelAnimationStyleContinuousUNIT">
+    <CActorModel id="ProcessorAnalyzeWeaknessImpact" parent="ModelAnimationStyleContinuousUNIT">
         <Inherits index="BaseModelScale" value="1"/>
         <Inherits index="Scale" value="1"/>
         <On Terms="Behavior.AnalyzeWeakness.On" Send="Create"/>
@@ -2300,29 +2296,29 @@
         <HostSiteOps Ops="SOpAttachCenter"/>
         <ModelFlags index="AllowHitTest" value="0"/>
     </CActorModel>
-    <CActorSound id="ProcessingDroneSystemOffloadSound" parent="SoundOneShot">
+    <CActorSound id="ProcessorSystemOffloadSound" parent="SoundOneShot">
         <On Terms="Effect.SystemOffloadSA.Start" Send="Create"/>
-        <Sound value="ProcessingDrone_SystemOffload_Sound"/>
+        <Sound value="Processor_SystemOffload_Sound"/>
     </CActorSound>
-    <CActorModel id="ProcessingNodeBuild" parent="GenetronBuildingBuild">
+    <CActorModel id="NodeBuild" parent="GenetronBuildingBuild">
         <CreepHeightClass value="Small"/>
     </CActorModel>
-    <CActorUnit id="ProcessingDrone" parent="GenericUnitStandard" unitName="ProcessingDrone">
+    <CActorUnit id="Processor" parent="GenericUnitStandard" unitName="Processor">
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-aircraftplating-level0.dds"/>
         <GroupIcon>
-            <Image value="Assets\Textures\wireframe-genetron-processingdrone.dds"/>
+            <Image value="Assets\Textures\wireframe-genetron-Processor.dds"/>
         </GroupIcon>
-        <UnitIcon value="Assets\Textures\btn-unit-genetron-processingdrone.dds"/>
+        <UnitIcon value="Assets\Textures\btn-unit-genetron-Processor.dds"/>
         <Wireframe>
-            <Image value="Assets\Textures\wireframe-genetron-processingdrone.dds"/>
+            <Image value="Assets\Textures\wireframe-genetron-Processor.dds"/>
         </Wireframe>
         <BarOffset value="45"/>
-        <DeathArray index="Normal" ModelLink="ProcessingDroneDeath" SoundLink="Viking_Explode"/>
+        <DeathArray index="Normal" ModelLink="ProcessorDeath" SoundLink="Viking_Explode"/>
         <SoundArray index="Birth" value=""/>
         <ModelFlags index="OutlineEmitter" value="1"/>
         <HostSiteOps Ops="SOpBankerBanshee"/>
     </CActorUnit>
-    <CActorUnit id="ProcessingNode" parent="GenetronBuilding" buildTime="24.000000" unitName="ProcessingNode">
+    <CActorUnit id="Node" parent="GenetronBuilding" buildTime="24.000000" unitName="Node">
         <PlacementSound value="Terran_BuildingPlacementSmall"/>
         <SoundArray index="Ready" value="SupplyDepot_Ready"/>
         <SoundArray index="What" value="SupplyDepot_What"/>
@@ -2478,20 +2474,15 @@
         </Wireframe>
     </CActorUnit>
     <CActorUnit id="ProcessingCore" parent="GenetronBuilding" buildTime="99.000000" unitName="ProcessingCore">
-        <On Terms="AbilTrain.TrainACR.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
-        <On Terms="AbilTrain.TrainACR.Finish" Send="AnimClear StandWork"/>
-        <On Terms="AbilTrain.TrainACR.Start" Send="Create ACRConstruction"/>
-        <On Terms="AbilTrain.TrainACR.Cancel" Target="ACRConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainACR.Finish" Target="ACRConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainACR.Cancel" Send="AnimClear StandWork"/>
-        <On Terms="AbilTrain.BuildProcessingDrone.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
-        <On Terms="AbilTrain.BuildProcessingDrone.Cancel" Send="AnimClear StandWork"/>
-        <On Terms="AbilTrain.BuildProcessingDrone.Finish" Send="AnimClear StandWork"/>
-        <On Terms="AbilTrain.BuildProcessingDrone.Start" Send="Create ProcessingDroneConstruction"/>
-        <On Terms="AbilTrain.BuildProcessingDrone.Cancel" Target="ProcessingDroneConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.BuildProcessingDrone.Finish" Target="ProcessingDroneConstruction" Send="Destroy Immediate"/>
-        <BarOffset value="240"/>
-        <BarWidth value="300"/>
+        <On Terms="AbilTrain.ProcessingCoreTrain.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
+        <On Terms="AbilTrain.ProcessingCoreTrain.Finish" Send="AnimClear StandWork"/>
+        <On Terms="AbilTrain.ProcessingCoreTrain.Cancel" Send="AnimClear StandWork"/>
+        <On Terms="AbilTrain.ProcessingCoreTrain.Start; AbilTrainProduced ACR" Send="Create ACRConstruction"/>
+        <On Terms="AbilTrain.ProcessingCoreTrain.Start; AbilTrainProduced Processor" Send="Create ProcessorConstruction"/>
+        <On Terms="AbilTrain.ProcessingCoreTrain.Cancel" Target="_GenetronUnitConstruction" Send="Destroy Immediate"/>
+        <On Terms="AbilTrain.ProcessingCoreTrain.Finish" Target="_GenetronUnitConstruction" Send="Destroy Immediate"/>
+        <BarOffset value="200"/>
+        <BarWidth value="225"/>
         <SoundArray index="Ready" value="CommandCenter_Ready"/>
         <SoundArray index="What" value="CommandCenter_What"/>
         <StatusHarvesterData Text="UI/HarvesterCountMinerals" SearchFilters="HarvestableResource;Player,Ally,Enemy" SearchRadius="8"/>
@@ -2502,71 +2493,65 @@
     <CActorUnit id="Manufacturer" parent="GenetronBuilding" buildTime="64.000000" unitName="Manufacturer">
         <On Terms="AbilTrain.TrainLightweightMechs.Start" Send="AnimPlay StandWork Stand,Work PlayForever,RandomStartOffset"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Finish" Send="AnimClear StandWork"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Spitfire" Send="Create SpitfireConstruction"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Spitfire" Send="StatusSet Fabricating 1"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Cancel; IsStatus Fabricating 1" Target="SpitfireConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Finish; IsStatus Fabricating 1" Target="SpitfireConstruction" Send="Destroy Immediate"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Cancel" Send="AnimClear StandWork"/>
+        <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Spitfire" Send="Create SpitfireConstruction"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Equalizer" Send="Create EqualizerConstruction"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Equalizer" Send="StatusSet Fabricating 2"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Cancel; IsStatus Fabricating 2" Target="EqualizerConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Finish; IsStatus Fabricating 2" Target="EqualizerConstruction" Send="Destroy Immediate"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Blitzer" Send="Create BlitzerConstruction"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Blitzer" Send="StatusSet Fabricating 3"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Cancel; IsStatus Fabricating 3" Target="BlitzerConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Finish; IsStatus Fabricating 3" Target="BlitzerConstruction" Send="Destroy Immediate"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Blaze" Send="Create BlazeConstruction"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Blaze" Send="StatusSet Fabricating 5"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Cancel; IsStatus Fabricating 5" Target="BlazeConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Finish; IsStatus Fabricating 5" Target="BlazeConstruction" Send="Destroy Immediate"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Aquila" Send="Create AquilaConstruction"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Aquila" Send="StatusSet Fabricating 4"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Cancel; IsStatus Fabricating 4" Target="AquilaConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Finish; IsStatus Fabricating 4" Target="AquilaConstruction" Send="Destroy Immediate"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Fixer" Send="Create FixerConstruction"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Start; AbilTrainProduced Fixer" Send="StatusSet Fabricating 6"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Cancel; IsStatus Fabricating 6" Target="FixerConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainLightweightMechs.Finish; IsStatus Fabricating 6" Target="FixerConstruction" Send="Destroy Immediate"/>
+        <On Terms="AbilTrain.TrainLightweightMechs.Cancel" Target="_GenetronUnitConstruction" Send="Destroy Immediate"/>
+        <On Terms="AbilTrain.TrainLightweightMechs.Finish" Target="_GenetronUnitConstruction" Send="Destroy Immediate"/>
         <SoundArray index="Ready" value="Barracks_Ready"/>
         <SoundArray index="What" value="Barracks_What"/>
         <BarWidth value="160"/>
         <DeathArray index="Normal" ModelLink="ManufacturerDeath" SoundLink="Barracks_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeathLarge" SoundLink="Barracks_Explode"/>
         <BarOffset value="115"/>
+        <Macros value="GenetronProductionModeMacro"/>
     </CActorUnit>
+    <CActorSplat id="ManufacturerSplat" parent="GenericUnitSplat" unitName="Manufacturer"/>
     <CActorUnit id="Fabricator" parent="GenetronBuilding" buildTime="64.000000" unitName="Fabricator">
         <On Terms="AbilTrain.TrainHeavyweightMechs.Start" Send="AnimPlay StandWork Stand,Work PlayForever,RandomStartOffset"/>
         <On Terms="AbilTrain.TrainHeavyweightMechs.Finish" Send="AnimClear StandWork"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Torrent" Send="Create TorrentConstruction"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Torrent" Send="StatusSet Fabricating 1"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Cancel; IsStatus Fabricating 1" Target="TorrentConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Finish; IsStatus Fabricating 1" Target="TorrentConstruction" Send="Destroy Immediate"/>
         <On Terms="AbilTrain.TrainHeavyweightMechs.Cancel" Send="AnimClear StandWork"/>
+        <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Torrent" Send="Create TorrentConstruction"/>
         <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Mole" Send="Create MoleConstruction"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Mole" Send="StatusSet Fabricating 2"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Cancel; IsStatus Fabricating 2" Target="MoleConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Finish; IsStatus Fabricating 2" Target="MoleConstruction" Send="Destroy Immediate"/>
         <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Tesla" Send="Create TeslaConstruction"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Tesla" Send="StatusSet Fabricating 3"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Cancel; IsStatus Fabricating 3" Target="TeslaConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Finish; IsStatus Fabricating 3" Target="TeslaConstruction" Send="Destroy Immediate"/>
         <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Virtus" Send="Create VirtusConstruction"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Virtus" Send="StatusSet Fabricating 4"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Cancel; IsStatus Fabricating 4" Target="VirtusConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Finish; IsStatus Fabricating 4" Target="VirtusConstruction" Send="Destroy Immediate"/>
         <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Inciter" Send="Create InciterConstruction"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Start; AbilTrainProduced Inciter" Send="StatusSet Fabricating 5"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Cancel; IsStatus Fabricating 5" Target="InciterConstruction" Send="Destroy Immediate"/>
-        <On Terms="AbilTrain.TrainHeavyweightMechs.Finish; IsStatus Fabricating 5" Target="InciterConstruction" Send="Destroy Immediate"/>
+        <On Terms="AbilTrain.TrainHeavyweightMechs.Cancel" Target="_GenetronUnitConstruction" Send="Destroy Immediate"/>
+        <On Terms="AbilTrain.TrainHeavyweightMechs.Finish" Target="_GenetronUnitConstruction" Send="Destroy Immediate"/>
         <BarOffset value="190"/>
         <BarWidth value="220"/>
         <SoundArray index="Ready" value="Factory_Ready"/>
         <SoundArray index="What" value="Factory_What"/>
         <DeathArray index="Normal" ModelLink="FactoryDeath" SoundLink="Factory_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeathLarge" SoundLink="Factory_Explode"/>
+        <Macros value="GenetronProductionModeMacro"/>
     </CActorUnit>
-    <CActorSplat id="ManufacturerSplat" parent="GenericUnitSplat" unitName="Manufacturer"/>
     <CActorSplat id="FabricatorSplat" parent="GenericUnitSplat" unitName="Fabricator"/>
+    <CActorUnit id="AssemblyArray" parent="GenetronBuilding" buildTime="64.000000" unitName="AssemblyArray">
+        <On Terms="AbilTrain.BuildAircraft.Start" Send="AnimPlay StandWork Stand,Work PlayForever,RandomStartOffset"/>
+        <On Terms="AbilTrain.BuildAircraft.Finish" Send="AnimClear StandWork"/>
+        <On Terms="AbilTrain.BuildAircraft.Cancel" Send="AnimClear StandWork"/>
+        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced AvengerGenetron" Send="Create AvengerConstruction"/>
+        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Badger" Send="Create BadgerConstruction"/>
+        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Jupiter" Send="Create JupiterConstruction"/>
+        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Courier" Send="Create CourierConstruction"/>
+        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Boar" Send="Create BoarConstruction"/>
+        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Hornet" Send="Create HornetConstruction"/>
+        <On Terms="AbilTrain.BuildAircraft.Cancel" Target="_GenetronUnitConstruction" Send="Destroy Immediate"/>
+        <On Terms="AbilTrain.BuildAircraft.Finish" Target="_GenetronUnitConstruction" Send="Destroy Immediate"/>
+        <BarOffset value="190"/>
+        <BarWidth value="220"/>
+        <SoundArray index="Ready" value="Starport_Ready"/>
+        <SoundArray index="What" value="Starport_What"/>
+        <DeathArray index="Normal" ModelLink="GhostAcademyDeath" SoundLink="GhostAcademy_Explode"/>
+        <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeath" SoundLink="GhostAcademy_Explode"/>
+        <Macros value="GenetronProductionModeMacro"/>
+    </CActorUnit>
+    <CActorSplat id="AssemblyArraySplat" parent="GenericUnitSplat" unitName="AssemblyArray"/>
     <CActorAction id="MoleAttack" parent="GenericAttack" effectAttack="" effectImpact="LynxCannonImpact" effectLaunch="LynxCannon">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <ImpactMap index="None" Model="ThorAAAttackImpactLance"/>
@@ -2640,48 +2625,33 @@
         <ImpactMap index="None" Sound="Viking_AssaultAttackImpact"/>
         <ImpactPhysics Name="BulletImpact" MatchKeys="Basic" Physics="SpitfireAttackForce"/>
     </CActorAction>
-    <CActorModel id="AquilaConstruction" parent="GenetronConstructionBase" Model="Aquila">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 56.000000 AsDuration"/>
-    </CActorModel>
-    <CActorModel id="ACRConstruction" parent="GenetronConstructionBase" Model="ACR">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 17.000000 AsDuration"/>
+    <CActorModel id="ACRConstruction" parent="GenetronConstructionBase" buildTime="17.000000" Model="ACR">
         <HostSiteOps Ops="SOpAttachHardPoint SOpMoveDownByDot25 SOpMoveDownByDot1"/>
     </CActorModel>
-    <CActorModel id="BlazeConstruction" parent="GenetronConstructionBase" Model="Blaze">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 42.000000 AsDuration"/>
-    </CActorModel>
-    <CActorModel id="BlitzerConstruction" parent="GenetronConstructionBase" Model="Blitzer">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 42.000000 AsDuration"/>
-    </CActorModel>
-    <CActorModel id="EqualizerConstruction" parent="GenetronConstructionBase" Model="Equalizer">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 42.000000 AsDuration"/>
-    </CActorModel>
-    <CActorModel id="FixerConstruction" parent="GenetronConstructionBase" Model="Fixer">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 42.000000 AsDuration"/>
+    <CActorModel id="ProcessorConstruction" parent="GenetronConstructionBase" buildTime="17.000000" Model="Processor"/>
+    <CActorModel id="BlazeConstruction" parent="GenetronConstructionBase" buildTime="42.000000" Model="Blaze"/>
+    <CActorModel id="BlitzerConstruction" parent="GenetronConstructionBase" buildTime="42.000000" Model="Blitzer"/>
+    <CActorModel id="EqualizerConstruction" parent="GenetronConstructionBase" buildTime="56.000000" Model="Equalizer"/>
+    <CActorModel id="FixerConstruction" parent="GenetronConstructionBase" buildTime="42.000000" Model="Fixer">
         <On Terms="ActorCreation" Send="AnimPlay CoverA Cover,A,Stand PlayForever 0.000000"/>
-        <On Terms="ActorCreation; ValidatePlayer FixerNoFusionWelders" Send="AnimPlay NoWelders Cover,B PlayForever 0.000000"/>
+        <!--<On Terms="ActorCreation; ValidatePlayer FixerNoFusionWelders" Send="AnimPlay NoWelders Cover,B PlayForever 0.000000"/>
         <On Terms="Upgrade.FixerFusionWelders.Add" Send="AnimClear NoWelders"/>
-        <On Terms="Upgrade.FixerFusionWelders.Remove" Send="AnimPlay NoWelders Cover,B PlayForever"/>
+        <On Terms="Upgrade.FixerFusionWelders.Remove" Send="AnimPlay NoWelders Cover,B PlayForever"/>-->
         <On Terms="ActorCreation" Send="AnimPlay NoReactiveArmor Cover,C PlayForever 0.000000"/>
     </CActorModel>
-    <CActorModel id="InciterConstruction" parent="GenetronConstructionBase" Model="Inciter">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 55.000000 AsDuration"/>
-    </CActorModel>
-    <CActorModel id="MoleConstruction" parent="GenetronConstructionBase" Model="Mole">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 40.000000 AsDuration"/>
-    </CActorModel>
-    <CActorModel id="SpitfireConstruction" parent="GenetronConstructionBase" Model="Spitfire">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 38.000000 AsDuration"/>
-    </CActorModel>
-    <CActorModel id="TeslaConstruction" parent="GenetronConstructionBase" Model="Tesla">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 45.000000 AsDuration"/>
-    </CActorModel>
-    <CActorModel id="TorrentConstruction" parent="GenetronConstructionBase" Model="Torrent">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 28.000000 AsDuration"/>
-    </CActorModel>
-    <CActorModel id="VirtusConstruction" parent="GenetronConstructionBase" Model="Virtus">
-        <On index="2" Terms="ActorCreation" Send="AnimPlay Build Build 0 0.000000 -1.000000 60.000000 AsDuration"/>
-    </CActorModel>
+    <CActorModel id="AquilaConstruction" parent="GenetronConstructionBase" buildTime="56.000000" Model="Aquila"/>
+    <CActorModel id="InciterConstruction" parent="GenetronConstructionBase" buildTime="56.000000" Model="Inciter"/>
+    <CActorModel id="MoleConstruction" parent="GenetronConstructionBase" buildTime="42.000000" Model="Mole"/>
+    <CActorModel id="SpitfireConstruction" parent="GenetronConstructionBase" buildTime="42.000000" Model="Spitfire"/>
+    <CActorModel id="TeslaConstruction" parent="GenetronConstructionBase" buildTime="42.000000" Model="Tesla"/>
+    <CActorModel id="TorrentConstruction" parent="GenetronConstructionBase" buildTime="28.000000" Model="Torrent"/>
+    <CActorModel id="VirtusConstruction" parent="GenetronConstructionBase" buildTime="56.000000" Model="Virtus"/>
+    <CActorModel id="AvengerConstruction" parent="GenetronConstructionBase" buildTime="28.000000" Model="AvengerGenetron"/>
+    <CActorModel id="HornetConstruction" parent="GenetronConstructionBase" buildTime="35.000000" Model="Hornet"/>
+    <CActorModel id="CourierConstruction" parent="GenetronConstructionBase" buildTime="35.000000" Model="Courier"/>
+    <CActorModel id="BoarConstruction" parent="GenetronConstructionBase" buildTime="35.000000" Model="Boar"/>
+    <CActorModel id="JupiterConstruction" parent="GenetronConstructionBase" buildTime="42.000000" Model="Jupiter"/>
+    <CActorModel id="BadgerConstruction" parent="GenetronConstructionBase" buildTime="56.000000" Model="Badger"/>
     <CActorUnit id="Tesla" parent="GenericUnitStandard" unitName="Tesla">
         <On Terms="Abil.ConstructTeslaCharge.Start; ValidateUnit TeslaEquippingShockCharge" Send="Create TeslaShockChargeModel"/>
         <On Terms="Abil.ConstructTeslaCharge.Start; ValidateUnit TeslaEquippingCloakCharge" Send="Create TeslaCloakChargeModel"/>
@@ -2780,18 +2750,12 @@
         <Model value="AvengerNemesisMissileWeapon"/>
     </CActorMissile>
     <CActorUnit id="Torrent" parent="GenericUnitStandard" unitName="Torrent">
-        <On index="65" Terms="WeaponStart.HurricaneMissilesNormalOutput.AttackStart" Send="AnimBracketStart Attack Attack"/>
-        <On Terms="WeaponStart.HurricaneMissilesNormalOutput.AttackStart; WeaponTargetDistance LT 2.000000" Send="AnimPlay Superior Superior,03 0 -1.000000 -1.000000 7.000000 AsDuration"/>
-        <On Terms="WeaponStart.HurricaneMissilesNormalOutput.AttackStart; WeaponTargetDistance GE 2.000000" Send="AnimPlay Superior Superior,02 0 -1.000000 -1.000000 7.000000 AsDuration"/>
-        <On Terms="WeaponStart.HurricaneMissilesNormalOutput.AttackStart; WeaponTargetDistance GE 4.000000" Send="AnimPlay Superior Superior,01 0 -1.000000 -1.000000 7.000000 AsDuration"/>
-        <On Terms="WeaponStart.HurricaneMissilesNormalOutput.AttackStart; WeaponTargetDistance GE 8.000000" Send="AnimPlay Superior Superior,00 0 -1.000000 -1.000000 7.000000 AsDuration"/>
-        <On Terms="WeaponStop.HurricaneMissilesNormalOutput.AttackStop" Send="AnimBracketStop Superior"/>
-        <On Terms="WeaponStart.HurricaneMissilesHighOutput" Send="AnimBracketStart Attack Attack {} {} 0 1.250000 AsDuration"/>
-        <On Terms="WeaponStart.HurricaneMissilesHighOutput.AttackStart; WeaponTargetDistance LT 2.000000" Send="AnimPlay Superior Superior,03 0 -1.000000 -1.000000 7.000000 AsDuration"/>
-        <On Terms="WeaponStart.HurricaneMissilesHighOutput.AttackStart; WeaponTargetDistance GE 2.000000" Send="AnimPlay Superior Superior,02 0 -1.000000 -1.000000 7.000000 AsDuration"/>
-        <On Terms="WeaponStart.HurricaneMissilesHighOutput.AttackStart; WeaponTargetDistance GE 4.000000" Send="AnimPlay Superior Superior,01 0 -1.000000 -1.000000 7.000000 AsDuration"/>
-        <On Terms="WeaponStart.HurricaneMissilesHighOutput.AttackStart; WeaponTargetDistance GE 8.000000" Send="AnimPlay Superior Superior,00 0 -1.000000 -1.000000 7.000000 AsDuration"/>
-        <On Terms="WeaponStop.HurricaneMissilesHighOutput.AttackStop" Send="AnimBracketStop Superior"/>
+        <On index="65" Terms="WeaponStart.HurricaneMissiles.AttackStart" Send="AnimBracketStart Attack Attack"/>
+        <On Terms="WeaponStart.HurricaneMissiles.AttackStart; WeaponTargetDistance LT 2.000000" Send="AnimPlay Superior Superior,03 0 -1.000000 -1.000000 7.000000 AsDuration"/>
+        <On Terms="WeaponStart.HurricaneMissiles.AttackStart; WeaponTargetDistance GE 2.000000" Send="AnimPlay Superior Superior,02 0 -1.000000 -1.000000 7.000000 AsDuration"/>
+        <On Terms="WeaponStart.HurricaneMissiles.AttackStart; WeaponTargetDistance GE 4.000000" Send="AnimPlay Superior Superior,01 0 -1.000000 -1.000000 7.000000 AsDuration"/>
+        <On Terms="WeaponStart.HurricaneMissiles.AttackStart; WeaponTargetDistance GE 8.000000" Send="AnimPlay Superior Superior,00 0 -1.000000 -1.000000 7.000000 AsDuration"/>
+        <On Terms="WeaponStop.HurricaneMissiles.AttackStop" Send="AnimBracketStop Superior"/>
         <On Terms="UnitHeightUpdate.*.Land" Send="Create Cyclone_Land"/>
         <Macros value="UnloadDropAnim"/>
         <Macros value="TerrainSquibAnimations"/>
@@ -2955,7 +2919,7 @@
         </Wireframe>
     </CActorUnit>
     <CActorSound id="MoleBurrowSound" parent="SoundOneShot">
-        <On Terms="AbilMorph.*.Start; MorphTo MoleBurrowed" Send="Create"/>
+        <On Terms="AbilMorph.*.Start; MorphTo MoleBurrowed; MorphFrom Mole" Send="Create"/>
         <Host Subject="_Unit"/>
         <HostSiteOps Ops="SOpAttachOriginStationary"/>
         <Sound value="WidowMine_Burrow"/>
@@ -5182,9 +5146,11 @@
         <Sound value="ApertureUnload"/>
     </CActorSound>
     <CActorModel id="ApertureLoadModel" parent="ModelAnimationStyleOneShotUNIT">
-        <On Terms="Effect.ApertureTeleportTP.Start; At Target" Send="Create"/>
+        <On Terms="Effect.ApertureTeleportEnergySwitch.Start; At Target" Send="Create"/>
         <On Terms="AbilTransport.ApertureLoadUnload.CargoLoad" Send="Create"/>
         <On Terms="ActorCreation" Send="SetTintColor {255,255,0 1.500000}"/>
+        <On Terms="Effect.ApertureTeleportEnergySwitch.Start; At Target" Send="AnimSetTimeScale BSD 0.300000"/>
+        <On Terms="Effect.ApertureTeleportEnergySwitch.Start; At Target" Send="SetTintColor {255,255,0 3.000000} 2.100000"/>
         <HostSiteOps Ops="SOpAttachOriginStationary"/>
     </CActorModel>
     <CActorSound id="ApertureLoadSound" parent="SoundOneShot">
@@ -6257,6 +6223,8 @@
         <On Terms="TimerExpired; TimerName CoverDelay" Send="AnimBracketStop Cover"/>
         <On Terms="WeaponStart.*.AttackStart" Send="AnimBracketStart Attack {} Attack {} ContentNonLooping,ContentPlayOnce"/>
         <On Terms="WeaponStop.*.AttackStop" Send="AnimBracketStop Attack"/>
+        <On Terms="UnitMovementUpdate.*.Walk" Send="AnimBracketClear Cover"/>
+        <Baselines index="Stand" BlendIn="0.000000"/>
         <Baselines index="Walk" AnimProps="Walk,Superior"/>
         <BarOffset value="65"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-mechanicalarmorlevel0.dds"/>
@@ -6325,4 +6293,24 @@
     <CActorUnit id="Edifice" parent="GenericUnitKeironStructure" buildTime="61.000000" unitName="Edifice">
         <On index="69" Terms="UnitConstruction.Edifice.Start" Send="Create KeironBuildModelEdifice"/>
     </CActorUnit>
+    <CActorUnit id="InciterELORProtocolTargetDummy" parent="GenericUnitStandard" unitName="InciterELORProtocolTargetDummy">
+        <Model value="Invisible"/>
+        <ModelFlags index="OutlineEmitter" value="1"/>
+    </CActorUnit>
+    <CActorModel id="InciterJumpJetsFireModel" parent="ModelAnimationStyleOneShot">
+        <On Terms="Effect.ELORProtocolSA.Start" Send="Create"/>
+        <On Terms="Effect.ELORProtocolLM.Start; At Source" Send="Create"/>
+        <HostSiteOps Ops="SOpCasterPoint" HoldPosition="1"/>
+        <Model value="InciterJumpJetsImpactModel"/>
+        <ModelFlags index="AllowHitTest" value="0"/>
+    </CActorModel>
+    <CActorSound id="InciterELORJumpLaunchSound" parent="SoundOneShot">
+        <On Terms="Effect.ELORProtocolLM.Start" Send="Create"/>
+        <HostSiteOps Ops="SOpCasterPoint"/>
+        <Sound value="Inciter_JumpLaunch"/>
+    </CActorSound>
+    <CActorSound id="InciterELORJumpLandSound" parent="SoundOneShot">
+        <On Terms="Effect.ELORProtocolSA.Start" Send="Create"/>
+        <Sound value="Inciter_JumpLand"/>
+    </CActorSound>
 </Catalog>

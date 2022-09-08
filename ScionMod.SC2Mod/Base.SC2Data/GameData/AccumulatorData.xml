@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
+    <CAccumulatorUserData id="DefaultDataAdd"/>
+    <CAccumulatorUserData id="RefundEnergyDataAdd">
+        <Key value="RefundEnergy"/>
+    </CAccumulatorUserData>
+    <CAccumulatorVitals id="EnergyCurrentCaster">
+        <Ratio value="1"/>
+        <VitalType value="Energy"/>
+        <ModificationType value="PerUnit"/>
+    </CAccumulatorVitals>
+    <CAccumulatorVitals id="EnergyMaxTarget">
+        <Ratio value="1"/>
+        <VitalType value="Energy"/>
+        <UnitSource Value="Target"/>
+        <ModificationType value="PerUnitMaxVital"/>
+    </CAccumulatorVitals>
+    <CAccumulatorVitals id="EnergyCurrentTarget">
+        <Ratio value="1"/>
+        <VitalType value="Energy"/>
+        <UnitSource Value="Target"/>
+        <ModificationType value="PerUnit"/>
+    </CAccumulatorVitals>
+    <CAccumulatorVitals id="EnergyMaxCaster">
+        <Ratio value="1"/>
+        <VitalType value="Energy"/>
+        <ModificationType value="PerUnitMaxVital"/>
+    </CAccumulatorVitals>
     <CAccumulatorVitals id="FuseFusionShieldsApply">
         <Ratio value="1"/>
         <VitalType value="Shields"/>
@@ -27,4 +53,15 @@
         <ModificationType value="PerUnitMaxVital"/>
     </CAccumulatorVitals>
     <CAccumulatorUserData id="FuseUnfuseData"/>
+    <CAccumulatorArithmetic id="RelayTowerLongRangeTransferArith">
+        <MinAccumulation value="0"/>
+        <MaxAccumulation value="25"/>
+        <Parameters value="25">
+            <AccumulatorArray value="EnergyCurrentTarget"/>
+        </Parameters>
+        <Parameters value="0">
+            <AccumulatorArray value="EnergyMaxTarget"/>
+        </Parameters>
+        <Operation value="Subtract"/>
+    </CAccumulatorArithmetic>
 </Catalog>

@@ -19,6 +19,49 @@
         <Compare value="GT"/>
         <Behavior value="GyreAnnexDummy"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorCombine id="ApertureHasEnoughEnergy">
+        <ResultFailed value="NotEnoughEnergy"/>
+        <CombineArray value="Aperture1CargoAnd10Energy"/>
+        <CombineArray value="Aperture2CargoAnd20Energy"/>
+        <CombineArray value="Aperture4CargoAnd40Energy"/>
+        <CombineArray value="Aperture8CargoAnd80Energy"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareOrderCount id="AssemblyArrayIsTraining1">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="BuildAircraft"/>
+        <AbilCmdIndex value="1"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="AssemblyArrayIsTraining2">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="BuildAircraft"/>
+        <AbilCmdIndex value="2"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="AssemblyArrayIsTraining3">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="BuildAircraft"/>
+        <AbilCmdIndex value="3"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="AssemblyArrayIsTraining4">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="BuildAircraft"/>
+        <AbilCmdIndex value="4"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="AssemblyArrayIsTraining5">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="BuildAircraft"/>
+        <AbilCmdIndex value="5"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="AssemblyArrayIsTraining6">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="BuildAircraft"/>
+        <AbilCmdIndex value="6"/>
+    </CValidatorUnitCompareOrderCount>
     <CValidatorCombine id="AvengerTacticalAI">
         <CombineArray value="InRangeCurrentTargetOfTarget"/>
         <CombineArray value="hasEnergy"/>
@@ -42,11 +85,185 @@
         <Value value="75"/>
         <Vital value="Energy"/>
     </CValidatorUnitCompareVital>
+    <CValidatorUnitCompareOrderCount id="AssemblyArrayIsTraining0">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="BuildAircraft"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorCombine id="GenetronCasterEnergyRegenNotSuppressed">
+        <Type value="And"/>
+        <CombineArray value="CasterNoCourierCloak"/>
+        <CombineArray value="CasterNoProcessorDetectionMode"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareBehaviorCount id="CasterNoCourierCloak">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="CourierCloak"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="CasterProductionModeIsOverclock">
+        <WhichUnit Value="Caster"/>
+        <Compare value="GT"/>
+        <Behavior value="GenetronProductionModeOverclockBuff"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="CasterNoProcessorDetectionMode">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="PDDetector"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="CasterNoPowerOutage">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="GenetronPowerOutage"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareVital id="CasterEnergyGTE5">
+        <ResultFailed value="NotEnoughEnergy"/>
+        <WhichUnit Value="Caster"/>
+        <Compare value="GE"/>
+        <Value value="5"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
+    <CValidatorUnitCompareOrderCount id="FabricatorIsTraining1">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="TrainHeavyweightMechs"/>
+        <AbilCmdIndex value="1"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="FabricatorIsTraining2">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="TrainHeavyweightMechs"/>
+        <AbilCmdIndex value="2"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="FabricatorIsTraining3">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="TrainHeavyweightMechs"/>
+        <AbilCmdIndex value="3"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="FabricatorIsTraining4">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="TrainHeavyweightMechs"/>
+        <AbilCmdIndex value="4"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorCombine id="AssemblyArrayIsTraining">
+        <CombineArray value="AssemblyArrayIsTraining0"/>
+        <CombineArray value="AssemblyArrayIsTraining1"/>
+        <CombineArray value="AssemblyArrayIsTraining2"/>
+        <CombineArray value="AssemblyArrayIsTraining3"/>
+        <CombineArray value="AssemblyArrayIsTraining4"/>
+        <CombineArray value="AssemblyArrayIsTraining5"/>
+        <CombineArray value="AssemblyArrayIsTraining6"/>
+    </CValidatorCombine>
+    <CValidatorPlayerRequirement id="HasCoreOrRelay">
+        <Find value="1"/>
+        <Value value="HaveProcessingCoreOrRelayTower"/>
+    </CValidatorPlayerRequirement>
+    <CValidatorCombine id="GenetronRegenValidators">
+        <CombineArray value="EnergyGTE5"/>
+        <CombineArray value="EnergyNotFullCaster"/>
+        <CombineArray value="NotDead"/>
+        <CombineArray value="CasterNotDead"/>
+        <CombineArray value="NotHidden"/>
+        <CombineArray value="GenetronCasterEnergyRegenNotSuppressed"/>
+        <Type value="And"/>
+    </CValidatorCombine>
+    <CValidatorUnitType id="IsNotRelayTower">
+        <Value value="RelayTower"/>
+        <Find value="0"/>
+    </CValidatorUnitType>
+    <CValidatorCombine id="IsRelayTowerOrProcessingCoreAndHasEnergy">
+        <Type value="And"/>
+        <CombineArray value="IsProcessingCoreOrRelayTower"/>
+        <CombineArray value="hasEnergy"/>
+    </CValidatorCombine>
+    <CValidatorUnitType id="IsNotTeslaCloakCharge">
+        <Value value="CloakCharge"/>
+        <Find value="0"/>
+    </CValidatorUnitType>
+    <CValidatorUnitType id="IsNotTeslaShockCharge">
+        <Value value="ShockCharge"/>
+    </CValidatorUnitType>
+    <CValidatorCombine id="IsNotTeslaCharge">
+        <Type value="And"/>
+        <CombineArray value="IsNotTeslaCloakCharge"/>
+        <CombineArray value="IsNotTeslaShockCharge"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="ManufacturerIsTraining">
+        <CombineArray value="ManufacturerIsTraining0"/>
+        <CombineArray value="ManufacturerIsTraining1"/>
+        <CombineArray value="ManufacturerIsTraining2"/>
+        <CombineArray value="ManufacturerIsTraining3"/>
+        <CombineArray value="ManufacturerIsTraining4"/>
+        <CombineArray value="ManufacturerIsTraining5"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareOrderCount id="FabricatorIsTraining0">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="TrainHeavyweightMechs"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="ManufacturerIsTraining1">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="TrainLightweightMechs"/>
+        <AbilCmdIndex value="1"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="ManufacturerIsTraining2">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="TrainLightweightMechs"/>
+        <AbilCmdIndex value="2"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="ManufacturerIsTraining3">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="TrainLightweightMechs"/>
+        <AbilCmdIndex value="3"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="ManufacturerIsTraining4">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="TrainLightweightMechs"/>
+        <AbilCmdIndex value="4"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="ManufacturerIsTraining5">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="TrainLightweightMechs"/>
+        <AbilCmdIndex value="5"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorCombine id="FabricatorIsTraining">
+        <CombineArray value="FabricatorIsTraining0"/>
+        <CombineArray value="FabricatorIsTraining1"/>
+        <CombineArray value="FabricatorIsTraining2"/>
+        <CombineArray value="FabricatorIsTraining3"/>
+        <CombineArray value="FabricatorIsTraining4"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareBehaviorCount id="CasterProductionModeIsPerformance">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="GenetronProductionModePerformanceBuff"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="CasterProductionModeIsStandard">
+        <WhichUnit Value="Caster"/>
+        <Compare value="GT"/>
+        <Behavior value="GenetronProductionModeStandardBuff"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="CasterHasSelfFixProtocol">
+        <WhichUnit Value="Caster"/>
+        <Compare value="NE"/>
+        <Behavior value="VirtusSelffixProtocolBuff"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareVital id="TargetEnergyLT100">
+        <Compare value="LT"/>
+        <Value value="100"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
     <CValidatorUnitCompareBehaviorCount id="CasterIsAnnexing">
         <WhichUnit Value="Caster"/>
         <Compare value="GT"/>
         <Behavior value="GyreAnnexCaster"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorEffectTreeUserData id="DefaultDataE0">
+        <CheckExistence value="0"/>
+        <Key value="Default"/>
+    </CValidatorEffectTreeUserData>
     <CValidatorUnitCompareBehaviorCount id="IsMoleBuried">
         <Compare value="GT"/>
         <Behavior value="MoleBuried"/>
@@ -223,11 +440,135 @@
         <Value value="0.5"/>
         <Vital value="Shields"/>
     </CValidatorUnitCompareVital>
+    <CValidatorUnitType id="IsRelayTower">
+        <Value value="RelayTower"/>
+    </CValidatorUnitType>
+    <CValidatorCombine id="IsProcessingCoreOrRelayTower">
+        <CombineArray value="IsProcessingCore"/>
+        <CombineArray value="IsRelayTower"/>
+    </CValidatorCombine>
+    <CValidatorLocationEnumArea id="PlayerHasRelayTowerOrProcessingCoreWithEnergy">
+        <AreaArray>
+            <Compare value="GT"/>
+            <Count value="0"/>
+            <Radius value="500"/>
+            <Validator value="IsRelayTowerOrProcessingCoreAndHasEnergy"/>
+        </AreaArray>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
+    </CValidatorLocationEnumArea>
+    <CValidatorUnitType id="TargetUnitTypeIsNotCasterUnitType">
+        <OtherUnit Value="Caster"/>
+        <Find value="0"/>
+    </CValidatorUnitType>
+    <CValidatorCombine id="UploaderIsResearching">
+        <CombineArray value="UploaderIsResearchingManu"/>
+        <CombineArray value="UploaderIsResearchingFab"/>
+        <CombineArray value="UploaderIsResearchingAsse"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareOrderCount id="UploaderIsResearchingAsse0">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="ResearchAssemblyArray"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="UploaderIsResearchingAsse1">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="ResearchAssemblyArray"/>
+        <AbilCmdIndex value="1"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="UploaderIsResearchingAsse2">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="ResearchAssemblyArray"/>
+        <AbilCmdIndex value="2"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="UploaderIsResearchingAsse3">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="ResearchAssemblyArray"/>
+        <AbilCmdIndex value="3"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="UploaderIsResearchingFab1">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="UploaderResearchFabricator"/>
+        <AbilCmdIndex value="1"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="UploaderIsResearchingFab2">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="UploaderResearchFabricator"/>
+        <AbilCmdIndex value="2"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorCombine id="UploaderIsResearchingAsse">
+        <CombineArray value="UploaderIsResearchingAsse0"/>
+        <CombineArray value="UploaderIsResearchingAsse1"/>
+        <CombineArray value="UploaderIsResearchingAsse2"/>
+        <CombineArray value="UploaderIsResearchingAsse3"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="UploaderIsResearchingManu">
+        <CombineArray value="UploaderIsResearchingManu0"/>
+        <CombineArray value="UploaderIsResearchingManu1"/>
+        <CombineArray value="UploaderIsResearchingManu2"/>
+        <CombineArray value="UploaderIsResearchingManu3"/>
+        <CombineArray value="UploaderIsResearchingManu4"/>
+        <CombineArray value="UploaderIsResearchingManu5"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareOrderCount id="UploaderIsResearchingManu0">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="UploaderResearchManufacL1"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="UploaderIsResearchingFab0">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="UploaderResearchFabricator"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="ManufacturerIsTraining0">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="TrainLightweightMechs"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="UploaderIsResearchingManu1">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="UploaderResearchManufacL1"/>
+        <AbilCmdIndex value="1"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="UploaderIsResearchingManu2">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="UploaderResearchManufacL1"/>
+        <AbilCmdIndex value="2"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="UploaderIsResearchingManu3">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="UploaderResearchManufacL1"/>
+        <AbilCmdIndex value="3"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="UploaderIsResearchingManu4">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="UploaderResearchManufacL1"/>
+        <AbilCmdIndex value="4"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="UploaderIsResearchingManu5">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+        <AbilLink value="UploaderResearchManufacL1"/>
+        <AbilCmdIndex value="5"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorCombine id="UploaderIsResearchingFab">
+        <CombineArray value="UploaderIsResearchingFab0"/>
+        <CombineArray value="UploaderIsResearchingFab1"/>
+        <CombineArray value="UploaderIsResearchingFab2"/>
+    </CValidatorCombine>
     <CValidatorPlayerRequirement id="XayidlingDexterousJoints">
         <Find value="1"/>
         <Value value="UseDexterousJoints"/>
     </CValidatorPlayerRequirement>
-    <CValidatorCombine id="ProcessingDroneAutocastFilter">
+    <CValidatorCombine id="ProcessorAutocastFilter">
         <CombineArray value="IsAquila"/>
         <CombineArray value="IsJupiter"/>
         <CombineArray value="IsBlitzer"/>
@@ -332,17 +673,17 @@
         <SearchFlags index="ExtendByUnitRadius" value="1"/>
         <SearchFilters value="Air,Visible;Player,Ally,Neutral,Worker,Missile,Stasis,Dead,Hidden,Invulnerable"/>
     </CValidatorLocationEnumArea>
-    <CValidatorCombine id="TacticalAIProcessingDroneAnalyzeWeakness">
+    <CValidatorCombine id="TacticalAIProcessorAnalyzeWeakness">
         <Type value="And"/>
-        <CombineArray value="TacticalAIProcessingDroneSupport"/>
+        <CombineArray value="TacticalAIProcessorSupport"/>
         <CombineArray value="CasterEnergyGE100"/>
     </CValidatorCombine>
-    <CValidatorCombine id="TacticalAIProcessingDroneDetectionOn">
+    <CValidatorCombine id="TacticalAIProcessorDetectionOn">
         <Type value="And"/>
-        <CombineArray value="TacticalAIProcessingDroneSupport"/>
+        <CombineArray value="TacticalAIProcessorSupport"/>
         <CombineArray value="UndetectedEnemyCloakedUnitsNearby"/>
     </CValidatorCombine>
-    <CValidatorLocationEnumArea id="TacticalAIProcessingDroneSupport">
+    <CValidatorLocationEnumArea id="TacticalAIProcessorSupport">
         <WhichLocation Value="CasterUnit"/>
         <AreaArray>
             <Compare value="GT"/>
@@ -561,18 +902,6 @@
         <Value value="1"/>
         <Behavior value="SchematicTransmitAL3"/>
     </CValidatorUnitCompareBehaviorCount>
-    <CValidatorCombine id="VirtusLockedDown">
-        <CombineArray value="VirtusLockedDownFull"/>
-        <CombineArray value="VirtusLockedDownTimed"/>
-    </CValidatorCombine>
-    <CValidatorUnitCompareBehaviorCount id="VirtusLockedDownFull">
-        <Behavior value="VirtusLockdownMode"/>
-        <Value value="1"/>
-    </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitCompareBehaviorCount id="VirtusLockedDownTimed">
-        <Behavior value="VirtusLockdownModeDuration"/>
-        <Value value="1"/>
-    </CValidatorUnitCompareBehaviorCount>
     <CValidatorPlayerRequirement id="VirtusSelfFixProtocolUpgraded">
         <ResultNoPlayer value="Error"/>
         <Find value="1"/>
@@ -731,7 +1060,7 @@
     <CValidatorUnitCompareVital id="VirtusLockdownHealthThreshhold">
         <ResultFailed value="TooMuchLife"/>
         <Compare value="LT"/>
-        <Value value="76"/>
+        <Value value="100"/>
     </CValidatorUnitCompareVital>
     <CValidatorLocationEnumArea id="NoGroundHostilesNearby">
         <AreaArray Count="0" Radius="7"/>
@@ -763,21 +1092,21 @@
         <CombineArray value="RevenantLaunchTargetFastCombine"/>
         <CombineArray value="RevenantLaunchTargetSlow"/>
     </CValidatorCombine>
-    <CValidatorUnitType id="TargetIsProcessingCore">
+    <CValidatorUnitType id="IsProcessingCore">
         <Value value="ProcessingCore"/>
     </CValidatorUnitType>
-    <CValidatorUnitType id="TargetIsProcessingDrone">
-        <Value value="ProcessingDrone"/>
+    <CValidatorUnitType id="IsProcessor">
+        <Value value="Processor"/>
     </CValidatorUnitType>
-    <CValidatorUnitType id="TargetNotProcessingDrone">
-        <Value value="ProcessingDrone"/>
+    <CValidatorUnitType id="IsNotProcessor">
+        <ResultFailed value="Error,Error/NotProcessor"/>
+        <Value value="Processor"/>
         <Find value="0"/>
-        <ResultFailed value="Error,Error/NotProcessingDrone"/>
     </CValidatorUnitType>
-    <CValidatorUnitType id="TargetNotProcessingCore">
-        <Value value="ProcessingCore"/>
-        <Find value="0"/>
+    <CValidatorUnitType id="IsNotProcessingCore">
         <ResultFailed value="Error,Error/NotProcessingCore"/>
+        <Value value="ProcessingCore"/>
+        <Find value="0"/>
     </CValidatorUnitType>
     <CValidatorUnitCompareBehaviorCount id="TrackingMunitionsApplied">
         <Compare value="NE"/>
@@ -915,11 +1244,6 @@
         <Compare value="LT"/>
         <Value value="0.75"/>
         <Type value="Fraction"/>
-    </CValidatorUnitCompareVital>
-    <CValidatorUnitCompareVital id="VirtusLockdownRegenThreshhold">
-        <ResultFailed value="TooMuchLife"/>
-        <Compare value="LT"/>
-        <Value value="75"/>
     </CValidatorUnitCompareVital>
     <CValidatorCombine id="Aperture1CargoAnd10Energy">
         <Type value="And"/>
@@ -1505,7 +1829,7 @@
     </CValidatorUnitType>
     <CValidatorPlayerRequirement id="UseElytraHangarAttackRequirement">
         <Find value="1"/>
-        <Value value="UseElytraHangarAttack"/>
+        <Value value="ElytraHangarAttack"/>
     </CValidatorPlayerRequirement>
     <CValidatorUnitAbil id="CanBeFused">
         <ResultFailed value="Error,ErrorText/CanBeFused"/>
@@ -1516,4 +1840,10 @@
         <Find value="1"/>
         <Value value="UseOcularAcuity"/>
     </CValidatorPlayerRequirement>
+    <CValidatorUnitCompareVital id="EnergyGTE5">
+        <ResultFailed value="NotEnoughEnergy"/>
+        <Compare value="GE"/>
+        <Value value="5"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
 </Catalog>

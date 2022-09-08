@@ -72,6 +72,7 @@ string[3] gv_unit_storage;
 unit[2][gv_const_races + 1] gv_builder_unit;
 bool gv_attack_mode;
 bool gv_vision;
+bool gv_generators;
 bool gv_pause;
 int gv_tester_menu;
 int gv_tester_panel;
@@ -90,6 +91,7 @@ int gv_settings_panel;
 int[4] gv_settings_upgradebutton;
 int[2] gv_settings_researchbutton;
 int[2] gv_settings_visionbutton;
+int[2] gv_settings_generatorsbutton;
 int[gv_const_terrains + 1] gv_settings_terrainbutton;
 int[gv_const_players + 1] gv_settings_allianceplayerlabel;
 int[gv_const_players + 1][3] gv_settings_alliancebuttons;
@@ -114,6 +116,7 @@ void InitGlobals () {
         gv_unit_storage[init_i] = "";
     }
     gv_vision = true;
+    gv_generators = true;
     gv_tester_menu = c_invalidDialogControlId;
     gv_tester_panel = c_invalidDialogControlId;
     gv_menu_mode_settings = c_invalidDialogControlId;
@@ -136,6 +139,9 @@ void InitGlobals () {
     }
     for (init_i = 0; init_i <= 1; init_i += 1) {
         gv_settings_visionbutton[init_i] = c_invalidDialogControlId;
+    }
+    for (init_i = 0; init_i <= 1; init_i += 1) {
+        gv_settings_generatorsbutton[init_i] = c_invalidDialogControlId;
     }
     for (init_i = 0; init_i <= gv_const_terrains; init_i += 1) {
         gv_settings_terrainbutton[init_i] = c_invalidDialogControlId;
@@ -228,7 +234,7 @@ trigger gt_LeaderboardUnitRemoved;
 bool gf_NoUnitsForSide (int lp_side) {
     // Automatic Variable Declarations
     // Implementation
-    if ((UnitGroupCount(UnitGroup(null, gv_side_player[lp_side], RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0), c_unitCountAlive) == 0) && (UnitGroupCount(UnitGroup("Battlecruiser", gv_side_player[lp_side], RegionEntireMap(), UnitFilter(0, (1 << (c_targetFilterStasis - 32)) | (1 << (c_targetFilterInvulnerable - 32)), (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0), c_unitCountAlive) == 0)) {
+    if ((UnitGroupCount(UnitGroup(null, gv_side_player[lp_side], RegionFromId(11), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0), c_unitCountAlive) == 0) && (UnitGroupCount(UnitGroup("Battlecruiser", gv_side_player[lp_side], RegionFromId(11), UnitFilter(0, (1 << (c_targetFilterStasis - 32)) | (1 << (c_targetFilterInvulnerable - 32)), (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0), c_unitCountAlive) == 0)) {
         return true;
     }
     else {
@@ -475,7 +481,7 @@ bool auto_gf_RemoveNeutralStructures_TriggerFunc (bool testConds, bool runAction
     unit auto202C1987_var;
 
     // Implementation
-    auto202C1987_g = UnitGroup(null, 0, RegionEntireMap(), UnitFilter(0, 0, 0, 0), 0);
+    auto202C1987_g = UnitGroup(null, 0, RegionFromId(11), UnitFilter(0, 0, 0, 0), 0);
     auto202C1987_u = UnitGroupCount(auto202C1987_g, c_unitCountAll);
     for (;; auto202C1987_u -= 1) {
         auto202C1987_var = UnitGroupUnitFromEnd(auto202C1987_g, auto202C1987_u);
@@ -514,7 +520,7 @@ bool auto_gf_SaveMapStructures_TriggerFunc (bool testConds, bool runActions) {
     lv_y = "";
 
     // Implementation
-    auto0A34B620_g = UnitGroup(null, 0, RegionEntireMap(), UnitFilter(0, 0, 0, 0), 0);
+    auto0A34B620_g = UnitGroup(null, 0, RegionFromId(11), UnitFilter(0, 0, 0, 0), 0);
     auto0A34B620_u = UnitGroupCount(auto0A34B620_g, c_unitCountAll);
     for (;; auto0A34B620_u -= 1) {
         auto0A34B620_var = UnitGroupUnitFromEnd(auto0A34B620_g, auto0A34B620_u);
@@ -640,6 +646,14 @@ void gf_RenderTesterUIForPlayer (int lp_player) {
             else {
                 libNtve_gf_SetDialogItemToggled(gv_settings_visionbutton[0], true, PlayerGroupSingle(lp_player));
                 libNtve_gf_SetDialogItemToggled(gv_settings_visionbutton[1], false, PlayerGroupSingle(lp_player));
+            }
+            if ((gv_generators == true)) {
+                libNtve_gf_SetDialogItemToggled(gv_settings_generatorsbutton[0], false, PlayerGroupSingle(lp_player));
+                libNtve_gf_SetDialogItemToggled(gv_settings_generatorsbutton[1], true, PlayerGroupSingle(lp_player));
+            }
+            else {
+                libNtve_gf_SetDialogItemToggled(gv_settings_generatorsbutton[0], true, PlayerGroupSingle(lp_player));
+                libNtve_gf_SetDialogItemToggled(gv_settings_generatorsbutton[1], false, PlayerGroupSingle(lp_player));
             }
             autoDC839A19_var = 0;
             for ( ; autoDC839A19_var <= autoDC839A19_ae; autoDC839A19_var += 1 ) {
@@ -865,7 +879,7 @@ void gf_DeleteAllTesterUnits () {
 
     // Implementation
     gf_RemoveNeutralStructures();
-    autoC8A61908_g = UnitGroup(null, c_playerAny, RegionEntireMap(), UnitFilter(0, 0, 0, (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
+    autoC8A61908_g = UnitGroup(null, c_playerAny, RegionFromId(11), UnitFilter(0, 0, 0, (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
     autoC8A61908_u = UnitGroupCount(autoC8A61908_g, c_unitCountAll);
     for (;; autoC8A61908_u -= 1) {
         autoC8A61908_var = UnitGroupUnitFromEnd(autoC8A61908_g, autoC8A61908_u);
@@ -882,35 +896,35 @@ void gf_DeleteAllTesterUnits () {
 
         UnitRemove(autoC8A61908_var);
     }
-    auto1B3ACED2_g = UnitGroup("Broodling", c_playerAny, RegionEntireMap(), UnitFilter(0, 0, 0, 0), 0);
+    auto1B3ACED2_g = UnitGroup("Broodling", c_playerAny, RegionFromId(11), UnitFilter(0, 0, 0, 0), 0);
     auto1B3ACED2_u = UnitGroupCount(auto1B3ACED2_g, c_unitCountAll);
     for (;; auto1B3ACED2_u -= 1) {
         auto1B3ACED2_var = UnitGroupUnitFromEnd(auto1B3ACED2_g, auto1B3ACED2_u);
         if (auto1B3ACED2_var == null) { break; }
         UnitRemove(auto1B3ACED2_var);
     }
-    auto92FD348B_g = UnitGroup("BroodlingEscort", c_playerAny, RegionEntireMap(), UnitFilter(0, 0, 0, 0), 0);
+    auto92FD348B_g = UnitGroup("BroodlingEscort", c_playerAny, RegionFromId(11), UnitFilter(0, 0, 0, 0), 0);
     auto92FD348B_u = UnitGroupCount(auto92FD348B_g, c_unitCountAll);
     for (;; auto92FD348B_u -= 1) {
         auto92FD348B_var = UnitGroupUnitFromEnd(auto92FD348B_g, auto92FD348B_u);
         if (auto92FD348B_var == null) { break; }
         UnitRemove(auto92FD348B_var);
     }
-    auto2C01BE5C_g = UnitGroup("ShockCharge", c_playerAny, RegionEntireMap(), UnitFilter(0, 0, 0, 0), 0);
+    auto2C01BE5C_g = UnitGroup("ShockCharge", c_playerAny, RegionFromId(11), UnitFilter(0, 0, 0, 0), 0);
     auto2C01BE5C_u = UnitGroupCount(auto2C01BE5C_g, c_unitCountAll);
     for (;; auto2C01BE5C_u -= 1) {
         auto2C01BE5C_var = UnitGroupUnitFromEnd(auto2C01BE5C_g, auto2C01BE5C_u);
         if (auto2C01BE5C_var == null) { break; }
         UnitRemove(auto2C01BE5C_var);
     }
-    auto5C4A9C34_g = UnitGroup("CloakCharge", c_playerAny, RegionEntireMap(), UnitFilter(0, 0, 0, 0), 0);
+    auto5C4A9C34_g = UnitGroup("CloakCharge", c_playerAny, RegionFromId(11), UnitFilter(0, 0, 0, 0), 0);
     auto5C4A9C34_u = UnitGroupCount(auto5C4A9C34_g, c_unitCountAll);
     for (;; auto5C4A9C34_u -= 1) {
         auto5C4A9C34_var = UnitGroupUnitFromEnd(auto5C4A9C34_g, auto5C4A9C34_u);
         if (auto5C4A9C34_var == null) { break; }
         UnitRemove(auto5C4A9C34_var);
     }
-    autoFDB84905_g = UnitGroup("Fuse", c_playerAny, RegionEntireMap(), UnitFilter(0, 0, 0, 0), 0);
+    autoFDB84905_g = UnitGroup("Fuse", c_playerAny, RegionFromId(11), UnitFilter(0, 0, 0, 0), 0);
     autoFDB84905_u = UnitGroupCount(autoFDB84905_g, c_unitCountAll);
     for (;; autoFDB84905_u -= 1) {
         autoFDB84905_var = UnitGroupUnitFromEnd(autoFDB84905_g, autoFDB84905_u);
@@ -996,7 +1010,7 @@ bool auto_gf_SaveTesterUnits_TriggerFunc (bool testConds, bool runActions) {
     lv_y = "";
 
     // Implementation
-    autoCD009358_g = UnitGroup(null, gv_side_player[0], RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
+    autoCD009358_g = UnitGroup(null, gv_side_player[0], RegionFromId(11), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
     autoCD009358_u = UnitGroupCount(autoCD009358_g, c_unitCountAll);
     for (;; autoCD009358_u -= 1) {
         autoCD009358_var = UnitGroupUnitFromEnd(autoCD009358_g, autoCD009358_u);
@@ -1008,7 +1022,7 @@ bool auto_gf_SaveTesterUnits_TriggerFunc (bool testConds, bool runActions) {
     }
     gv_unit_storage[0] = lv_string;
     lv_string = "";
-    auto7EC06B5A_g = UnitGroup(null, gv_side_player[1], RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
+    auto7EC06B5A_g = UnitGroup(null, gv_side_player[1], RegionFromId(11), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
     auto7EC06B5A_u = UnitGroupCount(auto7EC06B5A_g, c_unitCountAll);
     for (;; auto7EC06B5A_u -= 1) {
         auto7EC06B5A_var = UnitGroupUnitFromEnd(auto7EC06B5A_g, auto7EC06B5A_u);
@@ -1020,7 +1034,7 @@ bool auto_gf_SaveTesterUnits_TriggerFunc (bool testConds, bool runActions) {
     }
     gv_unit_storage[1] = lv_string;
     lv_string = "";
-    auto3DBFB9C5_g = UnitGroup(null, 0, RegionEntireMap(), UnitFilter(0, 0, 0, 0), 0);
+    auto3DBFB9C5_g = UnitGroup(null, 0, RegionFromId(11), UnitFilter(0, 0, 0, 0), 0);
     auto3DBFB9C5_u = UnitGroupCount(auto3DBFB9C5_g, c_unitCountAll);
     for (;; auto3DBFB9C5_u -= 1) {
         auto3DBFB9C5_var = UnitGroupUnitFromEnd(auto3DBFB9C5_g, auto3DBFB9C5_u);
@@ -1058,11 +1072,11 @@ void gf_ResetTesterUnits () {
     gf_LoadTesterUnits(gv_unit_storage[2], 0);
     auto3D6D11B2_var = 1;
     for ( ; auto3D6D11B2_var <= auto3D6D11B2_ae; auto3D6D11B2_var += 1 ) {
-        UnitControlGroupAddUnits(auto3D6D11B2_var, 1, UnitGroup(null, gv_side_player[0], RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0));
-        UnitControlGroupAddUnits(auto3D6D11B2_var, 2, UnitGroup(null, gv_side_player[1], RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0));
+        UnitControlGroupAddUnits(auto3D6D11B2_var, 1, UnitGroup(null, gv_side_player[0], RegionFromId(11), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0));
+        UnitControlGroupAddUnits(auto3D6D11B2_var, 2, UnitGroup(null, gv_side_player[1], RegionFromId(11), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0));
     }
     if ((gv_attack_mode == false)) {
-        autoE253323F_g = UnitGroup(null, c_playerAny, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
+        autoE253323F_g = UnitGroup(null, c_playerAny, RegionFromId(11), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
         autoE253323F_u = UnitGroupCount(autoE253323F_g, c_unitCountAll);
         for (;; autoE253323F_u -= 1) {
             autoE253323F_var = UnitGroupUnitFromEnd(autoE253323F_g, autoE253323F_u);
@@ -1071,14 +1085,14 @@ void gf_ResetTesterUnits () {
         }
     }
 
-    auto14626CCC_g = UnitGroup(null, c_playerAny, RegionEntireMap(), UnitFilter(0, (1 << (c_targetFilterHasEnergy - 32)), (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
+    auto14626CCC_g = UnitGroup(null, c_playerAny, RegionFromId(11), UnitFilter(0, (1 << (c_targetFilterHasEnergy - 32)), (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
     auto14626CCC_u = UnitGroupCount(auto14626CCC_g, c_unitCountAll);
     for (;; auto14626CCC_u -= 1) {
         auto14626CCC_var = UnitGroupUnitFromEnd(auto14626CCC_g, auto14626CCC_u);
         if (auto14626CCC_var == null) { break; }
         UnitSetPropertyFixed(auto14626CCC_var, c_unitPropEnergyPercent, 100.0);
     }
-    auto88460349_g = UnitGroup("Carrier", c_playerAny, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
+    auto88460349_g = UnitGroup("Carrier", c_playerAny, RegionFromId(11), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
     auto88460349_u = UnitGroupCount(auto88460349_g, c_unitCountAll);
     for (;; auto88460349_u -= 1) {
         auto88460349_var = UnitGroupUnitFromEnd(auto88460349_g, auto88460349_u);
@@ -1086,7 +1100,7 @@ void gf_ResetTesterUnits () {
         UnitSetProgressStage(auto88460349_var, 1, c_unitProgressStageCancel);
         UnitMagazineArm(auto88460349_var, AbilityCommand("CarrierHangar", 0), (CatalogFieldValueGetAsInt(c_gameCatalogAbil, "CarrierHangar", "MaxCount", UnitGetOwner(auto88460349_var))-CatalogFieldValueGetAsInt(c_gameCatalogAbil, "CarrierHangar", "InfoArray[" + IntToString(0) + "].CountStart", UnitGetOwner(auto88460349_var))));
     }
-    autoD3BD3B18_g = UnitGroup("Myriad", c_playerAny, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
+    autoD3BD3B18_g = UnitGroup("Myriad", c_playerAny, RegionFromId(11), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
     autoD3BD3B18_u = UnitGroupCount(autoD3BD3B18_g, c_unitCountAll);
     for (;; autoD3BD3B18_u -= 1) {
         autoD3BD3B18_var = UnitGroupUnitFromEnd(autoD3BD3B18_g, autoD3BD3B18_u);
@@ -1124,7 +1138,7 @@ void gf_MirrorTesterUnitsByPlayer (int lp_player) {
     else {
         lv_other_side = 0;
     }
-    auto2AD74E59_g = UnitGroup(null, gv_side_player[lv_other_side], RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
+    auto2AD74E59_g = UnitGroup(null, gv_side_player[lv_other_side], RegionFromId(11), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
     auto2AD74E59_u = UnitGroupCount(auto2AD74E59_g, c_unitCountAll);
     for (;; auto2AD74E59_u -= 1) {
         auto2AD74E59_var = UnitGroupUnitFromEnd(auto2AD74E59_g, auto2AD74E59_u);
@@ -1133,7 +1147,7 @@ void gf_MirrorTesterUnitsByPlayer (int lp_player) {
         UnitKill(auto2AD74E59_var);
     }
     Wait(0.0625, c_timeGame);
-    autoEA55E3F6_g = UnitGroup(null, gv_side_player[lv_this_side], RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
+    autoEA55E3F6_g = UnitGroup(null, gv_side_player[lv_this_side], RegionFromId(11), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
     autoEA55E3F6_u = UnitGroupCount(autoEA55E3F6_g, c_unitCountAll);
     for (;; autoEA55E3F6_u -= 1) {
         autoEA55E3F6_var = UnitGroupUnitFromEnd(autoEA55E3F6_g, autoEA55E3F6_u);
@@ -1184,14 +1198,14 @@ void gf_LoadTerrainData (structref<gs_DATA_TERRAIN> lp_dataTerrain) {
         }
     }
     gf_RestoreMapStructures();
-    auto00BFB0DA_g = UnitGroup(null, gv_side_player[0], RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
+    auto00BFB0DA_g = UnitGroup(null, gv_side_player[0], RegionFromId(11), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
     auto00BFB0DA_u = UnitGroupCount(auto00BFB0DA_g, c_unitCountAll);
     for (;; auto00BFB0DA_u -= 1) {
         auto00BFB0DA_var = UnitGroupUnitFromEnd(auto00BFB0DA_g, auto00BFB0DA_u);
         if (auto00BFB0DA_var == null) { break; }
         UnitSetPosition(auto00BFB0DA_var, gv_terrain.lv_spawnPoints[0], false);
     }
-    auto17ECD26E_g = UnitGroup(null, gv_side_player[1], RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
+    auto17ECD26E_g = UnitGroup(null, gv_side_player[1], RegionFromId(11), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
     auto17ECD26E_u = UnitGroupCount(auto17ECD26E_g, c_unitCountAll);
     for (;; auto17ECD26E_u -= 1) {
         auto17ECD26E_var = UnitGroupUnitFromEnd(auto17ECD26E_g, auto17ECD26E_u);
@@ -1587,13 +1601,13 @@ bool gt_Init_Func (bool testConds, bool runActions) {
     gf_AddUnitData("Inciter", "Assets\\Textures\\btn-unit-genetron-inciter.dds");
     gf_AddUnitData("Tesla", "Assets\\Textures\\btn-unit-genetron-tesla.dds");
     gf_AddUnitData("Virtus", "Assets\\Textures\\btn-unit-genetron-virtus.dds");
-    gf_AddUnitData("Courier", "Assets\\Textures\\btn-unit-genetron-courier.dds");
+    gf_AddUnitData("Processor", "Assets\\Textures\\btn-unit-genetron-Processor.dds");
     gf_AddUnitData("Hornet", "Assets\\Textures\\btn-unit-genetron-hornet.dds");
     gf_AddUnitData("AvengerGenetron", "Assets\\Textures\\btn-unit-genetron-avenger.dds");
+    gf_AddUnitData("Courier", "Assets\\Textures\\btn-unit-genetron-courier.dds");
     gf_AddUnitData("Boar", "Assets\\Textures\\btn-unit-genetron-boar.dds");
     gf_AddUnitData("Jupiter", "Assets\\Textures\\btn-unit-genetron-jupiter.dds");
     gf_AddUnitData("Badger", "Assets\\Textures\\btn-unit-genetron-badger.dds");
-    gf_AddUnitData("ProcessingDrone", "Assets\\Textures\\btn-unit-genetron-processingdrone.dds");
     gf_AddUnitData("Converter", "Assets\\Textures\\btn-unit-keiron-converter.dds");
     gf_AddUnitData("Volt", "Assets\\Textures\\btn-unit-keiron-volt.dds");
     gf_AddUnitData("Pariah", "Assets\\Textures\\btn-unit-keiron-pariah.dds");
@@ -1687,26 +1701,21 @@ bool gt_Init_Func (bool testConds, bool runActions) {
     gf_AddUpgradeData(AbilityCommand("InfestationPitResearch", 3));
     gf_AddUpgradeData(AbilityCommand("UltraliskCavernResearch", 2));
     gf_AddUpgradeData(AbilityCommand("UltraliskCavernResearch", 0));
-    gf_AddLeveledUpgradeData(AbilityCommand("OutfittingStationResearch", 3), AbilityCommand("OutfittingStationResearch", 4), AbilityCommand("OutfittingStationResearch", 5));
-    gf_AddLeveledUpgradeData(AbilityCommand("OutfittingStationResearch", 0), AbilityCommand("OutfittingStationResearch", 1), AbilityCommand("OutfittingStationResearch", 2));
+    gf_AddLeveledUpgradeData(AbilityCommand("AnalysisTerminalResearch", 3), AbilityCommand("AnalysisTerminalResearch", 4), AbilityCommand("AnalysisTerminalResearch", 5));
+    gf_AddLeveledUpgradeData(AbilityCommand("AnalysisTerminalResearch", 0), AbilityCommand("AnalysisTerminalResearch", 1), AbilityCommand("AnalysisTerminalResearch", 2));
     gf_AddLeveledUpgradeData(AbilityCommand("TechVaultResearch", 0), AbilityCommand("TechVaultResearch", 1), AbilityCommand("TechVaultResearch", 2));
     gf_AddLeveledUpgradeData(AbilityCommand("TechVaultResearch", 6), AbilityCommand("TechVaultResearch", 7), AbilityCommand("TechVaultResearch", 8));
     gf_AddLeveledUpgradeData(AbilityCommand("TechVaultResearch", 3), AbilityCommand("TechVaultResearch", 4), AbilityCommand("TechVaultResearch", 5));
-    gf_AddUpgradeData(AbilityCommand("UploaderResearchManufacL1", 0));
-    gf_AddUpgradeData(AbilityCommand("UploaderResearchManufacL1", 1));
-    gf_AddUpgradeData(AbilityCommand("UploaderResearchManufacL1", 2));
-    gf_AddUpgradeData(AbilityCommand("UploaderResearchManufacL1", 4));
-    gf_AddUpgradeData(AbilityCommand("UploaderResearchManufacL1", 3));
-    gf_AddUpgradeData(AbilityCommand("UploaderResearchManufacL1", 5));
-    gf_AddUpgradeData(AbilityCommand("UploaderResearchFabricator", 0));
-    gf_AddUpgradeData(AbilityCommand("UploaderResearchFabricator", 2));
-    gf_AddUpgradeData(AbilityCommand("UploaderResearchFabricator", 1));
-    gf_AddUpgradeData(AbilityCommand("ResearchAssemblyArray", 1));
-    gf_AddUpgradeData(AbilityCommand("ResearchAssemblyArray", 0));
-    gf_AddUpgradeData(AbilityCommand("ResearchAssemblyArray", 2));
-    gf_AddUpgradeData(AbilityCommand("ResearchAssemblyArray", 3));
-    gf_AddUpgradeData(AbilityCommand("AnalysisTerminalResearch", 1));
-    gf_AddUpgradeData(AbilityCommand("AnalysisTerminalResearch", 0));
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 0));
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 1));
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 2));
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 3));
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 4));
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 6));
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 7));
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 8));
+    gf_AddUpgradeData(AbilityCommand("GeneratorResearch", 1));
+    gf_AddUpgradeData(AbilityCommand("GeneratorResearch", 0));
     gf_AddLeveledUpgradeData(AbilityCommand("ReliquaryResearch", 0), AbilityCommand("ReliquaryResearch", 1), AbilityCommand("ReliquaryResearch", 2));
     gf_AddLeveledUpgradeData(AbilityCommand("ReliquaryResearch", 3), AbilityCommand("ReliquaryResearch", 4), AbilityCommand("ReliquaryResearch", 5));
     gf_AddLeveledUpgradeData(AbilityCommand("ReliquaryResearch", 6), AbilityCommand("ReliquaryResearch", 7), AbilityCommand("ReliquaryResearch", 8));
@@ -1722,7 +1731,6 @@ bool gt_Init_Func (bool testConds, bool runActions) {
     gf_AddUpgradeData(AbilityCommand("FoundryResearch", 1));
     gf_AddUpgradeData(AbilityCommand("AtriumResearch", 0));
     gf_AddUpgradeData(AbilityCommand("ConduitResearch", 0));
-    gf_AddUpgradeData(AbilityCommand("OutletResearch", 0));
     gf_AddLeveledUpgradeData(AbilityCommand("MutagenChamberResearch", 3), AbilityCommand("MutagenChamberResearch", 4), AbilityCommand("MutagenChamberResearch", 5));
     gf_AddLeveledUpgradeData(AbilityCommand("MutagenChamberResearch", 0), AbilityCommand("MutagenChamberResearch", 1), AbilityCommand("MutagenChamberResearch", 2));
     gf_AddLeveledUpgradeData(AbilityCommand("CatalystPitResearch", 0), AbilityCommand("CatalystPitResearch", 1), AbilityCommand("CatalystPitResearch", 2));
@@ -1763,6 +1771,8 @@ bool gt_Init_Func (bool testConds, bool runActions) {
     gv_settings_researchbutton[1] = gf_DialogItemFromLayoutHookup(c_triggerControlTypeButton, "UIContainer/FullscreenUpperContainer/TesterPanel/SettingsPanel/ListLeft/Research/On");
     gv_settings_visionbutton[0] = gf_DialogItemFromLayoutHookup(c_triggerControlTypeButton, "UIContainer/FullscreenUpperContainer/TesterPanel/SettingsPanel/ListLeft/Vision/Off");
     gv_settings_visionbutton[1] = gf_DialogItemFromLayoutHookup(c_triggerControlTypeButton, "UIContainer/FullscreenUpperContainer/TesterPanel/SettingsPanel/ListLeft/Vision/On");
+    gv_settings_generatorsbutton[0] = gf_DialogItemFromLayoutHookup(c_triggerControlTypeButton, "UIContainer/FullscreenUpperContainer/TesterPanel/SettingsPanel/ListLeft/Generators/Off");
+    gv_settings_generatorsbutton[1] = gf_DialogItemFromLayoutHookup(c_triggerControlTypeButton, "UIContainer/FullscreenUpperContainer/TesterPanel/SettingsPanel/ListLeft/Generators/On");
     lv_ii = 0;
     for ( ; ( (autoD1AD00AA_ai >= 0 && lv_ii <= autoD1AD00AA_ae) || (autoD1AD00AA_ai < 0 && lv_ii >= autoD1AD00AA_ae) ) ; lv_ii += autoD1AD00AA_ai ) {
         gv_settings_terrainbutton[lv_ii] = gf_DialogItemFromLayoutHookup(c_triggerControlTypeButton, ("UIContainer/FullscreenUpperContainer/TesterPanel/SettingsPanel/ListLeft/Terrain/Buttons/Terrain" + IntToString(lv_ii)));
@@ -1815,14 +1825,14 @@ bool gt_Init_Func (bool testConds, bool runActions) {
     gf_SaveMapStructures();
     auto49586763_var = 1;
     for ( ; auto49586763_var <= auto49586763_ae; auto49586763_var += 1 ) {
-        VisRevealerCreate(auto49586763_var, RegionEntireMap());
+        VisRevealerCreate(auto49586763_var, RegionFromId(11));
         gv_data_player[auto49586763_var].lv_revealer = VisRevealerLastCreated();
         gv_settings_allianceplayerlabel[auto49586763_var] = gf_DialogItemFromLayoutHookup(c_triggerControlTypeLabel, ("UIContainer/FullscreenUpperContainer/TesterPanel/SettingsPanel/ListRight/Player" + IntToString(auto49586763_var) + "/Label"));
         gv_settings_alliancebuttons[auto49586763_var][0] = gf_DialogItemFromLayoutHookup(c_triggerControlTypeButton, ("UIContainer/FullscreenUpperContainer/TesterPanel/SettingsPanel/ListRight/Player" + IntToString(auto49586763_var) + "/Red"));
         gv_settings_alliancebuttons[auto49586763_var][1] = gf_DialogItemFromLayoutHookup(c_triggerControlTypeButton, ("UIContainer/FullscreenUpperContainer/TesterPanel/SettingsPanel/ListRight/Player" + IntToString(auto49586763_var) + "/Blue"));
         gv_settings_alliancebuttons[auto49586763_var][2] = gf_DialogItemFromLayoutHookup(c_triggerControlTypeButton, ("UIContainer/FullscreenUpperContainer/TesterPanel/SettingsPanel/ListRight/Player" + IntToString(auto49586763_var) + "/Creator"));
     }
-    autoEB7D79F4_g = UnitGroup(null, c_playerAny, RegionEntireMap(), UnitFilter((1 << c_targetFilterStructure), 0, 0, 0), 0);
+    autoEB7D79F4_g = UnitGroup(null, c_playerAny, RegionFromId(11), UnitFilter((1 << c_targetFilterStructure), 0, 0, 0), 0);
     autoEB7D79F4_u = UnitGroupCount(autoEB7D79F4_g, c_unitCountAll);
     for (;; autoEB7D79F4_u -= 1) {
         autoEB7D79F4_var = UnitGroupUnitFromEnd(autoEB7D79F4_g, autoEB7D79F4_u);
@@ -1998,6 +2008,12 @@ bool gt_DialogItemIsUsed_Func (bool testConds, bool runActions) {
     int auto5401B2A5_var;
     const int auto34D9B1CB_ae = 8;
     int auto34D9B1CB_var;
+    unitgroup auto6C43F6EC_g;
+    int auto6C43F6EC_u;
+    unit auto6C43F6EC_var;
+    unitgroup auto46BFC1D8_g;
+    int auto46BFC1D8_u;
+    unit auto46BFC1D8_var;
     const int autoFB38623C_ae = gv_const_terrains;
     const int autoFB38623C_ai = 1;
     const int auto9B9BE3C2_ae = gv_const_players;
@@ -2187,6 +2203,32 @@ bool gt_DialogItemIsUsed_Func (bool testConds, bool runActions) {
                 }
                 gv_vision = true;
                 UIDisplayMessage(PlayerGroupActive(), c_messageAreaSubtitle, StringExternal("Param/Value/60FF29AC"));
+                gf_RenderTesterUIForAllPlayers();
+                return true;
+            }
+            else if ((EventDialogControl() == gv_settings_generatorsbutton[0])) {
+                auto6C43F6EC_g = UnitGroupFromId(1);
+                auto6C43F6EC_u = UnitGroupCount(auto6C43F6EC_g, c_unitCountAll);
+                for (;; auto6C43F6EC_u -= 1) {
+                    auto6C43F6EC_var = UnitGroupUnitFromEnd(auto6C43F6EC_g, auto6C43F6EC_u);
+                    if (auto6C43F6EC_var == null) { break; }
+                    libNtve_gf_ShowHideUnit(auto6C43F6EC_var, false);
+                }
+                gv_generators = false;
+                UIDisplayMessage(PlayerGroupActive(), c_messageAreaSubtitle, StringExternal("Param/Value/D8E96574"));
+                gf_RenderTesterUIForAllPlayers();
+                return true;
+            }
+            else if ((EventDialogControl() == gv_settings_generatorsbutton[1])) {
+                auto46BFC1D8_g = UnitGroupFromId(1);
+                auto46BFC1D8_u = UnitGroupCount(auto46BFC1D8_g, c_unitCountAll);
+                for (;; auto46BFC1D8_u -= 1) {
+                    auto46BFC1D8_var = UnitGroupUnitFromEnd(auto46BFC1D8_g, auto46BFC1D8_u);
+                    if (auto46BFC1D8_var == null) { break; }
+                    libNtve_gf_ShowHideUnit(auto46BFC1D8_var, true);
+                }
+                gv_generators = true;
+                UIDisplayMessage(PlayerGroupActive(), c_messageAreaSubtitle, StringExternal("Param/Value/E269DFBF"));
                 gf_RenderTesterUIForAllPlayers();
                 return true;
             }
@@ -2488,7 +2530,7 @@ bool gt_TesterStartButton_Func (bool testConds, bool runActions) {
     while (true) {
         auto1028843B_var = PlayerGroupNextPlayer(auto1028843B_g, auto1028843B_var);
         if (auto1028843B_var < 0) { break; }
-        UnitGroupSelect(UnitGroup(null, c_playerAny, RegionEntireMap(), UnitFilter(0, 0, 0, 0), 0), auto1028843B_var, false);
+        UnitGroupSelect(UnitGroup(null, c_playerAny, RegionFromId(11), UnitFilter(0, 0, 0, 0), 0), auto1028843B_var, false);
     }
     gf_ResetTesterUnits();
     TimerRestart(gv_test_timer);
@@ -2536,7 +2578,7 @@ bool gt_TesterStopButton_Func (bool testConds, bool runActions) {
     while (true) {
         autoAD5F4541_var = PlayerGroupNextPlayer(autoAD5F4541_g, autoAD5F4541_var);
         if (autoAD5F4541_var < 0) { break; }
-        UnitGroupSelect(UnitGroup(null, c_playerAny, RegionEntireMap(), UnitFilter(0, 0, 0, 0), 0), autoAD5F4541_var, false);
+        UnitGroupSelect(UnitGroup(null, c_playerAny, RegionFromId(11), UnitFilter(0, 0, 0, 0), 0), autoAD5F4541_var, false);
     }
     gf_MovePlayerCameras();
     BoardMinimizeSetState(gv_leaderboard, PlayerGroupActive(), false);
@@ -2572,16 +2614,16 @@ bool gt_TesterAttackButton_Func (bool testConds, bool runActions) {
     }
 
     if ((gv_data_player[EventPlayer()].lv_ctrl == false) && (gv_data_player[EventPlayer()].lv_shift == true)) {
-        UnitGroupIssueOrder(UnitGroup(null, 9, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterStructure) | (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0), OrderTargetingPoint(AbilityCommand("attack", 0), gv_terrain.lv_spawnPoints[1]), c_orderQueueReplace);
+        UnitGroupIssueOrder(UnitGroup(null, 9, RegionFromId(11), UnitFilter(0, 0, (1 << c_targetFilterStructure) | (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0), OrderTargetingPoint(AbilityCommand("attack", 0), gv_terrain.lv_spawnPoints[1]), c_orderQueueReplace);
         UIDisplayMessage(PlayerGroupActive(), c_messageAreaSubtitle, StringExternal("Param/Value/5F6637DC"));
     }
     else if ((gv_data_player[EventPlayer()].lv_ctrl == true) && (gv_data_player[EventPlayer()].lv_shift == false)) {
-        UnitGroupIssueOrder(UnitGroup(null, 10, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterStructure) | (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0), OrderTargetingPoint(AbilityCommand("attack", 0), gv_terrain.lv_spawnPoints[0]), c_orderQueueReplace);
+        UnitGroupIssueOrder(UnitGroup(null, 10, RegionFromId(11), UnitFilter(0, 0, (1 << c_targetFilterStructure) | (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0), OrderTargetingPoint(AbilityCommand("attack", 0), gv_terrain.lv_spawnPoints[0]), c_orderQueueReplace);
         UIDisplayMessage(PlayerGroupActive(), c_messageAreaSubtitle, StringExternal("Param/Value/B3C36D45"));
     }
     else if (true) {
-        UnitGroupIssueOrder(UnitGroup(null, 9, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterStructure) | (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0), OrderTargetingPoint(AbilityCommand("attack", 0), gv_terrain.lv_spawnPoints[1]), c_orderQueueReplace);
-        UnitGroupIssueOrder(UnitGroup(null, 10, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterStructure) | (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0), OrderTargetingPoint(AbilityCommand("attack", 0), gv_terrain.lv_spawnPoints[0]), c_orderQueueReplace);
+        UnitGroupIssueOrder(UnitGroup(null, 9, RegionFromId(11), UnitFilter(0, 0, (1 << c_targetFilterStructure) | (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0), OrderTargetingPoint(AbilityCommand("attack", 0), gv_terrain.lv_spawnPoints[1]), c_orderQueueReplace);
+        UnitGroupIssueOrder(UnitGroup(null, 10, RegionFromId(11), UnitFilter(0, 0, (1 << c_targetFilterStructure) | (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0), OrderTargetingPoint(AbilityCommand("attack", 0), gv_terrain.lv_spawnPoints[0]), c_orderQueueReplace);
         UIDisplayMessage(PlayerGroupActive(), c_messageAreaSubtitle, StringExternal("Param/Value/4C0FAC9F"));
     }
     Wait(1.0, c_timeGame);
@@ -2629,8 +2671,8 @@ bool gt_TesterResult_Func (bool testConds, bool runActions) {
 
     TriggerEnable(gt_TesterResult, false);
     Wait(1.0, c_timeGame);
-    lv_unit_count[0] = UnitGroupCount(UnitGroup(null, 9, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0), c_unitCountAlive);
-    lv_unit_count[1] = UnitGroupCount(UnitGroup(null, 10, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0), c_unitCountAlive);
+    lv_unit_count[0] = UnitGroupCount(UnitGroup(null, 9, RegionFromId(11), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0), c_unitCountAlive);
+    lv_unit_count[1] = UnitGroupCount(UnitGroup(null, 10, RegionFromId(11), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0), c_unitCountAlive);
     if ((lv_unit_count[0] == 0) && (lv_unit_count[1] == 0)) {
         UIDisplayMessage(PlayerGroupActive(), c_messageAreaSubtitle, StringExternal("Param/Value/19FA4295"));
         return true;
@@ -2645,7 +2687,7 @@ bool gt_TesterResult_Func (bool testConds, bool runActions) {
         lv_winning_player = gv_side_player[0];
         lv_winning_text = StringExternal("Param/Value/E8430A46");
     }
-    autoF8A1256B_g = UnitGroup(null, lv_winning_player, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
+    autoF8A1256B_g = UnitGroup(null, lv_winning_player, RegionFromId(11), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
     autoF8A1256B_u = UnitGroupCount(autoF8A1256B_g, c_unitCountAll);
     for (;; autoF8A1256B_u -= 1) {
         autoF8A1256B_var = UnitGroupUnitFromEnd(autoF8A1256B_g, autoF8A1256B_u);
@@ -2833,7 +2875,7 @@ bool gt_LeaderboardUnitCreated_Func (bool testConds, bool runActions) {
     }
 
     lv_unit_name = (lv_unit_type);
-    lv_unit_count = UnitGroupCount(UnitGroup(lv_unit_type, UnitGetOwner(EventUnitCreatedUnit()), RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0), c_unitCountAlive);
+    lv_unit_count = UnitGroupCount(UnitGroup(lv_unit_type, UnitGetOwner(EventUnitCreatedUnit()), RegionFromId(11), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0), c_unitCountAlive);
     lv_col = (UnitGetOwner(EventUnitCreatedUnit()) - gv_const_players);
     if ((DataTableValueExists(true, lv_unit_name) == false)) {
         lv_row = gf_TesterLeaderboardAddRow(lv_unit_name);
@@ -2901,7 +2943,7 @@ bool gt_LeaderboardUnitRemoved_Func (bool testConds, bool runActions) {
     BoardItemSetText(gv_leaderboard, lv_col, 1, IntToText(gv_leaderboard_minerals[lv_col]));
     BoardItemSetText(gv_leaderboard, lv_col, 2, IntToText(gv_leaderboard_gas[lv_col]));
     BoardItemSetText(gv_leaderboard, lv_col, 3, IntToText(PlayerGetPropertyInt(UnitGetOwner(EventUnit()), c_playerPropSuppliesUsed)));
-    lv_unitcount = UnitGroupCount(UnitGroup(lv_unit_type, UnitGetOwner(EventUnit()), RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0), c_unitCountAlive);
+    lv_unitcount = UnitGroupCount(UnitGroup(lv_unit_type, UnitGetOwner(EventUnit()), RegionFromId(11), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0), c_unitCountAlive);
     if ((lv_unitcount == 0)) {
         BoardItemSetText(gv_leaderboard, lv_col, lv_row, StringToText(""));
         BoardItemSetIcon(gv_leaderboard, lv_col, lv_row, null, true);

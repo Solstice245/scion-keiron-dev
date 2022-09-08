@@ -18,7 +18,7 @@ include "TriggerLibs/Genetron/GenetronHard"
 //--------------------------------------------------------------------------------------------------
 static void InitCounters (int player) {
     // versus Protoss
-    AICounterUnitSetup(player, c_PU_Zealot,             1.00, c_GU_Blaze,       1.00, c_GU_Blaze);
+    AICounterUnitSetup(player, c_PU_Zealot,             1.00, c_GU_Fixer,       1.00, c_GU_Fixer);
     AICounterUnitSetup(player, c_PU_Stalker,            1.00, c_GU_Equalizer,   1.00, c_GU_Equalizer);
     AICounterUnitSetup(player, c_PU_Sentry,             1.00, c_GU_Blitzer,     1.00, c_GU_Blitzer);
     AICounterUnitSetup(player, c_PU_HighTemplar,        1.00, c_GU_Blitzer,     1.00, c_GU_Tesla);
@@ -38,7 +38,7 @@ static void InitCounters (int player) {
     AICounterUnitSetup(player, c_PU_Disruptor,          0.75, c_GU_Virtus,      0.75, c_GU_Virtus);
 
     // versus Terran
-    AICounterUnitSetup(player, c_TU_Marine,             1.00, c_GU_Spitfire,    0.50, c_GU_Blaze);
+    AICounterUnitSetup(player, c_TU_Marine,             1.00, c_GU_Spitfire,    0.50, c_GU_Fixer);
     AICounterUnitSetup(player, c_TU_Marauder,           1.00, c_GU_Spitfire,    0.50, c_GU_Equalizer);
     AICounterUnitSetup(player, c_TU_Reaper,             0.60, c_GU_Spitfire,    0.60, c_GU_Blitzer);
     AICounterUnitSetup(player, c_TU_Ghost,              0.50, c_GU_Blitzer,     0.50, c_GU_Tesla);
@@ -56,7 +56,7 @@ static void InitCounters (int player) {
     AICounterUnitSetup(player, c_TU_Liberator_Alias,    1.00, c_GU_Torrent,     0.50, c_GU_Avenger);
 
     // versus Zerg
-    AICounterUnitSetup(player, c_ZU_Zergling,           0.60, c_GU_Spitfire,    0.30, c_GU_Blaze);
+    AICounterUnitSetup(player, c_ZU_Zergling,           0.60, c_GU_Spitfire,    0.30, c_GU_Fixer);
     AICounterUnitSetup(player, c_ZU_Baneling,           0.50, c_GU_Blitzer,     0.50, c_GU_Blitzer);
     AICounterUnitSetup(player, c_ZU_Roach,              0.80, c_GU_Equalizer,   0.80, c_GU_Equalizer);
     AICounterUnitSetup(player, c_ZU_Hydralisk,          2.00, c_GU_Spitfire,    0.50, c_GU_Inciter);
@@ -66,7 +66,7 @@ static void InitCounters (int player) {
     AICounterUnitSetup(player, c_ZU_Ultralisk,          2.00, c_GU_Equalizer,   1.00, c_GU_Virtus);
     AICounterUnitSetup(player, c_ZU_BroodLord,          2.00, c_GU_Avenger,     2.00, c_GU_Avenger);
     AICounterUnitSetup(player, c_ZB_SpineCrawler,       3.00, c_GU_Equalizer,   1.00, c_GU_Jupiter);
-    AICounterUnitSetup(player, c_ZU_SwarmHost,          2.00, c_GU_Blaze,       1.00, c_GU_Inciter);
+    AICounterUnitSetup(player, c_ZU_SwarmHost,          2.00, c_GU_Fixer,       1.00, c_GU_Inciter);
     AICounterUnitSetup(player, c_ZU_Viper,              1.00, c_GU_Avenger,     1.00, c_GU_Torrent);
     AICounterUnitSetup(player, c_ZU_Ravager,            1.00, c_GU_Blitzer,     1.00, c_GU_Blitzer);
     AICounterUnitSetup(player, c_ZU_Lurker,             2.00, c_GU_Equalizer,   1.00, c_GU_Mole_Alias);
@@ -136,9 +136,9 @@ void AINewUnitGen (int player, unit u) {
         }
     }
 
-    // processing drone
+    // Processor
     //
-    if (type == c_GU_ProcessingDrone) {
+    if (type == c_GU_Processor) {
 
         AINewDetector(player, u, false);
 
@@ -161,7 +161,7 @@ void AINewUnitGen (int player, unit u) {
 //  AIGetScoutGen
 //--------------------------------------------------------------------------------------------------
 unit AIGetScoutGen (int player, int index, unit prev, bool allowWorkers) {
-    unit processingDrone;
+    unit Processor;
     string prevType = UnitGetType(prev);
     
     if (!PlayerBeaconIsSet(player, c_beaconScout) &&
@@ -184,12 +184,12 @@ unit AIGetScoutGen (int player, int index, unit prev, bool allowWorkers) {
     if (AINumEnemyBuildings(player) == 0) {
         // only use medivac scouts if we don't know of any enemy buildings
         //   (ie we need a flying scout to check other islands etc).
-        if (prevType == c_GU_ProcessingDrone) {
+        if (prevType == c_GU_Processor) {
             return prev;
         }
-        processingDrone = AIGrabUnit(player, c_GU_ProcessingDrone, c_prioScout, null);
-        if (processingDrone) {
-            return processingDrone;
+        Processor = AIGrabUnit(player, c_GU_Processor, c_prioScout, null);
+        if (Processor) {
+            return Processor;
         }
     }
 
@@ -218,10 +218,10 @@ unit AIEarlyDefScoutGen (int player, unit prev, bool allowWorkers) {
         return c_nullUnit;
     }
     prevType = UnitGetType(prev);
-    if (prevType == c_GU_ProcessingDrone) {
+    if (prevType == c_GU_Processor) {
         return prev;
     }
-    obs = AIGrabUnit(player, c_GU_ProcessingDrone, c_prioScout, null);
+    obs = AIGrabUnit(player, c_GU_Processor, c_prioScout, null);
     if (obs) {
         return obs;
     }

@@ -81,7 +81,7 @@ int GenetronOpenArmyInitMedi (int player, int buildType) {
         armyRoll = RandomInt(1,3);
         if (armyRoll <= 2) {
             AIAddToStockArmy(player, c_GU_Spitfire, 3);
-            AIAddToStockArmy(player, c_GU_Blaze, 2);
+            AIAddToStockArmy(player, c_GU_Fixer, 2);
             // validation: 5 units above with cost 10 food and 550 resources
             duration = 360 + RandomInt(-15, 15);
         } else {
@@ -175,72 +175,72 @@ void GenetronOpenBuildMedi (int player) {
     if (buildType == e_buildType_Rush) {
         AISetStock( player, 1, c_GB_ProcessingCore );
         AISetStock( player, 16, c_GU_ACR );
-        AISetStock( player, 1, c_GB_ProcessingNode );
+        AISetStock( player, 1, c_GB_Node );
         AISetStock( player, 1, c_GB_Manufacturer );
         AISetStock( player, 1, c_GB_FilteringPlant );
         AISetStock( player, 2, c_GU_Spitfire );
         AISetStock( player, 1, c_GB_Uploader );
-        AISetStock( player, 2, c_GB_ProcessingNode );
+        AISetStock( player, 2, c_GB_Node );
         AISetStock( player, 18, c_GU_ACR );
-        AISetStockFarms( player, c_GB_ProcessingNode, c_stockNormalFarms);
+        AISetStockFarms( player, c_GB_Node, c_stockNormalFarms);
     }
     else if (buildType == e_buildType_Timing) {
         AISetStock( player, 1, c_GB_ProcessingCore );
         AISetStock( player, 16, c_GU_ACR );
-        AISetStock( player, 1, c_GB_ProcessingNode );
+        AISetStock( player, 1, c_GB_Node );
         AISetStock( player, 1, c_GB_Manufacturer );
         AISetStock( player, 1, c_GB_FilteringPlant );
         AISetStock( player, 2, c_GU_Spitfire );
         AISetStock( player, 1, c_GB_Uploader );
-        AISetStock( player, 2, c_GB_ProcessingNode );
+        AISetStock( player, 2, c_GB_Node );
         AISetStock( player, 18, c_GU_ACR );
-        AISetStockFarms( player, c_GB_ProcessingNode, c_stockNormalFarms);
+        AISetStockFarms( player, c_GB_Node, c_stockNormalFarms);
         AISetStock( player, 2, c_GB_FilteringPlant );
         AISetStock( player, 2, c_GB_Manufacturer );
     }
     else if (buildType == e_buildType_Power) {
         AISetStock( player, 1, c_GB_ProcessingCore );
         AISetStock( player, 16, c_GU_ACR );
-        AISetStock( player, 1, c_GB_ProcessingNode );
+        AISetStock( player, 1, c_GB_Node );
         AISetStock( player, 1, c_GB_Manufacturer );
         AISetStock( player, 1, c_GB_FilteringPlant );
         AISetStock( player, 1, c_GU_Spitfire );
         AISetStock( player, 1, c_GB_Uploader );
-        AISetStock( player, 2, c_GB_ProcessingNode );
+        AISetStock( player, 2, c_GB_Node );
         AISetStock( player, 18, c_GU_ACR );
-        AISetStockFarms( player, c_GB_ProcessingNode, c_stockNormalFarms);
+        AISetStockFarms( player, c_GB_Node, c_stockNormalFarms);
         AISetStock( player, 2, c_GB_FilteringPlant );
         AISetStock( player, 2, c_GB_Uploader );
     }
     else if (buildType == e_buildType_Macro) {
         AISetStock( player, 1, c_GB_ProcessingCore );
         AISetStock( player, 16, c_GU_ACR );
-        AISetStock( player, 1, c_GB_ProcessingNode );
+        AISetStock( player, 1, c_GB_Node );
         AISetStock( player, 1, c_GB_Manufacturer );
         if (GenetronMacroExpand(player)) { return; }
         AISetStock( player, 2, c_GU_Spitfire );
         AISetStock( player, 3, c_GB_Uploader );
-        AISetStock( player, 2, c_GB_ProcessingNode );
+        AISetStock( player, 2, c_GB_Node );
         AISetStock( player, 18, c_GU_ACR );
         AISetStock( player, 1, c_GB_Fabricator );
         AISetStock( player, 1, c_GB_FilteringPlant );
         AISetStockUnitNext( player, 24, c_GU_ACR, c_stockIdle );
-        AISetStockFarms( player, c_GB_ProcessingNode, c_stockNormalFarms);
+        AISetStockFarms( player, c_GB_Node, c_stockNormalFarms);
         AISetStock( player, 2, c_GB_FilteringPlant );
     }
     else if (buildType == e_buildType_Air) {
         AISetStock( player, 1, c_GB_ProcessingCore );
         AISetStock( player, 16, c_GU_ACR );
-        AISetStock( player, 1, c_GB_ProcessingNode );
+        AISetStock( player, 1, c_GB_Node );
         if (GenetronMacroExpand(player)) { return; }
         AISetStock( player, 1, c_GB_FilteringPlant );
         AISetStock( player, 1, c_GB_Manufacturer );
         AISetStock( player, 2, c_GB_FilteringPlant );
         AISetStock( player, 18, c_GU_ACR );
-        AISetStock( player, 2, c_GB_ProcessingNode );
+        AISetStock( player, 2, c_GB_Node );
         AISetStock( player, 1, c_GB_Fabricator );
         AISetStockUnitNext( player, 24, c_GU_ACR, c_stockIdle );
-        AISetStockFarms( player, c_GB_ProcessingNode, c_stockNormalFarms);
+        AISetStockFarms( player, c_GB_Node, c_stockNormalFarms);
         AISetStock( player, 1, c_GB_AssemblyArray );
         AISetStock( player, 9, c_GB_Uploader );
     }
@@ -427,7 +427,7 @@ void GenetronMidBuildMedi (int player) {
     }
 
     if (AINeedsDetection(player)) {
-        AISetStock( player, 1, c_GU_ProcessingDrone );
+        AISetStock( player, 1, c_GU_Processor );
         AISetStock( player, 2, c_GB_Interdictor_Alias );
     }
 
@@ -439,7 +439,7 @@ void GenetronMidBuildMedi (int player) {
 
     AISetStockArmyScale(player, 1.00);
 
-    AISetStock( player, 2, c_GU_ProcessingDrone );
+    AISetStock( player, 2, c_GU_Processor );
 
     GenetronTechUp(player, c_ldPhaseMid);
 
@@ -462,8 +462,8 @@ int GenetronLateArmyInitMedi (int player, int buildType) {
         if (armyRoll <= 3) {
             AIAddToStockArmy(player, c_GU_Spitfire, 4);
             AIAddToStockArmy(player, c_GU_Blitzer, 3);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Spitfire, 3, c_GU_Blaze, 3);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Blitzer, 3, c_GU_Blaze, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Spitfire, 3, c_GU_Fixer, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Blitzer, 3, c_GU_Fixer, 3);
             // validation: 13 units above with average cost 26 food and 1700 resources
             duration = 300 + RandomInt(-15, 15);
         } else if (armyRoll <= 4) {
@@ -485,7 +485,7 @@ int GenetronLateArmyInitMedi (int player, int buildType) {
             duration = 330 + RandomInt(-15, 15);
         } else if (armyRoll <= 4) {
             AIAddToStockArmy(player, c_GU_Blitzer, 4);
-            AIAddToStockArmy(player, c_GU_Blaze, 4);
+            AIAddToStockArmy(player, c_GU_Fixer, 4);
             AIAddToStockArmy(player, c_GU_Mole_Alias, 3);
             AIAddToStockArmy(player, c_GU_Virtus, 1);
             // validation: 12 units above with average cost 26 food and 2275 resources
@@ -496,8 +496,8 @@ int GenetronLateArmyInitMedi (int player, int buildType) {
         if (armyRoll <= 1) {
             AIAddToStockArmy(player, c_GU_Spitfire, 4);
             AIAddToStockArmy(player, c_GU_Aquila, 4);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Blaze, 4, c_GU_Blitzer, 3);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Blaze, 4, c_GU_Blitzer, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Fixer, 4, c_GU_Blitzer, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Fixer, 4, c_GU_Blitzer, 3);
             // validation: 15 units above with average cost 18 food and 2500 resources
             duration = 380 + RandomInt(-15, 15);
         } else if (armyRoll <= 2) {
@@ -514,7 +514,7 @@ int GenetronLateArmyInitMedi (int player, int buildType) {
         if (armyRoll <= 2) {
             AIAddToStockArmy(player, c_GU_Spitfire, 4);
             AIAddToStockArmy(player, c_GU_Blitzer, 3);
-            AIAddToStockArmy(player, c_GU_Blaze, 3);
+            AIAddToStockArmy(player, c_GU_Fixer, 3);
             AIAddToStockArmy(player, c_GU_Equalizer, 3);
             AIAddToStockArmy(player, c_GU_Aquila, 3);
             // validation: 15 units above with average cost 21 food and 2650 resources
@@ -570,8 +570,8 @@ int GenetronFinalArmyInitMedi (int player, int buildType) {
         if (armyRoll <= 3) {
             AIAddToStockArmy(player, c_GU_Spitfire, 8);
             AIAddToStockArmy(player, c_GU_Blitzer, 6);
-            AIAddToStockArmy(player, AIPickFrom2(c_GU_Spitfire, c_GU_Blaze) , 6);
-            AIAddToStockArmy(player, AIPickFrom2(c_GU_Blitzer, c_GU_Blaze) , 6);
+            AIAddToStockArmy(player, AIPickFrom2(c_GU_Spitfire, c_GU_Fixer) , 6);
+            AIAddToStockArmy(player, AIPickFrom2(c_GU_Blitzer, c_GU_Fixer) , 6);
             // validation: 26 units above with average cost 52 food and 3400 resources
             duration = 280 + RandomInt(-15, 15);
         } else if (armyRoll <= 4) {
@@ -593,7 +593,7 @@ int GenetronFinalArmyInitMedi (int player, int buildType) {
             duration = 330 + RandomInt(-15, 15);
         } else if (armyRoll <= 4) {
             AIAddToStockArmy(player, c_GU_Blitzer, 6);
-            AIAddToStockArmy(player, c_GU_Blaze, 5);
+            AIAddToStockArmy(player, c_GU_Fixer, 5);
             AIAddToStockArmy(player, c_GU_Mole_Alias, 3);
             AIAddToStockArmy(player, c_GU_Virtus, 3);
             // validation: 12 units above with average cost 26 food and 3550 resources
@@ -604,8 +604,8 @@ int GenetronFinalArmyInitMedi (int player, int buildType) {
         if (armyRoll <= 1) {
             AIAddToStockArmy(player, c_GU_Spitfire, 6);
             AIAddToStockArmy(player, c_GU_Aquila, 6);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Blaze, 6, c_GU_Blitzer, 4);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Blaze, 6, c_GU_Blitzer, 4);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Fixer, 6, c_GU_Blitzer, 4);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Fixer, 6, c_GU_Blitzer, 4);
             // validation: 22 units above with average cost 50 food and 3700 resources
             duration = 360 + RandomInt(-15, 15);
         } else if (armyRoll <= 2) {
@@ -623,7 +623,7 @@ int GenetronFinalArmyInitMedi (int player, int buildType) {
         if (armyRoll <= 2) {
             AIAddToStockArmy(player, c_GU_Spitfire, 4);
             AIAddToStockArmy(player, c_GU_Blitzer, 4);
-            AIAddToStockArmy(player, c_GU_Blaze, 4);
+            AIAddToStockArmy(player, c_GU_Fixer, 4);
             AIAddToStockArmy(player, c_GU_Equalizer, 4);
             AIAddToStockArmy(player, c_GU_Aquila, 4);
             AIAddToStockArmy(player, c_GU_Hornet, 4);
@@ -763,12 +763,12 @@ void GenetronLateBuildMedi (int player) {
         AISetStockUnitNext( player, 12, c_GB_Uploader, c_stockIdle );
     }
 
-    AISetStock( player, 2, c_GU_ProcessingDrone );
+    AISetStock( player, 2, c_GU_Processor );
 
     AISetStockArmyScale(player, 0.70);
 
     AISetStock( player, 2, c_GU_Courier );
-    AISetStock( player, 3, c_GU_ProcessingDrone );
+    AISetStock( player, 3, c_GU_Processor );
     AISetStock( player, 2, c_GB_Interdictor_Alias );
 
     AISetStockArmyScale(player, 1.00);

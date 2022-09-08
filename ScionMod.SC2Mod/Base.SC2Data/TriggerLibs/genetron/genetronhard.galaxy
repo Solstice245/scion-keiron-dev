@@ -28,7 +28,7 @@ void GenetronUpgradesHard (int player, int phase) {
                 AISetStock( player, 1, c_GR_GroundArmor2 );
                 AISetStock( player, 1, c_GR_HeavyWeapons1 );
 
-                if (AITechCount(player, c_GU_Blaze, c_techCountInProgressOrBetter) >= 5) {
+                if (AITechCount(player, c_GU_Fixer, c_techCountInProgressOrBetter) >= 5) {
                     AISetStock( player, 1, c_GR_FirewallShield );
                     AISetStock( player, 1, c_GR_RefittedNozzles );
                 }
@@ -110,7 +110,7 @@ void GenetronUpgradesHard (int player, int phase) {
                 AISetStock( player, 1, c_GR_GroundArmor1 );
                 AISetStock( player, 1, c_GR_HeavyWeapons1 );
 
-                if (AITechCount(player, c_GU_Blaze, c_techCountInProgressOrBetter) >= 5) {
+                if (AITechCount(player, c_GU_Fixer, c_techCountInProgressOrBetter) >= 5) {
                     AISetStock( player, 1, c_GR_FirewallShield );
                     AISetStock( player, 1, c_GR_RefittedNozzles );
                 }
@@ -164,7 +164,7 @@ int GenetronOpenArmyInitHard (int player, int buildType) {
         armyRoll = RandomInt(0,2);
         if (armyRoll <= 1) {
             AIAddToStockArmy(player, c_GU_Spitfire, 3);
-            AIAddToStockArmy(player, c_GU_Blaze, 3);
+            AIAddToStockArmy(player, c_GU_Fixer, 3);
             // validation: 675 resources
             duration = 320 + RandomInt(-15, 15);
         } else {
@@ -181,7 +181,7 @@ int GenetronOpenArmyInitHard (int player, int buildType) {
             duration = 380 + RandomInt(-15, 15);
         } else if (armyRoll <= 2){
             AIAddToStockArmy(player, c_GU_Spitfire, 2);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Spitfire, 5, c_GU_Blaze, 4);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Spitfire, 5, c_GU_Fixer, 4);
             AIAddToStockArmyPickFrom2Count(player, c_GU_Spitfire, 3, AIPickFrom3(c_GU_Blitzer, c_GU_Equalizer, c_GU_Hornet), 2);
             // validation: 1025 resources
             duration = 400 + RandomInt(-15, 15);
@@ -259,55 +259,55 @@ void GenetronOpenBuildHard (int player) {
     if (buildType == e_buildType_Rush) {
         AISetStock( player, 1, c_GB_ProcessingCore );
         AISetStock( player, 15, c_GU_ACR );
-        AISetStock( player, 1, c_GB_ProcessingNode );
+        AISetStock( player, 1, c_GB_Node );
         AISetStock( player, 16, c_GU_ACR );
         AISetStock( player, 1, c_GB_Manufacturer );
         AISetStock( player, 1, c_GB_FilteringPlant );
         AISetStock( player, 1, c_GU_Spitfire );
         AISetStock( player, 1, c_GB_Uploader );
         AISetStock( player, 2, c_GU_Spitfire );
-        AISetStock( player, 2, c_GB_ProcessingNode );
+        AISetStock( player, 2, c_GB_Node );
         AISetStock( player, 19, c_GU_ACR );
         AISetStockUnitNext( player, 20, c_TU_SCV, c_stockIdle );
-        AISetStockFarms( player, c_GB_ProcessingNode, c_stockNormalFarms);
+        AISetStockFarms( player, c_GB_Node, c_stockNormalFarms);
     }
     else if (buildType == e_buildType_Timing) {
         AISetStock( player, 1, c_GB_ProcessingCore );
         AISetStock( player, 15, c_GU_ACR );
-        AISetStock( player, 1, c_GB_ProcessingNode );
+        AISetStock( player, 1, c_GB_Node );
         AISetStock( player, 16, c_GU_ACR );
         AISetStock( player, 1, c_GB_Manufacturer );
         AISetStock( player, 1, c_GB_FilteringPlant );
         AISetStock( player, 1, c_GU_Spitfire );
         AISetStock( player, 1, c_GB_Uploader );
         AISetStock( player, 2, c_GU_Spitfire );
-        AISetStock( player, 2, c_GB_ProcessingNode );
+        AISetStock( player, 2, c_GB_Node );
         AISetStock( player, 19, c_GU_ACR );
         AISetStockUnitNext( player, 20, c_TU_SCV, c_stockIdle );
-        AISetStockFarms( player, c_GB_ProcessingNode, c_stockNormalFarms);
+        AISetStockFarms( player, c_GB_Node, c_stockNormalFarms);
         AISetStock( player, 2, c_GB_FilteringPlant );
         AISetStock( player, 2, c_GB_Manufacturer );
     }
     else if (buildType == e_buildType_Power) {
         AISetStock( player, 1, c_GB_ProcessingCore );
         AISetStock( player, 15, c_GU_ACR );
-        AISetStock( player, 1, c_GB_ProcessingNode );
+        AISetStock( player, 1, c_GB_Node );
         AISetStock( player, 16, c_GU_ACR );
         AISetStock( player, 1, c_GB_Manufacturer );
         AISetStock( player, 1, c_GB_FilteringPlant );
         AISetStock( player, 1, c_GU_Spitfire );
         AISetStock( player, 1, c_GB_Uploader );
-        AISetStock( player, 2, c_GB_ProcessingNode );
+        AISetStock( player, 2, c_GB_Node );
         AISetStock( player, 19, c_GU_ACR );
         AISetStockUnitNext( player, 20, c_TU_SCV, c_stockIdle );
-        AISetStockFarms( player, c_GB_ProcessingNode, c_stockNormalFarms);
+        AISetStockFarms( player, c_GB_Node, c_stockNormalFarms);
         AISetStock( player, 2, c_GB_FilteringPlant );
         AISetStock( player, 2, c_GB_Uploader );
     }
     else if (buildType == e_buildType_Macro) {
         AISetStock( player, 1, c_GB_ProcessingCore );
         AISetStock( player, 15, c_GU_ACR );
-        AISetStock( player, 1, c_GB_ProcessingNode );
+        AISetStock( player, 1, c_GB_Node );
         AISetStock( player, 16, c_GU_ACR );
         AISetStock( player, 1, c_GB_Manufacturer );
         if (GenetronMacroExpand(player)) { return; }
@@ -315,27 +315,27 @@ void GenetronOpenBuildHard (int player) {
         AISetStock( player, 3, c_GB_Uploader );
         AISetStock( player, 2, c_GU_Spitfire );
         AISetStock( player, 19, c_GU_ACR );
-        AISetStock( player, 2, c_GB_ProcessingNode );
+        AISetStock( player, 2, c_GB_Node );
         AISetStock( player, 1, c_GB_Fabricator );
         AISetStock( player, 1, c_GB_FilteringPlant );
         AISetStockUnitNext( player, 30, c_GU_ACR, c_stockIdle );
-        AISetStockFarms( player, c_GB_ProcessingNode, c_stockNormalFarms);
+        AISetStockFarms( player, c_GB_Node, c_stockNormalFarms);
         AISetStock( player, 2, c_GB_FilteringPlant );
     }
     else if (buildType == e_buildType_Air) {
         AISetStock( player, 1, c_GB_ProcessingCore );
         AISetStock( player, 15, c_GU_ACR );
-        AISetStock( player, 1, c_GB_ProcessingNode );
+        AISetStock( player, 1, c_GB_Node );
         AISetStock( player, 16, c_GU_ACR );
         if (GenetronMacroExpand(player)) { return; }
         AISetStock( player, 1, c_GB_FilteringPlant );
         AISetStock( player, 1, c_GB_Manufacturer );
         AISetStock( player, 2, c_GB_FilteringPlant );
         AISetStock( player, 19, c_GU_ACR );
-        AISetStock( player, 2, c_GB_ProcessingNode );
+        AISetStock( player, 2, c_GB_Node );
         AISetStock( player, 1, c_GB_Fabricator );
         AISetStockUnitNext( player, 30, c_GU_ACR, c_stockIdle );
-        AISetStockFarms( player, c_GB_ProcessingNode, c_stockNormalFarms);
+        AISetStockFarms( player, c_GB_Node, c_stockNormalFarms);
         AISetStock( player, 1, c_GB_AssemblyArray );
         AISetStock( player, 9, c_GB_Uploader );
     }
@@ -378,7 +378,7 @@ int GenetronMidArmyInitHard (int player, int buildType) {
         AIAddToStockArmy(player, c_GU_Spitfire, 3);
         AIAddToStockArmy(player, c_GU_Blitzer, 3);
         AIAddToStockArmy(player, c_GU_Mole_Alias, 2);
-        AIAddToStockArmy(player, AIPickFrom2(c_GU_Spitfire, c_GU_Blaze), 2);
+        AIAddToStockArmy(player, AIPickFrom2(c_GU_Spitfire, c_GU_Fixer), 2);
         // validation: 1500 resources
         duration = 300 + RandomInt(-15, 15);
     }
@@ -406,8 +406,8 @@ int GenetronMidArmyInitHard (int player, int buildType) {
             AIAddToStockArmy(player, c_GU_Spitfire, 3);
             AIAddToStockArmy(player, c_GU_Blitzer, 2);
             AIAddToStockArmyPickFrom2Count(player, c_GU_Inciter, 3, c_GU_Virtus, 2);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Blaze, 3, c_GU_Blitzer, 2);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Blaze, 3, c_GU_Blitzer, 2);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Fixer, 3, c_GU_Blitzer, 2);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Fixer, 3, c_GU_Blitzer, 2);
             // validation: 2220 resources
             duration = 360 + RandomInt(-15, 15);
         }
@@ -541,7 +541,7 @@ void GenetronMidBuildHard (int player) {
     }
 
     if (AINeedsDetection(player)) {
-        AISetStock( player, 1, c_GU_ProcessingDrone );
+        AISetStock( player, 1, c_GU_Processor );
         AISetStock( player, 2, c_GB_Interdictor_Alias );
     }
 
@@ -553,7 +553,7 @@ void GenetronMidBuildHard (int player) {
 
     AISetStockArmyScale(player, 1.00);
 
-    AISetStock( player, 3, c_GU_ProcessingDrone );
+    AISetStock( player, 3, c_GU_Processor );
 
     GenetronTechUp(player, c_ldPhaseMid);
 
@@ -576,12 +576,12 @@ int GenetronLateArmyInitHard (int player, int buildType) {
         if (armyRoll <= 1) {
             AIAddToStockArmy(player, c_GU_Spitfire, 12);
             AIAddToStockArmy(player, c_GU_Blitzer, 5);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Spitfire, 3, c_GU_Blaze, 3);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Blitzer, 3, c_GU_Blaze, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Spitfire, 3, c_GU_Fixer, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Blitzer, 3, c_GU_Fixer, 3);
             // validation: 2850 resources
             duration = 280 + RandomInt(-15, 15);
         } else {
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Spitfire, 8, c_GU_Blaze, 6);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Spitfire, 8, c_GU_Fixer, 6);
             AIAddToStockArmy(player, c_GU_Blitzer, 6);
             AIAddToStockArmy(player, c_GU_Mole_Alias, 5);
             // validation: 2950 resources
@@ -598,14 +598,14 @@ int GenetronLateArmyInitHard (int player, int buildType) {
             // validation: 3450 resources
             duration = 300 + RandomInt(-15, 15);
         } else if (armyRoll <= 4) {
-            AIAddToStockArmy(player, c_GU_Blaze, 4);
+            AIAddToStockArmy(player, c_GU_Fixer, 4);
             AIAddToStockArmy(player, c_GU_Blitzer, 6);
             AIAddToStockArmy(player, c_GU_Mole_Alias, 3);
             AIAddToStockArmy(player, c_GU_Virtus, 3);
             // validation: 3425 resources
             duration = 310 + RandomInt(-15, 15);
         } else {
-            AIAddToStockArmy(player, c_GU_Blaze, 4);
+            AIAddToStockArmy(player, c_GU_Fixer, 4);
             AIAddToStockArmy(player, c_GU_Blitzer, 8);
             AIAddToStockArmy(player, c_GU_Equalizer, 4);
             AIAddToStockArmy(player, c_GU_Hornet, 5);
@@ -617,8 +617,8 @@ int GenetronLateArmyInitHard (int player, int buildType) {
         if (armyRoll <= 1) {
             AIAddToStockArmy(player, c_GU_Spitfire, 12);
             AIAddToStockArmy(player, c_GU_Aquila, 6);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Blaze, 4, c_GU_Blitzer, 3);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Blaze, 4, c_GU_Blitzer, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Fixer, 4, c_GU_Blitzer, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Fixer, 4, c_GU_Blitzer, 3);
             // validation: 3650 resources
             duration = 320 + RandomInt(-15, 15);
         } else if (armyRoll <= 2) {
@@ -635,7 +635,7 @@ int GenetronLateArmyInitHard (int player, int buildType) {
         if (armyRoll <= 2) {
             AIAddToStockArmy(player, c_GU_Spitfire, 4);
             AIAddToStockArmy(player, c_GU_Blitzer, 6);
-            AIAddToStockArmy(player, c_GU_Blaze, 4);
+            AIAddToStockArmy(player, c_GU_Fixer, 4);
             AIAddToStockArmy(player, c_GU_Equalizer, 5);
             AIAddToStockArmy(player, c_GU_Aquila, 4);
             // validation: 3925 resources
@@ -700,8 +700,8 @@ int GenetronFinalArmyInitHard (int player, int buildType) {
         if (armyRoll <= 1) {
             AIAddToStockArmy(player, c_GU_Spitfire, 12);
             AIAddToStockArmy(player, c_GU_Blitzer, 8);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Spitfire, 4, c_GU_Blaze, 4);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Blitzer, 3, c_GU_Blaze, 4);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Spitfire, 4, c_GU_Fixer, 4);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Blitzer, 3, c_GU_Fixer, 4);
             AIAddToStockArmy(player, c_GU_Aquila, 3);
             // validation: 4425 resources
             duration = 250 + RandomInt(-15, 15);
@@ -713,7 +713,7 @@ int GenetronFinalArmyInitHard (int player, int buildType) {
             // validation: 4325 resources
             duration = 250 + RandomInt(-15, 15);
         } else {
-            AIAddToStockArmy(player, c_GU_Blaze, 11);
+            AIAddToStockArmy(player, c_GU_Fixer, 11);
             AIAddToStockArmy(player, c_GU_Blitzer, 10);
             AIAddToStockArmy(player, c_GU_Mole_Alias, 4);
             AIAddToStockArmy(player, c_GU_Equalizer, 2);
@@ -731,7 +731,7 @@ int GenetronFinalArmyInitHard (int player, int buildType) {
             // validation: 3700 resources
             duration = 260 + RandomInt(-15, 15);
         } else if (armyRoll <= 4) {
-            AIAddToStockArmy(player, c_GU_Blaze, 6);
+            AIAddToStockArmy(player, c_GU_Fixer, 6);
             AIAddToStockArmy(player, c_GU_Blitzer, 3);
             AIAddToStockArmy(player, c_GU_Torrent, 4);
             AIAddToStockArmy(player, c_GU_Mole_Alias, 6);
@@ -739,7 +739,7 @@ int GenetronFinalArmyInitHard (int player, int buildType) {
             // validation: 4475 resources
             duration = 280 + RandomInt(-15, 15);
         } else {
-            AIAddToStockArmy(player, c_GU_Blaze, 4);
+            AIAddToStockArmy(player, c_GU_Fixer, 4);
             AIAddToStockArmy(player, c_GU_Blitzer, 6);
             AIAddToStockArmy(player, c_GU_Equalizer, 4);
             AIAddToStockArmy(player, c_GU_Hornet, 4);
@@ -753,8 +753,8 @@ int GenetronFinalArmyInitHard (int player, int buildType) {
         if (armyRoll <= 1) {
             AIAddToStockArmy(player, c_GU_Spitfire, 12);
             AIAddToStockArmy(player, c_GU_Aquila, 10);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Blaze, 4, c_GU_Blitzer, 3);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Blaze, 4, c_GU_Blitzer, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Fixer, 4, c_GU_Blitzer, 3);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Fixer, 4, c_GU_Blitzer, 3);
             // validation: 5000 resources
             duration = 320 + RandomInt(-15, 15);
         } else if (armyRoll <= 2) {
@@ -771,7 +771,7 @@ int GenetronFinalArmyInitHard (int player, int buildType) {
         if (armyRoll <= 2) {
             AIAddToStockArmy(player, c_GU_Spitfire, 6);
             AIAddToStockArmy(player, c_GU_Blitzer, 4);
-            AIAddToStockArmy(player, c_GU_Blaze, 6);
+            AIAddToStockArmy(player, c_GU_Fixer, 6);
             AIAddToStockArmy(player, c_GU_Equalizer, 5);
             AIAddToStockArmy(player, c_GU_Aquila, 4);
             AIAddToStockArmy(player, c_GU_Tesla, 3);
@@ -788,7 +788,7 @@ int GenetronFinalArmyInitHard (int player, int buildType) {
             duration = 320 + RandomInt(-15, 15);
         } else if (armyRoll <= 5) {
             AIAddToStockArmy(player, c_GU_Blitzer, 8);
-            AIAddToStockArmyPickFrom2Count(player, c_GU_Blaze, 7, c_GU_Equalizer, 5);
+            AIAddToStockArmyPickFrom2Count(player, c_GU_Fixer, 7, c_GU_Equalizer, 5);
             AIAddToStockArmy(player, AIPickFrom2(c_GU_Boar, c_GU_Jupiter), 3);
             AIAddToStockArmy(player, AIPickFrom2(c_GU_Badger, c_GU_Virtus), 5);
             // validation: 5575 resources
@@ -922,12 +922,12 @@ void GenetronLateBuildHard (int player) {
         AISetStockUnitNext( player, 15, c_GB_Uploader, c_stockIdle );
     }
 
-    AISetStock( player, 2, c_GU_ProcessingDrone );
+    AISetStock( player, 2, c_GU_Processor );
 
     AISetStockArmyScale(player, 0.70);
 
     AISetStock( player, 2, c_GU_Courier );
-    AISetStock( player, 3, c_GU_ProcessingDrone );
+    AISetStock( player, 3, c_GU_Processor );
     AISetStock( player, 2, c_GB_Interdictor_Alias );
 
     AISetStockArmyScale(player, 1.00);
