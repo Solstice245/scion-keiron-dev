@@ -337,7 +337,7 @@
         <ValidatorArray value="CasterProductionModeIsOverclock"/>
         <EditorCategories value="Race:Genetron"/>
         <VitalArray index="Energy">
-            <Change value="-0.5"/>
+            <Change value="-1"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectCreateHealer id="GenetronUnitEnergyRegenHealer">
@@ -713,7 +713,7 @@
         <ValidatorArray value="CasterProductionModeIsStandard"/>
         <EditorCategories value="Race:Genetron"/>
         <VitalArray index="Energy">
-            <Change value="-0.25"/>
+            <Change value="-0.375"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectRemoveBehavior id="UploaderResearchDrainRB">
@@ -1867,11 +1867,7 @@
         <PeriodicEffectArray value="DashEffect"/>
         <PeriodicPeriodArray value="0.0625"/>
     </CEffectCreatePersistent>
-    <CEffectApplyBehavior id="ProtectiveCloudAB" parent="ApplyBehaviorXayid">
-        <ValidatorArray index="0" removed="1"/>
-        <Flags index="UseDuration" value="1"/>
-        <Duration value="0.6"/>
-    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="ProtectiveCloudAB" parent="ApplyBehaviorXayid"/>
     <CEffectApplyBehavior id="DynamicCoatingDebuff" parent="ApplyBehaviorXayid">
         <ValidatorArray index="0" value="TargetIsEnemy"/>
         <Flags index="UseDuration" value="1"/>
@@ -1880,19 +1876,19 @@
     <CEffectCreatePersistent id="ProtectiveCloud">
         <EditorCategories value="Race:Xayid"/>
         <InitialEffect value="ProtectiveCloudSA"/>
-        <PeriodCount value="39"/>
+        <PeriodCount value="79"/>
         <PeriodicEffectArray value="ProtectiveCloudSA"/>
-        <PeriodicPeriodArray value="0.5"/>
+        <PeriodicPeriodArray value="0.25"/>
     </CEffectCreatePersistent>
     <CEffectEnumArea id="ProtectiveCloudSA">
         <EditorCategories value="Race:Xayid"/>
-        <SearchFilters value="Ground;Neutral,Enemy,Air,Structure,RawResource,HarvestableResource,Missile,Item,Stasis,Dead,Hidden,Invulnerable"/>
-        <AreaArray Radius="2.5" Effect="ProtectiveCloudSet"/>
+        <SearchFilters value="Ground;Neutral,Enemy,Structure,Missile,Stasis,Dead,Hidden"/>
+        <AreaArray Radius="2.5" Effect="ProtectiveCloudAB"/>
+        <ImpactLocation Value="TargetPoint"/>
     </CEffectEnumArea>
     <CEffectSet id="ProtectiveCloudSet">
         <EditorCategories value="Race:Xayid"/>
         <EffectArray value="ProtectiveCloudAB"/>
-        <MaxCount value="1"/>
     </CEffectSet>
     <CEffectCreatePersistent id="EvisceratorSpines">
         <EditorCategories value="Race:Xayid"/>
