@@ -90,6 +90,11 @@
         <Compare value="GT"/>
         <AbilLink value="BuildAircraft"/>
     </CValidatorUnitCompareOrderCount>
+    <CValidatorEffectTreeUserData id="CasterDataDefaultIs1">
+        <CheckExistence value="0"/>
+        <Key value="Default"/>
+        <Value value="1"/>
+    </CValidatorEffectTreeUserData>
     <CValidatorCombine id="GenetronCasterEnergyRegenNotSuppressed">
         <Type value="And"/>
         <CombineArray value="CasterNoCourierCloak"/>
@@ -152,18 +157,46 @@
         <CombineArray value="AssemblyArrayIsTraining5"/>
         <CombineArray value="AssemblyArrayIsTraining6"/>
     </CValidatorCombine>
+    <CValidatorCombine id="GenetronEnergyGenValidators">
+        <Type value="And"/>
+        <CombineArray value="NotDead"/>
+        <CombineArray value="EnergyNotFull"/>
+        <CombineArray value="CasterNotDead"/>
+        <CombineArray value="NotHidden"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="GenetronProductionEnergyDrainStandard">
+        <Type value="And"/>
+        <CombineArray value="GenetronProductionIsTraining"/>
+        <CombineArray value="NotDead"/>
+        <CombineArray value="CasterNotDead"/>
+        <CombineArray value="NotHidden"/>
+        <CombineArray value="CasterIsNotHidden"/>
+        <CombineArray value="StructureNotLockedDown"/>
+        <CombineArray value="CasterNoPowerOutage"/>
+        <CombineArray value="CasterProductionModeIsStandard"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="GenetronProductionEnergyDrainOverclock">
+        <Type value="And"/>
+        <CombineArray value="GenetronProductionIsTraining"/>
+        <CombineArray value="NotDead"/>
+        <CombineArray value="CasterNotDead"/>
+        <CombineArray value="NotHidden"/>
+        <CombineArray value="CasterIsNotHidden"/>
+        <CombineArray value="StructureNotLockedDown"/>
+        <CombineArray value="CasterNoPowerOutage"/>
+        <CombineArray value="CasterProductionModeIsOverclock"/>
+    </CValidatorCombine>
     <CValidatorPlayerRequirement id="HasCoreOrRelay">
         <Find value="1"/>
         <Value value="HaveProcessingCoreOrRelayTower"/>
     </CValidatorPlayerRequirement>
-    <CValidatorCombine id="GenetronRegenValidators">
+    <CValidatorCombine id="GenetronEnergyRegenValidators">
+        <Type value="And"/>
         <CombineArray value="EnergyGTE5"/>
-        <CombineArray value="EnergyNotFullCaster"/>
         <CombineArray value="NotDead"/>
         <CombineArray value="CasterNotDead"/>
         <CombineArray value="NotHidden"/>
         <CombineArray value="GenetronCasterEnergyRegenNotSuppressed"/>
-        <Type value="And"/>
     </CValidatorCombine>
     <CValidatorUnitType id="IsNotRelayTower">
         <Value value="RelayTower"/>
@@ -250,6 +283,11 @@
         <Compare value="NE"/>
         <Behavior value="VirtusSelffixProtocolBuff"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorCombine id="GenetronProductionIsTraining">
+        <CombineArray value="ManufacturerIsTraining"/>
+        <CombineArray value="FabricatorIsTraining"/>
+        <CombineArray value="AssemblyArrayIsTraining"/>
+    </CValidatorCombine>
     <CValidatorUnitCompareVital id="TargetEnergyLT100">
         <Compare value="LT"/>
         <Value value="100"/>
@@ -260,7 +298,7 @@
         <Compare value="GT"/>
         <Behavior value="GyreAnnexCaster"/>
     </CValidatorUnitCompareBehaviorCount>
-    <CValidatorEffectTreeUserData id="DefaultDataE0">
+    <CValidatorEffectTreeUserData id="CasterDataDefaultIs0">
         <CheckExistence value="0"/>
         <Key value="Default"/>
     </CValidatorEffectTreeUserData>
