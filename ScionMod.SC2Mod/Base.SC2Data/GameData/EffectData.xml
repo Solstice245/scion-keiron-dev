@@ -272,15 +272,14 @@
     </CEffectDamage>
     <CEffectCreateHealer id="GeneratorPowerHealer">
         <ValidatorArray value="IsProcessingCoreOrRelayTower"/>
-        <ValidatorArray value="StructureNotLockedDown"/>
-        <ValidatorArray value="EnergyNotFull"/>
+        <ValidatorArray value="GenetronEnergyGenValidators"/>
         <EditorCategories value="Race:Genetron"/>
         <Flags index="Channeled" value="0"/>
         <PeriodicValidator value="GenetronEnergyGenValidators"/>
         <RechargeVital value="Energy"/>
         <RechargeVitalRate value="2.1445"/>
         <InitialEffect value="DataDefaultSet1"/>
-        <FinalEffect value="DataDefaultSet0"/>
+        <FinalEffect value="GeneratorPowerSet"/>
     </CEffectCreateHealer>
     <CEffectDamage id="EvisceratorSpinesDamageDummy">
         <EditorCategories value="Race:Xayid"/>
@@ -298,6 +297,21 @@
         <EffectArray value="GenetronConstruction"/>
         <EffectArray value="DownloadPhase"/>
         <EffectArray value="GenetronProductionModeWarmup"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="GenetronEnergyStateFull" parent="CEffectApplyBehaviorGenetronCaster">
+        <ValidatorArray index="0" value="CasterIsNotHidden"/>
+        <ValidatorArray value="CasterNotDead"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="GenetronEnergyStateNotFull" parent="CEffectApplyBehaviorGenetronCaster">
+        <ValidatorArray index="0" value="CasterIsNotHidden"/>
+        <ValidatorArray value="CasterNotDead"/>
+    </CEffectApplyBehavior>
+    <CEffectSet id="GenetronEnergyStateSet">
+        <ValidatorArray value="CasterIsNotHidden"/>
+        <ValidatorArray value="CasterNotDead"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="GenetronUpdatePowerGenerationTargetSA"/>
+        <EffectArray value="GenetronEnergyStateNotFull"/>
     </CEffectSet>
     <CEffectModifyUnit id="GenetronProductionModeWarmup">
         <ValidatorArray value="HasNoRelayTower"/>
@@ -359,6 +373,11 @@
             <Change value="-0.0893"/>
         </VitalArray>
     </CEffectModifyUnit>
+    <CEffectRemoveBehavior id="GenetronUpdatePowerGenerationTargetRB">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Caster"/>
+        <BehaviorLink value="GenetronUpdatePowerGenerationTarget"/>
+    </CEffectRemoveBehavior>
     <CEffectIssueOrder id="GenetronSchematicTransmitIssueOrder">
         <ValidatorArray value="IsUploader"/>
         <EditorCategories value="Race:Genetron"/>
@@ -462,6 +481,11 @@
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="GenetronUnitEnergyRegenx2Healer"/>
     </CEffectEnumArea>
+    <CEffectApplyBehavior id="GenetronUpdatePowerGenerationTarget" parent="CEffectApplyBehaviorGenetronTarget">
+        <ValidatorArray index="0" value="IsNodeOrGenerator"/>
+        <ValidatorArray value="StructureNotLockedDown"/>
+        <ValidatorArray value="NotUnderConstruction"/>
+    </CEffectApplyBehavior>
     <CEffectSet id="GyreAnnexInitSet">
         <EditorCategories value="Race:Keiron"/>
         <EffectArray value="GyreAnnexAK"/>
@@ -539,6 +563,25 @@
         <EditorCategories value="Race:Keiron"/>
         <EffectArray value="MyriadElytronTrackerReleaseMagazine"/>
         <EffectArray value="MyriadElytronTrackerRecallMagazine"/>
+    </CEffectSet>
+    <CEffectEnumArea id="GenetronUpdatePowerGenerationTargetSA">
+        <ValidatorArray value="IsProcessingCoreOrRelayTower"/>
+        <EditorCategories value="Race:Genetron"/>
+        <ImpactLocation Value="SourceUnitOrPoint"/>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
+        <AreaArray Radius="500" Effect="GenetronUpdatePowerGenerationTarget"/>
+    </CEffectEnumArea>
+    <CEffectSet id="NodePowerSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="DataDefaultSet0"/>
+        <EffectArray value="GenetronUpdatePowerGenerationTargetRB"/>
+        <EffectArray value="NodePowerSearchArea"/>
+    </CEffectSet>
+    <CEffectSet id="GeneratorPowerSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="DataDefaultSet0"/>
+        <EffectArray value="GenetronUpdatePowerGenerationTargetRB"/>
+        <EffectArray value="GeneratorPowerSearchArea"/>
     </CEffectSet>
     <CEffectCreatePersistent id="NullifierMissilesDummy">
         <EditorCategories value="Race:Genetron"/>
@@ -698,24 +741,29 @@
     </CEffectDamage>
     <CEffectEnumArea id="GeneratorPowerSearchArea">
         <EditorCategories value="Race:Genetron"/>
-        <ImpactLocation Value="TargetUnit"/>
+        <ImpactLocation Value="SourceUnitOrPoint"/>
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
         <TargetSorts>
             <SortArray value="PrioritizeRelayTower"/>
+            <SortArray value="TSDistance"/>
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="GeneratorPowerHealer"/>
+        <ValidatorArray value="CasterIsNotHidden"/>
+        <ValidatorArray value="CasterNotDead"/>
+        <ValidatorArray value="CasterNotLockedDown"/>
+        <ValidatorArray value="CasterIsNotUnderConstruction"/>
+        <ValidatorArray value="CasterDataDefaultIs0"/>
     </CEffectEnumArea>
     <CEffectCreateHealer id="NodePowerHealer">
         <ValidatorArray value="IsProcessingCoreOrRelayTower"/>
-        <ValidatorArray value="StructureNotLockedDown"/>
-        <ValidatorArray value="EnergyNotFull"/>
+        <ValidatorArray value="GenetronEnergyGenValidators"/>
         <EditorCategories value="Race:Genetron"/>
         <Flags index="Channeled" value="0"/>
         <PeriodicValidator value="GenetronEnergyGenValidators"/>
         <RechargeVital value="Energy"/>
         <RechargeVitalRate value="0.7148"/>
         <InitialEffect value="DataDefaultSet1"/>
-        <FinalEffect value="DataDefaultSet0"/>
+        <FinalEffect value="NodePowerSet"/>
     </CEffectCreateHealer>
     <CEffectRemoveBehavior id="VirtusSelffixProtocolBuffRemove">
         <EditorCategories value="Race:Genetron"/>
@@ -1340,12 +1388,18 @@
     </CEffectLaunchMissile>
     <CEffectEnumArea id="NodePowerSearchArea">
         <EditorCategories value="Race:Genetron"/>
-        <ImpactLocation Value="TargetUnit"/>
+        <ImpactLocation Value="SourceUnitOrPoint"/>
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
         <TargetSorts>
             <SortArray value="PrioritizeRelayTower"/>
+            <SortArray value="TSDistance"/>
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="NodePowerHealer"/>
+        <ValidatorArray value="CasterIsNotHidden"/>
+        <ValidatorArray value="CasterNotDead"/>
+        <ValidatorArray value="CasterNotLockedDown"/>
+        <ValidatorArray value="CasterIsNotUnderConstruction"/>
+        <ValidatorArray value="CasterDataDefaultIs0"/>
     </CEffectEnumArea>
     <CEffectDamage id="UploaderCountDummyStack1">
         <ValidatorArray value="CasterUploaderCount1"/>

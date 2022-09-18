@@ -95,10 +95,19 @@
         <Key value="Default"/>
         <Value value="1"/>
     </CValidatorEffectTreeUserData>
+    <CValidatorUnitCompareBehaviorCount id="CasterNotLockedDownBase">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="LockdownMode"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="CasterNotLockedDownDuration">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="LockdownModeDuration"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorCombine id="GenetronCasterEnergyRegenNotSuppressed">
         <Type value="And"/>
         <CombineArray value="CasterNoCourierCloak"/>
         <CombineArray value="CasterNoProcessorDetectionMode"/>
+        <CombineArray value="NoJupiterSpeed"/>
     </CValidatorCombine>
     <CValidatorUnitCompareBehaviorCount id="CasterNoCourierCloak">
         <WhichUnit Value="Caster"/>
@@ -160,10 +169,19 @@
     <CValidatorCombine id="GenetronEnergyGenValidators">
         <Type value="And"/>
         <CombineArray value="NotDead"/>
-        <CombineArray value="EnergyNotFull"/>
         <CombineArray value="CasterNotDead"/>
+        <CombineArray value="EnergyNotFull"/>
         <CombineArray value="NotHidden"/>
+        <CombineArray value="CasterIsNotHidden"/>
+        <CombineArray value="StructureNotLockedDown"/>
+        <CombineArray value="CasterNotLockedDown"/>
+        <CombineArray value="GenetronNotUpdatingPowerGenerationTarget"/>
+        <CombineArray value="OwnedBySelf"/>
     </CValidatorCombine>
+    <CValidatorUnitCompareBehaviorCount id="GenetronNotUpdatingPowerGenerationTarget">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="GenetronUpdatePowerGenerationTarget"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorCombine id="GenetronProductionEnergyDrainStandard">
         <Type value="And"/>
         <CombineArray value="GenetronProductionIsTraining"/>
@@ -197,14 +215,25 @@
         <CombineArray value="CasterNotDead"/>
         <CombineArray value="NotHidden"/>
         <CombineArray value="GenetronCasterEnergyRegenNotSuppressed"/>
+        <CombineArray value="OwnedBySelf"/>
     </CValidatorCombine>
     <CValidatorPlayerRequirement id="HasNoRelayTower">
         <Value value="HaveRelayTower"/>
     </CValidatorPlayerRequirement>
+    <CValidatorUnitType id="IsGenerator">
+        <Value value="Generator"/>
+    </CValidatorUnitType>
     <CValidatorUnitType id="IsNotRelayTower">
         <Value value="RelayTower"/>
         <Find value="0"/>
     </CValidatorUnitType>
+    <CValidatorUnitType id="IsNode">
+        <Value value="Node"/>
+    </CValidatorUnitType>
+    <CValidatorCombine id="IsNodeOrGenerator">
+        <CombineArray value="IsNode"/>
+        <CombineArray value="IsGenerator"/>
+    </CValidatorCombine>
     <CValidatorCombine id="IsRelayTowerOrProcessingCoreAndHasEnergy">
         <Type value="And"/>
         <CombineArray value="IsProcessingCoreOrRelayTower"/>
@@ -222,6 +251,10 @@
         <CombineArray value="IsNotTeslaCloakCharge"/>
         <CombineArray value="IsNotTeslaShockCharge"/>
     </CValidatorCombine>
+    <CValidatorUnitCompareBehaviorCount id="NoJupiterSpeed">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="JupiterSpeed"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorCombine id="ManufacturerIsTraining">
         <CombineArray value="ManufacturerIsTraining0"/>
         <CombineArray value="ManufacturerIsTraining1"/>
@@ -291,6 +324,17 @@
         <CombineArray value="FabricatorIsTraining"/>
         <CombineArray value="AssemblyArrayIsTraining"/>
     </CValidatorCombine>
+    <CValidatorCombine id="CasterNotLockedDown">
+        <Type value="And"/>
+        <CombineArray value="CasterNotLockedDownBase"/>
+        <CombineArray value="CasterNotLockedDownDuration"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareBehaviorCount id="StructureNotLockedDownBase">
+        <Behavior value="LockdownMode"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="StructureNotLockedDownDuration">
+        <Behavior value="LockdownModeDuration"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareVital id="TargetEnergyLT100">
         <Compare value="LT"/>
         <Value value="100"/>
@@ -687,9 +731,11 @@
         <Value value="3"/>
         <Behavior value="UploaderChargeStack"/>
     </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitCompareBehaviorCount id="StructureNotLockedDown">
-        <Behavior value="LockdownMode"/>
-    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorCombine id="StructureNotLockedDown">
+        <Type value="And"/>
+        <CombineArray value="StructureNotLockedDownBase"/>
+        <CombineArray value="StructureNotLockedDownDuration"/>
+    </CValidatorCombine>
     <CValidatorCombine id="TacticalAICasnoliskStagnatingBile">
         <CombineArray value="IsDefensiveStructure"/>
         <CombineArray value="IsSiegeTankSieged"/>
