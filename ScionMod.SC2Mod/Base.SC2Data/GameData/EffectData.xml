@@ -296,7 +296,7 @@
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="GenetronConstruction"/>
         <EffectArray value="DownloadPhase"/>
-        <EffectArray value="GenetronProductionModeWarmup"/>
+        <EffectArray value="GenetronProductionCalibration"/>
     </CEffectSet>
     <CEffectApplyBehavior id="GenetronEnergyStateFull" parent="CEffectApplyBehaviorGenetronCaster">
         <ValidatorArray index="0" value="CasterIsNotHidden"/>
@@ -313,11 +313,10 @@
         <EffectArray value="GenetronUpdatePowerGenerationTargetSA"/>
         <EffectArray value="GenetronEnergyStateNotFull"/>
     </CEffectSet>
-    <CEffectModifyUnit id="GenetronProductionModeWarmup">
-        <ValidatorArray value="HasNoRelayTower"/>
+    <CEffectApplyBehavior id="GenetronProductionCalibration">
+        <ValidatorArray index="0" value="IsGenetronArmyProduction"/>
         <EditorCategories value="Race:Genetron"/>
-        <Cost Abil="GenetronProductionModeStandard,Execute" CooldownTimeUse="42"/>
-    </CEffectModifyUnit>
+    </CEffectApplyBehavior>
     <CEffectSet id="GenetronProductionModeOverclock">
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="GenetronProductionModeStandardRB"/>
@@ -1278,7 +1277,7 @@
     </CEffectApplyBehavior>
     <CEffectCreatePersistent id="SchematicTransmitCP">
         <ValidatorArray value="NoMoreThan3LinkedUploaders"/>
-        <ValidatorArray value="UploaderLinkToAnyMechProductionStructure"/>
+        <ValidatorArray value="IsGenetronArmyProduction"/>
         <ValidatorArray value="NotUnderConstruction"/>
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="TargetUnit"/>
@@ -1294,9 +1293,9 @@
     </CEffectCreatePersistent>
     <CEffectSwitch id="SchematicTransmitLS">
         <EditorCategories value="Race:Genetron"/>
-        <CaseArray Validator="UploaderLinkedtoManufacturer" Effect="SchematicTransmitLM"/>
-        <CaseArray Validator="UploaderLinkedtoFabricationStation" Effect="SchematicTransmitLFS"/>
-        <CaseArray Validator="UploaderLinkedtoAssemblyArray" Effect="SchematicTransmitLAA"/>
+        <CaseArray Validator="IsManufacturer" Effect="SchematicTransmitLM"/>
+        <CaseArray Validator="IsFabricator" Effect="SchematicTransmitLFS"/>
+        <CaseArray Validator="IsAssemblyArray" Effect="SchematicTransmitLAA"/>
     </CEffectSwitch>
     <CEffectRemoveBehavior id="SchematicTransmitRL2">
         <EditorCategories value="Race:Genetron"/>
