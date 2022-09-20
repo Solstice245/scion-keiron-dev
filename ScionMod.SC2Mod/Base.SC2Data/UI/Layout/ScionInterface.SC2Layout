@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+
+    <Frame type="Frame" name="GameUI/UIContainer/FullscreenUpperContainer" file="GameUI">
+        <Frame type="Frame" name="GenetronEnergyPanel">
+            <Anchor side="Left" relative="$parent/ResourcePanel/ResourceFrame/SupplyBackground" pos="Min" offset="0"/>
+            <Anchor side="Top" relative="$parent/ResourcePanel/ResourceFrame" pos="Max" offset="0"/>
+            <Anchor side="Right" relative="$parent" pos="Max" offset="-5"/>
+            <Height val="32"/>
+            <Visible val="False"/>
+
+            <Frame type="Image" name="EnergyIcon">
+                <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                <Width val="32"/>
+                <Texture val="Assets/Textures/icon-power.dds"/>
+                <Tooltip val="@UI/ResourceTooltip_GenEnergy"/>
+                <TooltipAnchorPosition val="TopToBottom | RightToLeft"/>
+                <AcceptsMouse val="True"/>
+            </Frame>
+
+            <Frame type="CountdownLabel" name="EnergyCurrent">
+                <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                <Text val="0"/>
+                <Visible val="False"/>
+            </Frame>
+
+            <Frame type="CountdownLabel" name="EnergyMax">
+                <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                <Text val="0"/>
+                <Visible val="False"/>
+            </Frame>
+
+            <Frame type="TextFormatFrame" name="EnergyFormat">
+                <Anchor relative="$parent"/>
+                <FormatText val="%0%/%1%"/>
+                <Replacement val="{$parent/EnergyCurrent/@Text}" index="0"/>
+                <Replacement val="{$parent/EnergyMax/@Text}" index="1"/>
+            </Frame>
+
+            <Frame type="CountdownLabel" name="EnergyLabel">
+                <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/EnergyIcon" pos="Max" offset="5"/>
+                <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+                <Text val="{$parent/EnergyFormat/@Text}"/>
+                <Style val="ResourcePanel"/>
+                <TooltipAnchorPosition val="TopToBottom | RightToLeft"/>
+            </Frame>
+
+        </Frame>
+    </Frame>
+
+</Desc>
