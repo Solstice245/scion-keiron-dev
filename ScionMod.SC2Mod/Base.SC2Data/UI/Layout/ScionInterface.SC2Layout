@@ -24,6 +24,8 @@
                 <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
                 <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
                 <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                <StartValue val="{$this/@CurrentValue}"/>
+                <CurrentValue val="0"/>
                 <Text val="0"/>
                 <Visible val="False"/>
             </Frame>
@@ -32,6 +34,8 @@
                 <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
                 <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
                 <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                <StartValue val="{$this/@CurrentValue}"/>
+                <CurrentValue val="0"/>
                 <Text val="0"/>
                 <Visible val="False"/>
             </Frame>
@@ -48,9 +52,18 @@
                 <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
                 <Anchor side="Left" relative="$parent/EnergyIcon" pos="Max" offset="5"/>
                 <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-                <Text val="{$parent/EnergyFormat/@Text}"/>
                 <Style val="ResourcePanel"/>
+                <Text val="{$parent/EnergyFormat/@Text}"/>
                 <TooltipAnchorPosition val="TopToBottom | RightToLeft"/>
+                <Animation name="CountUp">
+                    <Event event="OnShown" action="Reset,Play"/>
+                    <Controller type="Counter" end="Loop" frame="$parent/EnergyCurrent">
+                        <Key type="Curve" time="0.0" value="1.0" out="Slow"/>
+                    </Controller>
+                    <Controller type="Counter" end="Loop" frame="$parent/EnergyMax">
+                        <Key type="Curve" time="0.0" value="1.0" out="Slow"/>
+                    </Controller>
+                </Animation>
             </Frame>
 
         </Frame>

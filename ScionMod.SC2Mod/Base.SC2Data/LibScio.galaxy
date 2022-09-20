@@ -93,9 +93,9 @@ bool libScio_gt_GenetronInterface_Func (bool testConds, bool runActions) {
                 if (autoA12E4867_var == null) { break; }
                 lv_genetron_energy_max_val += UnitGetPropertyFixed(autoA12E4867_var, c_unitPropEnergyMax, c_unitPropCurrent);
             }
-            libNtve_gf_SetDialogItemText(lv_genetron_energy_max_ui, IntToText(FixedToInt(lv_genetron_energy_max_val)), PlayerGroupSingle(auto3C5077DB_var));
-            libNtve_gf_SetDialogItemTooltip(lv_genetron_energy_label_ui, (StringExternal("Param/Value/lib_Scio_E5935B94") + (IntToText(TechTreeUnitCount(auto3C5077DB_var, "Node", c_techCountCompleteOnly)) + (StringExternal("Param/Value/lib_Scio_D1BCF012") + (StringExternal("Param/Value/lib_Scio_D09B5ED6") + IntToText(TechTreeUnitCount(auto3C5077DB_var, "Generator", c_techCountCompleteOnly)))))), PlayerGroupAll());
             if ((lv_genetron_energy_max_val > 0.0)) {
+                libNtve_gf_SetDialogItemCurrentValue(lv_genetron_energy_max_ui, lv_genetron_energy_max_val, PlayerGroupSingle(auto3C5077DB_var));
+                libNtve_gf_SetDialogItemTooltip(lv_genetron_energy_label_ui, (StringExternal("Param/Value/lib_Scio_E5935B94") + (IntToText(TechTreeUnitCount(auto3C5077DB_var, "Node", c_techCountCompleteOnly)) + (StringExternal("Param/Value/lib_Scio_D1BCF012") + (StringExternal("Param/Value/lib_Scio_D09B5ED6") + IntToText(TechTreeUnitCount(auto3C5077DB_var, "Generator", c_techCountCompleteOnly)))))), PlayerGroupAll());
                 DialogControlSetVisible(lv_genetron_energy_panel_ui, PlayerGroupSingle(auto3C5077DB_var), true);
             }
             else {
@@ -116,7 +116,7 @@ bool libScio_gt_GenetronInterface_Func (bool testConds, bool runActions) {
                     if (auto1752999D_var == null) { break; }
                     lv_genetron_energy_current_val += UnitGetPropertyFixed(auto1752999D_var, c_unitPropEnergy, c_unitPropCurrent);
                 }
-                libNtve_gf_SetDialogItemText(lv_genetron_energy_current_ui, IntToText(FixedToInt(lv_genetron_energy_current_val)), PlayerGroupSingle(auto4A7A7230_var));
+                libNtve_gf_SetDialogItemCurrentValue(lv_genetron_energy_current_ui, lv_genetron_energy_current_val, PlayerGroupSingle(auto4A7A7230_var));
             }
             Wait(0.0625, c_timeGame);
         }
