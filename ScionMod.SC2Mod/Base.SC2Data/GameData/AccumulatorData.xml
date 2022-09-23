@@ -37,6 +37,12 @@
         <UnitSource Value="Target"/>
         <ModificationType value="PerUnit"/>
     </CAccumulatorVitals>
+    <CAccumulatorVitals id="FuseUnfuseShieldMax">
+        <Ratio value="1"/>
+        <VitalType value="Shields"/>
+        <UnitSource Value="Target"/>
+        <ModificationType value="PerUnitMaxVital"/>
+    </CAccumulatorVitals>
     <CAccumulatorArithmetic id="FuseUnfuseArithmetic">
         <Parameters value="0.001">
             <AccumulatorArray value="FuseUnfuseShieldCurrent"/>
@@ -46,13 +52,13 @@
         </Parameters>
         <Operation value="Divide"/>
     </CAccumulatorArithmetic>
-    <CAccumulatorVitals id="FuseUnfuseShieldMax">
-        <Ratio value="1"/>
-        <VitalType value="Shields"/>
-        <UnitSource Value="Target"/>
-        <ModificationType value="PerUnitMaxVital"/>
-    </CAccumulatorVitals>
     <CAccumulatorUserData id="FuseUnfuseData"/>
+    <CAccumulatorArithmetic id="FuseFusionShieldRegenerationBonus">
+        <Parameters value="1.25"/>
+    </CAccumulatorArithmetic>
+    <CAccumulatorSwitch id="FuseFusionShieldRegenerationBonusSwitch">
+        <CaseArray Validator="ShieldsGTEDeltaFuse" Accumulator="FuseFusionShieldRegenerationBonus"/>
+    </CAccumulatorSwitch>
     <CAccumulatorArithmetic id="RelayTowerLongRangeTransferArith">
         <MinAccumulation value="0"/>
         <MaxAccumulation value="25"/>

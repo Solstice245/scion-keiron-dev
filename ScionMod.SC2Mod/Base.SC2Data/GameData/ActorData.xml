@@ -196,6 +196,25 @@
     </CActorEventMacro>
     <CActorRange id="InciterELORProtocolRange" parent="RangeAbilStandard" abil="ELORProtocol"/>
     <CActorModel id="GeneratorBuild" parent="GenetronBuildingBuild"/>
+    <CActorAction id="PulsarWeaponAttack" parent="GenericAttackBase">
+        <On Terms="Effect.SeparationBeam.Start" Send="Create"/>
+        <On Terms="Effect.SeparationBeamDMG.Start; FromEffectTreeDescendant" Send="ActionDamage"/>
+        <On Terms="Effect.SeparationBeam.Stop" Send="Destroy"/>
+        <ImpactSiteOps Ops="SOpAttachHarness SOpAttachVolumeNoVizEnhance SOpForwardLaunchGuide"/>
+        <ImpactMap index="None" Model="PulsarAttackImpact"/>
+        <DamageMap index="None" Model="PulsarAttackImpact"/>
+        <AcquisitionYawHalfArc value="10.000000"/>
+        <ActionFlags index="AlignedImpactsAndDamages" value="1"/>
+        <ActionFlags index="ImpactMonitorsTeleports" value="1"/>
+        <ActionFlags index="LaunchForceSite" value="1"/>
+        <Lifetime value="-1.000000"/>
+    </CActorAction>
+    <CActorBeamSimple id="PulsarWeaponAttackBeam" parent="BeamSimpleAnimationStyleContinuousClosingFull">
+        <Macros value="GlobalLoopMacro"/>
+        <Macros value="ActionTargetTeleportDestroy"/>
+        <On Terms="Effect.SeparationBeam.Stop; At Effect" Send="AnimBracketStop BSD"/>
+        <Model value="PulsarAttackBeam"/>
+    </CActorBeamSimple>
     <CActorSound id="SystemRechargeSoundStart" parent="SoundOneShot">
         <Sound value="SystemRecharge_LoopStart"/>
     </CActorSound>
@@ -1952,6 +1971,7 @@
         <Wireframe>
             <Image value="Assets\Textures\wireframe-genetron-avenger.dds"/>
         </Wireframe>
+        <On Terms="UnitBirth.AvengerGenetron" Send="Create AvengerVengeanceMissileAdd"/>
         <On Terms="AbilCharge.VengeanceMissile.Regen" Send="Create AvengerVengeanceMissileAdd"/>
         <On Terms="AbilCharge.VengeanceMissile.Spend" Target="AvengerVengeanceMissileAdd" Send="Destroy"/>
         <PortraitModel value="GenetronAdjutantPortrait"/>
@@ -6141,14 +6161,14 @@
         <HostSiteOps Ops="SOpMoveDownByDot75"/>
     </CActorModel>
     <CActorUnit id="Pulsar" parent="GenericUnitKeiron" unitName="Pulsar">
-        <On Terms="Behavior.DisableTurning.Off" Send="TimerSet 0.250000"/>
+        <On Terms="Behavior.PulsarDisableTurning.Off" Send="TimerSet 0.250000"/>
         <On Terms="Behavior.WalkAnimBack.On" Send="AnimGroupRemoveAll"/>
         <On Terms="Behavior.WalkAnimForward.On" Send="AnimGroupRemoveAll"/>
         <On Terms="Behavior.WalkAnimLeft.On" Send="AnimGroupRemoveAll"/>
         <On Terms="Behavior.WalkAnimRight.On" Send="AnimGroupRemoveAll"/>
-        <On Terms="Behavior.WalkAnimBack.On" Send="AnimGroupApply C"/>
+        <On Terms="Behavior.WalkAnimBack.On" Send="AnimGroupApply B"/>
         <On Terms="Behavior.WalkAnimForward.On" Send="AnimGroupApply A"/>
-        <On Terms="Behavior.WalkAnimLeft.On" Send="AnimGroupApply B"/>
+        <On Terms="Behavior.WalkAnimLeft.On" Send="AnimGroupApply C"/>
         <On Terms="Behavior.WalkAnimRight.On" Send="AnimGroupApply D"/>
         <On Terms="TimerExpired" Send="AnimGroupRemoveAll"/>
         <On Terms="TimerExpired" Send="AnimGroupApply A"/>
@@ -6156,14 +6176,10 @@
         <BarOffset value="55"/>
         <DeathArray index="Normal" SoundLink="KeironUnit_Death"/>
     </CActorUnit>
-    <CActorModel id="PulsarAttackImpact" parent="ModelAnimationStyleOneShotUNIT">
-        <On Terms="Effect.SeperationBeamDMG.Start; At Target" Send="Create"/>
-        <HostSiteOps Ops="SOpTargetUnit"/>
-    </CActorModel>
     <CActorSound id="PulsarAttackLaunchSound" parent="SoundOneShot">
-        <On Terms="Effect.SeperationBeam.Start; At Effect" Send="Create"/>
+        <On Terms="Effect.SeparationBeam.Start; At Effect" Send="Create"/>
     </CActorSound>
-    <CActorSound id="PulsarAttackSoundLoop" parent="SoundContinuousKeiron" Effect="SeperationBeam"/>
+    <CActorSound id="PulsarAttackSoundLoop" parent="SoundContinuousKeiron" Effect="SeparationBeam"/>
     <CActorModel id="ReverbTeleportPoint" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Effect.ReverbCPDumy" Send="Create"/>
         <Model value="Stalker_Deluxe_Collection_BlinkOut"/>
@@ -6272,19 +6288,6 @@
         <On Terms="Behavior.UmbraShieldVisualControl.Off" Send="Destroy"/>
         <HostSiteOps Ops="SOpAttachCenter"/>
     </CActorModel>
-    <CActorBeamSimple id="PulsarAttackBeam" parent="BeamSimpleAnimationStyleContinuous">
-        <Aliases value="_VoidRaySwarmAttackBeam"/>
-        <Macros value="ActionTargetTeleportDestroy"/>
-        <Supporter Subject="_Unit" Scope="Caster" Actor="Find"/>
-        <On index="0" Terms="ActorCreation" Send="AnimBracketStart BSD Birth Attack,00 Death FullMatch"/>
-        <On Terms="ActorOrphan" Send="Destroy"/>
-        <On Terms="Effect.SeperationBeam.Stop; At Caster" Send="Destroy"/>
-        <On Terms="Effect.SeperationBeam.Start; At Caster" Send="Create"/>
-        <On Terms="Effect.SeperationBeam.Start; At Caster" Send="Create"/>
-        <Host Subject="_Unit" Scope="Caster" Actor="Find"/>
-        <HostLaunchSiteOps Ops="SOpCasterUnit SOpAttachWeapon"/>
-        <HostImpactSiteOps Ops="SOpCasterUnit SOpMoveBy3 SOpMoveBy1 SOpMoveUpByDot5"/>
-    </CActorBeamSimple>
     <CActorAction id="VoltAttack" parent="GenericAttack" effectImpact="ElectronBoltD" effectLaunch="ElectronBoltLM">
         <LaunchSiteOps Ops="SOpAttachHarness SOpMoveBackByDot75"/>
         <ImpactSite value="VoltAttackImpactSite"/>

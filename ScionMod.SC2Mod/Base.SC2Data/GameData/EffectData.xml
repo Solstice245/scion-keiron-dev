@@ -764,6 +764,181 @@
         <InitialEffect value="DataDefaultSet1"/>
         <FinalEffect value="NodePowerSet"/>
     </CEffectCreateHealer>
+    <CEffectSet id="PulsarFacingFindAttackTarget">
+        <ValidatorArray value="PulsarAttackTarget"/>
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="PulsarDisableTurning"/>
+        <EffectArray value="PulsarFacingModifyUnit"/>
+    </CEffectSet>
+    <CEffectSet id="PulsarFacingFindGeneralTarget">
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="PulsarDisableTurning"/>
+        <EffectArray value="PulsarFacingModifyUnit"/>
+    </CEffectSet>
+    <CEffectEnumArea id="PulsarFacingSearchAttackTarget">
+        <EditorCategories value="Race:Keiron"/>
+        <AreaArray MaxCount="1" Radius="4" Effect="PulsarFacingFindAttackTarget"/>
+        <MinCount value="1"/>
+        <SearchFlags index="ExtendByUnitRadius" value="1"/>
+    </CEffectEnumArea>
+    <CEffectEnumArea id="PulsarFacingSearchGeneralTarget">
+        <EditorCategories value="Race:Keiron"/>
+        <SearchFilters value="Ground,Visible;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <TargetSorts>
+            <SortArray value="TSDistance"/>
+        </TargetSorts>
+        <AreaArray MaxCount="1" Radius="4" Effect="PulsarFacingFindGeneralTarget"/>
+        <SearchFlags index="ExtendByUnitRadius" value="1"/>
+    </CEffectEnumArea>
+    <CEffectSwitch id="PulsarFacingSwitch">
+        <EditorCategories value="Race:Keiron"/>
+        <CaseArray Effect="PulsarFacingSearchAttackTarget"/>
+        <CaseDefault value="PulsarFacingSearchGeneralTarget"/>
+    </CEffectSwitch>
+    <CEffectModifyUnit id="PulsarFacingModifyUnit">
+        <EditorCategories value="Race:Keiron"/>
+        <ImpactUnit Value="Caster"/>
+        <ModifyFlags index="InterpolateFacing" value="1"/>
+        <FacingLocation Value="TargetUnit"/>
+        <FacingType value="LookAt"/>
+    </CEffectModifyUnit>
+    <CEffectApplyBehavior id="PulsarDisableTurning" parent="CEffectApplyBehaviorKeironCaster"/>
+    <CEffectCreatePersistent id="SeparationBeam" parent="CEffectCreatePersistentKeironUnit">
+        <WhichLocation Value="TargetUnit"/>
+        <TimeScaleSource Value="Caster"/>
+        <Flags index="Channeled" value="1"/>
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <PeriodicEffectArray value="SeparationBeamDMG"/>
+        <PeriodicPeriodArray value="0.5"/>
+    </CEffectCreatePersistent>
+    <CEffectSet id="SeparationBeamInit">
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="SeparationBeamDMG"/>
+        <EffectArray value="SeparationBeamTarget"/>
+    </CEffectSet>
+    <CEffectDamage id="SeparationBeamDMG" parent="CEffectDamageKeironWeapon">
+        <AttributeBonus index="Light" value="3"/>
+        <Amount value="6"/>
+        <Death value="Electrocute"/>
+    </CEffectDamage>
+    <CEffectApplyBehavior id="SeparationBeamTarget" parent="CEffectApplyBehaviorKeironTarget"/>
+    <CEffectApplyBehavior id="PulsarDampener" parent="CEffectApplyBehaviorKeironTarget"/>
+    <CEffectApplyBehavior id="PulsarDampenerAlt" parent="CEffectApplyBehaviorKeironCaster"/>
+    <CEffectApplyBehavior id="PulsarDampenerAutocast" parent="CEffectApplyBehaviorKeironCaster"/>
+    <CEffectSet id="Pulsar4DMCUSet">
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="Pulsar4DMDelay"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="Pulsar4DMKill">
+        <EditorCategories value="Race:Keiron"/>
+        <ImpactUnit Effect="Pulsar4DMCUSet"/>
+        <ModifyFlags index="Remove" value="1"/>
+    </CEffectModifyUnit>
+    <CEffectCreatePersistent id="Pulsar4DMFrontDummy">
+        <EditorCategories value="Race:Keiron"/>
+        <WhichLocation Value="CasterUnit"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="Pulsar4DMLeftDummy">
+        <EditorCategories value="Race:Keiron"/>
+        <WhichLocation Value="CasterUnit"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="Pulsar4DMBackDummy">
+        <EditorCategories value="Race:Keiron"/>
+        <WhichLocation Value="CasterUnit"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="Pulsar4DMRightDummy">
+        <EditorCategories value="Race:Keiron"/>
+        <WhichLocation Value="CasterUnit"/>
+    </CEffectCreatePersistent>
+    <CEffectCreateUnit id="Pulsar4DMCU">
+        <EditorCategories value="Race:Keiron"/>
+        <WhichLocation Value="CasterPoint"/>
+        <CreateFlags index="OffsetByRadius" value="0"/>
+        <CreateFlags index="Placement" value="0"/>
+        <CreateFlags index="ProvideFood" value="0"/>
+        <CreateFlags index="TechComplete" value="0"/>
+        <CreateFlags index="UseFood" value="0"/>
+        <CreateFlags index="NormalizeSpawnOffset" value="0"/>
+        <SpawnEffect value="Pulsar4DMCUSet"/>
+        <SpawnUnit value="Pulsar4DMDummy"/>
+    </CEffectCreateUnit>
+    <CEffectCreatePersistent id="Pulsar4DMDelay" parent="CEffectCreatePersistentKeiron">
+        <InitialDelay value="0.1875"/>
+        <InitialEffect value=""/>
+        <FinalEffect value="Pulsar4DMKill"/>
+        <PeriodCount value="4"/>
+        <PeriodicEffectArray value="Pulsar4DMFrontSA"/>
+        <PeriodicEffectArray value="Pulsar4DMLeftSA"/>
+        <PeriodicEffectArray value="Pulsar4DMBackSA"/>
+        <PeriodicEffectArray value="Pulsar4DMRightSA"/>
+    </CEffectCreatePersistent>
+    <CEffectEnumArea id="Pulsar4DMFrontSA">
+        <EditorCategories value="Race:Keiron"/>
+        <LaunchLocation Value="CasterUnit"/>
+        <ImpactLocation Value="CasterUnit"/>
+        <IncludeArray Effect="Pulsar4DMCUSet" Value="Target"/>
+        <SearchFilters value="-;Player,Ally,Neutral,Enemy"/>
+        <AreaArray>
+            <Arc value="90"/>
+            <MaxCount value="1"/>
+            <Radius value="1"/>
+            <Effect value="Pulsar4DMABBack"/>
+        </AreaArray>
+    </CEffectEnumArea>
+    <CEffectEnumArea id="Pulsar4DMLeftSA">
+        <EditorCategories value="Race:Keiron"/>
+        <LaunchLocation Value="CasterUnit"/>
+        <ImpactLocation Value="CasterUnit"/>
+        <IncludeArray Effect="Pulsar4DMCUSet" Value="Target"/>
+        <SearchFilters value="-;Player,Ally,Neutral,Enemy"/>
+        <AreaArray>
+            <Arc value="90"/>
+            <MaxCount value="1"/>
+            <Radius value="1"/>
+            <FacingAdjustment value="90"/>
+            <Effect value="Pulsar4DMABRight"/>
+        </AreaArray>
+    </CEffectEnumArea>
+    <CEffectEnumArea id="Pulsar4DMBackSA">
+        <EditorCategories value="Race:Keiron"/>
+        <LaunchLocation Value="CasterUnit"/>
+        <ImpactLocation Value="CasterUnit"/>
+        <IncludeArray Effect="Pulsar4DMCUSet" Value="Target"/>
+        <SearchFilters value="-;Player,Ally,Neutral,Enemy"/>
+        <AreaArray>
+            <Arc value="90"/>
+            <MaxCount value="1"/>
+            <Radius value="1"/>
+            <FacingAdjustment value="180"/>
+            <Effect value="Pulsar4DMABForward"/>
+        </AreaArray>
+    </CEffectEnumArea>
+    <CEffectEnumArea id="Pulsar4DMRightSA">
+        <EditorCategories value="Race:Keiron"/>
+        <LaunchLocation Value="CasterUnit"/>
+        <ImpactLocation Value="CasterUnit"/>
+        <IncludeArray Effect="Pulsar4DMCUSet" Value="Target"/>
+        <SearchFilters value="-;Player,Ally,Neutral,Enemy"/>
+        <AreaArray>
+            <Arc value="90"/>
+            <MaxCount value="1"/>
+            <Radius value="1"/>
+            <FacingAdjustment value="270"/>
+            <Effect value="Pulsar4DMABLeft"/>
+        </AreaArray>
+    </CEffectEnumArea>
+    <CEffectApplyBehavior id="Pulsar4DMABForward" parent="CEffectApplyBehaviorKeironCaster">
+        <Behavior value="WalkAnimForward"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="Pulsar4DMABLeft" parent="CEffectApplyBehaviorKeironCaster">
+        <Behavior value="WalkAnimLeft"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="Pulsar4DMABBack" parent="CEffectApplyBehaviorKeironCaster">
+        <Behavior value="WalkAnimBack"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="Pulsar4DMABRight" parent="CEffectApplyBehaviorKeironCaster">
+        <Behavior value="WalkAnimRight"/>
+    </CEffectApplyBehavior>
     <CEffectRemoveBehavior id="VirtusSelffixProtocolBuffRemove">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="VirtusSelffixProtocolBuff"/>
@@ -807,8 +982,6 @@
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="UploaderResearchDrainSet"/>
     </CEffectEnumArea>
-    <CEffectApplyBehavior id="PulsarDampenerAutocast" parent="CEffectApplyBehaviorKeironCaster"/>
-    <CEffectApplyBehavior id="PulsarDampenerAlt" parent="CEffectApplyBehaviorKeironTarget"/>
     <CEffectCreateHealer id="FixerRepair">
         <ValidatorArray value="NotWarpingIn"/>
         <ValidatorArray value="HiddenCompareBA"/>
@@ -877,7 +1050,7 @@
         <Flags index="Notification" value="1"/>
         <Kind value="Splash"/>
         <KindSplash value="Splash"/>
-        <Amount value="45"/>
+        <Amount value="40"/>
         <Death value="Disintegrate"/>
         <AreaArray Radius="2" Fraction="1"/>
         <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
@@ -1614,7 +1787,7 @@
         <AreaArray Radius="0.4" Fraction="0.5"/>
     </CEffectDamage>
     <CEffectDamage id="ChargeCannon" parent="CEffectDamageGenetronWeapon">
-        <Amount value="13"/>
+        <Amount value="12"/>
         <Death value="Blast"/>
     </CEffectDamage>
     <CEffectDamage id="HalifaxGrenadesDMG" parent="CEffectDamageGenetronWeapon">
@@ -1667,7 +1840,7 @@
         <Death value="Blast"/>
     </CEffectDamage>
     <CEffectDamage id="ChargeCannonSC" parent="CEffectDamageGenetronWeapon">
-        <Amount value="26"/>
+        <Amount value="24"/>
         <Death value="Blast"/>
     </CEffectDamage>
     <CEffectDamage id="RepulsorSuppressionCannonsDamage" parent="CEffectDamageGenetronWeapon">
@@ -2859,7 +3032,6 @@
         <Abil value="AegisMorphToNormal"/>
         <Player Value="Caster"/>
     </CEffectIssueOrder>
-    <CEffectApplyBehavior id="PulsarDampener" parent="CEffectApplyBehaviorKeironTarget"/>
     <CEffectCreateUnit id="AegisShieldAuraKBCU">
         <EditorCategories value="Race:Keiron"/>
         <WhichLocation Value="CasterUnit"/>
@@ -3903,7 +4075,7 @@
     </CEffectIssueOrder>
     <CEffectDamage id="Psythe" parent="CEffectDamageKeironWeapon">
         <Kind value="Melee"/>
-        <Amount value="7"/>
+        <Amount value="8"/>
         <Death value="Eviscerate"/>
     </CEffectDamage>
     <CEffectLaunchMissile id="EnthrallerQuillsLM" parent="CEffectLaunchMissileKeiron">
@@ -3923,114 +4095,6 @@
         <Amount value="15"/>
         <Death value="Eviscerate"/>
     </CEffectDamage>
-    <CEffectSet id="Pulsar4DMCUSet">
-        <EditorCategories value="Race:Keiron"/>
-        <EffectArray value="Pulsar4DMDelay"/>
-    </CEffectSet>
-    <CEffectModifyUnit id="Pulsar4DMKill">
-        <EditorCategories value="Race:Keiron"/>
-        <ImpactUnit Effect="Pulsar4DMCUSet"/>
-        <ModifyFlags index="Remove" value="1"/>
-    </CEffectModifyUnit>
-    <CEffectCreatePersistent id="Pulsar4DMLeftDummy">
-        <EditorCategories value="Race:Keiron"/>
-        <WhichLocation Value="CasterUnit"/>
-    </CEffectCreatePersistent>
-    <CEffectCreatePersistent id="Pulsar4DMFrontDummy">
-        <EditorCategories value="Race:Keiron"/>
-        <WhichLocation Value="CasterUnit"/>
-    </CEffectCreatePersistent>
-    <CEffectCreatePersistent id="Pulsar4DMBackDummy">
-        <EditorCategories value="Race:Keiron"/>
-        <WhichLocation Value="CasterUnit"/>
-    </CEffectCreatePersistent>
-    <CEffectCreatePersistent id="Pulsar4DMRightDummy">
-        <EditorCategories value="Race:Keiron"/>
-        <WhichLocation Value="CasterUnit"/>
-    </CEffectCreatePersistent>
-    <CEffectEnumArea id="Pulsar4DMRightSA">
-        <EditorCategories value="Race:Keiron"/>
-        <LaunchLocation Value="CasterUnit"/>
-        <ImpactLocation Value="CasterUnit"/>
-        <IncludeArray Effect="Pulsar4DMCUSet" Value="Target"/>
-        <SearchFilters value="-;Player,Ally,Neutral,Enemy"/>
-        <AreaArray>
-            <Arc value="90"/>
-            <MaxCount value="1"/>
-            <Radius value="1"/>
-            <FacingAdjustment value="270"/>
-            <Effect value="Pulsar4DMABLeft"/>
-        </AreaArray>
-    </CEffectEnumArea>
-    <CEffectCreateUnit id="Pulsar4DMCU">
-        <EditorCategories value="Race:Keiron"/>
-        <WhichLocation Value="CasterPoint"/>
-        <CreateFlags index="OffsetByRadius" value="0"/>
-        <CreateFlags index="Placement" value="0"/>
-        <CreateFlags index="ProvideFood" value="0"/>
-        <CreateFlags index="TechComplete" value="0"/>
-        <CreateFlags index="UseFood" value="0"/>
-        <CreateFlags index="NormalizeSpawnOffset" value="0"/>
-        <SpawnEffect value="Pulsar4DMCUSet"/>
-        <SpawnUnit value="Pulsar4DMDummy"/>
-    </CEffectCreateUnit>
-    <CEffectCreatePersistent id="Pulsar4DMDelay" parent="CEffectCreatePersistentKeiron">
-        <InitialDelay value="0.1875"/>
-        <InitialEffect value=""/>
-        <FinalEffect value="Pulsar4DMKill"/>
-        <PeriodCount value="4"/>
-        <PeriodicEffectArray value="Pulsar4DMFrontSA"/>
-        <PeriodicEffectArray value="Pulsar4DMBackSA"/>
-        <PeriodicEffectArray value="Pulsar4DMLeftSA"/>
-        <PeriodicEffectArray value="Pulsar4DMRightSA"/>
-    </CEffectCreatePersistent>
-    <CEffectEnumArea id="Pulsar4DMFrontSA">
-        <EditorCategories value="Race:Keiron"/>
-        <LaunchLocation Value="CasterUnit"/>
-        <ImpactLocation Value="CasterUnit"/>
-        <IncludeArray Effect="Pulsar4DMCUSet" Value="Target"/>
-        <SearchFilters value="-;Player,Ally,Neutral,Enemy"/>
-        <AreaArray>
-            <Arc value="90"/>
-            <MaxCount value="1"/>
-            <Radius value="1"/>
-            <Effect value="Pulsar4DMABBack"/>
-        </AreaArray>
-    </CEffectEnumArea>
-    <CEffectEnumArea id="Pulsar4DMLeftSA">
-        <EditorCategories value="Race:Keiron"/>
-        <LaunchLocation Value="CasterUnit"/>
-        <ImpactLocation Value="CasterUnit"/>
-        <IncludeArray Effect="Pulsar4DMCUSet" Value="Target"/>
-        <SearchFilters value="-;Player,Ally,Neutral,Enemy"/>
-        <AreaArray>
-            <Arc value="90"/>
-            <MaxCount value="1"/>
-            <Radius value="1"/>
-            <FacingAdjustment value="90"/>
-            <Effect value="Pulsar4DMABRight"/>
-        </AreaArray>
-    </CEffectEnumArea>
-    <CEffectEnumArea id="Pulsar4DMBackSA">
-        <EditorCategories value="Race:Keiron"/>
-        <LaunchLocation Value="CasterUnit"/>
-        <ImpactLocation Value="CasterUnit"/>
-        <IncludeArray Effect="Pulsar4DMCUSet" Value="Target"/>
-        <SearchFilters value="-;Player,Ally,Neutral,Enemy"/>
-        <AreaArray>
-            <Arc value="90"/>
-            <MaxCount value="1"/>
-            <Radius value="1"/>
-            <FacingAdjustment value="180"/>
-            <Effect value="Pulsar4DMABForward"/>
-        </AreaArray>
-    </CEffectEnumArea>
-    <CEffectSet id="PulsarSeperationBeamSet">
-        <EditorCategories value="Race:Keiron"/>
-        <EffectArray value="WeaponFacingDummyAB"/>
-        <EffectArray value="WeaponFacingDummyMU"/>
-        <EffectArray value="SeperationBeamSA"/>
-    </CEffectSet>
     <CEffectApplyBehavior id="ReverbCasterController" parent="CEffectApplyBehaviorKeironCaster">
         <Behavior value="EchoReverbCasterController"/>
     </CEffectApplyBehavior>
@@ -4097,26 +4161,7 @@
         <EffectArray value="KeironUnitChargeAB"/>
         <EffectArray value="ElysiumMeridianAddCharge"/>
     </CEffectSet>
-    <CEffectCreatePersistent id="SeperationBeam" parent="CEffectCreatePersistentKeironUnit">
-        <WhichLocation Value="TargetUnit"/>
-        <Flags index="Channeled" value="1"/>
-        <Flags index="Channeling" value="1"/>
-        <Flags index="PersistUntilDestroyed" value="1"/>
-        <InitialEffect value="PulsarSeperationBeamSet"/>
-        <PeriodicValidator value="RangeLE3AndTargetNotDead"/>
-        <PeriodicEffectArray value="WeaponFacingDummyMU"/>
-        <PeriodicEffectArray value="WeaponFacingDummyMU"/>
-        <PeriodicEffectArray value="WeaponFacingDummyMU"/>
-        <PeriodicEffectArray value="PulsarSeperationBeamSet"/>
-        <PeriodicPeriodArray value="0.125"/>
-    </CEffectCreatePersistent>
-    <CEffectDamage id="SeperationBeamD" parent="CEffectDamageKeironWeapon"/>
-    <CEffectDamage id="SeperationBeamDMG" parent="CEffectDamageKeironWeapon">
-        <Amount value="4"/>
-        <Death value="Electrocute"/>
-        <ExcludeArray index="0" removed="1"/>
-        <Kind value="Splash"/>
-    </CEffectDamage>
+    <CEffectDamage id="HarbingerWeaponDummy" parent="CEffectDamageKeironWeapon"/>
     <CEffectEnumArea id="ShieldAura" parent="CEffectSearchAreaKeiron">
         <SearchFilters value="-;Self,Missile,Stasis,Dead,Hidden"/>
         <AreaArray Radius="10" Effect="ShieldAuraS"/>
@@ -4173,7 +4218,7 @@
         <Flags index="Channeled" value="1"/>
         <Flags index="PersistUntilDestroyed" value="1"/>
         <InitialEffect value="TitanWeaponSwitch"/>
-        <PeriodicEffectArray value="TitanWeaponSwitch"/>
+        <PeriodicEffectArray value="TitanWeaponSet"/>
         <PeriodicPeriodArray value="0.5"/>
         <ValidatorArray value="CasterAndTargetNotDead"/>
         <TimeScaleSource Value="Caster"/>
@@ -4189,58 +4234,25 @@
         <PeriodicPeriodArray value="0.25"/>
         <TimeScaleSource Value="Caster"/>
     </CEffectCreatePersistent>
-    <CEffectDamage id="TitanWeaponDMG">
+    <CEffectDamage id="TitanWeaponDMG" parent="DU_WEAP_MISSILE">
         <EditorCategories value="Race:Keiron"/>
-        <ArmorReduction value="1"/>
-        <Amount value="10"/>
+        <KindSplash value="Splash"/>
+        <Amount value="11"/>
+        <AreaArray Radius="1" Fraction="0.5"/>
+        <ExcludeArray Value="Target"/>
+        <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
     </CEffectDamage>
     <CEffectCreatePersistent id="TitanWeaponDummy" parent="CEffectCreatePersistentKeironUnit"/>
     <CEffectCreatePersistent id="NullifierWeaponDummy" parent="CEffectCreatePersistentKeironUnit"/>
     <CEffectEnumArea id="TitanWeaponSA" parent="CEffectSearchAreaKeiron">
         <IncludeArray Value="Target"/>
-        <AreaArray Radius="1" Effect="TitanWeaponSet"/>
+        <AreaArray Radius="1" Effect="TitanWeaponAB"/>
     </CEffectEnumArea>
     <CEffectSet id="TitanWeaponSet">
-        <EffectArray value="TitanWeaponAB"/>
         <EffectArray value="TitanWeaponDMG"/>
+        <EffectArray value="TitanWeaponSA"/>
         <EditorCategories value="Race:Keiron"/>
     </CEffectSet>
-    <CEffectSwitch id="TitanWeaponSwitch">
-        <CaseArray Validator="IsStructureOrMassive" Effect="TitanWeaponSet"/>
-        <CaseDefault value="TitanWeaponSA"/>
-        <EditorCategories value="Race:Keiron"/>
-    </CEffectSwitch>
-    <CEffectApplyBehavior id="Pulsar4DMABForward" parent="CEffectApplyBehaviorKeironTarget">
-        <WhichUnit Value="Caster"/>
-        <Behavior value="WalkAnimForward"/>
-    </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="Pulsar4DMABRight" parent="CEffectApplyBehaviorKeironTarget">
-        <WhichUnit Value="Caster"/>
-        <Behavior value="WalkAnimRight"/>
-    </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="Pulsar4DMABLeft" parent="CEffectApplyBehaviorKeironTarget">
-        <WhichUnit Value="Caster"/>
-        <Behavior value="WalkAnimLeft"/>
-    </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="Pulsar4DMABBack" parent="CEffectApplyBehaviorKeironTarget">
-        <ValidatorArray index="0" removed="1"/>
-        <WhichUnit Value="Caster"/>
-        <Behavior value="WalkAnimBack"/>
-    </CEffectApplyBehavior>
-    <CEffectModifyUnit id="WeaponFacingDummyMU">
-        <EditorCategories value="Race:Keiron"/>
-        <ImpactUnit Value="Caster"/>
-        <ModifyFlags index="InterpolateFacing" value="1"/>
-        <FacingLocation Value="TargetUnit"/>
-        <FacingType value="LookAt"/>
-    </CEffectModifyUnit>
-    <CEffectEnumArea id="SeperationBeamSA" parent="CEffectSearchAreaKeiron">
-        <ImpactLocation Value="SourceUnit"/>
-        <IncludeArray Effect="SeperationBeam" Value="Target"/>
-        <AreaArray RectangleWidth="0.3" RectangleHeight="3.75" Effect="SeperationBeamDMG"/>
-        <AreaRelativeOffset value="0,-1.75"/>
-        <SearchFlags index="OffsetByUnitRadius" value="1"/>
-    </CEffectEnumArea>
     <CEffectLaunchMissile id="TitanBlast" parent="CEffectLaunchMissileKeiron"/>
     <CEffectLaunchMissile id="ShadowCannon" parent="CEffectLaunchMissileKeiron"/>
     <CEffectDamage id="TitanBlastImpact" parent="CEffectDamageKeironWeapon">
@@ -4262,18 +4274,6 @@
         <MaxCount value="2"/>
         <EditorCategories value="Race:Keiron"/>
     </CEffectSet>
-    <CEffectApplyBehavior id="WeaponFacingDummyAB">
-        <EditorCategories value="Race:Keiron"/>
-        <WhichUnit Value="Caster"/>
-        <Behavior value="DisableTurning"/>
-    </CEffectApplyBehavior>
-    <CEffectCreatePersistent id="WeaponFacingDummy">
-        <EditorCategories value="Race:Keiron"/>
-        <WhichLocation Value="TargetUnit"/>
-        <InitialEffect value="WeaponFacingDummyAB"/>
-        <PeriodicEffectArray value="WeaponFacingDummyMU"/>
-        <PeriodCount value="1"/>
-    </CEffectCreatePersistent>
     <CEffectModifyUnit id="EdificeParVolAddCharge">
         <EditorCategories value="Race:Keiron"/>
         <ImpactUnit Value="Caster"/>
