@@ -478,7 +478,7 @@
         <HostSiteOps Ops="SOpAttachCenter"/>
         <AutoScaleFactor value="1.000000"/>
     </CActorModel>
-    <CActorAction id="GyreShackleAttack" parent="GenericAttack" effectImpact="GyreShackleImpactCP" effectLaunch="GyreShackleLM">
+    <CActorAction id="GyreShackleAttack" parent="GenericAttack" effectImpact="GyreShackleImpact" effectLaunch="GyreShackle">
         <LaunchSiteOps Ops="SOpAttachHarness SOpMoveDownByDot05"/>
         <LaunchAttachQuery Methods="AMFilterHardpoint01"/>
         <Missile value="GyreShackleWeapon"/>
@@ -556,7 +556,7 @@
         <BarOffset value="110"/>
         <DeathArray index="Normal" ModelLink="GeneratorDeath" SoundLink="FusionCore_Explode"/>
     </CActorUnit>
-    <CActorAction id="RevilerDummyAttack" parent="GenericAttack" effectImpact="EvisceratorSpinesDamageDummy" effectLaunch="EvisceratorSpinesLMDummy">
+    <CActorAction id="RevilerDummyAttack" parent="GenericAttack" effectImpact="EvisceratorSpinesLMDummyImpact" effectLaunch="EvisceratorSpinesLMDummy">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <LaunchAssets Sound="Spell_SpineVolley_Launch"/>
         <ImpactMap index="None" Model="HydraliskGroundAttackImpact"/>
@@ -810,59 +810,6 @@
         <AcceptedHostedPropTransfers index="CastShadows" value="0"/>
         <Model value="Invisible"/>
         <UnitFlags index="ShowBlobShadow" value="0"/>
-    </CActorUnit>
-    <CActorUnit id="UploaderAddonDummy0" parent="GenericUnitSelectableNoAutoSoundLinks" unitName="Uploader3x3AddonDummy">
-        <On Terms="UnitBirth.Uploader4x4AddonDummy" Send="Create"/>
-        <On Terms="Signal.*.UploaderCount0" Send="Create"/>
-        <On Terms="Effect.UploaderCountDummyStack1.Start" Send="Signal UploaderCount1"/>
-        <On Terms="Effect.UploaderCountDummyStack1.Start" Send="Destroy"/>
-        <On Terms="Effect.UploaderCountDummyStack2.Start" Send="Signal UploaderCount2"/>
-        <On Terms="Effect.UploaderCountDummyStack2.Start" Send="Destroy"/>
-        <On Terms="Effect.UploaderCountDummyStack3.Start" Send="Signal UploaderCount3"/>
-        <On Terms="Effect.UploaderCountDummyStack3.Start" Send="Destroy"/>
-        <Model value="Invisible"/>
-        <BuildModel value="Invisible"/>
-        <PlacementModel value="Invisible"/>
-        <AddonIndicator value="Actor/AddonIndicator/UploaderCount0"/>
-    </CActorUnit>
-    <CActorUnit id="UploaderAddonDummy1" parent="GenericUnitSelectableNoAutoSoundLinks">
-        <On Terms="Signal.*.UploaderCount1" Send="Create"/>
-        <On Terms="Effect.UploaderCountDummyStack0.Start" Send="Signal UploaderCount0"/>
-        <On Terms="Effect.UploaderCountDummyStack0.Start" Send="Destroy"/>
-        <On Terms="Effect.UploaderCountDummyStack2.Start" Send="Signal UploaderCount2"/>
-        <On Terms="Effect.UploaderCountDummyStack2.Start" Send="Destroy"/>
-        <On Terms="Effect.UploaderCountDummyStack3.Start" Send="Signal UploaderCount3"/>
-        <On Terms="Effect.UploaderCountDummyStack3.Start" Send="Destroy"/>
-        <Model value="Invisible"/>
-        <BuildModel value="Invisible"/>
-        <PlacementModel value="Invisible"/>
-        <AddonIndicator value="Actor/AddonIndicator/UploaderCount1"/>
-    </CActorUnit>
-    <CActorUnit id="UploaderAddonDummy2" parent="GenericUnitSelectableNoAutoSoundLinks">
-        <On Terms="Signal.*.UploaderCount2" Send="Create"/>
-        <On Terms="Effect.UploaderCountDummyStack0.Start" Send="Signal UploaderCount0"/>
-        <On Terms="Effect.UploaderCountDummyStack0.Start" Send="Destroy"/>
-        <On Terms="Effect.UploaderCountDummyStack1.Start" Send="Signal UploaderCount1"/>
-        <On Terms="Effect.UploaderCountDummyStack1.Start" Send="Destroy"/>
-        <On Terms="Effect.UploaderCountDummyStack3.Start" Send="Signal UploaderCount3"/>
-        <On Terms="Effect.UploaderCountDummyStack3.Start" Send="Destroy"/>
-        <Model value="Invisible"/>
-        <BuildModel value="Invisible"/>
-        <PlacementModel value="Invisible"/>
-        <AddonIndicator value="Actor/AddonIndicator/UploaderCount2"/>
-    </CActorUnit>
-    <CActorUnit id="UploaderAddonDummy3" parent="GenericUnitSelectableNoAutoSoundLinks">
-        <On Terms="Signal.*.UploaderCount3" Send="Create"/>
-        <On Terms="Effect.UploaderCountDummyStack0.Start" Send="Signal UploaderCount0"/>
-        <On Terms="Effect.UploaderCountDummyStack0.Start" Send="Destroy"/>
-        <On Terms="Effect.UploaderCountDummyStack1.Start" Send="Signal UploaderCount1"/>
-        <On Terms="Effect.UploaderCountDummyStack1.Start" Send="Destroy"/>
-        <On Terms="Effect.UploaderCountDummyStack2.Start" Send="Signal UploaderCount2"/>
-        <On Terms="Effect.UploaderCountDummyStack2.Start" Send="Destroy"/>
-        <Model value="Invisible"/>
-        <BuildModel value="Invisible"/>
-        <PlacementModel value="Invisible"/>
-        <AddonIndicator value="Actor/AddonIndicator/UploaderCount3"/>
     </CActorUnit>
     <CActorModel id="GenetronPowerOutage" parent="ModelAnimationStyleContinuousUNIT">
         <On Terms="Behavior.GenetronPowerOutage.On" Send="Create"/>
@@ -3159,12 +3106,12 @@
     </CActorModel>
     <CActorMissile id="CasnoliskCoveringSprayCastMissile" parent="GenericAttackMissile" unitName="CoveringSprayMissile"/>
     <CActorModel id="MassaliskAntiAirAttackImpact" parent="ModelAnimationStyleOneShot">
-        <On Terms="Effect.MassiveSporeAirDMG.Start; At Target" Send="Create"/>
+        <On Terms="Effect.MassiveSporeAAImpact.Start; At Target" Send="Create"/>
         <HostSiteOps Ops="SOpTargetPoint"/>
         <Model value="GuardianMPWeaponImpact"/>
     </CActorModel>
     <CActorSound id="MassaliskAntiAirAttackImpactSound" parent="SoundOneShot">
-        <On Terms="Effect.MassiveSporeAirDMG.Start; At Target" Send="Create"/>
+        <On Terms="Effect.MassiveSporeAAImpact.Start; At Target" Send="Create"/>
         <HostSiteOps Ops="SOpTargetPoint"/>
         <Sound value="Spell_Yoink_Impact"/>
     </CActorSound>
@@ -3216,7 +3163,7 @@
     <CActorMissile id="IncendiaryInfusionCastMissile" parent="GenericAttackMissile" unitName="IncendiaryInfusionMissile">
         <On Terms="ActorCreation" Send="SetTintColor {255,124,28 3.000000}"/>
     </CActorMissile>
-    <CActorAction id="IncendiaryInfusionCast" parent="GenericAttack" effectImpact="IncendiaryInfusionSet" effectLaunch="IncendiaryInfusion">
+    <CActorAction id="IncendiaryInfusionCast" parent="GenericAttack" effectImpact="IncendiaryInfusionImpact" effectLaunch="IncendiaryInfusion">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <LaunchAssets Sound="NydusDestroyer_AttackLaunch"/>
         <ImpactMap index="None" Model="" Sound="IncendiaryInfusionImpact"/>
@@ -3245,7 +3192,7 @@
         <Sound value="Hydralisk_AttackImpactMelee"/>
     </CActorSound>
     <CActorModel id="StagnatingBileMissileImpact" parent="ModelAnimationStyleOneShot">
-        <On Terms="Effect.StagnatingBileSA.Start" Send="Create"/>
+        <On Terms="Effect.StagnatingBileImpact.Start" Send="Create"/>
     </CActorModel>
     <CActorRange id="VolatileDischargeUnitRange" parent="RangeAbilStandard" abil="">
         <On index="1" Terms="UnitBirth.VolatileDischarge" Send="Create"/>
@@ -3278,7 +3225,7 @@
         <DeathArray index="UnderConstruction" ModelLink="ZergBuildingDeath" SoundLink="SpineCrawler_Death"/>
         <PortraitModel value="ZergBuildingEx2_Portrait"/>
     </CActorUnit>
-    <CActorAction id="BilePitAGAttack" parent="GenericAttack" effectImpact="BileGlobDMG" effectLaunch="BileGlobLAG">
+    <CActorAction id="BilePitAGAttack" parent="GenericAttack" effectImpact="BileGlobImpact" effectLaunch="BileGlobLAG">
         <LaunchSiteOps Ops="SOpAttachHarness BilePitLaunchOffset"/>
         <LaunchAttachQuery Methods="Center 0"/>
         <LaunchAssets Sound="Ravager_AttackLaunch"/>
@@ -3352,7 +3299,7 @@
         <ModelFlags index="OutlineEmitter" value="1"/>
         <HostSiteOps Ops="SOpBankerKraken"/>
     </CActorUnit>
-    <CActorAction id="KrakenAttack" parent="GenericAttack" effectImpact="BileSwarmDMG" effectLaunch="BileSwarmLM">
+    <CActorAction id="KrakenAttack" parent="GenericAttack" effectImpact="BileSwarmLMImpact" effectLaunch="BileSwarmLM">
         <LaunchAttachQuery Methods="AMPatternKraken"/>
         <LaunchAssets Model="EyeStalkLaunch" Sound="Ravager_AttackLaunch"/>
         <ImpactMap index="None" Scale="2.000000" Sound="Spell_Eyestalk_Impact"/>
@@ -3476,7 +3423,7 @@
     <CActorModel id="CasnoliskExplosiveGlobImpactModel" parent="ModelAnimationStyleOneShot">
         <On Terms="Effect.ExplosiveGlobImpactSearch.Impact" Send="Create"/>
     </CActorModel>
-    <CActorAction id="CasnoliskStagnatingBileCast" parent="GenericAttack" effectImpact="StagnatingBileSA" effectLaunch="StagnatingBile">
+    <CActorAction id="CasnoliskStagnatingBileCast" parent="GenericAttack" effectImpact="StagnatingBileImpact" effectLaunch="StagnatingBile">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <LaunchAssets Sound="Ravager_CorrosiveBile_AttackLaunch"/>
         <Missile value="StagnatingBileMissile"/>
@@ -3534,7 +3481,7 @@
         <ModelFlags index="OutlineEmitter" value="1"/>
         <HostSiteOps Ops="SOpBankerMutalisk"/>
     </CActorUnit>
-    <CActorAction id="RaptorAttack" parent="GenericAttack" effectImpact="SearingSporesSet" effectLaunch="SearingSpores">
+    <CActorAction id="RaptorAttack" parent="GenericAttack" effectImpact="SearingSporesImpact" effectLaunch="SearingSpores">
         <LaunchAttachQuery Methods="AMFilterWeapon AMFilterWeapon01"/>
         <LaunchAssets Sound="ParasiticBombLaunch"/>
         <ImpactMap index="None" Model="RavagerWeaponImpact" Sound="Ravager_Attack_Impact"/>
@@ -3556,7 +3503,7 @@
         <ModelFlags index="OutlineEmitter" value="1"/>
         <HostSiteOps Ops="SOpBankerQueenMP"/>
     </CActorUnit>
-    <CActorAction id="AssailantAttack" parent="GenericAttack" effectImpact="AcidWormsDMG" effectLaunch="AcidWormsLM">
+    <CActorAction id="AssailantAttack" parent="GenericAttack" effectImpact="AcidWormsLMImpact" effectLaunch="AcidWormsLM">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <LaunchAssets Sound="GuardianMP_AttackLaunch"/>
         <ImpactMap index="None" Sound="GuardianMP_AttackImpact" ScaleReaction="0.800000"/>
@@ -3630,7 +3577,7 @@
         <ModelFlags index="OutlineEmitter" value="1"/>
         <HostSiteOps Ops="SOpBankerExterminator"/>
     </CActorUnit>
-    <CActorAction id="ExterminatorAttack" parent="GenericAttack" effectImpact="ExterminationDMG" effectLaunch="Extermination">
+    <CActorAction id="ExterminatorAttack" parent="GenericAttack" effectImpact="ExterminationImpact" effectLaunch="Extermination">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <LaunchAssets Sound="Ravager_AttackLaunch"/>
     </CActorAction>
@@ -3960,20 +3907,20 @@
             <Image value="Assets\Textures\wireframe-Xayid-massalisk.dds"/>
         </Wireframe>
     </CActorUnit>
-    <CActorAction id="MassaliskHunkeredAttack" parent="GenericAttack" effectImpact="MassiveSporeAirDMG" effectLaunch="MassiveSporeAA">
+    <CActorAction id="MassaliskHunkeredAttack" parent="GenericAttack" effectImpact="MassiveSporeAAImpact" effectLaunch="MassiveSporeAA">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <ImpactMap index="None" Model="" Sound="Spell_Yoink_Impact"/>
         <LaunchModel value="MassaliskSporeAttackMissileAA"/>
         <Missile value="MassaliskSporeAttackMissileAA"/>
     </CActorAction>
-    <CActorAction id="MassaliskMobileAttack" parent="GenericAttack" effectImpact="MassiveSporeAGDMG" effectLaunch="MassiveSporeAG">
+    <CActorAction id="MassaliskMobileAttack" parent="GenericAttack" effectImpact="MassiveSporeAGImpact" effectLaunch="MassiveSporeAG">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <LaunchAssets Sound="SwarmHost_EggLaunch"/>
         <Missile value="MassaliskSporeAttackMissile"/>
         <ImpactMap index="None" Model="GuardianMPWeaponImpact" Sound="Spell_Yoink_Impact"/>
         <LaunchModel value="MassaliskSporeAttackMissile"/>
     </CActorAction>
-    <CActorAction id="MendlingAttack" parent="GenericAttack" effectImpact="NeedleSpinesDMG" effectLaunch="NeedleSpinesLM">
+    <CActorAction id="MendlingAttack" parent="GenericAttack" effectImpact="NeedleSpinesImpact" effectLaunch="NeedleSpines">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <LaunchAssets Sound="Queen_AttackLaunchRanged"/>
         <Missile value="AcidSpinesAttackMissile"/>
@@ -4237,7 +4184,7 @@
             <Visuals TerrainPhysicsMaterial="Water" ActorModel="TerrainSquibHarnessContinuous" ModelLink="WaterRippleLarge"/>
         </TerrainSquibs>
     </CActorUnit>
-    <CActorAction id="RevilerAttack" parent="GenericAttack" effectImpact="EvisceratorSpinesDMG" effectLaunch="EvisceratorSpinesLM">
+    <CActorAction id="RevilerAttack" parent="GenericAttack" effectImpact="EvisceratorSpinesLMImpact" effectLaunch="EvisceratorSpinesLM">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <LaunchAssets Sound="Spell_SpineVolley_Launch"/>
         <ImpactMap index="None" Model="HydraliskGroundAttackImpact"/>
@@ -4330,7 +4277,7 @@
         <On Terms="ActorCreation" Send="SetTintColor {255,64,0 10.000000}"/>
         <Model value="SearingSpores"/>
     </CActorMissile>
-    <CActorAction id="SpitterAttack" parent="GenericAttack" effectImpact="SpitterSporesDMG" effectLaunch="SpitterSpores">
+    <CActorAction id="SpitterAttack" parent="GenericAttack" effectImpact="SpitterSporesImpact" effectLaunch="SpitterSpores">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <LaunchAssets Sound="Ravager_AttackLaunch"/>
         <ImpactMap index="None" Model="SpitterAttackImpactModel" Sound="DevourerMP_AttackImpact"/>
@@ -4376,7 +4323,7 @@
             <Visuals TerrainPhysicsMaterial="Water" ActorModel="TerrainSquibHarnessContinuous" ModelLink="WaterRippleMedium"/>
         </TerrainSquibs>
     </CActorUnit>
-    <CActorAction id="RoamerAttack" parent="GenericAttack" effectImpact="VirulentSpitDMG" effectLaunch="VirulentSpit">
+    <CActorAction id="RoamerAttack" parent="GenericAttack" effectImpact="VirulentSpitImpact" effectLaunch="VirulentSpit">
         <LaunchAttachQuery Methods="AMFilterWeapon" Fallback="Target"/>
         <LaunchAssets Scale="0.700000" Sound="Spell_Eyestalk_Launch"/>
         <ImpactMap index="None" Model="EyeStalkImpact" Sound="Spell_Eyestalk_Impact"/>
@@ -4884,7 +4831,7 @@
             <Stop Group="Turret_03" Weight="1" Time="125"/>
         </Types>
     </CActorLookAt>
-    <CActorAction id="ParagonGroundWeaponAttack" parent="GenericAttack" effectImpact="ParagonGroundWeaponDMG" effectLaunch="ParagonGroundWeapon">
+    <CActorAction id="ParagonGroundWeaponAttack" parent="GenericAttack" effectImpact="ParagonGroundWeaponImpact" effectLaunch="ParagonGroundWeapon">
         <LaunchAssets Sound="ParagonGroundWeapon_Launch"/>
         <Missile value="ParagonGroundWeaponMissile"/>
         <ImpactMap index="None" Sound="ParagonGroundWeapon_Impact"/>
@@ -4951,7 +4898,7 @@
         <On Terms="ActorCreation" Send="SetTintColor {172,255,0 2.000000}"/>
         <Model value="HarbingerGroundAttackMissile"/>
     </CActorMissile>
-    <CActorAction id="HarbingerAirAttack" parent="GenericAttack" effectImpact="HeraldEnergyCannonsLMImpact" effectLaunch="HeraldEnergyCannonsLM">
+    <CActorAction id="HarbingerAirAttack" parent="GenericAttack" effectImpact="HeraldEnergyCannonsDMG" effectLaunch="HeraldEnergyCannonsLM">
         <LaunchAttachQuery Methods="AMPatternHarbingerAir"/>
         <LaunchModel value="HarbingerAirAttackLaunchModel"/>
         <ImpactMap index="None" ModelReaction="SubjugatorAirAttackImpactReaction"/>
@@ -5110,7 +5057,7 @@
         <HostSiteOps Ops="SOpAttachWeapon01"/>
     </CActorModel>
     <CActorSound id="MeridianConvergence_Charge" parent="SoundOneShotKeiron" Effect="MeridianConvergenceCP"/>
-    <CActorAction id="ParagonAirWeaponAttack" parent="GenericAttack" effectImpact="ParagonAirWeaponDMG" effectLaunch="ParagonAirWeapon">
+    <CActorAction id="ParagonAirWeaponAttack" parent="GenericAttack" effectImpact="ParagonAirWeaponImpact" effectLaunch="ParagonAirWeapon">
         <LaunchAssets Sound="ParagonAirWeapon_Launch"/>
         <Missile value="ParagonAirWeaponMissile"/>
         <ImpactMap index="None" Sound="ParagonAirWeapon_Impact"/>
@@ -6304,7 +6251,7 @@
         <ModelFlags index="OutlineEmitter" value="1"/>
     </CActorUnit>
     <CActorModel id="InciterJumpJetsFireModel" parent="ModelAnimationStyleOneShot">
-        <On Terms="Effect.ELORProtocolSA.Start" Send="Create"/>
+        <On Terms="Effect.ELORProtocolLMImpact.Start" Send="Create"/>
         <On Terms="Effect.ELORProtocolLM.Start; At Source" Send="Create"/>
         <HostSiteOps Ops="SOpCasterPoint" HoldPosition="1"/>
         <Model value="InciterJumpJetsImpactModel"/>
@@ -6316,7 +6263,7 @@
         <Sound value="Inciter_JumpLaunch"/>
     </CActorSound>
     <CActorSound id="InciterELORJumpLandSound" parent="SoundOneShot">
-        <On Terms="Effect.ELORProtocolSA.Start" Send="Create"/>
+        <On Terms="Effect.ELORProtocolLMImpact.Start" Send="Create"/>
         <Sound value="Inciter_JumpLand"/>
     </CActorSound>
 </Catalog>
