@@ -284,7 +284,6 @@
         </Modification>
     </CBehaviorBuff>
     <CBehaviorBuff id="GyreAnnexed">
-        <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <RemoveValidatorArray value="AnnexDummyUnitIsAlive"/>
         <RemoveValidatorArray value="AnnexCasterCloserThan2range"/>
@@ -406,6 +405,7 @@
             <Kind index="Melee" value="0"/>
             <Kind index="Ranged" value="0"/>
             <Kind index="NoProc" value="0"/>
+            <Chance value="1"/>
         </DamageResponse>
         <Requirements value="UseDampener"/>
     </CBehaviorBuff>
@@ -425,11 +425,11 @@
         <InfoFlags index="Hidden" value="1"/>
         <InfoIcon value="Assets\Textures\btn-ability-keiron-dampener.dds"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
-        <InitialEffect value="PulsarDampenerAlt"/>
         <DamageResponse Handled="PulsarDampenerAutocast">
             <RequireEffectArray value="InfernalFlameThrower"/>
             <RequireEffectArray value="HellionTankDamage"/>
             <RequireEffectArray value="ThermalLancesMU"/>
+            <Chance value="1"/>
         </DamageResponse>
         <Requirements value="UseDampener"/>
     </CBehaviorBuff>
@@ -778,7 +778,9 @@
         <RemoveValidatorArray value="NotBeingAbducted"/>
         <MaxStackCount value="50"/>
         <Duration value="3.125"/>
-        <Modification MoveSpeedBonus="0.25"/>
+        <Modification MoveSpeedBonus="0.1992"/>
+        <InitialEffect value="JupiterSpeedModifyUnit"/>
+        <RefreshEffect value="JupiterSpeedModifyUnit"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="SpeedCloak">
         <InfoIcon value="Assets\Textures\btn-ability-genetron-blazespeedcloak.dds"/>
@@ -1405,7 +1407,7 @@
         <DisableValidatorArray value="NotContaminated"/>
         <DisableValidatorArray value="NotHidden"/>
         <BuffFlags index="Countdown" value="0"/>
-        <Duration value="56"/>
+        <Duration value="63"/>
         <ExpireEffect value="EmpyreanHarParSet"/>
         <TimeScaleSource Effect="KeironChargeDummyCUSet"/>
     </CBehaviorBuff>
@@ -1436,10 +1438,10 @@
     <CBehaviorBuff id="PulsarDisableTurning">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
-        <TimeScaleSource Value="Unknown"/>
+        <TimeScaleSource Value="Global"/>
         <Duration value="1"/>
         <Period value="0.1875"/>
-        <PeriodicEffect value="Pulsar4DMCU"/>
+        <PeriodicEffect value="Pulsar4DMUnit"/>
         <Modification MoveSpeedBonus="-0.5">
             <ModifyFlags index="SuppressTurning" value="1"/>
         </Modification>
@@ -1482,7 +1484,7 @@
         <DisableValidatorArray value="NotContaminated"/>
         <DisableValidatorArray value="NotHidden"/>
         <BuffFlags index="Countdown" value="0"/>
-        <Duration value="63"/>
+        <Duration value="70"/>
         <ExpireEffect value="AtriumIndMyrSet"/>
         <TimeScaleSource Effect="KeironChargeDummyCUSet"/>
     </CBehaviorBuff>
@@ -1499,7 +1501,7 @@
     <CBehaviorBuff id="HarbingerJudgementMode">
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
         <FinalEffect value="HarbingerJudgementModeStop"/>
-        <Modification MoveSpeedMultiplier="0.4">
+        <Modification MoveSpeedMultiplier="0.6667" AccelerationMultiplier="0.3332">
             <WeaponDisableArray value="AuguryGuns"/>
         </Modification>
         <InfoFlags index="Hidden" value="1"/>
@@ -1509,7 +1511,7 @@
         <Duration value="2"/>
         <Period value="2"/>
         <FinalEffect value="HarbingerJudgementMode"/>
-        <Modification MoveSpeedMultiplier="0.4">
+        <Modification MoveSpeedMultiplier="0.6667" AccelerationMultiplier="0.3332">
             <WeaponArray Link="HarbingerDummyWeapon"/>
             <WeaponDisableArray value="AuguryGuns"/>
             <WeaponDisableArray value="HeraldEnergyCannons"/>
@@ -1519,7 +1521,7 @@
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
         <Duration value="2"/>
         <Period value="2"/>
-        <Modification MoveSpeedMultiplier="0.4">
+        <Modification MoveSpeedMultiplier="0.6667" AccelerationMultiplier="0.3332">
             <WeaponArray Link="HarbingerDummyWeapon"/>
             <WeaponDisableArray value="AuguryGuns"/>
             <WeaponDisableArray value="HeraldEnergyCannons"/>
@@ -1602,7 +1604,7 @@
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
         <RemoveValidatorArray value="IsConstructing"/>
         <Modification SightMaximum="0.0625">
-            <StateFlags index="SuppressShields" value="1"/>
+            <VitalMaxFractionArray index="Shields" value="-1"/>
         </Modification>
     </CBehaviorBuff>
     <CBehaviorBuff id="PantheonTitanBase">
@@ -1812,28 +1814,32 @@
             <DamageDealtFraction index="Ranged" value="0.5"/>
         </Modification>
     </CBehaviorBuff>
-    <CBehaviorBuff id="WalkAnimBack">
-        <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
-        <Duration value="0.25"/>
-        <TimeScaleSource Value="Unknown"/>
+    <CBehaviorBuff id="Pulsar4DMBackward">
         <InfoFlags index="Hidden" value="1"/>
+        <InfoIcon value="Assets\Textures\cursor-edgescroll-bottom.dds"/>
+        <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
+        <TimeScaleSource Value="Global"/>
+        <Duration value="0.25"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="WalkAnimLeft">
-        <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
-        <Duration value="0.25"/>
-        <TimeScaleSource Value="Unknown"/>
+    <CBehaviorBuff id="Pulsar4DMLeft">
         <InfoFlags index="Hidden" value="1"/>
+        <InfoIcon value="Assets\Textures\cursor-edgescroll-left.dds"/>
+        <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
+        <TimeScaleSource Value="Global"/>
+        <Duration value="0.25"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="WalkAnimRight">
-        <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
-        <Duration value="0.25"/>
-        <TimeScaleSource Value="Unknown"/>
+    <CBehaviorBuff id="Pulsar4DMRight">
         <InfoFlags index="Hidden" value="1"/>
+        <InfoIcon value="Assets\Textures\cursor-edgescroll-right.dds"/>
+        <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
+        <TimeScaleSource Value="Global"/>
+        <Duration value="0.25"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="WalkAnimForward">
-        <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
-        <Duration value="0.25"/>
-        <TimeScaleSource Value="Unknown"/>
+    <CBehaviorBuff id="Pulsar4DMForward">
         <InfoFlags index="Hidden" value="1"/>
+        <InfoIcon value="Assets\Textures\cursor-edgescroll-top.dds"/>
+        <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
+        <TimeScaleSource Value="Global"/>
+        <Duration value="0.25"/>
     </CBehaviorBuff>
 </Catalog>
