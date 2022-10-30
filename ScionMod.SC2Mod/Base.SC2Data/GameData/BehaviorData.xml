@@ -458,6 +458,20 @@
         <Period value="0.5"/>
         <PeriodicEffect value="MiningPrioritySearchArea"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="TeslaShockChargeOverload">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="TeslaShockChargeResponder">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="CasterEnergyGTShockCharge"/>
+        <FinalEffect value="Suicide"/>
+        <Modification>
+            <StateFlags index="Benign" value="1"/>
+        </Modification>
+        <DamageResponse Handled="TeslaShockChargeOverload" ModifyFraction="0">
+            <Chance value="1"/>
+        </DamageResponse>
+    </CBehaviorBuff>
     <CBehaviorBuff id="VirtusSelffixProtocolBuff">
         <InfoIcon value="Assets\Textures\btn-upgrade-swann-regenerativebiosteel.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -830,14 +844,15 @@
     <CBehaviorBuff id="ShockCharge">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <RemoveValidatorArray value="hasEnergy"/>
-        <Period value="0.675"/>
-        <PeriodicEffect value="ShockChargeSA"/>
-        <FinalEffect value="Suicide"/>
         <InfoIcon value="Assets\Textures\btn-ability-genetron-teslacharge.dds"/>
         <DisableValidatorArray value="CasterIsNotHidden"/>
-        <DisableValidatorArray value="CasterIsNotBlindedByProwler"/>
-        <DisableValidatorArray value="NoNaniteGrenadeBuff"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisplayDuration index="Ally" value="1"/>
+        <DisplayDuration index="Neutral" value="1"/>
+        <DisplayDuration index="Enemy" value="1"/>
+        <Duration value="2.1"/>
+        <InitialEffect value="TeslaShockChargeOverloadRemove"/>
+        <ExpireEffect value="TeslaShockChargeExpire"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="TrackingImplant">
         <Alignment value="Negative"/>

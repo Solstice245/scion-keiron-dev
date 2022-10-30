@@ -219,7 +219,7 @@
     </CEffectMorph>
     <CEffectApplyBehavior id="CitadelEnergize" parent="ScionApplyBehavior" Race="Keiron"/>
     <CEffectApplyBehavior id="CitadelEnergized" parent="ScionApplyBehavior" Race="Keiron"/>
-    <CEffectSet id="CloakChargeComplete2" parent="ScionSet" Race="Genetron">
+    <CEffectSet id="TeslaChargeCompleteCloakCharge" parent="ScionSet" Race="Genetron">
         <EffectArray value="Equipped"/>
         <EffectArray value="ApplyChargeCC"/>
     </CEffectSet>
@@ -575,7 +575,7 @@
     <CEffectSet id="LaunchCloakChargeLS" parent="ScionSet" Race="Genetron">
         <EffectArray value="LaunchCloakCharge"/>
         <EffectArray value="ChargeUse"/>
-        <TargetLocationType value="Point"/>
+        <TargetLocationType value="UnitOrPoint"/>
     </CEffectSet>
     <CEffectSet id="LaunchShockChargeLS" parent="ScionSet" Race="Genetron">
         <EffectArray value="LaunchShockCharge"/>
@@ -932,9 +932,6 @@
         <ValidatorArray value="FriendlyTarget"/>
         <Behavior value="AegisShield"/>
     </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="ShockChargeApplyDecloak" parent="ScionApplyBehavior" Race="Genetron">
-        <Behavior value="ShockChargeDecloak"/>
-    </CEffectApplyBehavior>
     <CEffectApplyBehavior id="StagnatingBileStun" parent="ScionApplyBehavior" Race="Xayid">
         <ValidatorArray index="0" value="NotPlanetaryFortress"/>
         <ValidatorArray value="NotFrenzied"/>
@@ -945,6 +942,73 @@
     <CEffectApplyBehavior id="SystemOffloadAB" parent="ScionApplyBehavior" Race="Genetron">
         <Behavior value="SystemOffload"/>
     </CEffectApplyBehavior>
+    <CEffectSet id="TeslaShockChargeExpire" parent="ScionSet" Race="Genetron">
+        <EffectArray value="TeslaShockChargeExpireEnergy"/>
+        <EffectArray value="TeslaShockChargeExpireSearch"/>
+        <EffectArray value="TeslaShockChargeOverloadRemove"/>
+        <EffectArray value="TeslaShockChargeExpireRecharge"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="TeslaShockChargeExpireEnergy">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-20">
+                <AccumulatorArray value="TeslaShockChargeOverloadSwitch"/>
+            </Change>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectEnumArea id="TeslaShockChargeExpireSearch" parent="ScionEnumArea" Race="Genetron">
+        <SearchFilters value="-;Player,Ally,Missile,Buried,Stasis,Dead,Hidden"/>
+        <AreaArray Radius="3" Effect="TeslaShockChargeImpact"/>
+        <ValidatorArray value="CasterIsNotBlindedByProwler"/>
+        <ValidatorArray value="CasterHasNoNaniteGrenadeBuff"/>
+    </CEffectEnumArea>
+    <CEffectApplyBehavior id="TeslaShockChargeExpireRecharge" parent="ScionApplyBehaviorCaster" Race="Genetron">
+        <Behavior value="ShockCharge"/>
+    </CEffectApplyBehavior>
+    <CEffectSet id="TeslaShockChargeImpact" parent="ScionSet" Race="Genetron">
+        <ValidatorArray value="TeslaShockChargeTargetValidators"/>
+        <ValidatorArray value="CasterHasEnergy"/>
+        <EffectArray value="TeslaShockChargeImpactDamage"/>
+        <EffectArray value="TeslaShockChargeImpactEnergyTarget"/>
+        <EffectArray value="TeslaShockChargeImpactEnergyCaster"/>
+        <EffectArray value="TeslaShockChargeImpactDecloak"/>
+    </CEffectSet>
+    <CEffectDamage id="TeslaShockChargeImpactDamage" parent="ScionDamage" Race="Genetron">
+        <LaunchLocation Effect="ShockChargeSA" Value="TargetUnit"/>
+        <ImpactLocation Value="TargetUnit"/>
+        <ImpactUnitValidator value="NotInvulnerable"/>
+        <Amount value="18">
+            <AccumulatorArray value="TeslaShockChargeOverloadSwitch"/>
+        </Amount>
+        <Death value="Electrocute"/>
+    </CEffectDamage>
+    <CEffectModifyUnit id="TeslaShockChargeImpactEnergyTarget">
+        <EditorCategories value="Race:Genetron"/>
+        <LaunchUnit Effect="ShockChargeSA"/>
+        <VitalArray index="Energy">
+            <Change value="-18">
+                <AccumulatorArray value="TeslaShockChargeOverloadSwitch"/>
+            </Change>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="TeslaShockChargeImpactEnergyCaster">
+        <EditorCategories value="Race:Genetron"/>
+        <ImpactUnit Value="Source"/>
+        <VitalArray index="Energy">
+            <Change value="-3">
+                <AccumulatorArray value="TeslaShockChargeOverloadSwitch"/>
+            </Change>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectApplyBehavior id="TeslaShockChargeImpactDecloak" parent="ScionApplyBehavior" Race="Genetron">
+        <Behavior value="ShockChargeDecloak"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="TeslaShockChargeOverload" parent="ScionApplyBehaviorCaster" Race="Genetron"/>
+    <CEffectRemoveBehavior id="TeslaShockChargeOverloadRemove">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Caster"/>
+        <BehaviorLink value="TeslaShockChargeOverload"/>
+    </CEffectRemoveBehavior>
     <CEffectApplyBehavior id="TitanWeaponAB" parent="ScionApplyBehavior" Race="Keiron">
         <Behavior value="TitanWeapon"/>
         <ValidatorArray index="0" value="NotFrenzied"/>
@@ -1166,24 +1230,10 @@
         <WhichUnit Value="Caster"/>
         <BehaviorLink value="Equipped"/>
     </CEffectRemoveBehavior>
-    <CEffectSet id="ShockChargeComplete" parent="ScionSet" Race="Genetron">
+    <CEffectSet id="TeslaChargeCompleteShockCharge" parent="ScionSet" Race="Genetron">
         <EffectArray value="Equipped"/>
         <EffectArray value="ApplyChargeSC"/>
     </CEffectSet>
-    <CEffectSet id="ShockChargeSet" parent="ScionSet" Race="Genetron">
-        <EffectArray value="ShockChargeDMG"/>
-        <EffectArray value="ShockChargeZE"/>
-        <EffectArray value="ShockChargeMU"/>
-        <EffectArray value="ShockChargeApplyDecloak"/>
-        <ValidatorArray value="TeslaShockChargeTargetValidators"/>
-    </CEffectSet>
-    <CEffectModifyUnit id="ShockChargeZE">
-        <EditorCategories value="Race:Genetron"/>
-        <LaunchUnit Effect="ShockChargeSA"/>
-        <VitalArray index="Energy">
-            <Change value="-9"/>
-        </VitalArray>
-    </CEffectModifyUnit>
     <CEffectSet id="StingerDrillLMImpact" parent="ScionSet" Race="Genetron">
         <EffectArray value="StingerDrillDMG"/>
         <EffectArray value="StingerDrillSw"/>
@@ -1245,7 +1295,7 @@
     <CEffectLaunchMissile id="LancerAutogun" parent="ScionLaunchMissile" Race="Genetron"/>
     <CEffectCreateUnit id="LaunchCloakChargeImpact">
         <EditorCategories value="Race:Genetron"/>
-        <WhichLocation Value="TargetPoint"/>
+        <WhichLocation Value="TargetUnitOrPoint"/>
         <SpawnUnit value="CloakCharge"/>
         <SpawnEffect value="TeslaChargeSpawned"/>
     </CEffectCreateUnit>
@@ -1470,25 +1520,6 @@
         <SpawnEffect value="TeslaChargeSpawned"/>
         <SpawnUnit value="ShockCharge"/>
     </CEffectCreateUnit>
-    <CEffectDamage id="ShockChargeDMG" parent="ScionDamage" Race="Genetron">
-        <LaunchLocation Effect="ShockChargeSA" Value="TargetUnit"/>
-        <ImpactLocation Value="TargetUnit"/>
-        <Amount value="6"/>
-        <Death value="Electrocute"/>
-        <ShieldBonus value="3"/>
-        <ImpactUnitValidator value="NotInvulnerable"/>
-    </CEffectDamage>
-    <CEffectModifyUnit id="ShockChargeMU">
-        <EditorCategories value="Race:Genetron"/>
-        <ImpactUnit Value="Source"/>
-        <VitalArray index="Energy">
-            <Change value="-1"/>
-        </VitalArray>
-    </CEffectModifyUnit>
-    <CEffectEnumArea id="ShockChargeSA" parent="ScionEnumArea" Race="Genetron">
-        <SearchFilters value="-;Player,Ally,Missile,Buried,Stasis,Dead,Hidden"/>
-        <AreaArray Radius="3" Effect="ShockChargeSet"/>
-    </CEffectEnumArea>
     <CEffectSet id="VengeanceMissileS" parent="ScionSet" Race="Genetron">
         <EffectArray value="VengeanceMissileMU"/>
         <EffectArray value="AvengerVengeanceMissileAmmoCasterRemove"/>
@@ -1588,6 +1619,7 @@
         <Movers Link="TeslaChargeMoverLow" IfRangeLTE="4"/>
         <Movers Link="LaunchShockChargeWeapon" IfRangeLTE="8"/>
         <AmmoOwner Value="Caster"/>
+        <ImpactLocation Value="TargetUnitOrPoint"/>
     </CEffectLaunchMissile>
     <CEffectLaunchMissile id="LaunchShockCharge" parent="ScionLaunchMissilePoint" Race="Genetron">
         <Movers Link="TeslaChargeMoverLow" IfRangeLTE="4"/>
@@ -1844,6 +1876,7 @@
     <CEffectSet id="ExplosiveGlobImpactSet" parent="ScionSet" Race="Xayid">
         <EffectArray value="ExplosiveGlobDMG"/>
         <EffectArray value="ReaperKD8Knockback"/>
+        <ValidatorArray value="IsNotTeslaCharge"/>
     </CEffectSet>
     <CEffectEnumArea id="ExplosiveGlobSA" parent="ScionEnumArea" Race="Xayid">
         <ImpactLocation Value="SourceUnit"/>

@@ -2899,13 +2899,16 @@
         <PortraitModel value="TeslaPortrait"/>
         <ModelFlags index="OutlineEmitter" value="1"/>
     </CActorUnit>
-    <CActorAction id="TeslaShockChargeAction" parent="GenericAttack" effectAttack="ShockChargeDMG">
+    <CActorAction id="TeslaShockChargeAction" parent="GenericAttack" effectAttack="TeslaShockChargeImpact">
         <LaunchAssets Sound="Archon_AttackLaunch"/>
         <Beam value="TeslaShockChargeBeam"/>
+        <BeamScope value="Caster"/>
+        <ActionFlags index="ImpactMonitorsTeleports" value="1"/>
     </CActorAction>
     <CActorBeamStandard id="TeslaShockChargeBeam" parent="BeamStandardAnimationStyleOneShot">
         <On Terms="ActorCreation" Send="SetTintColor {79,198,255 2.000000}"/>
         <Beam value="BeamStandard"/>
+        <Macros value="ActionTargetTeleportDestroy"/>
     </CActorBeamStandard>
     <CActorAction id="TeslaShockChargeLaunchAction" parent="GenericAttack" effectImpact="LaunchShockChargeImpact" effectLaunch="LaunchShockCharge">
         <LaunchAttachQuery Methods="AMFilterHardpoint"/>
