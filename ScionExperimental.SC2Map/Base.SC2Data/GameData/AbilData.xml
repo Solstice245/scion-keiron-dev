@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CAbilEffectInstant id="XayidSeedCancel">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <Effect index="0" value="Suicide"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Cancel"/>
+    </CAbilEffectInstant>
+    <CAbilEffectTarget id="XayidSeedLand">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <Flags index="AllowMovement" value="1"/>
+        <Flags index="NoDeceleration" value="1"/>
+        <Cost>
+            <Charge CountMax="1" CountStart="1" CountUse="1"/>
+        </Cost>
+        <Range value="3"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="BurrowDown"/>
+        <FinishTime value="1"/>
+        <UninterruptibleArray index="Finish" value="1"/>
+    </CAbilEffectTarget>
+    <CAbilEffectTarget id="XayidSproutScavengerNest">
+        <TechPlayer value="Owner"/>
+        <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <Flags index="RequireTargetVision" value="0"/>
+        <Cost>
+            <Resource index="Minerals" value="400"/>
+        </Cost>
+        <Range value="500"/>
+        <Arc value="360"/>
+        <AINotifyEffect value="XayidSproutScavengerNestCU"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="ScavengerNest"/>
+        <PlaceUnit value="ScavengerNest"/>
+    </CAbilEffectTarget>
+    <CAbilBuild id="XayidSproutStructures">
+        <EditorCategories value="AbilityorEffectType:Units"/>
+        <FlagArray index="PeonHide" value="1"/>
+        <FlagArray index="PeonKillCancel" value="1"/>
+        <FlagArray index="PeonKillFinish" value="1"/>
+        <FlagArray index="RangeIncludesBuilding" value="0"/>
+        <InfoArray index="Build1" Unit="ScavengerNest" Time="30">
+            <Button DefaultButtonFace="ScavengerNest"/>
+        </InfoArray>
+        <Range value="0.5"/>
+    </CAbilBuild>
+    <CAbilMove id="XayidSeedMove">
+        <AbilSetId value="Move"/>
+        <DataCollection value="move"/>
+        <CmdButtonArray index="Patrol">
+            <Flags index="IgnoreUser" value="1"/>
+        </CmdButtonArray>
+        <CmdButtonArray index="HoldPos">
+            <Flags index="IgnoreUser" value="1"/>
+        </CmdButtonArray>
+        <CmdButtonArray index="AcquireMove">
+            <Flags index="IgnoreUser" value="1"/>
+        </CmdButtonArray>
+        <CmdButtonArray index="Turn">
+            <Flags index="IgnoreUser" value="1"/>
+        </CmdButtonArray>
+        <FleeRange value="5"/>
+        <FleeTime value="5"/>
+        <FollowRangeSlop value="1"/>
+        <FollowAcquireRange value="6"/>
+        <MinPatrolDistance value="1"/>
+    </CAbilMove>
+</Catalog>

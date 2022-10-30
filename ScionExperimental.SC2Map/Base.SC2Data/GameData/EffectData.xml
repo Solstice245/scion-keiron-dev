@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CEffectModifyUnit id="RotateFacing180Target">
+        <FacingLocation Value="TargetUnit"/>
+        <FacingAdjustment value="180"/>
+    </CEffectModifyUnit>
+    <CEffectApplyBehavior id="XayidSeedLandAB">
+        <EditorCategories value=""/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="XayidSeedLanded"/>
+    </CEffectApplyBehavior>
+    <CEffectEnumArea id="XayidSproutScavengerNestSA">
+        <EditorCategories value=""/>
+        <DebugTrace value="1"/>
+        <LaunchLocation Effect="XayidSproutScavengerNest" Value="TargetPoint"/>
+        <ImpactLocation Effect="XayidSproutScavengerNest" Value="TargetPoint"/>
+        <SearchFilters value="Ground;Massive,Structure,Missile,Stasis,Dead,Hidden"/>
+        <AreaArray Radius="2" Effect="XayidSproutScavengerNestKBTarget"/>
+    </CEffectEnumArea>
+    <CEffectCreatePersistent id="XayidSproutScavengerNestCP">
+        <EditorCategories value=""/>
+        <WhichLocation Value="TargetUnit"/>
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <PeriodicValidator value="NotHiddenAndNotDead"/>
+        <PeriodicEffectArray value="XayidSproutScavengerNestSet"/>
+        <PeriodicPeriodArray value="0.0625"/>
+        <InitialEffect value="RotateFacing180Target"/>
+    </CEffectCreatePersistent>
+    <CEffectCreateUnit id="XayidSproutScavengerNestCU">
+        <EditorCategories value=""/>
+        <WhichLocation Value="CasterPoint"/>
+        <SpawnOwner Value="Caster"/>
+        <SpawnEffect value="XayidSproutScavengerNestCP"/>
+        <SpawnUnit value="StructureSeedLarge"/>
+        <Origin Effect="XayidSproutScavengerNest" Value="TargetPoint"/>
+        <CreateFlags index="SetFacing" value="1"/>
+    </CEffectCreateUnit>
+    <CEffectModifyPlayer id="XayidSproutScavengerNestCost">
+        <EditorCategories value=""/>
+        <WhichPlayer Value="Caster"/>
+        <Resources index="Minerals" value="350"/>
+    </CEffectModifyPlayer>
+    <CEffectIssueOrder id="XayidSproutScavengerNestOrder">
+        <EditorCategories value=""/>
+        <Abil value="XayidSproutStructures"/>
+        <CmdFlags index="Queued" value="1"/>
+        <Target Effect="XayidSproutScavengerNest" Value="TargetPoint"/>
+    </CEffectIssueOrder>
+    <CEffectCreatePersistent id="XayidSproutScavengerNest">
+        <EditorCategories value=""/>
+        <InitialEffect value="XayidSproutScavengerNestCost"/>
+        <FinalEffect value="XayidSproutScavengerNestCU"/>
+    </CEffectCreatePersistent>
+    <CEffectLaunchMissile id="XayidSeedLand">
+        <EditorCategories value=""/>
+        <LaunchLocation Value="CasterUnit"/>
+        <ImpactLocation Value="TargetPoint"/>
+        <ImpactEffect value="XayidSeedLandAB"/>
+        <Movers Link="XayidSeedLand"/>
+        <DeathType value="Unknown"/>
+        <ValidatorArray index="0" value="StructureSeedTargetIsPathable"/>
+    </CEffectLaunchMissile>
+    <CEffectIssueOrder id="XayidSproutScavengerNestLand">
+        <EditorCategories value=""/>
+        <Abil value="XayidSeedLand"/>
+        <Target Effect="XayidSproutScavengerNest" Value="TargetPoint"/>
+    </CEffectIssueOrder>
+    <CEffectSet id="XayidSproutScavengerNestSet">
+        <EditorCategories value=""/>
+        <EffectArray value="XayidSproutScavengerNestLand"/>
+        <EffectArray value="XayidSproutScavengerNestOrder"/>
+    </CEffectSet>
+</Catalog>

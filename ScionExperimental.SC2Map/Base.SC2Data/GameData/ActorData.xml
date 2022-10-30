@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CActorUnit id="ScavengerNestPlacementDummy" parent="ZergBuilding" unitName="ScavengerNestPlacementDummy">
+        <Model value="ScavengerNest"/>
+        <PlacementModel value="ScavengerNest"/>
+    </CActorUnit>
+    <CActorUnit id="StructureSeedLarge" parent="GenericUnitXayid" unitName="StructureSeedLarge">
+        <Macros index="3" value="PhysicsDeathsSwarmAir"/>
+        <Macros index="4" value="PhysicsDeathsVoidAir"/>
+        <HostSiteOps Ops="SOpBankerQueenMP"/>
+        <Model value="StructureSeed"/>
+        <BuildModel value="StructureSeed"/>
+        <DeathArray index="Normal" ModelLink="GuardianMPDeath" SoundLink="GuardianMP_Explode" VoiceLink="GuardianMP_Death"/>
+        <PlacementModel value="StructureSeed"/>
+        <PortraitModel value="GuardianMPPortrait"/>
+        <BarOffset value="65"/>
+        <BarWidth value="80"/>
+        <GroupIcon>
+            <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
+        </GroupIcon>
+        <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-pneumatizedcarapace.dds"/>
+        <SoundArray index="Ready" value="Assailant_Ready"/>
+        <SoundArray index="What" value="Assailant_What"/>
+        <SoundArray index="Yes" value="Assailant_Yes"/>
+        <SoundArray index="Attack" value="Assailant_Yes"/>
+        <UnitIcon value="Assets\Textures\btn-unit-Xayid-Assailant.dds"/>
+        <Wireframe>
+            <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
+        </Wireframe>
+        <On Terms="TimerExpired; TimerName SpellStart" Send="AnimBracketStart Spell Spell,Start Spell,End"/>
+        <On Terms="TimerExpired; TimerName CoverEnd" Send="AnimSetPaused Cover"/>
+        <On Terms="Abil.XayidSeedLand.SourceCastStop" Send="TimerSet 0.800000 SpellEnd"/>
+        <On Terms="TimerExpired; TimerName SpellEnd" Send="$Spell,End PlayForever,NonLooping"/>
+        <On Terms="ActorCreation" Send="TimerSet 0.650000 CoverStart"/>
+        <On Terms="TimerExpired; TimerName CoverStart" Send="AnimPlay Cover Cover PlayForever"/>
+        <On Terms="Abil.XayidSeedLand.SourceCastStop" Send="TimerSet 0.300000 SpellStart"/>
+        <On Terms="Abil.XayidSeedLand.SourceCastStop" Send="TimerSet 0.550000 CoverEnd"/>
+    </CActorUnit>
+</Catalog>
