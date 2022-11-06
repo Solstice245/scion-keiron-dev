@@ -18,6 +18,8 @@ void InitLibs () {
 // Trigger Variables
 //--------------------------------------------------------------------------------------------------
 trigger gt_MeleeInitialization;
+trigger gt_count;
+trigger gt_kill;
 
 //--------------------------------------------------------------------------------------------------
 // Trigger: Melee Initialization
@@ -33,10 +35,13 @@ bool gt_MeleeInitialization_Func (bool testConds, bool runActions) {
     MeleeInitUnits();
     MeleeInitAI();
     MeleeInitOptions();
-    PlayerModifyPropertyFixed(1, c_playerPropMinerals, c_playerPropOperSetTo, 10000.0);
-    PlayerModifyPropertyFixed(1, c_playerPropVespene, c_playerPropOperSetTo, 10000.0);
+    PlayerModifyPropertyFixed(1, c_playerPropMinerals, c_playerPropOperSetTo, 100000.0);
+    PlayerModifyPropertyFixed(1, c_playerPropVespene, c_playerPropOperSetTo, 100000.0);
+    PlayerModifyPropertyFixed(2, c_playerPropMinerals, c_playerPropOperSetTo, 100000.0);
+    PlayerModifyPropertyFixed(2, c_playerPropVespene, c_playerPropOperSetTo, 100000.0);
     TechTreeUpgradeAddLevel(1, "Burrow", 1);
     PlayerSetAlliance(2, c_allianceIdControl, 1, true);
+    UnitIssueOrder(UnitFromId(301619804), OrderTargetingUnit(AbilityCommand("XayidSproutSiphoner", 0), UnitFromId(1237414737)), c_orderQueueReplace);
     return true;
 }
 
@@ -47,10 +52,62 @@ void gt_MeleeInitialization_Init () {
 }
 
 //--------------------------------------------------------------------------------------------------
+// Trigger: count
+//--------------------------------------------------------------------------------------------------
+bool gt_count_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaSubtitle, IntToText(UnitGroupCount(UnitGroup(null, c_playerAny, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), 0), 0), c_unitCountAll)));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_count_Init () {
+    gt_count = TriggerCreate("gt_count_Func");
+    TriggerAddEventChatMessage(gt_count, c_playerAny, "count", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: kill
+//--------------------------------------------------------------------------------------------------
+bool gt_kill_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    unitgroup auto60840817_g;
+    int auto60840817_u;
+    unit auto60840817_var;
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    auto60840817_g = UnitGroup("Siphoner", 2, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0);
+    auto60840817_u = UnitGroupCount(auto60840817_g, c_unitCountAll);
+    for (;; auto60840817_u -= 1) {
+        auto60840817_var = UnitGroupUnitFromEnd(auto60840817_g, auto60840817_u);
+        if (auto60840817_var == null) { break; }
+        UnitKill(auto60840817_var);
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_kill_Init () {
+    gt_kill = TriggerCreate("gt_kill_Func");
+    TriggerAddEventChatMessage(gt_kill, c_playerAny, "kill", true);
+}
+
+//--------------------------------------------------------------------------------------------------
 // Trigger Initialization
 //--------------------------------------------------------------------------------------------------
 void InitTriggers () {
     gt_MeleeInitialization_Init();
+    gt_count_Init();
+    gt_kill_Init();
 }
 
 //--------------------------------------------------------------------------------------------------

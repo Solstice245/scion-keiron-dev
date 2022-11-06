@@ -1,12 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
+    <CValidatorCombine id="NotMineralField">
+        <Type value="And"/>
+        <CombineArray value="Minerals"/>
+        <CombineArray value="IsRichMineralField"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
     <CValidatorCombine id="NotHiddenAndNotDead">
         <Type value="And"/>
         <CombineArray value="NotHidden"/>
         <CombineArray value="NotDead"/>
     </CValidatorCombine>
-    <CValidatorLocationPathable id="StructureSeedTargetIsPathable">
+    <CValidatorUnitType id="NotScavengerSprout">
+        <Value value="ScavengerSprout"/>
+        <Find value="0"/>
+    </CValidatorUnitType>
+    <CValidatorCombine id="NotScavengerSproutAndNotDead">
+        <Type value="And"/>
+        <CombineArray value="NotScavengerSprout"/>
+        <CombineArray value="TargetNotDead"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="ResourcesOrSelf">
+        <CombineArray value="Resources"/>
+        <CombineArray value="TargetIsSelf"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="StructureSeedLandingFilters">
+        <CombineArray value="RawResources"/>
+        <CombineArray value="TargetPointIsPathableNoBuildings"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareBehaviorCount id="StructureSeedNotBlocked">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="StructureSeedBlocked"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorCombine id="StructureSeedNotLandedAndNotBlocked">
+        <Type value="And"/>
+        <CombineArray value="StructureSeedNotLanded"/>
+        <CombineArray value="StructureSeedNotBlocked"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareOrderCount id="ScavengerSeedHasNoOrders" parent="CasterHasNoOrders">
+        <WhichUnit Effect="XayidSproutScavengerCP" Value="Target"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareBehaviorCount id="StructureSeedNotLanded">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="StructureSeedLanded"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorLocationPathable id="TargetUnitIsOverPathableNoBuildings">
+        <ResultFailed value="MustTargetWalkableLocation"/>
+        <WhichLocation Value="TargetUnit"/>
+        <Types index="Building" value="0"/>
+    </CValidatorLocationPathable>
+    <CValidatorUnitCompareBehaviorCount id="UnitSeedNotLanded">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="UnitSeedLanded"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorLocationPathable id="TargetPointIsPathableNoBuildings">
         <ResultFailed value="MustTargetWalkableLocation"/>
         <Types index="Building" value="0"/>
     </CValidatorLocationPathable>
+    <CValidatorUnitCompareBehaviorCount id="UnitSeedIsLanded">
+        <Compare value="GT"/>
+        <Behavior value="UnitSeedLanded"/>
+    </CValidatorUnitCompareBehaviorCount>
 </Catalog>

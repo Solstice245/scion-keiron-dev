@@ -1,26 +1,319 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
+    <CAbilEffectTarget id="XayidAirRally">
+        <AbilSetId value="XayidRally"/>
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <Flags index="BestUnit" value="0"/>
+        <Flags index="RequireTargetVision" value="0"/>
+        <Flags index="Smart" value="1"/>
+        <Range value="500"/>
+        <Arc value="360"/>
+        <SmartPriority value="3"/>
+        <IgnoreFilters value="Structure;Ally,Neutral,Enemy,RawResource,HarvestableResource"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Rally">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+    </CAbilEffectTarget>
+    <CAbilTrain id="XayidMorphSeedScavenger">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <DataCollection value=""/>
+        <Activity value="UI/Morphing"/>
+        <ActorKey value="BanelingAspect"/>
+        <Flags index="KillOnCancel" value="1"/>
+        <Flags index="KillOnFinish" value="1"/>
+        <Flags index="Select" value="1"/>
+        <MorphUnit value="ScavengerSprout"/>
+        <InfoArray index="Train1" Time="10">
+            <Button DefaultButtonFace="BirthScavenger"/>
+            <Unit value="Scavenger"/>
+            <Flags index="IgnorePlacement" value="1"/>
+        </InfoArray>
+        <Alert value="MorphComplete_Zerg"/>
+    </CAbilTrain>
+    <CAbilEffectTarget id="XayidSproutSiphoner">
+        <TechPlayer value="Owner"/>
+        <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
+        <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
+        <Flags index="RequireTargetVision" value="0"/>
+        <Cost>
+            <Resource index="Minerals" value="75"/>
+        </Cost>
+        <Range value="500"/>
+        <Arc value="360"/>
+        <AINotifyEffect value="XayidSproutScavengerNestCU"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Siphoner"/>
+        <PlaceUnit value="Siphoner"/>
+        <IgnoreFilters value="RawResource;-"/>
+    </CAbilEffectTarget>
+    <CAbilTrain id="XayidSproutXayidling">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <DataCollection value="XayidSproutXayidUnits"/>
+        <Offset value="0,0"/>
+        <InfoArray index="Train1" Effect="XayidSproutXayidling">
+            <Button DefaultButtonFace="Xayidling">
+                <Flags index="ToSelection" value="1"/>
+            </Button>
+            <Unit value="XayidlingSeed"/>
+        </InfoArray>
+        <Flags index="Transient" value="1"/>
+    </CAbilTrain>
+    <CAbilEffectTarget id="XayidWorkerRally">
+        <AbilSetId value="XayidRally"/>
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <Flags index="BestUnit" value="0"/>
+        <Flags index="RequireTargetVision" value="0"/>
+        <Flags index="Smart" value="1"/>
+        <Range value="500"/>
+        <Arc value="360"/>
+        <SmartPriority value="3"/>
+        <SmartValidatorArray value="ResourcesOrSelf"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Rally">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+    </CAbilEffectTarget>
+    <CAbilRally id="XayidWorkerRallyPoint">
+        <OrderArray index="0">
+            <DisplayType value="Rally"/>
+            <Color value="255,0,150,0"/>
+            <Model value="Assets\UI\Feedback\WayPointRally\WayPointRally.m3"/>
+            <LineTexture value="Assets\Textures\WayPointLine.dds"/>
+        </OrderArray>
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Structures"/>
+        <DataCollection value="Rally"/>
+        <CmdButtonArray index="Rally1">
+            <Flags index="IgnoreUser" value="1"/>
+            <Flags index="ToSelection" value="0"/>
+        </CmdButtonArray>
+        <CmdButtonArray index="Rally2">
+            <Flags index="IgnoreUser" value="1"/>
+            <Flags index="ToSelection" value="0"/>
+        </CmdButtonArray>
+        <CmdButtonArray index="Rally3">
+            <Flags index="IgnoreUser" value="1"/>
+            <Flags index="ToSelection" value="0"/>
+        </CmdButtonArray>
+        <CmdButtonArray index="Rally4">
+            <Flags index="IgnoreUser" value="1"/>
+        </CmdButtonArray>
+        <InfoArray index="0" SetOnGround="0">
+            <SetValidators value="Resources"/>
+        </InfoArray>
+        <InfoArray SetOnGround="0">
+            <SetValidators value="Resources"/>
+        </InfoArray>
+        <InfoArray SetOnGround="0">
+            <SetValidators value="Resources"/>
+        </InfoArray>
+        <InfoArray SetOnGround="0">
+            <SetValidators value="Resources"/>
+        </InfoArray>
+    </CAbilRally>
+    <CAbilEffectTarget id="XayidMassRally">
+        <AbilSetId value="XayidRally"/>
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <Flags index="BestUnit" value="0"/>
+        <Flags index="RequireTargetVision" value="0"/>
+        <Flags index="Smart" value="1"/>
+        <Range value="500"/>
+        <Arc value="360"/>
+        <SmartPriority value="3"/>
+        <IgnoreFilters value="Structure;Ally,Neutral,Enemy,RawResource,HarvestableResource"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Rally">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+    </CAbilEffectTarget>
+    <CAbilRally id="XayidMassRallyPoint">
+        <OrderArray index="0">
+            <DisplayType value="Rally"/>
+            <Color value="255,200,0,0"/>
+            <Model value="Assets\UI\Feedback\WayPointRally\WayPointRally.m3"/>
+            <LineTexture value="Assets\Textures\WayPointLine.dds"/>
+        </OrderArray>
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Structures"/>
+        <DataCollection value="Rally"/>
+        <CmdButtonArray index="Rally1">
+            <Flags index="IgnoreUser" value="1"/>
+            <Flags index="ToSelection" value="0"/>
+        </CmdButtonArray>
+        <CmdButtonArray index="Rally2">
+            <Flags index="IgnoreUser" value="1"/>
+            <Flags index="ToSelection" value="0"/>
+        </CmdButtonArray>
+        <CmdButtonArray index="Rally3">
+            <Flags index="IgnoreUser" value="1"/>
+            <Flags index="ToSelection" value="0"/>
+        </CmdButtonArray>
+        <CmdButtonArray index="Rally4">
+            <Flags index="IgnoreUser" value="1"/>
+        </CmdButtonArray>
+        <InfoArray index="0" SetOnGround="0" SetFilters="-;RawResource,HarvestableResource"/>
+        <InfoArray SetOnGround="0"/>
+        <InfoArray SetOnGround="0"/>
+        <InfoArray SetOnGround="0"/>
+    </CAbilRally>
+    <CAbilEffectTarget id="XayidSpellRally">
+        <AbilSetId value="XayidRally"/>
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <Flags index="BestUnit" value="0"/>
+        <Flags index="RequireTargetVision" value="0"/>
+        <Flags index="Smart" value="1"/>
+        <Range value="500"/>
+        <Arc value="360"/>
+        <SmartPriority value="3"/>
+        <IgnoreFilters value="Structure;Ally,Neutral,Enemy,RawResource,HarvestableResource"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Rally">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+    </CAbilEffectTarget>
+    <CAbilRally id="XayidGroundRallyPoint">
+        <OrderArray index="0">
+            <DisplayType value="Rally"/>
+            <Color value="255,255,128,0"/>
+            <Model value="Assets\UI\Feedback\WayPointRally\WayPointRally.m3"/>
+            <LineTexture value="Assets\Textures\WayPointLine.dds"/>
+        </OrderArray>
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Structures"/>
+        <CmdButtonArray index="Rally1">
+            <Flags index="IgnoreUser" value="1"/>
+            <Flags index="ToSelection" value="0"/>
+        </CmdButtonArray>
+        <CmdButtonArray index="Rally2">
+            <Flags index="IgnoreUser" value="1"/>
+            <Flags index="ToSelection" value="0"/>
+        </CmdButtonArray>
+        <CmdButtonArray index="Rally3">
+            <Flags index="IgnoreUser" value="1"/>
+            <Flags index="ToSelection" value="0"/>
+        </CmdButtonArray>
+        <CmdButtonArray index="Rally4">
+            <Flags index="IgnoreUser" value="1"/>
+        </CmdButtonArray>
+        <InfoArray index="0" SetOnGround="0" SetFilters="-;RawResource,HarvestableResource"/>
+        <InfoArray SetOnGround="0"/>
+        <InfoArray SetOnGround="0"/>
+        <InfoArray SetOnGround="0"/>
+    </CAbilRally>
+    <CAbilEffectTarget id="XayidGroundRally">
+        <AbilSetId value="XayidRally"/>
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <Effect index="0" value="XayidGroundRallyOrder"/>
+        <Flags index="BestUnit" value="0"/>
+        <Flags index="RequireTargetVision" value="0"/>
+        <Flags index="Smart" value="1"/>
+        <Range value="500"/>
+        <Arc value="360"/>
+        <SmartPriority value="3"/>
+        <IgnoreFilters value="Structure;Ally,Neutral,Enemy,RawResource,HarvestableResource"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Rally">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+    </CAbilEffectTarget>
+    <CAbilRally id="XayidAirRallyPoint">
+        <OrderArray index="0">
+            <DisplayType value="Rally"/>
+            <Color value="255,0,255,255"/>
+            <Model value="Assets\UI\Feedback\WayPointRally\WayPointRally.m3"/>
+            <LineTexture value="Assets\Textures\WayPointLine.dds"/>
+        </OrderArray>
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Structures"/>
+        <DataCollection value="Rally"/>
+        <CmdButtonArray index="Rally1">
+            <Flags index="IgnoreUser" value="1"/>
+            <Flags index="ToSelection" value="0"/>
+        </CmdButtonArray>
+        <CmdButtonArray index="Rally2">
+            <Flags index="IgnoreUser" value="1"/>
+            <Flags index="ToSelection" value="0"/>
+        </CmdButtonArray>
+        <CmdButtonArray index="Rally3">
+            <Flags index="IgnoreUser" value="1"/>
+            <Flags index="ToSelection" value="0"/>
+        </CmdButtonArray>
+        <CmdButtonArray index="Rally4">
+            <Flags index="IgnoreUser" value="1"/>
+        </CmdButtonArray>
+        <InfoArray index="0" SetOnGround="0"/>
+        <InfoArray SetOnGround="0"/>
+        <InfoArray SetOnGround="0"/>
+        <InfoArray SetOnGround="0"/>
+    </CAbilRally>
+    <CAbilRally id="XayidSpellRallyPoint">
+        <OrderArray index="0">
+            <DisplayType value="Rally"/>
+            <Color value="255,200,0,200"/>
+            <Model value="Assets\UI\Feedback\WayPointRally\WayPointRally.m3"/>
+            <LineTexture value="Assets\Textures\WayPointLine.dds"/>
+        </OrderArray>
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Structures"/>
+        <DataCollection value="Rally"/>
+        <CmdButtonArray index="Rally1">
+            <Flags index="IgnoreUser" value="1"/>
+            <Flags index="ToSelection" value="0"/>
+        </CmdButtonArray>
+        <CmdButtonArray index="Rally2">
+            <Flags index="IgnoreUser" value="1"/>
+            <Flags index="ToSelection" value="0"/>
+        </CmdButtonArray>
+        <CmdButtonArray index="Rally3">
+            <Flags index="IgnoreUser" value="1"/>
+            <Flags index="ToSelection" value="0"/>
+        </CmdButtonArray>
+        <CmdButtonArray index="Rally4">
+            <Flags index="IgnoreUser" value="1"/>
+        </CmdButtonArray>
+        <InfoArray index="0" SetOnGround="0" SetFilters="-;RawResource,HarvestableResource"/>
+        <InfoArray SetOnGround="0"/>
+        <InfoArray SetOnGround="0"/>
+        <InfoArray SetOnGround="0"/>
+    </CAbilRally>
+    <CAbilTrain id="XayidMorphSeedXayidling">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <DataCollection value=""/>
+        <Activity value="UI/Morphing"/>
+        <ActorKey value="BanelingAspect"/>
+        <Flags index="KillOnCancel" value="1"/>
+        <Flags index="KillOnFinish" value="1"/>
+        <Flags index="Select" value="1"/>
+        <MorphUnit value="XayidlingSprout"/>
+        <InfoArray index="Train1" Time="15">
+            <Button DefaultButtonFace="Xayidling">
+                <Flags index="ShowInGlossary" value="1"/>
+            </Button>
+            <Unit value="Xayidling"/>
+            <Flags index="IgnorePlacement" value="1"/>
+        </InfoArray>
+        <Alert value="MorphComplete_Zerg"/>
+    </CAbilTrain>
     <CAbilEffectInstant id="XayidSeedCancel">
-        <EditorCategories value="AbilityorEffectType:Units"/>
+        <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
         <Effect index="0" value="Suicide"/>
+        <Flags index="Transient" value="1"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="Cancel"/>
     </CAbilEffectInstant>
-    <CAbilEffectTarget id="XayidSeedLand">
-        <EditorCategories value="AbilityorEffectType:Units"/>
+    <CAbilTrain id="XayidSproutScavenger">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <Offset value="0,0"/>
+        <InfoArray index="Train1" Effect="XayidSproutScavengerCP">
+            <Button DefaultButtonFace="BirthScavenger">
+                <Flags index="ToSelection" value="1"/>
+            </Button>
+            <Unit value="ScavengerSeed"/>
+        </InfoArray>
+        <Flags index="Transient" value="1"/>
+    </CAbilTrain>
+    <CAbilEffectTarget id="XayidStructureSeedLand">
+        <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
         <Flags index="AllowMovement" value="1"/>
         <Flags index="NoDeceleration" value="1"/>
-        <Cost>
-            <Charge CountMax="1" CountStart="1" CountUse="1"/>
-        </Cost>
         <Range value="3"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="BurrowDown"/>
         <FinishTime value="1"/>
         <UninterruptibleArray index="Finish" value="1"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="BurrowDown"/>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="XayidSproutScavengerNest">
         <TechPlayer value="Owner"/>
         <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
-        <EditorCategories value="AbilityorEffectType:Units"/>
+        <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
         <Flags index="RequireTargetVision" value="0"/>
         <Cost>
             <Resource index="Minerals" value="400"/>
@@ -31,8 +324,22 @@
         <CmdButtonArray index="Execute" DefaultButtonFace="ScavengerNest"/>
         <PlaceUnit value="ScavengerNest"/>
     </CAbilEffectTarget>
+    <CAbilEffectTarget id="XayidSproutXayidDen">
+        <TechPlayer value="Owner"/>
+        <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
+        <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
+        <Flags index="RequireTargetVision" value="0"/>
+        <Cost>
+            <Resource index="Minerals" value="150"/>
+        </Cost>
+        <Range value="500"/>
+        <Arc value="360"/>
+        <AINotifyEffect value="XayidSproutScavengerNestCU"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="XayidDen"/>
+        <PlaceUnit value="XayidDen"/>
+    </CAbilEffectTarget>
     <CAbilBuild id="XayidSproutStructures">
-        <EditorCategories value="AbilityorEffectType:Units"/>
+        <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
         <FlagArray index="PeonHide" value="1"/>
         <FlagArray index="PeonKillCancel" value="1"/>
         <FlagArray index="PeonKillFinish" value="1"/>
@@ -40,11 +347,59 @@
         <InfoArray index="Build1" Unit="ScavengerNest" Time="30">
             <Button DefaultButtonFace="ScavengerNest"/>
         </InfoArray>
+        <InfoArray index="Build2" Unit="Siphoner" Time="30">
+            <Button DefaultButtonFace="Siphoner"/>
+        </InfoArray>
+        <InfoArray index="Build3" Unit="SiphonerPlacementBackup">
+            <Button DefaultButtonFace="Siphoner"/>
+        </InfoArray>
+        <InfoArray index="Build4" Unit="FeedingPool" Time="17">
+            <Button DefaultButtonFace="FeedingPool"/>
+        </InfoArray>
+        <InfoArray index="Build5" Unit="XayidDen" Time="20">
+            <Button DefaultButtonFace="XayidDen"/>
+        </InfoArray>
         <Range value="0.5"/>
+        <RefundFraction>
+            <Resource index="Minerals" value="-1"/>
+            <Resource index="Vespene" value="-1"/>
+            <Resource index="Terrazine" value="-1"/>
+            <Resource index="Custom" value="-1"/>
+        </RefundFraction>
     </CAbilBuild>
-    <CAbilMove id="XayidSeedMove">
+    <CAbilEffectTarget id="XayidSproutFeedingPool">
+        <TechPlayer value="Owner"/>
+        <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
+        <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
+        <Effect index="0" value="XayidSproutFeedingPoolInit"/>
+        <Flags index="RequireTargetVision" value="0"/>
+        <Cost>
+            <Resource index="Minerals" value="100"/>
+        </Cost>
+        <Range value="500"/>
+        <Arc value="360"/>
+        <AINotifyEffect value="XayidSproutScavengerNestCU"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="FeedingPool"/>
+        <PlaceUnit value="FeedingPool"/>
+    </CAbilEffectTarget>
+    <CAbilEffectTarget id="XayidUnitSeedLand">
+        <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
+        <DataCollection value="XayidStructureSeedLand"/>
+        <Flags index="AllowMovement" value="1"/>
+        <Flags index="NoDeceleration" value="1"/>
+        <Range value="3"/>
+        <FinishTime value="0.375"/>
+        <UninterruptibleArray index="Finish" value="1"/>
+        <AINotifyEffect value="XayidStructureSeedLand"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="BurrowDown"/>
+    </CAbilEffectTarget>
+    <CAbilMove id="SeedMove">
         <AbilSetId value="Move"/>
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <DataCollection value="move"/>
+        <CmdButtonArray index="Move">
+            <Flags index="IgnoreUser" value="1"/>
+        </CmdButtonArray>
         <CmdButtonArray index="Patrol">
             <Flags index="IgnoreUser" value="1"/>
         </CmdButtonArray>
