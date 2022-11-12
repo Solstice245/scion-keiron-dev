@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
+    <CBehaviorBuff id="XayidDigested">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="CasterNotDead"/>
+        <Period value="0.0625"/>
+        <InitialEffect value="HideTarget"/>
+        <PeriodicEffect value="XayidDigestDMG"/>
+        <FinalEffect value="XayidDigestDelay"/>
+        <Modification>
+            <ModifyFlags index="DisableAbils" value="1"/>
+            <ModifyFlags index="DisableWeapons" value="1"/>
+            <StateFlags index="Invulnerable" value="1"/>
+            <StateFlags index="SuppressCollision" value="1"/>
+            <DeathResponse Chance="1" Effect="XayidDigestRefund"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="XayidDigesting">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="XayidEntangled">
+        <Alignment value="Negative"/>
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <Duration value="5"/>
+        <Modification MoveSpeedMultiplier="0.7"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="XayidUnitSeedLandPHFate">
         <InfoFlags index="Hidden" value="1"/>
         <Duration value="3"/>
@@ -22,14 +46,6 @@
             <ModifyFlags index="SuppressMoving" value="1"/>
             <PlaneDelta index="Ground" value="1"/>
             <PlaneDelta index="Air" value="-1"/>
-        </Modification>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="XayidSeed">
-        <EditorCategories value="AbilityorEffectType:Units"/>
-        <Duration value="0.5"/>
-        <Modification>
-            <HeightTime index="Start" value="0.25"/>
-            <HeightTime index="Stop" value="0.25"/>
         </Modification>
     </CBehaviorBuff>
     <CBehaviorBuff id="StructureSeedLanded">
