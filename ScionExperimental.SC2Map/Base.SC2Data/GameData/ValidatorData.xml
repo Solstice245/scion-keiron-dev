@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
+    <CValidatorLocationEnumArea id="ResourcesAtScavengerRallyPoint">
+        <WhichLocation Effect="XayidSproutScavengerInit"/>
+        <AreaArray>
+            <Compare value="GT"/>
+            <Count value="0"/>
+            <Radius value="0.5"/>
+            <Validator value="Resources"/>
+        </AreaArray>
+        <SearchFilters value="Ground,Structure;Missile,Dead,Hidden"/>
+    </CValidatorLocationEnumArea>
     <CValidatorCombine id="NotMineralField">
         <Type value="And"/>
         <CombineArray value="Minerals"/>
@@ -24,6 +34,11 @@
         <CombineArray value="Resources"/>
         <CombineArray value="TargetIsSelf"/>
     </CValidatorCombine>
+    <CValidatorUnitCompareRallyPointCount id="StandardRallyPointGT0">
+        <ResultNoUnit value="OKPlaceholder"/>
+        <Compare value="GT"/>
+    </CValidatorUnitCompareRallyPointCount>
+    <CValidatorUnitCompareSpeed id="TargetIsStationary"/>
     <CValidatorUnitCompareRallyPointCount id="SproutScavengerRallyNotSet">
         <WhichUnit Effect="XayidSproutScavengerCP"/>
     </CValidatorUnitCompareRallyPointCount>
@@ -40,13 +55,14 @@
         <CombineArray value="StructureSeedNotLanded"/>
         <CombineArray value="StructureSeedNotBlocked"/>
     </CValidatorCombine>
-    <CValidatorUnitCompareOrderCount id="ScavengerSeedHasNoOrders" parent="CasterHasNoOrders">
-        <WhichUnit Effect="XayidSproutScavengerCP" Value="Target"/>
-    </CValidatorUnitCompareOrderCount>
     <CValidatorUnitCompareBehaviorCount id="StructureSeedNotLanded">
         <WhichUnit Value="Caster"/>
         <Behavior value="StructureSeedLanded"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorCombine id="TargetHasNoOrdersOrIsStationary">
+        <CombineArray value="TargetHasNoOrders"/>
+        <CombineArray value="TargetIsStationary"/>
+    </CValidatorCombine>
     <CValidatorLocationPathable id="TargetUnitIsOverPathableNoBuildings">
         <ResultFailed value="MustTargetWalkableLocation"/>
         <WhichLocation Value="TargetUnit"/>

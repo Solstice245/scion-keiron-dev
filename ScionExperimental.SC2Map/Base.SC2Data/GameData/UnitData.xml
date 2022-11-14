@@ -154,6 +154,7 @@
             <LayoutButtons Face="Move" Type="AbilCmd" AbilCmd="SeedMove,Move" Row="0" Column="0"/>
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="XayidSeedCancel,Execute" Row="2" Column="4"/>
             <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="Rally,Rally1" Row="1" Column="4"/>
+            <LayoutButtons Face="Stop" Type="AbilCmd" AbilCmd="stop,Stop" Row="0" Column="1"/>
         </CardLayouts>
         <Radius value="0.4375"/>
         <SeparationRadius value="0.25"/>
@@ -161,6 +162,23 @@
         <SubgroupPriority value="69"/>
         <MinimapRadius value="0.75"/>
         <EditorCategories value="ObjectType:Unit,ObjectFamily:Melee"/>
+    </CUnit>
+    <CUnit default="1" id="DefaultSettingsXayidRallyDummy" parent="DefaultSettingsXayidSprout">
+        <Name value="Unit/Name/DefaultSettingsXayidRallyDummy"/>
+        <Description value="Button/Tooltip/##id##"/>
+        <FlagArray index="Unselectable" value="1"/>
+        <FlagArray index="Untargetable" value="1"/>
+        <FlagArray index="Invulnerable" value="1"/>
+        <Collide index="Ground" value="0"/>
+        <Collide index="ForceField" value="0"/>
+        <Attributes index="Biological" value="0"/>
+        <LifeArmorName value="Unit/LifeArmorName/XayidCarapace"/>
+        <Sight value="0"/>
+        <AbilArray index="2" removed="1"/>
+        <CardLayouts index="0" removed="1"/>
+        <Footprint value="FootprintXayidRallyDummy"/>
+        <PlacementFootprint value="FootprintXayidRallyDummy"/>
+        <MinimapRadius value="0"/>
     </CUnit>
     <CUnit id="AcidNest">
         <Collide index="Burrow" value="0"/>
@@ -960,9 +978,8 @@
         <Collide index="RoachBurrow" value="0"/>
         <Collide index="ForceField" value="0"/>
         <Collide index="Flying6" value="1"/>
-        <AbilArray index="2" Link="XayidWorkerRally"/>
-        <AbilArray index="3" Link="XayidWorkerRallyPoint"/>
-        <AbilArray Link="XayidSproutScavenger"/>
+        <AbilArray index="2" Link="XayidWorkerRallyPoint"/>
+        <AbilArray index="3" Link="XayidSproutScavenger"/>
         <AbilArray Link="XayidSproutScavengerNest"/>
         <AbilArray Link="XayidSproutXayidDen"/>
         <AbilArray Link="XayidSproutSiphon"/>
@@ -976,7 +993,7 @@
         <AbilArray Link="XayidSproutSunkenWarren"/>
         <BehaviorArray Link="CommandCenterKnockbackBehavior"/>
         <CardLayouts index="0">
-            <LayoutButtons index="2" AbilCmd="XayidWorkerRally,Execute"/>
+            <LayoutButtons index="2" AbilCmd="XayidWorkerRallyPoint,Rally1"/>
             <LayoutButtons index="3" AbilCmd="XayidSproutScavenger,Train1"/>
             <LayoutButtons Face="BirthScavenger" Type="Passive" Row="0" Column="0"/>
             <LayoutButtons Face="FormBasicStructure" Type="Submenu" SubmenuCardId="0002" Row="2" Column="0"/>
@@ -1127,6 +1144,7 @@
         <AbilArray Link="XayidStructureSeedLand"/>
         <CardLayouts index="0">
             <LayoutButtons index="2" Face="BurrowDown" Type="AbilCmd" AbilCmd="XayidStructureSeedLand,Execute" Row="2" Column="3"/>
+            <LayoutButtons index="3" removed="1"/>
         </CardLayouts>
         <Radius value="0.5"/>
         <SeparationRadius value="0.5"/>
@@ -1141,6 +1159,7 @@
         <AbilArray Link="XayidStructureSeedLand"/>
         <CardLayouts index="0">
             <LayoutButtons index="2" Face="BurrowDown" Type="AbilCmd" AbilCmd="XayidStructureSeedLand,Execute" Row="2" Column="3"/>
+            <LayoutButtons index="3" removed="1"/>
         </CardLayouts>
         <Radius value="0.375"/>
         <SeparationRadius value="0.375"/>
@@ -1154,6 +1173,7 @@
         <AbilArray Link="XayidStructureSeedLand"/>
         <CardLayouts index="0">
             <LayoutButtons index="2" Face="BurrowDown" Type="AbilCmd" AbilCmd="XayidStructureSeedLand,Execute" Row="2" Column="3"/>
+            <LayoutButtons index="3" removed="1"/>
         </CardLayouts>
         <Radius value="0.25"/>
         <InnerRadius value="0"/>
@@ -1354,6 +1374,9 @@
         <AbilArray Link="XayidMorphSeedXayidling"/>
         <ScoreResult value="BuildOrder"/>
         <Food value="-1"/>
+        <CardLayouts index="0">
+            <LayoutButtons index="3" removed="1"/>
+        </CardLayouts>
     </CUnit>
     <CUnit id="XayidDen">
         <Collide index="Burrow" value="0"/>
@@ -1362,12 +1385,15 @@
         <Collide index="ForceField" value="0"/>
         <Collide index="Flying6" value="1"/>
         <AbilArray index="1" Link="XayidGroundRallyPoint"/>
-        <AbilArray Link="XayidGroundRally"/>
         <AbilArray Link="XayidSproutXayidling"/>
+        <AbilArray Link="que1"/>
         <BehaviorArray index="0" Link="TerranStructuresKnockbackBehavior"/>
+        <BehaviorArray Link="XayidRallyController"/>
         <CardLayouts index="0">
-            <LayoutButtons index="1" Face="Rally" Type="AbilCmd" AbilCmd="XayidGroundRally,Execute" Row="1" Column="4"/>
+            <LayoutButtons index="0" Face="Cancel" AbilCmd="que1,CancelLast"/>
+            <LayoutButtons index="1" Face="Rally" Type="AbilCmd" AbilCmd="XayidGroundRallyPoint,Rally1" Row="1" Column="4"/>
             <LayoutButtons index="2" Face="Xayidling" AbilCmd="XayidSproutXayidling,Train1" Row="0" Column="1"/>
+            <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
             <LayoutButtons Face="Xayidling" Type="Passive" Row="0" Column="1"/>
             <LayoutButtons Face="BirthScavenger" Type="AbilCmd" AbilCmd="XayidSproutScavenger,Train1" Row="0" Column="0"/>
             <LayoutButtons Face="BirthScavenger" Type="Passive" Requirements="ScavengerNestSelected" Row="0" Column="0"/>
@@ -1387,8 +1413,10 @@
         <AbilArray Link="XayidScavengerSeedLand"/>
         <AbilArray Link="XayidMorphSeedScavenger"/>
         <CardLayouts index="0">
-            <LayoutButtons index="2" Face="BurrowDown" Type="AbilCmd" AbilCmd="XayidScavengerSeedLand,Execute" Row="2" Column="3"/>
+            <LayoutButtons index="2" Face="Stop" Type="AbilCmd" AbilCmd="stop,Stop" Row="0" Column="1"/>
+            <LayoutButtons index="3" Face="Rally" Type="AbilCmd" AbilCmd="Rally,Rally1" Row="1" Column="4"/>
         </CardLayouts>
+        <FlagArray index="ArmySelect" value="0"/>
     </CUnit>
     <CUnit id="MendlingSeed" parent="DefaultSettingsXayidSeed">
         <Food value="-1"/>
@@ -1398,7 +1426,7 @@
         <AbilArray Link="XayidMorphSeedMendling"/>
         <CardLayouts index="0">
             <LayoutButtons index="2" Face="BurrowDown" Type="AbilCmd" AbilCmd="XayidMendlingSeedLand,Execute" Row="2" Column="3"/>
-            <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="Rally,Rally1" Row="1" Column="4"/>
+            <LayoutButtons index="3" Face="Rally" Type="AbilCmd" AbilCmd="Rally,Rally1" Row="1" Column="4"/>
         </CardLayouts>
     </CUnit>
     <CUnit id="ScorpaliskSeed" parent="DefaultSettingsXayidSeed">
@@ -1411,7 +1439,7 @@
         <AbilArray Link="XayidMorphSeedScorpalisk"/>
         <CardLayouts index="0">
             <LayoutButtons index="2" Face="BurrowDown" Type="AbilCmd" AbilCmd="XayidScorpaliskSeedLand,Execute" Row="2" Column="3"/>
-            <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="Rally,Rally1" Row="1" Column="4"/>
+            <LayoutButtons index="3" Face="Rally" Type="AbilCmd" AbilCmd="Rally,Rally1" Row="1" Column="4"/>
         </CardLayouts>
         <Radius value="0.5625"/>
         <SeparationRadius value="0.5"/>
@@ -1538,5 +1566,15 @@
             <LayoutButtons Face="Exterminator" Type="Passive" Requirements="BloomExterminator" Row="2" Column="1"/>
             <LayoutButtons Face="Kraken" Type="Passive" Requirements="BloomKraken" Row="2" Column="2"/>
         </CardLayouts>
+    </CUnit>
+    <CUnit id="XayidlingDummy" parent="DefaultSettingsXayidRallyDummy">
+        <Name value="Unit/Name/XayidlingDummy"/>
+        <Food value="-1"/>
+        <CostResource index="Minerals" value="75"/>
+    </CUnit>
+    <CUnit id="ScavengerDummy" parent="DefaultSettingsXayidRallyDummy">
+        <Name value="Unit/Name/ScavengerDummy"/>
+        <Food value="-1"/>
+        <CostResource index="Minerals" value="50"/>
     </CUnit>
 </Catalog>

@@ -94,6 +94,20 @@
         <Player Value="Caster"/>
         <Target Value="TargetPoint"/>
     </CEffectIssueOrder>
+    <CEffectCreatePersistent id="XayidRallyControllerCP">
+        <ValidatorArray value="StandardRallyPointGT0"/>
+        <EditorCategories value="Race:Xayid"/>
+        <Chance value="0"/>
+        <WhichLocation Value="TargetUnit"/>
+        <PeriodCount value="4"/>
+        <PeriodicEffectArray value="XayidRallyControllerOrder"/>
+    </CEffectCreatePersistent>
+    <CEffectIssueOrder id="XayidRallyControllerOrder">
+        <EditorCategories value="Race:Xayid"/>
+        <Abil value="XayidGroundRallyPoint"/>
+        <CmdFlags index="Queued" value="1"/>
+        <Target Value="TargetUnit"/>
+    </CEffectIssueOrder>
     <CEffectCreatePersistent id="XayidSproutAvianNest">
         <EditorCategories value="Race:Xayid"/>
         <InitialEffect value="XayidSproutAvianNestCost"/>
@@ -104,6 +118,21 @@
         <InitialEffect value="XayidSproutCatalystPitCost"/>
         <FinalEffect value="XayidSproutCatalystPitCU"/>
     </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="XayidSproutScavengerInit">
+        <EditorCategories value="Race:Xayid"/>
+        <InitialEffect value="XayidSproutScavengerCU"/>
+    </CEffectCreatePersistent>
+    <CEffectIssueOrder id="XayidSproutScavengerMove">
+        <EditorCategories value="Race:Xayid"/>
+        <Abil value="SeedMove"/>
+        <Target Value="SourceUnitOrPoint"/>
+    </CEffectIssueOrder>
+    <CEffectSet id="XayidSproutScavengerSet">
+        <EditorCategories value="Race:Xayid"/>
+        <EffectArray value="XayidSproutScavengerMove"/>
+        <EffectArray value="XayidSproutScavengerSwitch"/>
+        <EffectArray value="XayidSproutScavengerOrder"/>
+    </CEffectSet>
     <CEffectCreatePersistent id="XayidSproutSunkenWarren">
         <EditorCategories value="Race:Xayid"/>
         <InitialEffect value="XayidSproutSunkenWarrenCost"/>
@@ -386,18 +415,14 @@
         <WhichLocation Value="TargetUnit"/>
         <Flags index="PersistUntilDestroyed" value="1"/>
         <InitialDelay value="0.375"/>
-        <FinalEffect value="XayidSproutScavengerRallySA"/>
         <PeriodicValidator value="NotScavengerSproutAndNotDead"/>
-        <PeriodicEffectArray value="XayidSproutScavengerSwitch"/>
-        <PeriodicEffectArray value="XayidSproutScavengerOrder"/>
+        <PeriodicEffectArray value="XayidSproutScavengerSet"/>
         <PeriodicPeriodArray value="0.0625"/>
-        <PeriodicPeriodArray value="0"/>
     </CEffectCreatePersistent>
     <CEffectIssueOrder id="XayidSproutScavengerLand">
-        <ValidatorArray value="TargetHasNoOrders"/>
         <EditorCategories value="Race:Xayid"/>
         <Abil value="XayidScavengerSeedLand"/>
-        <Target Value="TargetUnit"/>
+        <Target Value="SourceUnitOrPoint"/>
     </CEffectIssueOrder>
     <CEffectSet id="XayidSproutScavengerNestSet">
         <ValidatorArray value="TargetHasNoOrders"/>
@@ -407,13 +432,13 @@
     </CEffectSet>
     <CEffectCreatePersistent id="XayidSproutScavengerOffset">
         <EditorCategories value="Race:Xayid"/>
-        <WhichLocation Value="TargetUnit"/>
+        <WhichLocation Effect="XayidSproutScavengerInit"/>
         <OffsetVectorStartLocation Value="CasterUnit"/>
         <OffsetVectorEndLocation Value="TargetUnit"/>
         <OffsetFacingFallback Value="TargetUnit"/>
         <PeriodCount value="1"/>
         <PeriodicEffectArray value="XayidSproutScavengerLandOffset"/>
-        <PeriodicOffsetArray value="0,1,0"/>
+        <PeriodicOffsetArray value="0,0.75,0"/>
     </CEffectCreatePersistent>
     <CEffectIssueOrder id="XayidSproutScavengerOrder">
         <ValidatorArray value="UnitSeedIsLanded"/>
@@ -422,21 +447,19 @@
     </CEffectIssueOrder>
     <CEffectIssueOrder id="XayidSproutScavengerRallyOrder">
         <EditorCategories value="Race:Xayid"/>
-        <WhichUnit Effect="XayidSproutScavengerCP"/>
+        <WhichUnit Effect="XayidSproutScavengerCUSet"/>
         <Abil value="Rally"/>
         <Target Value="TargetUnit"/>
-        <ValidatorArray value="SproutScavengerRallyNotSet"/>
-        <Player Effect="XayidSproutScavengerCP"/>
+        <Player Effect="XayidSproutScavengerCUSet"/>
     </CEffectIssueOrder>
     <CEffectEnumArea id="XayidSproutScavengerRallySA" parent="ScionEnumArea">
         <EditorCategories value="Race:Xayid"/>
         <DebugTrace value="1"/>
         <SearchFilters value="HarvestableResource;Ally,Enemy,Missile,Stasis,Dead,Hidden"/>
-        <AreaArray MaxCount="1" Radius="3" Effect="XayidSproutScavengerRallyOrder"/>
-        <ValidatorArray value="UnitSeedIsLanded"/>
+        <AreaArray MaxCount="1" Radius="0.1" Effect="XayidSproutScavengerRallyOrder"/>
+        <ImpactLocation Effect="XayidSproutScavengerInit" Value="TargetPoint"/>
     </CEffectEnumArea>
     <CEffectIssueOrder id="XayidSproutScavengerLandOffset">
-        <ValidatorArray value="ScavengerSeedHasNoOrders"/>
         <EditorCategories value="Race:Xayid"/>
         <WhichUnit Effect="XayidSproutScavengerCP"/>
         <Abil value="XayidScavengerSeedLand"/>
@@ -444,11 +467,9 @@
         <Target Value="TargetPoint"/>
     </CEffectIssueOrder>
     <CEffectSwitch id="XayidSproutScavengerSwitch">
-        <ValidatorArray value="TargetHasNoOrders"/>
         <EditorCategories value="Race:Xayid"/>
-        <CaseArray Validator="DistanceLessThan2" Effect="XayidSproutScavengerLand"/>
-        <CaseArray Validator="TargetUnitIsOverPathableNoBuildings" Effect="XayidSproutScavengerLand"/>
-        <CaseDefault value="XayidSproutScavengerOffset"/>
+        <CaseArray Validator="ResourcesAtScavengerRallyPoint" Effect="XayidSproutScavengerOffset"/>
+        <CaseDefault value="XayidSproutScavengerLand"/>
     </CEffectSwitch>
     <CEffectCreatePersistent id="XayidSproutSiphon">
         <EditorCategories value="Race:Xayid"/>
@@ -615,6 +636,66 @@
         <EffectArray value="XayidSproutMutagenChamberLand"/>
         <EffectArray value="XayidSproutMutagenChamberOrder"/>
     </CEffectSet>
+    <CEffectCreateUnit id="XayidSproutXayidlingCU">
+        <EditorCategories value="Race:Xayid"/>
+        <WhichLocation Value="CasterUnitOrPoint"/>
+        <Origin Value="TargetPoint"/>
+        <CreateFlags index="OffsetByRadius" value="0"/>
+        <CreateFlags index="Placement" value="0"/>
+        <CreateFlags index="SetFacing" value="1"/>
+        <CreateFlags index="NormalizeSpawnOffset" value="0"/>
+        <SpawnEffect value="XayidSproutXayidlingCUSet"/>
+        <SpawnUnit value="XayidlingSeed"/>
+        <SpawnRange value="0"/>
+    </CEffectCreateUnit>
+    <CEffectCreateUnit id="XayidSproutScavengerCU">
+        <EditorCategories value="Race:Xayid"/>
+        <WhichLocation Value="CasterUnitOrPoint"/>
+        <Origin Value="TargetPoint"/>
+        <CreateFlags index="OffsetByRadius" value="0"/>
+        <CreateFlags index="Placement" value="0"/>
+        <CreateFlags index="SetFacing" value="1"/>
+        <CreateFlags index="NormalizeSpawnOffset" value="0"/>
+        <SpawnEffect value="XayidSproutScavengerCUSet"/>
+        <SpawnUnit value="ScavengerSeed"/>
+        <SpawnRange value="0"/>
+    </CEffectCreateUnit>
+    <CEffectSet id="XayidSproutXayidlingCUSet">
+        <EditorCategories value="Race:Xayid"/>
+        <EffectArray value="RotateFacing180Target"/>
+        <EffectArray value="XayidSproutXayidling"/>
+        <EffectArray value="XayidSproutXayidlingKill"/>
+    </CEffectSet>
+    <CEffectSet id="XayidSproutScavengerCUSet">
+        <EditorCategories value="Race:Xayid"/>
+        <EffectArray value="RotateFacing180Target"/>
+        <EffectArray value="XayidSproutScavengerCP"/>
+        <EffectArray value="XayidSproutScavengerKill"/>
+        <EffectArray value="XayidSproutScavengerRallySA"/>
+    </CEffectSet>
+    <CEffectDamage id="XayidSproutXayidlingKill">
+        <EditorCategories value="Race:Xayid"/>
+        <Flags index="Kill" value="1"/>
+        <Death value="Remove"/>
+        <ImpactLocation Effect="XayidSproutXayidlingCU" Value="TargetUnit"/>
+    </CEffectDamage>
+    <CEffectDamage id="XayidSproutScavengerKill">
+        <EditorCategories value="Race:Xayid"/>
+        <ImpactLocation Effect="XayidSproutScavengerInit" Value="TargetUnit"/>
+        <Flags index="Kill" value="1"/>
+        <Death value="Remove"/>
+    </CEffectDamage>
+    <CEffectIssueOrder id="XayidSproutXayidlingMove">
+        <EditorCategories value="Race:Xayid"/>
+        <Abil value="SeedMove"/>
+        <Target Value="SourceUnitOrPoint"/>
+    </CEffectIssueOrder>
+    <CEffectSet id="XayidSproutXayidlingSet">
+        <EditorCategories value="Race:Xayid"/>
+        <EffectArray value="XayidSproutXayidlingMove"/>
+        <EffectArray value="XayidSproutXayidlingLand"/>
+        <EffectArray value="XayidSproutXayidlingOrder"/>
+    </CEffectSet>
     <CEffectIssueOrder id="XayidWorkerRally">
         <ValidatorArray value="Pathable"/>
         <EditorCategories value="Race:Xayid"/>
@@ -645,16 +726,13 @@
         <Flags index="PersistUntilDestroyed" value="1"/>
         <InitialDelay value="0.375"/>
         <PeriodicValidator value="TargetNotDead"/>
-        <PeriodicEffectArray value="XayidSproutXayidlingLand"/>
-        <PeriodicEffectArray value="XayidSproutXayidlingOrder"/>
+        <PeriodicEffectArray value="XayidSproutXayidlingSet"/>
         <PeriodicPeriodArray value="0.0625"/>
-        <PeriodicPeriodArray value="0"/>
     </CEffectCreatePersistent>
     <CEffectIssueOrder id="XayidSproutXayidlingLand">
-        <ValidatorArray value="TargetHasNoOrders"/>
         <EditorCategories value="Race:Xayid"/>
         <Abil value="XayidXayidlingSeedLand"/>
-        <Target Value="TargetUnit"/>
+        <Target Value="SourceUnitOrPoint"/>
     </CEffectIssueOrder>
     <CEffectIssueOrder id="XayidSproutXayidlingOrder">
         <ValidatorArray value="UnitSeedIsLanded"/>
