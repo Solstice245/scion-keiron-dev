@@ -8,20 +8,32 @@
     <CAbilEffectTarget id="Mend">
         <Range index="0" value="5"/>
     </CAbilEffectTarget>
-    <CAbilEffectTarget id="XayidAirRally">
-        <AbilSetId value="XayidRally"/>
-        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
-        <Flags index="BestUnit" value="0"/>
-        <Flags index="RequireTargetVision" value="0"/>
-        <Flags index="Smart" value="1"/>
-        <Range value="500"/>
-        <Arc value="360"/>
-        <SmartPriority value="3"/>
-        <IgnoreFilters value="Structure;Ally,Neutral,Enemy,RawResource,HarvestableResource"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="Rally">
-            <Flags index="ToSelection" value="1"/>
-        </CmdButtonArray>
-    </CAbilEffectTarget>
+    <CAbilMorph id="XayidMorphFeedingPoolBilePit">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:MorphsandBurrows"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="BilePit" Requirements="HaveMutagenChamber"/>
+        <CmdButtonArray index="Cancel" DefaultButtonFace="Cancel"/>
+        <Flags index="BestUnit" value="1"/>
+        <Flags index="DisableAbils" value="1"/>
+        <Flags index="FastBuild" value="1"/>
+        <Flags index="Interruptible" value="1"/>
+        <Flags index="Produce" value="1"/>
+        <Flags index="ShowProgress" value="1"/>
+        <InfoArray Score="1" Unit="BilePit">
+            <SectionArray index="Abils">
+                <DurationArray index="Delay" value="20"/>
+            </SectionArray>
+            <SectionArray index="Actor">
+                <DurationArray index="Duration" value="20"/>
+            </SectionArray>
+            <SectionArray index="Facing">
+                <DurationArray index="Delay" value="20"/>
+            </SectionArray>
+            <SectionArray index="Stats">
+                <DurationArray index="Delay" value="20"/>
+            </SectionArray>
+        </InfoArray>
+        <Alert value="MorphComplete_Zerg"/>
+    </CAbilMorph>
     <CAbilEffectTarget id="XayidDigest">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <Range value="4"/>
@@ -724,9 +736,8 @@
     <CAbilTrain id="XayidSproutMendling">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <DataCollection value="XayidSproutXayidUnits"/>
-        <Flags index="Transient" value="1"/>
         <Offset value="0,0"/>
-        <InfoArray index="Train1" Effect="XayidSproutMendlingCP">
+        <InfoArray index="Train1" Effect="XayidSproutMendlingCU" Location="Rally">
             <Charge>
                 <CountMax value="3"/>
                 <CountUse value="1"/>
@@ -738,7 +749,7 @@
             <Button DefaultButtonFace="Mendling">
                 <Flags index="ToSelection" value="1"/>
             </Button>
-            <Unit value="MendlingSeed"/>
+            <Unit value="MendlingDummy"/>
         </InfoArray>
     </CAbilTrain>
     <CAbilTrain id="XayidSproutScorpalisk">
@@ -746,7 +757,7 @@
         <DataCollection value="XayidSproutXayidUnits"/>
         <Flags index="Transient" value="1"/>
         <Offset value="0,0"/>
-        <InfoArray index="Train1" Effect="XayidSproutScorpaliskCP">
+        <InfoArray index="Train1" Effect="XayidSproutScorpaliskCU" Location="Rally">
             <Charge>
                 <CountMax value="3"/>
                 <CountUse value="1"/>
@@ -758,7 +769,7 @@
             <Button DefaultButtonFace="Scorpalisk">
                 <Flags index="ToSelection" value="1"/>
             </Button>
-            <Unit value="ScorpaliskSeed"/>
+            <Unit value="ScorpaliskDummy"/>
         </InfoArray>
     </CAbilTrain>
     <CAbilTrain id="XayidSproutRaptor">
@@ -781,19 +792,7 @@
             <Unit value="RaptorSeed"/>
         </InfoArray>
     </CAbilTrain>
-    <CAbilEffectTarget id="XayidWorkerRally">
-        <AbilSetId value="XayidRally"/>
-        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
-        <Flags index="Smart" value="1"/>
-        <Range value="500"/>
-        <Arc value="360"/>
-        <SmartPriority value="3"/>
-        <SmartValidatorArray value="ResourcesOrSelf"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="Rally">
-            <Flags index="ToSelection" value="1"/>
-        </CmdButtonArray>
-    </CAbilEffectTarget>
-    <CAbilRally id="XayidWorkerRallyPoint">
+    <CAbilRally id="XayidWorkerRally">
         <OrderArray index="0">
             <DisplayType value="Rally"/>
             <Color value="255,0,150,0"/>
@@ -825,21 +824,7 @@
             <SetValidators value="Resources"/>
         </InfoArray>
     </CAbilRally>
-    <CAbilEffectTarget id="XayidMassRally">
-        <AbilSetId value="XayidRally"/>
-        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
-        <Flags index="BestUnit" value="0"/>
-        <Flags index="RequireTargetVision" value="0"/>
-        <Flags index="Smart" value="1"/>
-        <Range value="500"/>
-        <Arc value="360"/>
-        <SmartPriority value="3"/>
-        <IgnoreFilters value="Structure;Ally,Neutral,Enemy,RawResource,HarvestableResource"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="Rally">
-            <Flags index="ToSelection" value="1"/>
-        </CmdButtonArray>
-    </CAbilEffectTarget>
-    <CAbilRally id="XayidMassRallyPoint">
+    <CAbilRally id="XayidBiomassRally">
         <OrderArray index="0">
             <DisplayType value="Rally"/>
             <Color value="255,200,0,0"/>
@@ -848,10 +833,6 @@
         </OrderArray>
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Structures"/>
         <DataCollection value="Rally"/>
-        <CmdButtonArray index="Rally1">
-            <Flags index="IgnoreUser" value="1"/>
-            <Flags index="ToSelection" value="0"/>
-        </CmdButtonArray>
         <CmdButtonArray index="Rally2">
             <Flags index="IgnoreUser" value="1"/>
             <Flags index="ToSelection" value="0"/>
@@ -863,26 +844,14 @@
         <CmdButtonArray index="Rally4">
             <Flags index="IgnoreUser" value="1"/>
         </CmdButtonArray>
-        <InfoArray index="0" SetOnGround="0" SetFilters="-;RawResource,HarvestableResource"/>
+        <InfoArray index="0" SetFilters="-;RawResource,HarvestableResource">
+            <SetValidators value="Pathable"/>
+        </InfoArray>
         <InfoArray SetOnGround="0"/>
         <InfoArray SetOnGround="0"/>
         <InfoArray SetOnGround="0"/>
     </CAbilRally>
-    <CAbilEffectTarget id="XayidSpellRally">
-        <AbilSetId value="XayidRally"/>
-        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
-        <Flags index="BestUnit" value="0"/>
-        <Flags index="RequireTargetVision" value="0"/>
-        <Flags index="Smart" value="1"/>
-        <Range value="500"/>
-        <Arc value="360"/>
-        <SmartPriority value="3"/>
-        <IgnoreFilters value="Structure;Ally,Neutral,Enemy,RawResource,HarvestableResource"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="Rally">
-            <Flags index="ToSelection" value="1"/>
-        </CmdButtonArray>
-    </CAbilEffectTarget>
-    <CAbilRally id="XayidGroundRallyPoint">
+    <CAbilRally id="XayidDenRally">
         <OrderArray index="0">
             <DisplayType value="Rally"/>
             <Color value="255,255,128,0"/>
@@ -901,27 +870,15 @@
         <CmdButtonArray index="Rally4">
             <Flags index="IgnoreUser" value="1"/>
         </CmdButtonArray>
+        <InfoArray index="0" SetFilters="-;RawResource,HarvestableResource">
+            <SetValidators value="Pathable"/>
+        </InfoArray>
         <InfoArray SetOnGround="0"/>
         <InfoArray SetOnGround="0"/>
         <InfoArray SetOnGround="0"/>
         <SmartPriority value="20"/>
     </CAbilRally>
-    <CAbilEffectTarget id="XayidGroundRally">
-        <AbilSetId value="XayidRally"/>
-        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
-        <Effect index="0" value="XayidGroundRallyOrder"/>
-        <Flags index="BestUnit" value="0"/>
-        <Flags index="RequireTargetVision" value="0"/>
-        <Flags index="Smart" value="1"/>
-        <Range value="500"/>
-        <Arc value="360"/>
-        <SmartPriority value="3"/>
-        <IgnoreFilters value="Structure;Ally,Neutral,Enemy,RawResource,HarvestableResource"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="Rally">
-            <Flags index="ToSelection" value="1"/>
-        </CmdButtonArray>
-    </CAbilEffectTarget>
-    <CAbilRally id="XayidAirRallyPoint">
+    <CAbilRally id="XayidAvianRally">
         <OrderArray index="0">
             <DisplayType value="Rally"/>
             <Color value="255,0,255,255"/>
@@ -930,10 +887,6 @@
         </OrderArray>
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Structures"/>
         <DataCollection value="Rally"/>
-        <CmdButtonArray index="Rally1">
-            <Flags index="IgnoreUser" value="1"/>
-            <Flags index="ToSelection" value="0"/>
-        </CmdButtonArray>
         <CmdButtonArray index="Rally2">
             <Flags index="IgnoreUser" value="1"/>
             <Flags index="ToSelection" value="0"/>
@@ -945,12 +898,12 @@
         <CmdButtonArray index="Rally4">
             <Flags index="IgnoreUser" value="1"/>
         </CmdButtonArray>
-        <InfoArray index="0" SetOnGround="0"/>
+        <InfoArray index="0" SetFilters="-;RawResource,HarvestableResource"/>
         <InfoArray SetOnGround="0"/>
         <InfoArray SetOnGround="0"/>
         <InfoArray SetOnGround="0"/>
     </CAbilRally>
-    <CAbilRally id="XayidSpellRallyPoint">
+    <CAbilRally id="XayidCasnoliskRally">
         <OrderArray index="0">
             <DisplayType value="Rally"/>
             <Color value="255,200,0,200"/>
@@ -959,10 +912,6 @@
         </OrderArray>
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Structures"/>
         <DataCollection value="Rally"/>
-        <CmdButtonArray index="Rally1">
-            <Flags index="IgnoreUser" value="1"/>
-            <Flags index="ToSelection" value="0"/>
-        </CmdButtonArray>
         <CmdButtonArray index="Rally2">
             <Flags index="IgnoreUser" value="1"/>
             <Flags index="ToSelection" value="0"/>
@@ -974,7 +923,9 @@
         <CmdButtonArray index="Rally4">
             <Flags index="IgnoreUser" value="1"/>
         </CmdButtonArray>
-        <InfoArray index="0" SetOnGround="0" SetFilters="-;RawResource,HarvestableResource"/>
+        <InfoArray index="0" SetFilters="-;RawResource,HarvestableResource">
+            <SetValidators value="Pathable"/>
+        </InfoArray>
         <InfoArray SetOnGround="0"/>
         <InfoArray SetOnGround="0"/>
         <InfoArray SetOnGround="0"/>

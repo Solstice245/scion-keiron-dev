@@ -180,6 +180,7 @@
         <PlacementFootprint value="FootprintXayidRallyDummy"/>
         <MinimapRadius value="0"/>
         <CostCategory value="None"/>
+        <DeathRevealRadius value="0"/>
     </CUnit>
     <CUnit id="AcidNest">
         <Collide index="Burrow" value="0"/>
@@ -231,12 +232,12 @@
         </CardLayouts>
     </CUnit>
     <CUnit id="AvianNest">
-        <AbilArray index="1" Link="XayidAirRallyPoint"/>
-        <AbilArray Link="XayidAirRally"/>
+        <AbilArray index="1" Link="XayidAvianRally"/>
         <AbilArray Link="XayidSproutRaptor"/>
+        <AbilArray Link="que1"/>
         <BehaviorArray index="0" Link="TerranStructuresKnockbackBehavior"/>
         <CardLayouts index="0">
-            <LayoutButtons index="1" Face="Rally" Type="AbilCmd" AbilCmd="XayidAirRally,Execute" Row="1" Column="4"/>
+            <LayoutButtons index="1" Face="Rally" Type="AbilCmd" AbilCmd="XayidAvianRally,Rally1" Row="1" Column="4"/>
             <LayoutButtons index="2" Face="BirthScavenger" AbilCmd="XayidSproutScavenger,Train1" Row="0" Column="0"/>
             <LayoutButtons Face="BirthScavenger" Type="Passive" Requirements="ScavengerNestSelected" Row="0" Column="0"/>
             <LayoutButtons Face="Xayidling" Type="AbilCmd" AbilCmd="XayidSproutXayidling,Train1" Row="0" Column="1"/>
@@ -255,6 +256,9 @@
         <Collide index="RoachBurrow" value="0"/>
         <Collide index="ForceField" value="0"/>
         <Collide index="Flying6" value="1"/>
+        <CostResource index="Minerals" value="175"/>
+        <ScoreMake value="175"/>
+        <ScoreKill value="175"/>
     </CUnit>
     <CUnit id="BiomassCavern">
         <Collide index="Burrow" value="0"/>
@@ -265,12 +269,12 @@
         <BehaviorArray Link="TerranStructuresKnockbackBehavior"/>
     </CUnit>
     <CUnit id="BiomassHatchery">
-        <AbilArray index="1" Link="XayidMassRally"/>
-        <AbilArray Link="XayidMassRallyPoint"/>
+        <AbilArray index="1" Link="XayidBiomassRally"/>
         <AbilArray Link="XayidSproutScorpalisk"/>
+        <AbilArray Link="que1"/>
         <BehaviorArray index="0" Link="TerranStructuresKnockbackBehavior"/>
         <CardLayouts index="0">
-            <LayoutButtons index="1" Face="Rally" Type="AbilCmd" AbilCmd="XayidMassRally,Execute" Row="1" Column="4"/>
+            <LayoutButtons index="1" Face="Rally" Type="AbilCmd" AbilCmd="XayidBiomassRally,Rally1" Row="1" Column="4"/>
             <LayoutButtons index="2" Face="BirthScavenger" AbilCmd="XayidSproutScavenger,Train1" Row="0" Column="0"/>
             <LayoutButtons Face="BirthScavenger" Type="Passive" Requirements="ScavengerNestSelected" Row="0" Column="0"/>
             <LayoutButtons Face="Xayidling" Type="AbilCmd" AbilCmd="XayidSproutXayidling,Train1" Row="0" Column="1"/>
@@ -332,8 +336,8 @@
         </CardLayouts>
     </CUnit>
     <CUnit id="CasnoliskDen">
-        <AbilArray Link="XayidSpellRally"/>
-        <AbilArray Link="XayidSpellRallyPoint"/>
+        <AbilArray index="1" Link="que1"/>
+        <AbilArray Link="XayidCasnoliskRally"/>
         <AbilArray Link="XayidSproutMendling"/>
         <CardLayouts index="0">
             <LayoutButtons index="2" Row="1"/>
@@ -342,7 +346,7 @@
             <LayoutButtons index="5" Row="2"/>
             <LayoutButtons index="6" Row="1"/>
             <LayoutButtons index="7" Row="1"/>
-            <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="XayidSpellRally,Execute" Row="1" Column="4"/>
+            <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="XayidCasnoliskRally,Rally1" Row="1" Column="4"/>
             <LayoutButtons Face="BirthScavenger" Type="AbilCmd" AbilCmd="XayidSproutScavenger,Train1" Row="0" Column="0"/>
             <LayoutButtons Face="BirthScavenger" Type="Passive" Requirements="ScavengerNestSelected" Row="0" Column="0"/>
             <LayoutButtons Face="Xayidling" Type="AbilCmd" AbilCmd="XayidSproutXayidling,Train1" Row="0" Column="1"/>
@@ -453,6 +457,11 @@
         <Collide index="RoachBurrow" value="0"/>
         <Collide index="ForceField" value="0"/>
         <Collide index="Flying6" value="1"/>
+        <AbilArray Link="XayidMorphFeedingPoolBilePit"/>
+        <CardLayouts index="0">
+            <LayoutButtons Face="BilePit" Type="AbilCmd" AbilCmd="XayidMorphFeedingPoolBilePit,Execute" Row="0" Column="0"/>
+            <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="XayidMorphFeedingPoolBilePit,Cancel" Row="2" Column="4"/>
+        </CardLayouts>
     </CUnit>
     <CUnit id="Ferrion">
         <CardLayouts index="0">
@@ -649,14 +658,7 @@
     <CUnit id="Mendling">
         <AbilArray Link="XayidMorphMendling"/>
         <CardLayouts index="0">
-            <LayoutButtons index="5">
-                <Face value="XayidBloom"/>
-                <Type value="Submenu"/>
-                <AbilCmd value=""/>
-                <SubmenuCardId value="0002"/>
-                <SubmenuFullSubCmdValidation value="1"/>
-                <SubmenuIsSticky value="1"/>
-            </LayoutButtons>
+            <LayoutButtons index="5" Face="XayidBloom" Type="Submenu" AbilCmd="" SubmenuCardId="0002" SubmenuIsSticky="1"/>
             <LayoutButtons index="6" Face="Mend" AbilCmd="Mend,Execute" Column="1"/>
             <LayoutButtons index="7" Column="2"/>
             <LayoutButtons Face="MutateintoSacrificialMutation" Type="AbilCmd" AbilCmd="MendlingSacrificialMutation,Execute" Row="2" Column="3"/>
@@ -665,29 +667,29 @@
             <LayoutButtons Face="Roamer" Type="AbilCmd" AbilCmd="XayidMorphXayidling,Train1" Row="0" Column="0"/>
             <LayoutButtons Face="Roamer" Type="Passive" Requirements="BloomRoamer" Row="0" Column="0"/>
             <LayoutButtons Face="Snare" Type="AbilCmd" AbilCmd="XayidMorphXayidling,Train2" Row="0" Column="1"/>
+            <LayoutButtons Face="Snare" Type="Passive" Requirements="BloomSnare" Row="0" Column="1"/>
             <LayoutButtons Face="Eroder" Type="AbilCmd" AbilCmd="XayidMorphXayidling,Train3" Row="0" Column="2"/>
+            <LayoutButtons Face="Eroder" Type="Passive" Requirements="BloomEroder" Row="0" Column="2"/>
             <LayoutButtons Face="Reviler" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train1" Row="1" Column="0"/>
+            <LayoutButtons Face="Reviler" Type="Passive" Requirements="BloomReviler" Row="1" Column="0"/>
             <LayoutButtons Face="Spitter" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train2" Row="1" Column="1"/>
+            <LayoutButtons Face="Spitter" Type="Passive" Requirements="BloomSpitter" Row="1" Column="1"/>
             <LayoutButtons Face="Massalisk" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train3" Row="1" Column="2"/>
+            <LayoutButtons Face="Massalisk" Type="Passive" Requirements="BloomMassalisk" Row="1" Column="2"/>
             <LayoutButtons Face="Ferrion" Type="AbilCmd" AbilCmd="XayidMorphScavengerFerry,Train1" Row="1" Column="3"/>
+            <LayoutButtons Face="Ferrion" Type="Passive" Requirements="BloomFerry" Row="1" Column="3"/>
             <LayoutButtons Face="Cancel" Type="CancelSubmenu" Row="2" Column="4"/>
             <LayoutButtons Face="Casnolisk" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train1" Row="0" Column="3"/>
-            <LayoutButtons Face="Prowler" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train2" Row="0" Column="4"/>
-            <LayoutButtons Face="Xayithoan" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train3" Row="1" Column="4"/>
-            <LayoutButtons Face="Assailant" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train1" Row="2" Column="0"/>
-            <LayoutButtons Face="Exterminator" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train2" Row="2" Column="1"/>
-            <LayoutButtons Face="Kraken" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train3" Row="2" Column="2"/>
-            <LayoutButtons Face="Snare" Type="Passive" Requirements="BloomSnare" Row="0" Column="1"/>
-            <LayoutButtons Face="Eroder" Type="Passive" Requirements="BloomEroder" Row="0" Column="2"/>
             <LayoutButtons Face="Casnolisk" Type="Passive" Requirements="BloomCasnolisk" Row="0" Column="3"/>
+            <LayoutButtons Face="Prowler" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train2" Row="0" Column="4"/>
             <LayoutButtons Face="Prowler" Type="Passive" Requirements="BloomProwler" Row="0" Column="4"/>
+            <LayoutButtons Face="Xayithoan" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train3" Row="1" Column="4"/>
             <LayoutButtons Face="Xayithoan" Type="Passive" Requirements="BloomXayithoan" Row="1" Column="4"/>
-            <LayoutButtons Face="Reviler" Type="Passive" Requirements="BloomReviler" Row="1" Column="0"/>
-            <LayoutButtons Face="Spitter" Type="Passive" Requirements="BloomSpitter" Row="1" Column="1"/>
-            <LayoutButtons Face="Massalisk" Type="Passive" Requirements="BloomMassalisk" Row="1" Column="2"/>
-            <LayoutButtons Face="Ferrion" Type="Passive" Requirements="BloomFerry" Row="1" Column="3"/>
+            <LayoutButtons Face="Assailant" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train1" Row="2" Column="0"/>
             <LayoutButtons Face="Assailant" Type="Passive" Requirements="BloomAssailant" Row="2" Column="0"/>
+            <LayoutButtons Face="Exterminator" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train2" Row="2" Column="1"/>
             <LayoutButtons Face="Exterminator" Type="Passive" Requirements="BloomExterminator" Row="2" Column="1"/>
+            <LayoutButtons Face="Kraken" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train3" Row="2" Column="2"/>
             <LayoutButtons Face="Kraken" Type="Passive" Requirements="BloomKraken" Row="2" Column="2"/>
         </CardLayouts>
         <Food value="-1"/>
@@ -760,7 +762,6 @@
                 <Type value="Submenu"/>
                 <Requirements value=""/>
                 <SubmenuCardId value="0002"/>
-                <SubmenuFullSubCmdValidation value="1"/>
                 <SubmenuIsSticky value="1"/>
                 <ShowInGlossary value="1"/>
             </LayoutButtons>
@@ -770,29 +771,29 @@
             <LayoutButtons Face="Roamer" Type="AbilCmd" AbilCmd="XayidMorphXayidling,Train1" Row="0" Column="0"/>
             <LayoutButtons Face="Roamer" Type="Passive" Requirements="BloomRoamer" Row="0" Column="0"/>
             <LayoutButtons Face="Snare" Type="AbilCmd" AbilCmd="XayidMorphXayidling,Train2" Row="0" Column="1"/>
+            <LayoutButtons Face="Snare" Type="Passive" Requirements="BloomSnare" Row="0" Column="1"/>
             <LayoutButtons Face="Eroder" Type="AbilCmd" AbilCmd="XayidMorphXayidling,Train3" Row="0" Column="2"/>
+            <LayoutButtons Face="Eroder" Type="Passive" Requirements="BloomEroder" Row="0" Column="2"/>
             <LayoutButtons Face="Reviler" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train1" Row="1" Column="0"/>
+            <LayoutButtons Face="Reviler" Type="Passive" Requirements="BloomReviler" Row="1" Column="0"/>
             <LayoutButtons Face="Spitter" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train2" Row="1" Column="1"/>
+            <LayoutButtons Face="Spitter" Type="Passive" Requirements="BloomSpitter" Row="1" Column="1"/>
             <LayoutButtons Face="Massalisk" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train3" Row="1" Column="2"/>
+            <LayoutButtons Face="Massalisk" Type="Passive" Requirements="BloomMassalisk" Row="1" Column="2"/>
             <LayoutButtons Face="Ferrion" Type="AbilCmd" AbilCmd="XayidMorphScavengerFerry,Train1" Row="1" Column="3"/>
+            <LayoutButtons Face="Ferrion" Type="Passive" Requirements="BloomFerry" Row="1" Column="3"/>
             <LayoutButtons Face="Cancel" Type="CancelSubmenu" Row="2" Column="4"/>
             <LayoutButtons Face="Casnolisk" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train1" Row="0" Column="3"/>
-            <LayoutButtons Face="Prowler" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train2" Row="0" Column="4"/>
-            <LayoutButtons Face="Xayithoan" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train3" Row="1" Column="4"/>
-            <LayoutButtons Face="Assailant" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train1" Row="2" Column="0"/>
-            <LayoutButtons Face="Exterminator" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train2" Row="2" Column="1"/>
-            <LayoutButtons Face="Kraken" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train3" Row="2" Column="2"/>
-            <LayoutButtons Face="Snare" Type="Passive" Requirements="BloomSnare" Row="0" Column="1"/>
-            <LayoutButtons Face="Eroder" Type="Passive" Requirements="BloomEroder" Row="0" Column="2"/>
             <LayoutButtons Face="Casnolisk" Type="Passive" Requirements="BloomCasnolisk" Row="0" Column="3"/>
+            <LayoutButtons Face="Prowler" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train2" Row="0" Column="4"/>
             <LayoutButtons Face="Prowler" Type="Passive" Requirements="BloomProwler" Row="0" Column="4"/>
+            <LayoutButtons Face="Xayithoan" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train3" Row="1" Column="4"/>
             <LayoutButtons Face="Xayithoan" Type="Passive" Requirements="BloomXayithoan" Row="1" Column="4"/>
-            <LayoutButtons Face="Reviler" Type="Passive" Requirements="BloomReviler" Row="1" Column="0"/>
-            <LayoutButtons Face="Spitter" Type="Passive" Requirements="BloomSpitter" Row="1" Column="1"/>
-            <LayoutButtons Face="Massalisk" Type="Passive" Requirements="BloomMassalisk" Row="1" Column="2"/>
-            <LayoutButtons Face="Ferrion" Type="Passive" Requirements="BloomFerry" Row="1" Column="3"/>
+            <LayoutButtons Face="Assailant" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train1" Row="2" Column="0"/>
             <LayoutButtons Face="Assailant" Type="Passive" Requirements="BloomAssailant" Row="2" Column="0"/>
+            <LayoutButtons Face="Exterminator" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train2" Row="2" Column="1"/>
             <LayoutButtons Face="Exterminator" Type="Passive" Requirements="BloomExterminator" Row="2" Column="1"/>
+            <LayoutButtons Face="Kraken" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train3" Row="2" Column="2"/>
             <LayoutButtons Face="Kraken" Type="Passive" Requirements="BloomKraken" Row="2" Column="2"/>
         </CardLayouts>
     </CUnit>
@@ -883,11 +884,14 @@
             <LayoutButtons Face="Kraken" Type="Passive" Requirements="BloomKraken" Row="2" Column="2"/>
         </CardLayouts>
     </CUnit>
+    <CUnit id="SacrificialMutation">
+        <Food value="-1"/>
+    </CUnit>
     <CUnit id="Scavenger">
         <AbilArray index="4" Link="SprayZerg"/>
         <AbilArray index="5" Link="XayidMorphScavengerFerry"/>
         <CardLayouts index="0">
-            <LayoutButtons index="5" Face="XayidBloom" AbilCmd="" SubmenuFullSubCmdValidation="1" SubmenuIsSticky="1"/>
+            <LayoutButtons index="5" Face="XayidBloom" AbilCmd="" SubmenuIsSticky="1"/>
             <LayoutButtons index="6">
                 <Face value="GatherZerg"/>
                 <Type value="AbilCmd"/>
@@ -909,23 +913,23 @@
             <LayoutButtons index="4" Face="Reviler" AbilCmd="XayidMorphScorpalisk,Train1" Column="0"/>
             <LayoutButtons index="5" Face="Spitter" AbilCmd="XayidMorphScorpalisk,Train2" Row="1" Column="1"/>
             <LayoutButtons index="6" Face="Massalisk" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train3" Row="1" Column="2"/>
-            <LayoutButtons Face="Ferrion" Type="AbilCmd" AbilCmd="XayidMorphScavengerFerry,Train1" Row="1" Column="3"/>
-            <LayoutButtons Face="Cancel" Type="CancelSubmenu" Row="2" Column="4"/>
-            <LayoutButtons Face="Casnolisk" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train1" Row="0" Column="3"/>
-            <LayoutButtons Face="Prowler" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train2" Row="0" Column="4"/>
-            <LayoutButtons Face="Xayithoan" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train3" Row="1" Column="4"/>
-            <LayoutButtons Face="Assailant" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train1" Row="2" Column="0"/>
-            <LayoutButtons Face="Exterminator" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train2" Row="2" Column="1"/>
             <LayoutButtons Face="Snare" Type="Passive" Requirements="BloomSnare" Row="0" Column="1"/>
             <LayoutButtons Face="Eroder" Type="Passive" Requirements="BloomSnare" Row="0" Column="2"/>
             <LayoutButtons Face="Reviler" Type="Passive" Requirements="BloomReviler" Row="1" Column="0"/>
             <LayoutButtons Face="Spitter" Type="Passive" Requirements="BloomReviler" Row="1" Column="1"/>
             <LayoutButtons Face="Massalisk" Type="Passive" Requirements="BloomReviler" Row="1" Column="2"/>
+            <LayoutButtons Face="Ferrion" Type="AbilCmd" AbilCmd="XayidMorphScavengerFerry,Train1" Row="1" Column="3"/>
             <LayoutButtons Face="Ferrion" Type="Passive" Requirements="BloomFerry" Row="1" Column="3"/>
+            <LayoutButtons Face="Cancel" Type="CancelSubmenu" Row="2" Column="4"/>
+            <LayoutButtons Face="Casnolisk" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train1" Row="0" Column="3"/>
             <LayoutButtons Face="Casnolisk" Type="Passive" Requirements="BloomCasnolisk" Row="0" Column="3"/>
+            <LayoutButtons Face="Prowler" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train2" Row="0" Column="4"/>
             <LayoutButtons Face="Prowler" Type="Passive" Requirements="BloomCasnolisk" Row="0" Column="4"/>
+            <LayoutButtons Face="Xayithoan" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train3" Row="1" Column="4"/>
             <LayoutButtons Face="Xayithoan" Type="Passive" Requirements="BloomCasnolisk" Row="1" Column="4"/>
+            <LayoutButtons Face="Assailant" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train1" Row="2" Column="0"/>
             <LayoutButtons Face="Assailant" Type="Passive" Requirements="BloomAssailant" Row="2" Column="0"/>
+            <LayoutButtons Face="Exterminator" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train2" Row="2" Column="1"/>
             <LayoutButtons Face="Exterminator" Type="Passive" Requirements="BloomAssailant" Row="2" Column="1"/>
             <LayoutButtons Face="Kraken" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train3" Row="2" Column="2"/>
             <LayoutButtons Face="Kraken" Type="Passive" Requirements="BloomAssailant" Row="2" Column="2"/>
@@ -940,7 +944,6 @@
                 <Type value="Submenu"/>
                 <Requirements value=""/>
                 <SubmenuCardId value="0002"/>
-                <SubmenuFullSubCmdValidation value="1"/>
                 <SubmenuIsSticky value="1"/>
                 <ShowInGlossary value="1"/>
                 <Column value="0"/>
@@ -952,31 +955,33 @@
             <LayoutButtons Face="Roamer" Type="AbilCmd" AbilCmd="XayidMorphXayidling,Train1" Row="0" Column="0"/>
             <LayoutButtons Face="Roamer" Type="Passive" Requirements="BloomRoamer" Row="0" Column="0"/>
             <LayoutButtons Face="Snare" Type="AbilCmd" AbilCmd="XayidMorphXayidling,Train2" Row="0" Column="1"/>
+            <LayoutButtons Face="Snare" Type="Passive" Requirements="BloomSnare" Row="0" Column="1"/>
             <LayoutButtons Face="Eroder" Type="AbilCmd" AbilCmd="XayidMorphXayidling,Train3" Row="0" Column="2"/>
+            <LayoutButtons Face="Eroder" Type="Passive" Requirements="BloomEroder" Row="0" Column="2"/>
             <LayoutButtons Face="Reviler" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train1" Row="1" Column="0"/>
+            <LayoutButtons Face="Reviler" Type="Passive" Requirements="BloomReviler" Row="1" Column="0"/>
             <LayoutButtons Face="Spitter" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train2" Row="1" Column="1"/>
+            <LayoutButtons Face="Spitter" Type="Passive" Requirements="BloomSpitter" Row="1" Column="1"/>
             <LayoutButtons Face="Massalisk" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train3" Row="1" Column="2"/>
+            <LayoutButtons Face="Massalisk" Type="Passive" Requirements="BloomMassalisk" Row="1" Column="2"/>
             <LayoutButtons Face="Ferrion" Type="AbilCmd" AbilCmd="XayidMorphScavengerFerry,Train1" Row="1" Column="3"/>
+            <LayoutButtons Face="Ferrion" Type="Passive" Requirements="BloomFerry" Row="1" Column="3"/>
             <LayoutButtons Face="Cancel" Type="CancelSubmenu" Row="2" Column="4"/>
             <LayoutButtons Face="Casnolisk" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train1" Row="0" Column="3"/>
-            <LayoutButtons Face="Prowler" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train2" Row="0" Column="4"/>
-            <LayoutButtons Face="Xayithoan" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train3" Row="1" Column="4"/>
-            <LayoutButtons Face="Assailant" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train1" Row="2" Column="0"/>
-            <LayoutButtons Face="Exterminator" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train2" Row="2" Column="1"/>
-            <LayoutButtons Face="Kraken" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train3" Row="2" Column="2"/>
-            <LayoutButtons Face="Snare" Type="Passive" Requirements="BloomSnare" Row="0" Column="1"/>
-            <LayoutButtons Face="Eroder" Type="Passive" Requirements="BloomEroder" Row="0" Column="2"/>
             <LayoutButtons Face="Casnolisk" Type="Passive" Requirements="BloomCasnolisk" Row="0" Column="3"/>
+            <LayoutButtons Face="Prowler" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train2" Row="0" Column="4"/>
             <LayoutButtons Face="Prowler" Type="Passive" Requirements="BloomProwler" Row="0" Column="4"/>
+            <LayoutButtons Face="Xayithoan" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train3" Row="1" Column="4"/>
             <LayoutButtons Face="Xayithoan" Type="Passive" Requirements="BloomXayithoan" Row="1" Column="4"/>
-            <LayoutButtons Face="Reviler" Type="Passive" Requirements="BloomReviler" Row="1" Column="0"/>
-            <LayoutButtons Face="Spitter" Type="Passive" Requirements="BloomSpitter" Row="1" Column="1"/>
-            <LayoutButtons Face="Massalisk" Type="Passive" Requirements="BloomMassalisk" Row="1" Column="2"/>
-            <LayoutButtons Face="Ferrion" Type="Passive" Requirements="BloomFerry" Row="1" Column="3"/>
+            <LayoutButtons Face="Assailant" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train1" Row="2" Column="0"/>
             <LayoutButtons Face="Assailant" Type="Passive" Requirements="BloomAssailant" Row="2" Column="0"/>
+            <LayoutButtons Face="Exterminator" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train2" Row="2" Column="1"/>
             <LayoutButtons Face="Exterminator" Type="Passive" Requirements="BloomExterminator" Row="2" Column="1"/>
+            <LayoutButtons Face="Kraken" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train3" Row="2" Column="2"/>
             <LayoutButtons Face="Kraken" Type="Passive" Requirements="BloomKraken" Row="2" Column="2"/>
         </CardLayouts>
+        <CostResource index="Minerals" value="150"/>
+        <CostResource index="Vespene" value="0"/>
     </CUnit>
     <CUnit id="SnareAttackMissile" parent="MISSILE">
         <Name value="Unit/Name/HydraliskGroundWeapon"/>
@@ -989,7 +994,8 @@
         <Collide index="RoachBurrow" value="0"/>
         <Collide index="ForceField" value="0"/>
         <Collide index="Flying6" value="1"/>
-        <AbilArray index="2" Link="XayidWorkerRallyPoint"/>
+        <AbilArray index="1" Link="que1"/>
+        <AbilArray index="2" Link="XayidWorkerRally"/>
         <AbilArray index="3" Link="XayidSproutScavenger"/>
         <AbilArray Link="XayidSproutScavengerNest"/>
         <AbilArray Link="XayidSproutXayidDen"/>
@@ -1004,7 +1010,7 @@
         <AbilArray Link="XayidSproutSunkenWarren"/>
         <BehaviorArray Link="CommandCenterKnockbackBehavior"/>
         <CardLayouts index="0">
-            <LayoutButtons index="2" AbilCmd="XayidWorkerRallyPoint,Rally1"/>
+            <LayoutButtons index="2" AbilCmd="XayidWorkerRally,Rally1"/>
             <LayoutButtons index="3" AbilCmd="XayidSproutScavenger,Train1"/>
             <LayoutButtons Face="BirthScavenger" Type="Passive" Row="0" Column="0"/>
             <LayoutButtons Face="FormBasicStructure" Type="Submenu" SubmenuCardId="0002" Row="2" Column="0"/>
@@ -1247,14 +1253,7 @@
     </CUnit>
     <CUnit id="Xayidling">
         <CardLayouts index="0">
-            <LayoutButtons index="5">
-                <Face value="XayidBloom"/>
-                <Type value="Submenu"/>
-                <AbilCmd value=""/>
-                <SubmenuCardId value="0002"/>
-                <SubmenuFullSubCmdValidation value="1"/>
-                <SubmenuIsSticky value="1"/>
-            </LayoutButtons>
+            <LayoutButtons index="5" Face="XayidBloom" Type="Submenu" AbilCmd="" SubmenuCardId="0002" SubmenuIsSticky="1"/>
             <LayoutButtons index="6" Face="Dash" Type="AbilCmd" AbilCmd="XayidlingDash,Execute" Requirements="" ShowInGlossary="1"/>
             <LayoutButtons Face="OcularAcuity" Type="Passive" Requirements="UseOcularAcuity" Row="2" Column="2"/>
         </CardLayouts>
@@ -1262,29 +1261,29 @@
             <LayoutButtons Face="Roamer" Type="AbilCmd" AbilCmd="XayidMorphXayidling,Train1" Row="0" Column="0"/>
             <LayoutButtons Face="Roamer" Type="Passive" Requirements="BloomRoamer" Row="0" Column="0"/>
             <LayoutButtons Face="Snare" Type="AbilCmd" AbilCmd="XayidMorphXayidling,Train2" Row="0" Column="1"/>
+            <LayoutButtons Face="Snare" Type="Passive" Requirements="BloomSnare" Row="0" Column="1"/>
             <LayoutButtons Face="Eroder" Type="AbilCmd" AbilCmd="XayidMorphXayidling,Train3" Row="0" Column="2"/>
+            <LayoutButtons Face="Eroder" Type="Passive" Requirements="BloomEroder" Row="0" Column="2"/>
             <LayoutButtons Face="Reviler" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train1" Row="1" Column="0"/>
+            <LayoutButtons Face="Reviler" Type="Passive" Requirements="BloomReviler" Row="1" Column="0"/>
             <LayoutButtons Face="Spitter" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train2" Row="1" Column="1"/>
+            <LayoutButtons Face="Spitter" Type="Passive" Requirements="BloomSpitter" Row="1" Column="1"/>
             <LayoutButtons Face="Massalisk" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train3" Row="1" Column="2"/>
+            <LayoutButtons Face="Massalisk" Type="Passive" Requirements="BloomMassalisk" Row="1" Column="2"/>
             <LayoutButtons Face="Ferrion" Type="AbilCmd" AbilCmd="XayidMorphScavengerFerry,Train1" Row="1" Column="3"/>
+            <LayoutButtons Face="Ferrion" Type="Passive" Requirements="BloomFerry" Row="1" Column="3"/>
             <LayoutButtons Face="Cancel" Type="CancelSubmenu" Row="2" Column="4"/>
             <LayoutButtons Face="Casnolisk" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train1" Row="0" Column="3"/>
-            <LayoutButtons Face="Prowler" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train2" Row="0" Column="4"/>
-            <LayoutButtons Face="Xayithoan" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train3" Row="1" Column="4"/>
-            <LayoutButtons Face="Assailant" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train1" Row="2" Column="0"/>
-            <LayoutButtons Face="Exterminator" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train2" Row="2" Column="1"/>
-            <LayoutButtons Face="Kraken" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train3" Row="2" Column="2"/>
-            <LayoutButtons Face="Snare" Type="Passive" Requirements="BloomSnare" Row="0" Column="1"/>
-            <LayoutButtons Face="Eroder" Type="Passive" Requirements="BloomEroder" Row="0" Column="2"/>
             <LayoutButtons Face="Casnolisk" Type="Passive" Requirements="BloomCasnolisk" Row="0" Column="3"/>
+            <LayoutButtons Face="Prowler" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train2" Row="0" Column="4"/>
             <LayoutButtons Face="Prowler" Type="Passive" Requirements="BloomProwler" Row="0" Column="4"/>
+            <LayoutButtons Face="Xayithoan" Type="AbilCmd" AbilCmd="XayidMorphMendling,Train3" Row="1" Column="4"/>
             <LayoutButtons Face="Xayithoan" Type="Passive" Requirements="BloomXayithoan" Row="1" Column="4"/>
-            <LayoutButtons Face="Reviler" Type="Passive" Requirements="BloomReviler" Row="1" Column="0"/>
-            <LayoutButtons Face="Spitter" Type="Passive" Requirements="BloomSpitter" Row="1" Column="1"/>
-            <LayoutButtons Face="Massalisk" Type="Passive" Requirements="BloomMassalisk" Row="1" Column="2"/>
-            <LayoutButtons Face="Ferrion" Type="Passive" Requirements="BloomFerry" Row="1" Column="3"/>
+            <LayoutButtons Face="Assailant" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train1" Row="2" Column="0"/>
             <LayoutButtons Face="Assailant" Type="Passive" Requirements="BloomAssailant" Row="2" Column="0"/>
+            <LayoutButtons Face="Exterminator" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train2" Row="2" Column="1"/>
             <LayoutButtons Face="Exterminator" Type="Passive" Requirements="BloomExterminator" Row="2" Column="1"/>
+            <LayoutButtons Face="Kraken" Type="AbilCmd" AbilCmd="XayidMorphRaptor,Train3" Row="2" Column="2"/>
             <LayoutButtons Face="Kraken" Type="Passive" Requirements="BloomKraken" Row="2" Column="2"/>
         </CardLayouts>
         <AbilArray Link="XayidMorphXayidling"/>
@@ -1362,8 +1361,7 @@
         <LifeStart value="160"/>
         <LifeMax value="160"/>
         <Food value="-2"/>
-        <CostResource index="Minerals" value="100"/>
-        <CostResource index="Vespene" value="25"/>
+        <CostResource index="Minerals" value="150"/>
         <Radius value="0.5625"/>
         <InnerRadius value="0.5"/>
         <SubgroupPriority value="69"/>
@@ -1378,6 +1376,17 @@
         <Radius value="0.4375"/>
         <InnerRadius value="0.375"/>
         <SubgroupPriority value="69"/>
+    </CUnit>
+    <CUnit id="MendlingDummy" parent="DefaultSettingsXayidRallyDummy">
+        <Name value="Unit/Name/MendlingDummy"/>
+        <Food value="-1"/>
+        <CostResource index="Minerals" value="25"/>
+        <CostResource index="Vespene" value="75"/>
+    </CUnit>
+    <CUnit id="ScorpaliskDummy" parent="DefaultSettingsXayidRallyDummy">
+        <Name value="Unit/Name/ScorpaliskDummy"/>
+        <Food value="-2"/>
+        <CostResource index="Minerals" value="150"/>
     </CUnit>
     <CUnit id="XayidlingSeed" parent="DefaultSettingsXayidSeed">
         <CostCategory value="Army"/>
@@ -1396,14 +1405,13 @@
         <Collide index="RoachBurrow" value="0"/>
         <Collide index="ForceField" value="0"/>
         <Collide index="Flying6" value="1"/>
-        <AbilArray index="1" Link="XayidGroundRallyPoint"/>
+        <AbilArray index="1" Link="XayidDenRally"/>
         <AbilArray Link="XayidSproutXayidling"/>
         <AbilArray Link="que1"/>
         <BehaviorArray index="0" Link="TerranStructuresKnockbackBehavior"/>
-        <BehaviorArray Link="XayidRallyController"/>
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="Cancel" AbilCmd="que1,CancelLast"/>
-            <LayoutButtons index="1" Face="Rally" Type="AbilCmd" AbilCmd="XayidGroundRallyPoint,Rally1" Row="1" Column="4"/>
+            <LayoutButtons index="1" Face="Rally" Type="AbilCmd" AbilCmd="XayidDenRally,Rally1" Row="1" Column="4"/>
             <LayoutButtons index="2" Face="Xayidling" AbilCmd="XayidSproutXayidling,Train1" Row="0" Column="1"/>
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
             <LayoutButtons Face="Xayidling" Type="Passive" Row="0" Column="1"/>
@@ -1445,8 +1453,7 @@
         <LifeStart value="80"/>
         <LifeMax value="80"/>
         <Food value="-2"/>
-        <CostResource index="Minerals" value="100"/>
-        <CostResource index="Vespene" value="25"/>
+        <CostResource index="Minerals" value="150"/>
         <AbilArray Link="XayidScorpaliskSeedLand"/>
         <AbilArray Link="XayidMorphSeedScorpalisk"/>
         <CardLayouts index="0">
@@ -1499,8 +1506,7 @@
         <LifeMax value="80"/>
         <Acceleration value="0"/>
         <Food value="-2"/>
-        <CostResource index="Minerals" value="100"/>
-        <CostResource index="Vespene" value="25"/>
+        <CostResource index="Minerals" value="150"/>
         <Radius value="0.5625"/>
         <InnerRadius value="0.5"/>
         <SubgroupPriority value="69"/>
