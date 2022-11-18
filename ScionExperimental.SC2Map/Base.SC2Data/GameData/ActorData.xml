@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
+    <CActorModel id="XayidlingBloomComplete">
+        <On Terms="AbilMorph.*.Start; MorphFrom XayidlingBloom" Send="Create"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom XayidlingBloom" Send="$Death"/>
+        <On Terms="AbilMorph.*.Finish; MorphTo XayidlingBloom" Send="Destroy"/>
+        <On Terms="AnimDone; AnimName Death" Send="Destroy"/>
+        <Host Subject="_Selectable"/>
+        <HostSiteOps Ops="SOpAttachOriginStationary"/>
+        <Model value="XayidlingBloom"/>
+    </CActorModel>
     <CActorUnit id="BilePit">
         <On Terms="AbilMorph.XayidMorphFeedingPoolBilePit.Finish" Send="Create"/>
     </CActorUnit>
@@ -115,8 +124,7 @@
     </CActorMissile>
     <CActorAction id="SnareAttack" parent="GenericAttack" effectImpact="SnareEntangleDMG" effectLaunch="SnareEntangle">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
-        <LaunchAssets Sound="Queen_AttackLaunchRanged"/>
-        <ImpactMap index="None" Model="SnareAttackMissileImpact" Sound="Queen_AttackImpactRanged"/>
+        <ImpactMap index="None" Model="SnareAttackMissileImpact"/>
     </CActorAction>
     <CActorUnit id="RaptorSprout" parent="GenericUnitXayid" unitName="RaptorSprout">
         <Macros index="3" value="PhysicsDeathsSwarmAir"/>
@@ -382,9 +390,14 @@
         <Model value="Xayidling"/>
     </CActorUnit>
     <CActorUnit id="Xayidling">
+        <On index="69" Send="$Spell 0 -1.000000 0.000000 0.375000 AsDuration"/>
+        <On Terms="AbilMorph.XayidMorphXayidling.Finish; MorphTo Xayidling" Send="Create"/>
         <On Terms="AbilMorph.XayidMorphXayidling.Start" Send="Destroy"/>
+        <On Terms="UnitMovementUpdate.*.Walk; AnimPlaying Birth" Send="AnimClear Birth"/>
+        <WalkAnimMoveSpeed value="2.3984"/>
     </CActorUnit>
     <CActorUnit id="Snare" parent="GenericUnitXayid" unitName="Snare">
+        <On Terms="UnitMovementUpdate.*.Walk; AnimPlaying Birth" Send="AnimClear Birth"/>
         <Aliases value="_UnitSmall"/>
         <DeathArray index="Normal" ModelLink="Snare" SoundLink="Xayidling_Explode" VoiceLink="XayidlingDeathVoice"/>
         <PortraitModel value="UltraliskPortrait"/>
@@ -396,7 +409,7 @@
             <AttachQuery Methods="AMFilterCenter"/>
             <Visuals TerrainPhysicsMaterial="Water" ActorModel="TerrainSquibHarnessContinuous" ModelLink="WaterRippleMedium"/>
         </TerrainSquibs>
-        <WalkAnimMoveSpeed value="2.8085"/>
+        <WalkAnimMoveSpeed value="2.25"/>
         <BarOffset value="40"/>
         <BarWidth value="40"/>
         <GroupIcon>
@@ -421,6 +434,9 @@
     <CActorUnit id="ScorpaliskDummy" parent="GenericUnitXayid" unitName="ScorpaliskDummy">
         <Model value="Invisible"/>
     </CActorUnit>
+    <CActorAction id="XayidlingAttack">
+        <LaunchSiteOps Ops="SOpAttachHarness SOpMoveByDot3 SOpMoveUpByDot1"/>
+    </CActorAction>
     <CActorUnit id="XayidlingSeed" parent="GenericUnitXayid" unitName="XayidlingSeed">
         <Macros index="3" value="PhysicsDeathsSwarmAir"/>
         <Macros index="4" value="PhysicsDeathsVoidAir"/>
@@ -662,14 +678,11 @@
     </CActorUnit>
     <CActorUnit id="XayidlingBloom" parent="GenericUnitXayid" unitName="XayidlingBloom">
         <On Terms="ActorCreation" Send="AnimPlay BSD Spell,End PlayForever"/>
-        <On Terms="AbilMorph.XayidMorphXayidling.Start" Send="Create"/>
-        <Model value="StructureSeed"/>
-        <Scale value="0.600000"/>
-        <BuildModel value="StructureSeed"/>
-        <PlacementModel value="StructureSeed"/>
+        <On Terms="AbilMorph.*.Finish; MorphTo XayidlingBloom" Send="Create"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom XayidlingBloom" Send="Destroy"/>
+        <On Terms="AbilMorph.*.Finish; MorphTo XayidlingBloom" Send="$Birth 0 0.000000 -1.000000 0.000000"/>
         <PortraitModel value="GuardianMPPortrait"/>
-        <BarOffset value="65"/>
-        <BarWidth value="80"/>
+        <BarOffset value="60"/>
         <GroupIcon>
             <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
         </GroupIcon>
