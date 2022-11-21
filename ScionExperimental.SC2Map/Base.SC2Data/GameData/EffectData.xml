@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
+    <CEffectDamage id="EnervatorSporesDMG">
+        <AttributeBonus index="Light" value="-7"/>
+        <Amount value="21"/>
+    </CEffectDamage>
     <CEffectModifyUnit id="HideTarget">
         <ModifyFlags index="Hide" value="1"/>
     </CEffectModifyUnit>
@@ -17,6 +21,12 @@
         <EditorCategories value="Race:Xayid"/>
         <Behavior value="XayidEntangled"/>
     </CEffectApplyBehavior>
+    <CEffectEnumArea id="SnareEntangleArea" parent="ScionEnumAreaEnemyGround">
+        <EditorCategories value="Race:Xayid"/>
+        <Chance value="0"/>
+        <ExcludeArray Value="Target"/>
+        <AreaArray Radius="1.25" Effect="SnareEntangleAB"/>
+    </CEffectEnumArea>
     <CEffectDamage id="SnareEntangleDMG" parent="ScionDamageRange" Race="Xayid">
         <Amount value="14"/>
         <Death value="Disintegrate"/>
@@ -32,10 +42,15 @@
         <EditorCategories value="Race:Xayid"/>
         <EffectArray value="SnareEntangleAB"/>
         <EffectArray value="SnareEntangleDMG"/>
+        <EffectArray value="SnareEntangleArea"/>
     </CEffectSet>
     <CEffectSet id="SupportEffectsS">
         <EffectArray index="2" removed="1"/>
     </CEffectSet>
+    <CEffectDamage id="VirulentSpitImpact">
+        <AttributeBonus index="Light" value="0"/>
+        <Amount value="10"/>
+    </CEffectDamage>
     <CEffectSet id="XayidDigest" parent="ScionSet">
         <EditorCategories value="Race:Xayid"/>
         <EffectArray value="XayidDigestLM"/>
