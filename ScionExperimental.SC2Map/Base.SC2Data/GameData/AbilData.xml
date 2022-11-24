@@ -20,6 +20,22 @@
         <CastOutroTime index="0" value="0.5"/>
         <UninterruptibleArray index="Cast" value="1"/>
     </CAbilEffectTarget>
+    <CAbilEffectInstant id="XayidFletchSeedStop">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Stop"/>
+    </CAbilEffectInstant>
+    <CAbilEffectInstant id="XayidForagerSeedStop">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Stop"/>
+    </CAbilEffectInstant>
+    <CAbilEffectInstant id="XayidScorpaliskSeedStop">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Stop"/>
+    </CAbilEffectInstant>
+    <CAbilEffectInstant id="XayidMendlingSeedStop">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Stop"/>
+    </CAbilEffectInstant>
     <CAbilMorph id="XayidMorphFeedingPoolBilePit">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:MorphsandBurrows"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="BilePit" Requirements="HaveMutagenChamber"/>
@@ -536,14 +552,14 @@
         <Flags index="WaitForFood" value="0"/>
         <MorphUnit value="XayidlingBloom"/>
         <InfoArray index="Train1" Time="15">
-            <Button DefaultButtonFace="Roamer" Requirements="HaveXayidDen">
+            <Button DefaultButtonFace="Roamer" Requirements="HaveCasnoliskDen">
                 <Flags index="ToSelection" value="1"/>
             </Button>
             <Unit value="Roamer"/>
             <Flags index="IgnorePlacement" value="1"/>
         </InfoArray>
         <InfoArray index="Train2" Time="15">
-            <Button DefaultButtonFace="Snare" Requirements="HaveMutagenChamber">
+            <Button DefaultButtonFace="Snare" Requirements="HaveCasnoliskDen">
                 <Flags index="ToSelection" value="1"/>
             </Button>
             <Unit value="Snare"/>
@@ -732,10 +748,11 @@
         <CmdButtonArray index="Execute" DefaultButtonFace="MutagenChamber" Requirements="HaveXayidDen"/>
         <PlaceUnit value="MutagenChamber"/>
     </CAbilEffectTarget>
-    <CAbilTrain id="XayidSproutXayidling">
+    <CAbilTrain id="XayidSproutFletch">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <Flags index="WaitForFood" value="0"/>
         <Offset value="0,0"/>
-        <InfoArray index="Train1" Effect="XayidSproutXayidlingCU" Location="Rally">
+        <InfoArray index="Train1" Effect="XayidSproutFletchCU" Location="Rally">
             <Charge>
                 <CountMax value="3"/>
                 <CountUse value="1"/>
@@ -749,7 +766,6 @@
             </Button>
             <Unit value="XayidlingDummy"/>
         </InfoArray>
-        <Flags index="WaitForFood" value="0"/>
     </CAbilTrain>
     <CAbilTrain id="XayidSproutMendling">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
@@ -774,7 +790,6 @@
     <CAbilTrain id="XayidSproutScorpalisk">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <DataCollection value="XayidSproutXayidUnits"/>
-        <Flags index="Transient" value="1"/>
         <Flags index="WaitForFood" value="0"/>
         <Offset value="0,0"/>
         <InfoArray index="Train1" Effect="XayidSproutScorpaliskCU" Location="Rally">
@@ -795,9 +810,9 @@
     <CAbilTrain id="XayidSproutRaptor">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <DataCollection value="XayidSproutXayidUnits"/>
-        <Flags index="Transient" value="1"/>
+        <Flags index="WaitForFood" value="0"/>
         <Offset value="0,0"/>
-        <InfoArray index="Train1" Effect="XayidSproutRaptorCP">
+        <InfoArray index="Train1" Effect="XayidSproutRaptorCU" Location="Rally">
             <Charge>
                 <CountMax value="3"/>
                 <CountUse value="1"/>
@@ -809,7 +824,7 @@
             <Button DefaultButtonFace="Raptor">
                 <Flags index="ToSelection" value="1"/>
             </Button>
-            <Unit value="RaptorSeed"/>
+            <Unit value="RaptorDummy"/>
         </InfoArray>
     </CAbilTrain>
     <CAbilRally id="XayidWorkerRally">
@@ -975,10 +990,11 @@
         <Flags index="Transient" value="1"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="Cancel"/>
     </CAbilEffectInstant>
-    <CAbilTrain id="XayidSproutScavenger">
+    <CAbilTrain id="XayidSproutForager">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <Flags index="WaitForFood" value="0"/>
         <Offset value="0,0"/>
-        <InfoArray index="Train1" Effect="XayidSproutScavengerInit" Location="Rally">
+        <InfoArray index="Train1" Effect="XayidSproutForagerInit" Location="Rally">
             <Charge>
                 <CountMax value="3"/>
                 <CountStart value="1"/>
@@ -1097,10 +1113,9 @@
         <CmdButtonArray index="Execute" DefaultButtonFace="FeedingPool"/>
         <PlaceUnit value="FeedingPool"/>
     </CAbilEffectTarget>
-    <CAbilEffectTarget id="XayidXayidlingSeedLand">
+    <CAbilEffectTarget id="XayidFletchSeedLand">
         <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
         <DataCollection value="XayidStructureSeedLand"/>
-        <Effect index="0" value="XayidXayidlingSeedLandCU"/>
         <Flags index="AllowMovement" value="1"/>
         <Flags index="NoDeceleration" value="1"/>
         <Range value="3"/>
@@ -1134,10 +1149,9 @@
         <FollowAcquireRange value="6"/>
         <MinPatrolDistance value="1"/>
     </CAbilMove>
-    <CAbilEffectTarget id="XayidScavengerSeedLand">
+    <CAbilEffectTarget id="XayidForagerSeedLand">
         <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
         <DataCollection value="XayidStructureSeedLand"/>
-        <Effect index="0" value="XayidScavengerSeedLandCU"/>
         <Flags index="AllowMovement" value="1"/>
         <Flags index="NoDeceleration" value="1"/>
         <Range value="3"/>
@@ -1162,17 +1176,6 @@
         <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
         <DataCollection value="XayidStructureSeedLand"/>
         <Effect index="0" value="XayidScorpaliskSeedLandCU"/>
-        <Flags index="AllowMovement" value="1"/>
-        <Flags index="NoDeceleration" value="1"/>
-        <Range value="3"/>
-        <FinishTime value="0.375"/>
-        <UninterruptibleArray index="Finish" value="1"/>
-        <AINotifyEffect value="XayidStructureSeedLand"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="BurrowDown"/>
-    </CAbilEffectTarget>
-    <CAbilEffectTarget id="XayidRaptorSeedHover">
-        <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
-        <DataCollection value="XayidStructureSeedLand"/>
         <Flags index="AllowMovement" value="1"/>
         <Flags index="NoDeceleration" value="1"/>
         <Range value="3"/>

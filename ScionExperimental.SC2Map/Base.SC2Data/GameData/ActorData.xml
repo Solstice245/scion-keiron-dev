@@ -28,6 +28,40 @@
         <Model value="SnareAttackImpactModel"/>
         <ModelFlags index="AllowHitTest" value="1"/>
     </CActorModel>
+    <CActorUnit id="XayidTech" parent="ZergBuilding" unitName="XayidTech">
+        <BuildModel value="EvolutionChamber"/>
+        <DeathArray index="Normal" ModelLink="EvolutionChamberDeath" SoundLink="EvolutionChamber_Explode"/>
+        <DeathArray index="UnderConstruction" ModelLink="ZergBuildingDeathLarge" SoundLink="SpawningPool_Explode"/>
+        <PortraitModel value="ZergBuildingEx2_Portrait"/>
+        <BarWidth value="150"/>
+        <GroupIcon>
+            <Image value="Assets\Textures\wireframe-Xayid-Xayidden.dds"/>
+        </GroupIcon>
+        <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-buildingarmor.dds"/>
+        <SoundArray index="Birth" value=""/>
+        <SoundArray index="What" value="RoachWarren_What"/>
+        <UnitIcon value="Assets\Textures\btn-building-Xayid-Xayidden.dds"/>
+        <Wireframe>
+            <Image value="Assets\Textures\wireframe-Xayid-Xayidden.dds"/>
+        </Wireframe>
+    </CActorUnit>
+    <CActorUnit id="CasnoliskTech" parent="ZergBuilding" unitName="CasnoliskTech">
+        <BuildModel value="EvolutionChamber"/>
+        <DeathArray index="Normal" ModelLink="EvolutionChamberDeath" SoundLink="EvolutionChamber_Explode"/>
+        <DeathArray index="UnderConstruction" ModelLink="ZergBuildingDeathLarge" SoundLink="SpawningPool_Explode"/>
+        <PortraitModel value="ZergBuildingEx2_Portrait"/>
+        <BarWidth value="150"/>
+        <GroupIcon>
+            <Image value="Assets\Textures\wireframe-Xayid-Xayidden.dds"/>
+        </GroupIcon>
+        <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-buildingarmor.dds"/>
+        <SoundArray index="Birth" value=""/>
+        <SoundArray index="What" value="RoachWarren_What"/>
+        <UnitIcon value="Assets\Textures\btn-building-Xayid-Xayidden.dds"/>
+        <Wireframe>
+            <Image value="Assets\Textures\wireframe-Xayid-Xayidden.dds"/>
+        </Wireframe>
+    </CActorUnit>
     <CActorModel id="XayidlingBloomComplete">
         <On Terms="AbilMorph.*.Start; MorphFrom XayidlingBloom" Send="Create"/>
         <On Terms="AbilMorph.*.Start; MorphFrom XayidlingBloom" Send="$Death"/>
@@ -473,17 +507,20 @@
     <CActorAction id="XayidlingAttack">
         <LaunchSiteOps Ops="SOpAttachHarness SOpMoveByDot3 SOpMoveUpByDot1"/>
     </CActorAction>
+    <CActorUnit id="RaptorDummy" parent="GenericUnitXayid" unitName="RaptorDummy">
+        <Model value="Invisible"/>
+    </CActorUnit>
     <CActorUnit id="XayidlingSeed" parent="GenericUnitXayid" unitName="XayidlingSeed">
         <Macros index="3" value="PhysicsDeathsSwarmAir"/>
         <Macros index="4" value="PhysicsDeathsVoidAir"/>
         <On Terms="TimerExpired; TimerName SpellStart" Send="AnimBracketStart Spell Spell,Start Spell,End"/>
         <On Terms="TimerExpired; TimerName CoverEnd" Send="AnimSetPaused Cover"/>
-        <On Terms="Abil.XayidXayidlingSeedLand.SourceCastStop" Send="TimerSet 0.800000 SpellEnd"/>
+        <On Terms="Abil.XayidFletchSeedLand.SourceCastStop" Send="TimerSet 0.800000 SpellEnd"/>
         <On Terms="TimerExpired; TimerName SpellEnd" Send="$Spell,End PlayForever,NonLooping"/>
         <On Terms="ActorCreation" Send="TimerSet 0.650000 CoverStart"/>
         <On Terms="TimerExpired; TimerName CoverStart" Send="AnimPlay Cover Cover PlayForever"/>
-        <On Terms="Abil.XayidXayidlingSeedLand.SourceCastStop" Send="TimerSet 0.300000 SpellStart"/>
-        <On Terms="Abil.XayidXayidlingSeedLand.SourceCastStop" Send="TimerSet 0.550000 CoverEnd"/>
+        <On Terms="Abil.XayidFletchSeedLand.SourceCastStop" Send="TimerSet 0.300000 SpellStart"/>
+        <On Terms="Abil.XayidFletchSeedLand.SourceCastStop" Send="TimerSet 0.550000 CoverEnd"/>
         <HostSiteOps Ops="SOpBankerQueenMP"/>
         <Model value="StructureSeed"/>
         <Scale value="0.450000"/>
@@ -510,12 +547,12 @@
         <Macros index="4" value="PhysicsDeathsVoidAir"/>
         <On Terms="TimerExpired; TimerName SpellStart" Send="AnimBracketStart Spell Spell,Start Spell,End"/>
         <On Terms="TimerExpired; TimerName CoverEnd" Send="AnimSetPaused Cover"/>
-        <On Terms="Abil.XayidScavengerSeedLand.SourceCastStop" Send="TimerSet 0.800000 SpellEnd"/>
+        <On Terms="Abil.XayidForagerSeedLand.SourceCastStop" Send="TimerSet 0.800000 SpellEnd"/>
         <On Terms="TimerExpired; TimerName SpellEnd" Send="$Spell,End PlayForever,NonLooping"/>
         <On Terms="ActorCreation" Send="TimerSet 0.650000 CoverStart"/>
         <On Terms="TimerExpired; TimerName CoverStart" Send="AnimPlay Cover Cover PlayForever"/>
-        <On Terms="Abil.XayidScavengerSeedLand.SourceCastStop" Send="TimerSet 0.300000 SpellStart"/>
-        <On Terms="Abil.XayidScavengerSeedLand.SourceCastStop" Send="TimerSet 0.550000 CoverEnd"/>
+        <On Terms="Abil.XayidForagerSeedLand.SourceCastStop" Send="TimerSet 0.300000 SpellStart"/>
+        <On Terms="Abil.XayidForagerSeedLand.SourceCastStop" Send="TimerSet 0.550000 CoverEnd"/>
         <HostSiteOps Ops="SOpBankerQueenMP"/>
         <Model value="StructureSeed"/>
         <Scale value="0.450000"/>
