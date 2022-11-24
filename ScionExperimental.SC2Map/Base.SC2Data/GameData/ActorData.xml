@@ -6,8 +6,28 @@
         <BarWidth value="58"/>
     </CActorUnit>
     <CActorUnit id="Roamer">
+        <On index="69" Send="$Spell 0 -1.000000 -1.000000 -1.000000 AsDuration"/>
+        <On index="70" removed="1"/>
         <WalkAnimMoveSpeed value="4"/>
     </CActorUnit>
+    <CActorAction id="RoamerAttack">
+        <LaunchAttachQuery Methods="$GenericAttackLaunchMethods"/>
+    </CActorAction>
+    <CActorAction id="ScourAttack">
+        <LaunchAttachQuery Methods="AMFilterWeapon01"/>
+        <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpShadow SOpMoveUpBy3"/>
+    </CActorAction>
+    <CActorModel id="ScourImpact">
+        <HostSiteOps Ops="SOpShadow SOpMoveUpBy3"/>
+    </CActorModel>
+    <CActorModel id="SnareAttackImpactModel" parent="GenericAttackModel">
+        <Flags index="SuppressCreationErrors" value="0"/>
+        <Inherits index="Visibility" value="0"/>
+        <On Terms="ActorOrphan" Send="AnimBracketStop BSD"/>
+        <On Terms="ActorCreation; ValidateUnit SnareAreaSlow" Send="ModelSwap SnareAttackImpactUpgrade"/>
+        <Model value="SnareAttackImpactModel"/>
+        <ModelFlags index="AllowHitTest" value="1"/>
+    </CActorModel>
     <CActorModel id="XayidlingBloomComplete">
         <On Terms="AbilMorph.*.Start; MorphFrom XayidlingBloom" Send="Create"/>
         <On Terms="AbilMorph.*.Start; MorphFrom XayidlingBloom" Send="$Death"/>
@@ -128,11 +148,11 @@
         </Wireframe>
     </CActorUnit>
     <CActorMissile id="SnareAttackMissile" parent="GenericAttackMissile" unitName="SnareAttackMissile">
-        <On Terms="ActorCreation; ValidateUnit HydraliskRangeUpgraded" Send="ModelSwap HydraliskMissile_Upgrade"/>
+        <On Terms="ActorCreation; ValidateUnit SnareAreaSlow" Send="ModelSwap SnareAttackMissileUpgrade"/>
     </CActorMissile>
     <CActorAction id="SnareAttack" parent="GenericAttack" effectImpact="SnareEntangleDMG" effectLaunch="SnareEntangle">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
-        <ImpactMap index="None" Model="SnareAttackMissileImpact"/>
+        <ImpactModel value="SnareAttackImpactModel"/>
     </CActorAction>
     <CActorUnit id="RaptorSprout" parent="GenericUnitXayid" unitName="RaptorSprout">
         <Macros index="3" value="PhysicsDeathsSwarmAir"/>
@@ -402,11 +422,18 @@
         <On Terms="AbilMorph.XayidMorphXayidling.Finish; MorphTo Xayidling" Send="Create"/>
         <On Terms="AbilMorph.XayidMorphXayidling.Start" Send="Destroy"/>
         <On Terms="UnitMovementUpdate.*.Walk; AnimPlaying Birth" Send="AnimClear Birth"/>
+        <On Terms="ActorCreation; ValidatePlayer XayidlingOcularAcuity" Send="AnimPlay UpgradeA Upgrade,A PlayForever"/>
+        <On Terms="Upgrade.OcularAcuity.Add" Send="AnimPlay UpgradeA Upgrade,A PlayForever"/>
+        <On Terms="Upgrade.OcularAcuity.Remove" Send="AnimClear UpgradeA"/>
         <WalkAnimMoveSpeed value="2.3984"/>
         <BarOffset value="38"/>
+        <UnitIcon value="Assets\Textures\btn-unit-xayid-fletch.dds"/>
     </CActorUnit>
     <CActorUnit id="Snare" parent="GenericUnitXayid" unitName="Snare">
         <On Terms="UnitMovementUpdate.*.Walk; AnimPlaying Birth" Send="AnimClear Birth"/>
+        <On Terms="ActorCreation; ValidatePlayer SnareAreaSlow" Send="AnimPlay Cover Cover PlayForever"/>
+        <On Terms="Upgrade.SnareAreaSlow.Add" Send="AnimPlay Cover Cover PlayForever"/>
+        <On Terms="Upgrade.SnareAreaSlow.Remove" Send="AnimClear Cover"/>
         <Aliases value="_UnitSmall"/>
         <DeathArray index="Normal" ModelLink="Snare" SoundLink="Xayidling_Explode" VoiceLink="XayidlingDeathVoice"/>
         <PortraitModel value="UltraliskPortrait"/>
