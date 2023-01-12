@@ -219,6 +219,10 @@
     </CEffectMorph>
     <CEffectApplyBehavior id="CitadelEnergize" parent="ScionApplyBehavior" Race="Keiron"/>
     <CEffectApplyBehavior id="CitadelEnergized" parent="ScionApplyBehavior" Race="Keiron"/>
+    <CEffectDamage id="ElectronBoltBDMG" parent="ScionDamage" Race="Keiron">
+        <Amount value="3"/>
+        <Death value="Electrocute"/>
+    </CEffectDamage>
     <CEffectSet id="TeslaChargeCompleteCloakCharge" parent="ScionSet" Race="Genetron">
         <EffectArray value="Equipped"/>
         <EffectArray value="ApplyChargeCC"/>
@@ -1780,6 +1784,11 @@
         <Behavior value="LockdownModeDuration"/>
     </CEffectApplyBehavior>
     <CEffectApplyBehavior id="VolatileDischargeAB" parent="ScionApplyBehavior" Race="Xayid"/>
+    <CEffectDamage id="VoltElectronBoltBounceDummy" parent="ScionDamage" Race="Keiron"/>
+    <CEffectSet id="VoltElectronBoltBounceSet" parent="ScionSet" Race="Keiron">
+        <EffectArray value="ElectronBoltBDMG"/>
+        <EffectArray value="ElectronBoltBLM"/>
+    </CEffectSet>
     <CEffectApplyBehavior id="XayidSpawnTimedLife" parent="ScionApplyBehavior" Race="Xayid"/>
     <CEffectCreatePersistent id="XayidlingDash" parent="ScionCreatePersistent" Race="Xayid">
         <Flags index="Channeled" value="1"/>
@@ -3065,16 +3074,14 @@
     </CEffectSet>
     <CEffectEnumArea id="ElectronBoltBounceSA" parent="ScionEnumArea" Race="Keiron">
         <Chance value="0"/>
-        <ExcludeArray Value="Outer"/>
         <ExcludeArray Value="Target"/>
         <SearchFilters value="-;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
-        <AreaArray Radius="4" Effect="ElectronBoltBLM"/>
+        <AreaArray Radius="3" Effect="VoltElectronBoltBounceSet"/>
         <MaxCount value="1"/>
+        <TargetSorts>
+            <SortArray value="TSLife"/>
+        </TargetSorts>
     </CEffectEnumArea>
-    <CEffectDamage id="ElectronBoltBDMG" parent="ScionDamage" Race="Keiron">
-        <Amount value="2"/>
-        <Death value="Electrocute"/>
-    </CEffectDamage>
     <CEffectSet id="ElectronBoltLMImpact" parent="ScionSet" Race="Keiron">
         <EffectArray value="ElectronBoltD"/>
         <EffectArray value="ElectronBoltBounceSA"/>
@@ -3083,11 +3090,11 @@
         <AmmoUnit value="ElectronBoltWeapon"/>
     </CEffectLaunchMissile>
     <CEffectLaunchMissile id="ElectronBoltBLM" parent="ScionLaunchMissile" Race="Keiron">
-        <ImpactEffect value="ElectronBoltBDMG"/>
+        <ImpactEffect value="VoltElectronBoltBounceDummy"/>
         <AmmoUnit value="ElectronBoltWeapon"/>
         <Movers Link="ElectronBoltWeaponBounce"/>
     </CEffectLaunchMissile>
-    <CEffectDamage id="ElectronBoltD" parent="ScionDamageRange" Race="Keiron"/>
+    <CEffectDamage id="ElectronBoltD" parent="ScionDamage" Race="Keiron"/>
     <CEffectDamage id="ElectronBoltDMG" parent="ScionDamageRange" Race="Keiron">
         <Amount value="8"/>
         <Death value="Electrocute"/>

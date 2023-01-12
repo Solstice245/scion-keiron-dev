@@ -1675,17 +1675,16 @@
         <VisualDirectionalHeader value="ProtossShieldHeader"/>
         <VisualDirectionless value="ProtossShieldFull"/>
     </CActorShieldImpact>
-    <CActorSound id="SystemRechargeSound" parent="SoundContinuous">
+    <CActorSound id="SystemRecharge_Loop" parent="SoundContinuous">
         <On Terms="Effect.ProcessorSystemRechargeCH.TargetStart; At Target" Send="Create"/>
         <On Terms="Effect.ProcessorSystemRechargeCH.TargetStop; At Target" Send="Destroy"/>
         <On Terms="ActorOrphan" Send="Destroy"/>
-        <On Terms="ActorCreation" Send="Create SystemRechargeSoundStart"/>
-        <On Terms="ActorDestruction" Send="Create SystemRechargeSoundStop"/>
+        <On Terms="ActorCreation" Send="Create SystemRecharge_LoopStart"/>
+        <On Terms="ActorDestruction" Send="Create SystemRecharge_LoopStop"/>
         <On Terms="Effect.SystemRechargeCoreCH.TargetStart; At Target" Send="Create"/>
         <On Terms="Effect.SystemRechargeCoreCH.TargetStop; At Target" Send="Destroy"/>
         <Host Subject="_Selectable"/>
         <HostSiteOps Ops="SOpAttachOverhead"/>
-        <Sound value="SystemRecharge_Loop"/>
     </CActorSound>
     <CActorBeamSimple id="SystemRechargeBeam" parent="BeamSimpleAnimationStyleContinuous">
         <Inherits index="Visibility" value="1"/>
@@ -5739,7 +5738,7 @@
         <SoundArray index="Highlight" value="ChangelingVolt_Highlight"/>
     </CActorUnit>
     <CActorSite id="VoltAttackImpactSite" parent="GenericAttackImpactSite"/>
-    <CActorAction id="VoltBounceAttack" parent="GenericAttack" effectImpact="ElectronBoltBDMG" effectLaunch="ElectronBoltBLM">
+    <CActorAction id="VoltBounceAttack" parent="GenericAttack" effectImpact="VoltElectronBoltBounceDummy" effectLaunch="ElectronBoltBLM">
         <LaunchRequest Subject="_ImpactGuide" Actor="Find"/>
         <LaunchAssets Sound="VoltAttackLaunch"/>
         <Missile value="VoltAttackMissile"/>
