@@ -5,6 +5,79 @@
         <BarOffset value="54"/>
         <BarWidth value="58"/>
     </CActorUnit>
+    <CActorUnit id="Sage" parent="GenericUnitXayid" unitName="Sage">
+        <Aliases value="_UnitMedium"/>
+        <On index="61" Terms="WeaponStart.*.AttackStart" Send="AnimBracketStart Attack Spell,C"/>
+        <On Terms="Abil.Mend.SourceCastStart" Send="$Spell,B 0 -1.000000 -1.000000 1.200000 AsDuration"/>
+        <On Terms="Abil.MendlingSacrificialMutation.Start" Send="AnimBracketStart Morph {} Morph {} ContentNonLooping"/>
+        <On Terms="AbilMorph.*.Start" Send="Destroy"/>
+        <DeathArray index="Normal" ModelLink="QueenDeath" SoundLink="Queen_Explode" VoiceLink="QueenDeathVoice"/>
+        <DeathArray index="Disintegrate" ModelLink="QueenDeathAcid" SoundLink="Uni_DeathFXAcid"/>
+        <DeathArray index="Fire" ModelLink="QueenDeathFire" SoundLink="Uni_DeathFXFire"/>
+        <DeathCustoms ModelLink="ZergLargeUnitDeathLow" Name="AntiGravZerg"/>
+        <DeathCustoms ActorModel="QueenDeathRagdoll" ModelLink="QueenDeathRagdoll" Name="RagdollBasic"/>
+        <DeathCustoms Name="RagdollSiegeTank" InheritsFrom="RagdollBasic"/>
+        <DeathCustoms Name="RagdollNuke" InheritsFrom="RagdollBasic">
+            <BodySquibs Name="Fire"/>
+        </DeathCustoms>
+        <DeathCustoms Name="RagdollFire" InheritsFrom="RagdollBasic">
+            <BodySquibs Name="Fire"/>
+        </DeathCustoms>
+        <DeathCustoms Name="RagdollAcid" InheritsFrom="RagdollBasic">
+            <BodySquibs Name="Acid"/>
+        </DeathCustoms>
+        <DeathCustoms Name="RagdollBaneling" InheritsFrom="RagdollBasic">
+            <BodySquibs Name="Acid"/>
+        </DeathCustoms>
+        <DeathCustoms Name="RagdollUltraUnburrow" InheritsFrom="RagdollBasic"/>
+        <DeathCustoms Name="RagdollOverkillDPRH" InheritsFrom="RagdollBasic"/>
+        <DeathCustoms Name="RagdollOverkillDOI" InheritsFrom="RagdollBasic"/>
+        <DeathCustoms Name="RagdollMidair" InheritsFrom="RagdollBasic"/>
+        <PortraitModel value="QueenPortrait"/>
+        <TerrainSquibs>
+            <MovementDistance value="0.150000,0.150000"/>
+            <IdlePeriod value="0.100000,0.250000"/>
+            <RangeUp value="0.600000"/>
+            <RangeDown value="1.000000"/>
+            <AttachQuery Methods="AMFilterCenter"/>
+            <Visuals TerrainPhysicsMaterial="Water" ActorModel="TerrainSquibHarnessContinuous" ModelLink="WaterRippleLarge"/>
+        </TerrainSquibs>
+        <WalkAnimMoveSpeed value="2.5"/>
+        <BarOffset value="50"/>
+        <BarWidth value="55"/>
+        <GroupIcon>
+            <Image index="0" value="Assets\Textures\wireframe-Xayid-Mendling.dds"/>
+        </GroupIcon>
+        <SoundArray index="Ready" value="LairViper_Ready"/>
+        <SoundArray index="What" value="LairViper_What"/>
+        <SoundArray index="Yes" value="LairViper_Yes"/>
+        <SoundArray index="Attack" value="LairViper_Attack"/>
+        <SoundArray index="Pissed" value="LairViper_Attack"/>
+        <UnitIcon value="Assets\Textures\btn-unit-Xayid-Mendling.dds"/>
+        <Wireframe>
+            <Image index="0" value="Assets\Textures\wireframe-Xayid-Mendling.dds"/>
+        </Wireframe>
+    </CActorUnit>
+    <CActorUnit id="Pollinator" parent="ZergBuilding" unitName="Pollinator">
+        <On Terms="AbilMorph.XayidMorphFeedingPoolBilePit.Finish" Send="Destroy"/>
+        <DeathArray index="Normal" ModelLink="SpawningPoolDeath" SoundLink="Zerg_ExplosionMedium"/>
+        <DeathArray index="UnderConstruction" ModelLink="ZergBuildingDeath" SoundLink="SpineCrawler_Explode"/>
+        <PlacementActorModel value="FeedingPoolPlacement"/>
+        <PortraitModel value="ZergBuildingEx2_Portrait"/>
+        <BarOffset value="60"/>
+        <BarWidth value="110"/>
+        <GroupIcon>
+            <Image value="Assets\Textures\wireframe-Xayid-feedingpool.dds"/>
+        </GroupIcon>
+        <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-buildingarmor.dds"/>
+        <SoundArray index="Birth" value=""/>
+        <SoundArray index="Ready" value="SpawningPool_Ready"/>
+        <SoundArray index="What" value="SpawningPool_What"/>
+        <UnitIcon value="Assets\Textures\btn-building-Xayid-feedingpool.dds"/>
+        <Wireframe>
+            <Image value="Assets\Textures\wireframe-Xayid-feedingpool.dds"/>
+        </Wireframe>
+    </CActorUnit>
     <CActorUnit id="Roamer">
         <On index="69" Send="$Spell 0 -1.000000 -1.000000 -1.000000 AsDuration"/>
         <On index="70" removed="1"/>
@@ -13,6 +86,68 @@
     <CActorAction id="RoamerAttack">
         <LaunchAttachQuery Methods="$GenericAttackLaunchMethods"/>
     </CActorAction>
+    <CActorUnit id="Habitat" parent="ZergBuilding" unitName="Habitat">
+        <On index="69" Terms="UnitConstruction.Habitat.Start" Send="Create ScavengerNestBuild"/>
+        <Model value="ScavengerNest"/>
+        <BuildModel value="Hatchery"/>
+        <DeathArray index="Normal" ModelLink="ScavengerNestDeath" SoundLink="Hatchery_Explode"/>
+        <DeathArray index="UnderConstruction" ModelLink="ZergBuildingDeathExtraLarge" SoundLink="Hatchery_Explode"/>
+        <PlacementModel value="ScavengerNest"/>
+        <PortraitModel value="ZergBuildingEx2_Portrait"/>
+        <BarOffset value="150"/>
+        <BarWidth value="225"/>
+        <GroupIcon>
+            <Image value="Assets\Textures\wireframe-Xayid-scavengernest.dds"/>
+        </GroupIcon>
+        <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-buildingarmor.dds"/>
+        <SoundArray index="Birth" value=""/>
+        <SoundArray index="Ready" value="Hatchery_Ready"/>
+        <SoundArray index="What" value="Hatchery_What"/>
+        <StatusHarvesterData Text="UI/HarvesterCountMinerals" SearchFilters="HarvestableResource;Player,Ally,Enemy" SearchRadius="8"/>
+        <UnitIcon value="Assets\Textures\btn-building-Xayid-scavengernest.dds"/>
+        <Wireframe>
+            <Image value="Assets\Textures\wireframe-Xayid-scavengernest.dds"/>
+        </Wireframe>
+    </CActorUnit>
+    <CActorUnit id="Forager" parent="GenericUnitXayid" unitName="Forager">
+        <Aliases value="_UnitSmall"/>
+        <On Terms="Abil.DroneHarvest.Start" Send="AnimPlay Work Work PlayForever"/>
+        <On Terms="Abil.DroneHarvest.Stop" Send="AnimClear Work"/>
+        <On Terms="Abil.*.WorkerStart" Send="AnimPlay Work Work PlayForever"/>
+        <On Terms="Abil.*.WorkerCancel" Send="AnimClear Work"/>
+        <On Terms="Abil.*.WorkerStop" Send="AnimClear Work"/>
+        <On Terms="AbilMorph.XayidMorphForagerFerry.Start" Send="Destroy"/>
+        <DeathArray index="Normal" ModelLink="DroneDeath" SoundLink="Drone_Explode" VoiceLink="Drone_Death"/>
+        <DeathArray index="Disintegrate" ModelLink="DroneDeathAcid"/>
+        <DeathArray index="Fire" ModelLink="DroneDeathFire"/>
+        <PortraitModel value="DronePortrait"/>
+        <TerrainSquibs>
+            <GroupName value="RippleStandard"/>
+            <MovementDistance value="0.150000,0.150000"/>
+            <IdlePeriod value="0.100000,0.250000"/>
+            <RangeUp value="1.000000"/>
+            <RangeDown value="1.000000"/>
+            <AttachQuery Methods="AMFilterCenter"/>
+            <Visuals TerrainPhysicsMaterial="Water" ActorModel="TerrainSquibHarnessContinuous" ModelLink="WaterRippleMedium"/>
+        </TerrainSquibs>
+        <BarOffset value="42"/>
+        <BarWidth value="40"/>
+        <ErrorArray Error="CantLandTooFarFromBuildPowerSource" Text="MustBuildNearFeedingPool"/>
+        <ErrorArray Error="CantBuildTooFarFromBuildPowerSource" Text="MustBuildNearFeedingPool"/>
+        <GroupIcon>
+            <Image index="0" value="Assets\Textures\wireframe-Xayid-Scavenger.dds"/>
+        </GroupIcon>
+        <SoundArray index="Ready" value="Scavenger_Ready"/>
+        <SoundArray index="Help" value="Alert_ZergEconomyUnderAttack"/>
+        <SoundArray index="What" value="Scavenger_What"/>
+        <SoundArray index="Yes" value="Scavenger_Yes"/>
+        <SoundArray index="Attack" value="Scavenger_Attack"/>
+        <SoundArray index="Pissed" value="Scavenger_Pissed"/>
+        <UnitIcon value="Assets\Textures\btn-unit-Xayid-Scavenger.dds"/>
+        <Wireframe>
+            <Image index="0" value="Assets\Textures\wireframe-Xayid-Scavenger.dds"/>
+        </Wireframe>
+    </CActorUnit>
     <CActorAction id="ScourAttack">
         <LaunchAttachQuery Methods="AMFilterWeapon01"/>
         <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpShadow SOpMoveUpBy3"/>
@@ -28,7 +163,7 @@
         <Model value="SnareAttackImpactModel"/>
         <ModelFlags index="AllowHitTest" value="1"/>
     </CActorModel>
-    <CActorUnit id="XayidTech" parent="ZergBuilding" unitName="XayidTech">
+    <CActorUnit id="Gourd" parent="ZergBuilding" unitName="Gourd">
         <BuildModel value="EvolutionChamber"/>
         <DeathArray index="Normal" ModelLink="EvolutionChamberDeath" SoundLink="EvolutionChamber_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="ZergBuildingDeathLarge" SoundLink="SpawningPool_Explode"/>
@@ -62,14 +197,49 @@
             <Image value="Assets\Textures\wireframe-Xayid-Xayidden.dds"/>
         </Wireframe>
     </CActorUnit>
-    <CActorModel id="XayidlingBloomComplete">
-        <On Terms="AbilMorph.*.Start; MorphFrom XayidlingBloom" Send="Create"/>
-        <On Terms="AbilMorph.*.Start; MorphFrom XayidlingBloom" Send="$Death"/>
-        <On Terms="AbilMorph.*.Finish; MorphTo XayidlingBloom" Send="Destroy"/>
+    <CActorUnit id="Fletch" parent="GenericUnitXayid" unitName="Fletch">
+        <Aliases value="_UnitSmall"/>
+        <On Terms="Abil.XayidlingDash.SourceCastStart" Send="$Spell 0 -1.000000 0.000000 0.375000 AsDuration"/>
+        <On Terms="AbilMorph.XayidMorphXayidling.Finish; MorphTo Fletch" Send="Create"/>
+        <On Terms="AbilMorph.XayidMorphXayidling.Start" Send="Destroy"/>
+        <On Terms="UnitMovementUpdate.*.Walk; AnimPlaying Birth" Send="AnimClear Birth"/>
+        <On Terms="ActorCreation; ValidatePlayer XayidlingOcularAcuity" Send="AnimPlay UpgradeA Upgrade,A PlayForever"/>
+        <On Terms="Upgrade.OcularAcuity.Add" Send="AnimPlay UpgradeA Upgrade,A PlayForever"/>
+        <On Terms="Upgrade.OcularAcuity.Remove" Send="AnimClear UpgradeA"/>
+        <DeathArray index="Normal" ModelLink="Fletch" SoundLink="Xayidling_Explode" VoiceLink="XayidlingDeathVoice"/>
+        <PortraitModel value="UltraliskPortrait"/>
+        <TerrainSquibs>
+            <MovementDistance value="0.150000,0.150000"/>
+            <IdlePeriod value="0.100000,0.250000"/>
+            <RangeUp value="0.600000"/>
+            <RangeDown value="0.600000"/>
+            <AttachQuery Methods="AMFilterCenter"/>
+            <Visuals TerrainPhysicsMaterial="Water" ActorModel="TerrainSquibHarnessContinuous" ModelLink="WaterRippleMedium"/>
+        </TerrainSquibs>
+        <WalkAnimMoveSpeed value="2.3984"/>
+        <BarOffset value="38"/>
+        <BarWidth value="40"/>
+        <GroupIcon>
+            <Image index="0" value="Assets\Textures\wireframe-Xayid-Xayidling.dds"/>
+        </GroupIcon>
+        <SoundArray index="Ready" value="Xayidling_Ready"/>
+        <SoundArray index="What" value="Xayidling_What"/>
+        <SoundArray index="Yes" value="Xayidling_Yes"/>
+        <SoundArray index="Attack" value="Xayidling_Attack"/>
+        <SoundArray index="Pissed" value="Xayidling_Pissed"/>
+        <UnitIcon value="Assets\Textures\btn-unit-xayid-fletch.dds"/>
+        <Wireframe>
+            <Image index="0" value="Assets\Textures\wireframe-Xayid-Xayidling.dds"/>
+        </Wireframe>
+    </CActorUnit>
+    <CActorModel id="XayidlingBlossomComplete">
+        <On Terms="AbilMorph.*.Start; MorphFrom XayidlingBlossom" Send="Create"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom XayidlingBlossom" Send="$Death"/>
+        <On Terms="AbilMorph.*.Finish; MorphTo XayidlingBlossom" Send="Destroy"/>
         <On Terms="AnimDone; AnimName Death" Send="Destroy"/>
         <Host Subject="_Selectable"/>
         <HostSiteOps Ops="SOpAttachOriginStationary"/>
-        <Model value="XayidlingBloom"/>
+        <Model value="FletchBlossom"/>
     </CActorModel>
     <CActorUnit id="BilePit">
         <On Terms="AbilMorph.XayidMorphFeedingPoolBilePit.Finish" Send="Create"/>
@@ -77,9 +247,9 @@
     <CActorUnit id="FeedingPool">
         <On Terms="AbilMorph.XayidMorphFeedingPoolBilePit.Finish" Send="Destroy"/>
     </CActorUnit>
-    <CActorUnit id="MendlingBloom" parent="GenericUnitXayid" unitName="MendlingBloom">
+    <CActorUnit id="SageBlossom" parent="GenericUnitXayid" unitName="SageBlossom">
         <On Terms="ActorCreation" Send="AnimPlay BSD Spell,End PlayForever"/>
-        <On Terms="AbilMorph.XayidMorphMendling.Start" Send="Create"/>
+        <On Terms="AbilMorph.XayidMorphSage.Start" Send="Create"/>
         <Model value="StructureSeed"/>
         <Scale value="0.600000"/>
         <BuildModel value="StructureSeed"/>
@@ -103,7 +273,7 @@
     <CActorUnit id="Raptor">
         <On Terms="AbilMorph.XayidMorphRaptor.Start" Send="Destroy"/>
     </CActorUnit>
-    <CActorUnit id="RaptorBloom" parent="GenericUnitXayid" unitName="RaptorBloom">
+    <CActorUnit id="RaptorBlossom" parent="GenericUnitXayid" unitName="RaptorBlossom">
         <Macros index="3" value="PhysicsDeathsSwarmAir"/>
         <Macros index="4" value="PhysicsDeathsVoidAir"/>
         <On Terms="ActorCreation" Send="AnimPlay BSD Spell,End PlayForever"/>
@@ -129,12 +299,9 @@
             <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
         </Wireframe>
     </CActorUnit>
-    <CActorUnit id="Scavenger">
-        <On Terms="AbilMorph.XayidMorphScavengerFerry.Start" Send="Destroy"/>
-    </CActorUnit>
-    <CActorUnit id="ScavengerBloom" parent="GenericUnitXayid" unitName="ScavengerBloom">
+    <CActorUnit id="ForagerBlossom" parent="GenericUnitXayid" unitName="ForagerBlossom">
         <On Terms="ActorCreation" Send="AnimPlay BSD Spell,End PlayForever"/>
-        <On Terms="AbilMorph.XayidMorphScavengerFerry.Start" Send="Create"/>
+        <On Terms="AbilMorph.XayidMorphForagerFerry.Start" Send="Create"/>
         <Model value="StructureSeed"/>
         <Scale value="0.600000"/>
         <BuildModel value="StructureSeed"/>
@@ -158,7 +325,7 @@
     <CActorUnit id="Scorpalisk">
         <On Terms="AbilMorph.XayidMorphScorpalisk.Start" Send="Destroy"/>
     </CActorUnit>
-    <CActorUnit id="ScorpaliskBloom" parent="GenericUnitXayid" unitName="ScorpaliskBloom">
+    <CActorUnit id="ScorpaliskBlossom" parent="GenericUnitXayid" unitName="ScorpaliskBlossom">
         <On Terms="ActorCreation" Send="AnimPlay BSD Spell,End PlayForever"/>
         <On Terms="AbilMorph.XayidMorphScorpalisk.Start" Send="Create"/>
         <Model value="StructureSeed"/>
@@ -451,18 +618,6 @@
     <CActorUnit id="XayidGroundRallyDummy" parent="GenericUnitXayid" unitName="XayidGroundRallyDummy">
         <Model value="Xayidling"/>
     </CActorUnit>
-    <CActorUnit id="Xayidling">
-        <On index="69" Send="$Spell 0 -1.000000 0.000000 0.375000 AsDuration"/>
-        <On Terms="AbilMorph.XayidMorphXayidling.Finish; MorphTo Xayidling" Send="Create"/>
-        <On Terms="AbilMorph.XayidMorphXayidling.Start" Send="Destroy"/>
-        <On Terms="UnitMovementUpdate.*.Walk; AnimPlaying Birth" Send="AnimClear Birth"/>
-        <On Terms="ActorCreation; ValidatePlayer XayidlingOcularAcuity" Send="AnimPlay UpgradeA Upgrade,A PlayForever"/>
-        <On Terms="Upgrade.OcularAcuity.Add" Send="AnimPlay UpgradeA Upgrade,A PlayForever"/>
-        <On Terms="Upgrade.OcularAcuity.Remove" Send="AnimClear UpgradeA"/>
-        <WalkAnimMoveSpeed value="2.3984"/>
-        <BarOffset value="38"/>
-        <UnitIcon value="Assets\Textures\btn-unit-xayid-fletch.dds"/>
-    </CActorUnit>
     <CActorUnit id="Snare" parent="GenericUnitXayid" unitName="Snare">
         <On Terms="UnitMovementUpdate.*.Walk; AnimPlaying Birth" Send="AnimClear Birth"/>
         <On Terms="ActorCreation; ValidatePlayer SnareAreaSlow" Send="AnimPlay Cover Cover PlayForever"/>
@@ -495,10 +650,10 @@
             <Image index="0" value="Assets\Textures\wireframe-Xayid-Xayidling.dds"/>
         </Wireframe>
     </CActorUnit>
-    <CActorUnit id="ScavengerDummy" parent="GenericUnitXayid" unitName="ScavengerDummy">
+    <CActorUnit id="ForagerDummy" parent="GenericUnitXayid" unitName="ForagerDummy">
         <Model value="Invisible"/>
     </CActorUnit>
-    <CActorUnit id="MendlingDummy" parent="GenericUnitXayid" unitName="MendlingDummy">
+    <CActorUnit id="SageDummy" parent="GenericUnitXayid" unitName="SageDummy">
         <Model value="Invisible"/>
     </CActorUnit>
     <CActorUnit id="ScorpaliskDummy" parent="GenericUnitXayid" unitName="ScorpaliskDummy">
@@ -510,7 +665,7 @@
     <CActorUnit id="RaptorDummy" parent="GenericUnitXayid" unitName="RaptorDummy">
         <Model value="Invisible"/>
     </CActorUnit>
-    <CActorUnit id="XayidlingSeed" parent="GenericUnitXayid" unitName="XayidlingSeed">
+    <CActorUnit id="XayidlingSeed" parent="GenericUnitXayid" unitName="FletchSeed">
         <Macros index="3" value="PhysicsDeathsSwarmAir"/>
         <Macros index="4" value="PhysicsDeathsVoidAir"/>
         <On Terms="TimerExpired; TimerName SpellStart" Send="AnimBracketStart Spell Spell,Start Spell,End"/>
@@ -541,8 +696,9 @@
         <Wireframe>
             <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
         </Wireframe>
+        <HighlightTooltip value="Unit/Name/XayidlingSeed"/>
     </CActorUnit>
-    <CActorUnit id="ScavengerSeed" parent="GenericUnitXayid" unitName="ScavengerSeed">
+    <CActorUnit id="ForagerSeed" parent="GenericUnitXayid" unitName="ForagerSeed">
         <Macros index="3" value="PhysicsDeathsSwarmAir"/>
         <Macros index="4" value="PhysicsDeathsVoidAir"/>
         <On Terms="TimerExpired; TimerName SpellStart" Send="AnimBracketStart Spell Spell,Start Spell,End"/>
@@ -574,7 +730,7 @@
             <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
         </Wireframe>
     </CActorUnit>
-    <CActorUnit id="MendlingSeed" parent="GenericUnitXayid" unitName="MendlingSeed">
+    <CActorUnit id="SageSeed" parent="GenericUnitXayid" unitName="SageSeed">
         <Macros index="3" value="PhysicsDeathsSwarmAir"/>
         <Macros index="4" value="PhysicsDeathsVoidAir"/>
         <On Terms="TimerExpired; TimerName SpellStart" Send="AnimBracketStart Spell Spell,Start Spell,End"/>
@@ -665,7 +821,29 @@
             <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
         </Wireframe>
     </CActorUnit>
-    <CActorUnit id="XayidlingSprout" parent="GenericUnitXayid" unitName="XayidlingSprout">
+    <CActorUnit id="XayidlingSprout" parent="GenericUnitXayid" unitName="FletchSprout">
+        <Model value="StructureSeed"/>
+        <Scale value="0.450000"/>
+        <BuildModel value="StructureSeed"/>
+        <PlacementModel value="StructureSeed"/>
+        <PortraitModel value="GuardianMPPortrait"/>
+        <BarOffset value="65"/>
+        <BarWidth value="80"/>
+        <GroupIcon>
+            <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
+        </GroupIcon>
+        <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-pneumatizedcarapace.dds"/>
+        <SoundArray index="Ready" value="Assailant_Ready"/>
+        <SoundArray index="What" value="Assailant_What"/>
+        <SoundArray index="Yes" value="Assailant_Yes"/>
+        <SoundArray index="Attack" value="Assailant_Yes"/>
+        <UnitIcon value="Assets\Textures\btn-unit-Xayid-Assailant.dds"/>
+        <Wireframe>
+            <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
+        </Wireframe>
+        <HighlightTooltip value="Unit/Name/XayidlingSprout"/>
+    </CActorUnit>
+    <CActorUnit id="ForagerSprout" parent="GenericUnitXayid" unitName="ForagerSprout">
         <Model value="StructureSeed"/>
         <Scale value="0.450000"/>
         <BuildModel value="StructureSeed"/>
@@ -686,28 +864,7 @@
             <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
         </Wireframe>
     </CActorUnit>
-    <CActorUnit id="ScavengerSprout" parent="GenericUnitXayid" unitName="ScavengerSprout">
-        <Model value="StructureSeed"/>
-        <Scale value="0.450000"/>
-        <BuildModel value="StructureSeed"/>
-        <PlacementModel value="StructureSeed"/>
-        <PortraitModel value="GuardianMPPortrait"/>
-        <BarOffset value="65"/>
-        <BarWidth value="80"/>
-        <GroupIcon>
-            <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
-        </GroupIcon>
-        <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-pneumatizedcarapace.dds"/>
-        <SoundArray index="Ready" value="Assailant_Ready"/>
-        <SoundArray index="What" value="Assailant_What"/>
-        <SoundArray index="Yes" value="Assailant_Yes"/>
-        <SoundArray index="Attack" value="Assailant_Yes"/>
-        <UnitIcon value="Assets\Textures\btn-unit-Xayid-Assailant.dds"/>
-        <Wireframe>
-            <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
-        </Wireframe>
-    </CActorUnit>
-    <CActorUnit id="MendlingSprout" parent="GenericUnitXayid" unitName="MendlingSprout">
+    <CActorUnit id="SageSprout" parent="GenericUnitXayid" unitName="SageSprout">
         <Model value="StructureSeed"/>
         <Scale value="0.500000"/>
         <BuildModel value="StructureSeed"/>
@@ -749,11 +906,11 @@
             <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
         </Wireframe>
     </CActorUnit>
-    <CActorUnit id="XayidlingBloom" parent="GenericUnitXayid" unitName="XayidlingBloom">
+    <CActorUnit id="XayidlingBlossom" parent="GenericUnitXayid" unitName="FletchBlossom">
         <On Terms="ActorCreation" Send="AnimPlay BSD Spell,End PlayForever"/>
-        <On Terms="AbilMorph.*.Finish; MorphTo XayidlingBloom" Send="Create"/>
-        <On Terms="AbilMorph.*.Start; MorphFrom XayidlingBloom" Send="Destroy"/>
-        <On Terms="AbilMorph.*.Finish; MorphTo XayidlingBloom" Send="$Birth 0 0.000000 -1.000000 0.000000"/>
+        <On Terms="AbilMorph.*.Finish; MorphTo XayidlingBlossom" Send="Create"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom XayidlingBlossom" Send="Destroy"/>
+        <On Terms="AbilMorph.*.Finish; MorphTo XayidlingBlossom" Send="$Birth 0 0.000000 -1.000000 0.000000"/>
         <PortraitModel value="GuardianMPPortrait"/>
         <BarOffset value="60"/>
         <GroupIcon>
@@ -768,8 +925,9 @@
         <Wireframe>
             <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
         </Wireframe>
+        <HighlightTooltip value="Unit/Name/XayidlingBlossom"/>
     </CActorUnit>
-    <CActorUnit id="XayidlingDummy" parent="GenericUnitXayid" unitName="XayidlingDummy">
+    <CActorUnit id="FletchDummy" parent="GenericUnitXayid" unitName="FletchDummy">
         <Model value="Invisible"/>
     </CActorUnit>
     <!--                                                                                         -->

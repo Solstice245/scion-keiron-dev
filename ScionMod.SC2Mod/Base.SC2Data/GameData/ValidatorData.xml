@@ -192,6 +192,16 @@
         <CombineArray value="GenetronNotUpdatingPowerGenerationTarget"/>
         <CombineArray value="OwnedBySelf"/>
     </CValidatorCombine>
+    <CValidatorCombine id="OlympusEnergyRegenValidators">
+        <Type value="And"/>
+        <CombineArray value="EnergyGTE5"/>
+        <CombineArray value="NotDead"/>
+        <CombineArray value="CasterNotDead"/>
+        <CombineArray value="NotHidden"/>
+        <CombineArray value="GenetronCasterEnergyRegenNotSuppressed"/>
+        <CombineArray value="OwnedBySelf"/>
+        <CombineArray value="OlympusIsCharging"/>
+    </CValidatorCombine>
     <CValidatorUnitCompareBehaviorCount id="GenetronNotUpdatingPowerGenerationTarget">
         <WhichUnit Value="Caster"/>
         <Behavior value="GenetronUpdatePowerGenerationTarget"/>
@@ -270,6 +280,11 @@
     <CValidatorUnitCompareBehaviorCount id="CasterHasNoNaniteGrenadeBuff">
         <WhichUnit Value="Caster"/>
         <Behavior value="NaniteGrenadeAB"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="OlympusIsCharging">
+        <WhichUnit Value="Caster"/>
+        <Compare value="GT"/>
+        <Behavior value="OlympusCharging"/>
     </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareVital id="ShieldsGTEDeltaFuse">
         <ResultFailed value="TooMuchLife"/>

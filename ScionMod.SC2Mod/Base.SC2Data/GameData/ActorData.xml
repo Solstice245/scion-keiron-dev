@@ -198,6 +198,54 @@
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-pneumatizedcarapace.dds"/>
         <SoundArray index="Attack" value="Assailant_Yes"/>
     </CActorUnit>
+    <CActorModel id="OlympusDischargeDoT" parent="ModelAddition">
+        <Inherits index="Opacity" value="0"/>
+        <Inherits index="TintColor" value="0"/>
+        <On Terms="Behavior.OlympusElectrified.On" Send="Create"/>
+        <On Terms="Behavior.OlympusElectrified.Off" Send="Destroy"/>
+        <On Terms="Behavior.OlympusElectrifiedStructure.On" Send="Create"/>
+        <On Terms="Behavior.OlympusElectrifiedStructure.Off" Send="Destroy"/>
+        <HostSiteOps Ops="SOpAttachCenter"/>
+        <AutoScaleFactor value="1.000000"/>
+    </CActorModel>
+    <CActorModel id="OlympusExplode" parent="ModelAnimationStyleOneShot">
+        <On Terms="Effect.OlympusExplodeDMG.Start" Send="Create"/>
+    </CActorModel>
+    <CActorModel id="OlympusDischargeIndicator" parent="ModelAnimationStyleOneShot">
+        <Flags index="SuppressSaveLoad" value="0"/>
+        <Filter index="Enemy" value="1"/>
+        <FogVisibility value="Visible"/>
+        <On Terms="Effect.OlympusDischargeCP.Start" Send="Create"/>
+        <On Terms="Effect.OlympusDischargeCP.Stop" Send="Destroy"/>
+        <HostSiteOps Ops="SOpShadow"/>
+    </CActorModel>
+    <CActorUnit id="Olympus" parent="GenetronBuilding" buildTime="64.000000" unitName="Olympus">
+        <Macros value="GenetronProductionModeMacro"/>
+        <On Terms="AbilTrain.BuildAircraft.Start" Send="AnimPlay StandWork Stand,Work PlayForever,RandomStartOffset"/>
+        <On Terms="AbilTrain.BuildAircraft.Finish" Send="AnimClear StandWork"/>
+        <On Terms="AbilTrain.BuildAircraft.Cancel" Send="AnimClear StandWork"/>
+        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced AvengerGenetron" Send="Create AvengerConstruction"/>
+        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Badger" Send="Create BadgerConstruction"/>
+        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Jupiter" Send="Create JupiterConstruction"/>
+        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Courier" Send="Create CourierConstruction"/>
+        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Boar" Send="Create BoarConstruction"/>
+        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Hornet" Send="Create HornetConstruction"/>
+        <On Terms="AbilTrain.BuildAircraft.Cancel" Target="_GenetronUnitConstruction" Send="Destroy Immediate"/>
+        <On Terms="AbilTrain.BuildAircraft.Finish" Target="_GenetronUnitConstruction" Send="Destroy Immediate"/>
+        <DeathArray index="Normal" ModelLink="GhostAcademyDeath" SoundLink="GhostAcademy_Explode"/>
+        <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeath" SoundLink="GhostAcademy_Explode"/>
+        <BarOffset value="190"/>
+        <BarWidth value="220"/>
+        <GroupIcon>
+            <Image index="0" value="Assets\Textures\wireframe-genetron-AssemblyArray.dds"/>
+        </GroupIcon>
+        <SoundArray index="Ready" value="Starport_Ready"/>
+        <SoundArray index="What" value="Starport_What"/>
+        <UnitIcon value="Assets\Textures\btn-building-genetron-AssemblyArray.dds"/>
+        <Wireframe>
+            <Image index="0" value="Assets\Textures\wireframe-genetron-AssemblyArray.dds"/>
+        </Wireframe>
+    </CActorUnit>
     <CActorUnit id="Casnolisk" parent="GenericUnitXayid" unitName="Casnolisk">
         <Aliases value="_UnitMedium"/>
         <On Terms="Abil.ExplosiveGlob.SourceCastStart" Send="AnimBracketStart Attack Attack {} {} ClosingFull"/>
@@ -329,6 +377,13 @@
     <CActorSound id="OculusRevealStop" parent="SoundOneShot">
         <On Terms="Effect.OculusReveal.Stop; At Target" Send="Create"/>
     </CActorSound>
+    <CActorModel id="OlympusDischarge" parent="ModelAnimationStyleOneShot">
+        <On Terms="Effect.OlympusDischargeSA.Start" Send="Create"/>
+    </CActorModel>
+    <CActorSplat id="OlympusDischargeSplat" parent="CursorSplat" abil="OlympusDischarge">
+        <On index="0" Terms="Abil.##abil##.Cursor" Send="Create"/>
+        <Model value="ProtossAOECursorSplat"/>
+    </CActorSplat>
     <CActorUnit id="Prowler" parent="GenericUnitXayid" unitName="Prowler">
         <PortraitModel value="LurkerMPPortrait"/>
         <BarOffset value="45"/>

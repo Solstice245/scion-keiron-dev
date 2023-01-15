@@ -18,6 +18,7 @@ void InitLibs () {
 // Trigger Variables
 //--------------------------------------------------------------------------------------------------
 trigger gt_MeleeInitialization;
+trigger gt_kill;
 
 //--------------------------------------------------------------------------------------------------
 // Trigger: Melee Initialization
@@ -60,10 +61,41 @@ void gt_MeleeInitialization_Init () {
 }
 
 //--------------------------------------------------------------------------------------------------
+// Trigger: kill
+//--------------------------------------------------------------------------------------------------
+bool gt_kill_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    unitgroup auto60840817_g;
+    int auto60840817_u;
+    unit auto60840817_var;
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    auto60840817_g = UnitGroupSelected(1);
+    auto60840817_u = UnitGroupCount(auto60840817_g, c_unitCountAll);
+    for (;; auto60840817_u -= 1) {
+        auto60840817_var = UnitGroupUnitFromEnd(auto60840817_g, auto60840817_u);
+        if (auto60840817_var == null) { break; }
+        UnitKill(auto60840817_var);
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_kill_Init () {
+    gt_kill = TriggerCreate("gt_kill_Func");
+    TriggerAddEventChatMessage(gt_kill, c_playerAny, "kill", true);
+}
+
+//--------------------------------------------------------------------------------------------------
 // Trigger Initialization
 //--------------------------------------------------------------------------------------------------
 void InitTriggers () {
     gt_MeleeInitialization_Init();
+    gt_kill_Init();
 }
 
 //--------------------------------------------------------------------------------------------------

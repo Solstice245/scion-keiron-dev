@@ -221,6 +221,14 @@
         <PeriodicEffect value="GenetronUnitEnergyRegenx2SA"/>
         <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="OlympusCharging">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="EnergyNotFull"/>
+        <Period value="0.5"/>
+        <InitialEffect value="OlympusChargeUpSA"/>
+        <PeriodicEffect value="OlympusChargeUpSA"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="GenetronUpdatePowerGenerationTarget">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -373,6 +381,45 @@
         <RemoveValidatorArray value="NotHidden"/>
         <Period value="0.0625"/>
         <FinalEffect value="MyriadElytronTrackerRecallSet"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="OlympusDischarging">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <TimeScaleSource Value="Global"/>
+        <Duration value="10"/>
+        <Modification>
+            <AbilLinkDisableArray value="OlympusChargeUp"/>
+            <BehaviorLinkDisableArray value="OlympusCharging"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="OlympusElectrified">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Duration value="5"/>
+        <Period value="0.125"/>
+        <PeriodicEffect value="OlympusDischargeDebuffDMG"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="OlympusElectrifiedStructure">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Duration value="5"/>
+        <Period value="0.125"/>
+        <PeriodicEffect value="OlympusDischargeDebuffDMG"/>
+        <Modification>
+            <AbilClassDisableArray index="CAbilAttack" value="1"/>
+            <AbilClassDisableArray index="CAbilEffectInstant" value="1"/>
+            <AbilClassDisableArray index="CAbilEffectTarget" value="1"/>
+            <RateMultiplierArray index="Charge" value="0.001"/>
+            <RateMultiplierArray index="Cooldown" value="0.001"/>
+            <RateMultiplierArray index="Morph" value="0.001"/>
+            <RateMultiplierArray index="Progress" value="0.001"/>
+            <RateMultiplierArray index="Queueable" value="0.001"/>
+            <RateMultiplierArray index="Spawn" value="0.001"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="OlympusExplode">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DamageResponse Fatal="1" Handled="OlympusExplodeDelay">
+            <Chance value="1"/>
+        </DamageResponse>
     </CBehaviorBuff>
     <CBehaviorBuff id="Pause">
         <Modification TimeScale="0.01"/>

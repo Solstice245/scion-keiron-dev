@@ -219,6 +219,107 @@
     </CEffectMorph>
     <CEffectApplyBehavior id="CitadelEnergize" parent="ScionApplyBehavior" Race="Keiron"/>
     <CEffectApplyBehavior id="CitadelEnergized" parent="ScionApplyBehavior" Race="Keiron"/>
+    <CEffectCreateHealer id="OlympusChargeUpHealer">
+        <ValidatorArray value="IsProcessingCoreOrRelayTower"/>
+        <ValidatorArray value="EnergyGTE5"/>
+        <EditorCategories value="Race:Genetron"/>
+        <LaunchUnit Value="Target"/>
+        <ImpactUnit Value="Caster"/>
+        <Flags index="Channeled" value="0"/>
+        <PeriodicValidator value="OlympusEnergyRegenValidators"/>
+        <DrainVital value="Energy"/>
+        <DrainVitalCostFactor value="1"/>
+        <RechargeVital value="Energy"/>
+        <RechargeVitalRate value="50"/>
+        <InitialEffect value="DataDefaultSet1"/>
+        <FinalEffect value="OlympusChargeUpSet"/>
+    </CEffectCreateHealer>
+    <CEffectEnumArea id="OlympusChargeUpSA" parent="ScionEnumArea" Race="Genetron">
+        <ValidatorArray value="CasterDataDefaultIs0"/>
+        <ValidatorArray value="HasCoreOrRelay"/>
+        <ValidatorArray value="GenetronCasterEnergyRegenNotSuppressed"/>
+        <ValidatorArray value="OlympusIsCharging"/>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
+        <TargetSorts>
+            <SortArray value="PrioritizeRelayTower"/>
+            <SortArray value="TSDistance"/>
+        </TargetSorts>
+        <AreaArray MaxCount="1" Radius="500" Effect="OlympusChargeUpHealer"/>
+    </CEffectEnumArea>
+    <CEffectSet id="OlympusChargeUpSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="DataDefaultSet0"/>
+        <EffectArray value="OlympusChargeUpSA"/>
+    </CEffectSet>
+    <CEffectSet id="OlympusDischarge">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="OlympusDischargeABCaster"/>
+        <EffectArray value="OlympusDischargeCP"/>
+        <TargetLocationType value="Point"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="OlympusDischargeABCaster" parent="ScionApplyBehaviorCaster">
+        <EditorCategories value="Race:Genetron"/>
+        <Behavior value="OlympusDischarging"/>
+    </CEffectApplyBehavior>
+    <CEffectCreatePersistent id="OlympusDischargeCP">
+        <EditorCategories value="Race:Genetron"/>
+        <InitialDelay value="9"/>
+        <InitialEffect value="OlympusDischargeReveal"/>
+    </CEffectCreatePersistent>
+    <CEffectDamage id="OlympusDischargeDMG">
+        <EditorCategories value="Race:Genetron"/>
+        <DebugTrace value="1"/>
+        <Amount value="50"/>
+    </CEffectDamage>
+    <CEffectApplyBehavior id="OlympusDischargeDebuffAB" parent="ScionApplyBehavior">
+        <ValidatorArray index="0" value="NotStructureTarget"/>
+        <EditorCategories value="Race:Genetron"/>
+        <Behavior value="OlympusElectrified"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="OlympusDischargeDebuffABStructure" parent="ScionApplyBehavior">
+        <ValidatorArray index="0" value="IsStructure"/>
+        <EditorCategories value="Race:Genetron"/>
+        <Behavior value="OlympusElectrifiedStructure"/>
+    </CEffectApplyBehavior>
+    <CEffectDamage id="OlympusDischargeDebuffDMG">
+        <EditorCategories value="Race:Genetron"/>
+        <Amount value="2.5"/>
+    </CEffectDamage>
+    <CEffectCreatePersistent id="OlympusDischargeReveal">
+        <EditorCategories value="Race:Genetron"/>
+        <InitialDelay value="1"/>
+        <InitialEffect value="OlympusDischargeSA"/>
+        <ExpireDelay value="5"/>
+        <RevealRadius value="6"/>
+        <RevealFlags index="Unfog" value="1"/>
+    </CEffectCreatePersistent>
+    <CEffectEnumArea id="OlympusDischargeSA" parent="ScionEnumArea">
+        <EditorCategories value="Race:Genetron"/>
+        <AreaArray Radius="6" Effect="OlympusDischargeSet"/>
+    </CEffectEnumArea>
+    <CEffectSet id="OlympusDischargeSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="OlympusDischargeDMG"/>
+        <EffectArray value="OlympusDischargeDebuffAB"/>
+        <EffectArray value="OlympusDischargeDebuffABStructure"/>
+    </CEffectSet>
+    <CEffectDamage id="OlympusExplodeDMG">
+        <EditorCategories value="Race:Genetron"/>
+        <DebugTrace value="1"/>
+        <ImpactLocation Value="CasterPoint"/>
+        <AttributeBonus index="Structure" value="600"/>
+        <Amount value="400"/>
+        <AreaArray Radius="4" Fraction="1"/>
+        <AreaArray Radius="6" Fraction="0.5"/>
+        <AreaArray Radius="8" Fraction="0.25"/>
+        <SearchFilters value="-;Missile,Stasis,Dead,Invulnerable"/>
+    </CEffectDamage>
+    <CEffectCreatePersistent id="OlympusExplodeDelay">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="CasterPoint"/>
+        <InitialDelay value="3"/>
+        <InitialEffect value="OlympusExplodeDMG"/>
+    </CEffectCreatePersistent>
     <CEffectSet id="TeslaChargeCompleteCloakCharge" parent="ScionSet" Race="Genetron">
         <EffectArray value="Equipped"/>
         <EffectArray value="ApplyChargeCC"/>
@@ -498,9 +599,11 @@
     </CEffectEnumArea>
     <CEffectEnumArea id="GenetronUnitEnergyRegenx2SA" parent="GenetronUnitEnergyRegenSA">
         <AreaArray index="0" MaxCount="1" Radius="500" Effect="GenetronUnitEnergyRegenx2Healer"/>
+        <Name value="Effect/Name/GenetronUnitEnergyRegenx2SA"/>
     </CEffectEnumArea>
     <CEffectEnumArea id="GenetronUnitEnergyRegenx3SA" parent="GenetronUnitEnergyRegenSA">
         <AreaArray index="0" MaxCount="1" Radius="500" Effect="GenetronUnitEnergyRegenx3Healer"/>
+        <Name value="Effect/Name/GenetronUnitEnergyRegenx3SA"/>
     </CEffectEnumArea>
     <CEffectApplyBehavior id="GlazeFire" parent="ScionApplyBehavior" Race="Xayid">
         <Flags index="UseDuration" value="1"/>
