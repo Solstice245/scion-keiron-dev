@@ -109,6 +109,15 @@
         <Value value="40"/>
         <Vital value="Energy"/>
     </CValidatorUnitCompareVital>
+    <CValidatorUnitCompareBehaviorCount id="CasterHasShellRestoration">
+        <WhichUnit Value="Caster"/>
+        <Compare value="GT"/>
+        <Behavior value="KeironShellRestoration"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorCombine id="CasterHasShellRestorationOrMaxShields">
+        <CombineArray value="CasterHasShellRestoration"/>
+        <CombineArray value="CasterShieldsFull"/>
+    </CValidatorCombine>
     <CValidatorUnitCompareBehaviorCount id="CasterNotLockedDownBase">
         <WhichUnit Value="Caster"/>
         <Behavior value="LockdownMode"/>
@@ -117,6 +126,16 @@
         <WhichUnit Value="Caster"/>
         <Behavior value="LockdownModeDuration"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="WardIsCastingShellDome">
+        <WhichUnit Value="Caster"/>
+        <Compare value="GT"/>
+        <Behavior value="ShellDomeCaster"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorLocationCompareRange id="WardShellDomeDistance">
+        <Compare value="LT"/>
+        <Range value="2.5"/>
+        <Value Value="SourcePoint"/>
+    </CValidatorLocationCompareRange>
     <CValidatorCombine id="GenetronCasterEnergyRegenNotSuppressed">
         <Type value="And"/>
         <CombineArray value="CasterNoCourierCloak"/>
@@ -192,6 +211,13 @@
         <CombineArray value="GenetronNotUpdatingPowerGenerationTarget"/>
         <CombineArray value="OwnedBySelf"/>
     </CValidatorCombine>
+    <CValidatorUnitCompareBehaviorCount id="NoShellRestorationDelay">
+        <Behavior value="KeironShellRestorationDelay"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitType id="NotShellDome">
+        <Value value="ShellDome"/>
+        <Find value="0"/>
+    </CValidatorUnitType>
     <CValidatorCombine id="OlympusEnergyRegenValidators">
         <Type value="And"/>
         <CombineArray value="EnergyGTE5"/>
@@ -286,6 +312,13 @@
         <Compare value="GT"/>
         <Behavior value="OlympusCharging"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareVital id="CasterShieldsFull">
+        <ResultFailed value="RequiresHealTarget"/>
+        <WhichUnit Value="Caster"/>
+        <Type value="Fraction"/>
+        <Value value="1"/>
+        <Vital value="Shields"/>
+    </CValidatorUnitCompareVital>
     <CValidatorUnitCompareVital id="ShieldsGTEDeltaFuse">
         <ResultFailed value="TooMuchLife"/>
         <Compare value="GE"/>
@@ -593,6 +626,12 @@
         </AreaArray>
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
     </CValidatorLocationEnumArea>
+    <CValidatorUnitCompareBehaviorCount id="CasterIsFused">
+        <ResultFailed value="Error,ErrorText/TargetIsNotFused"/>
+        <WhichUnit Value="Caster"/>
+        <Compare value="GT"/>
+        <Behavior value="FuseFused"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitType id="TargetUnitTypeIsNotCasterUnitType">
         <OtherUnit Value="Caster"/>
         <Find value="0"/>
@@ -602,6 +641,25 @@
         <Compare value="GT"/>
         <AbilLink value="TrainLightweightMechs"/>
     </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareField id="UnitIsKeiron">
+        <Field value="Race"/>
+        <Value value="Keir"/>
+    </CValidatorUnitCompareField>
+    <CValidatorLocationCompareRange id="AegisShieldAuraDistance">
+        <Compare value="LT"/>
+        <Range value="10"/>
+        <Value Value="SourcePoint"/>
+    </CValidatorLocationCompareRange>
+    <CValidatorUnitCompareVital id="WardShellDomeCasterGTE100Shields">
+        <WhichUnit Value="Caster"/>
+        <Compare value="GE"/>
+        <Value value="100"/>
+        <Vital value="Shields"/>
+    </CValidatorUnitCompareVital>
+    <CValidatorCombine id="WardShellDomeReq">
+        <CombineArray value="WardShellDomeCasterGTE100Shields"/>
+        <CombineArray value="WardIsCastingShellDome"/>
+    </CValidatorCombine>
     <CValidatorPlayerRequirement id="XayidlingDexterousJoints">
         <Find value="1"/>
         <Value value="UseDexterousJoints"/>

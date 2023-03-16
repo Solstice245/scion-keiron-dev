@@ -7,6 +7,32 @@
         <FinalEffect value="ProcessorFateSet"/>
         <RemoveValidatorArray value="CasterNotDead"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="ShellDomeCaster">
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <BuffFlags index="Channeled" value="1"/>
+        <FinalEffect value="KeironShellRestorationDelayABSource"/>
+        <Modification>
+            <StateFlags index="SuppressShieldsRegen" value="1"/>
+            <BehaviorLinkDisableArray value="KeironShellRestoration"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="ShellDomeFused">
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="CasterIsFused"/>
+        <Modification>
+            <VitalMaxDecreaseAffectsCurrentArray index="Shields" value="1"/>
+            <VitalMaxArray index="Shields" value="125"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="WardShellDome">
+        <InfoIcon value="Assets\Textures\btn-ability-keiron-aegisshield.dds"/>
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <TimeScaleSource Value="Global"/>
+        <Duration value="0.3125"/>
+        <Modification>
+            <StateFlags index="Invulnerable" value="1"/>
+        </Modification>
+    </CBehaviorBuff>
     <CBehaviorBuff id="ApertureTeleportTarget">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
@@ -220,6 +246,29 @@
         <Period value="0.5"/>
         <PeriodicEffect value="GenetronUnitEnergyRegenx2SA"/>
         <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="KeironShellRestoration">
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="ShieldsNotFull"/>
+        <RemoveValidatorArray value="NoShellRestorationDelay"/>
+        <Modification>
+            <VitalRegenArray index="Shields" value="3"/>
+        </Modification>
+        <DamageResponse Handled="KeironShellRestorationDelayABSource">
+            <Chance value="1"/>
+        </DamageResponse>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="KeironShellRestorationAura">
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <Period value="0.25"/>
+        <PeriodicEffect value="KeironShellRestorationSA"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="KeironShellRestorationDelay">
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <Duration value="2"/>
+        <DamageResponse Handled="KeironShellRestorationDelayABSource">
+            <Chance value="1"/>
+        </DamageResponse>
     </CBehaviorBuff>
     <CBehaviorBuff id="OlympusCharging">
         <InfoFlags index="Hidden" value="1"/>
@@ -505,6 +554,17 @@
         <Period value="0.5"/>
         <PeriodicEffect value="MiningPrioritySearchArea"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="ShellDomeAura">
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <BuffFlags index="Channeling" value="1"/>
+        <Period value="0.125"/>
+        <PeriodicEffect value="WardShellDomeSA"/>
+        <FinalEffect value="WardShellDomeEndSet"/>
+        <RemoveValidatorArray value="hasShields"/>
+        <Modification>
+            <BehaviorLinkDisableArray value="KeironShellRestoration"/>
+        </Modification>
+    </CBehaviorBuff>
     <CBehaviorBuff id="TeslaShockChargeOverload">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
     </CBehaviorBuff>
@@ -559,6 +619,15 @@
         <Modification>
             <RateMultiplierArray index="Queueable" value="0.001"/>
         </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="WardPassiveShellRegen">
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <Period value="0.0625"/>
+        <PeriodicEffect value="KeironShellRestorationAB"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="WardShellDomeReqDummy">
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="WardShellDomeReq"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="XayidSpawnTimedLife">
         <InfoFlags index="Hidden" value="1"/>

@@ -381,7 +381,6 @@
         <On Terms="Effect.OlympusDischargeSA.Start" Send="Create"/>
     </CActorModel>
     <CActorSplat id="OlympusDischargeSplat" parent="CursorSplat" abil="OlympusDischarge">
-        <On index="0" Terms="Abil.##abil##.Cursor" Send="Create"/>
         <Model value="ProtossAOECursorSplat"/>
     </CActorSplat>
     <CActorUnit id="Prowler" parent="GenericUnitXayid" unitName="Prowler">
@@ -609,6 +608,11 @@
         <On Terms="Upgrade.ScorpaliskMetabolics.Add" Send="AnimGroupApply Superior"/>
         <On Terms="Upgrade.ScorpaliskMetabolics.Remove" Send="AnimGroupRemove Superior"/>
         <BarWidth value="68"/>
+    </CActorUnit>
+    <CActorUnit id="ShellDome" parent="GenericUnitStandard" unitName="ShellDome">
+        <On Terms="ActorCreation" Send="AnimBracketStart BSD Stand,Work,Start Stand,Work Stand,Work,End"/>
+        <DeathArray index="Normal" AnimProps="Stand,Work,End"/>
+        <HighlightTooltip value="Unit/Name/Bogus"/>
     </CActorUnit>
     <CActorUnit id="Spitter" parent="GenericUnitXayid" unitName="Spitter">
         <DeathArray index="Normal" ModelLink="DefilerMPDeath"/>
@@ -1060,6 +1064,32 @@
     <CActorSound id="TitanAttack_Start" parent="SoundOneShotScion" Effect="TitanWeaponCP">
         <On Terms="Effect.TitanWeaponCP.Stop" Send="Destroy"/>
     </CActorSound>
+    <CActorUnit id="Ward" parent="GenericUnitKeiron" unitName="Ward">
+        <On index="65" Terms="WeaponStart.*.AttackStart" Send="AnimBracketStart Cover Cover,Start Cover Cover,End OpeningPlayForever"/>
+        <On index="67" Terms="WeaponStop.*.AttackStop" Send="TimerSet 3.000000 CoverDelay"/>
+        <On Terms="TimerExpired; TimerName CoverDelay" Send="AnimBracketStop Cover"/>
+        <On Terms="WeaponStart.*.AttackStart" Send="AnimBracketStart Attack {} Attack {} ContentNonLooping,ContentPlayOnce"/>
+        <On Terms="WeaponStop.*.AttackStop" Send="AnimBracketStop Attack"/>
+        <On Terms="UnitMovementUpdate.*.Walk" Send="AnimBracketClear Cover"/>
+        <Baselines index="Stand" BlendIn="0.000000"/>
+        <Baselines index="Walk" AnimProps="Walk,Superior"/>
+        <DeathArray index="Normal" SoundLink="KeironUnit_Death"/>
+        <BarOffset value="65"/>
+        <GroupIcon>
+            <Image index="0" value="Assets\Textures\wireframe-keiron-Umbra.dds"/>
+        </GroupIcon>
+        <HeroIcon value="Assets\Textures\btn-unit-keiron-Umbra.dds"/>
+        <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-mechanicalarmorlevel0.dds"/>
+        <UnitIcon value="Assets\Textures\btn-unit-keiron-Umbra.dds"/>
+        <Wireframe>
+            <Image index="0" value="Assets\Textures\wireframe-keiron-Umbra.dds"/>
+        </Wireframe>
+        <WireframeShield>
+            <Image index="0" value="Assets\Textures\wireframe-keiron-Umbra-shield1.dds"/>
+            <Image index="1" value="Assets\Textures\wireframe-keiron-Umbra-shield2.dds"/>
+            <Image index="2" value="Assets\Textures\wireframe-keiron-Umbra-shield3.dds"/>
+        </WireframeShield>
+    </CActorUnit>
     <CActorSound id="UmbraShieldCompulsionSound" parent="SoundOneShotScion" Effect="UmbraShieldCompulsion"/>
     <CActorSound id="Umbra_CloakOff" parent="SoundOneShotScion" Behavior="UmbraStealth" BSub="Off"/>
     <CActorSound id="Umbra_CloakOn" parent="SoundOneShotScion" Behavior="UmbraStealth"/>

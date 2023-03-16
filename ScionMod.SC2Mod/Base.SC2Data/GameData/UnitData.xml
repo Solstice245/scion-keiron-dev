@@ -229,8 +229,6 @@
         <SeparationRadius value="1.5"/>
         <MinimapRadius value="1.5"/>
         <ShieldArmorName value="Unit/ShieldArmorName/KeironDispersionShields"/>
-        <ShieldRegenDelay value="4"/>
-        <ShieldRegenRate value="1.25"/>
         <CardLayouts>
             <LayoutButtons Face="SelectBuilder" Type="SelectBuilder" Row="1" Column="3"/>
         </CardLayouts>
@@ -261,8 +259,6 @@
         <Collide index="ForceField" value="1"/>
         <LifeRegenRate value="0.1718"/>
         <LifeArmorName value="Unit/LifeArmorName/KeironArmor"/>
-        <ShieldRegenDelay value="4"/>
-        <ShieldRegenRate value="1.25"/>
         <Acceleration value="1000"/>
         <Sight value="9"/>
         <CostCategory value="Army"/>
@@ -954,6 +950,16 @@
         <GlossaryCategory value=""/>
         <HotkeyCategory value=""/>
     </CUnit>
+    <CUnit id="ShellDome">
+        <Race value="Keir"/>
+        <PlaneArray index="Ground" value="1"/>
+        <ShieldsStart value="200"/>
+        <ShieldsMax value="200"/>
+        <Radius value="2.5"/>
+        <InnerRadius value="2.5"/>
+        <EditorCategories value="ObjectType:Unit,ObjectFamily:Melee"/>
+        <Mover value="Fly"/>
+    </CUnit>
     <CUnit id="TechVault" parent="CStructureGenetron">
         <LifeStart value="1000"/>
         <LifeMax value="1000"/>
@@ -1022,6 +1028,47 @@
         <Radius value="1.25"/>
         <SubgroupPriority value="7"/>
         <GlossaryPriority value="4"/>
+    </CUnit>
+    <CUnit id="Ward" parent="CUnitKeiron">
+        <Attributes index="Armored" value="1"/>
+        <Attributes index="Mechanical" value="1"/>
+        <LifeStart value="75"/>
+        <LifeMax value="75"/>
+        <LifeArmor value="1"/>
+        <LifeArmorName value="Unit/LifeArmorName/KeironMechanicalArmor"/>
+        <ShieldsStart value="200"/>
+        <ShieldsMax value="200"/>
+        <Speed value="2.25"/>
+        <StationaryTurningRate value="630"/>
+        <TurningRate value="630"/>
+        <Food value="-3"/>
+        <CostResource index="Minerals" value="150"/>
+        <CostResource index="Vespene" value="150"/>
+        <AbilArray index="3" Link="ProgressRally"/>
+        <AbilArray Link="KeironWarpable"/>
+        <AbilArray Link="FuseUnfuse"/>
+        <AbilArray Link="WardReplenishShell"/>
+        <AbilArray Link="WardShellDome"/>
+        <AbilArray Link="WardShellDomeCancel"/>
+        <BehaviorArray Link="WardPassiveShellRegen"/>
+        <BehaviorArray Link="WardShellDomeReqDummy"/>
+        <WeaponArray Link="ShadowCannon"/>
+        <EffectArray index="Create" value="FoundryUmbraDelay"/>
+        <CardLayouts index="0">
+            <LayoutButtons Row="0" Column="0"/>
+            <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="WardShellDomeCancel,Execute" Row="2" Column="4"/>
+            <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
+            <LayoutButtons Face="Unfuse" Type="AbilCmd" AbilCmd="FuseUnfuse,Execute" Row="1" Column="4"/>
+            <LayoutButtons Face="ReplenishShell" Type="AbilCmd" AbilCmd="WardReplenishShell,Execute" Row="2" Column="0"/>
+            <LayoutButtons Face="ShellDome" Type="AbilCmd" AbilCmd="WardShellDome,Execute" Row="2" Column="1"/>
+        </CardLayouts>
+        <Radius value="0.625"/>
+        <SeparationRadius value="0.625"/>
+        <InnerRadius value="0.5"/>
+        <CargoSize value="2"/>
+        <SubgroupPriority value="20"/>
+        <MinimapRadius value="0.625"/>
+        <GlossaryPriority value="20"/>
     </CUnit>
     <CUnit id="Uploader" parent="CStructureGenetron">
         <LifeStart value="400"/>
@@ -3161,7 +3208,6 @@
         <PlaneArray index="Ground" value="1"/>
         <ShieldsStart value="3000"/>
         <ShieldsMax value="3000"/>
-        <ShieldRegenRate value="2.5"/>
         <BehaviorArray Link="AegisShieldAura"/>
         <GlossaryCategory value=""/>
     </CUnit>
@@ -3268,7 +3314,6 @@
         </CardLayouts>
         <SubgroupPriority value="21"/>
         <GlossaryPriority value="31"/>
-        <ShieldRegenRate value="2.5"/>
         <LateralAcceleration value="6"/>
         <Radius value="0.4375"/>
         <SeparationRadius value="0.4375"/>
@@ -3366,8 +3411,6 @@
         <LifeArmorName value="Unit/LifeArmorName/ProtossBuildingPlating"/>
         <ShieldsStart value="300"/>
         <ShieldsMax value="300"/>
-        <ShieldRegenDelay value="10"/>
-        <ShieldRegenRate value="2"/>
         <StationaryTurningRate value="719.4726"/>
         <TurningRate value="719.4726"/>
         <Sight value="9"/>
@@ -3903,6 +3946,7 @@
         <AbilArray Link="CitadelChargeMorph"/>
         <AbilArray Link="CitadelEnergize"/>
         <BehaviorArray Link="CitadelPowerSource"/>
+        <BehaviorArray Link="KeironShellRestorationAura"/>
         <Radius value="2"/>
         <SeparationRadius value="2"/>
         <FlagArray index="PreventReveal" value="1"/>
@@ -4448,7 +4492,6 @@
         <Collide index="Ground" value="0"/>
         <Collide index="ForceField" value="0"/>
         <Collide index="Phased" value="1"/>
-        <ShieldArmorLevel value="1"/>
         <AbilArray index="0" Link="attack"/>
         <AbilArray index="1" Link="move"/>
         <AbilArray index="2" Link="stop"/>
@@ -4584,7 +4627,6 @@
         <Acceleration value="4"/>
         <ShieldsStart value="140"/>
         <ShieldsMax value="140"/>
-        <ShieldRegenRate value="2.5"/>
     </CUnit>
     <CUnit id="Edifice" parent="CBuildingKeiron">
         <Facing value="45"/>
@@ -4735,6 +4777,8 @@
         <GlossaryAlias value=""/>
         <HotkeyCategory value=""/>
         <SubgroupPriority value="4"/>
+        <ShieldRegenDelay value="4"/>
+        <ShieldRegenRate value="1.25"/>
     </CUnit>
     <CUnit id="Reliquary" parent="CBuildingKeiron">
         <Facing value="45"/>

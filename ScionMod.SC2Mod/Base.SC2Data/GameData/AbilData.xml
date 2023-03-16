@@ -1026,6 +1026,33 @@
         <UninterruptibleArray index="Channel" value="1"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="SelfFixProtocol"/>
     </CAbilEffectInstant>
+    <CAbilEffectTarget id="WardReplenishShell">
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <Cost>
+            <Vital index="Shields" value="50"/>
+        </Cost>
+        <Range value="8"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="ReplenishShell"/>
+    </CAbilEffectTarget>
+    <CAbilEffectTarget id="WardShellDome">
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <Range value="8"/>
+        <CmdButtonArray index="Execute" Requirements="WardShellDome"/>
+        <Cost>
+            <Charge Location="Unit"/>
+            <Cooldown Location="Unit" TimeStart="0.0625"/>
+        </Cost>
+        <UninterruptibleArray index="Channel" value="1"/>
+    </CAbilEffectTarget>
+    <CAbilEffectInstant id="WardShellDomeCancel">
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <Flags index="Transient" value="1"/>
+        <Cost>
+            <Charge Link="Abil/WardShellDome" Location="Unit"/>
+            <Cooldown Link="Abil/WardShellDome" Location="Unit" TimeUse="10"/>
+        </Cost>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Cancel" Requirements="WardShellDomeCancel"/>
+    </CAbilEffectInstant>
     <CAbilQueue id="que1Passive">
         <EditorCategories value="Race:Neutral,AbilityorEffectType:Structures"/>
         <QueueSize value="1"/>

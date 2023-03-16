@@ -219,6 +219,37 @@
     </CEffectMorph>
     <CEffectApplyBehavior id="CitadelEnergize" parent="ScionApplyBehavior" Race="Keiron"/>
     <CEffectApplyBehavior id="CitadelEnergized" parent="ScionApplyBehavior" Race="Keiron"/>
+    <CEffectApplyBehavior id="FuseFusionABRegen">
+        <ValidatorArray index="0" value="CasterHasShellRestorationOrMaxShields"/>
+        <EditorCategories value="Race:Keiron"/>
+        <Behavior value="KeironShellRestoration"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="KeironShellRestorationAB">
+        <ValidatorArray index="0" value="NoShellRestorationDelay"/>
+        <ValidatorArray value="UnitIsKeiron"/>
+        <EditorCategories value="Race:Keiron"/>
+        <Behavior value="KeironShellRestoration"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="KeironShellRestorationDelayABSource">
+        <EditorCategories value="Race:Keiron"/>
+        <WhichUnit Value="Source"/>
+        <Behavior value="KeironShellRestorationDelay"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="KeironShellRestorationDelayABCaster">
+        <ValidatorArray index="0" value="KeironShellRestorationDelayABSourceTargetFilters"/>
+        <EditorCategories value="Race:Keiron"/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="KeironShellRestorationDelay"/>
+    </CEffectApplyBehavior>
+    <CEffectRemoveBehavior id="KeironShellRestorationDelayRBTarget">
+        <EditorCategories value="Race:Keiron"/>
+        <BehaviorLink value="KeironShellRestorationDelay"/>
+    </CEffectRemoveBehavior>
+    <CEffectEnumArea id="KeironShellRestorationSA" parent="ScionEnumArea">
+        <EditorCategories value="Race:Keiron"/>
+        <SearchFilters value="-;Neutral,Enemy,Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <AreaArray Radius="10" Effect="KeironShellRestorationAB"/>
+    </CEffectEnumArea>
     <CEffectCreateHealer id="OlympusChargeUpHealer">
         <ValidatorArray value="IsProcessingCoreOrRelayTower"/>
         <ValidatorArray value="EnergyGTE5"/>
@@ -1033,6 +1064,7 @@
     <CEffectApplyBehavior id="ShieldAuraAB" parent="ScionApplyBehavior" Race="Keiron">
         <ValidatorArray index="0" value="NoAegisShieldAura"/>
         <ValidatorArray value="FriendlyTarget"/>
+        <ValidatorArray value="AegisShieldAuraDistance"/>
         <Behavior value="AegisShield"/>
     </CEffectApplyBehavior>
     <CEffectApplyBehavior id="StagnatingBileStun" parent="ScionApplyBehavior" Race="Xayid">
@@ -1883,6 +1915,106 @@
         <Behavior value="LockdownModeDuration"/>
     </CEffectApplyBehavior>
     <CEffectApplyBehavior id="VolatileDischargeAB" parent="ScionApplyBehavior" Race="Xayid"/>
+    <CEffectSet id="WardReplenishShell">
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="KeironShellRestorationDelayABSource"/>
+        <EffectArray value="KeironShellRestorationDelayRBTarget"/>
+        <EffectArray value="KeironShellRestorationAB"/>
+        <EffectArray value="WardReplenishShellMU"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="WardReplenishShellMU">
+        <EditorCategories value="Race:Keiron"/>
+        <VitalArray index="Shields">
+            <Change value="50"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectSet id="WardShellDome">
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="WardShellDomeCU"/>
+        <TargetLocationType value="Point"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="WardShellDomeABFused" parent="ScionApplyBehavior">
+        <ValidatorArray index="0" value="CasterIsFused"/>
+        <EditorCategories value="Race:Keiron"/>
+        <Behavior value="ShellDomeFused"/>
+    </CEffectApplyBehavior>
+    <CEffectCreateUnit id="WardShellDomeCU">
+        <EditorCategories value="Race:Keiron"/>
+        <WhichLocation Value="TargetPoint"/>
+        <SpawnEffect value="WardShellDomeCUSet"/>
+        <SpawnUnit value="ShellDome"/>
+    </CEffectCreateUnit>
+    <CEffectApplyBehavior id="WardShellDomeABAura">
+        <EditorCategories value="Race:Keiron"/>
+        <Behavior value="ShellDomeAura"/>
+    </CEffectApplyBehavior>
+    <CEffectSet id="WardShellDomeCUSet">
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="WardShellDomeABFused"/>
+        <EffectArray value="WardShellDomeStartMUDome"/>
+        <EffectArray value="WardShellDomeStartMUCaster"/>
+        <EffectArray value="WardShellDomeStartABCaster"/>
+        <EffectArray value="WardShellDomeABAura"/>
+    </CEffectSet>
+    <CEffectRemoveBehavior id="WardShellDomeCancel">
+        <EditorCategories value="Race:Keiron"/>
+        <WhichUnit Value="Caster"/>
+        <BehaviorLink value="ShellDomeCaster"/>
+    </CEffectRemoveBehavior>
+    <CEffectRemoveBehavior id="WardShellDomeEndRBCaster">
+        <EditorCategories value="Race:Keiron"/>
+        <WhichUnit Value="Caster"/>
+        <BehaviorLink value="ShellDomeCaster"/>
+    </CEffectRemoveBehavior>
+    <CEffectSet id="WardShellDomeEndSet">
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="WardShellDomeEndMUCaster"/>
+        <EffectArray value="WardShellDomeEndRBCaster"/>
+        <EffectArray value="Suicide"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="WardShellDomeProtectionAB">
+        <ValidatorArray index="0" value="WardShellDomeDistance"/>
+        <ValidatorArray value="NotShellDome"/>
+        <ValidatorArray value="NotAegis"/>
+        <EditorCategories value="Race:Keiron"/>
+        <Behavior value="WardShellDome"/>
+    </CEffectApplyBehavior>
+    <CEffectEnumArea id="WardShellDomeSA" parent="ScionEnumArea">
+        <EditorCategories value="Race:Keiron"/>
+        <DebugTrace value="1"/>
+        <SearchFilters value="-;Neutral,Enemy,Air,Missile,Stasis,Dead,Hidden"/>
+        <AreaArray Radius="2.5" Effect="WardShellDomeProtectionAB"/>
+    </CEffectEnumArea>
+    <CEffectApplyBehavior id="WardShellDomeStartABCaster" parent="ScionApplyBehaviorCaster">
+        <EditorCategories value="Race:Keiron"/>
+        <Behavior value="ShellDomeCaster"/>
+    </CEffectApplyBehavior>
+    <CEffectModifyUnit id="WardShellDomeStartMUDome">
+        <EditorCategories value="Race:Keiron"/>
+        <VitalArray index="Shields">
+            <Change value="0">
+                <AccumulatorArray value="ShieldsCurrentCaster"/>
+            </Change>
+        </VitalArray>
+        <ModifyFlags index="SetVitals" value="1"/>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="WardShellDomeStartMUCaster">
+        <EditorCategories value="Race:Keiron"/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Shields">
+            <ChangeFraction value="-1"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="WardShellDomeEndMUCaster">
+        <EditorCategories value="Race:Keiron"/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Shields">
+            <Change value="0">
+                <AccumulatorArray value="ShieldsCurrentTarget"/>
+            </Change>
+        </VitalArray>
+        <ModifyFlags index="SetVitals" value="1"/>
+    </CEffectModifyUnit>
     <CEffectApplyBehavior id="XayidSpawnTimedLife" parent="ScionApplyBehavior" Race="Xayid"/>
     <CEffectCreatePersistent id="XayidlingDash" parent="ScionCreatePersistent" Race="Xayid">
         <Flags index="Channeled" value="1"/>
@@ -2311,6 +2443,7 @@
         <PeriodCount value="2"/>
         <PeriodicEffectArray value="FuseFusionAB"/>
         <PeriodicEffectArray value="FuseFusionSelection"/>
+        <InitialEffect value="FuseFusionABRegen"/>
     </CEffectCreatePersistent>
     <CEffectApplyBehavior id="FuseFusionABCaster" parent="ScionApplyBehaviorCaster" Race="Keiron">
         <Behavior value="FuseFusedCaster"/>
@@ -2343,7 +2476,7 @@
         <EditorCategories value="Race:Keiron"/>
         <VitalArray index="Shields">
             <Change value="0">
-                <AccumulatorArray value="FuseFusionShieldsApply"/>
+                <AccumulatorArray value="ShieldsCurrentCaster"/>
             </Change>
         </VitalArray>
     </CEffectModifyUnit>
@@ -2390,13 +2523,14 @@
     <CEffectCreatePersistent id="FuseUnfuseSet" parent="ScionCreatePersistent" Race="Keiron">
         <WhichLocation Value="TargetUnit"/>
         <FinalEffect value="FuseUnfuseSelectionCooldown"/>
-        <PeriodCount value="7"/>
+        <PeriodCount value="8"/>
         <PeriodicEffectArray value="FuseUnfuseRB"/>
         <PeriodicEffectArray value="FuseUnfuseRK"/>
         <PeriodicEffectArray value="FuseUnfuseRBCaster"/>
         <PeriodicEffectArray value="FuseUnfuseShieldMUCaster"/>
         <PeriodicEffectArray value="FuseUnfuseShieldMUTarget"/>
         <PeriodicEffectArray value="FuseUnfuseCargoSuicide"/>
+        <PeriodicEffectArray value="KeironShellRestorationDelayABCaster"/>
         <PeriodicEffectArray value="FuseUnfuseShow"/>
         <ExpireDelay value="0.5"/>
     </CEffectCreatePersistent>
