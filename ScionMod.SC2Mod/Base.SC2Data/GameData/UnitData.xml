@@ -334,6 +334,11 @@
         <MinimapRadius value="0.4375"/>
         <BehaviorArray Link="GenetronUnitEnergyRegenx2"/>
     </CUnit>
+    <CUnit id="WardWeaponLMWeapon" parent="MISSILE">
+        <Race value="Keir"/>
+        <Mover value="MissileDefault"/>
+        <EditorCategories value="ObjectType:Projectile,ObjectFamily:Melee"/>
+    </CUnit>
     <CUnit id="Olympus" parent="CStructureGenetron">
         <LifeStart value="2000"/>
         <LifeMax value="2000"/>
@@ -794,8 +799,6 @@
             <LayoutButtons Face="ResearchFixerReactiveArmor" Type="AbilCmd" AbilCmd="OutfittingStationResearch,Research4" Row="0" Column="3"/>
             <LayoutButtons Face="ResearchTorrentEnhancedTargeting" Type="AbilCmd" AbilCmd="OutfittingStationResearch,Research5" Row="1" Column="0"/>
             <LayoutButtons Face="ResearchMoleSubterraneanSensors" Type="AbilCmd" AbilCmd="OutfittingStationResearch,Research7" Row="1" Column="1"/>
-            <LayoutButtons Face="ResearchBoarShapedHull" Type="AbilCmd" AbilCmd="OutfittingStationResearch,Research8" Row="2" Column="0"/>
-            <LayoutButtons Face="ResearchBadgerAAMDefenseTurret" Type="AbilCmd" AbilCmd="OutfittingStationResearch,Research9" Row="2" Column="1"/>
         </CardLayouts>
         <Radius value="1.25"/>
         <SubgroupPriority value="2"/>
@@ -950,16 +953,6 @@
         <GlossaryCategory value=""/>
         <HotkeyCategory value=""/>
     </CUnit>
-    <CUnit id="ShellDome">
-        <Race value="Keir"/>
-        <PlaneArray index="Ground" value="1"/>
-        <ShieldsStart value="200"/>
-        <ShieldsMax value="200"/>
-        <Radius value="2.5"/>
-        <InnerRadius value="2.5"/>
-        <EditorCategories value="ObjectType:Unit,ObjectFamily:Melee"/>
-        <Mover value="Fly"/>
-    </CUnit>
     <CUnit id="TechVault" parent="CStructureGenetron">
         <LifeStart value="1000"/>
         <LifeMax value="1000"/>
@@ -1032,12 +1025,12 @@
     <CUnit id="Ward" parent="CUnitKeiron">
         <Attributes index="Armored" value="1"/>
         <Attributes index="Mechanical" value="1"/>
-        <LifeStart value="75"/>
-        <LifeMax value="75"/>
+        <LifeStart value="100"/>
+        <LifeMax value="100"/>
         <LifeArmor value="1"/>
         <LifeArmorName value="Unit/LifeArmorName/KeironMechanicalArmor"/>
-        <ShieldsStart value="200"/>
-        <ShieldsMax value="200"/>
+        <ShieldsStart value="250"/>
+        <ShieldsMax value="250"/>
         <Speed value="2.25"/>
         <StationaryTurningRate value="630"/>
         <TurningRate value="630"/>
@@ -1052,7 +1045,7 @@
         <AbilArray Link="WardShellDomeCancel"/>
         <BehaviorArray Link="WardPassiveShellRegen"/>
         <BehaviorArray Link="WardShellDomeReqDummy"/>
-        <WeaponArray Link="ShadowCannon"/>
+        <WeaponArray Link="WardWeapon"/>
         <EffectArray index="Create" value="FoundryUmbraDelay"/>
         <CardLayouts index="0">
             <LayoutButtons Row="0" Column="0"/>
@@ -1062,13 +1055,24 @@
             <LayoutButtons Face="ReplenishShell" Type="AbilCmd" AbilCmd="WardReplenishShell,Execute" Row="2" Column="0"/>
             <LayoutButtons Face="ShellDome" Type="AbilCmd" AbilCmd="WardShellDome,Execute" Row="2" Column="1"/>
         </CardLayouts>
-        <Radius value="0.625"/>
-        <SeparationRadius value="0.625"/>
+        <Radius value="0.75"/>
+        <SeparationRadius value="0.75"/>
         <InnerRadius value="0.5"/>
-        <CargoSize value="2"/>
+        <CargoSize value="4"/>
         <SubgroupPriority value="20"/>
         <MinimapRadius value="0.625"/>
         <GlossaryPriority value="20"/>
+    </CUnit>
+    <CUnit id="ShellDome">
+        <Race value="Keir"/>
+        <PlaneArray index="Ground" value="1"/>
+        <ShieldsStart value="250"/>
+        <ShieldsMax value="250"/>
+        <Radius value="2.5"/>
+        <InnerRadius value="2.5"/>
+        <EditorCategories value="ObjectType:Unit,ObjectFamily:Melee"/>
+        <Mover value="Fly"/>
+        <FlagArray index="AlwaysThreatens" value="1"/>
     </CUnit>
     <CUnit id="Uploader" parent="CStructureGenetron">
         <LifeStart value="400"/>
@@ -1680,17 +1684,8 @@
         <RepairTime value="56"/>
         <WeaponArray Link="HellraiserGuns"/>
         <WeaponArray Link="LancerAutogun" Turret="BadgerAATurret"/>
-        <WeaponArray Link="AAMLaser" Turret="BadgerPointDefenseTurret"/>
         <CardLayouts index="0">
             <LayoutButtons Face="MELESTargetingSystem" Type="Passive" Row="2" Column="0"/>
-            <LayoutButtons>
-                <Face value="AAMDefenseTurret"/>
-                <Type value="Passive"/>
-                <Requirements value="UseAAMDefenseTurret"/>
-                <ShowInGlossary value="0"/>
-                <Row value="2"/>
-                <Column value="1"/>
-            </LayoutButtons>
         </CardLayouts>
         <Radius value="1"/>
         <SeparationRadius value="1"/>
@@ -1711,8 +1706,8 @@
     </CUnit>
     <CUnit id="Boar" parent="CUnitGenetronAir">
         <Attributes index="Armored" value="1"/>
-        <LifeStart value="175"/>
-        <LifeMax value="175"/>
+        <LifeStart value="225"/>
+        <LifeMax value="225"/>
         <Speed value="3.25"/>
         <Sight value="10"/>
         <Food value="-4"/>
@@ -3965,6 +3960,7 @@
         <TechTreeProducedUnitArray value="Subjecter"/>
         <TechTreeProducedUnitArray value="Meridian"/>
         <TechTreeProducedUnitArray value="Umbra"/>
+        <TechTreeProducedUnitArray value="Ward"/>
         <TechTreeProducedUnitArray value="Inducer"/>
         <TechTreeProducedUnitArray value="Myriad"/>
         <TechTreeProducedUnitArray value="Titan"/>
@@ -4677,6 +4673,7 @@
         <ScoreMake value="300"/>
         <ScoreKill value="300"/>
         <TechTreeUnlockedUnitArray value="Umbra"/>
+        <TechTreeUnlockedUnitArray value="Ward"/>
     </CUnit>
     <CUnit id="Outlet" parent="DefaultSettingsKeironBuildingFlyer">
         <Facing value="45"/>

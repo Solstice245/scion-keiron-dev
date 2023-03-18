@@ -198,6 +198,10 @@
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-pneumatizedcarapace.dds"/>
         <SoundArray index="Attack" value="Assailant_Yes"/>
     </CActorUnit>
+    <CActorMissile id="WardAttackMissile" parent="GenericAttackMissile" unitName="WardWeaponLMWeapon">
+        <On Terms="ActorCreation" Send="SetTintColor {255,89,0 2.000000}"/>
+        <Model value="WardAttackMissile"/>
+    </CActorMissile>
     <CActorModel id="OlympusDischargeDoT" parent="ModelAddition">
         <Inherits index="Opacity" value="0"/>
         <Inherits index="TintColor" value="0"/>
@@ -1065,30 +1069,12 @@
         <On Terms="Effect.TitanWeaponCP.Stop" Send="Destroy"/>
     </CActorSound>
     <CActorUnit id="Ward" parent="GenericUnitKeiron" unitName="Ward">
-        <On index="65" Terms="WeaponStart.*.AttackStart" Send="AnimBracketStart Cover Cover,Start Cover Cover,End OpeningPlayForever"/>
-        <On index="67" Terms="WeaponStop.*.AttackStop" Send="TimerSet 3.000000 CoverDelay"/>
-        <On Terms="TimerExpired; TimerName CoverDelay" Send="AnimBracketStop Cover"/>
-        <On Terms="WeaponStart.*.AttackStart" Send="AnimBracketStart Attack {} Attack {} ContentNonLooping,ContentPlayOnce"/>
-        <On Terms="WeaponStop.*.AttackStop" Send="AnimBracketStop Attack"/>
-        <On Terms="UnitMovementUpdate.*.Walk" Send="AnimBracketClear Cover"/>
-        <Baselines index="Stand" BlendIn="0.000000"/>
-        <Baselines index="Walk" AnimProps="Walk,Superior"/>
+        <WalkAnimMoveSpeed value="1.8984"/>
         <DeathArray index="Normal" SoundLink="KeironUnit_Death"/>
-        <BarOffset value="65"/>
-        <GroupIcon>
-            <Image index="0" value="Assets\Textures\wireframe-keiron-Umbra.dds"/>
-        </GroupIcon>
-        <HeroIcon value="Assets\Textures\btn-unit-keiron-Umbra.dds"/>
+        <BarOffset value="80"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-mechanicalarmorlevel0.dds"/>
-        <UnitIcon value="Assets\Textures\btn-unit-keiron-Umbra.dds"/>
-        <Wireframe>
-            <Image index="0" value="Assets\Textures\wireframe-keiron-Umbra.dds"/>
-        </Wireframe>
-        <WireframeShield>
-            <Image index="0" value="Assets\Textures\wireframe-keiron-Umbra-shield1.dds"/>
-            <Image index="1" value="Assets\Textures\wireframe-keiron-Umbra-shield2.dds"/>
-            <Image index="2" value="Assets\Textures\wireframe-keiron-Umbra-shield3.dds"/>
-        </WireframeShield>
+        <On index="65" Terms="WeaponStart.*.AttackStart" Send="AnimBracketStart Attack Attack {} {} ContentNonLooping,OpeningPlayForever"/>
+        <BarWidth value="70"/>
     </CActorUnit>
     <CActorSound id="UmbraShieldCompulsionSound" parent="SoundOneShotScion" Effect="UmbraShieldCompulsion"/>
     <CActorSound id="Umbra_CloakOff" parent="SoundOneShotScion" Behavior="UmbraStealth" BSub="Off"/>
@@ -6107,6 +6093,11 @@
         <ImpactMap index="Shield" Sound="SubjugatorAirAttackImpactShield" ModelReaction="SubjugatorAirAttackImpactReactionShield"/>
         <DamageMap index="None" Model="SubjugatorAirAttackDamage" Sound="SubjugatorAirAttackDamage" ModelReaction="SubjugatorAirAttackDamageReaction"/>
         <DamageMap index="Shield" Sound="SubjugatorAirAttackDamageShield" ModelReaction="SubjugatorAirAttackDamageReactionShield"/>
+    </CActorAction>
+    <CActorAction id="WardAttack" parent="GenericAttack" effectImpact="WardWeaponLMImpact" effectLaunch="WardWeaponLM">
+        <LaunchAttachQuery Methods="AMFilterWeapon AMPatternWard"/>
+        <LaunchModel value="SubjecterAirAttackLaunch"/>
+        <ImpactModel value="SubjecterAirAttackImpact"/>
     </CActorAction>
     <CActorAction id="SubjecterAttack" parent="GenericAttack" effectAttack="ForceBlast">
         <LaunchAttachQuery Methods="AMFilterSubjugatorGround"/>

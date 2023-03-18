@@ -219,6 +219,16 @@
     </CEffectMorph>
     <CEffectApplyBehavior id="CitadelEnergize" parent="ScionApplyBehavior" Race="Keiron"/>
     <CEffectApplyBehavior id="CitadelEnergized" parent="ScionApplyBehavior" Race="Keiron"/>
+    <CEffectCreatePersistent id="WardWeapon" parent="ScionCreatePersistent" Race="Keiron">
+        <WhichLocation Value="TargetUnit"/>
+        <PeriodCount value="2"/>
+        <PeriodicEffectArray value="WardWeaponLM"/>
+    </CEffectCreatePersistent>
+    <CEffectLaunchMissile id="WardWeaponLM" parent="ScionLaunchMissile" Race="Keiron"/>
+    <CEffectDamage id="WardWeaponLMImpact" parent="ScionDamageRange" Race="Keiron">
+        <Amount value="6"/>
+        <Death value="Electrocute"/>
+    </CEffectDamage>
     <CEffectApplyBehavior id="FuseFusionABRegen">
         <ValidatorArray index="0" value="CasterHasShellRestorationOrMaxShields"/>
         <EditorCategories value="Race:Keiron"/>
@@ -454,7 +464,7 @@
         <Flags index="Channeled" value="0"/>
         <PeriodicValidator value="GenetronEnergyGenValidators"/>
         <RechargeVital value="Energy"/>
-        <RechargeVitalRate value="2.1445"/>
+        <RechargeVitalRate value="2.8593"/>
         <InitialEffect value="DataDefaultSet1"/>
         <FinalEffect value="GeneratorPowerSet"/>
     </CEffectCreateHealer>
@@ -1921,6 +1931,8 @@
         <EffectArray value="KeironShellRestorationDelayRBTarget"/>
         <EffectArray value="KeironShellRestorationAB"/>
         <EffectArray value="WardReplenishShellMU"/>
+        <ValidatorArray value="CanHaveShields"/>
+        <ValidatorArray value="ShieldsNotFull"/>
     </CEffectSet>
     <CEffectModifyUnit id="WardReplenishShellMU">
         <EditorCategories value="Race:Keiron"/>
@@ -3300,18 +3312,25 @@
         <EffectArray value="KeironUnitChargeAB"/>
         <EffectArray value="EdificeParVolAddCharge"/>
     </CEffectSet>
-    <CEffectEnumArea id="ElectronBoltBounceSA" parent="ScionEnumArea" Race="Keiron">
-        <Chance value="0"/>
-        <ExcludeArray Value="Outer"/>
-        <ExcludeArray Value="Target"/>
-        <SearchFilters value="-;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
-        <AreaArray Radius="4" Effect="ElectronBoltBLM"/>
-        <MaxCount value="1"/>
-    </CEffectEnumArea>
     <CEffectDamage id="ElectronBoltBDMG" parent="ScionDamage" Race="Keiron">
-        <Amount value="2"/>
+        <Amount value="3"/>
         <Death value="Electrocute"/>
     </CEffectDamage>
+    <CEffectDamage id="VoltElectronBoltBounceDummy" parent="ScionDamage" Race="Keiron"/>
+    <CEffectSet id="VoltElectronBoltBounceSet" parent="ScionSet" Race="Keiron">
+        <EffectArray value="ElectronBoltBDMG"/>
+        <EffectArray value="ElectronBoltBLM"/>
+    </CEffectSet>
+    <CEffectEnumArea id="ElectronBoltBounceSA" parent="ScionEnumArea" Race="Keiron">
+        <Chance value="0"/>
+        <ExcludeArray Value="Target"/>
+        <SearchFilters value="-;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <AreaArray Radius="3" Effect="VoltElectronBoltBounceSet"/>
+        <MaxCount value="1"/>
+        <TargetSorts>
+            <SortArray value="TSLife"/>
+        </TargetSorts>
+    </CEffectEnumArea>
     <CEffectSet id="ElectronBoltLMImpact" parent="ScionSet" Race="Keiron">
         <EffectArray value="ElectronBoltD"/>
         <EffectArray value="ElectronBoltBounceSA"/>
