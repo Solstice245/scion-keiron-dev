@@ -334,6 +334,23 @@
         <MinimapRadius value="0.4375"/>
         <BehaviorArray Link="GenetronUnitEnergyRegenx2"/>
     </CUnit>
+    <CUnit id="OrdnanceCache" parent="CStructureGenetron">
+        <LifeStart value="1000"/>
+        <LifeMax value="1000"/>
+        <Sight value="10"/>
+        <CostResource index="Minerals" value="150"/>
+        <CostResource index="Vespene" value="150"/>
+        <RepairTime value="60"/>
+        <CardLayouts index="0">
+            <LayoutButtons index="0" Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
+            <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
+        </CardLayouts>
+        <Radius value="1.25"/>
+        <SubgroupPriority value="6"/>
+        <GlossaryPriority value="26"/>
+        <TechTreeUnlockedUnitArray value="Virtus"/>
+        <TechTreeUnlockedUnitArray value="Badger"/>
+    </CUnit>
     <CUnit id="WardWeaponLMWeapon" parent="MISSILE">
         <Race value="Keir"/>
         <Mover value="MissileDefault"/>
@@ -438,16 +455,8 @@
         <BehaviorArray Link="FixerReactiveArmor"/>
         <WeaponArray Link="FixerFlashGun"/>
         <CardLayouts index="0">
-            <LayoutButtons Face="FixerSpeedCloak" Type="AbilCmd" AbilCmd="SpeedCloak,Execute" Row="2" Column="0"/>
-            <LayoutButtons Face="Repair" Type="AbilCmd" AbilCmd="FixerRepair,Execute" Row="2" Column="1"/>
-            <LayoutButtons>
-                <Face value="ReactiveArmor"/>
-                <Type value="Passive"/>
-                <Requirements value="FixerUseReactiveArmor"/>
-                <ShowInGlossary value="0"/>
-                <Row value="2"/>
-                <Column value="2"/>
-            </LayoutButtons>
+            <LayoutButtons Face="Repair" Type="AbilCmd" AbilCmd="FixerRepair,Execute" Row="2" Column="0"/>
+            <LayoutButtons Face="ReactiveArmor" Type="Passive" Behavior="FixerReactiveArmor" Row="2" Column="1"/>
         </CardLayouts>
         <InnerRadius value="0.4375"/>
         <SubgroupPriority value="44"/>
@@ -504,8 +513,8 @@
         <GlossaryWeakArray value="Marauder"/>
         <GlossaryWeakArray value="Zergling"/>
         <Speed value="2.75"/>
-        <EnergyStart value="10"/>
-        <EnergyMax value="10"/>
+        <EnergyStart value="30"/>
+        <EnergyMax value="30"/>
         <BehaviorArray Link="GenetronUnitEnergyRegen"/>
     </CUnit>
     <CUnit id="ParadoxShackleWeapon" parent="MISSILE_INVULNERABLE">
@@ -785,8 +794,8 @@
         <LifeStart value="850"/>
         <LifeMax value="850"/>
         <Sight value="10"/>
-        <CostResource index="Minerals" value="125"/>
-        <CostResource index="Vespene" value="75"/>
+        <CostResource index="Minerals" value="150"/>
+        <CostResource index="Vespene" value="100"/>
         <RepairTime value="50"/>
         <AbilArray Link="que5"/>
         <AbilArray Link="OutfittingStationResearch"/>
@@ -795,19 +804,14 @@
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
             <LayoutButtons Face="ResearchSpitfireCalibratedEngines" Type="AbilCmd" AbilCmd="OutfittingStationResearch,Research1" Row="0" Column="0"/>
             <LayoutButtons Face="ResearchSpitfireMadcapRounds" Type="AbilCmd" AbilCmd="OutfittingStationResearch,Research2" Row="0" Column="1"/>
-            <LayoutButtons Face="ResearchBlitzerBoreanReactor" Type="AbilCmd" AbilCmd="OutfittingStationResearch,Research3" Row="0" Column="2"/>
-            <LayoutButtons Face="ResearchFixerReactiveArmor" Type="AbilCmd" AbilCmd="OutfittingStationResearch,Research4" Row="0" Column="3"/>
-            <LayoutButtons Face="ResearchTorrentEnhancedTargeting" Type="AbilCmd" AbilCmd="OutfittingStationResearch,Research5" Row="1" Column="0"/>
-            <LayoutButtons Face="ResearchMoleSubterraneanSensors" Type="AbilCmd" AbilCmd="OutfittingStationResearch,Research7" Row="1" Column="1"/>
         </CardLayouts>
         <Radius value="1.25"/>
         <SubgroupPriority value="2"/>
         <GlossaryPriority value="25"/>
+        <TechTreeUnlockedUnitArray value="Blitzer"/>
         <TechTreeUnlockedUnitArray value="Fixer"/>
         <TechTreeUnlockedUnitArray value="Equalizer"/>
         <TechTreeUnlockedUnitArray value="Inciter"/>
-        <TechTreeUnlockedUnitArray value="Tesla"/>
-        <TechTreeUnlockedUnitArray value="Boar"/>
     </CUnit>
     <CUnit id="GyreAnnexDummy">
         <Race value="Keir"/>
@@ -830,8 +834,8 @@
         <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
     </CUnit>
     <CUnit id="RelayTower" parent="CStructureGenetron">
-        <LifeStart value="600"/>
-        <LifeMax value="600"/>
+        <LifeStart value="500"/>
+        <LifeMax value="500"/>
         <EnergyMax value="300"/>
         <AbilArray Link="RelayTowerLongRangeTransfer"/>
         <AbilArray Link="CoreSystemRecharge"/>
@@ -844,28 +848,27 @@
         <CostResource index="Minerals" value="100"/>
         <CostResource index="Vespene" value="50"/>
         <TechTreeUnlockedUnitArray value="Processor"/>
-        <TechTreeUnlockedUnitArray value="Blitzer"/>
         <GlossaryPriority value="23"/>
         <RepairTime value="40"/>
         <BehaviorArray Link="GenetronEnergyStateNotFull"/>
         <EffectArray index="Birth" value="GenetronUpdatePowerGenerationTargetSA"/>
         <SubgroupPriority value="5"/>
+        <Sight value="10"/>
+        <Radius value="1"/>
+        <MinimapRadius value="1"/>
     </CUnit>
     <CUnit id="Generator" parent="CStructureGenetron">
-        <LifeStart value="850"/>
-        <LifeMax value="850"/>
+        <LifeStart value="750"/>
+        <LifeMax value="750"/>
         <BehaviorArray Link="GeneratorPower"/>
         <CardLayouts index="0">
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
             <LayoutButtons Face="GeneratorEnergyGrid" Type="Passive" Row="2" Column="0"/>
-            <LayoutButtons Face="ResearchProcessorIntegratedOptics" Type="AbilCmd" AbilCmd="GeneratorResearch,Research2" Row="0" Column="0"/>
-            <LayoutButtons Face="ResearchProcessorCloakingGenerator" Type="AbilCmd" AbilCmd="GeneratorResearch,Research1" Row="0" Column="1"/>
         </CardLayouts>
         <CostResource index="Minerals" value="150"/>
         <CostResource index="Vespene" value="50"/>
         <RepairTime value="40"/>
         <AbilArray Link="que5"/>
-        <AbilArray Link="GeneratorResearch"/>
         <GlossaryPriority value="24"/>
         <CostCategory value="Economy"/>
         <SubgroupPriority value="1"/>
@@ -979,9 +982,8 @@
         <SubgroupPriority value="6"/>
         <GlossaryPriority value="26"/>
         <TechTreeUnlockedUnitArray value="Aquila"/>
-        <TechTreeUnlockedUnitArray value="Virtus"/>
+        <TechTreeUnlockedUnitArray value="Tesla"/>
         <TechTreeUnlockedUnitArray value="Jupiter"/>
-        <TechTreeUnlockedUnitArray value="Badger"/>
     </CUnit>
     <CUnit id="CloakCharge">
         <Race value="Gen"/>
@@ -1177,6 +1179,7 @@
             <LayoutButtons Face="AssemblyArray" Type="AbilCmd" AbilCmd="ACRBuild,Build12" Row="1" Column="0"/>
             <LayoutButtons Face="Generator" Type="AbilCmd" AbilCmd="ACRBuild,Build14" Row="1" Column="1"/>
             <LayoutButtons Face="TechVault" Type="AbilCmd" AbilCmd="ACRBuild,Build11" Row="1" Column="2"/>
+            <LayoutButtons Face="OrdnanceCache" Type="AbilCmd" AbilCmd="ACRBuild,Build16" Row="2" Column="2"/>
         </CardLayouts>
         <Radius value="0.375"/>
         <InnerRadius value="0.375"/>
@@ -1330,14 +1333,7 @@
         <CardLayouts index="0">
             <LayoutButtons Face="AcquireMove" Type="AbilCmd" AbilCmd="move,AcquireMove" Row="0" Column="4"/>
             <LayoutButtons Face="DeployCannon" Type="AbilCmd" AbilCmd="MoleActivate,Execute" Row="2" Column="0"/>
-            <LayoutButtons>
-                <Face value="SubterraneanSensors"/>
-                <Type value="Passive"/>
-                <Requirements value="SubterraneanSensorsButton"/>
-                <ShowInGlossary value="0"/>
-                <Row value="2"/>
-                <Column value="2"/>
-            </LayoutButtons>
+            <LayoutButtons Face="SubterraneanSensors" Type="Passive" Requirements="SubterraneanSensorsButton" Row="2" Column="2"/>
         </CardLayouts>
         <Radius value="0.75"/>
         <InnerRadius value="0.5"/>
@@ -1377,7 +1373,6 @@
                 <Type value="Passive"/>
                 <AbilCmd value=""/>
                 <Requirements value="SubterraneanSensorsButton"/>
-                <ShowInGlossary value="0"/>
                 <Row value="2"/>
                 <Column value="2"/>
             </LayoutButtons>
@@ -1455,6 +1450,8 @@
         <GlossaryWeakArray value="Hellion"/>
         <GlossaryWeakArray value="Baneling"/>
         <SeparationRadius value="0.375"/>
+        <Acceleration value="30"/>
+        <Deceleration value="1000"/>
     </CUnit>
     <CUnit id="ChangelingSpitfire" parent="Spitfire">
         <Name value="Unit/Name/ChangelingSpitfire"/>
@@ -1476,6 +1473,8 @@
         <SubgroupAlias value="Changeling"/>
         <GlossaryCategory value=""/>
         <RepairTime value="30.4"/>
+        <Acceleration value="1000"/>
+        <Deceleration value="0"/>
     </CUnit>
     <CUnit id="Tesla" parent="CUnitGenetron">
         <Attributes index="Armored" value="1"/>
@@ -1662,8 +1661,8 @@
         <GlossaryWeakArray value="VoidRay"/>
         <GlossaryWeakArray value="ThorAP"/>
         <GlossaryWeakArray value="Hydralisk"/>
-        <EnergyStart value="40"/>
-        <EnergyMax value="40"/>
+        <EnergyStart value="50"/>
+        <EnergyMax value="50"/>
         <BehaviorArray Link="GenetronUnitEnergyRegenx3"/>
         <BehaviorArray Link="AvengerVengeanceMissileAmmo"/>
         <Acceleration value="3.5"/>
@@ -1755,6 +1754,7 @@
         <RepairTime value="35"/>
         <AbilArray index="2" Link="CourierTransport"/>
         <AbilArray Link="CourierCloak"/>
+        <AbilArray Link="OpticalDisruption"/>
         <CardLayouts index="0">
             <LayoutButtons Face="AcquireMove" Type="AbilCmd" AbilCmd="move,AcquireMove" Row="0" Column="4"/>
             <LayoutButtons Face="CourierLoad" Type="AbilCmd" AbilCmd="CourierTransport,Load" Row="2" Column="2"/>
@@ -1768,6 +1768,7 @@
                 <Row value="2"/>
                 <Column value="1"/>
             </LayoutButtons>
+            <LayoutButtons Face="OpticalDisruption" Type="AbilCmd" AbilCmd="OpticalDisruption,Execute" Row="2" Column="4"/>
         </CardLayouts>
         <Radius value="0.75"/>
         <SeparationRadius value="0.75"/>
@@ -1851,47 +1852,29 @@
     </CUnit>
     <CUnit id="Processor" parent="CUnitGenetronAir">
         <Response value="Flee"/>
-        <LifeStart value="100"/>
-        <LifeMax value="100"/>
-        <LifeArmor value="0"/>
-        <LifeRegenDelay value="10"/>
-        <LifeRegenRate value="1.25"/>
+        <LifeStart value="120"/>
+        <LifeMax value="120"/>
         <EnergyMax value="200"/>
         <Speed value="4.25"/>
         <Sight value="11"/>
         <CostResource index="Minerals" value="75"/>
         <CostResource index="Vespene" value="75"/>
         <RepairTime value="17"/>
-        <AbilArray index="2" Link="SystemOffload"/>
-        <AbilArray Link="ProcessorAnalyzeWeakness"/>
-        <AbilArray Link="ProcessorToggleDetection"/>
-        <AbilArray Link="ProcessorSystemRecharge"/>
+        <AbilArray index="2" Link="ProcessorSystemRecharge"/>
         <BehaviorArray Link="GenetronUnitEnergyRegenx3"/>
-        <BehaviorArray Link="IntegratedOptics"/>
+        <BehaviorArray Link="Detector11"/>
         <BehaviorArray Link="CloakingGenerator"/>
         <CardLayouts index="0">
             <LayoutButtons Face="AcquireMove" Type="AbilCmd" AbilCmd="move,AcquireMove" Row="0" Column="4"/>
-            <LayoutButtons Face="AnalyzeWeakness" Type="AbilCmd" AbilCmd="ProcessorAnalyzeWeakness,Execute" Row="2" Column="1"/>
             <LayoutButtons Face="SystemRecharge" Type="AbilCmd" AbilCmd="ProcessorSystemRecharge,Execute" Row="2" Column="0"/>
-            <LayoutButtons Face="ToggleDetector" Type="AbilCmd" AbilCmd="ProcessorToggleDetection,On" Row="2" Column="3"/>
             <LayoutButtons>
-                <Face value="IntegratedOptics"/>
+                <Face value="Detector"/>
                 <Type value="Passive"/>
-                <Requirements value="UseIntegratedOptics"/>
-                <ShowInGlossary value="0"/>
+                <AbilCmd value="ProcessorToggleDetection,On"/>
+                <Behavior value="Detector11"/>
                 <Row value="2"/>
                 <Column value="3"/>
             </LayoutButtons>
-            <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="ProcessorToggleDetection,Off" Row="2" Column="4"/>
-            <LayoutButtons>
-                <Face value="CloakingGenerator"/>
-                <Type value="Passive"/>
-                <Requirements value="UseCloakingGenerator"/>
-                <ShowInGlossary value="0"/>
-                <Row value="2"/>
-                <Column value="2"/>
-            </LayoutButtons>
-            <LayoutButtons Face="InternalRepairSystem" Type="Passive" Row="1" Column="0"/>
         </CardLayouts>
         <SubgroupPriority value="49"/>
         <GlossaryPriority value="1"/>
@@ -1904,6 +1887,7 @@
         <Food value="-2"/>
         <EnergyStart value="200"/>
         <Acceleration value="3.5"/>
+        <Attributes index="Light" value="1"/>
     </CUnit>
     <CUnit id="HalifaxGrenadesLMWeapon" parent="CProjectileGenetron"/>
     <CUnit id="HellraiserGunsWeapon" parent="CProjectileGenetron"/>
@@ -3401,11 +3385,11 @@
         <ResourceState value="Harvestable"/>
         <ResourceType value="Vespene"/>
         <Collide index="Small" value="1"/>
-        <LifeStart value="600"/>
-        <LifeMax value="600"/>
+        <LifeStart value="350"/>
+        <LifeMax value="350"/>
         <LifeArmorName value="Unit/LifeArmorName/ProtossBuildingPlating"/>
-        <ShieldsStart value="300"/>
-        <ShieldsMax value="300"/>
+        <ShieldsStart value="175"/>
+        <ShieldsMax value="175"/>
         <StationaryTurningRate value="719.4726"/>
         <TurningRate value="719.4726"/>
         <Sight value="9"/>

@@ -219,6 +219,22 @@
     </CEffectMorph>
     <CEffectApplyBehavior id="CitadelEnergize" parent="ScionApplyBehavior" Race="Keiron"/>
     <CEffectApplyBehavior id="CitadelEnergized" parent="ScionApplyBehavior" Race="Keiron"/>
+    <CEffectCreatePersistent id="OpticalDisruption" parent="ScionCreatePersistentUnit" Race="Genetron">
+        <InitialEffect value="OpticalDisruptionCaster"/>
+        <PeriodCount value="20"/>
+        <PeriodicEffectArray value="OpticalDisruptionSearchArea"/>
+        <PeriodicPeriodArray value="0.25"/>
+    </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="OpticalDisruptionBuff" parent="ScionApplyBehavior">
+        <EditorCategories value="Race:Genetron"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="OpticalDisruptionCaster" parent="ScionApplyBehaviorCaster">
+        <EditorCategories value="Race:Genetron"/>
+    </CEffectApplyBehavior>
+    <CEffectEnumArea id="OpticalDisruptionSearchArea" parent="ScionEnumArea">
+        <EditorCategories value="Race:Genetron"/>
+        <AreaArray Radius="1.5" Effect="OpticalDisruptionBuff"/>
+    </CEffectEnumArea>
     <CEffectCreatePersistent id="WardWeapon" parent="ScionCreatePersistent" Race="Keiron">
         <WhichLocation Value="TargetUnit"/>
         <PeriodCount value="2"/>
@@ -475,8 +491,6 @@
     <CEffectApplyBehavior id="GenetronConstruction" parent="ScionApplyBehavior" Race="Genetron"/>
     <CEffectSet id="GenetronConstructionInit" parent="ScionSet" Race="Genetron">
         <EffectArray value="GenetronConstruction"/>
-        <EffectArray value="DownloadPhase"/>
-        <EffectArray value="GenetronProductionCalibration"/>
     </CEffectSet>
     <CEffectApplyBehavior id="GenetronEnergyStateFull" parent="ScionApplyBehaviorCaster" Race="Genetron">
         <ValidatorArray index="0" value="CasterIsNotHidden"/>
@@ -1187,12 +1201,12 @@
         <ValidatorArray value="NotVortexd"/>
         <ValidatorArray value="NotStasis"/>
         <EditorCategories value="Race:Genetron"/>
-        <DrainResourceCostFactor index="Minerals" value="0.0832"/>
-        <DrainResourceCostFactor index="Vespene" value="0.0832"/>
-        <DrainResourceCostFactor index="Terrazine" value="0.0832"/>
-        <DrainResourceCostFactor index="Custom" value="0.0832"/>
-        <RechargeVitalRate value="3"/>
-        <TimeFactor value="1"/>
+        <DrainResourceCostFactor index="Minerals" value="0.125"/>
+        <DrainResourceCostFactor index="Vespene" value="0.125"/>
+        <DrainResourceCostFactor index="Terrazine" value="0.125"/>
+        <DrainResourceCostFactor index="Custom" value="0.125"/>
+        <RechargeVitalRate value="1"/>
+        <TimeFactor value="0.5"/>
     </CEffectCreateHealer>
     <CEffectUserData id="RelayTowerLongRangeTransferData">
         <EditorCategories value="Race:Genetron"/>
@@ -1404,10 +1418,11 @@
         <ValidatorArray value="CasterIsMovingGTE3"/>
     </CEffectDamage>
     <CEffectEnumArea id="IgnitionBlastSA" parent="ScionEnumAreaEnemyAir" Race="Genetron">
-        <AreaArray Arc="180" Radius="0.125" Effect="IgnitionBlastDMG"/>
+        <AreaArray Effect="IgnitionBlastDMG"/>
         <ValidatorArray value="CasterIsMovingGTE3"/>
         <SearchFlags index="ExtendByUnitRadius" value="1"/>
-        <DebugTrace value="1"/>
+        <SearchFlags index="OffsetAreaByAngle" value="0"/>
+        <AreaRelativeOffset value="0,-0.5"/>
     </CEffectEnumArea>
     <CEffectEnumArea id="CloakChargeFieldSA" parent="ScionEnumArea" Race="Genetron">
         <ImpactLocation Value="CasterUnit"/>
@@ -1703,6 +1718,7 @@
     </CEffectDamage>
     <CEffectDamage id="HurricaneMissilesLMImpact" parent="ScionDamageRange" Race="Genetron">
         <Amount value="10"/>
+        <AttributeBonus index="Massive" value="2"/>
     </CEffectDamage>
     <CEffectDamage id="IBF7FlamethrowerDMG" parent="ScionDamageRange" Race="Genetron">
         <AttributeBonus index="Light" value="6"/>
