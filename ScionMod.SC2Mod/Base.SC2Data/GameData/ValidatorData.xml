@@ -88,6 +88,11 @@
         <Value value="40"/>
         <Vital value="Energy"/>
     </CValidatorUnitCompareVital>
+    <CValidatorCombine id="CasterHasOpticalDisruptionAndTargetIsAlive">
+        <Type value="And"/>
+        <CombineArray value="CasterHasOpticalDisruptionCaster"/>
+        <CombineArray value="NotDead"/>
+    </CValidatorCombine>
     <CValidatorUnitCompareBehaviorCount id="CasterHasShellRestoration">
         <WhichUnit Value="Caster"/>
         <Compare value="GT"/>
@@ -97,6 +102,11 @@
         <CombineArray value="CasterHasShellRestoration"/>
         <CombineArray value="CasterShieldsFull"/>
     </CValidatorCombine>
+    <CValidatorUnitCompareBehaviorCount id="CasterHasOpticalDisruptionCaster">
+        <WhichUnit Value="Caster"/>
+        <Compare value="GT"/>
+        <Behavior value="OpticalDisruptionCaster"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="CasterNotLockedDownBase">
         <WhichUnit Value="Caster"/>
         <Behavior value="LockdownMode"/>
@@ -131,6 +141,11 @@
         <Find value="1"/>
         <Value value="AssemblyArrayIsTrainingHornet"/>
     </CValidatorPlayerRequirement>
+    <CValidatorUnitType id="IsNotOlympus">
+        <ResultFailed value="Error,Error/NotOlympus"/>
+        <Value value="Olympus"/>
+        <Find value="0"/>
+    </CValidatorUnitType>
     <CValidatorPlayerRequirement id="ManufacturerIsTrainingSpitfire">
         <Find value="1"/>
         <Value value="ManufacturerIsTrainingSpitfire"/>
@@ -155,10 +170,22 @@
         <Find value="1"/>
         <Value value="FabricatorIsTrainingTorrent"/>
     </CValidatorPlayerRequirement>
-    <CValidatorUnitCompareBehaviorCount id="NoEnergyShield">
+    <CValidatorUnitCompareBehaviorCount id="NoEnergyShieldCaster">
         <WhichUnit Value="Caster"/>
         <Behavior value="BadgerEnergyShield"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="NoEnergyShield">
+        <ResultFailed value="Error,Error/NoEnergyShield"/>
+        <Behavior value="BadgerEnergyShield"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorLocationCompareRange id="OpticalDisruptionRangeLimiter">
+        <WhichLocation Value="TargetUnitOrPoint"/>
+        <Compare value="GT"/>
+        <Range value="13"/>
+    </CValidatorLocationCompareRange>
+    <CValidatorUnitFilters id="TargetIsAirUnit">
+        <Filters value="Air;-"/>
+    </CValidatorUnitFilters>
     <CValidatorUnitCompareBehaviorCount id="WardIsCastingShellDome">
         <WhichUnit Value="Caster"/>
         <Compare value="GT"/>
@@ -174,7 +201,7 @@
         <CombineArray value="CasterNoCourierCloak"/>
         <CombineArray value="CasterNoProcessorDetectionMode"/>
         <CombineArray value="NoJupiterSpeed"/>
-        <CombineArray value="NoEnergyShield"/>
+        <CombineArray value="NoEnergyShieldCaster"/>
     </CValidatorCombine>
     <CValidatorUnitCompareBehaviorCount id="CasterNoCourierCloak">
         <WhichUnit Value="Caster"/>
@@ -432,8 +459,8 @@
     <CValidatorUnitType id="IsSubjecter">
         <Value value="Subjecter"/>
     </CValidatorUnitType>
-    <CValidatorUnitType id="IsMeridian">
-        <Value value="Meridian"/>
+    <CValidatorUnitType id="IsCrux">
+        <Value value="Crux"/>
     </CValidatorUnitType>
     <CValidatorUnitType id="IsUmbra">
         <Value value="Umbra"/>
@@ -1613,8 +1640,8 @@
         <Value value="80"/>
         <Vital value="Energy"/>
     </CValidatorUnitCompareVital>
-    <CValidatorUnitFilters id="MeridianEnergyGainTargetFilters">
-        <WhichUnit Effect="MeridianWeaponLM"/>
+    <CValidatorUnitFilters id="CruxEnergyGainTargetFilters">
+        <WhichUnit Effect="CruxWeaponLM"/>
         <Filters value="Biological;-"/>
     </CValidatorUnitFilters>
     <CValidatorUnitCompareBehaviorCount id="NotMaterializing">

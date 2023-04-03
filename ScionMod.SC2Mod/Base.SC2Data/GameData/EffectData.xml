@@ -580,6 +580,51 @@
         <Operation value="Subtract"/>
         <BehaviorScope Behavior="GenetronProductionInternalEnergy"/>
     </CEffectUserData>
+    <CEffectSet id="CourierOpticalDisruption">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="OpticalDisruptionCaster"/>
+        <EffectArray value="CourierOpticalDisruptionCreatePersistent"/>
+    </CEffectSet>
+    <CEffectCreatePersistent id="CourierOpticalDisruptionHoldCreatePersistent" parent="ScionCreatePersistent" Race="Genetron">
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <PeriodicValidator value="CasterHasOpticalDisruptionCaster"/>
+        <PeriodicEffectArray value="CourierOpticalDisruptionRB"/>
+        <PeriodicEffectArray value="CourierOpticalDisruptionSearchSwitch"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0.25"/>
+    </CEffectCreatePersistent>
+    <CEffectUserData id="CourierOpticalDisruptionDataSet1">
+        <EditorCategories value="Race:Genetron"/>
+        <Operation value="Set"/>
+    </CEffectUserData>
+    <CEffectUserData id="CourierOpticalDisruptionDataSet0">
+        <EditorCategories value="Race:Genetron"/>
+        <Amount value="0"/>
+        <Operation value="Set"/>
+    </CEffectUserData>
+    <CEffectSwitch id="CourierOpticalDisruptionDataSwitch">
+        <EditorCategories value="Race:Genetron"/>
+        <CaseArray Validator="TargetIsAirUnit" Effect="CourierOpticalDisruptionDataSet1"/>
+        <CaseDefault value="CourierOpticalDisruptionDataSet0"/>
+    </CEffectSwitch>
+    <CEffectEnumArea id="CourierOpticalDisruptionGroundSA" parent="ScionEnumArea">
+        <EditorCategories value="Race:Genetron"/>
+        <DebugTrace value="1"/>
+        <SearchFilters value="Ground;Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <AreaArray Radius="1.5" Effect="OpticalDisruptionBuff"/>
+    </CEffectEnumArea>
+    <CEffectRemoveBehavior id="CourierOpticalDisruptionRB">
+        <ValidatorArray index="0" value="OpticalDisruptionRangeLimiter"/>
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Caster"/>
+        <BehaviorLink value="OpticalDisruptionCaster"/>
+    </CEffectRemoveBehavior>
+    <CEffectSwitch id="CourierOpticalDisruptionSearchSwitch">
+        <EditorCategories value="Race:Genetron"/>
+        <CaseArray Validator="CasterDataDefaultIs1" Effect="CourierOpticalDisruptionAirSA"/>
+        <CaseDefault value="CourierOpticalDisruptionGroundSA"/>
+        <TargetLocationType value="UnitOrPoint"/>
+    </CEffectSwitch>
     <CEffectUserData id="FabricatorFinishVirtusPerformanceData">
         <EditorCategories value="Race:Genetron"/>
         <Key value="InternalEnergy"/>
@@ -1305,10 +1350,15 @@
         <CaseArray Validator="FabricatorIsTrainingVirtus" Effect="FabricatorTrainVirtusSwitch"/>
         <CaseDefault value="SetEnergyNeededData0"/>
     </CEffectSwitch>
-    <CEffectCreatePersistent id="OpticalDisruption" parent="ScionCreatePersistentUnit" Race="Genetron">
-        <InitialEffect value="OpticalDisruptionCaster"/>
-        <PeriodCount value="20"/>
-        <PeriodicEffectArray value="OpticalDisruptionSearchArea"/>
+    <CEffectCreatePersistent id="CourierOpticalDisruptionCreatePersistent" parent="ScionCreatePersistentUnit" Race="Genetron">
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <FinalEffect value="CourierOpticalDisruptionHoldCreatePersistent"/>
+        <PeriodicValidator value="CasterHasOpticalDisruptionAndTargetIsAlive"/>
+        <PeriodicEffectArray value="CourierOpticalDisruptionDataSwitch"/>
+        <PeriodicEffectArray value="CourierOpticalDisruptionRB"/>
+        <PeriodicEffectArray value="CourierOpticalDisruptionSearchSwitch"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0"/>
         <PeriodicPeriodArray value="0.25"/>
     </CEffectCreatePersistent>
     <CEffectApplyBehavior id="OpticalDisruptionBuff" parent="ScionApplyBehavior">
@@ -1317,8 +1367,10 @@
     <CEffectApplyBehavior id="OpticalDisruptionCaster" parent="ScionApplyBehaviorCaster">
         <EditorCategories value="Race:Genetron"/>
     </CEffectApplyBehavior>
-    <CEffectEnumArea id="OpticalDisruptionSearchArea" parent="ScionEnumArea">
+    <CEffectEnumArea id="CourierOpticalDisruptionAirSA" parent="ScionEnumArea">
         <EditorCategories value="Race:Genetron"/>
+        <DebugTrace value="1"/>
+        <SearchFilters value="Air;Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <AreaArray Radius="1.5" Effect="OpticalDisruptionBuff"/>
     </CEffectEnumArea>
     <CEffectUserData id="SetEnergyNeededData0">
@@ -1607,6 +1659,7 @@
         <EffectArray value="GenetronProductionModeStandardRB"/>
         <EffectArray value="GenetronProductionModePerformanceRB"/>
         <EffectArray value="GenetronProductionModeOverclockBuff"/>
+        <EffectArray value="KillRemove"/>
     </CEffectSet>
     <CEffectApplyBehavior id="GenetronProductionModeOverclockBuff" parent="ScionApplyBehaviorCaster" Race="Genetron"/>
     <CEffectRemoveBehavior id="GenetronProductionModeOverclockRB">
@@ -1618,6 +1671,7 @@
         <EffectArray value="GenetronProductionModeOverclockRB"/>
         <EffectArray value="GenetronProductionModeStandardRB"/>
         <EffectArray value="GenetronProductionModePerformanceBuff"/>
+        <EffectArray value="KillRemove"/>
     </CEffectSet>
     <CEffectApplyBehavior id="GenetronProductionModePerformanceBuff" parent="ScionApplyBehaviorCaster" Race="Genetron"/>
     <CEffectApplyBehavior id="AvengerVengeanceMissileAmmo" parent="ScionApplyBehaviorCaster" Race="Genetron"/>
@@ -1647,6 +1701,7 @@
         <EffectArray value="GenetronProductionModeOverclockRB"/>
         <EffectArray value="GenetronProductionModePerformanceRB"/>
         <EffectArray value="GenetronProductionModeStandardBuff"/>
+        <EffectArray value="KillRemove"/>
     </CEffectSet>
     <CEffectApplyBehavior id="GenetronProductionModeStandardBuff" parent="ScionApplyBehaviorCaster" Race="Genetron"/>
     <CEffectRemoveBehavior id="GenetronProductionModeStandardRB">
@@ -2559,6 +2614,8 @@
         <ValidatorArray value="NotUncommandable"/>
         <ValidatorArray value="SourceNotHidden"/>
         <ValidatorArray value="CasterHasEnergy"/>
+        <ValidatorArray value="NoEnergyShield"/>
+        <ValidatorArray value="IsNotOlympus"/>
         <EditorCategories value="Race:Genetron"/>
         <DrainVital value="Energy"/>
         <DrainVitalCostFactor value="1"/>
@@ -2574,6 +2631,8 @@
         <ValidatorArray value="SourceNotHidden"/>
         <ValidatorArray value="IsNotProcessingCore"/>
         <ValidatorArray value="CasterHasEnergy"/>
+        <ValidatorArray value="NoEnergyShield"/>
+        <ValidatorArray value="IsNotOlympus"/>
         <EditorCategories value="Race:Genetron"/>
         <DrainVital value="Energy"/>
         <DrainVitalCostFactor value="1"/>
@@ -4063,74 +4122,74 @@
         <InitialEffect value="KeironConstructionModifier"/>
     </CEffectCreatePersistent>
     <CEffectCreatePersistent id="KeironConstructionStop" parent="ScionCreatePersistentUnit" Race="Keiron"/>
-    <CEffectCreatePersistent id="MeridianConvergenceCP" parent="ScionCreatePersistent" Race="Keiron">
+    <CEffectCreatePersistent id="CruxConvergence" parent="ScionCreatePersistent" Race="Keiron">
         <Flags index="Channeled" value="1"/>
         <InitialDelay value="2.5"/>
-        <InitialEffect value="MeridianConvergenceSA"/>
+        <InitialEffect value="CruxConvergenceSA"/>
         <PeriodicValidator value="CasterNotDead"/>
     </CEffectCreatePersistent>
-    <CEffectDamage id="MeridianConvergenceDMG" parent="ScionDamage" Race="Keiron">
+    <CEffectDamage id="CruxConvergenceDMG" parent="ScionDamage" Race="Keiron">
         <AttributeBonus index="Mechanical" value="50"/>
         <Amount value="50"/>
         <Death value="Electrocute"/>
     </CEffectDamage>
-    <CEffectEnumArea id="MeridianConvergenceSA" parent="ScionEnumArea" Race="Keiron">
-        <AreaArray Radius="2.25" Effect="MeridianConvergenceDMG"/>
+    <CEffectEnumArea id="CruxConvergenceSA" parent="ScionEnumArea" Race="Keiron">
+        <AreaArray Radius="2.25" Effect="CruxConvergenceDMG"/>
     </CEffectEnumArea>
-    <CEffectDamage id="MeridianLightningBoltDMG" parent="ScionDamage" Race="Keiron">
+    <CEffectDamage id="CruxLightningBoltDMG" parent="ScionDamage" Race="Keiron">
         <Amount value="40"/>
         <Death value="Electrocute"/>
     </CEffectDamage>
-    <CEffectUserData id="MeridianLightningBoltData">
+    <CEffectUserData id="CruxLightningBoltData">
         <EditorCategories value="Race:Keiron"/>
         <ValidateMax value="2"/>
-        <EffectSuccess value="MeridianLightningBoltSearchTarget"/>
+        <EffectSuccess value="CruxLightningBoltSearchTarget"/>
     </CEffectUserData>
-    <CEffectSet id="MeridianLightningBoltInit" parent="ScionSet" Race="Keiron">
+    <CEffectSet id="CruxLightningBolt" parent="ScionSet" Race="Keiron">
         <Marker>
             <MatchFlags index="Id" value="1"/>
         </Marker>
-        <EffectArray value="MeridianLightningBoltInitDMG"/>
-        <EffectArray value="MeridianLightningBoltData"/>
+        <EffectArray value="CruxLightningBoltInitDMG"/>
+        <EffectArray value="CruxLightningBoltData"/>
     </CEffectSet>
-    <CEffectDamage id="MeridianLightningBoltInitDMG" parent="ScionDamage" Race="Keiron">
+    <CEffectDamage id="CruxLightningBoltInitDMG" parent="ScionDamage" Race="Keiron">
         <Amount value="80"/>
         <Death value="Electrocute"/>
     </CEffectDamage>
-    <CEffectEnumArea id="MeridianLightningBoltSearchTarget" parent="ScionEnumArea" Race="Keiron">
+    <CEffectEnumArea id="CruxLightningBoltSearchTarget" parent="ScionEnumArea" Race="Keiron">
         <SearchFilters value="-;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden,Invulnerable"/>
-        <AreaArray MaxCount="1" Radius="3" Effect="MeridianLightningBoltSet"/>
         <TargetSorts>
             <SortArray value="TSEnergyLargestFirst"/>
         </TargetSorts>
+        <AreaArray MaxCount="1" Radius="3" Effect="CruxLightningBoltSet"/>
     </CEffectEnumArea>
-    <CEffectSet id="MeridianLightningBoltSet" parent="ScionSet" Race="Keiron">
+    <CEffectSet id="CruxLightningBoltSet" parent="ScionSet" Race="Keiron">
         <ValidatorArray value="noMarkers"/>
-        <EffectArray value="MeridianLightningBoltDMG"/>
-        <EffectArray value="MeridianLightningBoltData"/>
+        <EffectArray value="CruxLightningBoltDMG"/>
+        <EffectArray value="CruxLightningBoltData"/>
     </CEffectSet>
-    <CEffectSet id="MeridianWeapon" parent="ScionSet" Race="Keiron">
-        <EffectArray value="MeridianWeaponDMG"/>
-        <EffectArray value="MeridianWeaponTargetMU"/>
-        <EffectArray value="MeridianWeaponLM"/>
+    <CEffectSet id="CruxWeapon" parent="ScionSet" Race="Keiron">
+        <EffectArray value="CruxWeaponDMG"/>
+        <EffectArray value="CruxWeaponTargetMU"/>
+        <EffectArray value="CruxWeaponLM"/>
     </CEffectSet>
-    <CEffectModifyUnit id="MeridianWeaponCasterMU">
+    <CEffectModifyUnit id="CruxWeaponCasterMU">
+        <ValidatorArray value="CruxEnergyGainTargetFilters"/>
         <EditorCategories value="Race:Keiron"/>
         <VitalArray index="Energy">
             <Change value="5"/>
         </VitalArray>
-        <ValidatorArray value="MeridianEnergyGainTargetFilters"/>
     </CEffectModifyUnit>
-    <CEffectDamage id="MeridianWeaponDMG" parent="ScionDamageRange" Race="Keiron">
+    <CEffectDamage id="CruxWeaponDMG" parent="ScionDamageRange" Race="Keiron">
         <Amount value="15"/>
     </CEffectDamage>
-    <CEffectLaunchMissile id="MeridianWeaponLM" parent="ScionLaunchMissile" Race="Keiron">
+    <CEffectLaunchMissile id="CruxWeaponLM" parent="ScionLaunchMissile" Race="Keiron">
         <LaunchLocation Value="TargetUnit"/>
         <ImpactLocation Value="CasterUnit"/>
-        <ImpactEffect value="MeridianWeaponCasterMU"/>
-        <AmmoUnit value="MeridianWeapon"/>
+        <ImpactEffect value="CruxWeaponCasterMU"/>
+        <AmmoUnit value="WeaponCrux"/>
     </CEffectLaunchMissile>
-    <CEffectModifyUnit id="MeridianWeaponTargetMU">
+    <CEffectModifyUnit id="CruxWeaponTargetMU">
         <EditorCategories value="Race:Keiron"/>
         <VitalArray index="Energy">
             <Change value="-10"/>
@@ -4225,44 +4284,44 @@
         <ImpactUnit Value="Caster"/>
         <Cost Abil="KeironCitadelMaterialize,Train6" ChargeCountUse="-1"/>
     </CEffectModifyUnit>
-    <CEffectCreatePersistent id="ElysiumMeridianDeathCP" parent="ScionCreatePersistent" Race="Keiron">
+    <CEffectCreatePersistent id="ElysiumCruxDeathCP" parent="ScionCreatePersistent" Race="Keiron">
         <WhichLocation Value="SourceUnitOrPoint"/>
         <PeriodCount value="2"/>
-        <PeriodicEffectArray value="ElysiumMeridianDeathSet"/>
+        <PeriodicEffectArray value="ElysiumCruxDeathSet"/>
     </CEffectCreatePersistent>
-    <CEffectModifyUnit id="ElysiumMeridianDeathRemoveCharge">
+    <CEffectModifyUnit id="ElysiumCruxDeathRemoveCharge">
         <EditorCategories value="Race:Keiron"/>
         <ImpactUnit Value="Caster"/>
         <Cost Abil="KeironCitadelMaterialize,Train5" ChargeCountUse="1"/>
     </CEffectModifyUnit>
-    <CEffectSet id="ElysiumMeridianDeathSet" parent="ScionSet" Race="Keiron">
+    <CEffectSet id="ElysiumCruxDeathSet" parent="ScionSet" Race="Keiron">
         <ValidatorArray value="UnitChargeGT0"/>
-        <EffectArray value="ElysiumMeridianDeathRemoveCharge"/>
-        <EffectArray value="ElysiumMeridianRB"/>
+        <EffectArray value="ElysiumCruxDeathRemoveCharge"/>
+        <EffectArray value="ElysiumCruxRB"/>
     </CEffectSet>
-    <CEffectCreatePersistent id="ElysiumMeridianDelay" parent="ScionCreatePersistent" Race="Keiron">
+    <CEffectCreatePersistent id="ElysiumCruxDelay" parent="ScionCreatePersistent" Race="Keiron">
         <InitialDelay value="0.0625"/>
-        <InitialEffect value="ElysiumMeridianSA"/>
+        <InitialEffect value="ElysiumCruxSA"/>
     </CEffectCreatePersistent>
-    <CEffectRemoveBehavior id="ElysiumMeridianRB">
+    <CEffectRemoveBehavior id="ElysiumCruxRB">
         <ValidatorArray index="0" value="IsElysium"/>
         <ValidatorArray value="UnitChargeGT0"/>
         <EditorCategories value="Race:Keiron"/>
         <BehaviorLink value="KeironUnitCharge"/>
         <Count value="1"/>
     </CEffectRemoveBehavior>
-    <CEffectEnumArea id="ElysiumMeridianSA" parent="ScionEnumArea" Race="Keiron">
+    <CEffectEnumArea id="ElysiumCruxSA" parent="ScionEnumArea" Race="Keiron">
         <ValidatorArray value="IsMaterializingOrSourceIsDead"/>
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Dead,Hidden"/>
         <TargetSorts>
             <SortArray value="HighestUnitCharge"/>
         </TargetSorts>
-        <AreaArray MaxCount="1" Radius="500" Effect="ElysiumMeridianRB"/>
+        <AreaArray MaxCount="1" Radius="500" Effect="ElysiumCruxRB"/>
     </CEffectEnumArea>
-    <CEffectApplyBehavior id="ElysiumMeridianAB" parent="ScionApplyBehaviorCaster" Race="Keiron">
-        <Behavior value="ElysiumMeridianBase"/>
+    <CEffectApplyBehavior id="ElysiumCruxAB" parent="ScionApplyBehaviorCaster" Race="Keiron">
+        <Behavior value="ElysiumCruxBase"/>
     </CEffectApplyBehavior>
-    <CEffectModifyUnit id="ElysiumMeridianAddCharge">
+    <CEffectModifyUnit id="ElysiumCruxAddCharge">
         <EditorCategories value="Race:Keiron"/>
         <ImpactUnit Value="Caster"/>
         <Cost Abil="KeironCitadelMaterialize,Train5" ChargeCountUse="-1"/>
@@ -4679,10 +4738,10 @@
         <Amount value="25"/>
         <Death value="Electrocute"/>
     </CEffectDamage>
-    <CEffectSet id="ElysiumMeridianSet" parent="ScionSet" Race="Keiron">
-        <EffectArray value="ElysiumMeridianAB"/>
+    <CEffectSet id="ElysiumCruxSet" parent="ScionSet" Race="Keiron">
+        <EffectArray value="ElysiumCruxAB"/>
         <EffectArray value="KeironUnitChargeAB"/>
-        <EffectArray value="ElysiumMeridianAddCharge"/>
+        <EffectArray value="ElysiumCruxAddCharge"/>
     </CEffectSet>
     <CEffectDamage id="HarbingerWeaponDummy" parent="ScionDamageRangeVisible" Race="Keiron"/>
     <CEffectEnumArea id="ShieldAura" parent="ScionEnumArea" Race="Keiron">

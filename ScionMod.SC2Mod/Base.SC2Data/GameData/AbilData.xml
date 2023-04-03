@@ -121,32 +121,22 @@
         <TargetFilters index="0" value="CanHaveEnergy,Visible,HasEnergy;Self,Player,Ally,Neutral,Missile,Stasis,Dead,Hidden"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
     </CAbilEffectTarget>
-    <CAbilEffectInstant id="GenetronProductionModeOverclock">
+    <CAbilTrain id="GenetronProductionModeSwitch">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="GenetronOverclockMode" Requirements="ProductionNotOverclockMode"/>
-        <Flags index="Transient" value="1"/>
-        <Cost>
-            <Charge Link="Abil/GenetronProductionModeStandard"/>
-            <Cooldown Link="Abil/GenetronProductionModeStandard" Location="Unit" TimeUse="5"/>
-        </Cost>
-    </CAbilEffectInstant>
-    <CAbilEffectInstant id="GenetronProductionModePerformance">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="GenetronPerformanceMode" Requirements="ProductionNotPerformanceMode"/>
-        <Flags index="Transient" value="1"/>
-        <Cost>
-            <Charge Link="Abil/GenetronProductionModeStandard"/>
-            <Cooldown Link="Abil/GenetronProductionModeStandard" Location="Unit" TimeUse="5"/>
-        </Cost>
-    </CAbilEffectInstant>
-    <CAbilEffectInstant id="GenetronProductionModeStandard">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="GenetronStandardMode" Requirements="ProductionNotStandardMode"/>
-        <Flags index="Transient" value="1"/>
-        <Cost>
-            <Cooldown Location="Unit" TimeUse="5"/>
-        </Cost>
-    </CAbilEffectInstant>
+        <InfoArray index="Train1" Time="7" Effect="GenetronProductionModePerformance">
+            <Button DefaultButtonFace="GenetronPerformanceMode" Requirements="GenetronPerformanceModeNotQueuedOrActive"/>
+            <Unit value="GenetronPerformanceModeDummy"/>
+        </InfoArray>
+        <InfoArray index="Train2" Time="7" Effect="GenetronProductionModeStandard">
+            <Button DefaultButtonFace="GenetronStandardMode" Requirements="GenetronStandardModeNotQueuedOrActive"/>
+            <Unit value="GenetronStandardModeDummy"/>
+        </InfoArray>
+        <InfoArray index="Train3" Time="7" Effect="GenetronProductionModeOverclock">
+            <Button DefaultButtonFace="GenetronOverclockMode" Requirements="GenetronOverclockModeNotQueuedOrActive"/>
+            <Unit value="GenetronOverclockModeDummy"/>
+        </InfoArray>
+        <Flags index="BestUnit" value="0"/>
+    </CAbilTrain>
     <CAbilMorph id="MoleBury">
         <AbilSetId value="MBuryD"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -242,12 +232,13 @@
         <CursorEffect value="OlympusDischargeSA"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="OlympusDischarge"/>
     </CAbilEffectTarget>
-    <CAbilEffectTarget id="OpticalDisruption">
+    <CAbilEffectTarget id="CourierOpticalDisruption">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Flags index="AllowMovement" value="1"/>
         <Flags index="TransientPreferred" value="1"/>
         <Range value="10"/>
         <Arc value="360"/>
+        <AINotifyEffect value="CourierOpticalDisruptionCreatePersistent"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="OpticalDisruption"/>
     </CAbilEffectTarget>
     <CAbilResearch id="OutfittingStationResearch">
@@ -2015,7 +2006,7 @@
     <CAbilResearch id="ElysiumResearch">
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
         <Activity value="UI/Developing"/>
-        <InfoArray index="Research1" Time="80" Upgrade="MeridianConvergence">
+        <InfoArray index="Research1" Time="80" Upgrade="CruxConvergence">
             <Resource index="Minerals" value="200"/>
             <Resource index="Vespene" value="200"/>
             <Button DefaultButtonFace="DevelopConvergence" Requirements="LearnConvergence">
@@ -2235,7 +2226,7 @@
                 <Flags index="AllowMinimap" value="1"/>
             </Button>
         </InfoArray>
-        <InfoArray index="Train5" Time="5" Unit="Meridian">
+        <InfoArray index="Train5" Time="5" Unit="Crux">
             <Charge>
                 <CountMax value="500000"/>
                 <CountUse value="1"/>
@@ -2243,7 +2234,7 @@
                 <Location value="Player"/>
             </Charge>
             <Cooldown Link="Abil/KeironMaterializeMeridian" Location="Player"/>
-            <Button DefaultButtonFace="MaterializeMeridian">
+            <Button DefaultButtonFace="MaterializeCrux">
                 <Flags index="AllowMinimap" value="1"/>
             </Button>
         </InfoArray>
@@ -2380,9 +2371,8 @@
         </InfoArray>
         <Flags index="WarpTrainersButton" value="0"/>
     </CAbilWarpTrain>
-    <CAbilEffectTarget id="MeridianConvergence">
+    <CAbilEffectTarget id="CruxConvergence">
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
-        <Effect index="0" value="MeridianConvergenceCP"/>
         <Cost>
             <Vital index="Energy" value="150"/>
         </Cost>
@@ -2390,13 +2380,11 @@
         <FinishTime value="0.25"/>
         <UninterruptibleArray index="Channel" value="1"/>
         <UninterruptibleArray index="Finish" value="1"/>
-        <CursorEffect value="MeridianConvergenceSA"/>
-        <AINotifyEffect value="MeridianConvergenceCP"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="MeridianConvergence" Requirements="UseConvergence"/>
+        <CursorEffect value="CruxConvergenceSA"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="CruxConvergence" Requirements="UseConvergence"/>
     </CAbilEffectTarget>
-    <CAbilEffectTarget id="MeridianLightningBolt">
+    <CAbilEffectTarget id="CruxLightningBolt">
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
-        <Effect index="0" value="MeridianLightningBoltInit"/>
         <Cost>
             <Vital index="Energy" value="125"/>
         </Cost>
@@ -2406,8 +2394,7 @@
         <FinishTime value="0.25"/>
         <UninterruptibleArray index="Cast" value="1"/>
         <UninterruptibleArray index="Finish" value="1"/>
-        <AINotifyEffect value="MeridianLightningBoltInit"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="MeridianLightningBolt"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="CruxLightningBolt"/>
     </CAbilEffectTarget>
     <CAbilArmMagazine id="ElytraHangar">
         <AbilSetId value="MyriadHanger"/>

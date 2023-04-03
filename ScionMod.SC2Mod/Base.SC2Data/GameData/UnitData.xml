@@ -334,6 +334,75 @@
         <MinimapRadius value="0.4375"/>
         <BehaviorArray Link="GenetronUnitEnergyRegenx2"/>
     </CUnit>
+    <CUnit id="GenetronPerformanceModeDummy">
+        <Race value="Gen"/>
+        <FlagArray index="Turnable" value="0"/>
+        <FlagArray index="Movable" value="0"/>
+        <FlagArray index="Uncommandable" value="1"/>
+        <FlagArray index="Unselectable" value="1"/>
+        <FlagArray index="Untargetable" value="1"/>
+        <FlagArray index="NoDraw" value="1"/>
+        <FlagArray index="Undetectable" value="1"/>
+        <FlagArray index="KillCredit" value="0"/>
+        <FlagArray index="Invulnerable" value="1"/>
+        <FlagArray index="NoScore" value="1"/>
+        <FlagArray index="Unstoppable" value="1"/>
+        <FlagArray index="CameraFollow" value="0"/>
+        <FlagArray index="NeverThink" value="1"/>
+        <EditorFlags index="NoPlacement" value="1"/>
+        <BehaviorArray Link="DummyUnit"/>
+        <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
+        <LeaderAlias value=""/>
+        <HotkeyAlias value=""/>
+        <SelectAlias value=""/>
+        <SubgroupAlias value=""/>
+    </CUnit>
+    <CUnit id="GenetronStandardModeDummy">
+        <Race value="Gen"/>
+        <FlagArray index="Turnable" value="0"/>
+        <FlagArray index="Movable" value="0"/>
+        <FlagArray index="Uncommandable" value="1"/>
+        <FlagArray index="Unselectable" value="1"/>
+        <FlagArray index="Untargetable" value="1"/>
+        <FlagArray index="NoDraw" value="1"/>
+        <FlagArray index="Undetectable" value="1"/>
+        <FlagArray index="KillCredit" value="0"/>
+        <FlagArray index="Invulnerable" value="1"/>
+        <FlagArray index="NoScore" value="1"/>
+        <FlagArray index="Unstoppable" value="1"/>
+        <FlagArray index="CameraFollow" value="0"/>
+        <FlagArray index="NeverThink" value="1"/>
+        <EditorFlags index="NoPlacement" value="1"/>
+        <BehaviorArray Link="DummyUnit"/>
+        <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
+        <LeaderAlias value=""/>
+        <HotkeyAlias value=""/>
+        <SelectAlias value=""/>
+        <SubgroupAlias value=""/>
+    </CUnit>
+    <CUnit id="GenetronOverclockModeDummy">
+        <Race value="Gen"/>
+        <FlagArray index="Turnable" value="0"/>
+        <FlagArray index="Movable" value="0"/>
+        <FlagArray index="Uncommandable" value="1"/>
+        <FlagArray index="Unselectable" value="1"/>
+        <FlagArray index="Untargetable" value="1"/>
+        <FlagArray index="NoDraw" value="1"/>
+        <FlagArray index="Undetectable" value="1"/>
+        <FlagArray index="KillCredit" value="0"/>
+        <FlagArray index="Invulnerable" value="1"/>
+        <FlagArray index="NoScore" value="1"/>
+        <FlagArray index="Unstoppable" value="1"/>
+        <FlagArray index="CameraFollow" value="0"/>
+        <FlagArray index="NeverThink" value="1"/>
+        <EditorFlags index="NoPlacement" value="1"/>
+        <BehaviorArray Link="DummyUnit"/>
+        <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
+        <LeaderAlias value=""/>
+        <HotkeyAlias value=""/>
+        <SelectAlias value=""/>
+        <SubgroupAlias value=""/>
+    </CUnit>
     <CUnit id="OrdnanceCache" parent="CStructureGenetron">
         <LifeStart value="1000"/>
         <LifeMax value="1000"/>
@@ -578,9 +647,7 @@
         <AbilArray Link="que5"/>
         <AbilArray Link="Rally"/>
         <AbilArray Link="BuildAircraft"/>
-        <AbilArray Link="GenetronProductionModePerformance"/>
-        <AbilArray Link="GenetronProductionModeStandard"/>
-        <AbilArray Link="GenetronProductionModeOverclock"/>
+        <AbilArray Link="GenetronProductionModeSwitch"/>
         <BehaviorArray Link="GenetronProductionInternalEnergy"/>
         <BehaviorArray Link="GenetronProductionModePerformanceBuff"/>
         <BehaviorArray Link="AssemblyArray"/>
@@ -605,11 +672,11 @@
             <LayoutButtons Face="Jupiter" Type="AbilCmd" AbilCmd="BuildAircraft,Train3" Row="0" Column="3"/>
             <LayoutButtons Face="Boar" Type="AbilCmd" AbilCmd="BuildAircraft,Train4" Row="0" Column="2"/>
             <LayoutButtons Face="Hornet" Type="AbilCmd" AbilCmd="BuildAircraft,Train7" Row="1" Column="0"/>
-            <LayoutButtons Face="GenetronPerformanceMode" Type="AbilCmd" AbilCmd="GenetronProductionModePerformance,Execute" Row="2" Column="0"/>
+            <LayoutButtons Face="GenetronPerformanceMode" Type="AbilCmd" AbilCmd="GenetronProductionModeSwitch,Train1" Row="2" Column="0"/>
             <LayoutButtons Face="GenetronPerformanceMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="0"/>
-            <LayoutButtons Face="GenetronStandardMode" Type="AbilCmd" AbilCmd="GenetronProductionModeStandard,Execute" Row="2" Column="1"/>
+            <LayoutButtons Face="GenetronStandardMode" Type="AbilCmd" AbilCmd="GenetronProductionModeSwitch,Train2" Row="2" Column="1"/>
             <LayoutButtons Face="GenetronStandardMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="1"/>
-            <LayoutButtons Face="GenetronOverclockMode" Type="AbilCmd" AbilCmd="GenetronProductionModeOverclock,Execute" Row="2" Column="2"/>
+            <LayoutButtons Face="GenetronOverclockMode" Type="AbilCmd" AbilCmd="GenetronProductionModeSwitch,Train3" Row="2" Column="2"/>
             <LayoutButtons Face="GenetronOverclockMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="2"/>
             <LayoutButtons Face="Badger" Type="AbilCmd" AbilCmd="BuildAircraft,Train5" Row="0" Column="4"/>
             <LayoutButtons Face="GenetronInternalEnergy" Type="Passive" Row="1" Column="1"/>
@@ -1262,9 +1329,7 @@
         <AbilArray Link="que5"/>
         <AbilArray Link="Rally"/>
         <AbilArray Link="TrainLightweightMechs"/>
-        <AbilArray Link="GenetronProductionModePerformance"/>
-        <AbilArray Link="GenetronProductionModeStandard"/>
-        <AbilArray Link="GenetronProductionModeOverclock"/>
+        <AbilArray Link="GenetronProductionModeSwitch"/>
         <BehaviorArray Link="GenetronProductionInternalEnergy"/>
         <BehaviorArray Link="GenetronProductionModePerformanceBuff"/>
         <BehaviorArray Link="Manufacturer"/>
@@ -1277,11 +1342,11 @@
             <LayoutButtons Face="Fixer" Type="AbilCmd" AbilCmd="TrainLightweightMechs,Train6" Row="0" Column="2"/>
             <LayoutButtons Face="Blitzer" Type="AbilCmd" AbilCmd="TrainLightweightMechs,Train3" Row="0" Column="1"/>
             <LayoutButtons Face="Equalizer" Type="AbilCmd" AbilCmd="TrainLightweightMechs,Train2" Row="0" Column="3"/>
-            <LayoutButtons Face="GenetronPerformanceMode" Type="AbilCmd" AbilCmd="GenetronProductionModePerformance,Execute" Row="2" Column="0"/>
+            <LayoutButtons Face="GenetronPerformanceMode" Type="AbilCmd" AbilCmd="GenetronProductionModeSwitch,Train1" Row="2" Column="0"/>
             <LayoutButtons Face="GenetronPerformanceMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="0"/>
-            <LayoutButtons Face="GenetronStandardMode" Type="AbilCmd" AbilCmd="GenetronProductionModeStandard,Execute" Row="2" Column="1"/>
+            <LayoutButtons Face="GenetronStandardMode" Type="AbilCmd" AbilCmd="GenetronProductionModeSwitch,Train2" Row="2" Column="1"/>
             <LayoutButtons Face="GenetronStandardMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="1"/>
-            <LayoutButtons Face="GenetronOverclockMode" Type="AbilCmd" AbilCmd="GenetronProductionModeOverclock,Execute" Row="2" Column="2"/>
+            <LayoutButtons Face="GenetronOverclockMode" Type="AbilCmd" AbilCmd="GenetronProductionModeSwitch,Train3" Row="2" Column="2"/>
             <LayoutButtons Face="GenetronOverclockMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="2"/>
             <LayoutButtons Face="Aquila" Type="AbilCmd" AbilCmd="TrainLightweightMechs,Train5" Row="0" Column="4"/>
             <LayoutButtons Face="GenetronInternalEnergy" Type="Passive" Row="1" Column="0"/>
@@ -1305,9 +1370,7 @@
         <AbilArray Link="que5"/>
         <AbilArray Link="Rally"/>
         <AbilArray Link="TrainHeavyweightMechs"/>
-        <AbilArray Link="GenetronProductionModePerformance"/>
-        <AbilArray Link="GenetronProductionModeStandard"/>
-        <AbilArray Link="GenetronProductionModeOverclock"/>
+        <AbilArray Link="GenetronProductionModeSwitch"/>
         <BehaviorArray Link="GenetronProductionInternalEnergy"/>
         <BehaviorArray Link="GenetronProductionModePerformanceBuff"/>
         <BehaviorArray Link="Fabricator"/>
@@ -1319,12 +1382,12 @@
             <LayoutButtons Face="Mole" Type="AbilCmd" AbilCmd="TrainHeavyweightMechs,Train2" Row="0" Column="1"/>
             <LayoutButtons Face="Torrent" Type="AbilCmd" AbilCmd="TrainHeavyweightMechs,Train1" Row="0" Column="0"/>
             <LayoutButtons Face="Tesla" Type="AbilCmd" AbilCmd="TrainHeavyweightMechs,Train3" Row="0" Column="3"/>
-            <LayoutButtons Face="GenetronPerformanceMode" Type="AbilCmd" AbilCmd="GenetronProductionModePerformance,Execute" Row="2" Column="0"/>
+            <LayoutButtons Face="GenetronPerformanceMode" Type="AbilCmd" AbilCmd="GenetronProductionModeSwitch,Train1" Row="2" Column="0"/>
             <LayoutButtons Face="GenetronPerformanceMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="0"/>
             <LayoutButtons Face="Inciter" Type="AbilCmd" AbilCmd="TrainHeavyweightMechs,Train4" Row="0" Column="2"/>
-            <LayoutButtons Face="GenetronStandardMode" Type="AbilCmd" AbilCmd="GenetronProductionModeStandard,Execute" Row="2" Column="1"/>
+            <LayoutButtons Face="GenetronStandardMode" Type="AbilCmd" AbilCmd="GenetronProductionModeSwitch,Train2" Row="2" Column="1"/>
             <LayoutButtons Face="GenetronStandardMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="1"/>
-            <LayoutButtons Face="GenetronOverclockMode" Type="AbilCmd" AbilCmd="GenetronProductionModeOverclock,Execute" Row="2" Column="2"/>
+            <LayoutButtons Face="GenetronOverclockMode" Type="AbilCmd" AbilCmd="GenetronProductionModeSwitch,Train3" Row="2" Column="2"/>
             <LayoutButtons Face="GenetronOverclockMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="2"/>
             <LayoutButtons Face="Virtus" Type="AbilCmd" AbilCmd="TrainHeavyweightMechs,Train5" Row="0" Column="4"/>
             <LayoutButtons Face="GenetronEnergyNeeded" Type="Passive" Row="1" Column="1"/>
@@ -1784,21 +1847,21 @@
         <RepairTime value="35"/>
         <AbilArray index="2" Link="CourierTransport"/>
         <AbilArray Link="CourierCloak"/>
-        <AbilArray Link="OpticalDisruption"/>
+        <AbilArray Link="CourierOpticalDisruption"/>
         <CardLayouts index="0">
             <LayoutButtons Face="AcquireMove" Type="AbilCmd" AbilCmd="move,AcquireMove" Row="0" Column="4"/>
-            <LayoutButtons Face="CourierLoad" Type="AbilCmd" AbilCmd="CourierTransport,Load" Row="2" Column="2"/>
-            <LayoutButtons Face="CourierUnloadAll" Type="AbilCmd" AbilCmd="CourierTransport,UnloadAt" Row="2" Column="3"/>
-            <LayoutButtons Face="CloakOnCourier" Type="AbilCmd" AbilCmd="CourierCloak,On" Row="2" Column="0"/>
+            <LayoutButtons Face="CourierLoad" Type="AbilCmd" AbilCmd="CourierTransport,Load" Row="2" Column="3"/>
+            <LayoutButtons Face="CourierUnloadAll" Type="AbilCmd" AbilCmd="CourierTransport,UnloadAt" Row="2" Column="4"/>
+            <LayoutButtons Face="CloakOnCourier" Type="AbilCmd" AbilCmd="CourierCloak,On" Row="2" Column="1"/>
             <LayoutButtons>
                 <Face value="CloakOffCourier"/>
                 <Type value="AbilCmd"/>
                 <AbilCmd value="CourierCloak,Off"/>
                 <ShowInGlossary value="0"/>
                 <Row value="2"/>
-                <Column value="1"/>
+                <Column value="2"/>
             </LayoutButtons>
-            <LayoutButtons Face="OpticalDisruption" Type="AbilCmd" AbilCmd="OpticalDisruption,Execute" Row="2" Column="4"/>
+            <LayoutButtons Face="OpticalDisruption" Type="AbilCmd" AbilCmd="CourierOpticalDisruption,Execute" Row="2" Column="0"/>
         </CardLayouts>
         <Radius value="0.75"/>
         <SeparationRadius value="0.75"/>
@@ -3611,46 +3674,46 @@
         <GlossaryCategory value="Unit/Category/KeironUnits"/>
         <GlossaryPriority value="50"/>
     </CUnit>
-    <CUnit id="Meridian" parent="CUnitKeiron">
+    <CUnit id="Crux" parent="CUnitKeiron">
+        <FlagArray index="AICaster" value="1"/>
+        <FlagArray index="AISupport" value="1"/>
         <Collide index="Small" value="1"/>
+        <Attributes index="Biological" value="1"/>
+        <Attributes index="Psionic" value="1"/>
         <LifeStart value="80"/>
         <LifeMax value="80"/>
+        <LifeArmorName value="Unit/LifeArmorName/KeironBiologicalArmor"/>
         <EnergyStart value="75"/>
         <EnergyMax value="200"/>
         <EnergyRegenRate value="0.5625"/>
         <ShieldsStart value="40"/>
         <ShieldsMax value="40"/>
         <Speed value="2.5"/>
+        <Sight value="10"/>
+        <Food value="-3"/>
+        <CostResource index="Minerals" value="175"/>
+        <CostResource index="Vespene" value="150"/>
         <AbilArray index="3" Link="ProgressRally"/>
         <AbilArray Link="KeironWarpable"/>
         <AbilArray Link="FuseUnfuse"/>
         <AbilArray Link="Beholder"/>
-        <AbilArray Link="MeridianLightningBolt"/>
-        <AbilArray Link="MeridianConvergence"/>
-        <WeaponArray Link="MeridianWeapon"/>
-        <EffectArray index="Create" value="ElysiumMeridianDelay"/>
+        <AbilArray Link="CruxLightningBolt"/>
+        <AbilArray Link="CruxConvergence"/>
+        <WeaponArray Link="CruxWeapon"/>
+        <EffectArray index="Create" value="ElysiumCruxDelay"/>
         <CardLayouts index="0">
             <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
-            <LayoutButtons Face="MeridianLightningBolt" Type="AbilCmd" AbilCmd="MeridianLightningBolt,Execute" Row="2" Column="1"/>
-            <LayoutButtons Face="MeridianConvergence" Type="AbilCmd" AbilCmd="MeridianConvergence,Execute" Row="2" Column="2"/>
-            <LayoutButtons Face="MeridianSycophant" Type="Passive" Row="2" Column="3"/>
+            <LayoutButtons Face="CruxLightningBolt" Type="AbilCmd" AbilCmd="CruxLightningBolt,Execute" Row="2" Column="1"/>
+            <LayoutButtons Face="CruxConvergence" Type="AbilCmd" AbilCmd="CruxConvergence,Execute" Row="2" Column="2"/>
+            <LayoutButtons Face="CruxSycophant" Type="Passive" Row="2" Column="3"/>
             <LayoutButtons Face="Beholder" Type="AbilCmd" AbilCmd="Beholder,Execute" Row="2" Column="0"/>
             <LayoutButtons Face="Unfuse" Type="AbilCmd" AbilCmd="FuseUnfuse,Execute" Row="1" Column="4"/>
         </CardLayouts>
-        <CargoSize value="4"/>
-        <CostResource index="Minerals" value="175"/>
-        <CostResource index="Vespene" value="150"/>
-        <Attributes index="Biological" value="1"/>
-        <Attributes index="Psionic" value="1"/>
-        <Food value="-3"/>
-        <GlossaryPriority value="18"/>
-        <SubgroupPriority value="32"/>
-        <LifeArmorName value="Unit/LifeArmorName/KeironBiologicalArmor"/>
-        <FlagArray index="AICaster" value="1"/>
-        <FlagArray index="AISupport" value="1"/>
-        <Sight value="10"/>
         <Radius value="0.625"/>
+        <CargoSize value="4"/>
+        <SubgroupPriority value="32"/>
         <MinimapRadius value="0.75"/>
+        <GlossaryPriority value="18"/>
     </CUnit>
     <CUnit id="Elysium" parent="CBuildingKeiron">
         <Facing value="45"/>
@@ -3662,8 +3725,8 @@
         <CostResource index="Vespene" value="100"/>
         <AbilArray index="2" Link="KeironCitadelMaterialize"/>
         <AbilArray index="3" Link="ElysiumResearch"/>
-        <BehaviorArray Link="ElysiumMeridianBase"/>
-        <EffectArray index="Death" value="ElysiumMeridianDeathCP"/>
+        <BehaviorArray Link="ElysiumCruxBase"/>
+        <EffectArray index="Death" value="ElysiumCruxDeathCP"/>
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="KeironCharges" Type="Passive" Row="2" Column="0"/>
             <LayoutButtons Face="SelectBuilderKeiron" Type="SelectBuilder" Row="1" Column="3"/>
@@ -3674,7 +3737,7 @@
         <GlossaryPriority value="57"/>
         <ScoreMake value="325"/>
         <ScoreKill value="325"/>
-        <TechTreeUnlockedUnitArray value="Meridian"/>
+        <TechTreeUnlockedUnitArray value="Crux"/>
     </CUnit>
     <CUnit id="Stratus" parent="DefaultSettingsKeironBuildingFlyer">
         <LifeStart value="250"/>
@@ -3911,7 +3974,7 @@
             <LayoutButtons Face="MaterializePulsar" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train3" Row="0" Column="2"/>
             <LayoutButtons Face="MaterializeSubjecter" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train4" Row="0" Column="3"/>
             <LayoutButtons Face="MaterializeTitan" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train9" Row="1" Column="3"/>
-            <LayoutButtons Face="MaterializeMeridian" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train5" Row="0" Column="4"/>
+            <LayoutButtons Face="MaterializeCrux" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train5" Row="0" Column="4"/>
             <LayoutButtons Face="MaterializeUmbra" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train6" Row="1" Column="0"/>
             <LayoutButtons Face="MaterializeInducer" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train7" Row="1" Column="1"/>
             <LayoutButtons Face="MaterializeMyriad" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train8" Row="1" Column="2"/>
@@ -3972,7 +4035,7 @@
         <TechTreeProducedUnitArray value="Volt"/>
         <TechTreeProducedUnitArray value="Pulsar"/>
         <TechTreeProducedUnitArray value="Subjecter"/>
-        <TechTreeProducedUnitArray value="Meridian"/>
+        <TechTreeProducedUnitArray value="Crux"/>
         <TechTreeProducedUnitArray value="Umbra"/>
         <TechTreeProducedUnitArray value="Ward"/>
         <TechTreeProducedUnitArray value="Inducer"/>
@@ -4013,7 +4076,7 @@
             </LayoutButtons>
         </CardLayouts>
         <CardLayouts index="1" CardId="0002">
-            <LayoutButtons index="4" Face="MaterializeMeridian" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train5" Row="0" Column="4"/>
+            <LayoutButtons index="4" Face="MaterializeCrux" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train5" Row="0" Column="4"/>
             <LayoutButtons index="5" Face="MaterializeTitan" Type="AbilCmd" AbilCmd="KeironCitadelMaterialize,Train9" Row="1" Column="3"/>
         </CardLayouts>
         <CostResource index="Minerals" value="125"/>
@@ -4347,9 +4410,9 @@
         <TechTreeUnlockedUnitArray value="Pulsar"/>
         <TechTreeUnlockedUnitArray value="Subjecter"/>
     </CUnit>
-    <CUnit id="MeridianWeapon" parent="MISSILE">
+    <CUnit id="WeaponCrux" parent="MISSILE">
         <Race value="Keir"/>
-        <Mover value="MeridianWeaponMissile"/>
+        <Mover value="CruxWeaponMissile"/>
         <EditorCategories value="ObjectType:Projectile,ObjectFamily:Melee"/>
     </CUnit>
     <CUnit id="Titan" parent="CUnitKeiron">
