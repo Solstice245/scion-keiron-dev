@@ -284,6 +284,12 @@
         </Frame>
     </Frame>
 
+    <Frame type="Frame" name="VerticalLine_Gen" template="TechTreePanel/VerticalLine">
+        <Frame type="Image" name="VerticalLine">
+            <LayerColor val="##LineColorGen"/>
+        </Frame>
+    </Frame>
+
     <Frame type="TechTreePanel" name="TechTreeTemplate">
 
         <Frame type="Frame" name="CategoryFrame_Gen_Void">
@@ -560,27 +566,50 @@
             </Frame>
 
             <Frame type="TechTreeStructureFrame" name="Interdictor" template="TechTreePanel_Scion/TechTreeStructureFrameNoProductionTemplate_Gen">
-                <Anchor side="Top" relative="$parent/Repulsor" pos="Min" offset="0"/>
-                <Anchor side="Left" relative="$parent/Repulsor" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Anchor side="Top" relative="$parent/Repulsor" pos="Max" offset="-50"/>
+                <Anchor side="Left" relative="$parent/Repulsor" pos="Min" offset="0"/>
             </Frame>
 
-            <Frame type="Frame" name="RepulsorToInterdictorTwoCornerLine" template="TechTreePanel_Scion/TwoCornerLine_Gen">
+            <Frame type="TechTreeStructureFrame" name="TechVault" template="TechTreePanel_Scion/TechTreeStructureFrameNoProductionTemplate_Gen">
+                <Anchor side="Top" relative="$parent/Repulsor" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/Repulsor" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="240"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="OutfittingStation" template="TechTreePanel_Scion/TechTreeStructureFrameNoProductionTemplate_Gen">
+                <Anchor side="Top" relative="$parent/TechVault" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/TechVault" pos="Max" offset="#TechTreeHorizontalGap"/>
+            </Frame>
+
+            <Frame type="Frame" name="AnalysisTerminalToRepulsorLeftCornerLine" template="TechTreePanel_Scion/LeftCornerLine_Gen">
                 <Anchor side="Left" relative="$parent/Repulsor/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
-                <Anchor side="Right" relative="$parent/Interdictor/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/TechVault/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
                 <Anchor side="Bottom" relative="$parent/Repulsor" pos="Min" offset="15"/>
+            </Frame>
+
+            <Frame type="Frame" name="AnalysisTerminalToRepulsorTwoCornerLine" template="TechTreePanel_Scion/TwoCornerLine_Gen">
+                <Anchor side="Left" relative="$parent/TechVault/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/OutfittingStation/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/TechVault" pos="Min" offset="15"/>
             </Frame>
 
             <Frame type="Frame" name="AnalysisTerminalToRepulsorArrow" template="TechTreePanel_Scion/VerticalArrow_Gen">
                 <Anchor side="Top" relative="$parent/AnalysisTerminal/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
-                <Anchor side="Bottom" relative="$parent/RepulsorToInterdictorTwoCornerLine" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/AnalysisTerminalToRepulsorLeftCornerLine" pos="Min" offset="0"/>
                 <Anchor side="Left" relative="$parent/AnalysisTerminal/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
                 <Anchor side="Right" relative="$parent/AnalysisTerminal/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+
+            <Frame type="Frame" name="RepulsorToInterdictorLine" template="TechTreePanel_Scion/VerticalLine_Gen">
+                <Anchor side="Top" relative="$parent/Repulsor/BuildingIconBackgroundImage" pos="Max" offset="-13"/>
+                <Anchor side="Left" relative="$parent/Repulsor/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/Interdictor" pos="Min" offset="13"/>
             </Frame>
 
             <!-- Tier One Two -->
 
             <Frame type="TechTreeStructureFrame" name="Fabricator" template="TechTreePanel_Scion/TechTreeStructureFrameTemplate_Gen">
-                <Anchor side="Top" relative="$parent/Repulsor" pos="Max" offset="0"/>
+                <Anchor side="Top" relative="$parent/TechVault" pos="Max" offset="0"/>
                 <Anchor side="Left" relative="$parent/Manufacturer" pos="Min" offset="0"/>
             </Frame>
 
@@ -590,22 +619,10 @@
                 <Height val="240"/>
             </Frame>
 
-            <Frame type="TechTreeStructureFrame" name="OutfittingStation" template="TechTreePanel_Scion/TechTreeStructureFrameNoProductionTemplate_Gen">
-                <Anchor side="Top" relative="$parent/RelayTower" pos="Min" offset="0"/>
-                <Anchor side="Left" relative="$parent/RelayTower" pos="Max" offset="#TechTreeHorizontalGap"/>
-                <Height val="240"/>
-            </Frame>
-
-            <Frame type="Frame" name="ManufacturerToFabricatorLeftCornerLine" template="TechTreePanel_Scion/LeftCornerLine_Gen">
+            <Frame type="Frame" name="ManufacturerToFabricatorTwoCornerLine" template="TechTreePanel_Scion/TwoCornerLine_Gen">
                 <Anchor side="Left" relative="$parent/Fabricator/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
                 <Anchor side="Right" relative="$parent/RelayTower/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
                 <Anchor side="Bottom" relative="$parent/Fabricator" pos="Min" offset="15"/>
-            </Frame>
-
-            <Frame type="Frame" name="ManufacturerToFabricatorTwoCornerLine" template="TechTreePanel_Scion/TwoCornerLine_Gen">
-                <Anchor side="Left" relative="$parent/RelayTower/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
-                <Anchor side="Right" relative="$parent/OutfittingStation/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
-                <Anchor side="Bottom" relative="$parent/RelayTower" pos="Min" offset="15"/>
             </Frame>
 
             <Frame type="Frame" name="ManufacturerToFabricatorArrow" template="TechTreePanel_Scion/VerticalArrow_Gen">
@@ -629,7 +646,7 @@
                 <Anchor side="Right" relative="$parent/Fabricator/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
             </Frame>
 
-            <Frame type="TechTreeStructureFrame" name="Generator" template="TechTreePanel_Scion/TechTreeStructureFrameTemplate_Gen">
+            <Frame type="TechTreeStructureFrame" name="Generator" template="TechTreePanel_Scion/TechTreeStructureFrameNoProductionTemplate_Gen">
                 <Anchor side="Top" relative="$parent/RelayTower" pos="Max" offset="0"/>
                 <Anchor side="Left" relative="$parent/RelayTower" pos="Min" offset="0"/>
             </Frame>
@@ -641,30 +658,39 @@
                 <Anchor side="Right" relative="$parent/RelayTower/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
             </Frame>
 
-            <Frame type="TechTreeStructureFrame" name="TechVault" template="TechTreePanel_Scion/TechTreeStructureFrameNoProductionTemplate_Gen">
-                <Anchor side="Top" relative="$parent/OutfittingStation" pos="Max" offset="0"/>
-                <Anchor side="Left" relative="$parent/OutfittingStation" pos="Min" offset="0"/>
-                <Height val="240"/>
-            </Frame>
-
-            <Frame type="Frame" name="OutfittingStationToTechVaultArrow" template="TechTreePanel_Scion/VerticalArrow_Gen">
-                <Anchor side="Top" relative="$parent/OutfittingStation/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
-                <Anchor side="Bottom" relative="$parent/TechVault/BuildingIconBackgroundImage" pos="Min" offset="15"/>
-                <Anchor side="Left" relative="$parent/OutfittingStation/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
-                <Anchor side="Right" relative="$parent/OutfittingStation/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            <Frame type="TechTreeStructureFrame" name="ChemicalFirm" template="TechTreePanel_Scion/TechTreeStructureFrameNoProductionTemplate_Gen">
+                <Anchor side="Top" relative="$parent/TechVault" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/TechVault" pos="Min" offset="0"/>
             </Frame>
 
             <Frame type="TechTreeStructureFrame" name="OrdnanceCache" template="TechTreePanel_Scion/TechTreeStructureFrameNoProductionTemplate_Gen">
-                <Anchor side="Top" relative="$parent/TechVault" pos="Max" offset="0"/>
-                <Anchor side="Left" relative="$parent/TechVault" pos="Min" offset="0"/>
-                <Height val="240"/>
+                <Anchor side="Top" relative="$parent/ChemicalFirm" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/ChemicalFirm" pos="Max" offset="#TechTreeHorizontalGap"/>
             </Frame>
 
-            <Frame type="Frame" name="TechVaultToOrdnanceCacheArrow" template="TechTreePanel_Scion/VerticalArrow_Gen">
+            <Frame type="Frame" name="TechVaultToChemicalFirmTwoCornerLine" template="TechTreePanel_Scion/TwoCornerLine_Gen">
+                <Anchor side="Left" relative="$parent/ChemicalFirm/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/OrdnanceCache/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/ChemicalFirm" pos="Min" offset="15"/>
+            </Frame>
+
+            <Frame type="Frame" name="TechVaultToChemicalFirmArrow" template="TechTreePanel_Scion/VerticalArrow_Gen">
                 <Anchor side="Top" relative="$parent/TechVault/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
-                <Anchor side="Bottom" relative="$parent/OrdnanceCache/BuildingIconBackgroundImage" pos="Min" offset="15"/>
+                <Anchor side="Bottom" relative="$parent/TechVaultToChemicalFirmTwoCornerLine" pos="Min" offset="0"/>
                 <Anchor side="Left" relative="$parent/TechVault/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
                 <Anchor side="Right" relative="$parent/TechVault/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="Olympus" template="TechTreePanel_Scion/TechTreeStructureFrameNoProductionTemplate_Gen">
+                <Anchor side="Top" relative="$parent/Generator" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/Generator" pos="Min" offset="0"/>
+            </Frame>
+
+            <Frame type="Frame" name="GeneratorToOlympusArrow" template="TechTreePanel_Scion/VerticalArrow_Gen">
+                <Anchor side="Top" relative="$parent/Generator/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/Olympus/BuildingIconBackgroundImage" pos="Min" offset="15"/>
+                <Anchor side="Left" relative="$parent/Generator/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/Generator/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
             </Frame>
 
         </Frame>
@@ -1231,8 +1257,4 @@
 
     </Frame>
 
-    <!--Frame type="CommandPanel" name="GameUI/UIContainer/ConsoleUIContainer/CommandPanel" file="GameUI">
-        <Anchor side="Bottom" relative="$parent" pos="Max" offset="-18"/>
-        <Anchor side="Right" relative="$parent" pos="Max" offset="-21"/>
-    </Frame-->
 </Desc>

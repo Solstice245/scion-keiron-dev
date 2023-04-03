@@ -12,6 +12,27 @@ void libScio_InitLibraries () {
 
 // Triggers
 //--------------------------------------------------------------------------------------------------
+// Trigger: Untitled Trigger 001
+//--------------------------------------------------------------------------------------------------
+bool libScio_gt_UntitledTrigger001_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libNtve_gf_CreateUnitsWithDefaultFacing(1, "Manufacturer", 0, 1, RegionGetCenter(RegionPlayableMap()));
+    PlayerSetRace(1, "Gen");
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libScio_gt_UntitledTrigger001_Init () {
+    libScio_gt_UntitledTrigger001 = TriggerCreate("libScio_gt_UntitledTrigger001_Func");
+    TriggerAddEventMapInit(libScio_gt_UntitledTrigger001);
+}
+
+//--------------------------------------------------------------------------------------------------
 // Trigger: Genetron Interface
 //--------------------------------------------------------------------------------------------------
 bool libScio_gt_GenetronInterface_Func (bool testConds, bool runActions) {
@@ -131,6 +152,7 @@ void libScio_gt_GenetronInterface_Init () {
 }
 
 void libScio_InitTriggers () {
+    libScio_gt_UntitledTrigger001_Init();
     libScio_gt_GenetronInterface_Init();
 }
 

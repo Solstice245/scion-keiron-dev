@@ -23,6 +23,54 @@
         <EditorCategories value="Race:Keiron"/>
         <SquibTypeDefault value="Metal"/>
     </CModel>
+    <CModel default="1" id="GenetronBuildingBuild" parent="TerranBuildingBuild">
+        <Model value="Assets\Buildings\Genetron\GenetronBuild.m3"/>
+        <EditorCategories value="Race:Genetron"/>
+        <Events>
+            <Anim value="Birth,A,Start"/>
+            <Name value="BuildStart1"/>
+            <Type value="Sound"/>
+            <Time value="0.000100"/>
+            <Payload value="Genetron_ConstructionStart"/>
+        </Events>
+        <Events>
+            <Anim value="Birth,A,Start"/>
+            <Name value="BuildStart2"/>
+            <Type value="Sound"/>
+            <Time value="1.000000"/>
+            <Payload value="Genetron_ConstructionStart2"/>
+        </Events>
+        <Events>
+            <Anim value="Birth,B,Start"/>
+            <Name value="BuildMove"/>
+            <Type value="Sound"/>
+            <Time value="0.000100"/>
+            <Payload value="Genetron_ConstructionMove"/>
+        </Events>
+        <Events>
+            <Anim value="Birth,C,Start"/>
+            <Name value="BuildMove"/>
+            <Type value="Sound"/>
+            <Time value="0.000100"/>
+            <Payload value="Genetron_ConstructionMove"/>
+        </Events>
+        <Events>
+            <Anim value="Birth,D,Start"/>
+            <Name value="BuildEnd"/>
+            <Type value="Sound"/>
+            <Time value="0.000100"/>
+            <Payload value="Genetron_ConstructionEnd"/>
+        </Events>
+        <Events>
+            <Anim value="Work"/>
+            <Name value="Work"/>
+            <Type value="Sound"/>
+            <Time value="0.000100"/>
+            <Payload value="Genetron_ConstructionWork"/>
+        </Events>
+        <Lighting value="GenetronBuildingBuild"/>
+        <Priority value="30"/>
+    </CModel>
     <CModel id="BadgerEnergyShieldGlaze">
         <Model value="Assets\Effects\Glaze\SOA_ShieldOvercharge_Glaze\SOA_ShieldOvercharge_Glaze.m3"/>
         <EditorCategories value="Race:Genetron"/>
@@ -40,6 +88,31 @@
     <CModel id="OpticalDisruptionBuff" parent="BuffFX">
         <Model value="Assets\Effects\Neutral\MomentOfSilence_Coop_Impact_Debuff\MomentOfSilence_Coop_Impact_Debuff.m3"/>
         <EditorCategories value="Race:Keiron"/>
+    </CModel>
+    <CModel id="ChemicalFirm" parent="Building">
+        <Model value="Assets\Buildings\Genetron\ChemicalFirm.m3"/>
+        <EditorCategories value="Race:Genetron"/>
+        <Radius value="1.250000"/>
+        <SelectionLayer value="2"/>
+        <SelectionRadius value="1.600000"/>
+    </CModel>
+    <CModel id="ChemicalFirmBirth" parent="Building">
+        <Model value="Assets\Buildings\Genetron\ChemicalFirm.m3"/>
+        <EditorCategories value="Race:Genetron"/>
+        <Radius value="1.250000"/>
+        <SelectionLayer value="2"/>
+        <SelectionRadius value="1.500000"/>
+    </CModel>
+    <CModel id="ChemicalFirmPlacement" parent="Placement">
+        <Model value="Assets\Buildings\Genetron\ChemicalFirm.m3"/>
+        <LowQualityModel value="ChemicalFirm"/>
+        <EditorCategories value="Race:Genetron"/>
+    </CModel>
+    <CModel id="ChemicalFirmSplat" parent="Splat">
+        <Model value="Assets\Splats\Splat_Bunker\Splat_Bunker.m3"/>
+        <EditorCategories value="Race:Genetron"/>
+        <ScaleMax value="1.250000,1.250000,1.250000"/>
+        <ScaleMin value="1.250000,1.250000,1.250000"/>
     </CModel>
     <CModel id="SpitfireAttackLaunch" parent="LaunchFX">
         <Model value="Assets\Effects\Genetron\SpitfireAttackLaunch.m3"/>
@@ -317,52 +390,9 @@
         <Flags index="Wait" value="1"/>
         <Priority value="32"/>
     </CModel>
-    <CModel id="GenetronBuildingBuild" parent="TerranBuildingBuild">
-        <EditorCategories value="Race:Genetron"/>
-        <Priority value="30"/>
-        <Model value="Assets\Buildings\Genetron\GenetronBuild.m3"/>
-        <Events>
-            <Anim value="Birth,A,Start"/>
-            <Name value="BuildStart1"/>
-            <Type value="Sound"/>
-            <Time value="0.000100"/>
-            <Payload value="Genetron_ConstructionStart"/>
-        </Events>
-        <Events>
-            <Anim value="Birth,A,Start"/>
-            <Name value="BuildStart2"/>
-            <Type value="Sound"/>
-            <Time value="1.000000"/>
-            <Payload value="Genetron_ConstructionStart2"/>
-        </Events>
-        <Events>
-            <Anim value="Birth,B,Start"/>
-            <Name value="BuildMove"/>
-            <Type value="Sound"/>
-            <Time value="0.000100"/>
-            <Payload value="Genetron_ConstructionMove"/>
-        </Events>
-        <Events>
-            <Anim value="Birth,C,Start"/>
-            <Name value="BuildMove"/>
-            <Type value="Sound"/>
-            <Time value="0.000100"/>
-            <Payload value="Genetron_ConstructionMove"/>
-        </Events>
-        <Events>
-            <Anim value="Birth,D,Start"/>
-            <Name value="BuildEnd"/>
-            <Type value="Sound"/>
-            <Time value="0.000100"/>
-            <Payload value="Genetron_ConstructionEnd"/>
-        </Events>
-        <Events>
-            <Anim value="Work"/>
-            <Name value="Work"/>
-            <Type value="Sound"/>
-            <Time value="0.000100"/>
-            <Payload value="Genetron_ConstructionWork"/>
-        </Events>
+    <CModel id="ChemicalFirmBuild" parent="GenetronBuildingBuild">
+        <ScaleMax value="1.000000,1.000000,1.200000"/>
+        <ScaleMin value="1.000000,1.000000,1.200000"/>
     </CModel>
     <CModel id="FabricatorBuild" parent="GenetronBuildingBuild">
         <ScaleMax value="1.450000,1.450000,0.900000"/>
@@ -401,14 +431,12 @@
         <EditorCategories value="Race:Genetron"/>
     </CModel>
     <CModel id="OrdnanceCacheSplat" parent="Splat">
-        <Model value="Assets\Splats\Splat_Bunker\Splat_Bunker.m3"/>
+        <Model value="Assets\Splats\Splat_ShadowOps\Splat_ShadowOps.m3"/>
         <EditorCategories value="Race:Genetron"/>
-        <ScaleMax value="1.250000,1.250000,1.250000"/>
-        <ScaleMin value="1.250000,1.250000,1.250000"/>
     </CModel>
     <CModel id="OrdnanceCacheBuild" parent="GenetronBuildingBuild">
-        <ScaleMax value="1.000000,1.000000,1.200000"/>
-        <ScaleMin value="1.000000,1.000000,1.200000"/>
+        <ScaleMax value="1.100000,1.100000,1.100000"/>
+        <ScaleMin value="1.100000,1.100000,1.100000"/>
     </CModel>
     <CModel id="WardAttackImpact" parent="ImpactFX">
         <Model value="Assets\Effects\Protoss\AdeptSoulMissileImpact\AdeptSoulMissileImpact.m3"/>
