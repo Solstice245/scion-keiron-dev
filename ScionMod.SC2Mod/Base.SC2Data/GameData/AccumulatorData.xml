@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
+    <CAccumulatorArithmetic id="BadgerRemainingDamage">
+        <Parameters value="0">
+            <AccumulatorArray value="EnergyDataAdd"/>
+            <AccumulatorArray value="MultiplyBy2"/>
+            <AccumulatorArray value="MultiplyByNeg1"/>
+        </Parameters>
+    </CAccumulatorArithmetic>
+    <CAccumulatorUserData id="EnergyDataAdd">
+        <Key value="Energy"/>
+    </CAccumulatorUserData>
+    <CAccumulatorEffectAmount id="DamageInherited">
+        <AmountType value="DamageInherited"/>
+    </CAccumulatorEffectAmount>
     <CAccumulatorUserData id="DefaultDataAdd"/>
+    <CAccumulatorConstant id="DivideBy2">
+        <ApplicationRule value="Multiply"/>
+        <Amount value="0.5"/>
+    </CAccumulatorConstant>
+    <CAccumulatorUserData id="EnergyNeededDataAdd">
+        <Key value="EnergyNeeded"/>
+        <BehaviorScope Behavior="GenetronProductionInternalEnergy"/>
+    </CAccumulatorUserData>
+    <CAccumulatorArithmetic id="GenetronCheckInternalEnergy">
+        <Parameters value="0">
+            <AccumulatorArray value="InternalEnergyDataAdd"/>
+        </Parameters>
+        <Parameters value="0">
+            <AccumulatorArray value="EnergyNeededDataAdd"/>
+        </Parameters>
+        <Operation value="Subtract"/>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="GenetronTrainEnergyRemaining">
+        <Parameters value="0">
+            <AccumulatorArray value="EnergyNeededDataAdd"/>
+        </Parameters>
+        <Parameters value="0">
+            <AccumulatorArray value="InternalEnergyDataAdd"/>
+        </Parameters>
+        <Operation value="Subtract"/>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="GenetronTrainEnergyRequested">
+        <Parameters value="0">
+            <AccumulatorArray value="EnergyCurrentTarget"/>
+        </Parameters>
+        <Parameters value="0">
+            <AccumulatorArray value="GenetronTrainEnergyRemaining"/>
+        </Parameters>
+        <Operation value="Subtract"/>
+    </CAccumulatorArithmetic>
+    <CAccumulatorConstant id="MultiplyBy2">
+        <ApplicationRule value="Multiply"/>
+        <Amount value="2"/>
+    </CAccumulatorConstant>
+    <CAccumulatorConstant id="MultiplyByNeg1">
+        <ApplicationRule value="Multiply"/>
+        <Amount value="-1"/>
+    </CAccumulatorConstant>
     <CAccumulatorUserData id="RefundEnergyDataAdd">
         <Key value="RefundEnergy"/>
     </CAccumulatorUserData>
@@ -77,4 +133,8 @@
     <CAccumulatorSwitch id="TeslaShockChargeOverloadSwitch">
         <CaseArray Validator="ShockChargeOverloaded" Accumulator="TeslaShockChargeOverloadMultiply"/>
     </CAccumulatorSwitch>
+    <CAccumulatorUserData id="InternalEnergyDataAdd">
+        <Key value="InternalEnergy"/>
+        <BehaviorScope Behavior="GenetronProductionInternalEnergy"/>
+    </CAccumulatorUserData>
 </Catalog>
