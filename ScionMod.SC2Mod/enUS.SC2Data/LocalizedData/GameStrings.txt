@@ -608,6 +608,7 @@ Button/Name/SystemOffload=System Offload
 Button/Name/SystemRecharge=System Recharge
 Button/Name/TechVault=Build Tech Vault
 Button/Name/Tesla=Fabricate Tesla
+Button/Name/TeslaConstructCharge=Construct Charge
 Button/Name/ToggleDetector=Detector
 Button/Name/Torrent=Fabricate Torrent
 Button/Name/UmbraCloakingSystems=Cloaking Systems
@@ -694,7 +695,7 @@ Button/Tooltip/Citadel=Primary structure. Used to create all Keiron units and re
 Button/Tooltip/CitadelCharged=Primary structure. Used to create all Keiron units and receive gathered resources. Can use Energize.
 Button/Tooltip/CitadelEnergize=Boosts the movement speed, shield armor, and regeneration of nearby units.<n/><n/><c val="FFFF80">Also increases worker harvesting speeds.</c>
 Button/Tooltip/CleavingSpores=<c val="FFFF80">Raptor</c> attacks deal an additional <d ref="Effect,CleavingSporesCP,PeriodCount"/> damage to armored units over <d ref="Effect,CleavingSporesCP,PeriodicPeriodArray[0]*Effect,CleavingSporesCP,PeriodCount" precision="1"/> seconds.
-Button/Tooltip/CloakCharge=Consumes energy after it is placed. Self-destructs when its energy reserves are consumed.
+Button/Tooltip/CloakCharge=Cloaks units in an area. Energy is used over time.<n/><n/>The charge is destroyed when its energy is exhausted.
 Button/Tooltip/CloakOffCourier=Decloaks the selected unit, making it visible to enemies.
 Button/Tooltip/CloakOnCourier=Cloaks the unit, preventing enemy units from seeing or attacking it. A cloaked unit will only be revealed by detectors or effects.<n/><n/><c val="f078ff">Drains <d ref="-1 * (Behavior,BansheeCloak,Modification.VitalRegenArray[2] + Unit,Banshee,EnergyRegenRate)" precision="1"/> energy per second.</c>
 Button/Tooltip/CloakingGenerator=<c val="FFFF80">Processors</c> gain permanent cloaking.
@@ -813,8 +814,8 @@ Button/Tooltip/KeironShieldsLevel2=Further upgrades the shields of all Keiron un
 Button/Tooltip/KeironShieldsLevel3=Maximizes the shields of all Keiron units and structures.
 Button/Tooltip/Kraken=A huge powerful beast, with a devastating attack. Can use Volatile Discharge.<n/><n/><c val="FFFF80">Can attack ground and air units.</c>
 Button/Tooltip/LatentCharge=Enables the <c val="FFFF80">Volt's</c> weapon to bounce to 1 additional target and deal <d ref="Effect,ElectronBoltBDMG,Amount"/> spell damage.
-Button/Tooltip/LaunchCloakCharge=Launches a <c val="FFFF80">Cloak Charge</c> to the target point.
-Button/Tooltip/LaunchShockCharge=Launches a <c val="FFFF80">Shock Charge</c> to the target point.
+Button/Tooltip/LaunchCloakCharge=Launches the Tesla's charge to the target point with the Cloak Charge configuration.<n/><n/>Cloak Charges cloak units in an area. Energy is used over time.<n/><n/>The charge is destroyed when its energy is exhausted.
+Button/Tooltip/LaunchShockCharge=Launches the Tesla's charge to the target point with the Shock Charge configuration.<n/><n/>Shock Charges deal <d ref="Effect,TeslaShockChargeImpactDamage,Amount"/> damage in an area every <d ref="Behavior,ShockCharge,Duration"/> seconds at the cost of energy. Each unit hit uses <d ref="-Effect,TeslaShockChargeImpactEnergyCaster,VitalArray[Energy].Change"/> energy and has <d ref="-Effect,TeslaShockChargeImpactEnergyTarget,VitalArray[Energy].Change"/> energy taken from them.<n/><n/>The charge is destroyed when its energy is exhausted.
 Button/Tooltip/LoadFerrion=Loads units into the Ferrion's hold.
 Button/Tooltip/MELESTargetingSystem=The <c val="FFFF80">Badger</c> is able to attack air and ground targets simultaneously.
 Button/Tooltip/Manufacturer=Produces light-weight machines.<n/><n/><c val="FFFF80">Enables:</c><n/>- Spitfires
@@ -960,7 +961,7 @@ Button/Tooltip/SelfFixProtocol=Heals <d ref="(Abil,VirtusSelffixProtocol,CastOut
 Button/Tooltip/ShapeAdvancedStructure=A list of advanced structures.
 Button/Tooltip/ShapeStructure=A list of basic structures.
 Button/Tooltip/ShapedHull=<c val="FFFF80">Boars</c> gain +50 life.
-Button/Tooltip/ShockCharge=Consumes energy after it is placed, and when it deals damage. Self-destructs when its energy reserves are consumed.
+Button/Tooltip/ShockCharge=Deals <d ref="Effect,TeslaShockChargeImpactDamage,Amount"/> damage in an area every <d ref="Behavior,ShockCharge,Duration"/> seconds at the cost of energy. Each unit hit uses <d ref="-Effect,TeslaShockChargeImpactEnergyCaster,VitalArray[Energy].Change"/> of the charge's energy and has <d ref="-Effect,TeslaShockChargeImpactEnergyTarget,VitalArray[Energy].Change"/> energy taken from them.<n/><n/>The charge is destroyed when its energy is exhausted.
 Button/Tooltip/Siphoner=Formed over a Vespene Geyser to allow harvesting of vespene gas.
 Button/Tooltip/SiphonerRich=Formed over a Vespene Geyser to allow harvesting of vespene gas.
 Button/Tooltip/SonicImage=Places a sonic image, which the Echo can teleport back to if it remains close by.
@@ -981,6 +982,7 @@ Button/Tooltip/SystemOffload=Boosts the attack speed of friendly units by 15% in
 Button/Tooltip/SystemRecharge=Transfers energy directly to the target unit.
 Button/Tooltip/TechVault=Contains weapon upgrades for Genetron heavy ground units, and weapon and armor upgrades for Genetron air units.<n/><n/><c val="FFFF80">Enables:</c><n/>- Moles at the Fabricator<n/>- Inciters at the Fabricator
 Button/Tooltip/Tesla=Area control specialist. Can construct and launch specialized charges.
+Button/Tooltip/TeslaConstructCharge=Arms the Tesla with a charge which can be launched to provide combat support.
 Button/Tooltip/Titan=Heavy assault walker.<n/><n/><c val="FFFF80">Can attack ground units.</c>
 Button/Tooltip/ToggleDetector=When active, this unit is a detector, allowing it to see cloaked and burrowed units, while draining energy.<n/><n/><c val="f078ff">Drains <d ref="-1*Behavior,PDDetector,Modification.VitalRegenArray[Energy]" precision="1"/> energy per second.</c>
 Button/Tooltip/Torrent=Anti-air artillary.<n/><n/><c val="FFFF80">Can attack ground and air units.</c>
@@ -1855,6 +1857,7 @@ Effect/Name/TeslaChargeCompleteCloakCharge=Tesla - Charge Complete (Cloak Charge
 Effect/Name/TeslaChargeCompleteShockCharge=Tesla - Charge Complete (Shock Charge)
 Effect/Name/TeslaChargeSpawned=Tesla - Charge Spawned
 Effect/Name/TeslaLoadChargeIntoTransport=Tesla - Load Charge Into Transport
+Effect/Name/TeslaShockChargeDummyDMG=Tesla - Shock Charge (DummyDMG)
 Effect/Name/TeslaShockChargeExpire=Tesla - Shock Charge (Expire)
 Effect/Name/TeslaShockChargeExpireEnergy=Tesla - Shock Charge (Expire Energy)
 Effect/Name/TeslaShockChargeExpireRecharge=Tesla - Shock Charge (Expire Recharge)
@@ -2163,8 +2166,6 @@ Unit/Name/FormulatorRich=Formulator
 Unit/Name/Foundry=Foundry
 Unit/Name/Fuse=Fuse
 Unit/Name/Generator=Generator
-Unit/Name/GenetronOverclockModeDummy=Genetron Overclock Mode Dummy
-Unit/Name/GenetronStandardModeDummy=Genetron Standard Mode Dummy
 Unit/Name/Grub=Grub
 Unit/Name/Gyre=Gyre
 Unit/Name/HalifaxGrenadesLMWeapon=Halifax Grenade
@@ -2175,7 +2176,6 @@ Unit/Name/Hornet=Hornet
 Unit/Name/HurricaneMissilesLMWeapon=Torrent Missile
 Unit/Name/IncendiaryInfusionMissile=Incendiary Infusion Missile
 Unit/Name/Inciter=Inciter
-Unit/Name/InciterELORProtocolTargetDummy=Inciter ELOR Protocol Target Dummy
 Unit/Name/InciterPlaceholder=Inciter Placeholder
 Unit/Name/Inducer=Inducer
 Unit/Name/InducerAttackMissile=Gamut Orb
@@ -2197,7 +2197,6 @@ Unit/Name/Mendling=Mendling
 Unit/Name/Mole=Mole
 Unit/Name/MoleBuried=MoleBuried
 Unit/Name/MoleBurrowed=Mole
-Unit/Name/MoleTurnDummy=Mole Turn Dummy
 Unit/Name/MutagenChamber=Mutagen Chamber
 Unit/Name/Myriad=Myriad
 Unit/Name/NaniteGrenadeWeapon=Nanite Grenade

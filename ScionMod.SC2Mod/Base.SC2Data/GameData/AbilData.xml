@@ -446,31 +446,13 @@
         <OrderArray index="0" Model="Assets\UI\Cursors\WayPointAttack_Void\WayPointAttack_Void.m3"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Activity value="UI/Constructing"/>
-        <InfoArray index="Specialize1" Time="15" Effect="TeslaChargeCompleteShockCharge">
-            <Resource index="Minerals" value="20"/>
-            <Resource index="Vespene" value="20"/>
-            <Charge>
-                <CountMax value="1"/>
-                <CountStart value="1"/>
-                <CountUse value="1"/>
-                <Location value="Unit"/>
-            </Charge>
+        <InfoArray index="Specialize1" Time="14" Effect="TeslaChargeCompleteShockCharge">
+            <Vital index="Energy" value="150"/>
+            <Charge CountMax="1" CountUse="1" Location="Unit"/>
             <Cooldown Location="Unit"/>
-            <Button DefaultButtonFace="ConstructShockCharge"/>
+            <Button DefaultButtonFace="TeslaConstructCharge"/>
             <Flags index="AutoCast" value="1"/>
-        </InfoArray>
-        <InfoArray index="Specialize2" Time="15" Effect="TeslaChargeCompleteCloakCharge">
-            <Resource index="Minerals" value="15"/>
-            <Resource index="Vespene" value="15"/>
-            <Charge>
-                <CountMax value="1"/>
-                <CountStart value="1"/>
-                <CountUse value="1"/>
-                <Location value="Unit"/>
-            </Charge>
-            <Cooldown Location="Unit"/>
-            <Button DefaultButtonFace="ConstructCloakCharge"/>
-            <Flags index="AutoCast" value="1"/>
+            <Flags index="AutoCastOn" value="1"/>
         </InfoArray>
         <MaxCount value="1"/>
     </CAbilSpecialize>
@@ -524,9 +506,15 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Effect index="0" value="LaunchShockChargeLS"/>
         <Range value="9"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="ConstructShockCharge"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="LaunchShockCharge"/>
         <Cost>
-            <Charge CountMax="1" CountUse="1"/>
+            <Charge>
+                <CountMax value="1"/>
+                <CountStart value="1"/>
+                <CountUse value="1"/>
+                <Location value="Unit"/>
+            </Charge>
+            <Cooldown Location="Unit"/>
         </Cost>
         <EffectRange index="0" value="1,500"/>
         <Arc value="360"/>
@@ -538,7 +526,14 @@
         <Range value="9"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="LaunchCloakCharge"/>
         <Cost>
-            <Charge CountMax="1" CountUse="1"/>
+            <Charge>
+                <CountMax value="1"/>
+                <CountStart value="1"/>
+                <CountUse value="1"/>
+                <Link value="Abil/LaunchShockCharge"/>
+                <Location value="Unit"/>
+            </Charge>
+            <Cooldown Link="Abil/LaunchShockCharge" Location="Unit"/>
         </Cost>
         <EffectRange index="0" value="1,500"/>
         <Arc value="360"/>

@@ -356,6 +356,7 @@
         <HotkeyAlias value=""/>
         <SelectAlias value=""/>
         <SubgroupAlias value=""/>
+        <Mover value="Fly"/>
     </CUnit>
     <CUnit id="GenetronStandardModeDummy">
         <Race value="Gen"/>
@@ -379,6 +380,7 @@
         <HotkeyAlias value=""/>
         <SelectAlias value=""/>
         <SubgroupAlias value=""/>
+        <Mover value="Fly"/>
     </CUnit>
     <CUnit id="GenetronOverclockModeDummy">
         <Race value="Gen"/>
@@ -402,6 +404,7 @@
         <HotkeyAlias value=""/>
         <SelectAlias value=""/>
         <SubgroupAlias value=""/>
+        <Mover value="Fly"/>
     </CUnit>
     <CUnit id="OrdnanceCache" parent="CStructureGenetron">
         <LifeStart value="1000"/>
@@ -466,13 +469,14 @@
         <SubgroupPriority value="8"/>
         <MinimapRadius value="2"/>
         <TacticalAI value="AssemblyArray"/>
-        <GlossaryPriority value="18"/>
+        <GlossaryPriority value="24"/>
         <TechTreeProducedUnitArray value="AvengerGenetron"/>
         <TechTreeProducedUnitArray value="Hornet"/>
         <TechTreeProducedUnitArray value="Courier"/>
         <TechTreeProducedUnitArray value="Boar"/>
         <TechTreeProducedUnitArray value="Jupiter"/>
         <TechTreeProducedUnitArray value="Badger"/>
+        <GlossaryCategory value="Unit/Category/GenetronUnits"/>
     </CUnit>
     <CUnit id="Blaze" parent="CUnitGenetron">
         <Attributes index="Light" value="1"/>
@@ -737,7 +741,7 @@
         <SubgroupPriority value="4"/>
         <MinimapRadius value="0.75"/>
         <GlossaryCategory value="Unit/Category/GenetronUnits"/>
-        <GlossaryPriority value="18"/>
+        <GlossaryPriority value="19"/>
         <GlossaryAlias value="Interdictor"/>
         <TechAliasArray value="Alias_Interdictor"/>
     </CUnit>
@@ -985,7 +989,7 @@
         <SubgroupPriority value="4"/>
         <MinimapRadius value="0.875"/>
         <GlossaryCategory value="Unit/Category/GenetronUnits"/>
-        <GlossaryPriority value="17"/>
+        <GlossaryPriority value="18"/>
         <GlossaryAlias value="Repulsor"/>
         <TechAliasArray value="Alias_Repulsor"/>
         <BehaviorArray Link="RepulsorInterdictorBurrowCD"/>
@@ -1010,6 +1014,7 @@
         <TacticalAI value="RepulsorBurrowed"/>
         <BehaviorArray index="1" removed="1"/>
         <BehaviorArray index="2" removed="1"/>
+        <GlossaryPriority value="17"/>
     </CUnit>
     <CUnit id="ScavengerSpawn" parent="CUnitXayid">
         <Description value="Button/Tooltip/BirthScavengerSpawn"/>
@@ -1076,17 +1081,17 @@
         <FlagArray index="UseLineOfSight" value="1"/>
         <FlagArray index="Invulnerable" value="1"/>
         <Collide index="Burrow3" value="1"/>
-        <EnergyStart value="200"/>
-        <EnergyMax value="200"/>
-        <EnergyRegenRate value="-10"/>
+        <EnergyStart value="150"/>
+        <EnergyMax value="150"/>
+        <EnergyRegenRate value="-7.1445"/>
         <Sight value="4"/>
         <CostCategory value="Army"/>
-        <Radius value="0.25"/>
-        <SeparationRadius value="0.25"/>
         <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
         <BehaviorArray Link="CloakChargeGenerator"/>
         <CargoSize value="1"/>
         <PlaneArray index="Ground" value="1"/>
+        <GlossaryCategory value="Unit/Category/GenetronUnits"/>
+        <GlossaryPriority value="23"/>
     </CUnit>
     <CUnit id="AnalysisTerminal" parent="CStructureGenetron">
         <LifeStart value="1000"/>
@@ -1582,11 +1587,10 @@
         <AbilArray Link="LaunchCloakCharge"/>
         <CardLayouts index="0">
             <LayoutButtons Face="AcquireMove" Type="AbilCmd" AbilCmd="move,AcquireMove" Row="0" Column="4"/>
-            <LayoutButtons Face="ConstructShockCharge" Type="AbilCmd" AbilCmd="ConstructTeslaCharge,Specialize1" Row="1" Column="0"/>
+            <LayoutButtons Face="TeslaConstructCharge" Type="AbilCmd" AbilCmd="ConstructTeslaCharge,Specialize1" Row="2" Column="0"/>
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="que1Passive,CancelLast" Row="2" Column="4"/>
-            <LayoutButtons Face="LaunchShockCharge" Type="AbilCmd" AbilCmd="LaunchShockCharge,Execute" Row="2" Column="0"/>
-            <LayoutButtons Face="ConstructCloakCharge" Type="AbilCmd" AbilCmd="ConstructTeslaCharge,Specialize2" Row="1" Column="1"/>
-            <LayoutButtons Face="LaunchCloakCharge" Type="AbilCmd" AbilCmd="LaunchCloakCharge,Execute" Row="2" Column="1"/>
+            <LayoutButtons Face="LaunchShockCharge" Type="AbilCmd" AbilCmd="LaunchShockCharge,Execute" Row="2" Column="1"/>
+            <LayoutButtons Face="LaunchCloakCharge" Type="AbilCmd" AbilCmd="LaunchCloakCharge,Execute" Row="2" Column="2"/>
         </CardLayouts>
         <Radius value="0.75"/>
         <InnerRadius value="0.75"/>
@@ -1611,22 +1615,25 @@
         <FlagArray index="AIPressForwardDisabled" value="1"/>
         <TurningRate value="360"/>
         <AIEvalConstant value="1"/>
+        <EnergyStart value="200"/>
+        <EnergyMax value="200"/>
+        <BehaviorArray Link="GenetronUnitEnergyRegenx3"/>
     </CUnit>
     <CUnit id="ShockCharge">
         <Race value="Gen"/>
         <FlagArray index="UseLineOfSight" value="1"/>
         <Collide index="Burrow3" value="1"/>
-        <EnergyStart value="200"/>
-        <EnergyMax value="200"/>
+        <EnergyStart value="150"/>
+        <EnergyMax value="150"/>
         <Sight value="4"/>
         <CostCategory value="Army"/>
         <BehaviorArray Link="ShockCharge"/>
         <BehaviorArray Link="TeslaShockChargeResponder"/>
-        <Radius value="0.25"/>
-        <SeparationRadius value="0.25"/>
         <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
         <CargoSize value="1"/>
         <PlaneArray index="Ground" value="1"/>
+        <GlossaryCategory value="Unit/Category/GenetronUnits"/>
+        <GlossaryPriority value="22"/>
     </CUnit>
     <CUnit id="Torrent" parent="CUnitGenetron">
         <LifeStart value="160"/>
@@ -1841,7 +1848,7 @@
         <Deceleration value="1.5"/>
         <LateralAcceleration value="2"/>
         <Sight value="10"/>
-        <Food value="-3"/>
+        <Food value="-2"/>
         <CostResource index="Minerals" value="150"/>
         <CostResource index="Vespene" value="50"/>
         <RepairTime value="35"/>
@@ -1977,7 +1984,7 @@
         <StationaryTurningRate value="720"/>
         <TurningRate value="720"/>
         <AIEvalConstant value="1"/>
-        <Food value="-2"/>
+        <Food value="-1"/>
         <EnergyStart value="200"/>
         <Acceleration value="3.5"/>
         <Attributes index="Light" value="1"/>
