@@ -31,6 +31,18 @@
         </Parameters>
         <Operation value="Subtract"/>
     </CAccumulatorArithmetic>
+    <CAccumulatorSwitch id="GenetronProductionModePerformance">
+        <CaseArray Validator="CasterProductionModeIsPerformance"/>
+        <CaseDefault value="MultiplyBy0"/>
+    </CAccumulatorSwitch>
+    <CAccumulatorSwitch id="GenetronProductionModeStandard">
+        <CaseArray Validator="CasterProductionModeIsStandard"/>
+        <CaseDefault value="MultiplyBy0"/>
+    </CAccumulatorSwitch>
+    <CAccumulatorSwitch id="GenetronProductionModeOverclock">
+        <CaseArray Validator="CasterProductionModeIsOverclock"/>
+        <CaseDefault value="MultiplyBy0"/>
+    </CAccumulatorSwitch>
     <CAccumulatorArithmetic id="GenetronTrainEnergyRemaining">
         <Parameters value="0">
             <AccumulatorArray value="EnergyNeededDataAdd"/>
@@ -49,6 +61,28 @@
         </Parameters>
         <Operation value="Subtract"/>
     </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="ProductionEnergyTesla">
+        <Parameters value="40">
+            <AccumulatorArray value="GenetronProductionModePerformance"/>
+        </Parameters>
+        <Parameters value="80">
+            <AccumulatorArray value="GenetronProductionModeStandard"/>
+        </Parameters>
+        <Parameters value="160">
+            <AccumulatorArray value="GenetronProductionModeOverclock"/>
+        </Parameters>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="ProductionEnergySpitfire">
+        <Parameters value="30">
+            <AccumulatorArray value="GenetronProductionModeStandard"/>
+        </Parameters>
+        <Parameters value="60">
+            <AccumulatorArray value="GenetronProductionModeOverclock"/>
+        </Parameters>
+    </CAccumulatorArithmetic>
+    <CAccumulatorConstant id="MultiplyBy0">
+        <ApplicationRule value="Multiply"/>
+    </CAccumulatorConstant>
     <CAccumulatorConstant id="MultiplyBy2">
         <ApplicationRule value="Multiply"/>
         <Amount value="2"/>
@@ -57,6 +91,133 @@
         <ApplicationRule value="Multiply"/>
         <Amount value="-1"/>
     </CAccumulatorConstant>
+    <CAccumulatorArithmetic id="ProductionEnergyFixer">
+        <Parameters value="35">
+            <AccumulatorArray value="GenetronProductionModeStandard"/>
+        </Parameters>
+        <Parameters value="70">
+            <AccumulatorArray value="GenetronProductionModeOverclock"/>
+        </Parameters>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="ProductionEnergyEqualizer">
+        <Parameters value="40">
+            <AccumulatorArray value="GenetronProductionModeStandard"/>
+        </Parameters>
+        <Parameters value="80">
+            <AccumulatorArray value="GenetronProductionModeOverclock"/>
+        </Parameters>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="ProductionEnergyAquila">
+        <Parameters value="25">
+            <AccumulatorArray value="GenetronProductionModePerformance"/>
+        </Parameters>
+        <Parameters value="50">
+            <AccumulatorArray value="GenetronProductionModeStandard"/>
+        </Parameters>
+        <Parameters value="100">
+            <AccumulatorArray value="GenetronProductionModeOverclock"/>
+        </Parameters>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="ProductionEnergyBadger">
+        <Parameters value="50">
+            <AccumulatorArray value="GenetronProductionModePerformance"/>
+        </Parameters>
+        <Parameters value="100">
+            <AccumulatorArray value="GenetronProductionModeStandard"/>
+        </Parameters>
+        <Parameters value="200">
+            <AccumulatorArray value="GenetronProductionModeOverclock"/>
+        </Parameters>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="ProductionEnergyVirtus">
+        <Parameters value="30">
+            <AccumulatorArray value="GenetronProductionModePerformance"/>
+        </Parameters>
+        <Parameters value="60">
+            <AccumulatorArray value="GenetronProductionModeStandard"/>
+        </Parameters>
+        <Parameters value="120">
+            <AccumulatorArray value="GenetronProductionModeOverclock"/>
+        </Parameters>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="ProductionEnergyTorrent">
+        <Parameters value="35">
+            <AccumulatorArray value="GenetronProductionModeStandard"/>
+        </Parameters>
+        <Parameters value="70">
+            <AccumulatorArray value="GenetronProductionModeOverclock"/>
+        </Parameters>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="ProductionEnergyMole">
+        <Parameters value="40">
+            <AccumulatorArray value="GenetronProductionModeStandard"/>
+        </Parameters>
+        <Parameters value="80">
+            <AccumulatorArray value="GenetronProductionModeOverclock"/>
+        </Parameters>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="ProductionEnergyInciter">
+        <Parameters value="25">
+            <AccumulatorArray value="GenetronProductionModePerformance"/>
+        </Parameters>
+        <Parameters value="50">
+            <AccumulatorArray value="GenetronProductionModeStandard"/>
+        </Parameters>
+        <Parameters value="100">
+            <AccumulatorArray value="GenetronProductionModeOverclock"/>
+        </Parameters>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="ProductionEnergyHornet">
+        <Parameters value="40">
+            <AccumulatorArray value="GenetronProductionModeStandard"/>
+        </Parameters>
+        <Parameters value="80">
+            <AccumulatorArray value="GenetronProductionModeOverclock"/>
+        </Parameters>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="ProductionEnergyAvenger">
+        <Parameters value="50">
+            <AccumulatorArray value="GenetronProductionModeStandard"/>
+        </Parameters>
+        <Parameters value="100">
+            <AccumulatorArray value="GenetronProductionModeOverclock"/>
+        </Parameters>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="ProductionEnergyCourier">
+        <Parameters value="50">
+            <AccumulatorArray value="GenetronProductionModeStandard"/>
+        </Parameters>
+        <Parameters value="100">
+            <AccumulatorArray value="GenetronProductionModeOverclock"/>
+        </Parameters>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="ProductionEnergyBlitzer">
+        <Parameters value="35">
+            <AccumulatorArray value="GenetronProductionModeStandard"/>
+        </Parameters>
+        <Parameters value="70">
+            <AccumulatorArray value="GenetronProductionModeOverclock"/>
+        </Parameters>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="ProductionEnergyBoar">
+        <Parameters value="50">
+            <AccumulatorArray value="GenetronProductionModeStandard"/>
+        </Parameters>
+        <Parameters value="100">
+            <AccumulatorArray value="GenetronProductionModeOverclock"/>
+        </Parameters>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="ProductionEnergyJupiter">
+        <Parameters value="30">
+            <AccumulatorArray value="GenetronProductionModePerformance"/>
+        </Parameters>
+        <Parameters value="60">
+            <AccumulatorArray value="GenetronProductionModeStandard"/>
+        </Parameters>
+        <Parameters value="120">
+            <AccumulatorArray value="GenetronProductionModeOverclock"/>
+        </Parameters>
+    </CAccumulatorArithmetic>
     <CAccumulatorUserData id="RefundEnergyDataAdd">
         <Key value="RefundEnergy"/>
     </CAccumulatorUserData>

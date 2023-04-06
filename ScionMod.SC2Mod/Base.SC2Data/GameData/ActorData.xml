@@ -205,11 +205,6 @@
     <CActorModelMaterial id="BadgerEnergyShieldGlaze" parent="BehaviorGlaze" buff="BadgerEnergyShield">
         <ModelFlags index="AutomateGlobalLoops" value="0"/>
     </CActorModelMaterial>
-    <CActorModel id="CourierOpticalDisruption" parent="ModelAnimationStyleContinuous">
-        <On Terms="Effect.CourierOpticalDisruptionCreatePersistent.Start" Send="Create"/>
-        <On Terms="Effect.CourierOpticalDisruptionHoldCreatePersistent.Stop; FromEffectTreeDescendant" Send="AnimBracketStop BSD"/>
-        <HostSiteOps Ops="SOpTargetUnit SOpAttachCenter"/>
-    </CActorModel>
     <CActorModel id="GenetronProductionModeSwitchAddition" parent="ModelAddition">
         <On Terms="AbilTrain.GenetronProductionModeSwitch.Start" Send="Create"/>
         <On Terms="AbilTrain.GenetronProductionModeSwitch.Finish" Send="AnimBracketStop BSD"/>
@@ -270,6 +265,31 @@
     <CActorSplat id="OrdnanceCacheSplat" parent="GenericUnitSplat" unitName="OrdnanceCache"/>
     <CActorModel id="OrdnanceCacheBuild" parent="GenetronBuildingBuild"/>
     <CActorSplat id="ChemicalFirmSplat" parent="GenericUnitSplat" unitName="ChemicalFirm"/>
+    <CActorBeamSimple id="OpticalDisruptionBeam" parent="BeamSimpleAnimationStyleContinuous">
+        <On Terms="Effect.CourierOpticalDisruptionCreatePersistent.Start" Send="Create"/>
+        <On Terms="Effect.CourierOpticalDisruptionHoldCreatePersistent.Stop" Send="Destroy"/>
+        <HostForProps Subject="_Unit" Scope="Caster" Actor="Find"/>
+        <Host Subject="_Unit" Scope="Caster" Actor="Find"/>
+        <HostLaunch Subject="_Unit" Scope="Caster" Actor="Find"/>
+        <HostLaunchSiteOps Ops="SOpAttachCenter SOpMoveUpByDot5 SOpMoveUpByDot1 SOpMoveBackByDot1"/>
+        <HostImpact Subject="_Unit" Scope="Target" Actor="Find"/>
+        <HostImpactSiteOps Ops="SOpAttachHead"/>
+        <ModelFlags index="AutomateGlobalLoops" value="1"/>
+    </CActorBeamSimple>
+    <CActorSound id="OpticalDisruption_Loop" parent="SoundContinuous">
+        <On Terms="ActorCreation" Send="Create OpticalDisruption_LoopStart"/>
+        <On Terms="ActorDestruction" Send="Create OpticalDisruption_LoopStop"/>
+        <On Terms="Effect.CourierOpticalDisruptionCreatePersistent.Start" Send="Create"/>
+        <On Terms="Effect.CourierOpticalDisruptionHoldCreatePersistent.Stop" Send="Destroy"/>
+        <Host Subject="_Selectable"/>
+        <HostSiteOps Ops="SOpAttachOverhead"/>
+    </CActorSound>
+    <CActorSiteOpRotationExplicit id="SOpPitchTeslaFX">
+        <Up value="0.000000,0.000000,1.000000"/>
+        <IsLocal value="1"/>
+    </CActorSiteOpRotationExplicit>
+    <CActorSound id="SystemRecharge_LoopStart" parent="SoundOneShot"/>
+    <CActorSound id="SystemRecharge_LoopStop" parent="SoundOneShot"/>
     <CActorSound id="TeslaShockCharge_Pulse" parent="SoundOneShotScion"/>
     <CActorMissile id="WardAttackMissile" parent="GenericAttackMissile" unitName="WardWeaponLMWeapon">
         <On Terms="ActorCreation" Send="SetTintColor {255,89,0 2.000000}"/>
@@ -717,7 +737,7 @@
         </TerrainSquibs>
         <WalkAnimMoveSpeed value="2.8085"/>
     </CActorUnit>
-    <CActorSound id="SystemRecharge_LoopStart" parent="SoundOneShot"/>
+    <CActorSound id="OpticalDisruption_LoopStart" parent="SoundOneShot"/>
     <CActorModel id="RelayTowerBuild" parent="GenetronBuildingBuild"/>
     <CActorUnit id="RelayTower" parent="GenetronBuilding" buildTime="40.000000" unitName="RelayTower">
         <BarOffset value="125"/>
@@ -1142,7 +1162,7 @@
         <StageArray AnimProps="Birth,C,Start"/>
         <StageArray AnimProps="Birth,C,Stand"/>
     </CActorProgress>
-    <CActorSound id="SystemRecharge_LoopStop" parent="SoundOneShot"/>
+    <CActorSound id="OpticalDisruption_LoopStop" parent="SoundOneShot"/>
     <CActorDoodad id="TerranTarmac">
         <DoodadFlags index="DefaultToModelAABBBounds" value="0"/>
     </CActorDoodad>
@@ -1582,7 +1602,7 @@
         <On Terms="Abil.ConstructTeslaCharge.Start" Send="Create"/>
         <On Terms="Abil.ConstructTeslaCharge.Stop" Send="Destroy"/>
         <On Terms="ActorCreation" Send="SetTintColor {255,204,98 2.000000}"/>
-        <HostSiteOps Ops="SOpAttachWeapon"/>
+        <HostSiteOps Ops="SOpAttachWeapon SOpPitchTeslaFX"/>
         <Model value="TelsaChargeConstructionEffect"/>
     </CActorModel>
     <CActorAction id="BlitzerSuperchargeAttack" parent="GenericAttack" effectAttack="ChargeCannonSC">
@@ -1847,8 +1867,6 @@
         <On Terms="Effect.ProcessorSystemRechargeCH.TargetStop" Send="Destroy"/>
         <On Terms="Effect.SystemRechargeCoreCH.TargetStart" Send="Create"/>
         <On Terms="Effect.SystemRechargeCoreCH.TargetStop" Send="Destroy"/>
-        <On Terms="Effect.CourierOpticalDisruptionCreatePersistent.TargetStart" Send="Create"/>
-        <On Terms="Effect.CourierOpticalDisruptionCreatePersistent.TargetStop" Send="Destroy"/>
         <HostForProps Subject="_Unit" Scope="Caster" Actor="Find"/>
         <Host Subject="_Unit" Scope="Caster" Actor="Find"/>
         <HostLaunch Subject="_Unit" Scope="Caster" Actor="Find"/>
@@ -2174,6 +2192,7 @@
         <On index="1" Terms="UnitBirth" Send="AnimBracketStart Lifetime Birth Fly"/>
         <On Terms="ActorCreation" Send="AnimPlay CoverA Cover,B PlayForever"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
+        <HostSiteOps Ops="SOpRotationSmooth"/>
     </CActorMissile>
     <CActorModel id="TeslaCloakChargeModel" parent="ModelAddition">
         <HostSiteOps Ops="SOpAttachHardPoint SOpMoveDownByDot25"/>
@@ -3033,7 +3052,6 @@
         <On Terms="Abil.LaunchCloakCharge.SourceCastStart" Target="TeslaShockChargeModel" Send="Destroy"/>
         <On Terms="TimerExpired; ValidateUnit TeslaNotEquipped" Target="TeslaShockChargeModel" Send="Destroy"/>
         <On Terms="UnitHeightUpdate.*.Land" Send="Create SiegeTank_Land"/>
-        <On Terms="AbilCharge" Send="ActionDamagePhysics"/>
         <BarOffset value="78"/>
         <BarWidth value="87"/>
         <GroupIcon>
@@ -3074,6 +3092,7 @@
         <Model value="TeslaShockCharge"/>
         <On index="1" Terms="UnitBirth" Send="AnimBracketStart Lifetime Birth Fly"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
+        <HostSiteOps Ops="SOpRotationSmooth"/>
     </CActorMissile>
     <CActorModel id="TeslaShockChargeModel" parent="ModelAddition">
         <HostSiteOps Ops="SOpAttachHardPoint SOpMoveDownByDot25"/>
