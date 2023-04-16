@@ -63,6 +63,12 @@
         <Find value="1"/>
         <Value value="UseVengeanceMissile"/>
     </CValidatorPlayerRequirement>
+    <CValidatorUnitCompareVital id="CasterEnergyLT25">
+        <WhichUnit Value="Caster"/>
+        <Compare value="LT"/>
+        <Value value="25"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
     <CValidatorUnitCompareVital id="CasterEnergyLT75">
         <WhichUnit Value="Caster"/>
         <Compare value="LT"/>
@@ -146,6 +152,12 @@
         <Value value="Olympus"/>
         <Find value="0"/>
     </CValidatorUnitType>
+    <CValidatorCombine id="IsRelayTowerOrProcessingCoreWithGE5EnergyAndNotRecharging">
+        <Type value="And"/>
+        <CombineArray value="IsProcessingCoreOrRelayTower"/>
+        <CombineArray value="TargetNotUsingSystemRecharge"/>
+        <CombineArray value="EnergyGTE5"/>
+    </CValidatorCombine>
     <CValidatorPlayerRequirement id="ManufacturerIsTrainingSpitfire">
         <Find value="1"/>
         <Value value="ManufacturerIsTrainingSpitfire"/>
@@ -183,9 +195,31 @@
         <Compare value="GT"/>
         <Range value="13"/>
     </CValidatorLocationCompareRange>
+    <CValidatorLocationEnumArea id="PlayerHasRelayTowerOrProcessingCoreWithGE5EnergyAndNotRecharging">
+        <AreaArray>
+            <Compare value="GT"/>
+            <Count value="0"/>
+            <Radius value="500"/>
+            <Validator value="IsRelayTowerOrProcessingCoreWithGE5EnergyAndNotRecharging"/>
+        </AreaArray>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
+        <ExcludeArray/>
+    </CValidatorLocationEnumArea>
+    <CValidatorCombine id="RelayTowerEnergyStealValidator">
+        <Type value="And"/>
+        <CombineArray value="PlayerHasRelayTowerOrProcessingCoreWithGE5EnergyAndNotRecharging"/>
+        <CombineArray value="CasterEnergyLT25"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="RelayTowerSystemRechargeAutocast">
+        <CombineArray value="PlayerHasRelayTowerOrProcessingCoreWithGE5EnergyAndNotRecharging"/>
+        <CombineArray value="CasterEnergyGTE5"/>
+    </CValidatorCombine>
     <CValidatorUnitFilters id="TargetIsAirUnit">
         <Filters value="Air;-"/>
     </CValidatorUnitFilters>
+    <CValidatorUnitCompareBehaviorCount id="TargetNotUsingSystemRecharge">
+        <Behavior value="UsingSystemRecharge"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="WardIsCastingShellDome">
         <WhichUnit Value="Caster"/>
         <Compare value="GT"/>

@@ -679,6 +679,66 @@
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="GenetronTrainSet"/>
     </CEffectEnumArea>
+    <CEffectCreatePersistent id="RelayTowerSystemRechargeCP">
+        <EditorCategories value="Race:Genetron"/>
+        <Flags index="Channeling" value="1"/>
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <InitialEffect value="RelayTowerSystemRechargeCPSteal"/>
+        <PeriodicEffectArray value="RelayTowerSystemRechargeCPSteal"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="RelayTowerSystemRechargeCPSteal">
+        <ValidatorArray value="RelayTowerEnergyStealValidator"/>
+        <EditorCategories value="Race:Genetron"/>
+        <Flags index="Channeling" value="1"/>
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <PeriodicValidator value="RelayTowerEnergyStealValidator"/>
+        <PeriodicEffectArray value="RelayTowerSystemRechargeSA"/>
+    </CEffectCreatePersistent>
+    <CEffectUserData id="RelayTowerSystemRechargeData">
+        <EditorCategories value="Race:Genetron"/>
+        <Amount value="0">
+            <AccumulatorArray value="RelayTowerEnergySteal"/>
+        </Amount>
+        <Operation value="Set"/>
+    </CEffectUserData>
+    <CEffectModifyUnit id="RelayTowerSystemRechargeMUTarget">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="0">
+                <AccumulatorArray value="DefaultDataAdd"/>
+                <AccumulatorArray value="MultiplyByNeg1"/>
+            </Change>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="RelayTowerSystemRechargeMUCaster">
+        <EditorCategories value="Race:Genetron"/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Energy">
+            <Change value="0">
+                <AccumulatorArray value="DefaultDataAdd"/>
+            </Change>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectSet id="RelayTowerSystemRechargeSet">
+        <ValidatorArray value="IsProcessingCoreOrRelayTower"/>
+        <ValidatorArray value="TargetNotUsingSystemRecharge"/>
+        <ValidatorArray value="EnergyGTE5"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="RelayTowerSystemRechargeData"/>
+        <EffectArray value="RelayTowerSystemRechargeMUTarget"/>
+        <EffectArray value="RelayTowerSystemRechargeMUCaster"/>
+    </CEffectSet>
+    <CEffectEnumArea id="RelayTowerSystemRechargeSA" parent="ScionEnumArea" Race="Genetron">
+        <ImpactLocation Value="CasterUnitOrPoint"/>
+        <ExcludeArray/>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
+        <TargetSorts>
+            <SortArray value="PrioritizeRelayTower"/>
+            <SortArray value="TSDistance"/>
+        </TargetSorts>
+        <AreaArray MaxCount="1" Radius="500" Effect="RelayTowerSystemRechargeSet"/>
+    </CEffectEnumArea>
     <CEffectSet id="GenetronTrainSet">
         <ValidatorArray value="IsProcessingCoreOrRelayTower"/>
         <ValidatorArray value="EnergyGTE5"/>
@@ -893,6 +953,19 @@
         <SearchFilters value="Air;Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <AreaArray Radius="1.5" Effect="OpticalDisruptionBuff"/>
     </CEffectEnumArea>
+    <CEffectSet id="RelayTowerSystemRecharge">
+        <ValidatorArray value="noMarkers"/>
+        <ValidatorArray value="NotWarpingIn"/>
+        <ValidatorArray value="NotVortexd"/>
+        <ValidatorArray value="NotUncommandable"/>
+        <ValidatorArray value="SourceNotHidden"/>
+        <ValidatorArray value="IsNotProcessingCore"/>
+        <ValidatorArray value="NoEnergyShield"/>
+        <ValidatorArray value="IsNotOlympus"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="RelayTowerSystemRechargeCP"/>
+        <EffectArray value="RelayTowerSystemRechargeHealer"/>
+    </CEffectSet>
     <CEffectUserData id="SetEnergyNeededData0">
         <EditorCategories value="Race:Genetron"/>
         <Key value="EnergyNeeded"/>
@@ -901,9 +974,29 @@
         <Operation value="Set"/>
         <BehaviorScope Behavior="GenetronProductionInternalEnergy"/>
     </CEffectUserData>
+    <CEffectCreateHealer id="RelayTowerSystemRechargeHealer">
+        <ValidatorArray value="noMarkers"/>
+        <ValidatorArray value="NotWarpingIn"/>
+        <ValidatorArray value="NotVortexd"/>
+        <ValidatorArray value="NotUncommandable"/>
+        <ValidatorArray value="SourceNotHidden"/>
+        <ValidatorArray value="IsNotProcessingCore"/>
+        <ValidatorArray value="CasterHasEnergy"/>
+        <ValidatorArray value="NoEnergyShield"/>
+        <ValidatorArray value="IsNotOlympus"/>
+        <EditorCategories value="Race:Genetron"/>
+        <DrainVital value="Energy"/>
+        <DrainVitalCostFactor value="1"/>
+        <RechargeVital value="Energy"/>
+        <RechargeVitalRate value="50"/>
+        <InitialEffect value="UsingSystemRecharge"/>
+    </CEffectCreateHealer>
     <CEffectDamage id="TeslaShockChargeDummyDMG">
         <EditorCategories value="Race:Genetron"/>
     </CEffectDamage>
+    <CEffectApplyBehavior id="UsingSystemRecharge" parent="ScionApplyBehaviorCaster">
+        <EditorCategories value="Race:Genetron"/>
+    </CEffectApplyBehavior>
     <CEffectCreatePersistent id="WardWeapon" parent="ScionCreatePersistent" Race="Keiron">
         <WhichLocation Value="TargetUnit"/>
         <PeriodCount value="2"/>
@@ -2162,6 +2255,7 @@
         <DrainVitalCostFactor value="1"/>
         <RechargeVital value="Energy"/>
         <RechargeVitalRate value="50"/>
+        <InitialEffect value="UsingSystemRecharge"/>
     </CEffectCreateHealer>
     <CEffectLaunchMissile id="StratumMissilePod" parent="ScionLaunchMissile" Race="Genetron">
         <AmmoUnit value="StratumMissileLauncherWeapon"/>

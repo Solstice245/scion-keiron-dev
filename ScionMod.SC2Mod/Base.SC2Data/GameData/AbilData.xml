@@ -57,6 +57,36 @@
         </OffCost>
         <BehaviorArray value="BadgerEnergyShield"/>
     </CAbilBehavior>
+    <CAbilEffectTarget id="RelayTowerSystemRecharge">
+        <Alignment value="Positive"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Flags index="AutoCast" value="1"/>
+        <Flags index="AutoCastOn" value="1"/>
+        <Flags index="ReExecutable" value="1"/>
+        <Flags index="Smart" value="1"/>
+        <TargetFilters value="CanHaveEnergy;Self,Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
+        <TargetSorts RequestCount="1">
+            <SortArray value="TSAlliancePassive"/>
+            <SortArray value="TSEnergyFraction"/>
+            <SortArray value="TSDistance"/>
+        </TargetSorts>
+        <Range value="8"/>
+        <Arc value="360"/>
+        <SmartValidatorArray value="healSmartTargetFilters"/>
+        <SmartValidatorArray value="NotWarpingIn"/>
+        <AutoCastAcquireLevel value="Defensive"/>
+        <AutoCastFilters value="-;Ally"/>
+        <AutoCastRange value="8"/>
+        <AutoCastValidatorArray value="NotWarpingIn"/>
+        <AutoCastValidatorArray value="IsNotProcessingCore"/>
+        <AutoCastValidatorArray value="IsNotRelayTower"/>
+        <AutoCastValidatorArray value="IsNotTeslaCharge"/>
+        <AutoCastValidatorArray value="RelayTowerSystemRechargeAutocast"/>
+        <UseMarkerArray index="Approach" value="0"/>
+        <UseMarkerArray index="Prep" value="0"/>
+        <AINotifyEffect value="SystemRechargeCoreCH"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="CoreSystemRecharge"/>
+    </CAbilEffectTarget>
     <CAbilResearch id="GeneratorResearch">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <InfoArray index="Research1" Time="110" Alert="ResearchComplete_Terr" Upgrade="CloakingGenerator">
@@ -101,7 +131,7 @@
     </CAbilTransport>
     <CAbilMorph id="DisguiseAsSpitfire" parent="DisguiseChangeling">
         <Name value="Abil/Name/DisguiseAsSpitfire"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="Spitfire"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="FabricateSpitfire"/>
         <InfoArray Unit="ChangelingSpitfire">
             <SectionArray index="Actor">
                 <DurationArray index="Delay" value="0.5"/>
@@ -421,27 +451,27 @@
     <CAbilTrain id="BuildAircraft">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <InfoArray index="Train1" Time="35" Effect="AssemblyArrayFinishAvengerInit">
-            <Button DefaultButtonFace="AvengerGenetron"/>
+            <Button DefaultButtonFace="FabricateAvengerGenetron"/>
             <Unit value="AvengerGenetron"/>
         </InfoArray>
         <InfoArray index="Train2" Time="42" Effect="AssemblyArrayFinishCourierInit">
-            <Button DefaultButtonFace="Courier"/>
+            <Button DefaultButtonFace="FabricateCourier"/>
             <Unit value="Courier"/>
         </InfoArray>
         <InfoArray index="Train3" Time="56" Effect="AssemblyArrayFinishJupiterInit">
-            <Button DefaultButtonFace="Jupiter" Requirements="HaveOrdnanceCache"/>
+            <Button DefaultButtonFace="FabricateJupiter" Requirements="HaveOrdnanceCache"/>
             <Unit value="Jupiter"/>
         </InfoArray>
         <InfoArray index="Train4" Time="35" Effect="AssemblyArrayFinishBoarInit">
-            <Button DefaultButtonFace="Boar"/>
+            <Button DefaultButtonFace="FabricateBoar"/>
             <Unit value="Boar"/>
         </InfoArray>
         <InfoArray index="Train5" Time="70" Effect="AssemblyArrayFinishBadgerInit">
-            <Button DefaultButtonFace="Badger" Requirements="HaveOrdnanceCache"/>
+            <Button DefaultButtonFace="FabricateBadger" Requirements="HaveOrdnanceCache"/>
             <Unit value="Badger"/>
         </InfoArray>
         <InfoArray index="Train7" Time="42" Effect="AssemblyArrayFinishHornetInit">
-            <Button DefaultButtonFace="Hornet"/>
+            <Button DefaultButtonFace="FabricateHornet"/>
             <Unit value="Hornet"/>
         </InfoArray>
     </CAbilTrain>
@@ -910,23 +940,23 @@
     <CAbilTrain id="TrainHeavyweightMechs">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <InfoArray index="Train1" Time="35" Effect="FabricatorFinishTorrentInit">
-            <Button DefaultButtonFace="Torrent"/>
+            <Button DefaultButtonFace="FabricateTorrent"/>
             <Unit value="Torrent"/>
         </InfoArray>
         <InfoArray index="Train2" Time="49" Effect="FabricatorFinishMoleInit">
-            <Button DefaultButtonFace="Mole" Requirements="HaveTechVault"/>
+            <Button DefaultButtonFace="FabricateMole" Requirements="HaveTechVault"/>
             <Unit value="Mole"/>
         </InfoArray>
         <InfoArray index="Train3" Time="56" Effect="FabricatorFinishTeslaInit">
-            <Button DefaultButtonFace="Tesla" Requirements="HaveChemicalFirm"/>
+            <Button DefaultButtonFace="FabricateTesla" Requirements="HaveChemicalFirm"/>
             <Unit value="Tesla"/>
         </InfoArray>
         <InfoArray index="Train4" Time="70" Effect="FabricatorFinishInciterInit">
-            <Button DefaultButtonFace="Inciter" Requirements="HaveTechVault"/>
+            <Button DefaultButtonFace="FabricateInciter" Requirements="HaveTechVault"/>
             <Unit value="Inciter"/>
         </InfoArray>
         <InfoArray index="Train5" Time="70" Effect="FabricatorFinishVirtusInit">
-            <Button DefaultButtonFace="Virtus" Requirements="HaveChemicalFirm"/>
+            <Button DefaultButtonFace="FabricateVirtus" Requirements="HaveChemicalFirm"/>
             <Unit value="Virtus"/>
         </InfoArray>
     </CAbilTrain>
@@ -945,15 +975,15 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Activity value="UI/Fabricating"/>
         <InfoArray index="Train1" Time="42" Effect="ManufacturerFinishSpitfireInit">
-            <Button DefaultButtonFace="Spitfire"/>
+            <Button DefaultButtonFace="FabricateSpitfire"/>
             <Unit value="Spitfire"/>
         </InfoArray>
         <InfoArray index="Train2" Time="56" Effect="ManufacturerFinishEqualizerInit">
-            <Button DefaultButtonFace="Equalizer" Requirements="HaveOutfittingStation"/>
+            <Button DefaultButtonFace="FabricateEqualizer" Requirements="HaveOutfittingStation"/>
             <Unit value="Equalizer"/>
         </InfoArray>
         <InfoArray index="Train3" Time="49" Effect="ManufacturerFinishBlitzerInit">
-            <Button DefaultButtonFace="Blitzer" Requirements="HaveAnalysisTerminal"/>
+            <Button DefaultButtonFace="FabricateBlitzer" Requirements="HaveAnalysisTerminal"/>
             <Unit value="Blitzer"/>
         </InfoArray>
         <InfoArray index="Train4" Time="42">
@@ -961,11 +991,11 @@
             <Unit value="Blaze"/>
         </InfoArray>
         <InfoArray index="Train5" Time="63" Effect="ManufacturerFinishAquilaInit">
-            <Button DefaultButtonFace="Aquila" Requirements="HaveChemicalFirm"/>
+            <Button DefaultButtonFace="FabricateAquila" Requirements="HaveChemicalFirm"/>
             <Unit value="Aquila"/>
         </InfoArray>
         <InfoArray index="Train6" Time="49" Effect="ManufacturerFinishFixerInit">
-            <Button DefaultButtonFace="Fixer" Requirements="HaveOutfittingStation"/>
+            <Button DefaultButtonFace="FabricateFixer" Requirements="HaveOutfittingStation"/>
             <Unit value="Fixer"/>
         </InfoArray>
     </CAbilTrain>
