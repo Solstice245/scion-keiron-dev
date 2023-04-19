@@ -134,7 +134,7 @@ Abil/Name/VengeanceMissile=Vengeance Missile
 Abil/Name/VirtusSelffixProtocol=Virtus - Self-fix Protocol
 Abil/Name/VolatileDischarge=Volatile Discharge
 Abil/Name/VolatileDischargeCancel=Volatile Discharge Cancel
-Abil/Name/WardReplenishShell=Ward - Replenish Shell
+Abil/Name/WardRestitution=Ward - Restitution
 Abil/Name/WardShellDome=Ward - Shell Dome
 Abil/Name/WardShellDomeCancel=Ward - Shell Dome Cancel
 Abil/Name/XayidlingDash=Dash
@@ -555,7 +555,6 @@ Button/Name/RelayTower=Build Relay Tower
 Button/Name/RelayTowerLongRangeTransfer=Long Range Transfer
 Button/Name/Reliquary=Shape Reliquary
 Button/Name/Relocate=Relocate
-Button/Name/ReplenishShell=Replenish Shell
 Button/Name/Repulsor=Build Repulsor
 Button/Name/ResearchAquilaPhalanxReactor=Research Phalanx Reactor
 Button/Name/ResearchAvengerVengeanceMissile=Research Vengeance Missile
@@ -576,6 +575,7 @@ Button/Name/ResearchTeslaInternalOptimization=Research Internal Optimization
 Button/Name/ResearchTorrentEnhancedTargeting=Research Enhanced Targeting
 Button/Name/ResearchVirtusSelfFixProtocol=Research Self-Fix Protocol
 Button/Name/ResidualAcid=Residual Acid
+Button/Name/Restitution=Restitution
 Button/Name/Reveal=Reveal
 Button/Name/RevenantBomb=Revenant Bomb
 Button/Name/Reverb=Reverb
@@ -960,6 +960,7 @@ Button/Tooltip/ResearchTeslaInternalOptimization=Increases the rate at which the
 Button/Tooltip/ResearchTorrentEnhancedTargeting=<c val="FFFF80">Torrents</c> gain +1 gun range and +3 missile range.
 Button/Tooltip/ResearchVirtusSelfFixProtocol=<c val="FFFF80">Virtus</c> gain +<d ref="Behavior,SelffixProtocol,Modification.VitalRegenArray[Life]"/> health regeneration while in Lockdown Mode.
 Button/Tooltip/ResidualAcid=<c val="FFFF80">Acid Nests</c> now leave behind a puddle of acid upon death, dealing <d ref="200/Effect,ResidualAcidCP,PeriodicPeriodArray[0]/Effect,ResidualAcidCP,PeriodCount"/> damage per second, and slowing enemies by 30% in an area. Lasts <d ref="Behavior,ResidualAcid,Period*Effect,ResidualAcidCP,PeriodCount" precision="0"/> seconds.
+Button/Tooltip/Restitution=Restores shell points proportional to the shell points expended by the caster. The target and units in an area around the target have their shell's charge restored as well.
 Button/Tooltip/Reveal=Grants vision on an area on the map.
 Button/Tooltip/RevenantBomb=Drops a bomb which deals <d ref="Effect,JupiterRevenantBombDamage,Amount"/> (+<d ref="Effect,JupiterRevenantBombDamage,AttributeBonus[Armored]"/> vs Armored) damage in the impact area. <n/><n/>Units hit directly by the bomb receive twice the damage.<n/><n/>Units in the impact area are unable to attack or cast spells for <d ref="Behavior,JupiterShellShocked,Duration"/> seconds.<n/><n/>The <c val="FFFF80">Jupiter</c> has increased speed during its run.
 Button/Tooltip/RevenantBombLMWeapon=Marks a location for the <c val="FFFF80">Jupiter</c> to drop a bomb, which deals 30 damage in the impact area, and applies napalm to the ground, dealing <d ref="Effect,RevenantBombNapalmDMG,Amount/Behavior,RevenantBombNapalm,Period" precision="1"/> damage per second in the area. The napalm lasts <d ref="Effect,RevenantBombNapalmCP,PeriodCount*Effect,RevenantBombNapalmCP,PeriodicPeriodArray[0]" /> seconds.<n/>The <c val="FFFF80">Jupiter</c> has increased speed when it's run commences.
@@ -980,6 +981,7 @@ Button/Tooltip/SelfFixProtocol=Heals <d ref="(Abil,VirtusSelffixProtocol,CastOut
 Button/Tooltip/ShapeAdvancedStructure=A list of advanced structures.
 Button/Tooltip/ShapeStructure=A list of basic structures.
 Button/Tooltip/ShapedHull=<c val="FFFF80">Boars</c> gain +50 life.
+Button/Tooltip/ShellDome=Places a Shell Dome, which protects units in an area from all attack damage. The protection is equal to the shell points of the caster.
 Button/Tooltip/ShockCharge=Deals <d ref="Effect,TeslaShockChargeImpactDamage,Amount"/> damage in an area every <d ref="Behavior,ShockCharge,Duration"/> seconds at the cost of energy. Each unit hit uses <d ref="-Effect,TeslaShockChargeImpactEnergyCaster,VitalArray[Energy].Change"/> of the charge's energy and has <d ref="-Effect,TeslaShockChargeImpactEnergyTarget,VitalArray[Energy].Change"/> energy taken from them.<n/><n/>The charge is destroyed when its energy is exhausted.
 Button/Tooltip/Siphoner=Formed over a Vespene Geyser to allow harvesting of vespene gas.
 Button/Tooltip/SiphonerRich=Formed over a Vespene Geyser to allow harvesting of vespene gas.
@@ -1856,8 +1858,10 @@ Effect/Name/VolatileDischargeCU=Volatile Discharge
 Effect/Name/VolatileDischargeDMG=Volatile Discharge
 Effect/Name/VoltElectronBoltBounceDummy=Volt - Electron Bolt Bounce (Dummy)
 Effect/Name/VoltElectronBoltBounceSet=Volt - Electron Bolt Bounce (Set)
-Effect/Name/WardReplenishShell=Ward - Replenish Shell (Init)
-Effect/Name/WardReplenishShellMU=Ward - Replenish Shell (MU)
+Effect/Name/WardRestitution=Ward - Restitution (Init)
+Effect/Name/WardRestitutionMU=Ward - Restitution (MU)
+Effect/Name/WardRestitutionRechargeSet=Ward - Restitution (Recharge Set)
+Effect/Name/WardRestitutionSearch=Ward - Restitution (Search)
 Effect/Name/WardShellDome=Ward - Shell Dome (Init)
 Effect/Name/WardShellDomeABAura=Ward - Shell Dome (ABAura)
 Effect/Name/WardShellDomeABFused=Ward - Shell Dome (ABFused)
@@ -2442,7 +2446,7 @@ Weapon/Name/TuskMachineGuns=Tusk Machine Guns
 Weapon/Name/TwinP1Dash0Guns=Twin P1-0 Guns
 Weapon/Name/VenomousStrike=Venomous Strike
 Weapon/Name/VirulentSpit=Virulent Spit
-Weapon/Name/WardWeapon=WardWeapon
+Weapon/Name/WardWeapon=Reclamation Shards
 Weapon/Tip/AAMLaser=Shoots enemy missiles.
 Weapon/Tip/ChargeCannon=
 Weapon/Tip/D15Magnum=

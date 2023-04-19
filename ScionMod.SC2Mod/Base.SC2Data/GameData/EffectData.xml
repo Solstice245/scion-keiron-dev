@@ -409,6 +409,8 @@
     <CEffectMorph id="CitadelChargeMorph">
         <EditorCategories value="Race:Keiron"/>
         <MorphUnit value="CitadelCharged"/>
+        <MorphFlags index="IgnoreFacing" value="1"/>
+        <MorphFlags index="IgnorePlacement" value="1"/>
     </CEffectMorph>
     <CEffectApplyBehavior id="CitadelEnergize" parent="ScionApplyBehavior" Race="Keiron"/>
     <CEffectApplyBehavior id="CitadelEnergized" parent="ScionApplyBehavior" Race="Keiron"/>
@@ -462,6 +464,9 @@
         <CaseDefault value="CourierOpticalDisruptionGroundSA"/>
         <TargetLocationType value="UnitOrPoint"/>
     </CEffectSwitch>
+    <CEffectDamage id="EMPDamage">
+        <ValidatorArray value="NotInvulnerable"/>
+    </CEffectDamage>
     <CEffectUserData id="FabricatorFinishInciterData">
         <EditorCategories value="Race:Genetron"/>
         <Key value="InternalEnergy"/>
@@ -679,6 +684,11 @@
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="GenetronTrainSet"/>
     </CEffectEnumArea>
+    <CEffectSet id="WardRestitutionRechargeSet">
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="KeironShellRestorationDelayRBTarget"/>
+        <EffectArray value="KeironShellRestorationAB"/>
+    </CEffectSet>
     <CEffectCreatePersistent id="RelayTowerSystemRechargeCP">
         <EditorCategories value="Race:Genetron"/>
         <Flags index="Channeling" value="1"/>
@@ -998,6 +1008,13 @@
     <CEffectApplyBehavior id="UsingSystemRecharge" parent="ScionApplyBehaviorCaster">
         <EditorCategories value="Race:Genetron"/>
     </CEffectApplyBehavior>
+    <CEffectEnumArea id="WardRestitutionSearch">
+        <EditorCategories value="Race:Keiron"/>
+        <DebugTrace value="1"/>
+        <ExcludeArray/>
+        <SearchFilters value="-;Neutral,Enemy,Stasis,Dead,Hidden"/>
+        <AreaArray Radius="1.75" Effect="WardRestitutionRechargeSet"/>
+    </CEffectEnumArea>
     <CEffectCreatePersistent id="WardWeapon" parent="ScionCreatePersistent" Race="Keiron">
         <WhichLocation Value="TargetUnit"/>
         <PeriodCount value="2"/>
@@ -1025,7 +1042,6 @@
         <Behavior value="KeironShellRestorationDelay"/>
     </CEffectApplyBehavior>
     <CEffectApplyBehavior id="KeironShellRestorationDelayABCaster">
-        <ValidatorArray index="0" value="KeironShellRestorationDelayABSourceTargetFilters"/>
         <EditorCategories value="Race:Keiron"/>
         <WhichUnit Value="Caster"/>
         <Behavior value="KeironShellRestorationDelay"/>
@@ -2647,16 +2663,15 @@
         <Behavior value="LockdownModeDuration"/>
     </CEffectApplyBehavior>
     <CEffectApplyBehavior id="VolatileDischargeAB" parent="ScionApplyBehavior" Race="Xayid"/>
-    <CEffectSet id="WardReplenishShell">
-        <EditorCategories value="Race:Keiron"/>
-        <EffectArray value="KeironShellRestorationDelayABSource"/>
-        <EffectArray value="KeironShellRestorationDelayRBTarget"/>
-        <EffectArray value="KeironShellRestorationAB"/>
-        <EffectArray value="WardReplenishShellMU"/>
+    <CEffectSet id="WardRestitution">
         <ValidatorArray value="CanHaveShields"/>
         <ValidatorArray value="ShieldsNotFull"/>
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="KeironShellRestorationDelayABSource"/>
+        <EffectArray value="WardRestitutionSearch"/>
+        <EffectArray value="WardRestitutionMU"/>
     </CEffectSet>
-    <CEffectModifyUnit id="WardReplenishShellMU">
+    <CEffectModifyUnit id="WardRestitutionMU">
         <EditorCategories value="Race:Keiron"/>
         <VitalArray index="Shields">
             <Change value="50"/>
@@ -2702,8 +2717,8 @@
     </CEffectRemoveBehavior>
     <CEffectSet id="WardShellDomeEndSet">
         <EditorCategories value="Race:Keiron"/>
-        <EffectArray value="WardShellDomeEndMUCaster"/>
         <EffectArray value="WardShellDomeEndRBCaster"/>
+        <EffectArray value="WardShellDomeEndMUCaster"/>
         <EffectArray value="Suicide"/>
     </CEffectSet>
     <CEffectApplyBehavior id="WardShellDomeProtectionAB">

@@ -503,6 +503,9 @@
             <SectionArray index="Actor">
                 <DurationArray index="Duration" value="2.5"/>
             </SectionArray>
+            <SectionArray index="Collide">
+                <DurationArray index="Delay" value="0.5"/>
+            </SectionArray>
             <SectionArray index="Stats">
                 <DurationArray index="Delay" value="2.5"/>
             </SectionArray>
@@ -1076,24 +1079,26 @@
         <UninterruptibleArray index="Channel" value="1"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="SelfFixProtocol"/>
     </CAbilEffectInstant>
-    <CAbilEffectTarget id="WardReplenishShell">
+    <CAbilEffectTarget id="WardRestitution">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Cost>
             <Vital index="Shields" value="50"/>
         </Cost>
-        <Range value="8"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="ReplenishShell"/>
         <TargetFilters value="-;Self,Neutral,Enemy,Missile,Stasis,Dead,Hidden"/>
+        <Range value="8"/>
+        <CursorEffect value="WardRestitutionSearch"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Restitution"/>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="WardShellDome">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Range value="8"/>
-        <CmdButtonArray index="Execute" Requirements="WardShellDome"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="ShellDome" Requirements="WardShellDome"/>
         <Cost>
             <Charge Location="Unit"/>
             <Cooldown Location="Unit" TimeStart="0.0625"/>
         </Cost>
         <UninterruptibleArray index="Channel" value="1"/>
+        <CursorEffect value="WardShellDomeSA"/>
     </CAbilEffectTarget>
     <CAbilEffectInstant id="WardShellDomeCancel">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>

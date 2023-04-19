@@ -205,6 +205,20 @@
     <CActorModelMaterial id="BadgerEnergyShieldGlaze" parent="BehaviorGlaze" buff="BadgerEnergyShield">
         <ModelFlags index="AutomateGlobalLoops" value="0"/>
     </CActorModelMaterial>
+    <CActorSound id="Ward_RestitutionLaunch" parent="SoundOneShotScion" Effect="WardRestitution"/>
+    <CActorSplat id="WardShellDomeCursor" parent="KeironCursorSplat" abil="WardShellDome">
+        <On Terms="ActorCreation" Send="AnimPlay BSD GLstand PlayForever -1.000000 -1.000000 -1.000000 AsAutomatic 0.000000 100"/>
+    </CActorSplat>
+    <CActorRange id="WardRestitutionRange" parent="RangeAbil" abil="WardRestitution"/>
+    <CActorSplat id="WardRestitutionCursor" parent="KeironCursorSplat" abil="WardRestitution">
+        <On Terms="ActorCreation" Send="AnimPlay BSD GLstand PlayForever -1.000000 -1.000000 -1.000000 AsAutomatic 0.000000 100"/>
+    </CActorSplat>
+    <CActorRange id="WardShellDomeRange" parent="RangeAbil" abil="WardShellDome"/>
+    <CActorBeamSimple id="WardShellBeam" parent="BeamSimpleAnimationStyleContinuous">
+        <On Terms="Effect.WardShellDomeCUSet.Start; At Target" Send="Create"/>
+        <HostLaunchSiteOps Ops="SOpCasterUnit SOpAttachHardPoint"/>
+        <HostImpactSiteOps Ops="SOpTargetUnit SOpAttachHardPoint"/>
+    </CActorBeamSimple>
     <CActorModel id="GenetronProductionModeSwitchAddition" parent="ModelAddition">
         <On Terms="AbilTrain.GenetronProductionModeSwitch.Start" Send="Create"/>
         <On Terms="AbilTrain.GenetronProductionModeSwitch.Finish" Send="AnimBracketStop BSD"/>
@@ -713,10 +727,13 @@
         <On Terms="Upgrade.ScorpaliskMetabolics.Remove" Send="AnimGroupRemove Superior"/>
         <BarWidth value="68"/>
     </CActorUnit>
-    <CActorUnit id="ShellDome" parent="GenericUnitStandard" unitName="ShellDome">
-        <On Terms="ActorCreation" Send="AnimBracketStart BSD Stand,Work,Start Stand,Work Stand,Work,End"/>
-        <DeathArray index="Normal" AnimProps="Stand,Work,End"/>
-        <HighlightTooltip value="Unit/Name/Bogus"/>
+    <CActorUnit id="ShellDome" parent="GenericUnitKeiron" unitName="ShellDome">
+        <DeathArray index="Normal" ActorModel="" ModelLink="ShellDome" SoundLink="WardShellDeath"/>
+        <SoundArray index="Birth" value="WardShellBirth"/>
+        <StatusBarFlags index="Life" value="0"/>
+        <BarOffset value="150"/>
+        <BarWidth value="160"/>
+        <StatusBarOn index="Shields" value="1"/>
     </CActorUnit>
     <CActorUnit id="Spitter" parent="GenericUnitXayid" unitName="Spitter">
         <DeathArray index="Normal" ModelLink="DefilerMPDeath"/>
@@ -942,6 +959,8 @@
         <Inherits index="TintColor" value="0"/>
         <On Terms="Behavior.FuseFused.On" Send="Create"/>
         <On Terms="Behavior.FuseFused.Off" Send="AnimBracketStop BSD"/>
+        <On Terms="Behavior.ShellDomeFused.On" Send="Create"/>
+        <On Terms="Behavior.ShellDomeFused.Off" Send="AnimBracketStop BSD"/>
         <On Terms="ActorCreation" Send="TimerSet 0.062500 FuseShield"/>
         <On Terms="TimerExpired; TimerName FuseShield" Send="TimerSet 0.062500 FuseShield"/>
         <On Terms="TimerExpired; TimerName FuseShield; ValidateUnit ShieldGTE50P" Send="SetOpacity 1.000000 0.250000 FuseShield"/>
@@ -961,6 +980,9 @@
         <On Terms="ActorCreation; ValidateUnit IsCrux" Send="HostSiteOpsSet ::Host SOpMoveUpByDot5 0 1"/>
         <On Terms="ActorCreation; ValidateUnit IsUmbra" Send="SetScale 0.600000"/>
         <On Terms="ActorCreation; ValidateUnit IsUmbra" Send="HostSiteOpsSet ::Host SOpAttachCenter 0 1"/>
+        <On Terms="ActorCreation; ValidateUnit IsWard" Send="SetScale 0.800000"/>
+        <On Terms="ActorCreation; ValidateUnit IsWard" Send="HostSiteOpsSet ::Host SOpAttachCenter 0 1"/>
+        <On Terms="ActorCreation; ValidateUnit IsShellDome" Send="SetScale 2.750000,2.750000,2.000000"/>
         <On Terms="ActorCreation; ValidateUnit IsMyriad" Send="SetScale 0.680000,0.820000,0.680000"/>
         <On Terms="ActorCreation; ValidateUnit IsMyriad" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveDownByDot25}"/>
         <On Terms="ActorCreation; ValidateUnit IsInducer" Send="SetScale 0.880000,1.000000,0.930000"/>
@@ -1176,6 +1198,8 @@
         <BarOffset value="80"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-mechanicalarmorlevel0.dds"/>
         <On index="65" Terms="WeaponStart.*.AttackStart" Send="AnimBracketStart Attack Attack {} {} ContentNonLooping,OpeningPlayForever"/>
+        <On Terms="Abil.WardRestitution.SourceCastStart" Send="$Spell"/>
+        <On Terms="Abil.WardShellDome.SourceCastStart" Send="$Spell"/>
         <BarWidth value="70"/>
     </CActorUnit>
     <CActorSound id="UmbraShieldCompulsionSound" parent="SoundOneShotScion" Effect="UmbraShieldCompulsion"/>
@@ -1265,6 +1289,10 @@
         <HostSiteOps Ops="SOpAttachCenter"/>
     </CActorModel>
     <CActorSound id="VirtusSelfFixProtocol_Init" parent="SoundOneShotScion" Behavior="VirtusSelffixProtocolBuff"/>
+    <CActorSound id="WardShellLoop" parent="SoundContinuous">
+        <On Terms="Effect.WardShellDomeCUSet.Start; At Target" Send="Create"/>
+    </CActorSound>
+    <CActorSound id="Ward_RestitutionImpact" parent="SoundOneShotScion" Effect="WardRestitutionRechargeSet"/>
     <CActorUnit id="Xayidling" parent="GenericUnitXayid" unitName="Xayidling">
         <WalkAnimMoveSpeed value="2.8085"/>
         <BarOffset value="40"/>
