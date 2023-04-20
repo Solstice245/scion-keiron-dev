@@ -250,6 +250,24 @@
         <VitalType value="Energy"/>
         <ModificationType value="PerUnitMaxVital"/>
     </CAccumulatorVitals>
+    <CAccumulatorArithmetic id="ShieldsPercentTarget">
+        <Parameters value="0">
+            <AccumulatorArray value="ShieldsCurrentTarget"/>
+        </Parameters>
+        <Parameters value="0">
+            <AccumulatorArray value="ShieldsMaxTarget"/>
+        </Parameters>
+        <Operation value="Divide"/>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="ShieldsPercentCaster">
+        <Parameters value="0">
+            <AccumulatorArray value="ShieldsCurrentCaster"/>
+        </Parameters>
+        <Parameters value="0">
+            <AccumulatorArray value="ShieldsMaxCaster"/>
+        </Parameters>
+        <Operation value="Divide"/>
+    </CAccumulatorArithmetic>
     <CAccumulatorVitals id="ShieldsCurrentCaster">
         <Ratio value="1"/>
         <VitalType value="Shields"/>
@@ -267,15 +285,10 @@
         <UnitSource Value="Target"/>
         <ModificationType value="PerUnitMaxVital"/>
     </CAccumulatorVitals>
-    <CAccumulatorArithmetic id="FuseUnfuseArithmetic">
-        <Parameters value="0.001">
-            <AccumulatorArray value="ShieldsCurrentTarget"/>
-        </Parameters>
-        <Parameters value="0.001">
-            <AccumulatorArray value="ShieldsMaxTarget"/>
-        </Parameters>
-        <Operation value="Divide"/>
-    </CAccumulatorArithmetic>
+    <CAccumulatorSwitch id="FuseUnfuseSwitch">
+        <CaseArray Validator="noShields"/>
+        <CaseDefault value="ShieldsPercentTarget"/>
+    </CAccumulatorSwitch>
     <CAccumulatorUserData id="FuseUnfuseData"/>
     <CAccumulatorArithmetic id="FuseFusionShieldRegenerationBonus">
         <Parameters value="1.25"/>
@@ -294,6 +307,11 @@
         </Parameters>
         <Operation value="Subtract"/>
     </CAccumulatorArithmetic>
+    <CAccumulatorVitals id="ShieldsMaxCaster">
+        <Ratio value="1"/>
+        <VitalType value="Shields"/>
+        <ModificationType value="PerUnitMaxVital"/>
+    </CAccumulatorVitals>
     <CAccumulatorArithmetic id="TeslaShockChargeOverloadMultiply">
         <ApplicationRule value="Multiply"/>
         <Parameters value="2"/>

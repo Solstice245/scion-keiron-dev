@@ -607,6 +607,48 @@
         <Operation value="Set"/>
         <BehaviorScope Behavior="GenetronProductionInternalEnergy"/>
     </CEffectUserData>
+    <CEffectEnumTrackedUnits id="FuseFusionHealWardETU">
+        <ValidatorArray value="WardIsCastingShellDomeTarget"/>
+        <EditorCategories value="Race:Keiron"/>
+        <BehaviorLink value="WardShellDomeTracker"/>
+        <TrackerUnit Value="Target"/>
+        <Effect value="FuseFusionHealWardSet"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectSet id="FuseFusionHealWardSet">
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="FuseFusionHealWardABFused"/>
+        <EffectArray value="FuseFusionHealShieldMU"/>
+    </CEffectSet>
+    <CEffectSet id="FuseUnfuseShieldSet">
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="FuseUnfuseWardRB"/>
+        <EffectArray value="FuseUnfuseShieldMUCaster"/>
+        <EffectArray value="FuseUnfuseShieldMUTarget"/>
+    </CEffectSet>
+    <CEffectSwitch id="FuseUnfuseShieldSwitch">
+        <EditorCategories value="Race:Keiron"/>
+        <CaseArray Validator="WardIsCastingShellDomeTarget" Effect="FuseUnfuseWardETU"/>
+        <CaseDefault value="FuseUnfuseShieldSet"/>
+    </CEffectSwitch>
+    <CEffectUserData id="FuseUnfuseWardData">
+        <EditorCategories value="Race:Keiron"/>
+        <Amount value="0">
+            <AccumulatorArray value="FuseUnfuseSwitch"/>
+        </Amount>
+        <Operation value="Set"/>
+        <EffectSuccess value="FuseUnfuseShieldSet"/>
+        <EffectFailure value="FuseUnfuseShieldSet"/>
+    </CEffectUserData>
+    <CEffectEnumTrackedUnits id="FuseUnfuseWardETU">
+        <EditorCategories value="Race:Keiron"/>
+        <BehaviorLink value="WardShellDomeTracker"/>
+        <TrackerUnit Value="Target"/>
+        <Effect value="FuseUnfuseWardData"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectRemoveBehavior id="FuseUnfuseWardRB">
+        <EditorCategories value="Race:Keiron"/>
+        <BehaviorLink value="ShellDomeFused"/>
+    </CEffectRemoveBehavior>
     <CEffectUserData id="GenetronTrainCheckInternalEnergyHaltData">
         <EditorCategories value="Race:Genetron"/>
         <Amount value="0">
@@ -1014,6 +1056,32 @@
         <ExcludeArray/>
         <SearchFilters value="-;Neutral,Enemy,Stasis,Dead,Hidden"/>
         <AreaArray Radius="1.75" Effect="WardRestitutionRechargeSet"/>
+    </CEffectEnumArea>
+    <CEffectApplyBehavior id="FuseFusionHealWardABFused" parent="ScionApplyBehavior">
+        <EditorCategories value="Race:Keiron"/>
+        <Behavior value="ShellDomeFused"/>
+    </CEffectApplyBehavior>
+    <CEffectAddTrackedUnit id="WardShellDomeATU">
+        <EditorCategories value="Race:Keiron"/>
+        <BehaviorLink value="WardShellDomeTracker"/>
+        <TrackedUnit Value="Target"/>
+    </CEffectAddTrackedUnit>
+    <CEffectModifyUnit id="WardShellDomeCooldown">
+        <EditorCategories value="Race:Keiron"/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="WardShellDome,Execute" CooldownTimeUse="10"/>
+    </CEffectModifyUnit>
+    <CEffectCreatePersistent id="WardShellDomeDummyCP">
+        <ValidatorArray value="NotShellDome"/>
+        <ValidatorArray value="NotAegis"/>
+        <EditorCategories value="Race:Keiron"/>
+        <WhichLocation Value="TargetUnit"/>
+    </CEffectCreatePersistent>
+    <CEffectEnumArea id="WardShellDomeDummySA" parent="ScionEnumArea">
+        <EditorCategories value="Race:Keiron"/>
+        <DebugTrace value="1"/>
+        <SearchFilters value="-;Neutral,Enemy,Air,Missile,Dead,Hidden"/>
+        <AreaArray Radius="2.5" Effect="WardShellDomeDummyCP"/>
     </CEffectEnumArea>
     <CEffectCreatePersistent id="WardWeapon" parent="ScionCreatePersistent" Race="Keiron">
         <WhichLocation Value="TargetUnit"/>
@@ -2699,6 +2767,7 @@
     </CEffectApplyBehavior>
     <CEffectSet id="WardShellDomeCUSet">
         <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="WardShellDomeATU"/>
         <EffectArray value="WardShellDomeABFused"/>
         <EffectArray value="WardShellDomeStartMUDome"/>
         <EffectArray value="WardShellDomeStartMUCaster"/>
@@ -2719,6 +2788,7 @@
         <EditorCategories value="Race:Keiron"/>
         <EffectArray value="WardShellDomeEndRBCaster"/>
         <EffectArray value="WardShellDomeEndMUCaster"/>
+        <EffectArray value="WardShellDomeCooldown"/>
         <EffectArray value="Suicide"/>
     </CEffectSet>
     <CEffectApplyBehavior id="WardShellDomeProtectionAB">
@@ -2731,7 +2801,7 @@
     <CEffectEnumArea id="WardShellDomeSA" parent="ScionEnumArea">
         <EditorCategories value="Race:Keiron"/>
         <DebugTrace value="1"/>
-        <SearchFilters value="-;Neutral,Enemy,Air,Missile,Stasis,Dead,Hidden"/>
+        <SearchFilters value="-;Neutral,Enemy,Air,Missile,Dead,Hidden"/>
         <AreaArray Radius="2.5" Effect="WardShellDomeProtectionAB"/>
     </CEffectEnumArea>
     <CEffectApplyBehavior id="WardShellDomeStartABCaster" parent="ScionApplyBehaviorCaster">
@@ -2741,9 +2811,9 @@
     <CEffectModifyUnit id="WardShellDomeStartMUDome">
         <EditorCategories value="Race:Keiron"/>
         <VitalArray index="Shields">
-            <Change value="0">
-                <AccumulatorArray value="ShieldsCurrentCaster"/>
-            </Change>
+            <ChangeFraction value="0">
+                <AccumulatorArray value="ShieldsPercentCaster"/>
+            </ChangeFraction>
         </VitalArray>
         <ModifyFlags index="SetVitals" value="1"/>
     </CEffectModifyUnit>
@@ -2758,9 +2828,9 @@
         <EditorCategories value="Race:Keiron"/>
         <ImpactUnit Value="Caster"/>
         <VitalArray index="Shields">
-            <Change value="0">
-                <AccumulatorArray value="ShieldsCurrentTarget"/>
-            </Change>
+            <ChangeFraction value="0">
+                <AccumulatorArray value="ShieldsPercentTarget"/>
+            </ChangeFraction>
         </VitalArray>
         <ModifyFlags index="SetVitals" value="1"/>
     </CEffectModifyUnit>
@@ -3216,14 +3286,15 @@
     </CEffectModifyUnit>
     <CEffectSet id="FuseFusionSet" parent="ScionSet" Race="Keiron">
         <EffectArray value="FuseFusionHide"/>
-        <EffectArray value="FuseFusionShieldMU"/>
+        <EffectArray value="FuseFusionHealShieldMU"/>
+        <EffectArray value="FuseFusionHealWardETU"/>
         <EffectArray value="FuseFusionAK"/>
         <EffectArray value="FuseFusionTP"/>
         <EffectArray value="FuseFusionATU"/>
         <EffectArray value="FuseFusionABCaster"/>
         <EffectArray value="FuseFusionABData"/>
     </CEffectSet>
-    <CEffectModifyUnit id="FuseFusionShieldMU">
+    <CEffectModifyUnit id="FuseFusionHealShieldMU">
         <EditorCategories value="Race:Keiron"/>
         <VitalArray index="Shields">
             <Change value="0">
@@ -3254,7 +3325,7 @@
     <CEffectUserData id="FuseUnfuseData">
         <EditorCategories value="Race:Keiron"/>
         <Amount value="0">
-            <AccumulatorArray value="FuseUnfuseArithmetic"/>
+            <AccumulatorArray value="FuseUnfuseSwitch"/>
         </Amount>
         <Operation value="Set"/>
         <EffectSuccess value="FuseUnfuseSet"/>
@@ -3274,12 +3345,11 @@
     <CEffectCreatePersistent id="FuseUnfuseSet" parent="ScionCreatePersistent" Race="Keiron">
         <WhichLocation Value="TargetUnit"/>
         <FinalEffect value="FuseUnfuseSelectionCooldown"/>
-        <PeriodCount value="8"/>
+        <PeriodCount value="7"/>
         <PeriodicEffectArray value="FuseUnfuseRB"/>
         <PeriodicEffectArray value="FuseUnfuseRK"/>
         <PeriodicEffectArray value="FuseUnfuseRBCaster"/>
-        <PeriodicEffectArray value="FuseUnfuseShieldMUCaster"/>
-        <PeriodicEffectArray value="FuseUnfuseShieldMUTarget"/>
+        <PeriodicEffectArray value="FuseUnfuseShieldSwitch"/>
         <PeriodicEffectArray value="FuseUnfuseCargoSuicide"/>
         <PeriodicEffectArray value="KeironShellRestorationDelayABCaster"/>
         <PeriodicEffectArray value="FuseUnfuseShow"/>
@@ -3289,7 +3359,7 @@
         <EditorCategories value="Race:Keiron"/>
         <ImpactUnit Value="Caster"/>
         <VitalArray index="Shields">
-            <ChangeFraction value="0.001">
+            <ChangeFraction value="0">
                 <AccumulatorArray value="FuseUnfuseData"/>
             </ChangeFraction>
         </VitalArray>
@@ -3298,7 +3368,7 @@
     <CEffectModifyUnit id="FuseUnfuseShieldMUTarget">
         <EditorCategories value="Race:Keiron"/>
         <VitalArray index="Shields">
-            <ChangeFraction value="0.001">
+            <ChangeFraction value="0">
                 <AccumulatorArray value="FuseUnfuseData"/>
             </ChangeFraction>
         </VitalArray>

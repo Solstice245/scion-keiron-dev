@@ -205,8 +205,37 @@
     <CActorModelMaterial id="BadgerEnergyShieldGlaze" parent="BehaviorGlaze" buff="BadgerEnergyShield">
         <ModelFlags index="AutomateGlobalLoops" value="0"/>
     </CActorModelMaterial>
+    <CActorRegionCircle id="CursorRegionCenter">
+        <Aliases value="_Scalable"/>
+        <On Terms="ActorCreation" Send="QueryPersistent GuideRegionAdd GuideRegionRemove AgainstCenter"/>
+        <On Terms="ActorOrphan" Send="Destroy"/>
+        <HostSiteOps Ops="SOpBasicScopeFollow"/>
+        <NotifyRadiusKey value="_Scalable"/>
+        <NotifyArcKey value="_Scalable"/>
+        <Radius value="1.000000"/>
+    </CActorRegionCircle>
+    <CActorModel id="ShellDomeAddition" parent="ModelAddition">
+        <Scale value="4.200000,4.200000,3.200000"/>
+        <Filter index="Self" value="1"/>
+        <Filter index="Ally" value="1"/>
+        <Inherits index="BaseModelScale" value="0"/>
+        <Inherits index="CastShadows" value="0"/>
+        <Inherits index="CloakEffect" value="0"/>
+        <Inherits index="CreepEngulfment" value="0"/>
+        <Inherits index="Decal" value="0"/>
+        <Inherits index="ModelMaterials" value="0"/>
+        <Inherits index="Opacity" value="0"/>
+        <Inherits index="Scale" value="0"/>
+        <Inherits index="TeamColor" value="0"/>
+        <Inherits index="TimeScale" value="0"/>
+        <Inherits index="TintColor" value="0"/>
+        <Inherits index="Visibility" value="0"/>
+        <Inherits index="WarpGroup" value="0"/>
+        <On Terms="ActorCreation" Send="SetOpacity"/>
+    </CActorModel>
     <CActorSound id="Ward_RestitutionLaunch" parent="SoundOneShotScion" Effect="WardRestitution"/>
     <CActorSplat id="WardShellDomeCursor" parent="KeironCursorSplat" abil="WardShellDome">
+        <On index="1" Terms="ActorCreation" Send="Create CursorRegionCenter"/>
         <On Terms="ActorCreation" Send="AnimPlay BSD GLstand PlayForever -1.000000 -1.000000 -1.000000 AsAutomatic 0.000000 100"/>
     </CActorSplat>
     <CActorRange id="WardRestitutionRange" parent="RangeAbil" abil="WardRestitution"/>
@@ -218,6 +247,7 @@
         <On Terms="Effect.WardShellDomeCUSet.Start; At Target" Send="Create"/>
         <HostLaunchSiteOps Ops="SOpCasterUnit SOpAttachHardPoint"/>
         <HostImpactSiteOps Ops="SOpTargetUnit SOpAttachHardPoint"/>
+        <ModelFlags index="AllowHitTest" value="0"/>
     </CActorBeamSimple>
     <CActorModel id="GenetronProductionModeSwitchAddition" parent="ModelAddition">
         <On Terms="AbilTrain.GenetronProductionModeSwitch.Start" Send="Create"/>
@@ -734,6 +764,8 @@
         <BarOffset value="150"/>
         <BarWidth value="160"/>
         <StatusBarOn index="Shields" value="1"/>
+        <On Terms="ActorCreation" Send="Create ShellDomeAddition"/>
+        <ModelFlags index="AllowHitTest" value="0"/>
     </CActorUnit>
     <CActorUnit id="Spitter" parent="GenericUnitXayid" unitName="Spitter">
         <DeathArray index="Normal" ModelLink="DefilerMPDeath"/>
@@ -980,9 +1012,9 @@
         <On Terms="ActorCreation; ValidateUnit IsCrux" Send="HostSiteOpsSet ::Host SOpMoveUpByDot5 0 1"/>
         <On Terms="ActorCreation; ValidateUnit IsUmbra" Send="SetScale 0.600000"/>
         <On Terms="ActorCreation; ValidateUnit IsUmbra" Send="HostSiteOpsSet ::Host SOpAttachCenter 0 1"/>
-        <On Terms="ActorCreation; ValidateUnit IsWard" Send="SetScale 0.800000"/>
-        <On Terms="ActorCreation; ValidateUnit IsWard" Send="HostSiteOpsSet ::Host SOpAttachCenter 0 1"/>
-        <On Terms="ActorCreation; ValidateUnit IsShellDome" Send="SetScale 2.750000,2.750000,2.000000"/>
+        <On Terms="ActorCreation; ValidateUnit IsWard" Send="SetScale 0.700000,0.700000,0.900000"/>
+        <On Terms="ActorCreation; ValidateUnit IsWard" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveDownByDot15} 0 1"/>
+        <On Terms="ActorCreation; ValidateUnit IsShellDome" Send="SetScale 0.540000,0.540000,0.330000"/>
         <On Terms="ActorCreation; ValidateUnit IsMyriad" Send="SetScale 0.680000,0.820000,0.680000"/>
         <On Terms="ActorCreation; ValidateUnit IsMyriad" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveDownByDot25}"/>
         <On Terms="ActorCreation; ValidateUnit IsInducer" Send="SetScale 0.880000,1.000000,0.930000"/>
