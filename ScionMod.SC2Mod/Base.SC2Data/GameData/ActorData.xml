@@ -205,6 +205,12 @@
     <CActorModelMaterial id="BadgerEnergyShieldGlaze" parent="BehaviorGlaze" buff="BadgerEnergyShield">
         <ModelFlags index="AutomateGlobalLoops" value="0"/>
     </CActorModelMaterial>
+    <CActorRange id="CourierOpticalDisruptionActiveRange">
+        <On Terms="Effect.CourierOpticalDisruptionCreatePersistent.Start; At Caster" Send="Create"/>
+        <On Terms="Effect.CourierOpticalDisruptionCreatePersistent.Stop; At Caster" Send="Destroy"/>
+        <Range value="13.750000"/>
+        <Icon value="Assets\Textures\RadarIcon2.dds"/>
+    </CActorRange>
     <CActorRegionCircle id="CursorRegionCenter">
         <Aliases value="_Scalable"/>
         <On Terms="ActorCreation" Send="QueryPersistent GuideRegionAdd GuideRegionRemove AgainstCenter"/>
@@ -237,16 +243,17 @@
         <HostSiteOps Ops="SOpAttachCenter"/>
         <AutoScaleFactor value="1.000000"/>
     </CActorModel>
+    <CActorRange id="CourierOpticalDisruptionRange" parent="RangeAbilStandard" abil="CourierOpticalDisruption"/>
     <CActorSound id="Ward_RestitutionLaunch" parent="SoundOneShotScion" Effect="WardRestitution"/>
     <CActorSplat id="WardShellDomeCursor" parent="KeironCursorSplat" abil="WardShellDome">
         <On index="1" Terms="ActorCreation" Send="Create CursorRegionCenter"/>
         <On Terms="ActorCreation" Send="AnimPlay BSD GLstand PlayForever -1.000000 -1.000000 -1.000000 AsAutomatic 0.000000 100"/>
     </CActorSplat>
-    <CActorRange id="WardRestitutionRange" parent="RangeAbil" abil="WardRestitution"/>
+    <CActorRange id="WardRestitutionRange" parent="RangeAbilStandard" abil="WardRestitution"/>
     <CActorSplat id="WardRestitutionCursor" parent="KeironCursorSplat" abil="WardRestitution">
         <On Terms="ActorCreation" Send="AnimPlay BSD GLstand PlayForever -1.000000 -1.000000 -1.000000 AsAutomatic 0.000000 100"/>
     </CActorSplat>
-    <CActorRange id="WardShellDomeRange" parent="RangeAbil" abil="WardShellDome"/>
+    <CActorRange id="WardShellDomeRange" parent="RangeAbilStandard" abil="WardShellDome"/>
     <CActorBeamSimple id="WardShellBeam" parent="BeamSimpleAnimationStyleContinuous">
         <On Terms="Effect.WardShellDomeCUSet.Start; At Target" Send="Create"/>
         <HostLaunchSiteOps Ops="SOpCasterUnit SOpAttachHardPoint"/>
@@ -4836,10 +4843,7 @@
     <CActorSound id="ParagonEmissaryOrbImpactSound" parent="SoundOneShot">
         <On Terms="Effect.EmissaryOrbDMG.Start; At Target" Send="Create"/>
     </CActorSound>
-    <CActorRange id="ParagonEmissaryOrbRange" parent="RangeAbil" abil="EmissaryOrb">
-        <Icon value="Assets\Textures\RadarIcon2.dds"/>
-        <IconArcLength value="3.250000"/>
-    </CActorRange>
+    <CActorRange id="ParagonEmissaryOrbRange" parent="RangeAbilStandard" abil="EmissaryOrb"/>
     <CActorAction id="ParagonEmissaryOrbAttack" parent="GenericAttack" effectImpact="EmissaryOrbDMG" effectLaunch="EmissaryOrb">
         <Missile value="ParagonEmissaryOrbWeapon"/>
         <ImpactSiteOps Ops="SOpTargetPoint SOp2DRotation"/>
@@ -4941,7 +4945,7 @@
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
         <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
     </CActorModel>
-    <CActorRange id="OculusRevealRange" parent="RangeAbil" abil="OculusReveal"/>
+    <CActorRange id="OculusRevealRange" parent="RangeAbilStandard" abil="OculusReveal"/>
     <CActorLookAt id="ParagonLookAt" parent="UnitTurret">
         <On Terms="SupporterDestruction.*.UnitDeathModel" Send="Destroy"/>
         <Type value="ParagonTurret"/>
