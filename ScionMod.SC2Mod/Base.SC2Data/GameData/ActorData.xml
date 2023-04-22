@@ -202,7 +202,7 @@
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-pneumatizedcarapace.dds"/>
         <SoundArray index="Attack" value="Assailant_Yes"/>
     </CActorUnit>
-    <CActorModelMaterial id="BadgerEnergyShieldGlaze" parent="BehaviorGlaze" buff="BadgerEnergyShield"/>
+    <CActorModelMaterial id="BadgerEnergyShieldGlaze" parent="BehaviorGlaze" buff="BadgerPowershell"/>
     <CActorRange id="CourierOpticalDisruptionActiveRange">
         <On Terms="Effect.CourierOpticalDisruptionCreatePersistent.Start; At Caster" Send="Create"/>
         <On Terms="Effect.CourierOpticalDisruptionCreatePersistent.Stop; At Caster" Send="Destroy"/>
@@ -1751,8 +1751,8 @@
         <On Terms="ActorCreation" Send="ModelMaterialApplyTo ::Main"/>
         <On Terms="AnimDone; AnimName Death" Send="ModelMaterialRemoveFrom ::Main"/>
         <On Terms="AnimDone; AnimName Death" Send="Destroy"/>
-        <On Terms="UnitRegen.Processor.LifeOn" Send="Create"/>
-        <On Terms="UnitRegen.Processor.LifeOff" Send="AnimBracketStop BSD"/>
+        <On Terms="UnitRegen.Scion_Processor.LifeOn" Send="Create"/>
+        <On Terms="UnitRegen.Scion_Processor.LifeOff" Send="AnimBracketStop BSD"/>
         <Model value="GlazeProcessorRegeneration"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModelMaterial>
@@ -1905,7 +1905,7 @@
         <HostSiteOps Ops="SOpAttachWeapon02 SOpMoveUpByDot1" HoldRotation="1"/>
     </CActorModel>
     <CActorSound id="ProcessorRegenSound" parent="SoundOneShot">
-        <On Terms="UnitRegen.Processor.LifeOn" Send="Create"/>
+        <On Terms="UnitRegen.Scion_Processor.LifeOn" Send="Create"/>
         <Sound value="Spell_CombatDrugs_Launch"/>
     </CActorSound>
     <CActorTurret id="BlitzerTurret">
@@ -2365,18 +2365,23 @@
         <LaunchAssets Model="GhostSnipeAttackLaunch"/>
         <ImpactMap index="None" Model="GhostAttackImpact"/>
     </CActorAction>
-    <CActorAction id="AvengerGenetronAttack" parent="GenericAttack" effectImpact="NemesisMissilesLMImpact" effectLaunch="NemesisMissilesLM">
+    <CActorAction id="Scion_AvengerAttack" parent="GenericAttack" effectImpact="NemesisMissilesLMImpact" effectLaunch="NemesisMissilesLM">
         <LaunchAttachQuery Methods="AMPatternAvenger"/>
         <LaunchAssets Model="VikingFighterAttackLaunch" Sound="SkyTank_BarrageMissile_Launch_Swt"/>
         <Missile value="AvengerNemesisAttackMissile"/>
         <ImpactMap index="None" Model="MarauderUpgradedAttackImpact" Sound="SkyTank_BarrageMissile_Impact"/>
     </CActorAction>
-    <CActorUnit id="AvengerGenetron" parent="GenericUnitStandard" unitName="AvengerGenetron">
+    <CActorUnit id="Scion_Avenger" parent="GenericUnitStandard" unitName="Scion_Avenger">
         <Macros value="TerrainSquibAnimations"/>
         <Macros value="PhysicsDeathsSwarmAir"/>
         <Macros value="PhysicsDeathsVoidAir"/>
+        <On Terms="UnitBirth.Scion_Avenger" Send="Create AvengerVengeanceMissileAdd"/>
+        <On Terms="AbilCharge.VengeanceMissile.Regen" Send="Create AvengerVengeanceMissileAdd"/>
+        <On Terms="AbilCharge.VengeanceMissile.Spend" Target="AvengerVengeanceMissileAdd" Send="Destroy"/>
         <HostSiteOps Ops="SOpBankerViking"/>
+        <Model value="AvengerGenetron"/>
         <ModelFlags index="OutlineEmitter" value="1"/>
+        <BuildModel value="AvengerGenetron"/>
         <DeathArray index="Normal" ModelLink="VikingFighterDeath" SoundLink="Viking_Explode" VoiceLink="VikingFighterDeathVoice"/>
         <DeathCustoms>
             <ActorModel value="UnitDeathRagdollFlier"/>
@@ -2398,6 +2403,8 @@
         <DeathCustoms Name="RagdollOverkillDOI" InheritsFrom="RagdollBasic"/>
         <DeathCustoms Name="RagdollMidair" InheritsFrom="RagdollBasic"/>
         <DeathActorModel value="UnitDeathModelWithDeathMotionFlier"/>
+        <PlacementModel value="AvengerGenetron"/>
+        <PortraitModel value="GenetronAdjutantPortrait"/>
         <BarOffset value="50"/>
         <BarWidth value="80"/>
         <GroupIcon>
@@ -2405,20 +2412,12 @@
         </GroupIcon>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-aircraftplating-level0.dds"/>
         <SoundArray index="Birth" value=""/>
-        <SoundArray index="Ready" value="Avenger_Ready"/>
-        <SoundArray index="What" value="Avenger_What"/>
-        <SoundArray index="Yes" value="Avenger_Yes"/>
-        <SoundArray index="Attack" value="Avenger_Attack"/>
-        <SoundArray index="Pissed" value="Avenger_Attack"/>
+        <SoundArray index="Pissed" value="Scion_Avenger_Attack"/>
         <SoundArray index="Movement" value="Viking_FighterMovement"/>
         <UnitIcon value="Assets\Textures\btn-unit-genetron-avenger.dds"/>
         <Wireframe>
             <Image value="Assets\Textures\wireframe-genetron-avenger.dds"/>
         </Wireframe>
-        <On Terms="UnitBirth.AvengerGenetron" Send="Create AvengerVengeanceMissileAdd"/>
-        <On Terms="AbilCharge.VengeanceMissile.Regen" Send="Create AvengerVengeanceMissileAdd"/>
-        <On Terms="AbilCharge.VengeanceMissile.Spend" Target="AvengerVengeanceMissileAdd" Send="Destroy"/>
-        <PortraitModel value="GenetronAdjutantPortrait"/>
     </CActorUnit>
     <CActorMissile id="AvengerVengeanceMissileAttackMissile" parent="GenericAttackMissile" unitName="VengeanceMissilesLMWeapon">
         <Model value="AvengerVengeanceMissile"/>
@@ -2767,23 +2766,23 @@
     <CActorModel id="NodeBuild" parent="GenetronBuildingBuild">
         <CreepHeightClass value="Small"/>
     </CActorModel>
-    <CActorUnit id="Processor" parent="GenericUnitStandard" unitName="Processor">
-        <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-aircraftplating-level0.dds"/>
+    <CActorUnit id="Scion_Processor" parent="GenericUnitStandard" unitName="Scion_Processor">
+        <On Terms="Abil.ProcessorSystemRecharge.SourceChannelStart" Send="AnimBracketStart Cover Cover,Start Cover Cover,End"/>
+        <On Terms="Abil.ProcessorSystemRecharge.SourceChannelStop" Send="AnimBracketStop Cover"/>
+        <HostSiteOps Ops="SOpBankerBanshee"/>
+        <AnimBlendTime value="0.750000"/>
+        <ModelFlags index="OutlineEmitter" value="1"/>
+        <DeathArray index="Normal" ModelLink="Scion_ProcessorDeath" SoundLink="Viking_Explode"/>
+        <BarOffset value="45"/>
         <GroupIcon>
             <Image value="Assets\Textures\wireframe-genetron-Processor.dds"/>
         </GroupIcon>
+        <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-aircraftplating-level0.dds"/>
+        <SoundArray index="Birth" value=""/>
         <UnitIcon value="Assets\Textures\btn-unit-genetron-Processor.dds"/>
         <Wireframe>
             <Image value="Assets\Textures\wireframe-genetron-Processor.dds"/>
         </Wireframe>
-        <BarOffset value="45"/>
-        <DeathArray index="Normal" ModelLink="ProcessorDeath" SoundLink="Viking_Explode"/>
-        <SoundArray index="Birth" value=""/>
-        <ModelFlags index="OutlineEmitter" value="1"/>
-        <HostSiteOps Ops="SOpBankerBanshee"/>
-        <On Terms="Abil.ProcessorSystemRecharge.SourceChannelStart" Send="AnimBracketStart Cover Cover,Start Cover Cover,End"/>
-        <On Terms="Abil.ProcessorSystemRecharge.SourceChannelStop" Send="AnimBracketStop Cover"/>
-        <AnimBlendTime value="0.750000"/>
     </CActorUnit>
     <CActorUnit id="Node" parent="GenetronBuilding" buildTime="24.000000" unitName="Node">
         <PlacementSound value="Terran_BuildingPlacementSmall"/>
@@ -3094,7 +3093,9 @@
     <CActorModel id="ACRConstruction" parent="GenetronConstructionBase" buildTime="17.000000" Model="ACR">
         <HostSiteOps Ops="SOpAttachHardPoint SOpMoveDownByDot25 SOpMoveDownByDot1"/>
     </CActorModel>
-    <CActorModel id="ProcessorConstruction" parent="GenetronConstructionBase" buildTime="25.500000" Model="Processor"/>
+    <CActorModel id="ProcessorConstruction" parent="GenetronConstructionBase" buildTime="25.500000" Model="Processor">
+        <Model value="Scion_Processor"/>
+    </CActorModel>
     <CActorModel id="BlazeConstruction" parent="GenetronConstructionBase" buildTime="42.000000" Model="Blaze"/>
     <CActorModel id="BlitzerConstruction" parent="GenetronConstructionBase" buildTime="49.000000" Model="Blitzer"/>
     <CActorModel id="EqualizerConstruction" parent="GenetronConstructionBase" buildTime="56.000000" Model="Equalizer"/>
