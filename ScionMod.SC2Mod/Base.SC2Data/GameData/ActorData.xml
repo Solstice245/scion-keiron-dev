@@ -202,9 +202,7 @@
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-pneumatizedcarapace.dds"/>
         <SoundArray index="Attack" value="Assailant_Yes"/>
     </CActorUnit>
-    <CActorModelMaterial id="BadgerEnergyShieldGlaze" parent="BehaviorGlaze" buff="BadgerEnergyShield">
-        <ModelFlags index="AutomateGlobalLoops" value="0"/>
-    </CActorModelMaterial>
+    <CActorModelMaterial id="BadgerEnergyShieldGlaze" parent="BehaviorGlaze" buff="BadgerEnergyShield"/>
     <CActorRange id="CourierOpticalDisruptionActiveRange">
         <On Terms="Effect.CourierOpticalDisruptionCreatePersistent.Start; At Caster" Send="Create"/>
         <On Terms="Effect.CourierOpticalDisruptionCreatePersistent.Stop; At Caster" Send="Destroy"/>
@@ -239,7 +237,8 @@
         <Inherits index="WarpGroup" value="0"/>
         <On Terms="ActorCreation" Send="SetOpacity"/>
     </CActorModel>
-    <CActorModel id="WardRestitutionImpact" parent="ModelAnimationStyleOneShotEffect" Effect="WardRestitutionRechargeSet">
+    <CActorModel id="WardRestitutionImpact" parent="ModelAnimationStyleOneShotUNIT">
+        <On Terms="Effect.WardRestitutionRechargeSet.Start; At Target" Send="Create"/>
         <HostSiteOps Ops="SOpAttachCenter"/>
         <AutoScaleFactor value="1.000000"/>
     </CActorModel>
@@ -4067,6 +4066,7 @@
     <CActorRange id="CoveringSprayRange" parent="RangeAbilStandard" abil="CoveringSpray"/>
     <CActorMissile id="KrakenAttackMissile" parent="GenericAttackMissile" unitName="BileSwarmLMWeapon">
         <Model value="BileSwarm"/>
+        <On Terms="ActorCreation" Send="SetTintColor {255,255,255 2.000000}"/>
     </CActorMissile>
     <CActorUnit id="SunkenWarren" parent="ZergBuilding" unitName="SunkenWarren">
         <BuildModel value="CasnoliskDen"/>

@@ -2265,8 +2265,8 @@
     <CEffectCreateUnit id="LaunchCloakChargeImpact">
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="TargetUnitOrPoint"/>
+        <SpawnEffect value="KillsToCaster"/>
         <SpawnUnit value="CloakCharge"/>
-        <SpawnEffect value="TeslaChargeSpawned"/>
     </CEffectCreateUnit>
     <CEffectLaunchMissile id="LynxCannon" parent="ScionLaunchMissile" Race="Genetron">
         <Movers Link="LynxCannonWeaponStraight" IfRangeLTE="9.325"/>
@@ -2370,9 +2370,9 @@
         <Cost/>
     </CEffectModifyUnit>
     <CEffectDamage id="VengeanceMissileLMImpact" parent="ScionDamage" Race="Genetron">
-        <Amount value="60"/>
+        <Amount value="50"/>
         <Death value="Electrocute"/>
-        <AttributeBonus index="Massive" value="20"/>
+        <AttributeBonus index="Massive" value="25"/>
     </CEffectDamage>
     <CEffectLaunchMissile id="NemesisMissilesLM" parent="ScionLaunchMissile" Race="Genetron"/>
     <CEffectLaunchMissile id="VengeanceMissileLM" parent="ScionLaunchMissile" Race="Genetron">
@@ -2467,7 +2467,7 @@
     <CEffectCreateUnit id="LaunchShockChargeImpact">
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="TargetUnitOrPoint"/>
-        <SpawnEffect value="TeslaChargeSpawned"/>
+        <SpawnEffect value="KillsToCaster"/>
         <SpawnUnit value="ShockCharge"/>
     </CEffectCreateUnit>
     <CEffectSet id="VengeanceMissileS" parent="ScionSet" Race="Genetron">
@@ -2546,7 +2546,7 @@
         <Death value="Eviscerate"/>
     </CEffectDamage>
     <CEffectDamage id="LancerAutogunImpact" parent="ScionDamageRangeVisible" Race="Genetron">
-        <Amount value="15"/>
+        <Amount value="12"/>
     </CEffectDamage>
     <CEffectDamage id="NemesisMissilesLMImpact" parent="ScionDamageRangeVisible" Race="Genetron">
         <Amount value="18"/>
@@ -2570,12 +2570,10 @@
         <Movers Link="TeslaChargeMoverLow" IfRangeLTE="2"/>
         <Movers Link="LaunchShockChargeWeapon" IfRangeLTE="8"/>
         <AmmoOwner Value="Caster"/>
-        <ImpactLocation Value="TargetUnitOrPoint"/>
     </CEffectLaunchMissile>
     <CEffectLaunchMissile id="LaunchShockCharge" parent="ScionLaunchMissilePoint" Race="Genetron">
         <Movers Link="TeslaChargeMoverLow" IfRangeLTE="2"/>
         <Movers Link="LaunchShockChargeWeapon" IfRangeLTE="8"/>
-        <ImpactLocation Value="TargetUnitOrPoint"/>
         <AmmoOwner Value="Caster"/>
     </CEffectLaunchMissile>
     <CEffectSet id="AcidNestAttack" parent="ScionSet" Race="Xayid">
@@ -2670,20 +2668,14 @@
     </CEffectEnumArea>
     <CEffectCreatePersistent id="BileSwarm" parent="ScionCreatePersistent" Race="Xayid">
         <WhichLocation Value="TargetUnit"/>
-        <PeriodCount value="4"/>
+        <PeriodCount value="2"/>
         <PeriodicEffectArray value="BileSwarmLM"/>
     </CEffectCreatePersistent>
     <CEffectDamage id="BileSwarmLMImpact" parent="ScionDamageRangeVisible" Race="Xayid">
         <Amount value="15"/>
         <Death value="Blast"/>
     </CEffectDamage>
-    <CEffectLaunchMissile id="BileSwarmLM" parent="ScionLaunchMissile" Race="Xayid">
-        <Movers Link="ScoutMPAirWeaponRight" IfRangeLTE="500"/>
-        <Movers Link="ScoutMPAirWeaponRight" IfRangeLTE="500"/>
-        <Movers Link="ScoutMPAirWeaponLeft" IfRangeLTE="500"/>
-        <Movers Link="ScoutMPAirWeaponLeft" IfRangeLTE="500"/>
-        <MoverExecuteJump value="1"/>
-    </CEffectLaunchMissile>
+    <CEffectLaunchMissile id="BileSwarmLM" parent="ScionLaunchMissile" Race="Xayid"/>
     <CEffectEnumArea id="BlindingBurst" parent="ScionEnumAreaEnemyGround" Race="Xayid">
         <ImpactLocation Value="SourceUnit"/>
         <SearchFilters value="Ground;Player,Ally,Neutral,Structure,Missile,Stasis,Dead,Hidden"/>
