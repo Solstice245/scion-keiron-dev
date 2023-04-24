@@ -69,6 +69,7 @@ timer gv_test_timer;
 int gv_test_timer_window;
 string gv_map_structure_storage;
 string[3] gv_unit_storage;
+unitgroup gv_builder_unit_group;
 unit[2][gv_const_races + 1] gv_builder_unit;
 bool gv_attack_mode;
 bool gv_vision;
@@ -115,6 +116,7 @@ void InitGlobals () {
     for (init_i = 0; init_i <= 2; init_i += 1) {
         gv_unit_storage[init_i] = "";
     }
+    gv_builder_unit_group = UnitGroupEmpty();
     gv_vision = true;
     gv_generators = true;
     gv_tester_menu = c_invalidDialogControlId;
@@ -867,19 +869,13 @@ void gf_DeleteAllTesterUnits () {
     unitgroup auto92FD348B_g;
     int auto92FD348B_u;
     unit auto92FD348B_var;
-    unitgroup auto2C01BE5C_g;
-    int auto2C01BE5C_u;
-    unit auto2C01BE5C_var;
-    unitgroup auto5C4A9C34_g;
-    int auto5C4A9C34_u;
-    unit auto5C4A9C34_var;
     unitgroup autoFDB84905_g;
     int autoFDB84905_u;
     unit autoFDB84905_var;
 
     // Implementation
     gf_RemoveNeutralStructures();
-    autoC8A61908_g = UnitGroup(null, c_playerAny, RegionFromId(11), UnitFilter(0, 0, 0, (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0);
+    autoC8A61908_g = UnitGroup(null, c_playerAny, RegionFromId(11), UnitFilter(0, 0, 0, (1 << (c_targetFilterHidden - 32))), 0);
     autoC8A61908_u = UnitGroupCount(autoC8A61908_g, c_unitCountAll);
     for (;; autoC8A61908_u -= 1) {
         autoC8A61908_var = UnitGroupUnitFromEnd(autoC8A61908_g, autoC8A61908_u);
@@ -894,7 +890,10 @@ void gf_DeleteAllTesterUnits () {
             }
         }
 
-        UnitRemove(autoC8A61908_var);
+        if ((UnitGroupHasUnit(gv_builder_unit_group, autoC8A61908_var) == false)) {
+            UnitRemove(autoC8A61908_var);
+        }
+
     }
     auto1B3ACED2_g = UnitGroup("Broodling", c_playerAny, RegionFromId(11), UnitFilter(0, 0, 0, 0), 0);
     auto1B3ACED2_u = UnitGroupCount(auto1B3ACED2_g, c_unitCountAll);
@@ -909,20 +908,6 @@ void gf_DeleteAllTesterUnits () {
         auto92FD348B_var = UnitGroupUnitFromEnd(auto92FD348B_g, auto92FD348B_u);
         if (auto92FD348B_var == null) { break; }
         UnitRemove(auto92FD348B_var);
-    }
-    auto2C01BE5C_g = UnitGroup("ShockCharge", c_playerAny, RegionFromId(11), UnitFilter(0, 0, 0, 0), 0);
-    auto2C01BE5C_u = UnitGroupCount(auto2C01BE5C_g, c_unitCountAll);
-    for (;; auto2C01BE5C_u -= 1) {
-        auto2C01BE5C_var = UnitGroupUnitFromEnd(auto2C01BE5C_g, auto2C01BE5C_u);
-        if (auto2C01BE5C_var == null) { break; }
-        UnitRemove(auto2C01BE5C_var);
-    }
-    auto5C4A9C34_g = UnitGroup("CloakCharge", c_playerAny, RegionFromId(11), UnitFilter(0, 0, 0, 0), 0);
-    auto5C4A9C34_u = UnitGroupCount(auto5C4A9C34_g, c_unitCountAll);
-    for (;; auto5C4A9C34_u -= 1) {
-        auto5C4A9C34_var = UnitGroupUnitFromEnd(auto5C4A9C34_g, auto5C4A9C34_u);
-        if (auto5C4A9C34_var == null) { break; }
-        UnitRemove(auto5C4A9C34_var);
     }
     autoFDB84905_g = UnitGroup("Fuse", c_playerAny, RegionFromId(11), UnitFilter(0, 0, 0, 0), 0);
     autoFDB84905_u = UnitGroupCount(autoFDB84905_g, c_unitCountAll);
@@ -1807,6 +1792,7 @@ bool gt_Init_Func (bool testConds, bool runActions) {
             UnitSetCustomValue(gv_builder_unit[lv_ii][lv_jj], 2, (PointGetX(UnitGetPosition(gv_builder_unit[lv_ii][lv_jj]))-PointGetX(PointFromId(105))));
             UnitSetCustomValue(gv_builder_unit[lv_ii][lv_jj], 3, (PointGetY(UnitGetPosition(gv_builder_unit[lv_ii][lv_jj]))-PointGetY(PointFromId(105))));
             UnitSetCustomValue(gv_builder_unit[lv_ii][lv_jj], 4, UnitGetFacing(gv_builder_unit[lv_ii][lv_jj]));
+            UnitGroupAdd(gv_builder_unit_group, gv_builder_unit[lv_ii][lv_jj]);
         }
     }
     CreepSetSpeed(c_creepSpeedGrowth, 1000.0);
