@@ -726,6 +726,25 @@
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="GenetronTrainSet"/>
     </CEffectEnumArea>
+    <CEffectCreatePersistent id="OlympusDischargeInitialDelay">
+        <EditorCategories value="Race:Genetron"/>
+        <InitialDelay value="4.2"/>
+        <InitialEffect value="OlympusDischargeCP"/>
+    </CEffectCreatePersistent>
+    <CEffectLaunchMissile id="OlympusDischargeLaunchMissileDown">
+        <EditorCategories value="Race:Genetron"/>
+        <LaunchLocation Value="TargetPoint"/>
+        <ImpactLocation Value="TargetPoint"/>
+        <LaunchOffset value="0,1,30"/>
+        <ImpactEffect value="OlympusDischargeSA"/>
+        <AmmoUnit value="OlympusDischargeWeapon"/>
+    </CEffectLaunchMissile>
+    <CEffectLaunchMissile id="OlympusDischargeLaunchMissileUp">
+        <EditorCategories value="Race:Genetron"/>
+        <ImpactLocation Value="SourcePoint"/>
+        <ImpactOffset value="0,-1,30"/>
+        <AmmoUnit value="OlympusDischargeWeapon"/>
+    </CEffectLaunchMissile>
     <CEffectSet id="WardRestitutionRechargeSet">
         <EditorCategories value="Race:Keiron"/>
         <EffectArray value="KeironShellRestorationDelayRBTarget"/>
@@ -1158,8 +1177,9 @@
     <CEffectSet id="OlympusDischarge">
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="OlympusDischargeABCaster"/>
-        <EffectArray value="OlympusDischargeCP"/>
+        <EffectArray value="OlympusDischargeInitialDelay"/>
         <TargetLocationType value="Point"/>
+        <Alert value="OlympusDischargeLaunch"/>
     </CEffectSet>
     <CEffectApplyBehavior id="OlympusDischargeABCaster" parent="ScionApplyBehaviorCaster">
         <EditorCategories value="Race:Genetron"/>
@@ -1167,8 +1187,10 @@
     </CEffectApplyBehavior>
     <CEffectCreatePersistent id="OlympusDischargeCP">
         <EditorCategories value="Race:Genetron"/>
-        <InitialDelay value="9"/>
-        <InitialEffect value="OlympusDischargeReveal"/>
+        <InitialEffect value="OlympusDischargeLaunchMissileUp"/>
+        <ValidatorArray value="CasterNotDead"/>
+        <ExpireDelay value="7"/>
+        <ExpireEffect value="OlympusDischargeReveal"/>
     </CEffectCreatePersistent>
     <CEffectDamage id="OlympusDischargeDMG">
         <EditorCategories value="Race:Genetron"/>
@@ -1192,7 +1214,7 @@
     <CEffectCreatePersistent id="OlympusDischargeReveal">
         <EditorCategories value="Race:Genetron"/>
         <InitialDelay value="1"/>
-        <InitialEffect value="OlympusDischargeSA"/>
+        <InitialEffect value="OlympusDischargeLaunchMissileDown"/>
         <ExpireDelay value="5"/>
         <RevealRadius value="6"/>
         <RevealFlags index="Unfog" value="1"/>
@@ -1221,7 +1243,7 @@
     <CEffectCreatePersistent id="OlympusExplodeDelay">
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="CasterPoint"/>
-        <InitialDelay value="3"/>
+        <InitialDelay value="3.5"/>
         <InitialEffect value="OlympusExplodeDMG"/>
     </CEffectCreatePersistent>
     <CEffectSet id="TeslaChargeCompleteCloakCharge" parent="ScionSet" Race="Genetron">

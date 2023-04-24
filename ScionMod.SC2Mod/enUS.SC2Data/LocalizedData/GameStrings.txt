@@ -145,6 +145,7 @@ Actor/AddonIndicator/UploaderCount2=2
 Actor/AddonIndicator/UploaderCount3=3
 Alert/Text/BuildComplete_Keir=Structure complete.
 Alert/Text/BuildComplete_Xayi=Structure complete.
+Alert/Text/OlympusDischargeLaunch=<c val="ffff00">Olympus Discharge detected: %s.</c>
 Alert/Text/ResearchComplete=Research complete.
 Alert/Text/ResearchComplete_Gen=Research complete.
 Alert/Text/ResearchComplete_Xayi=Research complete.
@@ -200,8 +201,6 @@ Behavior/Name/LockdownMode=Lockdown Mode
 Behavior/Name/LockdownModeDuration=Lockdown Mode Duration
 Behavior/Name/MendBehavior=Mend
 Behavior/Name/NaniteGrenadeAB=Nanite Grenade
-Behavior/Name/OlympusDischarging=Discharging
-Behavior/Name/OlympusElectrified=Electrified
 Behavior/Name/OlympusElectrifiedStructure=Electrified
 Behavior/Name/OpticalDisruptionBuff=Optical Disruption Buff
 Behavior/Name/PDDetector=Detector
@@ -256,6 +255,7 @@ Behavior/Tooltip/LockdownModeDuration=Under lockdown due to severe damage. Takes
 Behavior/Tooltip/MendBehavior=Under the effects of Mend.
 Behavior/Tooltip/MiningPrioritySearch=Nearby harvesters mine additional resources per trip.
 Behavior/Tooltip/NaniteGrenadeAB=This unit is stunned.
+Behavior/Tooltip/OlympusElectrifiedStructure=Taking <d ref="Behavior,OlympusElectrifiedStructure,Duration/Behavior,OlympusElectrifiedStructure,Period*Effect,OlympusDischargeDebuffDMG,Amount"/> damage over <d ref="Behavior,OlympusElectrifiedStructure,Duration"/> seconds. This structure's production is halted and is unable to attack or use abilities.
 Behavior/Tooltip/PDDetector=Detection mode currently active. Energy regeneration reduced, or negated.
 Behavior/Tooltip/ProtectiveCloudAB=Taking 30% less damage from all sources while within.
 Behavior/Tooltip/PulsarDampener=Spell and splash damage taken reduced by <d ref="-Behavior,PulsarDampener,DamageResponse.ModifyFraction+1*100"/>%.
@@ -521,7 +521,6 @@ Button/Name/Oculus=Shape Oculus
 Button/Name/Olympus=Build Olympus
 Button/Name/OlympusChargeUp=Charge Up
 Button/Name/OlympusDischarge=Discharge
-Button/Name/OlympusStopCharging=Stop Charging
 Button/Name/OpticalDisruption=Optical Disruption
 Button/Name/OrdnanceCache=Build Ordnance Cache
 Button/Name/OutfittingStation=Build Outfitting Station
@@ -903,7 +902,9 @@ Button/Tooltip/Node=Provides supply and energy.
 Button/Tooltip/Nullifier=Anti-ground defensive structure. <n/><n/><c val="ffff8a">Can attack ground units.</c>
 Button/Tooltip/OcularAcuity=<c val="FFFF80">Xayidlings</c> gain +1 attack range and +3 vs Armored attack damage.
 Button/Tooltip/Oculus=Able to grant vision of areas on the map at a long range.<n/><n/><c val="FFE303">Detector</c>
-Button/Tooltip/Olympus=Weapon of mass destruction.
+Button/Tooltip/Olympus=Weapon of mass destruction. Uses energy to power a global strike weapon that deals damage in a large area.
+Button/Tooltip/OlympusChargeUp=Draws power from global power storage at a rate of <d ref="Effect,OlympusChargeUpHealer,RechargeVitalRate"/> per second.
+Button/Tooltip/OlympusDischarge=Fires the weapon, dealing <d ref="Effect,OlympusDischargeDMG,Amount"/> damage in a large area after <d ref="Effect,OlympusDischargeInitialDelay,InitialDelay+Effect,OlympusDischargeCP,ExpireDelay"/> seconds. Units hit by the weapon additionally take <d ref="Behavior,OlympusElectrified,Duration/Behavior,OlympusElectrified,Period*Effect,OlympusDischargeDebuffDMG,Amount"/> damage over <d ref="Behavior,OlympusElectrified,Duration"/> seconds.
 Button/Tooltip/OpticalDisruption=Reduces the attack range of units in an area around the target unit. The effect lasts up to <d ref="Behavior,OpticalDisruptionCaster,Duration"/> seconds.
 Button/Tooltip/OrdnanceCache=Tech structure.<n/><n/><c val="FFFF80">Enables:</c><n/>- Jupiters at the Assembly Array<n/>- Badgers at the Assembly Array
 Button/Tooltip/OutfittingStation=Contains upgrades for the Spitfire.<n/><n/><c val="FFFF80">Enables:<n/></c>- Fixers at the Manufacturer</n>- Equalizers at the Manufacturer
@@ -1641,6 +1642,9 @@ Effect/Name/OlympusDischargeDMG=Olympus - Discharge (DMG)
 Effect/Name/OlympusDischargeDebuffAB=Olympus - Discharge (DebuffAB)
 Effect/Name/OlympusDischargeDebuffABStructure=Olympus - Discharge (DebuffABStructure)
 Effect/Name/OlympusDischargeDebuffDMG=Olympus - Discharge (DebuffDMG)
+Effect/Name/OlympusDischargeInitialDelay=Olympus - Discharge (Initial Delay)
+Effect/Name/OlympusDischargeLaunchMissileDown=Olympus - Discharge (Launch Missile Down)
+Effect/Name/OlympusDischargeLaunchMissileUp=Olympus - Discharge (Launch Missile Up)
 Effect/Name/OlympusDischargeReveal=Olympus - Discharge (Reveal)
 Effect/Name/OlympusDischargeSA=Olympus - Discharge (SA)
 Effect/Name/OlympusDischargeSet=Olympus - Discharge (Set)
@@ -2129,6 +2133,9 @@ Unit/Name/FormulatorRich=Formulator
 Unit/Name/Foundry=Foundry
 Unit/Name/Fuse=Fuse
 Unit/Name/Generator=Generator
+Unit/Name/GenetronOverclockModeDummy=Genetron Overclock Mode Dummy
+Unit/Name/GenetronPerformanceModeDummy=Genetron Performance Mode Dummy
+Unit/Name/GenetronStandardModeDummy=Genetron Standard Mode Dummy
 Unit/Name/Grub=Grub
 Unit/Name/Gyre=Gyre
 Unit/Name/HalifaxGrenadesLMWeapon=Halifax Grenade
@@ -2139,6 +2146,7 @@ Unit/Name/Hornet=Hornet
 Unit/Name/HurricaneMissilesLMWeapon=Torrent Missile
 Unit/Name/IncendiaryInfusionMissile=Incendiary Infusion Missile
 Unit/Name/Inciter=Inciter
+Unit/Name/InciterELORProtocolTargetDummy=Inciter ELOR Protocol Target Dummy
 Unit/Name/InciterPlaceholder=Inciter Placeholder
 Unit/Name/Inducer=Inducer
 Unit/Name/InducerAttackMissile=Gamut Orb
@@ -2160,6 +2168,7 @@ Unit/Name/Mendling=Mendling
 Unit/Name/Mole=Mole
 Unit/Name/MoleBuried=MoleBuried
 Unit/Name/MoleBurrowed=Mole
+Unit/Name/MoleTurnDummy=Mole Turn Dummy
 Unit/Name/MutagenChamber=Mutagen Chamber
 Unit/Name/Myriad=Myriad
 Unit/Name/NaniteGrenadeWeapon=Nanite Grenade
@@ -2169,6 +2178,7 @@ Unit/Name/Node=Node
 Unit/Name/Nullifier=Nullifier
 Unit/Name/Oculus=Oculus
 Unit/Name/Olympus=Olympus
+Unit/Name/OlympusDischargeWeapon=Olympus Discharge
 Unit/Name/OrdnanceCache=Ordnance Cache
 Unit/Name/OutfittingStation=Outfitting Station
 Unit/Name/Outlet=Outlet
