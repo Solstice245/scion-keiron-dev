@@ -66,6 +66,45 @@
         <?token id="Race" value="Neutral"?>
         <EditorCategories value="Race:##Race##"/>
     </CEffectSet>
+    <CEffectRemoveBehavior id="AegisShieldAuraDamageReceivedRB">
+        <ValidatorArray index="0" value="CasterShieldsLT1"/>
+        <EditorCategories value="Race:Keiron"/>
+        <WhichUnit Value="Caster"/>
+        <BehaviorLink value="AegisShieldAura"/>
+    </CEffectRemoveBehavior>
+    <CEffectSet id="AegisShieldAuraDamageReceivedSet">
+        <EditorCategories value="Race:Protoss"/>
+        <EffectArray value="AegisShieldAuraDamageReceivedMU"/>
+        <EffectArray value="AegisShieldAuraDamageReceivedRB"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="AegisShieldAuraDamageReceivedMU">
+        <EditorCategories value="Race:Keiron"/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Shields">
+            <Change value="0">
+                <AccumulatorArray value="DamageInherited"/>
+                <AccumulatorArray value="MultiplyByNeg1"/>
+            </Change>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectApplyBehavior id="AegisShieldedUnmorphProtection" parent="ScionApplyBehaviorCaster">
+        <EditorCategories value="Race:Keiron"/>
+    </CEffectApplyBehavior>
+    <CEffectSet id="AegisShieldedUnmorphSet">
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="AegisShieldedUnmorphProtection"/>
+        <EffectArray value="AegisShieldedUnmorphTP"/>
+        <EffectArray value="AegisShieldedUnmorphOrder"/>
+    </CEffectSet>
+    <CEffectTeleport id="AegisShieldedUnmorphTP">
+        <EditorCategories value="Race:Keiron"/>
+        <WhichUnit Value="Caster"/>
+        <ClearQueuedOrders value="0"/>
+        <MinDistance value="0"/>
+        <PlacementArc value="360"/>
+        <TargetLocation Value="CasterPoint"/>
+        <TeleportFlags index="TestFog" value="0"/>
+    </CEffectTeleport>
     <CEffectCreatePersistent id="AssemblyArrayFinishAvengerInit">
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="CasterUnit"/>
@@ -3528,7 +3567,7 @@
         <SearchFilters value="-;Self,Player,Ally,Neutral,Missile,Stasis,Dead,Hidden"/>
         <AreaArray Radius="20" Effect="AegisShieldAuraReveal"/>
     </CEffectEnumArea>
-    <CEffectIssueOrder id="AegisShieldedUnmorph">
+    <CEffectIssueOrder id="AegisShieldedUnmorphOrder">
         <EditorCategories value="Race:Keiron"/>
         <WhichUnit Value="Caster"/>
         <Abil value="AegisMorphToNormal"/>

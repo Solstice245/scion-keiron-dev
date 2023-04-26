@@ -7,6 +7,14 @@
         <FinalEffect value="ProcessorFateSet"/>
         <RemoveValidatorArray value="CasterNotDead"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="AegisShieldedUnmorphProtection">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <Duration value="0.125"/>
+        <DamageResponse ModifyFraction="0" ModifyMinimumDamage="1">
+            <Chance value="1"/>
+        </DamageResponse>
+    </CBehaviorBuff>
     <CBehaviorBuff id="BadgerPowershell">
         <InfoIcon value="Assets\Textures\btn-ability-stetmann-garypersonalstetzone-speed.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -1444,9 +1452,16 @@
         <DisplayDuration index="Enemy" value="1"/>
         <Duration value="56"/>
         <InitialEffect value="AegisShieldAuraActivationSet"/>
-        <FinalEffect value="AegisShieldedUnmorph"/>
+        <FinalEffect value="AegisShieldedUnmorphSet"/>
         <InfoFlags index="Hidden" value="1"/>
         <RemoveValidatorArray value="ShieldGZero"/>
+        <DamageResponse>
+            <Handled value="AegisShieldAuraDamageReceivedSet"/>
+            <ModifyFraction value="0"/>
+            <ModifyMinimumDamage value="1"/>
+            <HandledValue value="Absorbed"/>
+            <Chance value="1"/>
+        </DamageResponse>
     </CBehaviorBuff>
     <CBehaviorBuff id="AegisShieldAuraReveal">
         <InfoFlags index="Hidden" value="1"/>
