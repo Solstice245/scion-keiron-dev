@@ -37,6 +37,57 @@
         <InfoFlags index="Hidden" value="1"/>
         <Requirements value="AssemblyArrayUnitQueuedOrBetter"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="MaximumPowerProcessingCore">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="CasterNotLockedDown"/>
+        <DisableValidatorArray value="CasterIsNotUnderConstruction"/>
+        <DisableValidatorArray value="CasterIsNotHidden"/>
+        <DisableValidatorArray value="NotHidden"/>
+        <RemoveValidatorArray value="CasterNotDead"/>
+        <MaxStackCount value="0"/>
+        <Modification>
+            <VitalMaxIncreaseAffectsCurrentArray index="Energy" value="0"/>
+            <VitalMaxArray index="Energy" value="300"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="MaximumPowerRelayTower">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="CasterNotLockedDown"/>
+        <DisableValidatorArray value="CasterIsNotUnderConstruction"/>
+        <DisableValidatorArray value="CasterIsNotHidden"/>
+        <DisableValidatorArray value="NotHidden"/>
+        <RemoveValidatorArray value="CasterNotDead"/>
+        <MaxStackCount value="0"/>
+        <Modification>
+            <VitalMaxIncreaseAffectsCurrentArray index="Energy" value="0"/>
+            <VitalMaxArray index="Energy" value="200"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="MaximumPowerGenerator">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="CasterNotLockedDown"/>
+        <DisableValidatorArray value="CasterIsNotUnderConstruction"/>
+        <DisableValidatorArray value="CasterIsNotHidden"/>
+        <DisableValidatorArray value="NotHidden"/>
+        <RemoveValidatorArray value="CasterNotDead"/>
+        <MaxStackCount value="0"/>
+        <Modification>
+            <VitalMaxIncreaseAffectsCurrentArray index="Energy" value="0"/>
+            <VitalMaxArray index="Energy" value="100"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="TrackAndMirrorGenetronPowerSupply">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Period value="0.0625"/>
+        <InitialEffect value="TrackGenetronPowerSupplySwitch"/>
+        <PeriodicEffect value="MirrorGenetronPowerSupplyETU"/>
+        <DisableValidatorArray value="StructureNotLockedDown"/>
+        <DisableValidatorArray value="NotUnderConstruction"/>
+        <DisableValidatorArray value="NotHidden"/>
+    </CBehaviorBuff>
+    <CBehaviorUnitTracker id="GenetronPowerSupplyTracker">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+    </CBehaviorUnitTracker>
     <CBehaviorBuff id="GenetronProductionInternalEnergy">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <InfoFlags index="Hidden" value="1"/>
@@ -98,10 +149,11 @@
         </Modification>
         <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="UsingSystemRecharge">
+    <CBehaviorBuff id="TrackGenetronPowerSupply">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <BuffFlags index="Channeling" value="1"/>
-        <InfoFlags index="Hidden" value="1"/>
+        <Period value="0.0625"/>
+        <InitialEffect value="TrackGenetronPowerSupplySwitch"/>
+        <DisableValidatorArray value="NotUnderConstruction"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="WardShellDome">
         <InfoIcon value="Assets\Textures\btn-ability-keiron-shelldome.dds"/>
@@ -296,30 +348,30 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="EnergyNotFull"/>
         <DisableValidatorArray value="CasterDataDefaultIs0"/>
-        <DisableValidatorArray value="HasCoreOrRelay"/>
         <DisableValidatorArray value="GenetronCasterEnergyRegenNotSuppressed"/>
         <Period value="0.5"/>
-        <PeriodicEffect value="GenetronUnitEnergyRegenSA"/>
+        <PeriodicEffect value="GenetronUnitEnergyRegenETU"/>
+        <InitialEffect value="TrackGenetronPowerSupplyUnitSwitch"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="GenetronUnitEnergyRegenx3">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="EnergyNotFull"/>
         <DisableValidatorArray value="CasterDataDefaultIs0"/>
-        <DisableValidatorArray value="HasCoreOrRelay"/>
         <DisableValidatorArray value="GenetronCasterEnergyRegenNotSuppressed"/>
         <Period value="0.5"/>
-        <PeriodicEffect value="GenetronUnitEnergyRegenx3SA"/>
+        <PeriodicEffect value="GenetronUnitEnergyRegenx3ETU"/>
+        <InitialEffect value="TrackGenetronPowerSupplyUnitSwitch"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="GenetronUnitEnergyRegenx2">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="EnergyNotFull"/>
         <DisableValidatorArray value="CasterDataDefaultIs0"/>
-        <DisableValidatorArray value="HasCoreOrRelay"/>
         <DisableValidatorArray value="GenetronCasterEnergyRegenNotSuppressed"/>
         <Period value="0.5"/>
-        <PeriodicEffect value="GenetronUnitEnergyRegenx2SA"/>
+        <PeriodicEffect value="GenetronUnitEnergyRegenx2ETU"/>
         <InfoFlags index="Hidden" value="1"/>
+        <InitialEffect value="TrackGenetronPowerSupplyUnitSwitch"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="KeironShellRestoration">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
@@ -352,16 +404,11 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <RemoveValidatorArray value="EnergyNotFull"/>
         <Period value="0.5"/>
-        <InitialEffect value="OlympusChargeUpSA"/>
-        <PeriodicEffect value="OlympusChargeUpSA"/>
+        <InitialEffect value="OlympusChargeUpETU"/>
+        <PeriodicEffect value="OlympusChargeUpETU"/>
         <Modification>
             <AbilLinkDisableArray value="OlympusDischarge"/>
         </Modification>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="GenetronUpdatePowerGenerationTarget">
-        <InfoFlags index="Hidden" value="1"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Duration value="0.125"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="HornetBoreDrillBase">
         <Alignment value="Negative"/>
@@ -545,11 +592,11 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="StructureNotLockedDown"/>
-        <DisableValidatorArray value="HasCoreOrRelay"/>
         <DisableValidatorArray value="CasterIsNotHidden"/>
         <DisableValidatorArray value="CasterDataDefaultIs0"/>
         <Period value="0.5"/>
-        <PeriodicEffect value="GeneratorPowerSearchArea"/>
+        <PeriodicEffect value="GeneratorPowerETU"/>
+        <InitialEffect value="GeneratorPowerETU"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="SeparationBeamTarget">
         <InfoFlags index="Hidden" value="1"/>
@@ -936,11 +983,11 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="NotUnderConstruction"/>
         <DisableValidatorArray value="StructureNotLockedDown"/>
-        <DisableValidatorArray value="HasCoreOrRelay"/>
         <DisableValidatorArray value="CasterIsNotHidden"/>
         <DisableValidatorArray value="CasterDataDefaultIs0"/>
         <Period value="0.5"/>
-        <PeriodicEffect value="NodePowerSearchArea"/>
+        <PeriodicEffect value="NodePowerETU"/>
+        <InitialEffect value="NodePowerETU"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="RevenantBombAbilityChannel">
         <InfoFlags index="Hidden" value="1"/>

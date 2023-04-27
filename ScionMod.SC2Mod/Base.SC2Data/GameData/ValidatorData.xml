@@ -104,6 +104,22 @@
         <Compare value="GT"/>
         <Behavior value="KeironShellRestoration"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitType id="CasterIsRelayTower">
+        <WhichUnit Value="Caster"/>
+        <Value value="RelayTower"/>
+    </CValidatorUnitType>
+    <CValidatorUnitType id="CasterIsGenerator">
+        <WhichUnit Value="Caster"/>
+        <Value value="Generator"/>
+    </CValidatorUnitType>
+    <CValidatorEffectTreeUserData id="DataDefaultGT0">
+        <Compare value="GT"/>
+        <Key value="Default"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorPlayerRequirement id="GenetronHasNoPowerSupply">
+        <Find value="1"/>
+        <Value value="GenetronHasNoPowerSupply"/>
+    </CValidatorPlayerRequirement>
     <CValidatorUnitCompareBehaviorCount id="HasShellRestoration">
         <Compare value="GT"/>
         <Behavior value="KeironShellRestoration"/>
@@ -156,6 +172,13 @@
         <CombineArray value="HasShellRestoration"/>
         <CombineArray value="NoShellRestorationDelay"/>
     </CValidatorCombine>
+    <CValidatorUnitType id="IsGenetronPowerSupplyDummy">
+        <Value value="GenetronPowerSupplyDummy"/>
+    </CValidatorUnitType>
+    <CValidatorUnitType id="CasterIsProcessingCore">
+        <WhichUnit Value="Caster"/>
+        <Value value="ProcessingCore"/>
+    </CValidatorUnitType>
     <CValidatorUnitType id="IsWard">
         <Value value="Ward"/>
     </CValidatorUnitType>
@@ -164,12 +187,6 @@
         <Value value="Olympus"/>
         <Find value="0"/>
     </CValidatorUnitType>
-    <CValidatorCombine id="IsRelayTowerOrProcessingCoreWithGE5EnergyAndNotRecharging">
-        <Type value="And"/>
-        <CombineArray value="IsProcessingCoreOrRelayTower"/>
-        <CombineArray value="TargetNotUsingSystemRecharge"/>
-        <CombineArray value="EnergyGTE5"/>
-    </CValidatorCombine>
     <CValidatorPlayerRequirement id="ManufacturerIsTrainingSpitfire">
         <Find value="1"/>
         <Value value="ManufacturerIsTrainingSpitfire"/>
@@ -210,31 +227,14 @@
         <Compare value="GT"/>
         <Range value="13"/>
     </CValidatorLocationCompareRange>
-    <CValidatorLocationEnumArea id="PlayerHasRelayTowerOrProcessingCoreWithGE5EnergyAndNotRecharging">
-        <AreaArray>
-            <Compare value="GT"/>
-            <Count value="0"/>
-            <Radius value="500"/>
-            <Validator value="IsRelayTowerOrProcessingCoreWithGE5EnergyAndNotRecharging"/>
-        </AreaArray>
-        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
-        <ExcludeArray/>
-    </CValidatorLocationEnumArea>
     <CValidatorCombine id="RelayTowerEnergyStealValidator">
         <Type value="And"/>
         <CombineArray value="PlayerHasRelayTowerOrProcessingCoreWithGE5EnergyAndNotRecharging"/>
         <CombineArray value="CasterEnergyLT25"/>
     </CValidatorCombine>
-    <CValidatorCombine id="RelayTowerSystemRechargeAutocast">
-        <CombineArray value="PlayerHasRelayTowerOrProcessingCoreWithGE5EnergyAndNotRecharging"/>
-        <CombineArray value="CasterEnergyGTE5"/>
-    </CValidatorCombine>
     <CValidatorUnitFilters id="TargetIsAirUnit">
         <Filters value="Air;-"/>
     </CValidatorUnitFilters>
-    <CValidatorUnitCompareBehaviorCount id="TargetNotUsingSystemRecharge">
-        <Behavior value="UsingSystemRecharge"/>
-    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="WardIsCastingShellDomeCaster">
         <WhichUnit Value="Caster"/>
         <Compare value="GT"/>
@@ -292,12 +292,10 @@
         <Type value="And"/>
         <CombineArray value="NotDead"/>
         <CombineArray value="CasterNotDead"/>
-        <CombineArray value="EnergyNotFull"/>
         <CombineArray value="NotHidden"/>
         <CombineArray value="CasterIsNotHidden"/>
         <CombineArray value="StructureNotLockedDown"/>
         <CombineArray value="CasterNotLockedDown"/>
-        <CombineArray value="GenetronNotUpdatingPowerGenerationTarget"/>
         <CombineArray value="OwnedBySelf"/>
     </CValidatorCombine>
     <CValidatorUnitCompareBehaviorCount id="NoShellRestorationDelay">
@@ -317,10 +315,6 @@
         <CombineArray value="OwnedBySelf"/>
         <CombineArray value="OlympusIsCharging"/>
     </CValidatorCombine>
-    <CValidatorUnitCompareBehaviorCount id="GenetronNotUpdatingPowerGenerationTarget">
-        <WhichUnit Value="Caster"/>
-        <Behavior value="GenetronUpdatePowerGenerationTarget"/>
-    </CValidatorUnitCompareBehaviorCount>
     <CValidatorPlayerRequirement id="HasCoreOrRelay">
         <Find value="1"/>
         <Value value="HaveProcessingCoreOrRelayTower"/>
@@ -350,11 +344,6 @@
     <CValidatorCombine id="IsNodeOrGenerator">
         <CombineArray value="IsNode"/>
         <CombineArray value="IsGenerator"/>
-    </CValidatorCombine>
-    <CValidatorCombine id="IsRelayTowerOrProcessingCoreAndHasEnergy">
-        <Type value="And"/>
-        <CombineArray value="IsProcessingCoreOrRelayTower"/>
-        <CombineArray value="hasEnergy"/>
     </CValidatorCombine>
     <CValidatorUnitType id="IsNotTeslaCloakCharge">
         <Value value="CloakCharge"/>
@@ -644,19 +633,6 @@
     <CValidatorUnitType id="IsRelayTower">
         <Value value="RelayTower"/>
     </CValidatorUnitType>
-    <CValidatorCombine id="IsProcessingCoreOrRelayTower">
-        <CombineArray value="IsProcessingCore"/>
-        <CombineArray value="IsRelayTower"/>
-    </CValidatorCombine>
-    <CValidatorLocationEnumArea id="PlayerHasRelayTowerOrProcessingCoreWithEnergy">
-        <AreaArray>
-            <Compare value="GT"/>
-            <Count value="0"/>
-            <Radius value="500"/>
-            <Validator value="IsRelayTowerOrProcessingCoreAndHasEnergy"/>
-        </AreaArray>
-        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
-    </CValidatorLocationEnumArea>
     <CValidatorUnitCompareBehaviorCount id="CasterIsFused">
         <ResultFailed value="Error,ErrorText/TargetIsNotFused"/>
         <WhichUnit Value="Caster"/>
@@ -1019,10 +995,6 @@
         <Field value="LifeArmor"/>
         <Value value="5"/>
     </CValidatorUnitCompareField>
-    <CValidatorUnitCompareChargeUsed id="AtLeast1EnergyGridTick">
-        <WhichUnit Value="Target"/>
-        <Ability value="EnergyGridInput"/>
-    </CValidatorUnitCompareChargeUsed>
     <CValidatorUnitCompareField id="DisguiseAsSpitfire">
         <Field value="Race"/>
         <Value value="Gen"/>
@@ -1103,6 +1075,7 @@
     </CValidatorPlayerRequirement>
     <CValidatorUnitCompareVital id="HasNoEnergy">
         <Vital value="Energy"/>
+        <Compare value="LE"/>
     </CValidatorUnitCompareVital>
     <CValidatorUnitType id="IsInterdictor">
         <WhichUnit Value="Caster"/>
@@ -1907,6 +1880,12 @@
         <ResultFailed value="NotEnoughEnergy"/>
         <Compare value="GE"/>
         <Value value="5"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
+    <CValidatorUnitCompareVital id="MaximumEnergy0">
+        <ResultFailed value="NotEnoughEnergy"/>
+        <Compare value="GT"/>
+        <Type value="Maximum"/>
         <Vital value="Energy"/>
     </CValidatorUnitCompareVital>
 </Catalog>

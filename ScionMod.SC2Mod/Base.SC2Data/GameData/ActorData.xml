@@ -209,6 +209,12 @@
     <CActorSound id="Badger_PowershellOff" parent="SoundOneShotScion" Behavior="BadgerPowershell" BSub="Off">
         <Host Subject="_Selectable"/>
     </CActorSound>
+    <CActorUnit id="GenetronPowerSupplyDummy" parent="GenericUnitStandard" unitName="GenetronPowerSupplyDummy">
+        <Aliases index="1" removed="1"/>
+        <AcceptedHostedPropTransfers index="CastShadows" value="0"/>
+        <Model value="Colossus"/>
+        <UnitFlags index="ShowBlobShadow" value="0"/>
+    </CActorUnit>
     <CActorModel id="OlympusDischargeIndicator1" parent="ModelAnimationStyleOneShot">
         <Flags index="SuppressSaveLoad" value="0"/>
         <Inherits index="Scale" value="1"/>
@@ -2022,8 +2028,8 @@
         <On Terms="ActorDestruction" Send="Create SystemRecharge_LoopStop"/>
         <On Terms="Effect.SystemRechargeCoreCH.TargetStart; At Target" Send="Create"/>
         <On Terms="Effect.SystemRechargeCoreCH.TargetStop; At Target" Send="Destroy"/>
-        <On Terms="Effect.RelayTowerSystemRechargeHealer.TargetStart; At Target" Send="Create"/>
-        <On Terms="Effect.RelayTowerSystemRechargeHealer.TargetStop; At Target" Send="Destroy"/>
+        <On Terms="Effect.ProcessingCoreSystemRechargeCP.Start; At Target" Send="Create"/>
+        <On Terms="Effect.ProcessingCoreSystemRechargeCP.Stop; At Target" Send="Destroy"/>
         <Host Subject="_Selectable"/>
         <HostSiteOps Ops="SOpAttachOverhead"/>
     </CActorSound>
@@ -2032,10 +2038,8 @@
         <Supporter Subject="_Unit" Scope="Caster" Actor="Find"/>
         <On Terms="Effect.ProcessorSystemRechargeCH.TargetStart" Send="Create"/>
         <On Terms="Effect.ProcessorSystemRechargeCH.TargetStop" Send="Destroy"/>
-        <On Terms="Effect.SystemRechargeCoreCH.TargetStart" Send="Create"/>
-        <On Terms="Effect.SystemRechargeCoreCH.TargetStop" Send="Destroy"/>
-        <On Terms="Effect.RelayTowerSystemRechargeHealer.TargetStart" Send="Create"/>
-        <On Terms="Effect.RelayTowerSystemRechargeHealer.TargetStop" Send="Destroy"/>
+        <On Terms="Effect.ProcessingCoreSystemRechargeCP.Start" Send="Create"/>
+        <On Terms="Effect.ProcessingCoreSystemRechargeCP.Stop" Send="Destroy"/>
         <HostForProps Subject="_Unit" Scope="Caster" Actor="Find"/>
         <Host Subject="_Unit" Scope="Caster" Actor="Find"/>
         <HostLaunch Subject="_Unit" Scope="Caster" Actor="Find"/>

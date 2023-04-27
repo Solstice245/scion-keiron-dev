@@ -57,37 +57,6 @@
         </OffCost>
         <BehaviorArray value="BadgerPowershell"/>
     </CAbilBehavior>
-    <CAbilEffectTarget id="RelayTowerSystemRecharge">
-        <Alignment value="Positive"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Flags index="AutoCast" value="1"/>
-        <Flags index="AutoCastOn" value="1"/>
-        <Flags index="ReExecutable" value="1"/>
-        <Flags index="Smart" value="1"/>
-        <TargetFilters value="CanHaveEnergy;Self,Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
-        <TargetSorts RequestCount="1">
-            <SortArray value="TSAlliancePassive"/>
-            <SortArray value="TSEnergyFraction"/>
-            <SortArray value="TSDistance"/>
-        </TargetSorts>
-        <Range value="8"/>
-        <Arc value="360"/>
-        <SmartValidatorArray value="healSmartTargetFilters"/>
-        <SmartValidatorArray value="NotWarpingIn"/>
-        <AutoCastAcquireLevel value="Defensive"/>
-        <AutoCastFilters value="-;Ally"/>
-        <AutoCastRange value="8"/>
-        <AutoCastValidatorArray value="NotWarpingIn"/>
-        <AutoCastValidatorArray value="IsNotProcessingCore"/>
-        <AutoCastValidatorArray value="IsNotRelayTower"/>
-        <AutoCastValidatorArray value="IsNotTeslaCharge"/>
-        <AutoCastValidatorArray value="RelayTowerSystemRechargeAutocast"/>
-        <AutoCastValidatorArray value="EnergyNotFull"/>
-        <UseMarkerArray index="Approach" value="0"/>
-        <UseMarkerArray index="Prep" value="0"/>
-        <AINotifyEffect value="SystemRechargeCoreCH"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="CoreSystemRecharge"/>
-    </CAbilEffectTarget>
     <CAbilResearch id="GeneratorResearch">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <InfoArray index="Research1" Time="110" Alert="ResearchComplete_Terr" Upgrade="CloakingGenerator">
@@ -822,7 +791,7 @@
         <Flags index="NoDeceleration" value="1"/>
         <Flags index="ReExecutable" value="1"/>
         <Flags index="Smart" value="1"/>
-        <TargetFilters value="CanHaveEnergy;Self,Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
+        <TargetFilters value="CanHaveEnergy;Self,Ally,Neutral,Enemy,Structure,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
         <Range value="5"/>
         <SmartValidatorArray value="healSmartTargetFilters"/>
         <SmartValidatorArray value="NotWarpingIn"/>
@@ -832,8 +801,6 @@
         <AutoCastValidatorArray value="CasterEnergyGTE5"/>
         <AutoCastValidatorArray value="NotWarpingIn"/>
         <AutoCastValidatorArray value="TargetUnitTypeIsNotCasterUnitType"/>
-        <AutoCastValidatorArray value="IsNotProcessingCore"/>
-        <AutoCastValidatorArray value="IsNotRelayTower"/>
         <Alignment value="Positive"/>
         <TargetSorts RequestCount="1">
             <SortArray value="TSAlliancePassive"/>
@@ -850,12 +817,12 @@
     <CAbilEffectTarget id="CoreSystemRecharge">
         <Alignment value="Positive"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Effect index="0" value="RelayTowerSystemRecharge"/>
+        <Effect index="0" value="ProcessingCoreSystemRecharge"/>
         <Flags index="AutoCast" value="1"/>
         <Flags index="AutoCastOn" value="1"/>
         <Flags index="ReExecutable" value="1"/>
         <Flags index="Smart" value="1"/>
-        <TargetFilters value="CanHaveEnergy;Self,Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
+        <TargetFilters value="CanHaveEnergy;Self,Ally,Neutral,Enemy,Structure,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
         <Range value="8"/>
         <Arc value="360"/>
         <SmartValidatorArray value="healSmartTargetFilters"/>
@@ -863,10 +830,7 @@
         <AutoCastFilters value="-;Ally"/>
         <AutoCastRange value="8"/>
         <AutoCastValidatorArray value="NotWarpingIn"/>
-        <AutoCastValidatorArray value="IsNotProcessingCore"/>
-        <AutoCastValidatorArray value="IsNotRelayTower"/>
         <AutoCastValidatorArray value="IsNotTeslaCharge"/>
-        <AutoCastValidatorArray value="RelayTowerSystemRechargeAutocast"/>
         <AutoCastValidatorArray value="EnergyNotFull"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="CoreSystemRecharge"/>
         <TargetSorts RequestCount="1">

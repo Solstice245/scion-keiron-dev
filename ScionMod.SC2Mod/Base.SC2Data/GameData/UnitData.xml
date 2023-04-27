@@ -333,6 +333,7 @@
         <InnerRadius value="0.375"/>
         <Radius value="0.4375"/>
         <MinimapRadius value="0.4375"/>
+        <BehaviorArray Link="GenetronPowerSupplyTracker"/>
         <BehaviorArray Link="GenetronUnitEnergyRegenx2"/>
     </CUnit>
     <CUnit id="GenetronPerformanceModeDummy">
@@ -358,6 +359,22 @@
         <SelectAlias value=""/>
         <SubgroupAlias value=""/>
         <Mover value="Fly"/>
+    </CUnit>
+    <CUnit id="GenetronPowerSupplyDummy">
+        <Race value="Gen"/>
+        <FlagArray index="Turnable" value="0"/>
+        <FlagArray index="Movable" value="0"/>
+        <FlagArray index="KillCredit" value="0"/>
+        <FlagArray index="Invulnerable" value="1"/>
+        <FlagArray index="NoScore" value="1"/>
+        <FlagArray index="Unstoppable" value="1"/>
+        <FlagArray index="CameraFollow" value="0"/>
+        <EditorFlags index="NoPlacement" value="1"/>
+        <Mover value="Fly"/>
+        <BehaviorArray Link="DummyUnit"/>
+        <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
+        <LeaderAlias value=""/>
+        <HotkeyAlias value=""/>
     </CUnit>
     <CUnit id="GenetronStandardModeDummy">
         <Race value="Gen"/>
@@ -457,8 +474,11 @@
         <RepairTime value="75"/>
         <AbilArray Link="OlympusChargeUp"/>
         <AbilArray Link="OlympusDischarge"/>
+        <BehaviorArray index="0" Link="GenetronPowerSupplyTracker"/>
+        <BehaviorArray Link="LockdownMode"/>
         <BehaviorArray Link="UnderConstruction"/>
         <BehaviorArray Link="OlympusExplode"/>
+        <BehaviorArray Link="TrackGenetronPowerSupply"/>
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="Cancel" Type="AbilCmd" AbilCmd="OlympusChargeUp,Off" Row="2" Column="4"/>
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
@@ -539,6 +559,7 @@
         <RepairTime value="33.6"/>
         <AbilArray Link="SpeedCloak"/>
         <AbilArray Link="FixerRepair"/>
+        <BehaviorArray Link="GenetronPowerSupplyTracker"/>
         <BehaviorArray Link="FixerReactiveArmor"/>
         <WeaponArray Link="FixerFlashGun"/>
         <CardLayouts index="0">
@@ -602,6 +623,7 @@
         <Speed value="2.75"/>
         <EnergyStart value="30"/>
         <EnergyMax value="30"/>
+        <BehaviorArray Link="GenetronPowerSupplyTracker"/>
         <BehaviorArray Link="GenetronUnitEnergyRegen"/>
     </CUnit>
     <CUnit id="ParadoxShackleWeapon" parent="MISSILE_INVULNERABLE">
@@ -648,9 +670,12 @@
         <AbilArray Link="Rally"/>
         <AbilArray Link="BuildAircraft"/>
         <AbilArray Link="GenetronProductionModeSwitch"/>
+        <BehaviorArray index="0" Link="GenetronPowerSupplyTracker"/>
+        <BehaviorArray Link="LockdownMode"/>
         <BehaviorArray Link="GenetronProductionInternalEnergy"/>
         <BehaviorArray Link="GenetronProductionModePerformanceBuff"/>
         <BehaviorArray Link="AssemblyArray"/>
+        <BehaviorArray Link="TrackAndMirrorGenetronPowerSupply"/>
         <BehaviorArray Link="UnderConstruction"/>
         <Radius value="1.875"/>
         <Footprint value="Footprint4x4ContourReduced"/>
@@ -791,6 +816,7 @@
         <CostResource index="Minerals" value="150"/>
         <CostResource index="Vespene" value="150"/>
         <RepairTime value="56"/>
+        <BehaviorArray Link="GenetronPowerSupplyTracker"/>
         <BehaviorArray Link="InciterJump"/>
         <BehaviorArray Link="GenetronUnitEnergyRegenx3"/>
         <WeaponArray Link="HalifaxGrenades"/>
@@ -920,13 +946,10 @@
     <CUnit id="RelayTower" parent="CStructureGenetron">
         <LifeStart value="500"/>
         <LifeMax value="500"/>
-        <EnergyMax value="300"/>
         <AbilArray Link="stop"/>
-        <AbilArray Link="RelayTowerLongRangeTransfer"/>
-        <AbilArray Link="RelayTowerSystemRecharge"/>
+        <AbilArray Link="CoreSystemRecharge"/>
         <CardLayouts index="0">
-            <LayoutButtons Face="RelayTowerLongRangeTransfer" Type="AbilCmd" AbilCmd="RelayTowerLongRangeTransfer,Execute" Row="0" Column="0"/>
-            <LayoutButtons Face="CoreSystemRecharge" Type="AbilCmd" AbilCmd="RelayTowerSystemRecharge,Execute" Row="2" Column="0"/>
+            <LayoutButtons Face="CoreSystemRecharge" Type="AbilCmd" AbilCmd="CoreSystemRecharge,Execute" Row="2" Column="0"/>
             <LayoutButtons Face="Stop" Type="AbilCmd" AbilCmd="stop,Stop" Row="0" Column="1"/>
         </CardLayouts>
         <Footprint value="Footprint2x2Contour"/>
@@ -936,7 +959,10 @@
         <TechTreeUnlockedUnitArray value="Scion_Processor"/>
         <GlossaryPriority value="23"/>
         <RepairTime value="40"/>
+        <BehaviorArray index="0" Link="GenetronPowerSupplyTracker"/>
+        <BehaviorArray Link="LockdownMode"/>
         <BehaviorArray Link="GenetronEnergyStateNotFull"/>
+        <BehaviorArray Link="TrackAndMirrorGenetronPowerSupply"/>
         <EffectArray index="Birth" value="GenetronUpdatePowerGenerationTargetSA"/>
         <SubgroupPriority value="5"/>
         <Sight value="10"/>
@@ -946,6 +972,9 @@
     <CUnit id="Generator" parent="CStructureGenetron">
         <LifeStart value="750"/>
         <LifeMax value="750"/>
+        <BehaviorArray index="0" Link="GenetronPowerSupplyTracker"/>
+        <BehaviorArray Link="LockdownMode"/>
+        <BehaviorArray Link="TrackGenetronPowerSupply"/>
         <BehaviorArray Link="GeneratorPower"/>
         <CardLayouts index="0">
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
@@ -1290,7 +1319,6 @@
         <ResourceDropOff index="Custom" value="1"/>
         <LifeStart value="1500"/>
         <LifeMax value="1500"/>
-        <EnergyMax value="300"/>
         <Sight value="11"/>
         <Food value="15"/>
         <CostCategory value="Economy"/>
@@ -1323,6 +1351,8 @@
         <TurningRate value="719.4726"/>
         <SeparationRadius value="2.5"/>
         <BehaviorArray Link="GenetronEnergyStateNotFull"/>
+        <BehaviorArray Link="GenetronPowerSupplyTracker"/>
+        <BehaviorArray Link="TrackAndMirrorGenetronPowerSupply"/>
         <EffectArray index="Birth" value="GenetronUpdatePowerGenerationTargetSA"/>
     </CUnit>
     <CUnit id="Manufacturer" parent="CStructureGenetron">
@@ -1334,9 +1364,12 @@
         <AbilArray Link="Rally"/>
         <AbilArray Link="TrainLightweightMechs"/>
         <AbilArray Link="GenetronProductionModeSwitch"/>
+        <BehaviorArray index="0" Link="GenetronPowerSupplyTracker"/>
+        <BehaviorArray Link="LockdownMode"/>
         <BehaviorArray Link="GenetronProductionInternalEnergy"/>
         <BehaviorArray Link="GenetronProductionModePerformanceBuff"/>
         <BehaviorArray Link="Manufacturer"/>
+        <BehaviorArray Link="TrackAndMirrorGenetronPowerSupply"/>
         <BehaviorArray Link="UnderConstruction"/>
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
@@ -1373,9 +1406,12 @@
         <AbilArray Link="Rally"/>
         <AbilArray Link="TrainHeavyweightMechs"/>
         <AbilArray Link="GenetronProductionModeSwitch"/>
+        <BehaviorArray index="0" Link="GenetronPowerSupplyTracker"/>
+        <BehaviorArray Link="LockdownMode"/>
         <BehaviorArray Link="GenetronProductionInternalEnergy"/>
         <BehaviorArray Link="GenetronProductionModePerformanceBuff"/>
         <BehaviorArray Link="Fabricator"/>
+        <BehaviorArray Link="TrackAndMirrorGenetronPowerSupply"/>
         <BehaviorArray Link="UnderConstruction"/>
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
@@ -1512,6 +1548,9 @@
         <Food value="8"/>
         <CostResource index="Minerals" value="100"/>
         <RepairTime value="30"/>
+        <BehaviorArray index="0" Link="GenetronPowerSupplyTracker"/>
+        <BehaviorArray Link="LockdownMode"/>
+        <BehaviorArray Link="TrackGenetronPowerSupply"/>
         <BehaviorArray Link="NodePower"/>
         <CardLayouts index="0">
             <LayoutButtons Face="EnergyGrid" Type="Passive" Behavior="NodePower" Row="2" Column="0"/>
@@ -1621,6 +1660,7 @@
         <AIEvalConstant value="1"/>
         <EnergyStart value="200"/>
         <EnergyMax value="200"/>
+        <BehaviorArray Link="GenetronPowerSupplyTracker"/>
         <BehaviorArray Link="GenetronUnitEnergyRegenx3"/>
     </CUnit>
     <CUnit id="ShockCharge">
@@ -1704,6 +1744,7 @@
         <AbilArray index="1" Link="move"/>
         <AbilArray index="2" Link="stop"/>
         <AbilArray Link="VirtusSelffixProtocol"/>
+        <BehaviorArray Link="GenetronPowerSupplyTracker"/>
         <BehaviorArray Link="GenetronUnitEnergyRegenx2"/>
         <WeaponArray Link="330mmStrikeCannon" Turret="SiegeTank"/>
         <CardLayouts index="0">
@@ -1747,6 +1788,7 @@
         <AbilArray Link="que1Passive"/>
         <AbilArray Link="AvengerConstructVengeanceMissile"/>
         <AbilArray Link="VengeanceMissile"/>
+        <BehaviorArray Link="GenetronPowerSupplyTracker"/>
         <BehaviorArray Link="GenetronUnitEnergyRegenx3"/>
         <BehaviorArray Link="AvengerVengeanceMissileAmmo"/>
         <WeaponArray Link="NemesisMissile"/>
@@ -1805,6 +1847,7 @@
         <GlossaryWeakArray value="Viper"/>
         <StationaryTurningRate value="720"/>
         <TurningRate value="720"/>
+        <BehaviorArray Link="GenetronPowerSupplyTracker"/>
         <BehaviorArray Link="GenetronUnitEnergyRegenx2"/>
         <AbilArray Link="BadgerEnergyShield"/>
     </CUnit>
@@ -1839,6 +1882,7 @@
         <TurningRate value="1440"/>
         <LateralAcceleration value="7"/>
         <EnergyStart value="50"/>
+        <BehaviorArray Link="GenetronPowerSupplyTracker"/>
         <BehaviorArray Link="GenetronUnitEnergyRegenx3"/>
         <EnergyMax value="50"/>
         <Acceleration value="3.5"/>
@@ -1883,6 +1927,7 @@
         <Mob value="Multiplayer"/>
         <FlagArray index="AISupport" value="1"/>
         <MinimapRadius value="0.875"/>
+        <BehaviorArray Link="GenetronPowerSupplyTracker"/>
         <BehaviorArray Link="GenetronUnitEnergyRegen"/>
         <Acceleration value="2.5"/>
     </CUnit>
@@ -1954,6 +1999,7 @@
         <StationaryTurningRate value="720"/>
         <EnergyStart value="100"/>
         <EnergyMax value="100"/>
+        <BehaviorArray Link="GenetronPowerSupplyTracker"/>
         <BehaviorArray Link="GenetronUnitEnergyRegenx2"/>
     </CUnit>
     <CUnit id="Scion_Processor" parent="CUnitGenetronAir">
