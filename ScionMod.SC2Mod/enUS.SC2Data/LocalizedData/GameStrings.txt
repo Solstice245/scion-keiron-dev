@@ -1,5 +1,6 @@
 ﻿Abil/Name/ACRBuild=ACR - Build
 Abil/Name/ACRGather=Gather
+Abil/Name/ACRRepair=ACR - Repair
 Abil/Name/AcidNestAttack=Acid Nest Attack
 Abil/Name/AcidNestMorph=Acid Nest Morph
 Abil/Name/AdaptiveInjection=Adaptive Injection
@@ -106,7 +107,6 @@ Abil/Name/ProtectiveCloud=Protective Cloud
 Abil/Name/PulsarDampener=Pulsar - Dampener
 Abil/Name/RallyCitadel=Citadel - Rally
 Abil/Name/RallyProcessingCore=Processing Core - Rally
-Abil/Name/RelayTowerLongRangeTransfer=Relay Tower - Long Range Transfer
 Abil/Name/ReliquaryResearch=Reliquary Research
 Abil/Name/RepulsorBurrow=Burrow
 Abil/Name/RepulsorUnburrow=Unburrow
@@ -225,6 +225,7 @@ Behavior/Name/TeslaShockChargeResponder=Tesla - Shock Charge Responder
 Behavior/Name/TitanWeapon=Inhibitor Beam
 Behavior/Name/TrackAndMirrorGenetronPowerSupply=Track And Mirror Genetron Power Supply
 Behavior/Name/TrackGenetronPowerSupply=Track Genetron Power Supply
+Behavior/Name/TrackGenetronPowerSupplyUnit=Track Genetron Power Supply Unit
 Behavior/Name/TrackingImplant=Tracking Implant
 Behavior/Name/VenomInjection=Venom Injection
 Behavior/Name/VirtusSelffixProtocolBuff=Self-fix Protocol
@@ -549,7 +550,6 @@ Button/Name/RefinedExcretion=Refined Excretion
 Button/Name/RefittedNozzles=Refitted Nozzles
 Button/Name/ReinforcedPlating=Reinforced Plating
 Button/Name/RelayTower=Build Relay Tower
-Button/Name/RelayTowerLongRangeTransfer=Long Range Transfer
 Button/Name/Reliquary=Shape Reliquary
 Button/Name/Relocate=Relocate
 Button/Name/Repulsor=Build Repulsor
@@ -859,7 +859,7 @@ Button/Tooltip/MaterializeWard=Produced by the <c val="FFFF80">Foundry</c>.<n/><
 Button/Tooltip/MediumOutputMode=Sets the <c val="FFFF80">Torrent</c> weapon to Normal Output Mode.
 Button/Tooltip/Mend=Instantly restores <d ref="Effect,MendMU,VitalArray[Life].Change"/> life to target biological unit or structure.
 Button/Tooltip/Mendling=Healer unit. Can use Mend, Covering Spray and Sacrificial Mutation.<n/><n/><c val="FFFF80">Can attack ground and air units.</c>
-Button/Tooltip/MiningPriority=Increases the resource yield of owned nearby harvesters by <d ref="Behavior,ResourceTap,Modification.ResourceHarvestAmountBonus[Minerals]"/>. The effect lasts <d ref="Behavior,ResourceTapSearch,Duration"/> seconds.
+Button/Tooltip/MiningPriority=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/> <c val="FF0000" validator="GenetronPowerSupplyLT100"><d ref="Effect,ProcessingCoreMiningPriorityMU,VitalArray[Energy].Change*(-1)"/></c><img path="Assets\Textures\blank.dds" width="1" height="24" alignment="top"/><n/>Increases the resource yield of owned nearby harvesters by <d ref="Behavior,ResourceTap,Modification.ResourceHarvestAmountBonus[Minerals]"/>. The effect lasts <d ref="Behavior,ResourceTapSearch,Duration"/> seconds.
 Button/Tooltip/MissileTurret=Anti-air defensive structure.<n/><n/><c val="#ColorAttackInfo">Can attack air units.</c><n/><c val="FFE303">Detector</c>
 Button/Tooltip/MobileForm=Returns the <c val="FFFF80">Massalisk</c> to it's mobile form.
 Button/Tooltip/MobilizeCannon=Mobilizes the <c val="FFFF80">Mole</c>, disallowing usage of its cannon.
@@ -937,7 +937,6 @@ Button/Tooltip/RefinedExcretion=<c val="FFFF80">Xayithoans</c> abilities gain +5
 Button/Tooltip/RefittedNozzles=<c val="FFFF80">Blazes</c> gain +100% attack range.
 Button/Tooltip/ReinforcedPlating=<c val="FFFF80">Blitzers</c> and <c val="FFFF80">Equalizers</c> gain +25 life.
 Button/Tooltip/RelayTower=Facilitates global energy management. Can use System Recharge.<n/><n/><c val="FFFF80">Enables:</c><n/>- Processors at the Processing Core
-Button/Tooltip/RelayTowerLongRangeTransfer=Moves energy from the caster to the target.
 Button/Tooltip/Reliquary=Upgrade tech facility.<n/><n/><c val="FFFF80">Enables:</c><n/>  - Nullifiers from the Converter<n/>  - Strati from the Converter
 Button/Tooltip/Relocate=Teleports the caster to the target <c val="FFFF80">Citadel</c>.
 Button/Tooltip/Repulsor=Anti-ground defensive structure. Can burrow, disabling its weapon, and rendering itself invisible to enemies.<n/><n/><c val="FFFF80">Can attack ground units.</c>
@@ -1052,6 +1051,11 @@ DocInfo/Name=Scion (Mod)
 DocInfo/Website=https://discord.gg/4GSXkYU
 Effect/Name/330mmStrikeCannon=330mm Strike Cannon
 Effect/Name/AAMLaser=AAM Laser
+Effect/Name/ACRRepair=ACR - Repair (Init)
+Effect/Name/ACRRepairCost=ACR - Repair (Cost)
+Effect/Name/ACRRepairETU=ACR - Repair (ETU)
+Effect/Name/ACRRepairHealer=ACR - Repair (Healer)
+Effect/Name/ACRRepairSet=ACR - Repair (Set)
 Effect/Name/AcidNestAttack=Acid Nest
 Effect/Name/AcidNestDMG=Acid Nest
 Effect/Name/AcidNestDelay=Acid Nest
@@ -1363,7 +1367,11 @@ Effect/Name/FeedingPoolHealAuraSA=Heal Aura
 Effect/Name/FeedingPoolHealingAura=Heal Aura
 Effect/Name/FeedingPoolPowerUserRemove=Feeding Pool Power User Remove
 Effect/Name/FixerFlashGun=Fixer - Flash Gun (Damage)
-Effect/Name/FixerRepair=Fixer - Repair
+Effect/Name/FixerRepair=Fixer - Repair (Init)
+Effect/Name/FixerRepairCost=Fixer - Repair (Cost)
+Effect/Name/FixerRepairETU=Fixer - Repair (ETU)
+Effect/Name/FixerRepairHealer=Fixer - Repair (Healer)
+Effect/Name/FixerRepairSet=Fixer - Repair (Set)
 Effect/Name/ForceBlast=Force Blast
 Effect/Name/FormulatorRichRB=Formulator Rich RB
 Effect/Name/FoundryUmbraAB=Foundry - Umbra (AB)
@@ -1452,6 +1460,8 @@ Effect/Name/GenetronUnitEnergyRegenx2ETU=Genetron Unit Energy Regen x2 (ETU)
 Effect/Name/GenetronUnitEnergyRegenx2Healer=Genetron Unit Energy Regen x2 (Healer)
 Effect/Name/GenetronUnitEnergyRegenx3ETU=Genetron Unit Energy Regen x3 (ETU)
 Effect/Name/GenetronUnitEnergyRegenx3Healer=Genetron Unit Energy Regen x3 (Healer)
+Effect/Name/GenetronUnitEnergyRegenx5ETU=Genetron Unit Energy Regen x5 (ETU)
+Effect/Name/GenetronUnitEnergyRegenx5Healer=Genetron Unit Energy Regen x5 (Healer)
 Effect/Name/GlazeFire=Glaze Fire Apply
 Effect/Name/GyreAnnexAB=Gyre - Annex (AB)
 Effect/Name/GyreAnnexABCaster=Gyre - Annex (ABCaster)
@@ -1609,6 +1619,7 @@ Effect/Name/MendMU=Mend
 Effect/Name/MiningPrioritySearch=Mining Priority Search
 Effect/Name/MiningPrioritySearchArea=Mining Priority Search
 Effect/Name/MirrorGenetronPowerSupplyETU=Mirror Genetron Power Supply (ETU)
+Effect/Name/MirrorGenetronPowerSupplyEnergyLossMU=Mirror Genetron Power Supply Energy Loss (MU)
 Effect/Name/MirrorGenetronPowerSupplyGeneratorAB=Mirror Genetron Power Supply Generator (AB)
 Effect/Name/MirrorGenetronPowerSupplyGeneratorData=Mirror Genetron Power Supply Generator (Data)
 Effect/Name/MirrorGenetronPowerSupplyGeneratorRB=Mirror Genetron Power Supply Generator (RB)
@@ -1618,11 +1629,15 @@ Effect/Name/MirrorGenetronPowerSupplyProcessingCoreAB=Mirror Genetron Power Supp
 Effect/Name/MirrorGenetronPowerSupplyProcessingCoreData=Mirror Genetron Power Supply Processing Core (Data)
 Effect/Name/MirrorGenetronPowerSupplyProcessingCoreRB=Mirror Genetron Power Supply Processing Core (RB)
 Effect/Name/MirrorGenetronPowerSupplyProcessingCoreRBSet=Mirror Genetron Power Supply Processing Core (RBSet)
+Effect/Name/MirrorGenetronPowerSupplyRBSet=Mirror Genetron Power Supply (RBSet)
 Effect/Name/MirrorGenetronPowerSupplyRelayTowerAB=Mirror Genetron Power Supply Relay Tower (AB)
 Effect/Name/MirrorGenetronPowerSupplyRelayTowerData=Mirror Genetron Power Supply Relay Tower (Data)
 Effect/Name/MirrorGenetronPowerSupplyRelayTowerRB=Mirror Genetron Power Supply Relay Tower (RB)
 Effect/Name/MirrorGenetronPowerSupplyRelayTowerRBSet=Mirror Genetron Power Supply Relay Tower (RBSet)
 Effect/Name/MirrorGenetronPowerSupplySet=Mirror Genetron Power Supply (Set)
+Effect/Name/MirrorGenetronPowerSupplyStoreEnergyData=Mirror Genetron Power Supply Store Energy (Data)
+Effect/Name/MirrorGenetronPowerSupplyStoreEnergyDataSet0=Mirror Genetron Power Supply Store Energy (DataSet0)
+Effect/Name/MirrorGenetronPowerSupplySwitch=Mirror Genetron Power Supply (Switch)
 Effect/Name/MoleBuried=Mole - Buried
 Effect/Name/MoleBury=Mole - Bury
 Effect/Name/MoleBuryRemove=Mole - Bury Remove
@@ -1693,6 +1708,9 @@ Effect/Name/ParagonGroundWeapon=Paragon - Ground Weapon (LM)
 Effect/Name/ParagonGroundWeaponImpact=Paragon - Ground Weapon (DMG)
 Effect/Name/PariahProjectionRemoveBehavior=Pariah - Projection (Remove Behavior)
 Effect/Name/Pause=Pause
+Effect/Name/ProcessingCoreMiningPriority=Processing Core - Mining Priority (ETU)
+Effect/Name/ProcessingCoreMiningPriorityMU=Processing Core - Mining Priority (MU)
+Effect/Name/ProcessingCoreMiningPrioritySet=Processing Core - Mining Priority (Set)
 Effect/Name/ProcessingCoreSystemRecharge=Processing Core - System Recharge (Init)
 Effect/Name/ProcessingCoreSystemRechargeCP=Processing Core - System Recharge (CP)
 Effect/Name/ProcessingCoreSystemRechargeETU=Processing Core - System Recharge (ETU)
@@ -1733,10 +1751,6 @@ Effect/Name/PulsarFacingModifyUnit=Pulsar - Facing (Modify Unit)
 Effect/Name/PulsarFacingSearchAttackTarget=Pulsar - Facing (Search Attack Target)
 Effect/Name/PulsarFacingSearchGeneralTarget=Pulsar - Facing (Search General Target)
 Effect/Name/PulsarFacingSwitch=Pulsar - Facing (Switch)
-Effect/Name/RelayTowerLongRangeTransfer=Relay Tower - Long Range Transfer (Init)
-Effect/Name/RelayTowerLongRangeTransferData=Relay Tower - Long Range Transfer (Data)
-Effect/Name/RelayTowerLongRangeTransferMU=Relay Tower - Long Range Transfer (MU)
-Effect/Name/RelayTowerLongRangeTransferMURefund=Relay Tower - Long Range Transfer (MURefund)
 Effect/Name/RepulsorInterdictorBurrowCD=Repulsor/Interdictor Burrow CD
 Effect/Name/RepulsorSuppressionCannons=Repulsor - Suppression Cannons (Set)
 Effect/Name/RepulsorSuppressionCannonsDamage=Repulsor - Suppression Cannons (Damage)
@@ -1858,6 +1872,14 @@ Effect/Name/TitanWeaponSA=Titan - Weapon (SA)
 Effect/Name/TitanWeaponSet=Titan - Weapon (Set)
 Effect/Name/TrackGenetronPowerSupplyATU=Track Genetron Power Supply (ATU)
 Effect/Name/TrackGenetronPowerSupplyCU=Track Genetron Power Supply (CU)
+Effect/Name/TrackGenetronPowerSupplyEndAB=Track Genetron Power Supply End (AB)
+Effect/Name/TrackGenetronPowerSupplyEndETU=Track Genetron Power Supply End (ETU)
+Effect/Name/TrackGenetronPowerSupplyEndMirrorAB=Track Genetron Power Supply End Mirror (AB)
+Effect/Name/TrackGenetronPowerSupplyEndMirrorOrphan=Track Genetron Power Supply End Mirror (Orphan)
+Effect/Name/TrackGenetronPowerSupplyEndOrphan=Track Genetron Power Supply End (Orphan)
+Effect/Name/TrackGenetronPowerSupplyEndRTU=Track Genetron Power Supply End (RTU)
+Effect/Name/TrackGenetronPowerSupplyEndUnitAB=Track Genetron Power Supply End Unit (AB)
+Effect/Name/TrackGenetronPowerSupplyEndUnitOrphan=Track Genetron Power Supply End Unit (Orphan)
 Effect/Name/TrackGenetronPowerSupplyEnergySwitch=Track Genetron Power Supply Energy (Switch)
 Effect/Name/TrackGenetronPowerSupplyGeneratorAB=Track Genetron Power Supply Generator (AB)
 Effect/Name/TrackGenetronPowerSupplyProcessingCoreAB=Track Genetron Power Supply Processing Core (AB)

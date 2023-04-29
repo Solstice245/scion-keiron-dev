@@ -57,6 +57,43 @@
         </OffCost>
         <BehaviorArray value="BadgerPowershell"/>
     </CAbilBehavior>
+    <CAbilEffectTarget id="ACRRepair">
+        <Alignment value="Positive"/>
+        <AbilSetId value="Repair"/>
+        <EditorCategories value="Race:Terran,AbilityorEffectType:Units"/>
+        <DataCollection value="FixerRepair"/>
+        <Flags index="AutoCast" value="1"/>
+        <Flags index="AutoCastOffOwnerLeave" value="1"/>
+        <Flags index="AutoCastOn" value="1"/>
+        <Flags index="BestUnit" value="0"/>
+        <Flags index="ReExecutable" value="1"/>
+        <Flags index="Smart" value="1"/>
+        <Flags index="PassengerAcquirePassengers" value="1"/>
+        <TargetFilters value="Mechanical,Visible;Self,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
+        <Range value="0.25"/>
+        <RangeSlop value="0.25"/>
+        <AutoCastAcquireLevel value="Defensive"/>
+        <AutoCastFilters value="Visible;Neutral,Enemy"/>
+        <AutoCastRange value="7"/>
+        <AutoCastValidatorArray value="NotStructureTarget"/>
+        <Marker>
+            <MatchFlags index="Link" value="0"/>
+            <MismatchFlags index="Id" value="0"/>
+        </Marker>
+        <UseMarkerArray index="Approach" value="0"/>
+        <UseMarkerArray index="Prep" value="0"/>
+        <UseMarkerArray index="Cast" value="0"/>
+        <UseMarkerArray index="Channel" value="0"/>
+        <InheritAttackPriorityArray index="Prep" value="1"/>
+        <InheritAttackPriorityArray index="Cast" value="1"/>
+        <InheritAttackPriorityArray index="Channel" value="1"/>
+        <AINotifyEffect value="FixerRepairHealer"/>
+        <DefaultError value="RequiresRepairTarget"/>
+        <AcquirePriority value="1"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Repair">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+    </CAbilEffectTarget>
     <CAbilResearch id="GeneratorResearch">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <InfoArray index="Research1" Time="110" Alert="ResearchComplete_Terr" Upgrade="CloakingGenerator">
@@ -368,22 +405,7 @@
         <AcquirePriority value="1"/>
         <Range value="0.25"/>
         <AutoCastValidatorArray value="NotStructureTarget"/>
-    </CAbilEffectTarget>
-    <CAbilEffectTarget id="RelayTowerLongRangeTransfer">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Flags index="AutoCast" value="1"/>
-        <Flags index="AutoCastOn" value="1"/>
-        <Cost>
-            <Vital index="Energy" value="25"/>
-        </Cost>
-        <TargetFilters value="Structure;Self,Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
-        <Range value="500"/>
-        <Arc value="360"/>
-        <AutoCastFilters value="-;Self,Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
-        <AutoCastRange value="500"/>
-        <AutoCastValidatorArray value="CasterEnergyGE125"/>
-        <AutoCastValidatorArray value="TargetEnergyLT100"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="RelayTowerLongRangeTransfer" Requirements="NotUnderConstruction"/>
+        <AINotifyEffect value="FixerRepairHealer"/>
     </CAbilEffectTarget>
     <CAbilEffectInstant id="SuperCharge">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -555,12 +577,9 @@
     </CAbilTransport>
     <CAbilEffectInstant id="MiningPriority">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Cost>
-            <Vital index="Energy" value="100"/>
-            <Cooldown TimeUse="46.2"/>
-        </Cost>
+        <Cost/>
         <CmdButtonArray index="Execute" DefaultButtonFace="MiningPriority"/>
-        <Effect index="0" value="MiningPrioritySearch"/>
+        <Effect index="0" value="ProcessingCoreMiningPriority"/>
         <AINotifyEffect value="MiningPrioritySearchArea"/>
     </CAbilEffectInstant>
     <CAbilBuild id="ACRBuild">
@@ -832,6 +851,7 @@
         <AutoCastValidatorArray value="NotWarpingIn"/>
         <AutoCastValidatorArray value="IsNotTeslaCharge"/>
         <AutoCastValidatorArray value="EnergyNotFull"/>
+        <AutoCastValidatorArray value="GenetronPowerSupplyGE5"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="CoreSystemRecharge"/>
         <TargetSorts RequestCount="1">
             <SortArray value="TSAlliancePassive"/>

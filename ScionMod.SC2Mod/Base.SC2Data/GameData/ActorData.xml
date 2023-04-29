@@ -347,6 +347,10 @@
         <Inherits index="WarpGroup" value="0"/>
         <On Terms="ActorCreation" Send="SetOpacity"/>
     </CActorModel>
+    <CActorModel id="TrackGenetronPowerSupplytest" parent="ModelAnimationStyleOneShot">
+        <On Terms="Effect.TrackGenetronPowerSupplyEndMirrorOrphan.Start" Send="Create"/>
+        <Model value="OlympusDischarge"/>
+    </CActorModel>
     <CActorModel id="WardRestitutionImpact" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Effect.WardRestitutionRechargeSet.Start; At Target" Send="Create"/>
         <HostSiteOps Ops="SOpAttachCenter"/>
@@ -904,6 +908,9 @@
         <DeathArray index="Normal" ModelLink="MissileTurretDeath" SoundLink="MissileTurret_Explode"/>
         <On Terms="Abil.CoreSystemRecharge.SourceChannelStart" Send="$Spell PlayForever"/>
         <On Terms="Abil.CoreSystemRecharge.SourceChannelStop" Send="AnimClear Spell"/>
+        <StatusColors index="Energy">
+            <ColorArray index="0" value="255,0,128,255"/>
+        </StatusColors>
     </CActorUnit>
     <CActorModel id="BlitzerOverdrive" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Abil.BlitzerOverdrive.SourceCastStart" Send="Create"/>
@@ -2973,11 +2980,11 @@
         <Macros value="PhysicsDeathsVoidGround"/>
         <On Terms="Abil.SCVHarvest.Start" Send="AnimPlay StandWork Stand,Work PlayForever 0.405000 0.342500"/>
         <On Terms="Abil.SCVHarvest.Stop" Send="AnimClear StandWork"/>
-        <On Terms="Abil.MULERepair.SourceChannelStart" Send="AnimBracketStart Work Work,Start Work Work,End"/>
-        <On Terms="Abil.MULERepair.SourceChannelStop" Send="AnimBracketStop Work"/>
-        <On Terms="Abil.MULERepair.SourceChannelStart" Send="TimerSet 0.000000,0.300000 Repair"/>
-        <On Terms="Abil.MULERepair.SourceChannelStop" Send="TimerKill Repair"/>
-        <On Terms="Abil.MULERepair.SourceChannelStop" Send="AnimClear Repair"/>
+        <On Terms="Abil.ACRRepair.SourceChannelStart" Send="AnimBracketStart Work Work,Start Work Work,End"/>
+        <On Terms="Abil.ACRRepair.SourceChannelStop" Send="AnimBracketStop Work"/>
+        <On Terms="Abil.ACRRepair.SourceChannelStart" Send="TimerSet 0.000000,0.300000 Repair"/>
+        <On Terms="Abil.ACRRepair.SourceChannelStop" Send="TimerKill Repair"/>
+        <On Terms="Abil.ACRRepair.SourceChannelStop" Send="AnimClear Repair"/>
         <On Terms="AnimDone.*.Complete; AnimName Repair" Send="TimerSet 0.000000,0.300000 Repair"/>
         <On Terms="TimerExpired; TimerName Repair" Send="AnimPlay Repair Work NonLooping"/>
         <On Terms="TimerExpired; TimerName Repair" Send="Create MULERepairSound"/>
@@ -3053,6 +3060,9 @@
         <StatusHarvesterData Text="UI/HarvesterCountMinerals" SearchFilters="HarvestableResource;Player,Ally,Enemy" SearchRadius="8"/>
         <DeathArray index="Normal" ModelLink="ProcessingCoreDeath" SoundLink="CommandCenter_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeathLarge" SoundLink="CommandCenter_Explode"/>
+        <StatusColors index="Energy">
+            <ColorArray index="0" value="255,0,128,255"/>
+        </StatusColors>
     </CActorUnit>
     <CActorSplat id="ProcessingCoreSplat" parent="GenericUnitSplat" unitName="ProcessingCore"/>
     <CActorUnit id="Manufacturer" parent="GenetronBuilding" buildTime="64.000000" unitName="Manufacturer">
@@ -3074,6 +3084,9 @@
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeathLarge" SoundLink="Barracks_Explode"/>
         <BarOffset value="115"/>
         <Macros value="GenetronProductionModeMacro"/>
+        <StatusColors index="Energy">
+            <ColorArray index="0" value="255,0,128,255"/>
+        </StatusColors>
     </CActorUnit>
     <CActorSplat id="ManufacturerSplat" parent="GenericUnitSplat" unitName="Manufacturer"/>
     <CActorUnit id="Fabricator" parent="GenetronBuilding" buildTime="64.000000" unitName="Fabricator">
@@ -3094,6 +3107,9 @@
         <DeathArray index="Normal" ModelLink="FactoryDeath" SoundLink="Factory_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeathLarge" SoundLink="Factory_Explode"/>
         <Macros value="GenetronProductionModeMacro"/>
+        <StatusColors index="Energy">
+            <ColorArray index="0" value="255,0,128,255"/>
+        </StatusColors>
     </CActorUnit>
     <CActorSplat id="FabricatorSplat" parent="GenericUnitSplat" unitName="Fabricator"/>
     <CActorUnit id="AssemblyArray" parent="GenetronBuilding" buildTime="64.000000" unitName="AssemblyArray">
@@ -3115,6 +3131,9 @@
         <DeathArray index="Normal" ModelLink="GhostAcademyDeath" SoundLink="GhostAcademy_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeath" SoundLink="GhostAcademy_Explode"/>
         <Macros value="GenetronProductionModeMacro"/>
+        <StatusColors index="Energy">
+            <ColorArray index="0" value="255,0,128,255"/>
+        </StatusColors>
     </CActorUnit>
     <CActorSplat id="AssemblyArraySplat" parent="GenericUnitSplat" unitName="AssemblyArray"/>
     <CActorAction id="MoleAttack" parent="GenericAttack" effectAttack="" effectImpact="LynxCannonImpact" effectLaunch="LynxCannon">

@@ -3,9 +3,17 @@
     <CAccumulatorArithmetic id="BadgerRemainingDamage">
         <Parameters value="0">
             <AccumulatorArray value="EnergyDataAdd"/>
-            <AccumulatorArray value="MultiplyBy2"/>
             <AccumulatorArray value="MultiplyByNeg1"/>
         </Parameters>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="GenetronStructureEnergyLossArith">
+        <Parameters value="0">
+            <AccumulatorArray value="EnergyCurrentCaster"/>
+        </Parameters>
+        <Parameters value="0">
+            <AccumulatorArray value="EnergyDataAdd"/>
+        </Parameters>
+        <Operation value="Subtract"/>
     </CAccumulatorArithmetic>
     <CAccumulatorBehavior id="MaximumPowerGeneratorStackCaster">
         <Behavior value="MaximumPowerGenerator"/>
@@ -55,13 +63,6 @@
     <CAccumulatorBehavior id="MaximumPowerRelayTowerStackCaster">
         <Behavior value="MaximumPowerRelayTower"/>
     </CAccumulatorBehavior>
-    <CAccumulatorVitals id="RelayTowerEnergySteal">
-        <MaxAccumulation value="25"/>
-        <Ratio value="1"/>
-        <VitalType value="Energy"/>
-        <UnitSource Value="Target"/>
-        <ModificationType value="PerUnit"/>
-    </CAccumulatorVitals>
     <CAccumulatorUserData id="EnergyDataAdd">
         <Key value="Energy"/>
     </CAccumulatorUserData>
@@ -273,9 +274,6 @@
             <AccumulatorArray value="GenetronProductionModeOverclock"/>
         </Parameters>
     </CAccumulatorArithmetic>
-    <CAccumulatorUserData id="RefundEnergyDataAdd">
-        <Key value="RefundEnergy"/>
-    </CAccumulatorUserData>
     <CAccumulatorVitals id="EnergyCurrentCaster">
         <Ratio value="1"/>
         <VitalType value="Energy"/>
@@ -344,17 +342,6 @@
     <CAccumulatorSwitch id="FuseFusionShieldRegenerationBonusSwitch">
         <CaseArray Validator="FuseRegenerationBonus" Accumulator="FuseFusionShieldRegenerationBonus"/>
     </CAccumulatorSwitch>
-    <CAccumulatorArithmetic id="RelayTowerLongRangeTransferArith">
-        <MinAccumulation value="0"/>
-        <MaxAccumulation value="25"/>
-        <Parameters value="25">
-            <AccumulatorArray value="EnergyCurrentTarget"/>
-        </Parameters>
-        <Parameters value="0">
-            <AccumulatorArray value="EnergyMaxTarget"/>
-        </Parameters>
-        <Operation value="Subtract"/>
-    </CAccumulatorArithmetic>
     <CAccumulatorVitals id="ShieldsMaxCaster">
         <Ratio value="1"/>
         <VitalType value="Shields"/>
