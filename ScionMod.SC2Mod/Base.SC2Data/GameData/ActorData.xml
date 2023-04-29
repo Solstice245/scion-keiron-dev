@@ -212,7 +212,7 @@
     <CActorUnit id="GenetronPowerSupplyDummy" parent="GenericUnitStandard" unitName="GenetronPowerSupplyDummy">
         <Aliases index="1" removed="1"/>
         <AcceptedHostedPropTransfers index="CastShadows" value="0"/>
-        <Model value="Colossus"/>
+        <Model value="Sphere"/>
         <UnitFlags index="ShowBlobShadow" value="0"/>
     </CActorUnit>
     <CActorModel id="OlympusDischargeIndicator1" parent="ModelAnimationStyleOneShot">
@@ -346,10 +346,6 @@
         <Inherits index="Visibility" value="0"/>
         <Inherits index="WarpGroup" value="0"/>
         <On Terms="ActorCreation" Send="SetOpacity"/>
-    </CActorModel>
-    <CActorModel id="TrackGenetronPowerSupplytest" parent="ModelAnimationStyleOneShot">
-        <On Terms="Effect.TrackGenetronPowerSupplyEndMirrorOrphan.Start" Send="Create"/>
-        <Model value="OlympusDischarge"/>
     </CActorModel>
     <CActorModel id="WardRestitutionImpact" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Effect.WardRestitutionRechargeSet.Start; At Target" Send="Create"/>
@@ -2146,7 +2142,7 @@
         <Filter index="Enemy" value="1"/>
         <Inherits index="Visibility" value="0"/>
         <FogVisibility value="Visible"/>
-        <On Terms="Behavior.MoleBurrowed.On; ValidateUnit MoleSubterraneanSensorsUpgraded" Send="Create"/>
+        <On Terms="Behavior.MoleBurrowed.On" Send="Create"/>
         <On Terms="Behavior.MoleBurrowed.Off" Send="Destroy"/>
         <Range value="25.000000"/>
         <Icon value="Assets\Textures\radaricon1.dds"/>
@@ -3526,7 +3522,7 @@
         <On index="5" Terms="UnitConstruction.MoleBurrowed.Finish"/>
         <On index="69" Terms="UnitHeightUpdate.*.Land" Send="Create WidowMine_Land"/>
         <On index="70" Terms="UnitHeightUpdate.*.Land" Send="Create Warhound_Land"/>
-        <On index="71" Terms="ActorCreation; ValidatePlayer MoleSubterraneanSensorsUpgraded" Send="AnimPlay Cover Cover PlayForever"/>
+        <On index="71" Terms="ActorCreation" Send="AnimPlay Cover Cover PlayForever"/>
         <On index="72" Terms="Upgrade.SubterraneanSensors.Add" Send="AnimPlay Cover Cover PlayForever"/>
         <On index="73" Terms="Upgrade.SubterraneanSensors.Remove" Send="AnimClear Cover"/>
         <On index="74" Terms="WeaponStart.*.AttackStart; WeaponTargetElevation LE -20.000000" Send="AnimPlay Inferior Inferior PlayForever 1.000000 1.000000"/>
@@ -5562,6 +5558,7 @@
         <On Terms="UnitDeathCustomize; ValidateUnit NoVespene" Send="DeathCustomize Empty"/>
         <On Terms="UnitBirth.FormulatorRich" Send="TimerSet 0.100000 HideGeyser"/>
         <On Terms="TimerExpired; TimerName HideGeyser" Send="Create GeyserBuildFinishCovered"/>
+        <On Terms="Behavior.HarvestableRichVespeneGeyserGasKeiron.Extract" Send="AnimPlay Work Work 0 -1.000000 -1.000000 1.981000 AsDuration"/>
         <Model value="Formulator"/>
         <BuildModel value="Formulator"/>
         <PlacementModel value="Formulator"/>

@@ -181,7 +181,6 @@ Behavior/Name/FrenzyInjection=Frenzy Injection
 Behavior/Name/FrenzySink=Frenzy Sink
 Behavior/Name/FuseFused=Fused
 Behavior/Name/GenetronConstruction=Genetron Construction
-Behavior/Name/GenetronPowerSupplyTracker=Genetron Power Supply Tracker
 Behavior/Name/GenetronProductionCalibration=Calibration
 Behavior/Name/GyreAnnexDummy=Gyre - Annex Dummy
 Behavior/Name/GyreAnnexed=Annexed
@@ -199,9 +198,6 @@ Behavior/Name/KeironChargeDummyTS2=Keiron - Charge Dummy TS2
 Behavior/Name/KeironMaterializing=Materializing
 Behavior/Name/LockdownMode=Lockdown Mode
 Behavior/Name/LockdownModeDuration=Lockdown Mode Duration
-Behavior/Name/MaximumPowerGenerator=Maximum Power Generator
-Behavior/Name/MaximumPowerProcessingCore=Maximum Power Processing Core
-Behavior/Name/MaximumPowerRelayTower=Maximum Power Relay Tower
 Behavior/Name/MendBehavior=Mend
 Behavior/Name/NaniteGrenadeAB=Nanite Grenade
 Behavior/Name/OlympusElectrified=Electrified
@@ -223,9 +219,6 @@ Behavior/Name/SystemOffload=System Offload
 Behavior/Name/TeslaShockChargeOverload=Tesla - Shock Charge Overload
 Behavior/Name/TeslaShockChargeResponder=Tesla - Shock Charge Responder
 Behavior/Name/TitanWeapon=Inhibitor Beam
-Behavior/Name/TrackAndMirrorGenetronPowerSupply=Track And Mirror Genetron Power Supply
-Behavior/Name/TrackGenetronPowerSupply=Track Genetron Power Supply
-Behavior/Name/TrackGenetronPowerSupplyUnit=Track Genetron Power Supply Unit
 Behavior/Name/TrackingImplant=Tracking Implant
 Behavior/Name/VenomInjection=Venom Injection
 Behavior/Name/VirtusSelffixProtocolBuff=Self-fix Protocol
@@ -284,6 +277,7 @@ Button/ChargeText/GenetronInternalEnergy=<d ref="$RunAccumulators:InternalEnergy
 Button/ChargeText/KeironProductionStructures=<d ref="$BehaviorStackCount:KeironUnitCharge$"/>
 Button/Name/AAMDefenseTurret=AAM Defense Turret
 Button/Name/ACR=Fabricate ACR
+Button/Name/ACRRepair=Repair
 Button/Name/AcidNest=Volatile Acid
 Button/Name/ActivateShield=Activate Shield
 Button/Name/AdaptiveInjection=Adaptive Injection
@@ -642,6 +636,7 @@ Button/Name/Xayithoan=Mutate into Xayithoan
 Button/Name/Zenith=Shape Zenith
 Button/Tooltip/AAMDefenseTurret=<c val="FFFF80">Badgers</c> gain a turret, which uses a laser to fire upon enemy missiles.<n/>Has <d ref="Weapon,AAMLaser,Range" precision="1"/> range,and a fire rate of <d ref="Weapon,AAMLaser,Period" precision="1"/>.<n/>Cannot target special attacks.<n/><n/><c val="f078ff">Each shot consumes <d ref="Weapon,AAMLaser,Cost.Vital[Energy]"/> energy.</c>
 Button/Tooltip/ACR=Basic worker unit. Can gather resources, build Genetron structures, and repair.<n/><n/><c val="#ColorAttackInfo">Can attack ground units.</c>
+Button/Tooltip/ACRRepair=Restores life to mechanical units at the cost of power.
 Button/Tooltip/AcidNest=The <c val="FFFF80">Acid Nest</c> explodes for 50 damage to a enemy ground unit that comes into contact with it. Deals 35 splash damage to other units around it.
 Button/Tooltip/ActivateShield=Activates a shield, rendering all friendly units within it invulnerable to attack. Enemy units are unable to enter the shields area.
 Button/Tooltip/AdaptiveInjection=Can target either friendly or enemy units. When used on a friendly unit, it grants +40% attack speed, and +2 weapon range. When used on enemies, it has the opposite effect. Lasts for <d ref="Behavior,FrenzyInjection,Duration"/> seconds.
@@ -663,7 +658,7 @@ Button/Tooltip/AttackBarrage=Orders the selected units which can use this functi
 Button/Tooltip/Aurora=Tactical-strike aircraft. Can use Emanator.<n/><n/><c val="FFFF80">Can attack ground units.</c>
 Button/Tooltip/AvianNest=Creates Wasps, which are mutated into Xayid flyers.<n/><n/><c val="FFFF80">Enables:</c><n/>- Raptors<n/>- Assailants
 Button/Tooltip/Badger=Large gunship.<n/><n/><c val="f078ff">Energy user.</c><n/><c val="FFFF80">Can attack ground and air units simultaneously.</c>
-Button/Tooltip/BadgerPowershell=Converts energy into a shield with 50% damage reduction.
+Button/Tooltip/BadgerPowershell=Converts energy into a shield.<n/><n/><c val="f078ff">Drains <d ref="-1 * (Behavior,BadgerPowershell,Modification.VitalRegenArray[2])" precision="1"/> energy per second.</c>
 Button/Tooltip/BattleFrenzy=<c val="FFFF80">Reviler</c> attacks speed up attack rate by 6% per attack, stacking up to 30%. Lasts <d ref="Behavior,BattleFrenzy,Duration"/> seconds. Continued attacks will renew the duration.
 Button/Tooltip/Beholder=The Crux gains detection and additional sight range for <d ref="Behavior,Beholder,Duration"/> seconds.
 Button/Tooltip/BileDucts=<c val="FFFF80">Roamer</c> attack speed improved by 25%, and weapon range increased by 2.
@@ -778,7 +773,7 @@ Button/Tooltip/FormulatorRich=Warped in over a Vespene Geyser to allow harvestin
 Button/Tooltip/Foundry=Advanced tech facility.<n/><n/><c val="FFFF80">Enables:</c><n/>  - Umbrae from the Citadel<n/>  - Wards from the Citadel
 Button/Tooltip/Fuse=Support unit. Can use Fusion.
 Button/Tooltip/Fusion=Fuses the caster to the target unit, granting it an additional <d ref="Behavior,FuseFused,Modification.VitalMaxArray[Shields]"/> maximum shields.
-Button/Tooltip/Generator=Provides energy.
+Button/Tooltip/Generator=Provides energy. Increases power storage by <d ref="Behavior,MaximumPowerGenerator,Modification.VitalMaxArray[Energy]"/>.
 Button/Tooltip/GeneratorEnergyGrid=<c val="f078ff">Generates <d ref="Effect,GeneratorPowerHealer,RechargeVitalRate" precision="2"/> energy per second.</c>
 Button/Tooltip/GenetronBuild=A list of advanced structures.
 Button/Tooltip/GenetronBuildAdvanced=A list of advanced structures.
@@ -924,7 +919,7 @@ Button/Tooltip/PiercingThrust=<c val="FFFF80">Xayidlings</c> gain +4 damage vs A
 Button/Tooltip/PlaceAcidNest=Places an <c val="FFFF80">Acid Nest</c> on the ground, which are burrowed, and are invisible to enemies without detection. Deals 50 damage to the first enemy unit it comes into contact with, and deals 35 damage in an area.
 Button/Tooltip/PlaceEmanator=Emanators grant vision in an area. They are vulnerable to attack, but becomes permanently cloaked <d ref="Behavior,EmanatorFateDelay,Duration"/> seconds after placement.</n></n><c val="FFE303">Detector</c>
 Button/Tooltip/Prison=Channels an effect in an area. Enemy units that walk into it are unable to leave.
-Button/Tooltip/ProcessingCore=Primary structure. Used to receive gathered resources. Can use Mining Priority and System Recharge<n/><n/><c val="ffff8a">Enables:</c><n/>- ACRs
+Button/Tooltip/ProcessingCore=Primary structure. Used to receive gathered resources. Increases power storage by <d ref="Behavior,MaximumPowerProcessingCore,Modification.VitalMaxArray[Energy]"/>. Can use Mining Priority and System Recharge<n/><n/><c val="ffff8a">Enables:</c><n/>- ACRs
 Button/Tooltip/Projection=Allows the caster to move through other units at increased speed. Cannot attack while phased.
 Button/Tooltip/ProlongedSpores=<c val="FFFF80">Spitters</c> gain +3 weapon range.
 Button/Tooltip/ProtectiveCloud=Casts a cloud of gas, affected friendly units take 30% less damage from all effects.  Lasts for <d ref="(Effect,ProtectiveCloud,PeriodCount+1)*0.5"/> seconds.
@@ -936,7 +931,7 @@ Button/Tooltip/ReactiveArmor=Incoming ranged damage reduced by 2.
 Button/Tooltip/RefinedExcretion=<c val="FFFF80">Xayithoans</c> abilities gain +50% duration.
 Button/Tooltip/RefittedNozzles=<c val="FFFF80">Blazes</c> gain +100% attack range.
 Button/Tooltip/ReinforcedPlating=<c val="FFFF80">Blitzers</c> and <c val="FFFF80">Equalizers</c> gain +25 life.
-Button/Tooltip/RelayTower=Facilitates global energy management. Can use System Recharge.<n/><n/><c val="FFFF80">Enables:</c><n/>- Processors at the Processing Core
+Button/Tooltip/RelayTower=Increases power storage by <d ref="Behavior,MaximumPowerRelayTower,Modification.VitalMaxArray[Energy]"/>. Can use System Recharge.<n/><n/><c val="FFFF80">Enables:</c><n/>- Processors at the Processing Core
 Button/Tooltip/Reliquary=Upgrade tech facility.<n/><n/><c val="FFFF80">Enables:</c><n/>  - Nullifiers from the Converter<n/>  - Strati from the Converter
 Button/Tooltip/Relocate=Teleports the caster to the target <c val="FFFF80">Citadel</c>.
 Button/Tooltip/Repulsor=Anti-ground defensive structure. Can burrow, disabling its weapon, and rendering itself invisible to enemies.<n/><n/><c val="FFFF80">Can attack ground units.</c>
@@ -1157,6 +1152,7 @@ Effect/Name/AvengerConstructVengeanceMissile=Avenger - Construct Vengeance Missi
 Effect/Name/AvengerVengeanceMissileAmmo=Avenger - Vengeance Missile Ammo
 Effect/Name/AvengerVengeanceMissileAmmoCasterRemove=Avenger - Vengeance Missile Ammo Caster Remove
 Effect/Name/BadgerEnergyShieldDataEnergy=Badger - Powershell (Data Energy)
+Effect/Name/BadgerPowershellCooldown=Badger - Powershell Cooldown
 Effect/Name/BadgerPowershellData=Badger - Powershell (Data)
 Effect/Name/BadgerPowershellMU=Badger - Powershell (MU)
 Effect/Name/BadgerPowershellRemainingDMG=Badger - Powershell (Remaining DMG)
