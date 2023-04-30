@@ -215,6 +215,14 @@
         <Model value="Sphere"/>
         <UnitFlags index="ShowBlobShadow" value="0"/>
     </CActorUnit>
+    <CActorModel id="MoleSubterraneanSensorsModel" parent="ModelAddition">
+        <Inherits index="TimeScale" value="0"/>
+        <On Terms="ActorCreation" Send="$Stand,B PlayForever"/>
+        <On Terms="Behavior.MoleSubterraneanSensors.On" Send="Create"/>
+        <On Terms="Behavior.MoleSubterraneanSensors.Off" Send="Destroy"/>
+        <HostSiteOps Ops="SOpAttachOverhead SOpMoveDownByDot25 SOpMoveDownByDot25"/>
+        <Model value="GenetronProductionMode"/>
+    </CActorModel>
     <CActorModel id="OlympusDischargeIndicator1" parent="ModelAnimationStyleOneShot">
         <Flags index="SuppressSaveLoad" value="0"/>
         <Inherits index="Scale" value="1"/>
@@ -499,6 +507,7 @@
         <On Terms="Effect.OlympusDischargeCP.Start" Send="$Spell 0 -1.000000 -1.000000 -1.000000 AsAutomatic 0.000000 22"/>
         <DeathActorModel value="UnitDeathModelOlympus"/>
         <DeathActorModelLow value="UnitDeathModelOlympus"/>
+        <AbilSoundArray AbilCmd="OlympusDischarge,Execute" Sound="Olympus_Discharge_VO"/>
     </CActorUnit>
     <CActorUnit id="Casnolisk" parent="GenericUnitXayid" unitName="Casnolisk">
         <Aliases value="_UnitMedium"/>
@@ -2130,20 +2139,20 @@
         <On Terms="Behavior.InciterJump.Launch" Send="Create"/>
     </CActorSound>
     <CActorUnit id="InciterPlaceholder" parent="GenericUnitStandard" unitName="InciterPlaceholder">
-        <HighlightTooltip value="Unit/Name/Bogus"/>
         <ModelFlags index="OutlineEmitter" value="1"/>
     </CActorUnit>
     <CActorTurret id="MoleTurret">
         <On Terms="TurretEnable.MoleTurret" Send="Create"/>
         <On Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed; MorphTo Mole" Send="Destroy"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom MoleBuried; MorphTo Mole" Send="Destroy"/>
     </CActorTurret>
     <CActorRange id="MoleSubterraneanSensorsRange">
         <Filter index="Neutral" value="1"/>
         <Filter index="Enemy" value="1"/>
         <Inherits index="Visibility" value="0"/>
         <FogVisibility value="Visible"/>
-        <On Terms="Behavior.MoleBurrowed.On" Send="Create"/>
-        <On Terms="Behavior.MoleBurrowed.Off" Send="Destroy"/>
+        <On Terms="Behavior.MoleSubterraneanSensors.On" Send="Create"/>
+        <On Terms="Behavior.MoleSubterraneanSensors.Off" Send="Destroy"/>
         <Range value="25.000000"/>
         <Icon value="Assets\Textures\radaricon1.dds"/>
         <IconArcLength value="3.250000"/>

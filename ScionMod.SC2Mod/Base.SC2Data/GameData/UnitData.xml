@@ -495,6 +495,7 @@
         <TacticalAI value="AssemblyArray"/>
         <GlossaryPriority value="24"/>
         <GlossaryCategory value="Unit/Category/GenetronUnits"/>
+        <KillDisplay value="Always"/>
     </CUnit>
     <CUnit id="Blaze" parent="CUnitGenetron">
         <Attributes index="Light" value="1"/>
@@ -986,7 +987,6 @@
         <CostResource index="Minerals" value="150"/>
         <CostResource index="Vespene" value="50"/>
         <RepairTime value="40"/>
-        <AbilArray Link="que5"/>
         <GlossaryPriority value="24"/>
         <CostCategory value="Economy"/>
         <SubgroupPriority value="1"/>
@@ -1100,7 +1100,6 @@
         <Radius value="1.25"/>
         <SubgroupPriority value="6"/>
         <GlossaryPriority value="26"/>
-        <TechTreeUnlockedUnitArray value="Mole"/>
         <TechTreeUnlockedUnitArray value="Inciter"/>
     </CUnit>
     <CUnit id="CloakCharge">
@@ -1141,6 +1140,7 @@
         <SubgroupPriority value="7"/>
         <GlossaryPriority value="4"/>
         <TechTreeUnlockedUnitArray value="Blitzer"/>
+        <TechTreeUnlockedUnitArray value="Mole"/>
     </CUnit>
     <CUnit id="Ward" parent="CUnitKeiron">
         <Attributes index="Armored" value="1"/>
@@ -1458,12 +1458,14 @@
         <CostResource index="Minerals" value="150"/>
         <CostResource index="Vespene" value="100"/>
         <RepairTime value="42"/>
-        <AbilArray index="2" Link="MoleActivate"/>
+        <AbilArray index="2" Link="MoleSubterraneanSensors"/>
+        <AbilArray Link="MoleActivate"/>
         <TurretArray value="Hellion"/>
         <CardLayouts index="0">
             <LayoutButtons Face="AcquireMove" Type="AbilCmd" AbilCmd="move,AcquireMove" Row="0" Column="4"/>
             <LayoutButtons Face="DeployCannon" Type="AbilCmd" AbilCmd="MoleActivate,Execute" Row="2" Column="0"/>
-            <LayoutButtons Face="SubterraneanSensors" Type="Passive" Requirements="SubterraneanSensorsButton" Row="2" Column="2"/>
+            <LayoutButtons Face="SubterraneanSensors" Type="AbilCmd" AbilCmd="MoleSubterraneanSensors,On" Row="1" Column="0"/>
+            <LayoutButtons Face="MoleSubterraneanSensorsOff" Type="AbilCmd" AbilCmd="MoleSubterraneanSensors,Off" Row="1" Column="1"/>
         </CardLayouts>
         <Radius value="0.75"/>
         <InnerRadius value="0.5"/>
@@ -1483,41 +1485,29 @@
         <GlossaryWeakArray value="Marine"/>
         <GlossaryWeakArray value="Zergling"/>
         <KillDisplay value="Always"/>
+        <BehaviorArray Link="GenetronPowerSupplyTracker"/>
+        <BehaviorArray Link="TrackGenetronPowerSupplyUnit"/>
     </CUnit>
     <CUnit id="MoleBurrowed" parent="Mole">
         <Speed value="0"/>
         <AbilArray index="0" Link="stop"/>
         <AbilArray index="1" Link="attack"/>
-        <AbilArray index="2" Link="MoleDeactivate"/>
+        <AbilArray index="3" Link="MoleDeactivate"/>
         <AbilArray Link="MoleBury"/>
         <AbilArray Link="MoleTurnTurret"/>
-        <BehaviorArray Link="MoleBurrowed"/>
         <TurretArray index="0" removed="1"/>
         <WeaponArray Link="LynxCannon" Turret="MoleTurret"/>
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="Attack" Type="AbilCmd" AbilCmd="attack,Execute" Row="0" Column="4"/>
             <LayoutButtons index="1" Face="Stop" Type="AbilCmd" AbilCmd="stop,Stop" Row="0" Column="1"/>
             <LayoutButtons index="2" Face="MobilizeCannon" Type="AbilCmd" AbilCmd="MoleDeactivate,Execute" Row="2" Column="1"/>
-            <LayoutButtons index="3">
-                <Face value="SubterraneanSensors"/>
-                <Type value="Passive"/>
-                <AbilCmd value=""/>
-                <Requirements value="SubterraneanSensorsButton"/>
-                <Row value="2"/>
-                <Column value="2"/>
-            </LayoutButtons>
+            <LayoutButtons index="3" Face="SubterraneanSensors" Type="AbilCmd" AbilCmd="MoleSubterraneanSensors,On" Row="1" Column="0"/>
             <LayoutButtons index="4" Face="Turn" Type="AbilCmd" AbilCmd="MoleTurnTurret,Execute" Row="1" Column="4"/>
-            <LayoutButtons index="5" Face="MoleConceal" Type="AbilCmd" AbilCmd="MoleBury,Execute" Row="2" Column="3"/>
+            <LayoutButtons index="5" Face="MoleConceal" Type="AbilCmd" AbilCmd="MoleBury,Execute" Row="2" Column="2"/>
             <LayoutButtons index="6" Face="Move" Type="AbilCmd" AbilCmd="move,Move" Row="0" Column="0"/>
-            <LayoutButtons index="7">
-                <Face value="MoveHoldPosition"/>
-                <Type value="AbilCmd"/>
-                <AbilCmd value="move,HoldPos"/>
-                <Requirements value=""/>
-                <Row value="0"/>
-                <Column value="2"/>
-            </LayoutButtons>
-            <LayoutButtons Face="MovePatrol" Type="AbilCmd" AbilCmd="move,Patrol" Row="0" Column="3"/>
+            <LayoutButtons index="7" Face="MoveHoldPosition" Type="AbilCmd" AbilCmd="move,HoldPos" Row="0" Column="2"/>
+            <LayoutButtons index="8" Face="MovePatrol" Type="AbilCmd" AbilCmd="move,Patrol" Row="0" Column="3"/>
+            <LayoutButtons Face="MoleSubterraneanSensorsOff" Type="AbilCmd" AbilCmd="MoleSubterraneanSensors,Off" Row="1" Column="1"/>
         </CardLayouts>
         <CargoSize value="0"/>
         <GlossaryCategory value=""/>
@@ -1535,14 +1525,22 @@
         <FlagArray index="Cloaked" value="1"/>
         <Collide index="Ground" value="0"/>
         <Collide index="ForceField" value="0"/>
-        <AbilArray index="3" Link="MoleUnbury"/>
-        <BehaviorArray Link="MoleBuried"/>
+        <AbilArray index="4" Link="MoleUnbury"/>
         <CardLayouts index="0">
-            <LayoutButtons index="5" Face="MoleReveal" Type="AbilCmd" AbilCmd="MoleUnbury,Execute" Row="2" Column="4"/>
-            <LayoutButtons index="6" removed="1"/>
+            <LayoutButtons index="5" Face="MoleReveal" Type="AbilCmd" AbilCmd="MoleUnbury,Execute" Row="2" Column="3"/>
+            <LayoutButtons index="6" Face="MoleSubterraneanSensorsOff" Type="AbilCmd" AbilCmd="MoleSubterraneanSensors,Off" Row="1" Column="1"/>
             <LayoutButtons index="7" removed="1"/>
             <LayoutButtons index="8" removed="1"/>
+            <LayoutButtons index="9" removed="1"/>
         </CardLayouts>
+        <WeaponArray index="0" Link="" Turret="MoleTurret"/>
+        <EquipmentArray>
+            <Effect value=""/>
+            <Icon value=""/>
+            <Name value=""/>
+            <Tooltip value=""/>
+            <Weapon value="LynxCannon"/>
+        </EquipmentArray>
     </CUnit>
     <CUnit id="Node" parent="CStructureGenetron">
         <Facing value="0"/>

@@ -680,6 +680,18 @@
         <DrainVitalCostFactor value="1"/>
         <RechargeVitalRate value="1"/>
     </CEffectCreateHealer>
+    <CEffectCreateHealer id="MoleSubterraneanSensorsCost">
+        <EditorCategories value="Race:Genetron"/>
+        <LaunchUnit Value="Target"/>
+        <Flags index="Channeled" value="0"/>
+        <Flags index="ContinueWhenFull" value="1"/>
+        <PeriodicValidator value="CasterHasSubterraneanSensors"/>
+        <DrainVital value="Energy"/>
+        <DrainVitalCostFactor value="1"/>
+        <RechargeVitalRate value="1.4296"/>
+        <InitialEffect value="DataDefaultSet1"/>
+        <FinalEffect value="DataDefaultSet0"/>
+    </CEffectCreateHealer>
     <CEffectEnumTrackedUnits id="FixerRepairETU">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
@@ -1024,6 +1036,19 @@
         <CaseArray Validator="MirrorGenetronPowerSupplyValidator" Effect="MirrorGenetronPowerSupplyETU"/>
         <CaseDefault value="MirrorGenetronPowerSupplyRBSet"/>
     </CEffectSwitch>
+    <CEffectApplyBehavior id="MoleLockTurret">
+        <EditorCategories value="Race:Genetron"/>
+    </CEffectApplyBehavior>
+    <CEffectRemoveBehavior id="MoleLockTurretRemove">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="MoleLockTurret"/>
+    </CEffectRemoveBehavior>
+    <CEffectEnumTrackedUnits id="MoleSubterraneanSensorsETU">
+        <ValidatorArray value="CasterDataDefaultIs0"/>
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="MoleSubterraneanSensorsCost"/>
+    </CEffectEnumTrackedUnits>
     <CEffectEnumTrackedUnits id="NodePowerETU">
         <ValidatorArray value="CasterIsNotHidden"/>
         <ValidatorArray value="CasterNotDead"/>
@@ -1934,12 +1959,6 @@
         <Behavior value="ResourceTapSearch"/>
         <WhichUnit Value="Caster"/>
     </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="MoleBuried" parent="ScionApplyBehavior" Race="Genetron"/>
-    <CEffectApplyBehavior id="MoleBury" parent="ScionApplyBehavior" Race="Genetron"/>
-    <CEffectRemoveBehavior id="MoleBuryRemove">
-        <EditorCategories value="Race:Genetron"/>
-        <BehaviorLink value="MoleBury"/>
-    </CEffectRemoveBehavior>
     <CEffectIssueOrder id="MoleUnburrow">
         <Abil value="MoleDeactivate"/>
     </CEffectIssueOrder>
