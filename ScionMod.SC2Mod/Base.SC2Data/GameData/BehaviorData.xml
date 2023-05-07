@@ -106,9 +106,9 @@
         <InfoIcon value="Assets\Textures\btn-upgrade-terran-nova-detector.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="IsMoleBuried"/>
-        <RemoveValidatorArray value="GenetronPowerSupplyGE5"/>
+        <RemoveValidatorArray value="GenetronPowerSupplyGE05"/>
         <Period value="0.125"/>
-        <PeriodicEffect value="MoleSubterraneanSensorsETU"/>
+        <PeriodicEffect value="MoleSubterraneanSensorsPowerEnum"/>
         <Modification Radar="25" RadarFilters="Ground;Player,Ally,Neutral,RawResource,HarvestableResource,Missile,Dead,Hidden"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="TrackAndMirrorGenetronPowerSupply">
@@ -310,9 +310,14 @@
     <CBehaviorBuff id="GenetronConstruction">
         <InfoIcon value="Assets\Textures\btn-ability-genetron-structurelockdownmode.dds"/>
         <EditorCategories value="AbilityorEffectType:Units,Race:Genetron"/>
-        <DisableValidatorArray value="TargetInCombat"/>
         <RemoveValidatorArray value="IsConstructing"/>
-        <Modification TimeScale="0.5"/>
+        <Modification>
+            <DamageTakenFraction index="Spell" value="1"/>
+            <DamageTakenFraction index="Melee" value="1"/>
+            <DamageTakenFraction index="Ranged" value="1"/>
+            <DamageTakenFraction index="Splash" value="1"/>
+            <DamageTakenFraction index="NoProc" value="1"/>
+        </Modification>
         <Alignment value="Negative"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="GenetronEnergyStateFull">
@@ -923,10 +928,12 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <RemoveValidatorArray value="CanSpendEnergy"/>
         <RemoveValidatorArray value="hasEnergy"/>
+        <RemoveValidatorArray value="GenetronPowerSupplyGE001"/>
         <Modification>
             <StateFlags index="Cloak" value="1"/>
-            <VitalRegenArray index="Energy" value="-1.4765"/>
+            <StateFlags index="SuppressEnergyRegen" value="1"/>
         </Modification>
+        <InitialEffect value="CourierCloakingFieldPowerEnum"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="CloakChargeGenerator">
         <InfoFlags index="Hidden" value="1"/>

@@ -105,6 +105,140 @@
         <TargetLocation Value="CasterPoint"/>
         <TeleportFlags index="TestFog" value="0"/>
     </CEffectTeleport>
+    <CEffectSet id="CourierCloakingFieldPowerSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="CourierCloakingFieldPowerModify"/>
+        <EffectArray value="CourierCloakingFieldEnergyRate"/>
+        <EffectArray value="CourierCloakingFieldPowerRate"/>
+    </CEffectSet>
+    <CEffectCreateHealer id="CourierCloakingFieldEnergyRate">
+        <EditorCategories value="Race:Genetron"/>
+        <Flags index="Channeled" value="0"/>
+        <Flags index="ContinueWhenFull" value="1"/>
+        <PeriodicValidator value="CourierCloakingField"/>
+        <DrainVital value="Energy"/>
+        <DrainVitalCostFactor value="1"/>
+        <RechargeVitalRate value="0.914"/>
+    </CEffectCreateHealer>
+    <CEffectModifyUnit id="CourierCloakingFieldPowerModify">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-25"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectEnumTrackedUnits id="CourierOpticalDisruptionPowerEnum">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="CourierOpticalDisruptionPowerModify"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectCreatePersistent id="CourierOpticalDisruptionInitTarget">
+        <ValidatorArray value="GenetronPowerSupplyGE050"/>
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="TargetUnit"/>
+        <InitialEffect value="CourierOpticalDisruptionPowerEnum"/>
+        <ExpireEffect value="CourierOpticalDisruptionInitEffects"/>
+    </CEffectCreatePersistent>
+    <CEffectModifyUnit id="CourierOpticalDisruptionPowerModify">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-50"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectCreatePersistent id="ELORProtocolInitTarget">
+        <ValidatorArray value="GenetronPowerSupplyGE075"/>
+        <EditorCategories value="Race:Genetron"/>
+        <Flags index="Channeled" value="1"/>
+        <InitialEffect value="ELORProtocolPowerEnum"/>
+        <ExpireEffect value="ELORProtocolInitLaunch"/>
+    </CEffectCreatePersistent>
+    <CEffectEnumTrackedUnits id="ELORProtocolPowerEnum">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="ELORProtocolPowerModify"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectCreatePersistent id="AquilaNaniteGrenadeInitTarget">
+        <ValidatorArray value="GenetronPowerSupplyGE050"/>
+        <EditorCategories value="Race:Genetron"/>
+        <InitialEffect value="AquilaNaniteGrenadePowerEnum"/>
+        <ExpireEffect value="NaniteGrenade"/>
+    </CEffectCreatePersistent>
+    <CEffectEnumTrackedUnits id="AquilaNaniteGrenadePowerEnum">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="AquilaNaniteGrenadePowerModify"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectModifyUnit id="AquilaNaniteGrenadePowerModify">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-50"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="ELORProtocolPowerModify">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-75"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectEnumTrackedUnits id="BoarIgnitionBlastPowerEnum">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="BoarIgnitionBlastPowerSet"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectSet id="BoarIgnitionBlastPowerSet">
+        <ValidatorArray value="GenetronPowerSupplyGE050"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="BoarIgnitionBlastPowerModify"/>
+        <EffectArray value="IgnitionBlast"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="BoarIgnitionBlastPowerModify">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-50"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectEnumTrackedUnits id="JupiterSpeedPowerEnum">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="JupiterSpeedPowerModify"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectModifyUnit id="JupiterSpeedPowerModify">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-1"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectEnumTrackedUnits id="CourierCloakingFieldPowerEnum">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="CourierCloakingFieldPowerSet"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectCreateHealer id="CourierCloakingFieldPowerRate">
+        <EditorCategories value="Race:Genetron"/>
+        <LaunchUnit Value="Target"/>
+        <Flags index="Channeled" value="0"/>
+        <Flags index="ContinueWhenFull" value="1"/>
+        <PeriodicValidator value="CourierCloakingField"/>
+        <DrainVital value="Energy"/>
+        <DrainVitalCostFactor value="1"/>
+        <RechargeVitalRate value="0.914"/>
+    </CEffectCreateHealer>
+    <CEffectEnumTrackedUnits id="VirtusSelffixProtocolPowerEnum">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="VirtusSelffixProtocolPowerEnum"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectSet id="VirtusSelffixProtocolPowerSet">
+        <ValidatorArray value="GenetronPowerSupplyGE100"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="VirtusSelffixProtocolPowerModify"/>
+        <EffectArray value="VirtusSelffixProtocolBuff"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="VirtusSelffixProtocolPowerModify">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-100"/>
+        </VitalArray>
+    </CEffectModifyUnit>
     <CEffectCreatePersistent id="AssemblyArrayFinishAvengerInit">
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="CasterUnit"/>
@@ -397,7 +531,58 @@
     <CEffectApplyBehavior id="BlindingBurstAB" parent="ScionApplyBehavior" Race="Xayid">
         <ValidatorArray index="0" value="NotFrenzied"/>
     </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="BlitzerOverdrive" parent="ScionApplyBehavior" Race="Genetron"/>
+    <CEffectApplyBehavior id="BlitzerOverdrive" parent="ScionApplyBehaviorCaster" Race="Genetron"/>
+    <CEffectEnumTrackedUnits id="BlitzerSuperchargePowerEnum">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="BlitzerSuperchargePowerSet"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectEnumTrackedUnits id="BlitzerOverdrivePowerEnum">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="BlitzerOverdrivePowerSet"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectEnumTrackedUnits id="AquilaSuperchargePowerEnum">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="AquilaSuperchargePowerSet"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectSet id="BlitzerSuperchargePowerSet">
+        <ValidatorArray value="GenetronPowerSupplyGE015"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="BlitzerSuperchargePowerModify"/>
+        <EffectArray value="Supercharge"/>
+    </CEffectSet>
+    <CEffectSet id="BlitzerOverdrivePowerSet">
+        <ValidatorArray value="GenetronPowerSupplyGE015"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="BlitzerOverdrivePowerModify"/>
+        <EffectArray value="BlitzerOverdrive"/>
+    </CEffectSet>
+    <CEffectSet id="AquilaSuperchargePowerSet">
+        <ValidatorArray value="GenetronPowerSupplyGE030"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="AquilaSuperchargePowerModify"/>
+        <EffectArray value="Supercharge"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="BlitzerSuperchargePowerModify">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-15"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="BlitzerOverdrivePowerModify">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-15"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="AquilaSuperchargePowerModify">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-30"/>
+        </VitalArray>
+    </CEffectModifyUnit>
     <CEffectApplyBehavior id="BoreDrill1" parent="ScionApplyBehavior" Race="Genetron">
         <Behavior value="BoreDrill"/>
     </CEffectApplyBehavior>
@@ -462,7 +647,7 @@
         <InitialEffect value="AssemblyArrayFinishHornetData"/>
         <FinalEffect value="SetEnergyNeededData0"/>
     </CEffectCreatePersistent>
-    <CEffectSet id="CourierOpticalDisruption">
+    <CEffectSet id="CourierOpticalDisruptionInitEffects">
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="OpticalDisruptionCaster"/>
         <EffectArray value="CourierOpticalDisruptionCreatePersistent"/>
@@ -650,7 +835,7 @@
         <BehaviorScope Behavior="GenetronProductionInternalEnergy"/>
     </CEffectUserData>
     <CEffectSet id="ACRRepair">
-        <ValidatorArray value="GenetronPowerSupplyGE5"/>
+        <ValidatorArray value="GenetronPowerSupplyGE05"/>
         <ValidatorArray value="NotWarpingIn"/>
         <ValidatorArray value="HiddenCompareBA"/>
         <ValidatorArray value="HiddenCompareAB"/>
@@ -680,7 +865,7 @@
         <DrainVitalCostFactor value="1"/>
         <RechargeVitalRate value="1"/>
     </CEffectCreateHealer>
-    <CEffectCreateHealer id="MoleSubterraneanSensorsCost">
+    <CEffectCreateHealer id="MoleSubterraneanSensorsPowerRate">
         <EditorCategories value="Race:Genetron"/>
         <LaunchUnit Value="Target"/>
         <Flags index="Channeled" value="0"/>
@@ -698,7 +883,7 @@
         <Effect value="FixerRepairSet"/>
     </CEffectEnumTrackedUnits>
     <CEffectSet id="FixerRepair">
-        <ValidatorArray value="GenetronPowerSupplyGE5"/>
+        <ValidatorArray value="GenetronPowerSupplyGE05"/>
         <ValidatorArray value="NotWarpingIn"/>
         <ValidatorArray value="HiddenCompareBA"/>
         <ValidatorArray value="HiddenCompareAB"/>
@@ -719,7 +904,7 @@
         <ValidatorArray value="HiddenCompareAB"/>
         <ValidatorArray value="NotVortexd"/>
         <ValidatorArray value="NotStasis"/>
-        <ValidatorArray value="GenetronPowerSupplyGE1"/>
+        <ValidatorArray value="GenetronPowerSupplyGE001"/>
         <EditorCategories value="Race:Genetron"/>
         <LaunchUnit Value="Target"/>
         <ImpactUnit Effect="ACRRepair"/>
@@ -728,13 +913,13 @@
         <TimeFactor value="1"/>
     </CEffectCreateHealer>
     <CEffectSet id="FixerRepairSet">
-        <ValidatorArray value="GenetronPowerSupplyGE1"/>
+        <ValidatorArray value="GenetronPowerSupplyGE001"/>
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="FixerRepairHealer"/>
         <EffectArray value="FixerRepairCost"/>
     </CEffectSet>
     <CEffectSet id="ACRRepairSet">
-        <ValidatorArray value="GenetronPowerSupplyGE1"/>
+        <ValidatorArray value="GenetronPowerSupplyGE001"/>
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="ACRRepairHealer"/>
         <EffectArray value="ACRRepairCost"/>
@@ -1043,11 +1228,11 @@
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="MoleLockTurret"/>
     </CEffectRemoveBehavior>
-    <CEffectEnumTrackedUnits id="MoleSubterraneanSensorsETU">
+    <CEffectEnumTrackedUnits id="MoleSubterraneanSensorsPowerEnum">
         <ValidatorArray value="CasterDataDefaultIs0"/>
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
-        <Effect value="MoleSubterraneanSensorsCost"/>
+        <Effect value="MoleSubterraneanSensorsPowerRate"/>
     </CEffectEnumTrackedUnits>
     <CEffectEnumTrackedUnits id="NodePowerETU">
         <ValidatorArray value="CasterIsNotHidden"/>
@@ -1107,7 +1292,7 @@
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectSet id="ProcessingCoreMiningPrioritySet">
-        <ValidatorArray value="TargetEnergyGE100"/>
+        <ValidatorArray value="EnergyGTE100"/>
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="ProcessingCoreMiningPriorityMU"/>
         <EffectArray value="MiningPrioritySearch"/>
@@ -2357,10 +2542,11 @@
         <ValidatorArray index="0" value="NotStructureTarget"/>
         <ValidatorArray value="NotMassive"/>
     </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="VirtusSelffixProtocolBuff" parent="ScionApplyBehavior" Race="Genetron"/>
+    <CEffectApplyBehavior id="VirtusSelffixProtocolBuff" parent="ScionApplyBehaviorCaster" Race="Genetron"/>
     <CEffectRemoveBehavior id="VirtusSelffixProtocolBuffRemove">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="VirtusSelffixProtocolBuff"/>
+        <WhichUnit Value="Caster"/>
     </CEffectRemoveBehavior>
     <CEffectCreateHealer id="VirtusSelffixProtocol">
         <EditorCategories value="Race:Genetron"/>
@@ -2370,6 +2556,7 @@
         <RechargeVitalRate value="35.5585"/>
         <InitialEffect value="VirtusSelffixProtocolBuff"/>
         <FinalEffect value="VirtusSelffixProtocolBuffRemove"/>
+        <ImpactUnit Value="Caster"/>
     </CEffectCreateHealer>
     <CEffectCreateHealer id="FixerRepairHealer">
         <ValidatorArray value="NotWarpingIn"/>
@@ -2377,7 +2564,7 @@
         <ValidatorArray value="HiddenCompareAB"/>
         <ValidatorArray value="NotVortexd"/>
         <ValidatorArray value="NotStasis"/>
-        <ValidatorArray value="GenetronPowerSupplyGE1"/>
+        <ValidatorArray value="GenetronPowerSupplyGE001"/>
         <EditorCategories value="Race:Genetron"/>
         <LaunchUnit Value="Target"/>
         <ImpactUnit Effect="FixerRepair"/>
@@ -2475,6 +2662,7 @@
     </CEffectModifyUnit>
     <CEffectApplyBehavior id="JupiterSpeed" parent="ScionApplyBehaviorCaster" Race="Genetron">
         <ValidatorArray index="0" value="CasterHasEnergy"/>
+        <ValidatorArray value="GenetronPowerSupplyGE05"/>
     </CEffectApplyBehavior>
     <CEffectSwitch id="RevenantBomb">
         <EditorCategories value="Race:Genetron"/>
@@ -4839,7 +5027,7 @@
         <ImpactUnit Value="Caster"/>
         <Cost Abil="KeironCitadelMaterialize,Train1" ChargeCountUse="-1"/>
     </CEffectModifyUnit>
-    <CEffectCreateUnit id="ELORProtocol">
+    <CEffectCreateUnit id="ELORProtocolInitLaunch">
         <ValidatorArray value="Pathable"/>
         <ValidatorArray value="BurrowChargeMinimumRange"/>
         <EditorCategories value="Race:Genetron"/>

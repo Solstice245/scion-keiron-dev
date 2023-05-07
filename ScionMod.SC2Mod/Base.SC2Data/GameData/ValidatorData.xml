@@ -112,32 +112,65 @@
         <WhichUnit Value="Caster"/>
         <Value value="Generator"/>
     </CValidatorUnitType>
+    <CValidatorUnitCompareBehaviorCount id="CourierCloakingField">
+        <WhichUnit Value="Caster"/>
+        <Value value="1"/>
+        <Behavior value="CourierCloak"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorPlayerRequirement id="GenetronHasNoPowerSupply">
         <Find value="1"/>
         <Value value="GenetronHasNoPowerSupply"/>
     </CValidatorPlayerRequirement>
+    <CValidatorCompareTrackedUnitsCount id="GenetronPowerSupplyGE075">
+        <ResultFailed value="NotEnoughEnergy"/>
+        <Compare value="GT"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <TrackedUnitValidatorArray value="EnergyGTE75"/>
+        <TrackedUnitFilters value="-;Dead"/>
+    </CValidatorCompareTrackedUnitsCount>
     <CValidatorCompareTrackedUnitsCount id="GenetronPowerSupplyGE100">
         <ResultFailed value="NotEnoughEnergy"/>
         <Compare value="GT"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
-        <TrackedUnitValidatorArray value="TargetEnergyGE100"/>
+        <TrackedUnitValidatorArray value="EnergyGTE100"/>
+        <TrackedUnitFilters value="-;Dead"/>
+    </CValidatorCompareTrackedUnitsCount>
+    <CValidatorCompareTrackedUnitsCount id="GenetronPowerSupplyGE015">
+        <ResultFailed value="NotEnoughEnergy"/>
+        <Compare value="GT"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <TrackedUnitValidatorArray value="EnergyGTE15"/>
+        <TrackedUnitFilters value="-;Dead"/>
+    </CValidatorCompareTrackedUnitsCount>
+    <CValidatorCompareTrackedUnitsCount id="GenetronPowerSupplyGE030">
+        <ResultFailed value="NotEnoughEnergy"/>
+        <Compare value="GT"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <TrackedUnitValidatorArray value="EnergyGTE30"/>
+        <TrackedUnitFilters value="-;Dead"/>
+    </CValidatorCompareTrackedUnitsCount>
+    <CValidatorCompareTrackedUnitsCount id="GenetronPowerSupplyGE050">
+        <ResultFailed value="NotEnoughEnergy"/>
+        <Compare value="GT"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <TrackedUnitValidatorArray value="EnergyGTE50"/>
         <TrackedUnitFilters value="-;Dead"/>
     </CValidatorCompareTrackedUnitsCount>
     <CValidatorCompareTrackedUnitsCount id="GenetronPowerSupplyLT100">
         <ResultFailed value="NotEnoughEnergy"/>
         <Compare value="GT"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
-        <TrackedUnitValidatorArray value="TargetEnergyLT100"/>
+        <TrackedUnitValidatorArray value="EnergyLT100"/>
         <TrackedUnitFilters value="-;Dead"/>
     </CValidatorCompareTrackedUnitsCount>
-    <CValidatorCompareTrackedUnitsCount id="GenetronPowerSupplyGE5">
+    <CValidatorCompareTrackedUnitsCount id="GenetronPowerSupplyGE05">
         <ResultFailed value="NotEnoughEnergy"/>
         <Compare value="GT"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
         <TrackedUnitValidatorArray value="EnergyGTE5"/>
         <TrackedUnitFilters value="-;Dead"/>
     </CValidatorCompareTrackedUnitsCount>
-    <CValidatorCompareTrackedUnitsCount id="GenetronPowerSupplyGE1">
+    <CValidatorCompareTrackedUnitsCount id="GenetronPowerSupplyGE001">
         <ResultFailed value="NotEnoughEnergy"/>
         <Compare value="GT"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
@@ -287,9 +320,29 @@
         <CombineArray value="PlayerHasRelayTowerOrProcessingCoreWithGE5EnergyAndNotRecharging"/>
         <CombineArray value="CasterEnergyLT25"/>
     </CValidatorCombine>
-    <CValidatorUnitCompareVital id="TargetEnergyGE100">
+    <CValidatorUnitCompareVital id="EnergyGTE100">
         <Compare value="GE"/>
         <Value value="100"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
+    <CValidatorUnitCompareVital id="EnergyGTE15">
+        <Compare value="GE"/>
+        <Value value="15"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
+    <CValidatorUnitCompareVital id="EnergyGTE30">
+        <Compare value="GE"/>
+        <Value value="30"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
+    <CValidatorUnitCompareVital id="EnergyGTE75">
+        <Compare value="GE"/>
+        <Value value="75"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
+    <CValidatorUnitCompareVital id="EnergyGTE50">
+        <Compare value="GE"/>
+        <Value value="50"/>
         <Vital value="Energy"/>
     </CValidatorUnitCompareVital>
     <CValidatorUnitFilters id="TargetIsAirUnit">
@@ -500,7 +553,7 @@
     <CValidatorUnitCompareBehaviorCount id="StructureNotLockedDownDuration">
         <Behavior value="LockdownModeDuration"/>
     </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitCompareVital id="TargetEnergyLT100">
+    <CValidatorUnitCompareVital id="EnergyLT100">
         <Compare value="LT"/>
         <Value value="100"/>
         <Vital value="Energy"/>
