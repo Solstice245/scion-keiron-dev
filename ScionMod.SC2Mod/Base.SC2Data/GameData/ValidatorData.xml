@@ -80,18 +80,18 @@
         <Key value="Default"/>
         <Value value="1"/>
     </CValidatorEffectTreeUserData>
-    <CValidatorFunction id="CasterEnergyGTShockCharge">
-        <Line Test="ShockChargeOverloaded" Return="CasterEnergyGTShockChargeOverload" Break="1"/>
-        <Line Return="CasterEnergyGTShockChargeNormal"/>
+    <CValidatorFunction id="CasterEnergyGEShockCharge">
+        <Line Test="ShockChargeOverloaded" Return="CasterEnergyGEShockChargeOverload" Break="1"/>
+        <Line Return="CasterEnergyGEShockChargeNormal"/>
     </CValidatorFunction>
-    <CValidatorUnitCompareVital id="CasterEnergyGTShockChargeNormal">
-        <Compare value="GT"/>
-        <Value value="20"/>
+    <CValidatorUnitCompareVital id="CasterEnergyGEShockChargeNormal">
+        <Compare value="GE"/>
+        <Value value="15"/>
         <Vital value="Energy"/>
     </CValidatorUnitCompareVital>
-    <CValidatorUnitCompareVital id="CasterEnergyGTShockChargeOverload">
-        <Compare value="GT"/>
-        <Value value="40"/>
+    <CValidatorUnitCompareVital id="CasterEnergyGEShockChargeOverload">
+        <Compare value="GE"/>
+        <Value value="30"/>
         <Vital value="Energy"/>
     </CValidatorUnitCompareVital>
     <CValidatorCombine id="CasterHasOpticalDisruptionAndTargetIsAlive">
@@ -99,6 +99,11 @@
         <CombineArray value="CasterHasOpticalDisruptionCaster"/>
         <CombineArray value="NotDead"/>
     </CValidatorCombine>
+    <CValidatorUnitCompareBehaviorCount id="CasterHasPowershell">
+        <WhichUnit Value="Caster"/>
+        <Compare value="GT"/>
+        <Behavior value="BadgerPowershell"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="CasterHasShellRestoration">
         <WhichUnit Value="Caster"/>
         <Compare value="GT"/>
@@ -299,12 +304,8 @@
         <Compare value="GT"/>
         <Behavior value="MoleSubterraneanSensors"/>
     </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitCompareBehaviorCount id="NoEnergyShieldCaster">
+    <CValidatorUnitCompareBehaviorCount id="NoPowershellCaster">
         <WhichUnit Value="Caster"/>
-        <Behavior value="BadgerPowershell"/>
-    </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitCompareBehaviorCount id="NoEnergyShield">
-        <ResultFailed value="Error,Error/NoEnergyShield"/>
         <Behavior value="BadgerPowershell"/>
     </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitType id="IsShellDome">
@@ -367,7 +368,7 @@
         <CombineArray value="CasterNoCourierCloak"/>
         <CombineArray value="CasterNoProcessorDetectionMode"/>
         <CombineArray value="NoJupiterSpeed"/>
-        <CombineArray value="NoEnergyShieldCaster"/>
+        <CombineArray value="NoPowershellCaster"/>
     </CValidatorCombine>
     <CValidatorUnitCompareBehaviorCount id="CasterNoCourierCloak">
         <WhichUnit Value="Caster"/>

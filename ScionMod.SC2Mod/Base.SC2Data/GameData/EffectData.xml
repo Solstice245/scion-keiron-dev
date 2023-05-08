@@ -105,6 +105,60 @@
         <TargetLocation Value="CasterPoint"/>
         <TeleportFlags index="TestFog" value="0"/>
     </CEffectTeleport>
+    <CEffectEnumTrackedUnits id="AvengerVengeanceMissilePowerETU">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="AvengerVengeanceMissilePowerMU"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectModifyUnit id="AvengerVengeanceMissilePowerMU">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-50"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectEnumTrackedUnits id="BadgerPowershellPowerDamageETU">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="BadgerPowershellPowerDamageMU"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectModifyUnit id="BadgerPowershellPowerDamageMU">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="0">
+                <AccumulatorArray value="DefaultDataAdd"/>
+                <AccumulatorArray value="MultiplyByNeg1"/>
+            </Change>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectEnumTrackedUnits id="BadgerPowershellPowerDrainETU">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="BadgerPowershellPowerDrainSet"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectCreateHealer id="BadgerPowershellPowerDrainHealer">
+        <EditorCategories value="Race:Genetron"/>
+        <LaunchUnit Value="Target"/>
+        <Flags index="Channeled" value="0"/>
+        <Flags index="ContinueWhenFull" value="1"/>
+        <PeriodicValidator value="CasterHasPowershell"/>
+        <DrainVital value="Energy"/>
+        <DrainVitalCostFactor value="1"/>
+        <RechargeVitalRate value="1.4765"/>
+    </CEffectCreateHealer>
+    <CEffectCreateHealer id="BadgerPowershellPowerDrainCasterHealer">
+        <EditorCategories value="Race:Genetron"/>
+        <Flags index="Channeled" value="0"/>
+        <Flags index="ContinueWhenFull" value="1"/>
+        <PeriodicValidator value="CasterHasPowershell"/>
+        <DrainVital value="Energy"/>
+        <DrainVitalCostFactor value="1"/>
+        <RechargeVitalRate value="1.4765"/>
+    </CEffectCreateHealer>
+    <CEffectSet id="BadgerPowershellPowerDrainSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="BadgerPowershellPowerDrainCasterHealer"/>
+        <EffectArray value="BadgerPowershellPowerDrainHealer"/>
+    </CEffectSet>
     <CEffectSet id="CourierCloakingFieldPowerSet">
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="CourierCloakingFieldPowerModify"/>
@@ -183,9 +237,9 @@
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
         <Effect value="BoarIgnitionBlastPowerSet"/>
+        <ValidatorArray value="GenetronPowerSupplyGE050"/>
     </CEffectEnumTrackedUnits>
     <CEffectSet id="BoarIgnitionBlastPowerSet">
-        <ValidatorArray value="GenetronPowerSupplyGE050"/>
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="BoarIgnitionBlastPowerModify"/>
         <EffectArray value="IgnitionBlast"/>
@@ -222,13 +276,48 @@
         <DrainVitalCostFactor value="1"/>
         <RechargeVitalRate value="0.914"/>
     </CEffectCreateHealer>
+    <CEffectEnumTrackedUnits id="TeslaCloakChargeDrainETU">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="TeslaCloakChargeDrainHealer"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectCreateHealer id="TeslaCloakChargeDrainHealer">
+        <EditorCategories value="Race:Genetron"/>
+        <LaunchUnit Value="Target"/>
+        <Flags index="Channeled" value="0"/>
+        <Flags index="ContinueWhenFull" value="1"/>
+        <PeriodicValidator value="CasterNotDead"/>
+        <DrainVital value="Energy"/>
+        <DrainVitalCostFactor value="1"/>
+        <RechargeVitalRate value="7.1445"/>
+    </CEffectCreateHealer>
+    <CEffectEnumTrackedUnits id="TeslaShockChargeExpireETU">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="TeslaShockChargeExpireEnergy"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectModifyUnit id="TeslaShockChargeImpactPowerDrain">
+        <ValidatorArray value="CasterHasEnergy"/>
+        <EditorCategories value="Race:Genetron"/>
+        <LaunchUnit Effect="ShockChargeSA"/>
+        <VitalArray index="Energy">
+            <Change value="-3">
+                <AccumulatorArray value="TeslaShockChargeOverloadSwitch"/>
+            </Change>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectEnumTrackedUnits id="TeslaShockChargeImpactPowerETU">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="TeslaShockChargeImpactPowerDrain"/>
+    </CEffectEnumTrackedUnits>
     <CEffectEnumTrackedUnits id="VirtusSelffixProtocolPowerEnum">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
-        <Effect value="VirtusSelffixProtocolPowerEnum"/>
+        <Effect value="VirtusSelffixProtocolPowerSet"/>
+        <ValidatorArray value="GenetronPowerSupplyGE100"/>
     </CEffectEnumTrackedUnits>
     <CEffectSet id="VirtusSelffixProtocolPowerSet">
-        <ValidatorArray value="GenetronPowerSupplyGE100"/>
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="VirtusSelffixProtocolPowerModify"/>
         <EffectArray value="VirtusSelffixProtocolBuff"/>
@@ -523,6 +612,7 @@
         <EffectArray value="BadgerPowershellData"/>
         <EffectArray value="BadgerEnergyShieldDataEnergy"/>
         <EffectArray value="BadgerPowershellMU"/>
+        <EffectArray value="BadgerPowershellPowerDamageETU"/>
         <EffectArray value="BadgerPowershellRemainingDMG"/>
     </CEffectSet>
     <CEffectApplyBehavior id="BilePitSustain" parent="ScionApplyBehavior" Race="Xayid">
@@ -536,31 +626,31 @@
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
         <Effect value="BlitzerSuperchargePowerSet"/>
+        <ValidatorArray value="GenetronPowerSupplyGE015"/>
     </CEffectEnumTrackedUnits>
     <CEffectEnumTrackedUnits id="BlitzerOverdrivePowerEnum">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
         <Effect value="BlitzerOverdrivePowerSet"/>
+        <ValidatorArray value="GenetronPowerSupplyGE015"/>
     </CEffectEnumTrackedUnits>
     <CEffectEnumTrackedUnits id="AquilaSuperchargePowerEnum">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
         <Effect value="AquilaSuperchargePowerSet"/>
+        <ValidatorArray value="GenetronPowerSupplyGE030"/>
     </CEffectEnumTrackedUnits>
     <CEffectSet id="BlitzerSuperchargePowerSet">
-        <ValidatorArray value="GenetronPowerSupplyGE015"/>
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="BlitzerSuperchargePowerModify"/>
         <EffectArray value="Supercharge"/>
     </CEffectSet>
     <CEffectSet id="BlitzerOverdrivePowerSet">
-        <ValidatorArray value="GenetronPowerSupplyGE015"/>
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="BlitzerOverdrivePowerModify"/>
         <EffectArray value="BlitzerOverdrive"/>
     </CEffectSet>
     <CEffectSet id="AquilaSuperchargePowerSet">
-        <ValidatorArray value="GenetronPowerSupplyGE030"/>
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="AquilaSuperchargePowerModify"/>
         <EffectArray value="Supercharge"/>
@@ -1649,7 +1739,6 @@
         <ValidatorArray value="NotVortexd"/>
         <ValidatorArray value="NotUncommandable"/>
         <ValidatorArray value="SourceNotHidden"/>
-        <ValidatorArray value="IsNotProcessingCore"/>
         <ValidatorArray value="EnergyNotFull"/>
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="ProcessingCoreSystemRechargeETU"/>
@@ -1669,12 +1758,10 @@
         <ValidatorArray value="NotUncommandable"/>
         <ValidatorArray value="SourceNotHidden"/>
         <ValidatorArray value="CasterHasEnergy"/>
-        <ValidatorArray value="NoEnergyShield"/>
         <EditorCategories value="Race:Genetron"/>
         <LaunchUnit Value="Target"/>
         <ImpactUnit Effect="ProcessingCoreSystemRecharge"/>
         <DrainVital value="Energy"/>
-        <DrainVitalCostFactor value="1"/>
         <RechargeVital value="Energy"/>
         <RechargeVitalRate value="50"/>
         <InitialEffect value="ProcessingCoreSystemRechargeCP"/>
@@ -2467,6 +2554,7 @@
     </CEffectApplyBehavior>
     <CEffectSet id="TeslaShockChargeExpire" parent="ScionSet" Race="Genetron">
         <EffectArray value="TeslaShockChargeExpireEnergy"/>
+        <EffectArray value="TeslaShockChargeExpireETU"/>
         <EffectArray value="TeslaShockChargeExpireSearch"/>
         <EffectArray value="TeslaShockChargeOverloadRemove"/>
         <EffectArray value="TeslaShockChargeExpireRecharge"/>
@@ -2494,6 +2582,7 @@
         <EffectArray value="TeslaShockChargeDummyDMG"/>
         <EffectArray value="TeslaShockChargeImpactDamage"/>
         <EffectArray value="TeslaShockChargeImpactEnergyTarget"/>
+        <EffectArray value="TeslaShockChargeImpactPowerETU"/>
         <EffectArray value="TeslaShockChargeImpactEnergyCaster"/>
         <EffectArray value="TeslaShockChargeImpactDecloak"/>
     </CEffectSet>
@@ -2958,7 +3047,9 @@
         <SpawnEffect value="KillsToCaster"/>
         <SpawnUnit value="ShockCharge"/>
     </CEffectCreateUnit>
-    <CEffectSet id="VengeanceMissileS" parent="ScionSet" Race="Genetron">
+    <CEffectSet id="VengeanceMissile" parent="ScionSet" Race="Genetron">
+        <ValidatorArray value="GenetronPowerSupplyGE050"/>
+        <EffectArray value="AvengerVengeanceMissilePowerETU"/>
         <EffectArray value="VengeanceMissileMU"/>
         <EffectArray value="AvengerVengeanceMissileAmmoCasterRemove"/>
         <EffectArray value="VengeanceMissileLM"/>
