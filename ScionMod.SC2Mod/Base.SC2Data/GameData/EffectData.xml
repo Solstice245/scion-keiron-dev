@@ -276,6 +276,21 @@
         <DrainVitalCostFactor value="1"/>
         <RechargeVitalRate value="0.914"/>
     </CEffectCreateHealer>
+    <CEffectEnumTrackedUnits id="ProcessorSystemRechargePowerEnum">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="ProcessorSystemRechargePowerRate"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectCreateHealer id="ProcessorSystemRechargePowerRate">
+        <EditorCategories value="Race:Genetron"/>
+        <LaunchUnit Value="Target"/>
+        <Flags index="Channeled" value="0"/>
+        <Flags index="Channeling" value="1"/>
+        <Flags index="ContinueWhenFull" value="1"/>
+        <DrainVital value="Energy"/>
+        <DrainVitalCostFactor value="0.25"/>
+        <RechargeVitalRate value="25"/>
+    </CEffectCreateHealer>
     <CEffectEnumTrackedUnits id="TeslaCloakChargeDrainETU">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
@@ -311,17 +326,19 @@
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
         <Effect value="TeslaShockChargeImpactPowerDrain"/>
     </CEffectEnumTrackedUnits>
+    <CEffectCreatePersistent id="VirtusSelffixProtocolChannelDummy">
+        <ValidatorArray value="GenetronPowerSupplyGE100"/>
+        <EditorCategories value="Race:Genetron"/>
+        <Flags index="Channeling" value="1"/>
+        <InitialEffect value="VirtusSelffixProtocolPowerEnum"/>
+        <ExpireEffect value="VirtusSelffixProtocol"/>
+    </CEffectCreatePersistent>
     <CEffectEnumTrackedUnits id="VirtusSelffixProtocolPowerEnum">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
-        <Effect value="VirtusSelffixProtocolPowerSet"/>
+        <Effect value="VirtusSelffixProtocolPowerModify"/>
         <ValidatorArray value="GenetronPowerSupplyGE100"/>
     </CEffectEnumTrackedUnits>
-    <CEffectSet id="VirtusSelffixProtocolPowerSet">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="VirtusSelffixProtocolPowerModify"/>
-        <EffectArray value="VirtusSelffixProtocolBuff"/>
-    </CEffectSet>
     <CEffectModifyUnit id="VirtusSelffixProtocolPowerModify">
         <EditorCategories value="Race:Genetron"/>
         <VitalArray index="Energy">
@@ -943,7 +960,7 @@
         <Flags index="ContinueWhenFull" value="1"/>
         <DrainVital value="Energy"/>
         <DrainVitalCostFactor value="1"/>
-        <RechargeVitalRate value="2"/>
+        <RechargeVitalRate value="2.8554"/>
     </CEffectCreateHealer>
     <CEffectCreateHealer id="ACRRepairCost">
         <EditorCategories value="Race:Genetron"/>
@@ -953,7 +970,7 @@
         <Flags index="ContinueWhenFull" value="1"/>
         <DrainVital value="Energy"/>
         <DrainVitalCostFactor value="1"/>
-        <RechargeVitalRate value="1"/>
+        <RechargeVitalRate value="1.4296"/>
     </CEffectCreateHealer>
     <CEffectCreateHealer id="MoleSubterraneanSensorsPowerRate">
         <EditorCategories value="Race:Genetron"/>
@@ -1765,6 +1782,7 @@
         <RechargeVital value="Energy"/>
         <RechargeVitalRate value="50"/>
         <InitialEffect value="ProcessingCoreSystemRechargeCP"/>
+        <DrainVitalCostFactor value="0.25"/>
     </CEffectCreateHealer>
     <CEffectDamage id="TeslaShockChargeDummyDMG">
         <EditorCategories value="Race:Genetron"/>
@@ -2925,13 +2943,15 @@
         <ValidatorArray value="NotUncommandable"/>
         <ValidatorArray value="SourceNotHidden"/>
         <ValidatorArray value="CasterHasEnergy"/>
+        <ValidatorArray value="GenetronPowerSupplyGE001"/>
         <ValidatorArray value="IsNotOlympus"/>
         <EditorCategories value="Race:Genetron"/>
         <DrainVital value="Energy"/>
-        <DrainVitalCostFactor value="1"/>
+        <DrainVitalCostFactor value="0.25"/>
         <RechargeVital value="Energy"/>
         <RechargeVitalRate value="25"/>
         <Marker Link="Effect/SystemRechargeCoreCH"/>
+        <InitialEffect value="ProcessorSystemRechargePowerEnum"/>
     </CEffectCreateHealer>
     <CEffectLaunchMissile id="StratumMissilePod" parent="ScionLaunchMissile" Race="Genetron">
         <AmmoUnit value="StratumMissileLauncherWeapon"/>
