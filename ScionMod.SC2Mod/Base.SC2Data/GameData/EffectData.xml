@@ -291,41 +291,17 @@
         <DrainVitalCostFactor value="0.25"/>
         <RechargeVitalRate value="25"/>
     </CEffectCreateHealer>
-    <CEffectEnumTrackedUnits id="TeslaCloakChargeDrainETU">
+    <CEffectEnumTrackedUnits id="TeslaLaunchChargeCostETU">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
-        <Effect value="TeslaCloakChargeDrainHealer"/>
+        <Effect value="TeslaLaunchChargeCostMU"/>
     </CEffectEnumTrackedUnits>
-    <CEffectCreateHealer id="TeslaCloakChargeDrainHealer">
+    <CEffectModifyUnit id="TeslaLaunchChargeCostMU">
         <EditorCategories value="Race:Genetron"/>
-        <LaunchUnit Value="Target"/>
-        <Flags index="Channeled" value="0"/>
-        <Flags index="ContinueWhenFull" value="1"/>
-        <PeriodicValidator value="CasterNotDead"/>
-        <DrainVital value="Energy"/>
-        <DrainVitalCostFactor value="1"/>
-        <RechargeVitalRate value="7.1445"/>
-    </CEffectCreateHealer>
-    <CEffectEnumTrackedUnits id="TeslaShockChargeExpireETU">
-        <EditorCategories value="Race:Genetron"/>
-        <BehaviorLink value="GenetronPowerSupplyTracker"/>
-        <Effect value="TeslaShockChargeExpireEnergy"/>
-    </CEffectEnumTrackedUnits>
-    <CEffectModifyUnit id="TeslaShockChargeImpactPowerDrain">
-        <ValidatorArray value="CasterHasEnergy"/>
-        <EditorCategories value="Race:Genetron"/>
-        <LaunchUnit Effect="ShockChargeSA"/>
         <VitalArray index="Energy">
-            <Change value="-3">
-                <AccumulatorArray value="TeslaShockChargeOverloadSwitch"/>
-            </Change>
+            <Change value="-150"/>
         </VitalArray>
     </CEffectModifyUnit>
-    <CEffectEnumTrackedUnits id="TeslaShockChargeImpactPowerETU">
-        <EditorCategories value="Race:Genetron"/>
-        <BehaviorLink value="GenetronPowerSupplyTracker"/>
-        <Effect value="TeslaShockChargeImpactPowerDrain"/>
-    </CEffectEnumTrackedUnits>
     <CEffectCreatePersistent id="VirtusSelffixProtocolChannelDummy">
         <ValidatorArray value="GenetronPowerSupplyGE100"/>
         <EditorCategories value="Race:Genetron"/>
@@ -2237,12 +2213,16 @@
     <CEffectSet id="LaunchCloakChargeLS" parent="ScionSet" Race="Genetron">
         <EffectArray value="LaunchCloakCharge"/>
         <EffectArray value="ChargeUse"/>
+        <EffectArray value="TeslaLaunchChargeCostETU"/>
         <TargetLocationType value="UnitOrPoint"/>
+        <ValidatorArray value="GenetronPowerSupplyGE150"/>
     </CEffectSet>
     <CEffectSet id="LaunchShockChargeLS" parent="ScionSet" Race="Genetron">
         <EffectArray value="LaunchShockCharge"/>
         <EffectArray value="ChargeUse"/>
+        <EffectArray value="TeslaLaunchChargeCostETU"/>
         <TargetLocationType value="UnitOrPoint"/>
+        <ValidatorArray value="GenetronPowerSupplyGE150"/>
     </CEffectSet>
     <CEffectApplyBehavior id="MendBehavior" parent="ScionApplyBehavior" Race="Xayid"/>
     <CEffectApplyBehavior id="MiningPrioritySearch" parent="ScionApplyBehavior" Race="Genetron">
@@ -2572,7 +2552,6 @@
     </CEffectApplyBehavior>
     <CEffectSet id="TeslaShockChargeExpire" parent="ScionSet" Race="Genetron">
         <EffectArray value="TeslaShockChargeExpireEnergy"/>
-        <EffectArray value="TeslaShockChargeExpireETU"/>
         <EffectArray value="TeslaShockChargeExpireSearch"/>
         <EffectArray value="TeslaShockChargeOverloadRemove"/>
         <EffectArray value="TeslaShockChargeExpireRecharge"/>
@@ -2600,7 +2579,6 @@
         <EffectArray value="TeslaShockChargeDummyDMG"/>
         <EffectArray value="TeslaShockChargeImpactDamage"/>
         <EffectArray value="TeslaShockChargeImpactEnergyTarget"/>
-        <EffectArray value="TeslaShockChargeImpactPowerETU"/>
         <EffectArray value="TeslaShockChargeImpactEnergyCaster"/>
         <EffectArray value="TeslaShockChargeImpactDecloak"/>
     </CEffectSet>

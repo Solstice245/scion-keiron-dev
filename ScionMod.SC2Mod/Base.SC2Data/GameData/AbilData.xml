@@ -113,7 +113,7 @@
             <Vital index="Energy" value="15"/>
             <Cooldown TimeUse="5"/>
         </Cost>
-        <CmdButtonArray index="Execute" DefaultButtonFace="BlitzerSupercharge"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="BlitzerSupercharge" Requirements="BlitzerOverdriveReq"/>
         <Effect index="0" value="BlitzerOverdrivePowerEnum"/>
     </CAbilEffectInstant>
     <CAbilBuildable id="BuildInProgress">
@@ -279,7 +279,7 @@
         <Range value="10"/>
         <Arc value="360"/>
         <AINotifyEffect value="CourierOpticalDisruptionCreatePersistent"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="OpticalDisruption"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="OpticalDisruption" Requirements="CourierOpticalDisruptionReq"/>
         <Cost>
             <Vital index="Energy" value="50"/>
         </Cost>
@@ -365,7 +365,7 @@
             <Vital index="Energy" value="50"/>
             <Cooldown TimeUse="4.2"/>
         </Cost>
-        <CmdButtonArray index="Execute" DefaultButtonFace="IgnitionBlast"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="IgnitionBlast" Requirements="BoarIgnitionBlastReq"/>
         <Effect index="0" value="BoarIgnitionBlastPowerEnum"/>
     </CAbilEffectInstant>
     <CAbilRally id="RallyProcessingCore">
@@ -389,7 +389,7 @@
         <Flags index="Smart" value="1"/>
         <Flags index="PassengerAcquirePassengers" value="1"/>
         <TargetFilters value="Mechanical,Visible;Self,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
-        <RangeSlop value="0.25"/>
+        <RangeSlop value="0.5"/>
         <AutoCastAcquireLevel value="Defensive"/>
         <AutoCastFilters value="Visible;Neutral,Enemy"/>
         <AutoCastRange value="7"/>
@@ -409,7 +409,7 @@
             <Flags index="ToSelection" value="1"/>
         </CmdButtonArray>
         <AcquirePriority value="1"/>
-        <Range value="0.25"/>
+        <Range value="2"/>
         <AutoCastValidatorArray value="NotStructureTarget"/>
         <AINotifyEffect value="FixerRepairHealer"/>
     </CAbilEffectTarget>
@@ -430,7 +430,7 @@
     <CAbilBehavior id="CourierCloak">
         <AbilSetId value="Clok"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <CmdButtonArray index="On" DefaultButtonFace="CloakOnCourier">
+        <CmdButtonArray index="On" DefaultButtonFace="CloakOnCourier" Requirements="CourierCloakingFieldReq">
             <Flags index="ToSelection" value="1"/>
         </CmdButtonArray>
         <CmdButtonArray index="Off" DefaultButtonFace="CloakOffCourier">
@@ -518,7 +518,7 @@
         <UninterruptibleArray index="Cast" value="1"/>
         <UninterruptibleArray index="Finish" value="1"/>
         <CursorEffect value="NaniteGrenadeImpact"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="NaniteGrenade"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="NaniteGrenade" Requirements="AquilaNaniteGrenadeReq"/>
         <Effect index="0" value="AquilaNaniteGrenadeInitTarget"/>
     </CAbilEffectTarget>
     <CAbilEffectInstant id="SuperChargeAquila">
@@ -530,7 +530,7 @@
             <Charge Link="Abil/CannonReset"/>
             <Cooldown Link="Abil/CannonReset"/>
         </Cost>
-        <CmdButtonArray index="Execute" DefaultButtonFace="BlitzerSupercharge" Requirements="IsNotSupercharged">
+        <CmdButtonArray index="Execute" DefaultButtonFace="BlitzerSupercharge" Requirements="AquilaIsNotSupercharged">
             <Flags index="ToSelection" value="1"/>
         </CmdButtonArray>
         <AbilSetId value="Supercharge"/>
@@ -539,7 +539,7 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Effect index="0" value="LaunchShockChargeLS"/>
         <Range value="9"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="LaunchShockCharge"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="LaunchShockCharge" Requirements="TeslaAbilitiesReq"/>
         <Cost>
             <Charge>
                 <CountMax value="1"/>
@@ -557,7 +557,7 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Effect index="0" value="LaunchCloakChargeLS"/>
         <Range value="9"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="LaunchCloakCharge"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="LaunchCloakCharge" Requirements="TeslaAbilitiesReq"/>
         <Cost>
             <Charge>
                 <CountMax value="1"/>
@@ -1058,7 +1058,7 @@
         </Cost>
         <TargetFilters value="-;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <Range value="8"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="VengeanceMissile"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="VengeanceMissile" Requirements="AvengerVengeanceMissileReq"/>
         <SharedFlags index="RegisterChargeEvent" value="1"/>
         <Arc value="360"/>
     </CAbilEffectTarget>
@@ -1070,7 +1070,7 @@
         <CastOutroTime value="5.6"/>
         <UninterruptibleArray index="Cast" value="1"/>
         <UninterruptibleArray index="Channel" value="1"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="SelfFixProtocol"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="SelfFixProtocol" Requirements="VirtusSelfFixReq"/>
         <Effect index="0" value="VirtusSelffixProtocolChannelDummy"/>
     </CAbilEffectInstant>
     <CAbilEffectTarget id="WardRestitution">
@@ -2607,8 +2607,9 @@
         <TargetFilters value="-;Ally,Neutral,Enemy,Structure,Stasis,Dead,Hidden"/>
         <AINotifyEffect value="FuseUnfuseRB"/>
     </CAbilEffectInstant>
-    <CAbilEffectTarget id="ELORProtocol">
+    <CAbilEffectTarget id="InciterELORProtocol">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Effect index="0" value="ELORProtocolInitTarget"/>
         <Flags index="AllowMovement" value="1"/>
         <Flags index="BestUnit" value="0"/>
         <Flags index="RequireTargetVision" value="0"/>
@@ -2619,7 +2620,6 @@
         <Range value="10"/>
         <AINotifyEffect value="ELORProtocolLM"/>
         <EffectRange index="0" value="1,500"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="ELORProtocol"/>
-        <Effect index="0" value="ELORProtocolInitTarget"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="ELORProtocol" Requirements="InciterELORReq"/>
     </CAbilEffectTarget>
 </Catalog>

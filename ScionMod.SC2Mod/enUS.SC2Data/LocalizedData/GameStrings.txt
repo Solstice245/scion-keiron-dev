@@ -38,7 +38,6 @@ Abil/Name/CruxLightningBolt=Crux - Lightning Bolt
 Abil/Name/DisguiseAsSpitfire=Disguise As Spitfire
 Abil/Name/DisguiseAsVolt=Disguise As Volt
 Abil/Name/DisguiseAsXayidling=Disguise As Xayidling
-Abil/Name/ELORProtocol=ELOR Protocol
 Abil/Name/EchoDiscordMode=Discord Mode
 Abil/Name/EchoFighterMode=Fighter Mode
 Abil/Name/EdificeResearch=Edifice Research
@@ -64,6 +63,7 @@ Abil/Name/HarbingerJudgementModeStart=Harbinger - Judgement Mode
 Abil/Name/Hunker=Hunker
 Abil/Name/IgnitionBlast=Ignition Blast
 Abil/Name/IncendiaryInfusion=Incendiary Infusion
+Abil/Name/InciterELORProtocol=Inciter - ELOR Protocol
 Abil/Name/InterdictorBurrow=Burrow
 Abil/Name/InterdictorUnburrow=Unburrow
 Abil/Name/KeironBuild=Keiron Build
@@ -674,7 +674,7 @@ Button/Tooltip/BlazeResearchFirewallShield=<c val="FFFF80">Blazes</c> gain +2 sh
 Button/Tooltip/BlindingBurst=Blinds all enemies in a medium radius, disabling their vision, attacks and abilities. Lasts for a duration of <d ref="Behavior,BlindingBurstAB,Duration" precision="0"/> seconds. Will be cast upon death if available.
 Button/Tooltip/Blitzer=General purpose combat unit. Can use Supercharge and Overdrive.<n/><n/><c val="78F0FF">Power user.</c></n><c val="FFFF80">Can attack ground and air units.</c>
 Button/Tooltip/BlitzerBoreanReactor=<c val="FFFF80">Blitzers</c> gain +15 maximum and starting energy.
-Button/Tooltip/BlitzerOverdrive=Increases movement speed by <d ref="Behavior,BlitzerOverdrive,Modification.MoveSpeedMultiplier-1*100"/>% for <d ref="Behavior,BlitzerOverdrive,Duration"/> seconds.
+Button/Tooltip/BlitzerOverdrive=Increases movement speed by <d ref="Behavior,BlitzerOverdrive,Modification.MoveSpeedMultiplier-1*100"/>% for <d ref="Behavior,BlitzerOverdrive,Duration"/> seconds.<n/><n/><c val="78F0FF">Uses power.</c>
 Button/Tooltip/BlitzerSupercharge=Causes the caster's next attack to deal <d ref="Effect,ChargeCannonSC,Amount/Effect,ChargeCannon,Amount*100"/>% damage. Weapon range is extended by <d ref="Behavior,SuperChargeCannon,Modification.RangedWeaponRange"/> while charged. The charge lasts for <d ref="Behavior,SuperChargeCannon,Duration"/> seconds.<n/><n/><c val="78F0FF">Uses power.</c>
 Button/Tooltip/BlitzerSupercharged=The caster's weapon is currently supercharged.
 Button/Tooltip/Boar=Armored craft with a bladed hull, and light machine guns. Can use Ignition Blast.<n/><n/><c val="78F0FF">Power user.</c><n/><c val="FFFF80">Can attack ground and air units.</c>
@@ -1885,12 +1885,11 @@ Effect/Name/SystemOffloadSA=System Offload
 Effect/Name/TeslaChargeCompleteCloakCharge=Tesla - Charge Complete (Cloak Charge)
 Effect/Name/TeslaChargeCompleteShockCharge=Tesla - Charge Complete (Shock Charge)
 Effect/Name/TeslaChargeSpawned=Tesla - Charge Spawned
-Effect/Name/TeslaCloakChargeDrainETU=Tesla - Cloak Charge Drain (ETU)
-Effect/Name/TeslaCloakChargeDrainHealer=Tesla - Cloak Charge Drain (Healer)
+Effect/Name/TeslaLaunchChargeCostETU=Tesla - Launch Charge Cost (ETU)
+Effect/Name/TeslaLaunchChargeCostMU=Tesla - Launch Charge Cost (MU)
 Effect/Name/TeslaLoadChargeIntoTransport=Tesla - Load Charge Into Transport
 Effect/Name/TeslaShockChargeDummyDMG=Tesla - Shock Charge (DummyDMG)
 Effect/Name/TeslaShockChargeExpire=Tesla - Shock Charge (Expire)
-Effect/Name/TeslaShockChargeExpireETU=Tesla - Shock Charge (Expire ETU)
 Effect/Name/TeslaShockChargeExpireEnergy=Tesla - Shock Charge (Expire Energy)
 Effect/Name/TeslaShockChargeExpireRecharge=Tesla - Shock Charge (Expire Recharge)
 Effect/Name/TeslaShockChargeExpireSearch=Tesla - Shock Charge (Expire Search)
@@ -1899,8 +1898,6 @@ Effect/Name/TeslaShockChargeImpactDamage=Tesla - Shock Charge (Impact Damage)
 Effect/Name/TeslaShockChargeImpactDecloak=Tesla - Shock Charge (Impact Decloak)
 Effect/Name/TeslaShockChargeImpactEnergyCaster=Tesla - Shock Charge (Impact Energy Caster)
 Effect/Name/TeslaShockChargeImpactEnergyTarget=Tesla - Shock Charge (Impact Energy Target)
-Effect/Name/TeslaShockChargeImpactPowerDrain=Tesla - Shock Charge (Impact Power Drain)
-Effect/Name/TeslaShockChargeImpactPowerETU=Tesla - Shock Charge (Impact Power ETU)
 Effect/Name/TeslaShockChargeOverload=Tesla - Shock Charge Overload (Apply)
 Effect/Name/TeslaShockChargeOverloadRemove=Tesla - Shock Charge Overload (Remove)
 Effect/Name/ThrasherSpineDMG=Thrasher Spine
@@ -2016,14 +2013,24 @@ Race/Name/Keir=Keiron
 Race/Name/Xayi=Xayid
 RequirementNode/Tooltip/And352081205NotCountBehaviorHarbingerJudgementModeStartQueuedOrBetterAtUnitNotCountBehaviorHarbingerJudgementModeStopQueuedOrBetterAtUnit=Not Transforming
 RequirementNode/Tooltip/CountBehaviorApertureRequirementDummyQueuedOrBetterAtUnit1756462=At least 10 energy
+RequirementNode/Tooltip/CountBehaviorAquilaNaniteGrenadeReqCompleteOnlyAtUnit1897978320=Not enough power
+RequirementNode/Tooltip/CountBehaviorAquilaSuperchargeReqCompleteOnlyAtUnit1897978320=Not enough power
+RequirementNode/Tooltip/CountBehaviorAvengerVengeanceMissileReqCompleteOnlyAtUnit1897978320=Not enough power
+RequirementNode/Tooltip/CountBehaviorBlitzerAbilitiesReqCompleteOnlyAtUnit1897978320=Not enough power
+RequirementNode/Tooltip/CountBehaviorBoarIgnitionBlastReqCompleteOnlyAtUnit1897978320=Not enough power
+RequirementNode/Tooltip/CountBehaviorCourierCloakingFieldReqCompleteOnlyAtUnit1897978320=Not enough power
+RequirementNode/Tooltip/CountBehaviorCourierOpticalDisruptionReqCompleteOnlyAtUnit1897978320=Not enough power
 RequirementNode/Tooltip/CountBehaviorEchoReverbCasterControllerCompleteOnlyAtUnit2145668228=Must Have Active Sonic Image
 RequirementNode/Tooltip/CountBehaviorElytraAmmoDummyCompleteOnlyAtUnit3668520173=Elytra must have Ammo
 RequirementNode/Tooltip/CountBehaviorGenetronProductionModeOverclockBuffCompleteOnlyAtUnit1330943493=Is In Overclocked Mode
+RequirementNode/Tooltip/CountBehaviorInciterELORReqCompleteOnlyAtUnit1897978320=Not enough power
 RequirementNode/Tooltip/CountBehaviorMoleBurrowedCompleteOnlyAtUnit3504524364=Must Be Burrowed
 RequirementNode/Tooltip/CountBehaviorSchematicTransmit2CompleteOnlyAtUnit3303085758=2 Uploaders
 RequirementNode/Tooltip/CountBehaviorSchematicTransmit3CompleteOnlyAtUnit1653320550=3 Uploaders
 RequirementNode/Tooltip/CountBehaviorSchematicTransmit3CompleteOnlyAtUnit2016240140=Has 3 Linked Uploaders
 RequirementNode/Tooltip/CountBehaviorSchematicTransmitCompleteOnlyAtUnit1791806786=1 Uploader
+RequirementNode/Tooltip/CountBehaviorTeslaAbilitiesReqCompleteOnlyAtUnit1897978320=Not enough power
+RequirementNode/Tooltip/CountBehaviorVirtusSelfFixReqCompleteOnlyAtUnit1897978320=Not enough power
 RequirementNode/Tooltip/CountBehaviorWardShellDomeReqDummyQueuedOrBetterAtUnit2105069379=Not enough shell
 RequirementNode/Tooltip/CountUnitAlias_CitadelCompleteOnly2790733192=Citadel
 RequirementNode/Tooltip/CountUnitAlias_GatewayCompleteOnly4260347518TechTreeCheat=Gateway
