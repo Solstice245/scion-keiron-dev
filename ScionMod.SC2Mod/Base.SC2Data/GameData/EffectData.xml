@@ -276,6 +276,27 @@
         <DrainVitalCostFactor value="1"/>
         <RechargeVitalRate value="0.914"/>
     </CEffectCreateHealer>
+    <CEffectCreateHealer id="ProcessingCorePowerHealer">
+        <ValidatorArray value="GenetronEnergyGenValidators"/>
+        <EditorCategories value="Race:Genetron"/>
+        <Flags index="Channeled" value="0"/>
+        <Flags index="ContinueWhenFull" value="1"/>
+        <PeriodicValidator value="GenetronEnergyGenValidators"/>
+        <RechargeVital value="Energy"/>
+        <RechargeVitalRate value="0.7148"/>
+        <InitialEffect value="DataDefaultSet1"/>
+        <FinalEffect value="DataDefaultSet0"/>
+    </CEffectCreateHealer>
+    <CEffectEnumTrackedUnits id="ProcessingCorePowerETU">
+        <ValidatorArray value="CasterDataDefaultIs0"/>
+        <ValidatorArray value="CasterNotLockedDown"/>
+        <ValidatorArray value="CasterIsNotHidden"/>
+        <ValidatorArray value="CasterNotDead"/>
+        <ValidatorArray value="CasterIsNotUnderConstruction"/>
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="ProcessingCorePowerHealer"/>
+    </CEffectEnumTrackedUnits>
     <CEffectEnumTrackedUnits id="ProcessorSystemRechargePowerEnum">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
