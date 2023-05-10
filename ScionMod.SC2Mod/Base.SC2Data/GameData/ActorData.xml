@@ -209,6 +209,48 @@
     <CActorSound id="Badger_PowershellOff" parent="SoundOneShotScion" Behavior="BadgerPowershell" BSub="Off">
         <Host Subject="_Selectable"/>
     </CActorSound>
+    <CActorBeamSimple id="FixerRepairBeamAlt" parent="BeamSimpleAnimationStyleContinuous">
+        <Inherits index="Visibility" value="1"/>
+        <Supporter Subject="_Unit" Scope="Caster" Actor="Find"/>
+        <On Terms="Effect.FixerRepairHealer.SourceStart" Send="Create"/>
+        <On Terms="Effect.FixerRepairHealer.SourceStop" Send="Destroy"/>
+        <HostForProps Subject="_Unit" Scope="Caster" Actor="Find"/>
+        <Host Subject="_Unit" Scope="Caster" Actor="Find"/>
+        <Model value="FixerRepairBeam"/>
+        <HostLaunch Subject="_Unit" Scope="Caster" Actor="Find"/>
+        <HostLaunchSiteOps Ops="SOpAttachWeaponRight"/>
+        <HostImpact>
+            <Subject value="_Unit"/>
+            <Scope value="Target"/>
+            <Actor value="Find"/>
+            <Effect value="FixerRepair"/>
+        </HostImpact>
+        <HostImpactSiteOps Ops="SOpAttachCenter"/>
+    </CActorBeamSimple>
+    <CActorModel id="FixerRepairImpact" parent="ModelAnimationStyleContinuousUNIT">
+        <On index="0" Terms="ActorCreation" Send="$Birth PlayForever"/>
+        <On index="2" Terms="Effect.FixerRepairHealer.TargetStart" Send="Create"/>
+        <On Terms="Effect.FixerRepairHealer.TargetStop; FromEffectTreeDescendant" Send="Destroy"/>
+        <HostSiteOps Ops="SOpAttachCenter"/>
+        <Host Scope="Target" Effect="FixerRepair"/>
+        <AutoScaleFactor value="1.000000"/>
+    </CActorModel>
+    <CActorSound id="Fixer_RepairLoop" parent="SoundContinuous">
+        <On Terms="Effect.FixerRepairHealer.Start; At Caster" Send="Create"/>
+        <On Terms="Effect.FixerRepairHealer.Stop; At Caster; FromEffectTreeDescendant" Send="Destroy"/>
+        <On Terms="ActorCreation" Send="Create Fixer_RepairStart"/>
+        <On Terms="ActorDestruction" Send="Create Fixer_RepairStop"/>
+        <HostSiteOps Ops="SOpAttachCenter"/>
+        <Host Scope="Caster"/>
+    </CActorSound>
+    <CActorSound id="Fixer_RepairStart" parent="SoundOneShot">
+        <Host Scope="Caster"/>
+        <HostSiteOps Ops="SOpAttachCenter"/>
+    </CActorSound>
+    <CActorSound id="Fixer_RepairStop" parent="SoundOneShot">
+        <Host Scope="Caster"/>
+        <HostSiteOps Ops="SOpAttachCenter"/>
+    </CActorSound>
     <CActorUnit id="GenetronPowerSupplyDummy" parent="GenericUnitStandard" unitName="GenetronPowerSupplyDummy">
         <Aliases index="1" removed="1"/>
         <AcceptedHostedPropTransfers index="CastShadows" value="0"/>
@@ -355,6 +397,23 @@
         <Inherits index="WarpGroup" value="0"/>
         <On Terms="ActorCreation" Send="SetOpacity"/>
     </CActorModel>
+    <CActorBeamSimple id="FixerRepairBeam" parent="BeamSimpleAnimationStyleContinuous">
+        <Inherits index="Visibility" value="1"/>
+        <Supporter Subject="_Unit" Scope="Caster" Actor="Find"/>
+        <On Terms="Effect.FixerRepairHealer.SourceStart" Send="Create"/>
+        <On Terms="Effect.FixerRepairHealer.SourceStop" Send="Destroy"/>
+        <HostForProps Subject="_Unit" Scope="Caster" Actor="Find"/>
+        <Host Subject="_Unit" Scope="Caster" Actor="Find"/>
+        <HostLaunch Subject="_Unit" Scope="Caster" Actor="Find"/>
+        <HostLaunchSiteOps Ops="SOpAttachWeaponLeft"/>
+        <HostImpact>
+            <Subject value="_Unit"/>
+            <Scope value="Target"/>
+            <Actor value="Find"/>
+            <Effect value="FixerRepair"/>
+        </HostImpact>
+        <HostImpactSiteOps Ops="SOpAttachCenter"/>
+    </CActorBeamSimple>
     <CActorModel id="WardRestitutionImpact" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Effect.WardRestitutionRechargeSet.Start; At Target" Send="Create"/>
         <HostSiteOps Ops="SOpAttachCenter"/>
@@ -936,8 +995,8 @@
         <On index="65" Terms="WeaponStart.*.AttackStart; AnimPlaying Birth" Send="AnimClear Birth"/>
         <On index="66" Terms="Abil.attack.ReadyStop" Send="AnimGroupRemove Ready"/>
         <On index="67" Terms="UnitHeightUpdate.*.Land" Send="Create Warhound_Land"/>
-        <On index="68" Terms="Abil.FixerRepair.SourceChannelStart" Send="AnimPlay Work Work PlayForever"/>
-        <On Terms="Abil.FixerRepair.SourceChannelStop" Send="AnimClear Work"/>
+        <On index="68" Terms="Abil.FixerRepair.SourceChannelStart" Send="$Spell PlayForever"/>
+        <On Terms="Abil.FixerRepair.SourceChannelStop" Send="AnimClear Spell"/>
         <On Terms="Behavior.SpeedCloak.On" Send="AnimPlay SpeedCloakSpell Cover,A,Spell PlayForever"/>
         <On Terms="Behavior.SpeedCloak.Off" Send="AnimClear SpeedCloakSpell"/>
         <On Terms="AnimDone.*.Cleared; AnimName SpeedCloakSpell" Send="AnimBracketStart SpeedCloak Cover,A,Start Cover,A,Stand Cover,A,End"/>
@@ -2157,9 +2216,10 @@
         <FogVisibility value="Visible"/>
         <On Terms="Behavior.MoleSubterraneanSensors.On" Send="Create"/>
         <On Terms="Behavior.MoleSubterraneanSensors.Off" Send="Destroy"/>
-        <Range value="25.000000"/>
+        <Range value="30.000000"/>
         <Icon value="Assets\Textures\radaricon1.dds"/>
         <IconArcLength value="3.250000"/>
+        <RangeFlags index="Minimap" value="1"/>
     </CActorRange>
     <CActorSound id="Inciter_JumpLand" parent="SoundOneShot">
         <On Terms="Behavior.InciterJump.LandUp" Send="Create"/>
