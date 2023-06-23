@@ -608,52 +608,51 @@
 
             <!-- Tier One Two -->
 
-            <Frame type="TechTreeStructureFrame" name="Fabricator" template="TechTreePanel_Scion/TechTreeStructureFrameTemplate_Gen">
+            <Frame type="TechTreeStructureFrame" name="RelayTower" template="TechTreePanel_Scion/TechTreeStructureFrameNoProductionTemplate_Gen">
                 <Anchor side="Top" relative="$parent/TechVault" pos="Max" offset="0"/>
                 <Anchor side="Left" relative="$parent/Manufacturer" pos="Min" offset="0"/>
-            </Frame>
-
-            <Frame type="TechTreeStructureFrame" name="RelayTower" template="TechTreePanel_Scion/TechTreeStructureFrameNoProductionTemplate_Gen">
-                <Anchor side="Top" relative="$parent/Fabricator" pos="Min" offset="0"/>
-                <Anchor side="Left" relative="$parent/Fabricator" pos="Max" offset="#TechTreeHorizontalGap"/>
                 <Height val="240"/>
             </Frame>
 
-            <Frame type="Frame" name="ManufacturerToFabricatorTwoCornerLine" template="TechTreePanel_Scion/TwoCornerLine_Gen">
-                <Anchor side="Left" relative="$parent/Fabricator/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
-                <Anchor side="Right" relative="$parent/RelayTower/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
-                <Anchor side="Bottom" relative="$parent/Fabricator" pos="Min" offset="15"/>
+            <Frame type="TechTreeStructureFrame" name="Fabricator" template="TechTreePanel_Scion/TechTreeStructureFrameTemplate_Gen">
+                <Anchor side="Top" relative="$parent/RelayTower" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/RelayTower" pos="Max" offset="#TechTreeHorizontalGap"/>
             </Frame>
 
-            <Frame type="Frame" name="ManufacturerToFabricatorArrow" template="TechTreePanel_Scion/VerticalArrow_Gen">
+            <Frame type="Frame" name="ManufacturerToRelayTowerTwoCornerLine" template="TechTreePanel_Scion/TwoCornerLine_Gen">
+                <Anchor side="Left" relative="$parent/RelayTower/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/Fabricator/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/RelayTower" pos="Min" offset="15"/>
+            </Frame>
+
+            <Frame type="Frame" name="ManufacturerToRelayTowerArrow" template="TechTreePanel_Scion/VerticalArrow_Gen">
                 <Anchor side="Top" relative="$parent/Manufacturer/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
-                <Anchor side="Bottom" relative="$parent/ManufacturerToFabricatorTwoCornerLine" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/ManufacturerToRelayTowerTwoCornerLine" pos="Min" offset="0"/>
                 <Anchor side="Left" relative="$parent/Manufacturer/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
                 <Anchor side="Right" relative="$parent/Manufacturer/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
             </Frame>
 
             <!-- Tier Three -->
 
-            <Frame type="TechTreeStructureFrame" name="AssemblyArray" template="TechTreePanel_Scion/TechTreeStructureFrameTemplate_Gen">
-                <Anchor side="Top" relative="$parent/Fabricator" pos="Max" offset="0"/>
-                <Anchor side="Left" relative="$parent/Fabricator" pos="Min" offset="0"/>
-            </Frame>
-
-            <Frame type="Frame" name="FabricatorToAssemblyArrayArrow" template="TechTreePanel_Scion/VerticalArrow_Gen">
-                <Anchor side="Top" relative="$parent/Fabricator/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
-                <Anchor side="Bottom" relative="$parent/AssemblyArray/BuildingIconBackgroundImage" pos="Min" offset="15"/>
-                <Anchor side="Left" relative="$parent/Fabricator/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
-                <Anchor side="Right" relative="$parent/Fabricator/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
-            </Frame>
-
             <Frame type="TechTreeStructureFrame" name="Generator" template="TechTreePanel_Scion/TechTreeStructureFrameNoProductionTemplate_Gen">
                 <Anchor side="Top" relative="$parent/RelayTower" pos="Max" offset="0"/>
                 <Anchor side="Left" relative="$parent/RelayTower" pos="Min" offset="0"/>
             </Frame>
 
+            <Frame type="TechTreeStructureFrame" name="AssemblyArray" template="TechTreePanel_Scion/TechTreeStructureFrameTemplate_Gen">
+                <Anchor side="Top" relative="$parent/Generator" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/Generator" pos="Max" offset="0"/>
+            </Frame>
+
+            <Frame type="Frame" name="RelayTowerToGeneratorTwoCornerLine" template="TechTreePanel_Scion/TwoCornerLine_Gen">
+                <Anchor side="Left" relative="$parent/Generator/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/AssemblyArray/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/Generator" pos="Min" offset="15"/>
+            </Frame>
+
             <Frame type="Frame" name="RelayTowerToGeneratorArrow" template="TechTreePanel_Scion/VerticalArrow_Gen">
                 <Anchor side="Top" relative="$parent/RelayTower/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
-                <Anchor side="Bottom" relative="$parent/Generator/BuildingIconBackgroundImage" pos="Min" offset="15"/>
+                <Anchor side="Bottom" relative="$parent/RelayTowerToGeneratorTwoCornerLine" pos="Min" offset="0"/>
                 <Anchor side="Left" relative="$parent/RelayTower/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
                 <Anchor side="Right" relative="$parent/RelayTower/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
             </Frame>
