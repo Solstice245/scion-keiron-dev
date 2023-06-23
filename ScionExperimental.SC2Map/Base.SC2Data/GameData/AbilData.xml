@@ -28,10 +28,10 @@
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="Stop"/>
     </CAbilEffectInstant>
-    <CAbilMorph id="XayidMorphFeedingPoolPollinator">
+    <CAbilMorph id="XayidMorphAquiferPollinator">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:MorphsandBurrows"/>
         <DataCollection value="XayidMorphFeedingPoolBilePit"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="FeedingPool" Requirements="HaveMutagenChamber"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Pollinator" Requirements="HaveMutagenChamber"/>
         <CmdButtonArray index="Cancel" DefaultButtonFace="Cancel"/>
         <ActorKey value="XayidMorphFeedingPoolBilePit"/>
         <Flags index="BestUnit" value="1"/>
@@ -64,9 +64,9 @@
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="Stop"/>
     </CAbilEffectInstant>
-    <CAbilMorph id="XayidMorphFeedingPoolBilePit">
+    <CAbilMorph id="XayidMorphAquiferBilePit">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:MorphsandBurrows"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="BilePit" Requirements="HaveMutagenChamber"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Mire" Requirements="HaveMutagenChamber"/>
         <CmdButtonArray index="Cancel" DefaultButtonFace="Cancel"/>
         <Flags index="BestUnit" value="1"/>
         <Flags index="DisableAbils" value="1"/>
@@ -74,7 +74,7 @@
         <Flags index="Interruptible" value="1"/>
         <Flags index="Produce" value="1"/>
         <Flags index="ShowProgress" value="1"/>
-        <InfoArray Score="1" Unit="BilePit">
+        <InfoArray Score="1" Unit="Mire">
             <SectionArray index="Abils">
                 <DurationArray index="Delay" value="20"/>
             </SectionArray>
@@ -122,10 +122,10 @@
             <Flags index="IgnorePlacement" value="1"/>
         </InfoArray>
         <InfoArray index="Train3" Time="19">
-            <Button DefaultButtonFace="Xayithoan" Requirements="HaveAvianNest">
+            <Button DefaultButtonFace="Iris" Requirements="HaveAvianNest">
                 <Flags index="ToSelection" value="1"/>
             </Button>
-            <Unit value="Xayithoan"/>
+            <Unit value="Iris"/>
             <Flags index="IgnorePlacement" value="1"/>
         </InfoArray>
         <InfoArray index="Train4">
@@ -586,7 +586,7 @@
         <InfoArray index="Train1" Time="15">
             <Charge Link="Abil/XayidMorphXayidling"/>
             <Cooldown Link="Abil/XayidMorphXayidling"/>
-            <Button DefaultButtonFace="Roamer" Requirements="HaveCasnoliskDen">
+            <Button DefaultButtonFace="Roamer" Requirements="HaveShrub">
                 <Flags index="ToSelection" value="1"/>
             </Button>
             <Unit value="Roamer"/>
@@ -595,7 +595,7 @@
         <InfoArray index="Train2" Time="17">
             <Charge Link="Abil/XayidMorphXayidling"/>
             <Cooldown Link="Abil/XayidMorphXayidling"/>
-            <Button DefaultButtonFace="Snare" Requirements="HaveCasnoliskDen">
+            <Button DefaultButtonFace="Snare" Requirements="HaveShrub">
                 <Flags index="ToSelection" value="1"/>
             </Button>
             <Unit value="Snare"/>
@@ -719,7 +719,7 @@
             <Cooldown Link="Abil/XayidMorphXayidling"/>
         </InfoArray>
     </CAbilTrain>
-    <CAbilTrain id="XayidMorphForagerFerry">
+    <CAbilTrain id="XayidMorphForager">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <DataCollection value="XayidMorphXayidling"/>
         <Activity value="UI/Blossoming"/>
@@ -770,23 +770,120 @@
             <Flags index="IgnorePlacement" value="1"/>
         </InfoArray>
     </CAbilTrain>
-    <CAbilEffectTarget id="XayidSproutCatalystPit">
-        <TechPlayer value="Owner"/>
+    <CAbilEffectTarget id="XayidSproutGourdPlacementDummy">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <DataCollection value="XayidSproutHabitatPlacementDummy"/>
+        <Effect index="0" value="UnknownEffect"/>
+        <Placeholder value="Gourd"/>
+        <Range value="0.5"/>
+        <CastIntroTime value="0.125"/>
+        <AINotifyEffect value="XayidSproutHabitatPlacementDummy"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Gourd"/>
+        <PlaceUnit value="Gourd"/>
+    </CAbilEffectTarget>
+    <CAbilEffectTarget id="XayidSproutGourd">
         <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
         <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
         <Flags index="RequireTargetVision" value="0"/>
         <Cost>
-            <Resource index="Minerals" value="100"/>
-            <Resource index="Vespene" value="100"/>
+            <Resource index="Minerals" value="50"/>
         </Cost>
         <Range value="500"/>
         <Arc value="360"/>
-        <AINotifyEffect value="XayidSproutScavengerNestCU"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="CatalystPit" Requirements="HaveAvianNest"/>
+        <AINotifyEffect value="XayidSproutHabitatCU"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Gourd" Requirements="HaveAquifer">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+        <PlaceUnit value="Gourd"/>
+    </CAbilEffectTarget>
+    <CAbilEffectTarget id="XayidSproutLotusPlacementDummy">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <DataCollection value="XayidSproutHabitatPlacementDummy"/>
+        <Effect index="0" value="UnknownEffect"/>
+        <Placeholder value="Lotus"/>
+        <Range value="0.5"/>
+        <CastIntroTime value="0.125"/>
+        <AINotifyEffect value="XayidSproutHabitatPlacementDummy"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Lotus"/>
+        <PlaceUnit value="Lotus"/>
+    </CAbilEffectTarget>
+    <CAbilEffectTarget id="XayidSproutLotus">
+        <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
+        <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
+        <Effect index="0" value="XayidSproutLotusInit"/>
+        <Flags index="RequireTargetVision" value="0"/>
+        <Cost>
+            <Resource index="Minerals" value="50"/>
+        </Cost>
+        <Range value="500"/>
+        <Arc value="360"/>
+        <AINotifyEffect value="XayidSproutHabitatCU"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Lotus" Requirements="HaveBulb">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+        <PlaceUnit value="XayidShrub"/>
+    </CAbilEffectTarget>
+    <CAbilEffectTarget id="XayidSproutCatalyzerPlacementDummy">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <DataCollection value="XayidSproutHabitatPlacementDummy"/>
+        <Effect index="0" value="UnknownEffect"/>
+        <Placeholder value="Catalyzer"/>
+        <Range value="0.5"/>
+        <CastIntroTime value="0.125"/>
+        <AINotifyEffect value="XayidSproutHabitatPlacementDummy"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Catalyzer"/>
+        <PlaceUnit value="Catalyzer"/>
+    </CAbilEffectTarget>
+    <CAbilEffectTarget id="XayidSproutStemPlacementDummy">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <DataCollection value="XayidSproutHabitatPlacementDummy"/>
+        <Effect index="0" value="UnknownEffect"/>
+        <Placeholder value="Stem"/>
+        <Range value="0.5"/>
+        <CastIntroTime value="0.125"/>
+        <AINotifyEffect value="XayidSproutHabitatPlacementDummy"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Stem"/>
+        <PlaceUnit value="Stem"/>
+    </CAbilEffectTarget>
+    <CAbilEffectTarget id="XayidSproutShrubPlacementDummy">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <DataCollection value="XayidSproutHabitatPlacementDummy"/>
+        <Effect index="0" value="UnknownEffect"/>
+        <Placeholder value="XayidShrub"/>
+        <Range value="0.5"/>
+        <CastIntroTime value="0.125"/>
+        <AINotifyEffect value="XayidSproutHabitatPlacementDummy"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="XayidShrub"/>
+        <PlaceUnit value="XayidShrub"/>
+    </CAbilEffectTarget>
+    <CAbilEffectTarget id="XayidSproutReservoirPlacementDummy">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <DataCollection value="XayidSproutHabitatPlacementDummy"/>
+        <Effect index="0" value="UnknownEffect"/>
+        <Placeholder value="Reservoir"/>
+        <Range value="0.5"/>
+        <CastIntroTime value="0.125"/>
+        <AINotifyEffect value="XayidSproutHabitatPlacementDummy"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Reservoir"/>
+        <PlaceUnit value="Reservoir"/>
+    </CAbilEffectTarget>
+    <CAbilEffectTarget id="XayidSproutCatalyzer">
+        <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
+        <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
+        <Effect index="0" value="XayidSproutCatalyzerInit"/>
+        <Flags index="RequireTargetVision" value="0"/>
+        <Cost>
+            <Resource index="Minerals" value="50"/>
+        </Cost>
+        <Range value="500"/>
+        <Arc value="360"/>
+        <AINotifyEffect value="XayidSproutHabitatCU"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Catalyzer" Requirements="HaveAvianNest">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
         <PlaceUnit value="CatalystPit"/>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="XayidSproutBiomassCavern">
-        <TechPlayer value="Owner"/>
         <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
         <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
         <Flags index="RequireTargetVision" value="0"/>
@@ -796,56 +893,114 @@
         </Cost>
         <Range value="500"/>
         <Arc value="360"/>
-        <AINotifyEffect value="XayidSproutScavengerNestCU"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="BiomassCavern" Requirements="HaveBiomassHatchery"/>
+        <AINotifyEffect value="XayidSproutHabitatCU"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="BiomassCavern" Requirements="HaveBiomassHatchery">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
         <PlaceUnit value="BiomassCavern"/>
     </CAbilEffectTarget>
-    <CAbilEffectTarget id="XayidSproutAvianNest">
-        <TechPlayer value="Owner"/>
+    <CAbilEffectTarget id="XayidSproutStem">
         <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
         <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
+        <Effect index="0" value="XayidSproutStemInit"/>
         <Flags index="RequireTargetVision" value="0"/>
         <Cost>
-            <Resource index="Minerals" value="150"/>
-            <Resource index="Vespene" value="150"/>
+            <Resource index="Minerals" value="50"/>
         </Cost>
         <Range value="500"/>
         <Arc value="360"/>
-        <AINotifyEffect value="XayidSproutScavengerNestCU"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="AvianNest" Requirements="HaveCasnoliskDen"/>
+        <AINotifyEffect value="XayidSproutHabitatCU"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Stem" Requirements="HaveShrub">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
         <PlaceUnit value="AvianNest"/>
     </CAbilEffectTarget>
-    <CAbilEffectTarget id="XayidSproutCasnoliskDen">
-        <TechPlayer value="Owner"/>
+    <CAbilEffectTarget id="XayidSproutShrub">
         <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
         <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
+        <Effect index="0" value="XayidSproutShrubInit"/>
         <Flags index="RequireTargetVision" value="0"/>
         <Cost>
-            <Resource index="Minerals" value="175"/>
+            <Resource index="Minerals" value="50"/>
         </Cost>
         <Range value="500"/>
         <Arc value="360"/>
-        <AINotifyEffect value="XayidSproutScavengerNestCU"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="CasnoliskDen" Requirements="HaveXayidDen"/>
-        <PlaceUnit value="CasnoliskDen"/>
+        <AINotifyEffect value="XayidSproutHabitatCU"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="XayidShrub" Requirements="HaveBulb">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+        <PlaceUnit value="XayidShrub"/>
     </CAbilEffectTarget>
-    <CAbilEffectTarget id="XayidSproutBiomassHatchery">
-        <TechPlayer value="Owner"/>
+    <CAbilEffectTarget id="XayidSproutThistlePlacementDummy">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <DataCollection value="XayidSproutHabitatPlacementDummy"/>
+        <Effect index="0" value="UnknownEffect"/>
+        <Placeholder value="Thistle"/>
+        <Range value="0.5"/>
+        <CastIntroTime value="0.125"/>
+        <AINotifyEffect value="XayidSproutHabitatPlacementDummy"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Thistle"/>
+        <PlaceUnit value="Thistle"/>
+    </CAbilEffectTarget>
+    <CAbilEffectTarget id="XayidSproutThistle">
         <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
         <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
+        <Effect index="0" value="XayidSproutThistleInit"/>
         <Flags index="RequireTargetVision" value="0"/>
         <Cost>
-            <Resource index="Minerals" value="200"/>
-            <Resource index="Vespene" value="100"/>
+            <Resource index="Minerals" value="50"/>
         </Cost>
         <Range value="500"/>
         <Arc value="360"/>
-        <AINotifyEffect value="XayidSproutScavengerNestCU"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="BiomassHatchery" Requirements="HaveCasnoliskDen"/>
+        <AINotifyEffect value="XayidSproutHabitatCU"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Thistle" Requirements="HaveShrub">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
         <PlaceUnit value="BiomassHatchery"/>
     </CAbilEffectTarget>
+    <CAbilEffectTarget id="XayidSproutHabitatPlacementDummy">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <Effect index="0" value="UnknownEffect"/>
+        <Placeholder value="Habitat"/>
+        <Range value="0.5"/>
+        <CastIntroTime value="0.125"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="SproutHabitat"/>
+        <PlaceUnit value="Habitat"/>
+    </CAbilEffectTarget>
+    <CAbilEffectTarget id="XayidSproutAquiferPlacementDummy">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <DataCollection value="XayidSproutHabitatPlacementDummy"/>
+        <Effect index="0" value="UnknownEffect"/>
+        <Placeholder value="Aquifer"/>
+        <Range value="0.5"/>
+        <CastIntroTime value="0.125"/>
+        <AINotifyEffect value="XayidSproutHabitatPlacementDummy"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="FeedingPool"/>
+        <PlaceUnit value="Aquifer"/>
+    </CAbilEffectTarget>
+    <CAbilEffectTarget id="XayidSproutBulbPlacementDummy">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <DataCollection value="XayidSproutHabitatPlacementDummy"/>
+        <Effect index="0" value="UnknownEffect"/>
+        <Placeholder value="Bulb"/>
+        <Range value="0.5"/>
+        <CastIntroTime value="0.125"/>
+        <AINotifyEffect value="XayidSproutHabitatPlacementDummy"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Bulb"/>
+        <PlaceUnit value="Bulb"/>
+    </CAbilEffectTarget>
+    <CAbilEffectTarget id="XayidSproutSiphonPlacementDummy">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <DataCollection value="XayidSproutHabitatPlacementDummy"/>
+        <Effect index="0" value="UnknownEffect"/>
+        <Placeholder value="XayidSiphon"/>
+        <Range value="2"/>
+        <CastIntroTime value="0.125"/>
+        <AINotifyEffect value="XayidSproutHabitatPlacementDummy"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="SproutSiphon"/>
+        <PlaceUnit value="XayidSiphon"/>
+    </CAbilEffectTarget>
     <CAbilEffectTarget id="XayidSproutSunkenWarren">
-        <TechPlayer value="Owner"/>
         <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
         <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
         <Flags index="RequireTargetVision" value="0"/>
@@ -855,37 +1010,42 @@
         </Cost>
         <Range value="500"/>
         <Arc value="360"/>
-        <AINotifyEffect value="XayidSproutScavengerNestCU"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="SunkenWarren" Requirements="HaveCatalystPit"/>
+        <AINotifyEffect value="XayidSproutHabitatCU"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="SunkenWarren" Requirements="HaveCatalystPit">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
         <PlaceUnit value="SunkenWarren"/>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="XayidSproutSiphon">
-        <TechPlayer value="Owner"/>
         <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
         <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
         <Flags index="RequireTargetVision" value="0"/>
         <Cost>
-            <Resource index="Minerals" value="75"/>
+            <Resource index="Minerals" value="50"/>
         </Cost>
         <Range value="500"/>
         <Arc value="360"/>
-        <AINotifyEffect value="XayidSproutScavengerNestCU"/>
+        <AINotifyEffect value="XayidSproutHabitatCU"/>
         <IgnoreFilters value="RawResource;-"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="Siphoner"/>
-        <PlaceUnit value="Siphoner"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="SproutSiphon">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+        <PlaceUnit value="XayidSiphon"/>
     </CAbilEffectTarget>
-    <CAbilEffectTarget id="XayidSproutMutagenChamber">
-        <TechPlayer value="Owner"/>
+    <CAbilEffectTarget id="XayidSproutReservoir">
         <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
         <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
+        <Effect index="0" value="XayidSproutReservoirInit"/>
         <Flags index="RequireTargetVision" value="0"/>
         <Cost>
-            <Resource index="Minerals" value="125"/>
+            <Resource index="Minerals" value="50"/>
         </Cost>
         <Range value="500"/>
         <Arc value="360"/>
-        <AINotifyEffect value="XayidSproutScavengerNestCU"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="MutagenChamber" Requirements="HaveXayidDen"/>
+        <AINotifyEffect value="XayidSproutHabitatCU"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Reservoir" Requirements="HaveBulb">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
         <PlaceUnit value="MutagenChamber"/>
     </CAbilEffectTarget>
     <CAbilTrain id="XayidSproutFletch">
@@ -1142,7 +1302,7 @@
         <InfoArray SetOnGround="0"/>
         <InfoArray SetOnGround="0"/>
     </CAbilRally>
-    <CAbilRally id="XayidDenRally">
+    <CAbilRally id="XayidBulbRally">
         <OrderArray index="0">
             <DisplayType value="Rally"/>
             <Color value="255,255,128,0"/>
@@ -1194,7 +1354,7 @@
         <InfoArray SetOnGround="0"/>
         <InfoArray SetOnGround="0"/>
     </CAbilRally>
-    <CAbilRally id="XayidCasnoliskRally">
+    <CAbilRally id="XayidShrubRally">
         <OrderArray index="0">
             <DisplayType value="Rally"/>
             <Color value="255,200,0,200"/>
@@ -1273,36 +1433,41 @@
         <Range value="3"/>
         <FinishTime value="1"/>
         <UninterruptibleArray index="Finish" value="1"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="BurrowDown"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="BurrowDown">
+            <Flags index="IgnoreUser" value="1"/>
+        </CmdButtonArray>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="XayidSproutHabitat">
-        <TechPlayer value="Owner"/>
         <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
         <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
-        <Effect index="0" value="XayidSproutScavengerNest"/>
+        <Effect index="0" value="XayidSproutHabitatInit"/>
         <Flags index="RequireTargetVision" value="0"/>
         <Cost>
-            <Resource index="Minerals" value="400"/>
+            <Resource index="Minerals" value="50"/>
         </Cost>
         <Range value="500"/>
         <Arc value="360"/>
-        <AINotifyEffect value="XayidSproutScavengerNestCU"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="SproutHabitat"/>
+        <AINotifyEffect value="XayidSproutHabitatCU"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="SproutHabitat">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
         <PlaceUnit value="ScavengerNest"/>
     </CAbilEffectTarget>
-    <CAbilEffectTarget id="XayidSproutXayidDen">
-        <TechPlayer value="Owner"/>
+    <CAbilEffectTarget id="XayidSproutBulb">
         <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
         <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
+        <Effect index="0" value="XayidSproutBulbInit"/>
         <Flags index="RequireTargetVision" value="0"/>
         <Cost>
-            <Resource index="Minerals" value="150"/>
+            <Resource index="Minerals" value="50"/>
         </Cost>
         <Range value="500"/>
         <Arc value="360"/>
-        <AINotifyEffect value="XayidSproutScavengerNestCU"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="XayidDen" Requirements="HaveFeedingPool"/>
-        <PlaceUnit value="XayidDen"/>
+        <AINotifyEffect value="XayidSproutHabitatCU"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Bulb" Requirements="HaveAquifer">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+        <PlaceUnit value="Bulb"/>
     </CAbilEffectTarget>
     <CAbilBuild id="XayidSproutStructures">
         <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
@@ -1311,41 +1476,75 @@
         <FlagArray index="PeonKillFinish" value="1"/>
         <FlagArray index="RangeIncludesBuilding" value="0"/>
         <InfoArray index="Build1" Unit="Habitat" Time="100">
-            <Button DefaultButtonFace="SproutHabitat"/>
+            <Button DefaultButtonFace="SproutHabitat">
+                <Flags index="IgnoreUser" value="1"/>
+            </Button>
         </InfoArray>
-        <InfoArray index="Build2" Unit="Siphoner" Time="30">
-            <Button DefaultButtonFace="Siphoner"/>
+        <InfoArray index="Build2" Unit="XayidSiphon" Time="30">
+            <Button DefaultButtonFace="SproutSiphon">
+                <Flags index="IgnoreUser" value="1"/>
+            </Button>
             <ValidatorArray value="HasVespene"/>
         </InfoArray>
-        <InfoArray index="Build3" Unit="SiphonerPlacementBackup">
-            <Button DefaultButtonFace="Siphoner"/>
+        <InfoArray index="Build3" Unit="XayidSiphonPlacementBackup">
+            <Button DefaultButtonFace="SproutSiphon">
+                <Flags index="IgnoreUser" value="1"/>
+            </Button>
         </InfoArray>
-        <InfoArray index="Build4" Unit="FeedingPool" Time="30">
-            <Button DefaultButtonFace="FeedingPool"/>
+        <InfoArray index="Build4" Unit="Aquifer" Time="30">
+            <Button DefaultButtonFace="Aquifer">
+                <Flags index="IgnoreUser" value="1"/>
+            </Button>
         </InfoArray>
-        <InfoArray index="Build5" Unit="XayidDen" Time="68.25">
-            <Button DefaultButtonFace="XayidDen"/>
+        <InfoArray index="Build5" Unit="Bulb" Time="68.25">
+            <Button DefaultButtonFace="Bulb">
+                <Flags index="IgnoreUser" value="1"/>
+            </Button>
         </InfoArray>
-        <InfoArray index="Build6" Unit="MutagenChamber" Time="45">
-            <Button DefaultButtonFace="MutagenChamber"/>
+        <InfoArray index="Build6" Unit="Gourd" Time="50">
+            <Button DefaultButtonFace="Gourd">
+                <Flags index="IgnoreUser" value="1"/>
+            </Button>
         </InfoArray>
-        <InfoArray index="Build7" Unit="CasnoliskDen" Time="65">
-            <Button DefaultButtonFace="CasnoliskDen"/>
+        <InfoArray index="Build7" Unit="Reservoir" Time="45">
+            <Button DefaultButtonFace="Reservoir">
+                <Flags index="IgnoreUser" value="1"/>
+            </Button>
         </InfoArray>
-        <InfoArray index="Build9" Unit="BiomassHatchery" Time="60">
-            <Button DefaultButtonFace="BiomassHatchery"/>
+        <InfoArray index="Build8" Unit="XayidShrub" Time="65">
+            <Button DefaultButtonFace="XayidShrub">
+                <Flags index="IgnoreUser" value="1"/>
+            </Button>
         </InfoArray>
-        <InfoArray index="Build10" Unit="BiomassCavern" Time="80">
-            <Button DefaultButtonFace="BiomassCavern"/>
+        <InfoArray index="Build9" Unit="Lotus" Time="60">
+            <Button DefaultButtonFace="Lotus">
+                <Flags index="IgnoreUser" value="1"/>
+            </Button>
         </InfoArray>
-        <InfoArray index="Build11" Unit="AvianNest" Time="60">
-            <Button DefaultButtonFace="AvianNest"/>
+        <InfoArray index="Build10" Unit="Thistle" Time="60">
+            <Button DefaultButtonFace="Thistle">
+                <Flags index="IgnoreUser" value="1"/>
+            </Button>
         </InfoArray>
-        <InfoArray index="Build12" Unit="CatalystPit" Time="40">
-            <Button DefaultButtonFace="CatalystPit"/>
+        <InfoArray index="Build11" Unit="BiomassCavern" Time="80">
+            <Button DefaultButtonFace="BiomassCavern">
+                <Flags index="IgnoreUser" value="1"/>
+            </Button>
         </InfoArray>
-        <InfoArray index="Build13" Unit="SunkenWarren" Time="100">
-            <Button DefaultButtonFace="SunkenWarren"/>
+        <InfoArray index="Build12" Unit="Stem" Time="60">
+            <Button DefaultButtonFace="Stem">
+                <Flags index="IgnoreUser" value="1"/>
+            </Button>
+        </InfoArray>
+        <InfoArray index="Build13" Unit="Catalyzer" Time="40">
+            <Button DefaultButtonFace="Catalyzer">
+                <Flags index="IgnoreUser" value="1"/>
+            </Button>
+        </InfoArray>
+        <InfoArray index="Build14" Unit="SunkenWarren" Time="100">
+            <Button DefaultButtonFace="SunkenWarren">
+                <Flags index="IgnoreUser" value="1"/>
+            </Button>
         </InfoArray>
         <Range value="0.5"/>
         <RefundFraction>
@@ -1355,20 +1554,21 @@
             <Resource index="Custom" value="-1"/>
         </RefundFraction>
     </CAbilBuild>
-    <CAbilEffectTarget id="XayidSproutFeedingPool">
-        <TechPlayer value="Owner"/>
+    <CAbilEffectTarget id="XayidSproutAquifer">
         <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
         <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
-        <Effect index="0" value="XayidSproutFeedingPoolInit"/>
+        <Effect index="0" value="XayidSproutAquiferInit"/>
         <Flags index="RequireTargetVision" value="0"/>
         <Cost>
-            <Resource index="Minerals" value="100"/>
+            <Resource index="Minerals" value="25"/>
         </Cost>
         <Range value="500"/>
         <Arc value="360"/>
-        <AINotifyEffect value="XayidSproutScavengerNestCU"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="FeedingPool"/>
-        <PlaceUnit value="FeedingPool"/>
+        <AINotifyEffect value="XayidSproutHabitatCU"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Aquifer">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+        <PlaceUnit value="Aquifer"/>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="XayidFletchSeedLand">
         <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>

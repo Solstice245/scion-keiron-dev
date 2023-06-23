@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CAccumulatorVitals id="LifeMaxTarget">
+        <Ratio value="1"/>
+        <UnitSource Value="Target"/>
+        <ModificationType value="PerUnitMaxVital"/>
+    </CAccumulatorVitals>
+    <CAccumulatorArithmetic id="VitalMaxTarget">
+        <Parameters value="0">
+            <AccumulatorArray value="LifeMaxTarget"/>
+            <AccumulatorArray value="ShieldsMaxTarget"/>
+        </Parameters>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="XayidDigestDuration">
+        <MinAccumulation value="0.5"/>
+        <MaxAccumulation value="60"/>
+        <Parameters value="0">
+            <AccumulatorArray value="VitalMaxTarget"/>
+        </Parameters>
+        <Parameters value="0.1"/>
+        <Operation value="Multiply"/>
+    </CAccumulatorArithmetic>
+    <CAccumulatorSwitch id="XayidDigestSwitch">
+        <CaseArray Validator="TargetIsPlayer" Accumulator="DivideBy2"/>
+    </CAccumulatorSwitch>
+</Catalog>
