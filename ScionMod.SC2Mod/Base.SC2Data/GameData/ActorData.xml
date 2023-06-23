@@ -265,6 +265,23 @@
         <HostSiteOps Ops="SOpAttachOverhead SOpMoveDownByDot25 SOpMoveDownByDot25"/>
         <Model value="GenetronProductionMode"/>
     </CActorModel>
+    <CActorModel id="OculusRevealModelFriendly" parent="ModelAnimationStyleContinuous">
+        <VisibleTo index="Neutral" value="1"/>
+        <VisibleTo index="Enemy" value="1"/>
+        <FogVisibility value="Visible"/>
+        <On Terms="Effect.OculusRevealInit.Start" Send="Create"/>
+        <On Terms="Effect.OculusRevealVision.Stop" Send="AnimBracketStop BSD"/>
+        <On Terms="ActorCreation" Send="Create OculusRevealVisualRange"/>
+        <On Terms="ActorDestruction" Target="OculusRevealVisualRange" Send="Destroy"/>
+        <HostSiteOps Ops="SOpTargetPointStationary SOpForwardCasterPointInverted SOpMoveUpBy3 SOpMoveUpBy2" HoldPosition="1" HoldRotation="1"/>
+        <Model value="OculusRevealModel"/>
+    </CActorModel>
+    <CActorSound id="OculusRevealStartFriendly" parent="SoundOneShotScion" Effect="OculusRevealInit">
+        <VisibleTo index="Neutral" value="1"/>
+        <VisibleTo index="Enemy" value="1"/>
+        <FogVisibility value="Visible"/>
+        <Sound value="OculusRevealStart"/>
+    </CActorSound>
     <CActorModel id="OlympusDischargeIndicator1" parent="ModelAnimationStyleOneShot">
         <Flags index="SuppressSaveLoad" value="0"/>
         <Inherits index="Scale" value="1"/>
@@ -702,9 +719,13 @@
         <On index="2" Terms="Effect.CruxConvergenceSA.Start" Send="Create"/>
     </CActorSound>
     <CActorSound id="NullifierAttackSoundLoop" parent="SoundContinuousScion" Effect="NullifierWeaponCP"/>
-    <CActorSound id="OculusRevealStart" parent="SoundOneShotScion" Effect="OculusReveal"/>
+    <CActorSound id="OculusRevealStartEnemy" parent="SoundOneShotScion" Effect="OculusRevealInit">
+        <VisibleTo index="Self" value="1"/>
+        <VisibleTo index="Ally" value="1"/>
+        <Sound value="OculusRevealStart"/>
+    </CActorSound>
     <CActorSound id="OculusRevealStop" parent="SoundOneShot">
-        <On Terms="Effect.OculusReveal.Stop; At Target" Send="Create"/>
+        <On Terms="Effect.OculusRevealVision.Stop; At Target" Send="Create"/>
     </CActorSound>
     <CActorSplat id="OlympusDischargeSplat" parent="CursorSplat" abil="OlympusDischarge">
         <Model value="ProtossAOECursorSplat"/>
@@ -854,7 +875,7 @@
         <RollOutDuration value="0.750000"/>
     </CActorSiteOpBankerUnit>
     <CActorRange id="OculusRevealVisualRange">
-        <Host Subject="OculusRevealModel"/>
+        <Host Subject="OculusRevealModelEnemy"/>
         <Range value="8.000000"/>
         <Icon value="Assets\Textures\ScannerSweepRadius_Diffuse.dds"/>
         <IconArcLength value="0.750000"/>
@@ -1897,7 +1918,11 @@
         <On Terms="SelectionLocalUpdate.MoleBurrowed.Start" Send="Create"/>
         <On Terms="SelectionLocalUpdate.MoleBurrowed.StartEditorGround" Send="Create"/>
         <On Terms="SelectionLocalUpdate.MoleBurrowed.Stop" Send="Destroy"/>
+        <On Terms="SelectionLocalUpdate.MoleBuried.Start" Send="Create"/>
+        <On Terms="SelectionLocalUpdate.MoleBuried.StartEditorGround" Send="Create"/>
+        <On Terms="SelectionLocalUpdate.MoleBuried.Stop" Send="Destroy"/>
         <On Terms="AbilMorph.*.Start; MorphTo MoleBurrowed; Selected" Send="Create"/>
+        <On Terms="AbilMorph.*.Start; MorphTo MoleBuried; Selected" Send="Create"/>
         <On Terms="AbilMorph.*.Start; MorphTo Mole" Send="Destroy"/>
         <Weapon value="LynxCannon"/>
         <Icon value="Assets\Textures\RadarIcon2.dds"/>
@@ -3398,10 +3423,10 @@
     <CActorUnit id="TeslaShockChargeUnit" parent="GenericUnitStandard" unitName="ShockCharge">
         <On Terms="ActorCreation" Send="Create TeslaShockChargeRangeFriendly"/>
         <On Terms="ActorCreation" Send="Create TeslaShockChargeRangeEnemy"/>
-        <On Terms="Behavior.ShockCharge.On" Send="$Spell 0 0.000000 0.000000 2.100000 AsDuration"/>
+        <On Terms="Behavior.ShockCharge.On" Send="$Spell 0 0.000000 0.000000 1.750000 AsDuration"/>
         <On Terms="Behavior.TeslaShockChargeOverload.On" Send="AnimPlay Cover Cover PlayForever"/>
         <On Terms="Behavior.TeslaShockChargeOverload.Off" Send="AnimClear Cover"/>
-        <On Terms="Effect.TeslaShockChargeExpireRecharge.Start" Send="$Spell 0 0.000000 0.000000 2.100000 AsDuration"/>
+        <On Terms="Effect.TeslaShockChargeExpireRecharge.Start" Send="$Spell 0 0.000000 0.000000 1.750000 AsDuration"/>
         <Model value="TeslaShockCharge"/>
         <BuildModel value="TeslaShockCharge"/>
         <DeathArray index="Normal" ModelLink="TerranSmallTriggeredExplosion"/>
@@ -5103,12 +5128,15 @@
         <On Terms="Abil.ConverterGather.Start" Send="StatusIncrement Harvest"/>
         <On Terms="Abil.ConverterGather.Stop" Send="StatusDecrement Harvest"/>
     </CActorUnit>
-    <CActorModel id="OculusRevealModel" parent="ModelAnimationStyleContinuous">
-        <On Terms="Effect.OculusReveal.Start" Send="Create"/>
-        <On Terms="Effect.OculusReveal.Stop" Send="AnimBracketStop BSD"/>
+    <CActorModel id="OculusRevealModelEnemy" parent="ModelAnimationStyleContinuous">
+        <VisibleTo index="Self" value="1"/>
+        <VisibleTo index="Ally" value="1"/>
+        <On Terms="Effect.OculusRevealInit.Start" Send="Create"/>
+        <On Terms="Effect.OculusRevealVision.Stop" Send="AnimBracketStop BSD"/>
         <On Terms="ActorCreation" Send="Create OculusRevealVisualRange"/>
         <On Terms="ActorDestruction" Target="OculusRevealVisualRange" Send="Destroy"/>
         <HostSiteOps Ops="SOpTargetPointStationary SOpForwardCasterPointInverted SOpMoveUpBy3 SOpMoveUpBy2" HoldPosition="1" HoldRotation="1"/>
+        <Model value="OculusRevealModel"/>
     </CActorModel>
     <CActorModel id="KeironMaterializeModelAirParagon" parent="ModelAddition">
         <Aliases value="_ZergBuildModel"/>

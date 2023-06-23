@@ -276,6 +276,11 @@
         <DrainVitalCostFactor value="1"/>
         <RechargeVitalRate value="0.914"/>
     </CEffectCreateHealer>
+    <CEffectCreatePersistent id="OculusRevealInit" parent="ScionCreatePersistent" Race="Keiron">
+        <Flags index="Channeled" value="1"/>
+        <ExpireDelay value="2"/>
+        <ExpireEffect value="OculusRevealVision"/>
+    </CEffectCreatePersistent>
     <CEffectCreateHealer id="ProcessingCorePowerHealer">
         <ValidatorArray value="GenetronEnergyGenValidators"/>
         <EditorCategories value="Race:Genetron"/>
@@ -434,21 +439,21 @@
         <EditorCategories value="Race:Keiron"/>
         <ImpactUnit Value="Caster"/>
         <VitalArray index="Energy">
-            <Change value="40"/>
+            <Change value="30"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectModifyUnit id="ApertureTeleportMassRefund">
         <EditorCategories value="Race:Keiron"/>
         <ImpactUnit Value="Caster"/>
         <VitalArray index="Energy">
-            <Change value="80"/>
+            <Change value="60"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectModifyUnit id="ApertureTeleportMedRefund">
         <EditorCategories value="Race:Keiron"/>
         <ImpactUnit Value="Caster"/>
         <VitalArray index="Energy">
-            <Change value="20"/>
+            <Change value="15"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectSet id="ApertureTeleportSet" parent="ScionSet" Race="Keiron">
@@ -463,7 +468,7 @@
         <EditorCategories value="Race:Keiron"/>
         <ImpactUnit Value="Caster"/>
         <VitalArray index="Energy">
-            <Change value="10"/>
+            <Change value="5"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectUserData id="AssemblyArrayFinishCourierData">
@@ -781,7 +786,7 @@
     <CEffectEnumArea id="CourierOpticalDisruptionGroundSA" parent="ScionEnumArea">
         <EditorCategories value="Race:Genetron"/>
         <SearchFilters value="Ground;Missile,Stasis,Dead,Hidden,Invulnerable"/>
-        <AreaArray Radius="1.5" Effect="OpticalDisruptionBuff"/>
+        <AreaArray Radius="2" Effect="OpticalDisruptionBuff"/>
     </CEffectEnumArea>
     <CEffectRemoveBehavior id="CourierOpticalDisruptionRB">
         <ValidatorArray index="0" value="OpticalDisruptionRangeLimiter"/>
@@ -1745,7 +1750,7 @@
     <CEffectEnumArea id="CourierOpticalDisruptionAirSA" parent="ScionEnumArea">
         <EditorCategories value="Race:Genetron"/>
         <SearchFilters value="Air;Missile,Stasis,Dead,Hidden,Invulnerable"/>
-        <AreaArray Radius="1.5" Effect="OpticalDisruptionBuff"/>
+        <AreaArray Radius="2" Effect="OpticalDisruptionBuff"/>
     </CEffectEnumArea>
     <CEffectSet id="ProcessingCoreSystemRecharge">
         <ValidatorArray value="noMarkers"/>
@@ -2477,7 +2482,7 @@
         <EffectArray value="SeparationBeamTarget"/>
     </CEffectSet>
     <CEffectDamage id="SeparationBeamDMG" parent="ScionDamageRange" Race="Keiron">
-        <AttributeBonus index="Light" value="3"/>
+        <AttributeBonus index="Light" value="4"/>
         <Amount value="6"/>
         <Death value="Electrocute"/>
     </CEffectDamage>
@@ -2581,7 +2586,7 @@
     <CEffectModifyUnit id="TeslaShockChargeExpireEnergy">
         <EditorCategories value="Race:Genetron"/>
         <VitalArray index="Energy">
-            <Change value="-15">
+            <Change value="-10">
                 <AccumulatorArray value="TeslaShockChargeOverloadSwitch"/>
             </Change>
         </VitalArray>
@@ -2746,9 +2751,6 @@
         <PeriodicEffectArray value="JupiterShellShockedSearch"/>
         <PeriodicEffectArray value="JupiterNapalmCreatePersistent"/>
         <PeriodicEffectArray value="JupiterRevenantBombDamage"/>
-        <PeriodicPeriodArray value="0"/>
-        <PeriodicPeriodArray value="0"/>
-        <PeriodicPeriodArray value="0.0625"/>
     </CEffectCreatePersistent>
     <CEffectModifyUnit id="JupiterSpeedModifyUnit">
         <EditorCategories value="Race:Genetron"/>
@@ -3000,7 +3002,6 @@
         <WhichLocation Value="TargetPoint"/>
         <Effect value="JupiterRevenantBombChannel"/>
         <Count value="1"/>
-        <Radius value="1"/>
     </CEffectDestroyPersistent>
     <CEffectEnumArea id="JupiterShellShockedSearch" parent="ScionEnumAreaEnemyGround" Race="Genetron">
         <AreaArray Radius="1.5" Effect="JupiterShellShocked"/>
@@ -3040,10 +3041,10 @@
         <PeriodicEffectArray value="JupiterRevenantBombForceOffset"/>
         <PeriodicEffectArray value="JupiterSpeed"/>
         <PeriodicEffectArray value="JupiterStealth"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0"/>
         <PeriodicPeriodArray value="0.0625"/>
-        <PeriodicPeriodArray value="0"/>
-        <PeriodicPeriodArray value="0"/>
-        <PeriodicPeriodArray value="0"/>
     </CEffectCreatePersistent>
     <CEffectEnumArea id="SystemOffloadSA" parent="ScionEnumArea" Race="Genetron">
         <AINotifyFlags index="HelpFriend" value="1"/>
@@ -3762,14 +3763,14 @@
         <EditorCategories value="Race:Keiron"/>
         <ImpactUnit Value="Caster"/>
         <VitalArray index="Energy">
-            <Change value="-40"/>
+            <Change value="-30"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectModifyUnit id="ApertureTeleportMassMU">
         <EditorCategories value="Race:Keiron"/>
         <ImpactUnit Value="Caster"/>
         <VitalArray index="Energy">
-            <Change value="-80"/>
+            <Change value="-60"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectLoadContainer id="ApertureTeleportLoad">
@@ -3782,14 +3783,14 @@
         <EditorCategories value="Race:Keiron"/>
         <ImpactUnit Value="Caster"/>
         <VitalArray index="Energy">
-            <Change value="-10"/>
+            <Change value="-5"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectModifyUnit id="ApertureTeleportMedMU">
         <EditorCategories value="Race:Keiron"/>
         <ImpactUnit Value="Caster"/>
         <VitalArray index="Energy">
-            <Change value="-20"/>
+            <Change value="-15"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectSwitch id="ApertureTeleportEnergySwitch">
@@ -4073,11 +4074,13 @@
         <CaseArray Validator="CasterIsOutlet" Effect="KeironChargeDummyAurApeAB"/>
         <CaseArray Validator="CasterIsEmpyrean" Effect="KeironChargeDummyHarParAB"/>
     </CEffectSwitch>
-    <CEffectCreatePersistent id="OculusReveal" parent="ScionCreatePersistent" Race="Keiron">
+    <CEffectCreatePersistent id="OculusRevealVision" parent="ScionCreatePersistent" Race="Keiron">
         <Flags index="Channeled" value="1"/>
         <Flags index="PersistUntilDestroyed" value="1"/>
+        <InitialDelay value="2.1"/>
         <RevealRadius value="8"/>
         <RevealFlags index="Unfog" value="1"/>
+        <RevealFlags index="Detect" value="1"/>
     </CEffectCreatePersistent>
     <CEffectLaunchMissile id="ParagonAirWeapon" parent="ScionLaunchMissile" Race="Keiron">
         <AmmoUnit value="ParagonAir"/>
