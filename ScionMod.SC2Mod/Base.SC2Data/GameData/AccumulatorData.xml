@@ -6,6 +6,13 @@
             <AccumulatorArray value="MultiplyByNeg1"/>
         </Parameters>
     </CAccumulatorArithmetic>
+    <CAccumulatorBehavior id="FuseFusionStacksOnCaster">
+        <Behavior value="FuseFused"/>
+    </CAccumulatorBehavior>
+    <CAccumulatorBehavior id="FuseFusionStacksOnTarget">
+        <Behavior value="FuseFused"/>
+        <UnitSource Value="Target"/>
+    </CAccumulatorBehavior>
     <CAccumulatorArithmetic id="GenetronStructureEnergyLossArith">
         <Parameters value="0">
             <AccumulatorArray value="EnergyCurrentCaster"/>
@@ -337,7 +344,13 @@
     </CAccumulatorSwitch>
     <CAccumulatorUserData id="FuseUnfuseData"/>
     <CAccumulatorArithmetic id="FuseFusionShieldRegenerationBonus">
-        <Parameters value="1.5"/>
+        <Parameters value="1.5">
+            <AccumulatorArray value="FuseFusionStacksOnCaster"/>
+        </Parameters>
+        <Parameters value="0">
+            <AccumulatorArray value="FuseFusionStacksOnTarget"/>
+        </Parameters>
+        <Operation value="Multiply"/>
     </CAccumulatorArithmetic>
     <CAccumulatorSwitch id="FuseFusionShieldRegenerationBonusSwitch">
         <CaseArray Validator="FuseRegenerationBonus" Accumulator="FuseFusionShieldRegenerationBonus"/>

@@ -66,6 +66,12 @@
         <?token id="Race" value="Neutral"?>
         <EditorCategories value="Race:##Race##"/>
     </CEffectSet>
+    <CEffectCreatePersistent id="ACRRepairTarget">
+        <ValidatorArray value="GenetronPowerSupplyGE001"/>
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="TargetUnit"/>
+        <InitialEffect value="ACRRepairSet"/>
+    </CEffectCreatePersistent>
     <CEffectRemoveBehavior id="AegisShieldAuraDamageReceivedRB">
         <ValidatorArray index="0" value="CasterShieldsLT1"/>
         <EditorCategories value="Race:Keiron"/>
@@ -250,6 +256,12 @@
             <Change value="-50"/>
         </VitalArray>
     </CEffectModifyUnit>
+    <CEffectCreatePersistent id="FixerRepairTarget">
+        <ValidatorArray value="GenetronPowerSupplyGE001"/>
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="TargetUnit"/>
+        <InitialEffect value="FixerRepairSet"/>
+    </CEffectCreatePersistent>
     <CEffectEnumTrackedUnits id="JupiterSpeedPowerEnum">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
@@ -956,23 +968,25 @@
     </CEffectSet>
     <CEffectCreateHealer id="FixerRepairCost">
         <EditorCategories value="Race:Genetron"/>
-        <LaunchUnit Value="Target"/>
+        <LaunchUnit Effect="FixerRepairTarget" Value="Target"/>
         <Flags index="Channeled" value="0"/>
         <Flags index="Channeling" value="1"/>
         <Flags index="ContinueWhenFull" value="1"/>
         <DrainVital value="Energy"/>
         <DrainVitalCostFactor value="1"/>
         <RechargeVitalRate value="2.8554"/>
+        <ImpactUnit Effect="FixerRepairTarget"/>
     </CEffectCreateHealer>
     <CEffectCreateHealer id="ACRRepairCost">
         <EditorCategories value="Race:Genetron"/>
-        <LaunchUnit Value="Target"/>
+        <LaunchUnit Effect="ACRRepairTarget" Value="Target"/>
         <Flags index="Channeled" value="0"/>
         <Flags index="Channeling" value="1"/>
         <Flags index="ContinueWhenFull" value="1"/>
         <DrainVital value="Energy"/>
         <DrainVitalCostFactor value="1"/>
         <RechargeVitalRate value="1.4296"/>
+        <ImpactUnit Effect="ACRRepairTarget"/>
     </CEffectCreateHealer>
     <CEffectCreateHealer id="MoleSubterraneanSensorsPowerRate">
         <EditorCategories value="Race:Genetron"/>
@@ -989,7 +1003,7 @@
     <CEffectEnumTrackedUnits id="FixerRepairETU">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
-        <Effect value="FixerRepairSet"/>
+        <Effect value="FixerRepairTarget"/>
     </CEffectEnumTrackedUnits>
     <CEffectSet id="FixerRepair">
         <ValidatorArray value="GenetronPowerSupplyGE05"/>
@@ -1005,7 +1019,7 @@
     <CEffectEnumTrackedUnits id="ACRRepairETU">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
-        <Effect value="ACRRepairSet"/>
+        <Effect value="ACRRepairTarget"/>
     </CEffectEnumTrackedUnits>
     <CEffectCreateHealer id="ACRRepairHealer">
         <ValidatorArray value="NotWarpingIn"/>
@@ -1015,24 +1029,27 @@
         <ValidatorArray value="NotStasis"/>
         <ValidatorArray value="GenetronPowerSupplyGE001"/>
         <EditorCategories value="Race:Genetron"/>
-        <LaunchUnit Value="Target"/>
-        <ImpactUnit Effect="ACRRepair"/>
+        <LaunchUnit Effect="ACRRepairTarget" Value="Target"/>
         <DrainVital value="Energy"/>
         <RechargeVitalRate value="1"/>
         <TimeFactor value="1"/>
     </CEffectCreateHealer>
-    <CEffectSet id="FixerRepairSet">
+    <CEffectCreatePersistent id="FixerRepairSet">
         <ValidatorArray value="GenetronPowerSupplyGE001"/>
         <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="FixerRepairHealer"/>
-        <EffectArray value="FixerRepairCost"/>
-    </CEffectSet>
-    <CEffectSet id="ACRRepairSet">
+        <WhichLocation Effect="FixerRepair" Value="TargetUnit"/>
+        <PeriodCount value="2"/>
+        <PeriodicEffectArray value="FixerRepairHealer"/>
+        <PeriodicEffectArray value="FixerRepairCost"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="ACRRepairSet">
         <ValidatorArray value="GenetronPowerSupplyGE001"/>
         <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="ACRRepairHealer"/>
-        <EffectArray value="ACRRepairCost"/>
-    </CEffectSet>
+        <WhichLocation Effect="ACRRepair" Value="TargetUnit"/>
+        <PeriodCount value="2"/>
+        <PeriodicEffectArray value="ACRRepairHealer"/>
+        <PeriodicEffectArray value="ACRRepairCost"/>
+    </CEffectCreatePersistent>
     <CEffectEnumTrackedUnits id="FuseFusionHealWardETU">
         <ValidatorArray value="WardIsCastingShellDomeTarget"/>
         <EditorCategories value="Race:Keiron"/>
@@ -1406,17 +1423,6 @@
         <EffectArray value="ProcessingCoreMiningPriorityMU"/>
         <EffectArray value="MiningPrioritySearch"/>
     </CEffectSet>
-    <CEffectCreatePersistent id="ProcessingCoreSystemRechargeCP">
-        <EditorCategories value="Race:Genetron"/>
-        <WhichLocation Effect="ProcessingCoreSystemRecharge" Value="TargetUnit"/>
-        <Flags index="Channeling" value="1"/>
-        <Flags index="PersistUntilDestroyed" value="1"/>
-    </CEffectCreatePersistent>
-    <CEffectEnumTrackedUnits id="ProcessingCoreSystemRechargeETU">
-        <EditorCategories value="Race:Genetron"/>
-        <BehaviorLink value="GenetronPowerSupplyTracker"/>
-        <Effect value="ProcessingCoreSystemRechargeHealer"/>
-    </CEffectEnumTrackedUnits>
     <CEffectAddTrackedUnit id="TrackGenetronPowerSupplyATU">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
@@ -1752,17 +1758,6 @@
         <SearchFilters value="Air;Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <AreaArray Radius="2" Effect="OpticalDisruptionBuff"/>
     </CEffectEnumArea>
-    <CEffectSet id="ProcessingCoreSystemRecharge">
-        <ValidatorArray value="noMarkers"/>
-        <ValidatorArray value="NotWarpingIn"/>
-        <ValidatorArray value="NotVortexd"/>
-        <ValidatorArray value="NotUncommandable"/>
-        <ValidatorArray value="SourceNotHidden"/>
-        <ValidatorArray value="EnergyNotFull"/>
-        <ValidatorArray value="GenetronPowerUser"/>
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="ProcessingCoreSystemRechargeETU"/>
-    </CEffectSet>
     <CEffectUserData id="SetEnergyNeededData0">
         <EditorCategories value="Race:Genetron"/>
         <Key value="EnergyNeeded"/>
@@ -1771,21 +1766,21 @@
         <Operation value="Set"/>
         <BehaviorScope Behavior="GenetronProductionInternalEnergy"/>
     </CEffectUserData>
-    <CEffectCreateHealer id="ProcessingCoreSystemRechargeHealer">
+    <CEffectCreateHealer id="ProcessingCoreSystemRecharge">
         <ValidatorArray value="noMarkers"/>
         <ValidatorArray value="NotWarpingIn"/>
         <ValidatorArray value="NotVortexd"/>
         <ValidatorArray value="NotUncommandable"/>
         <ValidatorArray value="SourceNotHidden"/>
         <ValidatorArray value="CasterHasEnergy"/>
+        <ValidatorArray value="GenetronPowerSupplyGE001"/>
+        <ValidatorArray value="EnergyNotFull"/>
+        <ValidatorArray value="GenetronPowerUser"/>
         <EditorCategories value="Race:Genetron"/>
-        <LaunchUnit Value="Target"/>
-        <ImpactUnit Effect="ProcessingCoreSystemRecharge"/>
         <DrainVital value="Energy"/>
+        <DrainVitalCostFactor value="0.25"/>
         <RechargeVital value="Energy"/>
         <RechargeVitalRate value="50"/>
-        <InitialEffect value="ProcessingCoreSystemRechargeCP"/>
-        <DrainVitalCostFactor value="0.25"/>
     </CEffectCreateHealer>
     <CEffectDamage id="TeslaShockChargeDummyDMG">
         <EditorCategories value="Race:Genetron"/>
@@ -2678,8 +2673,7 @@
         <ValidatorArray value="NotStasis"/>
         <ValidatorArray value="GenetronPowerSupplyGE001"/>
         <EditorCategories value="Race:Genetron"/>
-        <LaunchUnit Value="Target"/>
-        <ImpactUnit Effect="FixerRepair"/>
+        <LaunchUnit Effect="FixerRepairTarget" Value="Target"/>
         <DrainVital value="Energy"/>
         <RechargeVitalRate value="1"/>
         <TimeFactor value="0.5"/>
@@ -3347,6 +3341,9 @@
         <ValidatorArray index="0" value="CasterIsFused"/>
         <EditorCategories value="Race:Keiron"/>
         <Behavior value="ShellDomeFused"/>
+        <Count value="0">
+            <AccumulatorArray value="FuseFusionStacksOnCaster"/>
+        </Count>
     </CEffectApplyBehavior>
     <CEffectCreateUnit id="WardShellDomeCU">
         <EditorCategories value="Race:Keiron"/>
@@ -3850,7 +3847,6 @@
     </CEffectSet>
     <CEffectCreatePersistent id="FuseFusion" parent="ScionCreatePersistent" Race="Keiron">
         <ValidatorArray value="CanBeFused"/>
-        <ValidatorArray value="TargetIsNotFused"/>
         <WhichLocation Value="TargetUnit"/>
         <ExpireDelay value="0.0625"/>
         <ExpireEffect value="FuseFusionCooldown"/>

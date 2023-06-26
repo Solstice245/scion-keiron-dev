@@ -241,7 +241,7 @@ Behavior/Tooltip/EroderEnervate=Unit weapon damage reduced by 15% temporarily du
 Behavior/Tooltip/FeedingPoolHealingAura=Is being healed by a nearby <c val="FFFF80">Feeding Pool</c>.
 Behavior/Tooltip/FrenzyInjection=This unit has their attack speed improved by 40%, and ranged attacks gain +2 range.
 Behavior/Tooltip/FrenzySink=This unit has slowed their attack speed slowed by 40%, and ranged attacks lose 2 range.
-Behavior/Tooltip/FuseFused=Gaining +<d ref="Behavior,FuseFused,Modification.VitalMaxArray[Shields]"/> maximum shields from a <c val="FFFF80">Fuse</c>.
+Behavior/Tooltip/FuseFused=Gaining +<d ref="Behavior,FuseFused,Modification.VitalMaxArray[Shields]*$BehaviorStackCount:FuseFused$"/> maximum shields from a <c val="FFFF80">Fuse</c>.
 Behavior/Tooltip/GenetronConstruction=Receives double the damage while under construction.
 Behavior/Tooltip/GenetronProductionCalibration=While no Relay Tower is active, Standard and Overclock production modes are disabled for a time after construction is completed.
 Behavior/Tooltip/GyreAnnexed=This unit is stunned while under the influence of a Gyre's Annex spell.
@@ -277,6 +277,7 @@ Behavior/Tooltip/WardShellDome=The unit is invulnerable while inside the shell d
 Button/ChargeText/GenetronEnergyNeeded=<d ref="$RunAccumulators:EnergyNeededDataAdd$"/>
 Button/ChargeText/GenetronInternalEnergy=<d ref="$RunAccumulators:InternalEnergyDataAdd$"/>
 Button/ChargeText/KeironProductionStructures=<d ref="$BehaviorStackCount:KeironUnitCharge$"/>
+Button/ChargeText/Unfuse=<d ref="$BehaviorStackCount:FuseFused$"/>
 Button/Name/AAMDefenseTurret=AAM Defense Turret
 Button/Name/ACR=Fabricate ACR
 Button/Name/ACRRepair=Repair
@@ -361,6 +362,7 @@ Button/Name/DevelopKeyhole=Develop Keyhole
 Button/Name/DevelopLatentCharge=Develop Latent Charge
 Button/Name/DevelopModifiedGait=Develop Modified Gait
 Button/Name/DevelopPulsarDampener=Develop Dampener
+Button/Name/DevelopReinforcedBond=Develop Reinforced Bond
 Button/Name/DevelopUmbraShieldCompulsion=Develop Stealth Compulsion
 Button/Name/DevelopWraithChamber=Develop Wraith Chamber
 Button/Name/DiscordMode=Discord Mode
@@ -723,6 +725,7 @@ Button/Tooltip/DevelopKeyhole=Allows <c val="FFFF80">Apertures</c> to use the Ke
 Button/Tooltip/DevelopLatentCharge=Enables the <c val="FFFF80">Volt's</c> weapon to bounce to 1 additional target and deal <d ref="Effect,ElectronBoltBDMG,Amount"/> spell damage.
 Button/Tooltip/DevelopModifiedGait=Increases the movement speed of <c val="FFFF80">Volt</c> and <c val="FFFF80">Pariah</c>.
 Button/Tooltip/DevelopPulsarDampener=Allows the <c val="FFFF80">Pulsar</c> to use the Dampener ability.
+Button/Tooltip/DevelopReinforcedBond=Fused units gain a stackable +1 shield armor bonus
 Button/Tooltip/DevelopUmbraShieldCompulsion=Allows <c val="FFFF80">Umbrae</c> to use the Stealth Compulsion ability.
 Button/Tooltip/DevelopWraithChamber=Increases the range of the <c val="FFFF80">Umbra</c> weapon, and increases its damage bonus while cloaked.
 Button/Tooltip/DiscordMode=The Echo becomes stationary, slowing enemy movement and production while revealing cloaked units in an area.
@@ -1057,6 +1060,7 @@ Effect/Name/ACRRepairCost=ACR - Repair (Cost)
 Effect/Name/ACRRepairETU=ACR - Repair (ETU)
 Effect/Name/ACRRepairHealer=ACR - Repair (Healer)
 Effect/Name/ACRRepairSet=ACR - Repair (Set)
+Effect/Name/ACRRepairTarget=ACR - Repair (Target)
 Effect/Name/AcidNestAttack=Acid Nest
 Effect/Name/AcidNestDMG=Acid Nest
 Effect/Name/AcidNestDelay=Acid Nest
@@ -1408,6 +1412,7 @@ Effect/Name/FixerRepairCost=Fixer - Repair (Cost)
 Effect/Name/FixerRepairETU=Fixer - Repair (ETU)
 Effect/Name/FixerRepairHealer=Fixer - Repair (Healer)
 Effect/Name/FixerRepairSet=Fixer - Repair (Set)
+Effect/Name/FixerRepairTarget=Fixer - Repair (Target)
 Effect/Name/ForceBlast=Force Blast
 Effect/Name/FormulatorRichRB=Formulator Rich RB
 Effect/Name/FoundryUmbraAB=Foundry - Umbra (AB)
@@ -1753,10 +1758,7 @@ Effect/Name/ProcessingCoreMiningPriorityMU=Processing Core - Mining Priority (MU
 Effect/Name/ProcessingCoreMiningPrioritySet=Processing Core - Mining Priority (Set)
 Effect/Name/ProcessingCorePowerETU=Processing Core - Power (ETU)
 Effect/Name/ProcessingCorePowerHealer=Processing Core - Power (Healer)
-Effect/Name/ProcessingCoreSystemRecharge=Processing Core - System Recharge (Init)
-Effect/Name/ProcessingCoreSystemRechargeCP=Processing Core - System Recharge (CP)
-Effect/Name/ProcessingCoreSystemRechargeETU=Processing Core - System Recharge (ETU)
-Effect/Name/ProcessingCoreSystemRechargeHealer=Processing Core - System Recharge (Healer)
+Effect/Name/ProcessingCoreSystemRecharge=Processing Core - System Recharge (Healer)
 Effect/Name/ProcessorActivated=Processor Activated
 Effect/Name/ProcessorActive=Processor Active
 Effect/Name/ProcessorAnalyzeWeaknessSA=Analyze Weakness
@@ -2465,6 +2467,7 @@ Upgrade/Name/ProlongedSpores=Prolonged Spores
 Upgrade/Name/PulsarDampener=Dampener
 Upgrade/Name/RefinedExcretion=Refined Excretion
 Upgrade/Name/RefittedNozzles=Refitted Nozzles
+Upgrade/Name/ReinforcedBond=Reinforced Bond
 Upgrade/Name/ReinforcedPlating=Reinforced Plating
 Upgrade/Name/ResearchGenetron=Research (Genetron)
 Upgrade/Name/ResearchKeiron=Research (Keiron)
