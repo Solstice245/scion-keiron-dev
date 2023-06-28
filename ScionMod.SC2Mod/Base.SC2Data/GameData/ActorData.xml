@@ -202,6 +202,12 @@
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-pneumatizedcarapace.dds"/>
         <SoundArray index="Attack" value="Assailant_Yes"/>
     </CActorUnit>
+    <CActorRange id="AuroraEmanatorRange" parent="RangeAbilStandard" abil="Emanator">
+        <On index="1" Terms="Abil.TargetOn" Send="Create"/>
+        <On index="2" Terms="Abil.TargetOff" Send="Destroy"/>
+        <On index="3" Terms="Abil.ButtonHoverOn" Send="Create"/>
+        <On index="4" Terms="Abil.ButtonHoverOff" Send="Destroy"/>
+    </CActorRange>
     <CActorModelMaterial id="BadgerEnergyShieldGlaze" parent="BehaviorGlaze" buff="BadgerPowershell"/>
     <CActorSound id="Badger_PowershellOn" parent="SoundOneShotScion" Behavior="BadgerPowershell">
         <Host Subject="_Selectable"/>
@@ -255,15 +261,15 @@
         <On Terms="ActorCreation" Send="StatusSet Count 0"/>
         <On Terms="BehaviorLevel.FuseFused.Start" Send="StatusSet Count 0"/>
         <On Terms="BehaviorLevel.ShellDomeFused.Start" Send="StatusSet Count 0"/>
-        <On Terms="StatusSet.*.Count; ValidateUnit FusionStackCombinedE1" Send="SetTintColor 255,255,255 1.000000"/>
-        <On Terms="StatusSet.*.Count; ValidateUnit FusionStackCombinedE2" Send="SetTintColor 0,128,255 1.000000"/>
-        <On Terms="StatusSet.*.Count; ValidateUnit FusionStackCombinedE3" Send="SetTintColor 0,255,150 1.000000"/>
-        <On Terms="StatusSet.*.Count; ValidateUnit FusionStackCombinedE4" Send="SetTintColor 0,255,0 1.000000"/>
-        <On Terms="StatusSet.*.Count; ValidateUnit FusionStackCombinedE5" Send="SetTintColor 255,255,0 1.000000"/>
-        <On Terms="StatusSet.*.Count; ValidateUnit FusionStackCombinedE6" Send="SetTintColor 255,128,0 1.000000"/>
-        <On Terms="StatusSet.*.Count; ValidateUnit FusionStackCombinedE7" Send="SetTintColor 255,0,0 1.000000"/>
-        <On Terms="StatusSet.*.Count; ValidateUnit FusionStackCombinedE8" Send="SetTintColor 255,50,150 1.000000"/>
-        <On Terms="StatusSet.*.Count; ValidateUnit FusionStackCombinedGTE9" Send="SetTintColor 128,0,255 1.000000"/>
+        <On Terms="StatusSet.*.Count; ValidateUnit FusionStackCombinedE1" Send="SetTintColor 128,255,0 1.000000"/>
+        <On Terms="StatusSet.*.Count; ValidateUnit FusionStackCombinedE2" Send="SetTintColor 192,255,0 1.000000"/>
+        <On Terms="StatusSet.*.Count; ValidateUnit FusionStackCombinedE3" Send="SetTintColor 255,255,0 1.000000"/>
+        <On Terms="StatusSet.*.Count; ValidateUnit FusionStackCombinedE4" Send="SetTintColor {255,192,0 1.130000} 1.000000"/>
+        <On Terms="StatusSet.*.Count; ValidateUnit FusionStackCombinedE5" Send="SetTintColor {255,80,0 1.250000} 1.000000"/>
+        <On Terms="StatusSet.*.Count; ValidateUnit FusionStackCombinedE6" Send="SetTintColor {255,0,64 1.130000} 1.000000"/>
+        <On Terms="StatusSet.*.Count; ValidateUnit FusionStackCombinedE7" Send="SetTintColor 255,0,255 1.000000"/>
+        <On Terms="StatusSet.*.Count; ValidateUnit FusionStackCombinedE8" Send="SetTintColor {128,64,255 1.500000} 1.000000"/>
+        <On Terms="StatusSet.*.Count; ValidateUnit FusionStackCombinedGTE9" Send="SetTintColor {128,64,255 3.000000} 1.000000"/>
     </CActorEventMacro>
     <CActorEventMacro id="FuseFusionSizeMacro">
         <On Terms="ActorCreation; ValidateUnit IsConverter" Send="SetScale 0.620000,0.940000,0.620000"/>
@@ -1294,7 +1300,7 @@
         <AutoScaleFactor value="1.000000"/>
         <ModelFlags index="AllowHitTest" value="0"/>
     </CActorModel>
-    <CActorRange id="GyreShackleRange" parent="RangeAbil" abil="GyreShackle"/>
+    <CActorRange id="GyreShackleRange" parent="RangeAbilStandard" abil="GyreShackle"/>
     <CActorModel id="GyreAnnexBeam" parent="ModelAddition">
         <Inherits index="TintColor" value="0"/>
         <On Terms="Behavior.GyreAnnexCaster.On" Send="Create"/>
@@ -1932,7 +1938,7 @@
         <Supporter Subject="::Creator"/>
         <Sound value="Mule_Repair"/>
     </CActorSound>
-    <CActorRange id="MoleAttackRange">
+    <CActorRange id="MoleAttackRange" parent="RangeWeapon" weapon="LynxCannon">
         <On Terms="SelectionLocalUpdate.MoleBurrowed.Start" Send="Create"/>
         <On Terms="SelectionLocalUpdate.MoleBurrowed.StartEditorGround" Send="Create"/>
         <On Terms="SelectionLocalUpdate.MoleBurrowed.Stop" Send="Destroy"/>
@@ -1942,7 +1948,6 @@
         <On Terms="AbilMorph.*.Start; MorphTo MoleBurrowed; Selected" Send="Create"/>
         <On Terms="AbilMorph.*.Start; MorphTo MoleBuried; Selected" Send="Create"/>
         <On Terms="AbilMorph.*.Start; MorphTo Mole" Send="Destroy"/>
-        <Weapon value="LynxCannon"/>
         <Icon value="Assets\Textures\RadarIcon2.dds"/>
         <IconArcLength value="3.250000"/>
     </CActorRange>
@@ -4745,7 +4750,7 @@
     </CActorAction>
     <CActorModel id="SpitterSporePrecursor">
         <Flags index="SuppressSaveLoad" value="1"/>
-        <On Terms="Effect.SpitterSpores.Start" Send="Create"/>
+        <!--<On Terms="Effect.SpitterSpores.Start" Send="Create"/>-->
         <On Terms="ActorCreation" Send="AnimBracketStart BSD {} Stand Death ContentPlayOnce"/>
         <On Terms="AnimBracketState.*.AfterClosing; AnimName BSD" Send="Destroy"/>
         <On Terms="ActorOrphan" Send="AnimBracketStop BSD"/>
@@ -5066,7 +5071,10 @@
         <Layer value="PowerLayer"/>
     </CActorSplat>
     <CActorSound id="AegisShieldActivate" parent="SoundOneShotScion" Behavior="AegisShieldAura"/>
-    <CActorRange id="NullifierRange" parent="RangeWeapon" weapon="NullifierWeapon"/>
+    <CActorRange id="NullifierRange" parent="RangeWeapon" weapon="NullifierWeapon">
+        <Icon value="Assets\Textures\radaricon2.dds"/>
+        <IconArcLength value="3.250000"/>
+    </CActorRange>
     <CActorSound id="GyrePrisonInit" parent="SoundOneShotScion" Effect="GyrePrisonDuration"/>
     <CActorModel id="ParagonEmissaryOrbChargeModel" parent="ModelAnimationStyleContinuousUNIT">
         <On Terms="Abil.EmissaryOrb.SourcePrepStart" Send="Create"/>
@@ -5519,7 +5527,10 @@
         <On Terms="ActorCreation; ValidatePlayer FixerNoReactiveArmor" Send="AnimPlay NoReactiveArmor Cover,C PlayForever 0.000000"/>
         <On Terms="ActorCreation" Send="Create FixerDeathDetonationForce"/>
     </CActorModel>
-    <CActorRange id="StratusRange" parent="RangeWeapon" weapon="StratusWeapon"/>
+    <CActorRange id="StratusRange" parent="RangeWeapon" weapon="StratusWeapon">
+        <Icon value="Assets\Textures\radaricon2.dds"/>
+        <IconArcLength value="3.250000"/>
+    </CActorRange>
     <CActorAction id="AegisAttack" parent="GenericAttack" effectImpact="BulwarkBlastImpact" effectLaunch="BulwarkBlast"/>
     <CActorMissile id="AegisAttackMissile" parent="GenericAttackMissile" unitName="BulwarkBlastWeapon">
         <On Terms="UnitBirth" Send="AnimSetTimeScaleAbsolute Lifetime 1.000000"/>
@@ -5527,8 +5538,8 @@
         <Model value="AegisAttackMissile"/>
     </CActorMissile>
     <CActorModel id="PulsarShieldEffect" parent="ModelAddition">
-        <On Terms="Behavior.PulsarDampener.On" Send="Create"/>
         <On Terms="ActorCreation" Send="SetOpacity 0.600000"/>
+        <On Terms="Behavior.PulsarDampener.On" Send="Create"/>
         <On Terms="Behavior.PulsarDampener.Off" Send="Destroy"/>
         <HostSiteOps Ops="SOpAttachCenter"/>
         <Model value="UmbraShieldEffect"/>
@@ -5607,7 +5618,7 @@
         <Aliases value="_Scalable"/>
         <On index="3" Terms="Effect.CruxConvergenceSA.Start; At Effect" Send="Create"/>
     </CActorModel>
-    <CActorRange id="CruxConvergenceRange" parent="RangeAbil" abil="CruxConvergence"/>
+    <CActorRange id="CruxConvergenceRange" parent="RangeAbilStandard" abil="CruxConvergence"/>
     <CActorBeamSimple id="CruxLightningBoltBeam" parent="BeamSimpleAnimationStyleOneShot">
         <Macros value="ActionTargetTeleportDestroy"/>
         <Model value="CruxLightningBolt"/>
@@ -5725,7 +5736,7 @@
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
         <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
     </CActorModel>
-    <CActorRange id="CruxLightningBoltRange" parent="RangeAbil" abil="CruxLightningBolt"/>
+    <CActorRange id="CruxLightningBoltRange" parent="RangeAbilStandard" abil="CruxLightningBolt"/>
     <CActorAction id="CruxWeaponAttack" parent="GenericAttack" effectAttack="CruxWeaponDMG">
         <ImpactSite value="CruxWeaponSite"/>
         <ImpactMap index="None" Sound="CruxWeapon_Launch"/>

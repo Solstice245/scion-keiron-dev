@@ -50,6 +50,7 @@ struct gs_DATA_UNIT {
 
 struct gs_DATA_UPGRADE {
     string[3] lv_upgrade;
+    string lv_reversionUpgrade;
     string[3] lv_icon;
     text[3] lv_tooltip;
     int lv_levels;
@@ -182,8 +183,8 @@ bool gf_NoUnitsForSide (int lp_side);
 int gf_DialogItemFromLayoutHookup (int lp_type, string lp_name);
 void gf_AddTerrainData (string lp_regionString);
 void gf_AddUnitData (string lp_unitType, string lp_icon);
-void gf_AddUpgradeData (abilcmd lp_abilityCommand);
-void gf_AddLeveledUpgradeData (abilcmd lp_abilityCommand0, abilcmd lp_abilityCommand1, abilcmd lp_abilityCommand2);
+void gf_AddUpgradeData (abilcmd lp_abilityCommand, string lp_reversionUpgrade);
+void gf_AddLeveledUpgradeData (abilcmd lp_abilityCommand0, abilcmd lp_abilityCommand1, abilcmd lp_abilityCommand2, string lp_reversionUpgrade);
 void gf_RemoveNeutralStructures ();
 void gf_SaveMapStructures ();
 void gf_RestoreMapStructures ();
@@ -191,7 +192,6 @@ void gf_RenderTesterUIForPlayer (int lp_player);
 void gf_RenderTesterUIForAllPlayers ();
 void gf_CreatorAddUnits (int lp_player, int lp_side, structref<gs_DATA_UNIT> lp_dataUnit);
 void gf_CreatorAddUpgrade (int lp_side, structref<gs_DATA_UPGRADE> lp_dataUpgrade);
-void gf_CreatorUpgradeToLevel (int lp_player, int lp_side, structref<gs_DATA_UPGRADE> lp_dataUpgrade);
 void gf_DeleteAllTesterUnits ();
 void gf_LoadTesterUnits (string lp_storageString, int lp_owner);
 void gf_SaveTesterUnits ();
@@ -322,7 +322,7 @@ void gf_AddUnitData (string lp_unitType, string lp_icon) {
     gv_data_unit[lv_race_index][lv_item_index].lv_tooltip = TextExpressionAssemble("Param/Expression/5AD5F175");
 }
 
-void gf_AddUpgradeData (abilcmd lp_abilityCommand) {
+void gf_AddUpgradeData (abilcmd lp_abilityCommand, string lp_reversionUpgrade) {
     // Variable Declarations
     string lv_button;
     string lv_upgrade;
@@ -368,6 +368,7 @@ void gf_AddUpgradeData (abilcmd lp_abilityCommand) {
 
     }
     gv_data_upgrade[lv_race_index][lv_item_index].lv_upgrade[0] = lv_upgrade;
+    gv_data_upgrade[lv_race_index][lv_item_index].lv_reversionUpgrade = lp_reversionUpgrade;
     gv_data_upgrade[lv_race_index][lv_item_index].lv_icon[0] = (CatalogFieldValueGet(c_gameCatalogButton, lv_button, "Icon", c_playerAny));
     TextExpressionSetToken("Param/Expression/613515FF", "name", StringExternal(CatalogFieldValueGet(c_gameCatalogButton, lv_button, "Name", c_playerAny)));
     TextExpressionSetToken("Param/Expression/613515FF", "min_icon", StringExternal(("UI/Icon22_Minerals_" + lv_race)));
@@ -379,7 +380,7 @@ void gf_AddUpgradeData (abilcmd lp_abilityCommand) {
     gv_data_upgrade[lv_race_index][lv_item_index].lv_levels = 0;
 }
 
-void gf_AddLeveledUpgradeData (abilcmd lp_abilityCommand0, abilcmd lp_abilityCommand1, abilcmd lp_abilityCommand2) {
+void gf_AddLeveledUpgradeData (abilcmd lp_abilityCommand0, abilcmd lp_abilityCommand1, abilcmd lp_abilityCommand2, string lp_reversionUpgrade) {
     // Variable Declarations
     string lv_button0;
     string lv_upgrade0;
@@ -455,6 +456,7 @@ void gf_AddLeveledUpgradeData (abilcmd lp_abilityCommand0, abilcmd lp_abilityCom
     TextExpressionSetToken("Param/Expression/9CBCCFDB", "gas_val", IntToText(CatalogFieldValueGetAsInt(c_gameCatalogAbil, AbilityCommandGetAbility(lp_abilityCommand2), "InfoArray[" + IntToString(AbilityCommandGetCommand(lp_abilityCommand2)) + "].Resource[" + IntToString(1) + "]", c_playerAny)));
     TextExpressionSetToken("Param/Expression/9CBCCFDB", "desc", StringExternal(CatalogFieldValueGet(c_gameCatalogButton, lv_button2, "Tooltip", c_playerAny)));
     gv_data_upgrade[lv_race_index][lv_item_index].lv_tooltip[2] = TextExpressionAssemble("Param/Expression/9CBCCFDB");
+    gv_data_upgrade[lv_race_index][lv_item_index].lv_reversionUpgrade = lp_reversionUpgrade;
     if ((gv_data_upgrade[lv_race_index][lv_item_index].lv_upgrade[2] != null)) {
         gv_data_upgrade[lv_race_index][lv_item_index].lv_levels = 2;
     }
@@ -827,29 +829,11 @@ void gf_CreatorAddUpgrade (int lp_side, structref<gs_DATA_UPGRADE> lp_dataUpgrad
         else {
             if ((TechTreeUpgradeCount(gv_side_player[lp_side], lp_dataUpgrade.lv_upgrade[lp_dataUpgrade.lv_levels], c_techCountCompleteOnly) == 1)) {
                 libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[lp_side], lp_dataUpgrade.lv_upgrade[autoF89844F9_var], 0);
-            }
+                if ((lp_dataUpgrade.lv_reversionUpgrade != null)) {
+                    libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[lp_side], lp_dataUpgrade.lv_reversionUpgrade, 1);
+                    libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[lp_side], lp_dataUpgrade.lv_reversionUpgrade, 0);
+                }
 
-        }
-    }
-}
-
-void gf_CreatorUpgradeToLevel (int lp_player, int lp_side, structref<gs_DATA_UPGRADE> lp_dataUpgrade) {
-    // Automatic Variable Declarations
-    int autoEAFB07F0_ae;
-    int autoEAFB07F0_var;
-
-    // Implementation
-    gv_data_player[lp_player].lv_creator_side = lp_side;
-    autoEAFB07F0_ae = lp_dataUpgrade.lv_levels;
-    autoEAFB07F0_var = 0;
-    for ( ; autoEAFB07F0_var <= autoEAFB07F0_ae; autoEAFB07F0_var += 1 ) {
-        if ((TechTreeUpgradeCount(gv_side_player[lp_side], lp_dataUpgrade.lv_upgrade[autoEAFB07F0_var], c_techCountCompleteOnly) == 0)) {
-            libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[lp_side], lp_dataUpgrade.lv_upgrade[autoEAFB07F0_var], 1);
-            break;
-        }
-        else {
-            if ((TechTreeUpgradeCount(gv_side_player[lp_side], lp_dataUpgrade.lv_upgrade[lp_dataUpgrade.lv_levels], c_techCountCompleteOnly) == 1)) {
-                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[lp_side], lp_dataUpgrade.lv_upgrade[autoEAFB07F0_var], 0);
             }
 
         }
@@ -1628,101 +1612,99 @@ bool gt_Init_Func (bool testConds, bool runActions) {
     gf_AddUnitData("Exterminator", "Assets\\Textures\\btn-unit-xayid-exterminator.dds");
     gf_AddUnitData("Xayithoan", "Assets\\Textures\\btn-unit-xayid-xayithoan.dds");
     gf_AddUnitData("Kraken", "Assets\\Textures\\btn-unit-xayid-kraken.dds");
-    gf_AddLeveledUpgradeData(AbilityCommand("ForgeResearch", 0), AbilityCommand("ForgeResearch", 1), AbilityCommand("ForgeResearch", 2));
-    gf_AddLeveledUpgradeData(AbilityCommand("ForgeResearch", 3), AbilityCommand("ForgeResearch", 4), AbilityCommand("ForgeResearch", 5));
-    gf_AddLeveledUpgradeData(AbilityCommand("CyberneticsCoreResearch", 0), AbilityCommand("CyberneticsCoreResearch", 1), AbilityCommand("CyberneticsCoreResearch", 2));
-    gf_AddLeveledUpgradeData(AbilityCommand("CyberneticsCoreResearch", 3), AbilityCommand("CyberneticsCoreResearch", 4), AbilityCommand("CyberneticsCoreResearch", 5));
-    gf_AddLeveledUpgradeData(AbilityCommand("ForgeResearch", 6), AbilityCommand("ForgeResearch", 7), AbilityCommand("ForgeResearch", 8));
-    gf_AddUpgradeData(AbilityCommand("CyberneticsCoreResearch", 6));
-    gf_AddUpgradeData(AbilityCommand("TwilightCouncilResearch", 0));
-    gf_AddUpgradeData(AbilityCommand("TwilightCouncilResearch", 1));
-    gf_AddUpgradeData(AbilityCommand("TwilightCouncilResearch", 2));
-    gf_AddUpgradeData(AbilityCommand("TemplarArchivesResearch", 4));
-    gf_AddUpgradeData(AbilityCommand("DarkShrineResearch", 0));
-    gf_AddUpgradeData(AbilityCommand("RoboticsBayResearch", 1));
-    gf_AddUpgradeData(AbilityCommand("RoboticsBayResearch", 2));
-    gf_AddUpgradeData(AbilityCommand("RoboticsBayResearch", 5));
-    gf_AddUpgradeData(AbilityCommand("FleetBeaconResearch", 2));
-    gf_AddUpgradeData(AbilityCommand("FleetBeaconResearch", 4));
-    gf_AddUpgradeData(AbilityCommand("FleetBeaconResearch", 5));
-    gf_AddLeveledUpgradeData(AbilityCommand("EngineeringBayResearch", 2), AbilityCommand("EngineeringBayResearch", 3), AbilityCommand("EngineeringBayResearch", 4));
-    gf_AddLeveledUpgradeData(AbilityCommand("EngineeringBayResearch", 6), AbilityCommand("EngineeringBayResearch", 7), AbilityCommand("EngineeringBayResearch", 8));
-    gf_AddLeveledUpgradeData(AbilityCommand("ArmoryResearch", 5), AbilityCommand("ArmoryResearch", 6), AbilityCommand("ArmoryResearch", 7));
-    gf_AddLeveledUpgradeData(AbilityCommand("ArmoryResearch", 14), AbilityCommand("ArmoryResearch", 15), AbilityCommand("ArmoryResearch", 16));
-    gf_AddLeveledUpgradeData(AbilityCommand("ArmoryResearch", 11), AbilityCommand("ArmoryResearch", 12), AbilityCommand("ArmoryResearch", 13));
-    gf_AddUpgradeData(AbilityCommand("BarracksTechLabResearch", 1));
-    gf_AddUpgradeData(AbilityCommand("BarracksTechLabResearch", 0));
-    gf_AddUpgradeData(AbilityCommand("BarracksTechLabResearch", 2));
-    gf_AddUpgradeData(AbilityCommand("GhostAcademyResearch", 0));
-    gf_AddUpgradeData(AbilityCommand("EngineeringBayResearch", 0));
-    gf_AddUpgradeData(AbilityCommand("EngineeringBayResearch", 5));
-    gf_AddUpgradeData(AbilityCommand("FactoryTechLabResearch", 1));
-    gf_AddUpgradeData(AbilityCommand("FactoryTechLabResearch", 9));
-    gf_AddUpgradeData(AbilityCommand("FactoryTechLabResearch", 4));
-    gf_AddUpgradeData(AbilityCommand("FactoryTechLabResearch", 6));
-    gf_AddUpgradeData(AbilityCommand("StarportTechLabResearch", 0));
-    gf_AddUpgradeData(AbilityCommand("StarportTechLabResearch", 9));
-    gf_AddUpgradeData(AbilityCommand("StarportTechLabResearch", 3));
-    gf_AddUpgradeData(AbilityCommand("FusionCoreResearch", 2));
-    gf_AddUpgradeData(AbilityCommand("FusionCoreResearch", 1));
-    gf_AddUpgradeData(AbilityCommand("FusionCoreResearch", 0));
-    gf_AddLeveledUpgradeData(AbilityCommand("evolutionchamberresearch", 0), AbilityCommand("evolutionchamberresearch", 1), AbilityCommand("evolutionchamberresearch", 2));
-    gf_AddLeveledUpgradeData(AbilityCommand("evolutionchamberresearch", 6), AbilityCommand("evolutionchamberresearch", 7), AbilityCommand("evolutionchamberresearch", 8));
-    gf_AddLeveledUpgradeData(AbilityCommand("evolutionchamberresearch", 3), AbilityCommand("evolutionchamberresearch", 4), AbilityCommand("evolutionchamberresearch", 5));
-    gf_AddLeveledUpgradeData(AbilityCommand("SpireResearch", 0), AbilityCommand("SpireResearch", 1), AbilityCommand("SpireResearch", 2));
-    gf_AddLeveledUpgradeData(AbilityCommand("SpireResearch", 3), AbilityCommand("SpireResearch", 4), AbilityCommand("SpireResearch", 5));
-    gf_AddUpgradeData(AbilityCommand("LairResearch", 3));
-    gf_AddUpgradeData(AbilityCommand("LairResearch", 1));
-    gf_AddUpgradeData(AbilityCommand("SpawningPoolResearch", 1));
-    gf_AddUpgradeData(AbilityCommand("SpawningPoolResearch", 0));
-    gf_AddUpgradeData(AbilityCommand("BanelingNestResearch", 0));
-    gf_AddUpgradeData(AbilityCommand("RoachWarrenResearch", 1));
-    gf_AddUpgradeData(AbilityCommand("RoachWarrenResearch", 2));
-    gf_AddUpgradeData(AbilityCommand("HydraliskDenResearch", 1));
-    gf_AddUpgradeData(AbilityCommand("HydraliskDenResearch", 0));
-    gf_AddUpgradeData(AbilityCommand("LurkerDenResearch", 0));
-    gf_AddUpgradeData(AbilityCommand("LurkerDenResearch", 1));
-    gf_AddUpgradeData(AbilityCommand("InfestationPitResearch", 2));
-    gf_AddUpgradeData(AbilityCommand("InfestationPitResearch", 3));
-    gf_AddUpgradeData(AbilityCommand("UltraliskCavernResearch", 2));
-    gf_AddUpgradeData(AbilityCommand("UltraliskCavernResearch", 0));
-    gf_AddLeveledUpgradeData(AbilityCommand("AnalysisTerminalResearch", 3), AbilityCommand("AnalysisTerminalResearch", 4), AbilityCommand("AnalysisTerminalResearch", 5));
-    gf_AddLeveledUpgradeData(AbilityCommand("AnalysisTerminalResearch", 0), AbilityCommand("AnalysisTerminalResearch", 1), AbilityCommand("AnalysisTerminalResearch", 2));
-    gf_AddLeveledUpgradeData(AbilityCommand("TechVaultResearch", 0), AbilityCommand("TechVaultResearch", 1), AbilityCommand("TechVaultResearch", 2));
-    gf_AddLeveledUpgradeData(AbilityCommand("TechVaultResearch", 6), AbilityCommand("TechVaultResearch", 7), AbilityCommand("TechVaultResearch", 8));
-    gf_AddLeveledUpgradeData(AbilityCommand("TechVaultResearch", 3), AbilityCommand("TechVaultResearch", 4), AbilityCommand("TechVaultResearch", 5));
-    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 0));
-    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 1));
-    gf_AddLeveledUpgradeData(AbilityCommand("ReliquaryResearch", 0), AbilityCommand("ReliquaryResearch", 1), AbilityCommand("ReliquaryResearch", 2));
-    gf_AddLeveledUpgradeData(AbilityCommand("ReliquaryResearch", 3), AbilityCommand("ReliquaryResearch", 4), AbilityCommand("ReliquaryResearch", 5));
-    gf_AddLeveledUpgradeData(AbilityCommand("ReliquaryResearch", 6), AbilityCommand("ReliquaryResearch", 7), AbilityCommand("ReliquaryResearch", 8));
-    gf_AddLeveledUpgradeData(AbilityCommand("ReliquaryResearch", 9), AbilityCommand("ReliquaryResearch", 10), AbilityCommand("ReliquaryResearch", 11));
-    gf_AddLeveledUpgradeData(AbilityCommand("ReliquaryResearch", 12), AbilityCommand("ReliquaryResearch", 13), AbilityCommand("ReliquaryResearch", 14));
-    gf_AddUpgradeData(AbilityCommand("EdificeResearch", 2));
-    gf_AddUpgradeData(AbilityCommand("EdificeResearch", 0));
-    gf_AddUpgradeData(AbilityCommand("EdificeResearch", 1));
-    gf_AddUpgradeData(AbilityCommand("SanctumResearch", 0));
-    gf_AddUpgradeData(AbilityCommand("SanctumResearch", 1));
-    gf_AddUpgradeData(AbilityCommand("ElysiumResearch", 0));
-    gf_AddUpgradeData(AbilityCommand("FoundryResearch", 1));
-    gf_AddUpgradeData(AbilityCommand("ConduitResearch", 0));
-    gf_AddUpgradeData(AbilityCommand("ConduitResearch", 1));
-    gf_AddLeveledUpgradeData(AbilityCommand("MutagenChamberResearch", 3), AbilityCommand("MutagenChamberResearch", 4), AbilityCommand("MutagenChamberResearch", 5));
-    gf_AddLeveledUpgradeData(AbilityCommand("MutagenChamberResearch", 0), AbilityCommand("MutagenChamberResearch", 1), AbilityCommand("MutagenChamberResearch", 2));
-    gf_AddLeveledUpgradeData(AbilityCommand("CatalystPitResearch", 0), AbilityCommand("CatalystPitResearch", 1), AbilityCommand("CatalystPitResearch", 2));
-    gf_AddLeveledUpgradeData(AbilityCommand("CatalystPitResearch", 3), AbilityCommand("CatalystPitResearch", 4), AbilityCommand("CatalystPitResearch", 5));
-    gf_AddUpgradeData(AbilityCommand("CasnoliskDenResearch", 6));
-    gf_AddUpgradeData(AbilityCommand("CasnoliskDenResearch", 3));
-    gf_AddUpgradeData(AbilityCommand("CasnoliskDenResearch", 5));
-    gf_AddUpgradeData(AbilityCommand("CasnoliskDenResearch", 4));
-    gf_AddUpgradeData(AbilityCommand("CasnoliskDenResearch", 1));
-    gf_AddUpgradeData(AbilityCommand("CasnoliskDenResearch", 2));
-    gf_AddUpgradeData(AbilityCommand("BiomassCavernResearch", 0));
-    gf_AddUpgradeData(AbilityCommand("BiomassCavernResearch", 1));
-    gf_AddUpgradeData(AbilityCommand("BiomassCavernResearch", 2));
-    gf_AddUpgradeData(AbilityCommand("SunkenWarrenResearch", 2));
-    gf_AddUpgradeData(AbilityCommand("SunkenWarrenResearch", 3));
-    gf_AddUpgradeData(AbilityCommand("SunkenWarrenResearch", 0));
+    gf_AddLeveledUpgradeData(AbilityCommand("ForgeResearch", 0), AbilityCommand("ForgeResearch", 1), AbilityCommand("ForgeResearch", 2), "ProtossGroundWeaponsRevert");
+    gf_AddLeveledUpgradeData(AbilityCommand("ForgeResearch", 3), AbilityCommand("ForgeResearch", 4), AbilityCommand("ForgeResearch", 5), "ProtossGroundArmorRevert");
+    gf_AddLeveledUpgradeData(AbilityCommand("CyberneticsCoreResearch", 0), AbilityCommand("CyberneticsCoreResearch", 1), AbilityCommand("CyberneticsCoreResearch", 2), "ProtossAirWeaponsRevert");
+    gf_AddLeveledUpgradeData(AbilityCommand("CyberneticsCoreResearch", 3), AbilityCommand("CyberneticsCoreResearch", 4), AbilityCommand("CyberneticsCoreResearch", 5), "ProtossAirArmorRevert");
+    gf_AddLeveledUpgradeData(AbilityCommand("ForgeResearch", 6), AbilityCommand("ForgeResearch", 7), AbilityCommand("ForgeResearch", 8), "ProtossShieldsRevert");
+    gf_AddUpgradeData(AbilityCommand("CyberneticsCoreResearch", 6), null);
+    gf_AddUpgradeData(AbilityCommand("TwilightCouncilResearch", 0), null);
+    gf_AddUpgradeData(AbilityCommand("TwilightCouncilResearch", 1), null);
+    gf_AddUpgradeData(AbilityCommand("TwilightCouncilResearch", 2), null);
+    gf_AddUpgradeData(AbilityCommand("TemplarArchivesResearch", 4), null);
+    gf_AddUpgradeData(AbilityCommand("DarkShrineResearch", 0), null);
+    gf_AddUpgradeData(AbilityCommand("RoboticsBayResearch", 1), null);
+    gf_AddUpgradeData(AbilityCommand("RoboticsBayResearch", 2), null);
+    gf_AddUpgradeData(AbilityCommand("RoboticsBayResearch", 5), null);
+    gf_AddUpgradeData(AbilityCommand("FleetBeaconResearch", 2), null);
+    gf_AddUpgradeData(AbilityCommand("FleetBeaconResearch", 4), "VoidRaySpeedUpgradeRevert");
+    gf_AddUpgradeData(AbilityCommand("FleetBeaconResearch", 5), null);
+    gf_AddLeveledUpgradeData(AbilityCommand("EngineeringBayResearch", 2), AbilityCommand("EngineeringBayResearch", 3), AbilityCommand("EngineeringBayResearch", 4), "TerranInfantryWeaponsRevert");
+    gf_AddLeveledUpgradeData(AbilityCommand("EngineeringBayResearch", 6), AbilityCommand("EngineeringBayResearch", 7), AbilityCommand("EngineeringBayResearch", 8), "TerranInfantryArmorRevert");
+    gf_AddLeveledUpgradeData(AbilityCommand("ArmoryResearch", 5), AbilityCommand("ArmoryResearch", 6), AbilityCommand("ArmoryResearch", 7), "TerranVehicleWeaponsRevert");
+    gf_AddLeveledUpgradeData(AbilityCommand("ArmoryResearch", 14), AbilityCommand("ArmoryResearch", 15), AbilityCommand("ArmoryResearch", 16), "TerranVehicleandShipPlatingRevert");
+    gf_AddLeveledUpgradeData(AbilityCommand("ArmoryResearch", 11), AbilityCommand("ArmoryResearch", 12), AbilityCommand("ArmoryResearch", 13), "TerranShipWeaponsRevert");
+    gf_AddUpgradeData(AbilityCommand("BarracksTechLabResearch", 1), "ShieldWallRevert");
+    gf_AddUpgradeData(AbilityCommand("BarracksTechLabResearch", 0), null);
+    gf_AddUpgradeData(AbilityCommand("BarracksTechLabResearch", 2), null);
+    gf_AddUpgradeData(AbilityCommand("GhostAcademyResearch", 0), null);
+    gf_AddUpgradeData(AbilityCommand("EngineeringBayResearch", 0), null);
+    gf_AddUpgradeData(AbilityCommand("EngineeringBayResearch", 5), null);
+    gf_AddUpgradeData(AbilityCommand("FactoryTechLabResearch", 1), null);
+    gf_AddUpgradeData(AbilityCommand("FactoryTechLabResearch", 9), null);
+    gf_AddUpgradeData(AbilityCommand("FactoryTechLabResearch", 4), null);
+    gf_AddUpgradeData(AbilityCommand("FactoryTechLabResearch", 6), null);
+    gf_AddUpgradeData(AbilityCommand("StarportTechLabResearch", 0), null);
+    gf_AddUpgradeData(AbilityCommand("StarportTechLabResearch", 9), null);
+    gf_AddUpgradeData(AbilityCommand("StarportTechLabResearch", 3), null);
+    gf_AddUpgradeData(AbilityCommand("FusionCoreResearch", 2), null);
+    gf_AddUpgradeData(AbilityCommand("FusionCoreResearch", 1), null);
+    gf_AddUpgradeData(AbilityCommand("FusionCoreResearch", 0), null);
+    gf_AddLeveledUpgradeData(AbilityCommand("evolutionchamberresearch", 0), AbilityCommand("evolutionchamberresearch", 1), AbilityCommand("evolutionchamberresearch", 2), "ZergMeleeAttacksRevert");
+    gf_AddLeveledUpgradeData(AbilityCommand("evolutionchamberresearch", 6), AbilityCommand("evolutionchamberresearch", 7), AbilityCommand("evolutionchamberresearch", 8), "ZergMissileAttacksRevert");
+    gf_AddLeveledUpgradeData(AbilityCommand("evolutionchamberresearch", 3), AbilityCommand("evolutionchamberresearch", 4), AbilityCommand("evolutionchamberresearch", 5), "ZergGroundCarapaceRevert");
+    gf_AddLeveledUpgradeData(AbilityCommand("SpireResearch", 0), AbilityCommand("SpireResearch", 1), AbilityCommand("SpireResearch", 2), "ZergFlyerAttacksRevert");
+    gf_AddLeveledUpgradeData(AbilityCommand("SpireResearch", 3), AbilityCommand("SpireResearch", 4), AbilityCommand("SpireResearch", 5), "ZergFlyerCarapaceRevert");
+    gf_AddUpgradeData(AbilityCommand("LairResearch", 3), null);
+    gf_AddUpgradeData(AbilityCommand("LairResearch", 1), null);
+    gf_AddUpgradeData(AbilityCommand("SpawningPoolResearch", 1), "zerglingmovementspeedrevert");
+    gf_AddUpgradeData(AbilityCommand("SpawningPoolResearch", 0), null);
+    gf_AddUpgradeData(AbilityCommand("BanelingNestResearch", 0), null);
+    gf_AddUpgradeData(AbilityCommand("RoachWarrenResearch", 1), null);
+    gf_AddUpgradeData(AbilityCommand("RoachWarrenResearch", 2), null);
+    gf_AddUpgradeData(AbilityCommand("HydraliskDenResearch", 1), null);
+    gf_AddUpgradeData(AbilityCommand("HydraliskDenResearch", 0), null);
+    gf_AddUpgradeData(AbilityCommand("LurkerDenResearch", 0), null);
+    gf_AddUpgradeData(AbilityCommand("LurkerDenResearch", 1), null);
+    gf_AddUpgradeData(AbilityCommand("InfestationPitResearch", 2), null);
+    gf_AddUpgradeData(AbilityCommand("InfestationPitResearch", 3), null);
+    gf_AddUpgradeData(AbilityCommand("UltraliskCavernResearch", 2), null);
+    gf_AddUpgradeData(AbilityCommand("UltraliskCavernResearch", 0), null);
+    gf_AddLeveledUpgradeData(AbilityCommand("AnalysisTerminalResearch", 3), AbilityCommand("AnalysisTerminalResearch", 4), AbilityCommand("AnalysisTerminalResearch", 5), null);
+    gf_AddLeveledUpgradeData(AbilityCommand("AnalysisTerminalResearch", 0), AbilityCommand("AnalysisTerminalResearch", 1), AbilityCommand("AnalysisTerminalResearch", 2), null);
+    gf_AddLeveledUpgradeData(AbilityCommand("TechVaultResearch", 0), AbilityCommand("TechVaultResearch", 1), AbilityCommand("TechVaultResearch", 2), null);
+    gf_AddLeveledUpgradeData(AbilityCommand("TechVaultResearch", 6), AbilityCommand("TechVaultResearch", 7), AbilityCommand("TechVaultResearch", 8), null);
+    gf_AddLeveledUpgradeData(AbilityCommand("TechVaultResearch", 3), AbilityCommand("TechVaultResearch", 4), AbilityCommand("TechVaultResearch", 5), null);
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 0), null);
+    gf_AddUpgradeData(AbilityCommand("OutfittingStationResearch", 1), null);
+    gf_AddLeveledUpgradeData(AbilityCommand("ReliquaryResearch", 0), AbilityCommand("ReliquaryResearch", 1), AbilityCommand("ReliquaryResearch", 2), null);
+    gf_AddLeveledUpgradeData(AbilityCommand("ReliquaryResearch", 3), AbilityCommand("ReliquaryResearch", 4), AbilityCommand("ReliquaryResearch", 5), null);
+    gf_AddLeveledUpgradeData(AbilityCommand("ReliquaryResearch", 6), AbilityCommand("ReliquaryResearch", 7), AbilityCommand("ReliquaryResearch", 8), null);
+    gf_AddLeveledUpgradeData(AbilityCommand("ReliquaryResearch", 9), AbilityCommand("ReliquaryResearch", 10), AbilityCommand("ReliquaryResearch", 11), null);
+    gf_AddLeveledUpgradeData(AbilityCommand("ReliquaryResearch", 12), AbilityCommand("ReliquaryResearch", 13), AbilityCommand("ReliquaryResearch", 14), null);
+    gf_AddUpgradeData(AbilityCommand("EdificeResearch", 2), null);
+    gf_AddUpgradeData(AbilityCommand("EdificeResearch", 0), null);
+    gf_AddUpgradeData(AbilityCommand("EdificeResearch", 1), null);
+    gf_AddUpgradeData(AbilityCommand("SanctumResearch", 0), null);
+    gf_AddUpgradeData(AbilityCommand("SanctumResearch", 1), null);
+    gf_AddUpgradeData(AbilityCommand("ElysiumResearch", 0), null);
+    gf_AddUpgradeData(AbilityCommand("FoundryResearch", 1), null);
+    gf_AddUpgradeData(AbilityCommand("ConduitResearch", 0), null);
+    gf_AddUpgradeData(AbilityCommand("ConduitResearch", 1), null);
+    gf_AddLeveledUpgradeData(AbilityCommand("MutagenChamberResearch", 3), AbilityCommand("MutagenChamberResearch", 4), AbilityCommand("MutagenChamberResearch", 5), null);
+    gf_AddLeveledUpgradeData(AbilityCommand("MutagenChamberResearch", 0), AbilityCommand("MutagenChamberResearch", 1), AbilityCommand("MutagenChamberResearch", 2), null);
+    gf_AddLeveledUpgradeData(AbilityCommand("CatalystPitResearch", 0), AbilityCommand("CatalystPitResearch", 1), AbilityCommand("CatalystPitResearch", 2), null);
+    gf_AddLeveledUpgradeData(AbilityCommand("CatalystPitResearch", 3), AbilityCommand("CatalystPitResearch", 4), AbilityCommand("CatalystPitResearch", 5), null);
+    gf_AddUpgradeData(AbilityCommand("CasnoliskDenResearch", 6), null);
+    gf_AddUpgradeData(AbilityCommand("CasnoliskDenResearch", 3), null);
+    gf_AddUpgradeData(AbilityCommand("CasnoliskDenResearch", 5), null);
+    gf_AddUpgradeData(AbilityCommand("CasnoliskDenResearch", 1), null);
+    gf_AddUpgradeData(AbilityCommand("CasnoliskDenResearch", 2), "PersistentSporesRevert");
+    gf_AddUpgradeData(AbilityCommand("BiomassCavernResearch", 0), null);
+    gf_AddUpgradeData(AbilityCommand("BiomassCavernResearch", 1), null);
+    gf_AddUpgradeData(AbilityCommand("BiomassCavernResearch", 2), null);
+    gf_AddUpgradeData(AbilityCommand("SunkenWarrenResearch", 2), null);
+    gf_AddUpgradeData(AbilityCommand("SunkenWarrenResearch", 3), null);
     gv_tester_menu = gf_DialogItemFromLayoutHookup(c_triggerControlTypePanel, "UIContainer/FullscreenUpperContainer/TesterMenu");
     gv_tester_panel = gf_DialogItemFromLayoutHookup(c_triggerControlTypePanel, "UIContainer/FullscreenUpperContainer/TesterPanel");
     gv_menu_mode_settings = gf_DialogItemFromLayoutHookup(c_triggerControlTypeButton, "UIContainer/FullscreenUpperContainer/TesterMenu/Modes/Settings");
@@ -2064,6 +2046,13 @@ bool gt_DialogItemIsUsed_Func (bool testConds, bool runActions) {
                             libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], gv_data_upgrade[lv_ii][lv_jj].lv_upgrade[0], 0);
                             libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], gv_data_upgrade[lv_ii][lv_jj].lv_upgrade[1], 0);
                             libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], gv_data_upgrade[lv_ii][lv_jj].lv_upgrade[2], 0);
+                            if ((gv_data_upgrade[lv_ii][lv_jj].lv_reversionUpgrade != null)) {
+                                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[0], gv_data_upgrade[lv_ii][lv_jj].lv_reversionUpgrade, 1);
+                                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[0], gv_data_upgrade[lv_ii][lv_jj].lv_reversionUpgrade, 0);
+                                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], gv_data_upgrade[lv_ii][lv_jj].lv_reversionUpgrade, 1);
+                                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], gv_data_upgrade[lv_ii][lv_jj].lv_reversionUpgrade, 0);
+                            }
+
                         }
 
                     }
@@ -2140,6 +2129,13 @@ bool gt_DialogItemIsUsed_Func (bool testConds, bool runActions) {
                         if ((gv_data_upgrade[lv_ii][lv_jj].lv_levels == 0) && (gv_data_upgrade[lv_ii][lv_jj].lv_upgrade[0] != null)) {
                             libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[0], gv_data_upgrade[lv_ii][lv_jj].lv_upgrade[0], 0);
                             libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], gv_data_upgrade[lv_ii][lv_jj].lv_upgrade[0], 0);
+                            if ((gv_data_upgrade[lv_ii][lv_jj].lv_reversionUpgrade != null)) {
+                                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[0], gv_data_upgrade[lv_ii][lv_jj].lv_reversionUpgrade, 1);
+                                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[0], gv_data_upgrade[lv_ii][lv_jj].lv_reversionUpgrade, 0);
+                                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], gv_data_upgrade[lv_ii][lv_jj].lv_reversionUpgrade, 1);
+                                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], gv_data_upgrade[lv_ii][lv_jj].lv_reversionUpgrade, 0);
+                            }
+
                         }
 
                     }

@@ -1956,6 +1956,8 @@
     <CEffectDamage id="D15MagnumSC" parent="ScionDamageRange" Race="Genetron">
         <Amount value="45"/>
         <Death value="Impact"/>
+        <ArmorReduction value="0"/>
+        <Kind value="Spell"/>
     </CEffectDamage>
     <CEffectSet id="D15MagnumSCS" parent="ScionSet" Race="Genetron">
         <EffectArray value="D15MagnumSC"/>
@@ -2425,9 +2427,12 @@
         <Behavior value="Active"/>
     </CEffectApplyBehavior>
     <CEffectApplyBehavior id="ProtectiveCloudAB" parent="ScionApplyBehavior" Race="Xayid"/>
-    <CEffectApplyBehavior id="PulsarDampener" parent="ScionApplyBehavior" Race="Keiron"/>
-    <CEffectApplyBehavior id="PulsarDampenerAlt" parent="ScionApplyBehavior" Race="Keiron"/>
-    <CEffectApplyBehavior id="PulsarDampenerAutocast" parent="ScionApplyBehaviorCaster" Race="Keiron"/>
+    <CEffectApplyBehavior id="PulsarDampener" parent="ScionApplyBehavior" Race="Keiron">
+        <WhichUnit Value="Source"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="PulsarDampenerAlt" parent="ScionApplyBehavior" Race="Keiron">
+        <WhichUnit Value="Source"/>
+    </CEffectApplyBehavior>
     <CEffectSet id="PulsarFacingFindAttackTarget" parent="ScionSet" Race="Keiron">
         <ValidatorArray value="PulsarAttackTarget"/>
         <EffectArray value="PulsarDisableTurning"/>
@@ -3131,6 +3136,8 @@
     <CEffectDamage id="ChargeCannonSC" parent="ScionDamageRange" Race="Genetron">
         <Amount value="24"/>
         <Death value="Blast"/>
+        <ArmorReduction value="0"/>
+        <Kind value="Spell"/>
     </CEffectDamage>
     <CEffectDamage id="RepulsorSuppressionCannonsDamage" parent="ScionDamageRange" Race="Genetron">
         <Amount value="20"/>
@@ -3441,7 +3448,7 @@
     </CEffectCreatePersistent>
     <CEffectEnumArea id="ProtectiveCloudSA" parent="ScionEnumArea" Race="Xayid">
         <SearchFilters value="Ground;Neutral,Enemy,Structure,Missile,Stasis,Dead,Hidden"/>
-        <AreaArray Radius="2.5" Effect="ProtectiveCloudAB"/>
+        <AreaArray Radius="3" Effect="ProtectiveCloudAB"/>
         <ImpactLocation Value="TargetPoint"/>
     </CEffectEnumArea>
     <CEffectSet id="ProtectiveCloudSet" parent="ScionSet" Race="Xayid">
@@ -3661,7 +3668,7 @@
         <AreaArray Radius="6" Effect="SupplimentationBuff"/>
     </CEffectEnumArea>
     <CEffectDamage id="ThrasherSpineDMG" parent="ScionDamageRange" Race="Xayid">
-        <Amount value="11"/>
+        <Amount value="10"/>
         <Death value="Eviscerate"/>
     </CEffectDamage>
     <CEffectSet id="VenomousStrike" parent="ScionSet" Race="Xayid">
@@ -3670,7 +3677,7 @@
     </CEffectSet>
     <CEffectDamage id="VirulentSpitImpact" parent="ScionDamageRange" Race="Xayid">
         <AttributeBonus index="Light" value="4"/>
-        <Amount value="9"/>
+        <Amount value="8"/>
         <Death value="Disintegrate"/>
     </CEffectDamage>
     <CEffectLaunchMissile id="VirulentSpit" parent="ScionLaunchMissile" Race="Xayid"/>
