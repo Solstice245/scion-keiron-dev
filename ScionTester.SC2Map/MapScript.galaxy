@@ -20,7 +20,7 @@ void InitLibs () {
 const int gv_const_terrains = 8;
 const int gv_const_players = 8;
 const int gv_const_races = 5;
-const int gv_const_card_length = 23;
+const int gv_const_card_length = 19;
 
 //--------------------------------------------------------------------------------------------------
 // Global Structures
@@ -224,6 +224,7 @@ trigger gt_TesterStopButton;
 trigger gt_TesterAttackButton;
 trigger gt_TesterResult;
 trigger gt_InstantBuild;
+trigger gt_ResearchCompleted;
 trigger gt_PlayerDeselectsAnyBuilder;
 trigger gt_TacNukeStrike;
 trigger gt_CreateNeutralStructure;
@@ -304,7 +305,7 @@ void gf_AddUnitData (string lp_unitType, string lp_icon) {
     }
     while ((gv_data_unit[lv_race_index][lv_item_index].lv_unit != null)) {
         lv_item_index += 1;
-        if ((lv_item_index == gv_const_card_length)) {
+        if ((lv_item_index > gv_const_card_length)) {
             return ;
         }
 
@@ -362,7 +363,7 @@ void gf_AddUpgradeData (abilcmd lp_abilityCommand, string lp_reversionUpgrade) {
     }
     while ((gv_data_upgrade[lv_race_index][lv_item_index].lv_upgrade[0] != null)) {
         lv_item_index += 1;
-        if ((lv_item_index == gv_const_card_length)) {
+        if ((lv_item_index > gv_const_card_length)) {
             return ;
         }
 
@@ -705,7 +706,7 @@ void gf_RenderTesterUIForPlayer (int lp_player) {
                     for ( ; ( (autoCD709BD7_ai >= 0 && lv_card_ii <= autoCD709BD7_ae) || (autoCD709BD7_ai < 0 && lv_card_ii >= autoCD709BD7_ae) ) ; lv_card_ii += autoCD709BD7_ai ) {
                         if ((gv_data_unit[gv_data_player[lp_player].lv_creator_race[lv_side_ii]][lv_card_ii].lv_unit == null)) {
                             DialogControlSetEnabled(gv_creator_itembutton[lv_side_ii][lv_card_ii], PlayerGroupSingle(lp_player), false);
-                            libNtve_gf_SetDialogItemTooltip(gv_creator_itembutton[lv_side_ii][lv_side_ii], StringToText(""), PlayerGroupSingle(lp_player));
+                            libNtve_gf_SetDialogItemTooltip(gv_creator_itembutton[lv_side_ii][lv_card_ii], StringToText(""), PlayerGroupSingle(lp_player));
                             DialogControlSetVisible(gv_creator_itemface[lv_side_ii][lv_card_ii], PlayerGroupSingle(lp_player), false);
                         }
                         else {
@@ -1634,19 +1635,18 @@ bool gt_Init_Func (bool testConds, bool runActions) {
     gf_AddLeveledUpgradeData(AbilityCommand("ArmoryResearch", 5), AbilityCommand("ArmoryResearch", 6), AbilityCommand("ArmoryResearch", 7), "TerranVehicleWeaponsRevert");
     gf_AddLeveledUpgradeData(AbilityCommand("ArmoryResearch", 14), AbilityCommand("ArmoryResearch", 15), AbilityCommand("ArmoryResearch", 16), "TerranVehicleandShipPlatingRevert");
     gf_AddLeveledUpgradeData(AbilityCommand("ArmoryResearch", 11), AbilityCommand("ArmoryResearch", 12), AbilityCommand("ArmoryResearch", 13), "TerranShipWeaponsRevert");
+    gf_AddUpgradeData(AbilityCommand("EngineeringBayResearch", 1), null);
+    gf_AddUpgradeData(AbilityCommand("EngineeringBayResearch", 0), null);
     gf_AddUpgradeData(AbilityCommand("BarracksTechLabResearch", 1), "ShieldWallRevert");
     gf_AddUpgradeData(AbilityCommand("BarracksTechLabResearch", 0), null);
     gf_AddUpgradeData(AbilityCommand("BarracksTechLabResearch", 2), null);
     gf_AddUpgradeData(AbilityCommand("GhostAcademyResearch", 0), null);
-    gf_AddUpgradeData(AbilityCommand("EngineeringBayResearch", 0), null);
-    gf_AddUpgradeData(AbilityCommand("EngineeringBayResearch", 5), null);
     gf_AddUpgradeData(AbilityCommand("FactoryTechLabResearch", 1), null);
     gf_AddUpgradeData(AbilityCommand("FactoryTechLabResearch", 9), null);
     gf_AddUpgradeData(AbilityCommand("FactoryTechLabResearch", 4), null);
     gf_AddUpgradeData(AbilityCommand("FactoryTechLabResearch", 6), null);
     gf_AddUpgradeData(AbilityCommand("StarportTechLabResearch", 0), null);
     gf_AddUpgradeData(AbilityCommand("StarportTechLabResearch", 9), null);
-    gf_AddUpgradeData(AbilityCommand("StarportTechLabResearch", 3), null);
     gf_AddUpgradeData(AbilityCommand("FusionCoreResearch", 2), null);
     gf_AddUpgradeData(AbilityCommand("FusionCoreResearch", 1), null);
     gf_AddUpgradeData(AbilityCommand("FusionCoreResearch", 0), null);
@@ -2726,6 +2726,26 @@ void gt_InstantBuild_Init () {
 }
 
 //--------------------------------------------------------------------------------------------------
+// Trigger: Research Completed
+//--------------------------------------------------------------------------------------------------
+bool gt_ResearchCompleted_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    gf_RenderTesterUIForAllPlayers();
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_ResearchCompleted_Init () {
+    gt_ResearchCompleted = TriggerCreate("gt_ResearchCompleted_Func");
+    TriggerAddEventUnitResearchProgress(gt_ResearchCompleted, null, c_unitProgressStageComplete);
+}
+
+//--------------------------------------------------------------------------------------------------
 // Trigger: Player Deselects Any Builder
 //--------------------------------------------------------------------------------------------------
 bool gt_PlayerDeselectsAnyBuilder_Func (bool testConds, bool runActions) {
@@ -2953,6 +2973,7 @@ void InitTriggers () {
     gt_TesterAttackButton_Init();
     gt_TesterResult_Init();
     gt_InstantBuild_Init();
+    gt_ResearchCompleted_Init();
     gt_PlayerDeselectsAnyBuilder_Init();
     gt_TacNukeStrike_Init();
     gt_CreateNeutralStructure_Init();
