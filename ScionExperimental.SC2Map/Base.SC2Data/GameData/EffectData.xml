@@ -10,6 +10,31 @@
     <CEffectDamage id="NeedleSpinesImpact">
         <Amount value="9"/>
     </CEffectDamage>
+    <CEffectApplyBehavior id="Scion_SageGraft">
+        <ValidatorArray index="0" value="NoGraftBuff"/>
+        <EditorCategories value="Race:Xayid"/>
+    </CEffectApplyBehavior>
+    <CEffectModifyUnit id="Scion_SageGraftHeal">
+        <EditorCategories value="Race:Xayid"/>
+        <VitalArray index="Life">
+            <Change value="20"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectCreatePersistent id="Scion_ToxicThorns">
+        <EditorCategories value="Race:Xayid"/>
+        <WhichLocation Value="TargetUnit"/>
+        <PeriodCount value="2"/>
+        <PeriodicEffectArray value="Scion_ToxicThornsLM"/>
+    </CEffectCreatePersistent>
+    <CEffectDamage id="Scion_ToxicThornsDMG" parent="ScionDamageRange">
+        <EditorCategories value="Race:Xayid"/>
+        <Amount value="5"/>
+    </CEffectDamage>
+    <CEffectLaunchMissile id="Scion_ToxicThornsLM">
+        <EditorCategories value="Race:Xayid"/>
+        <ImpactEffect value="Scion_ToxicThornsDMG"/>
+        <AmmoUnit value="Scion_WeaponToxicThorn"/>
+    </CEffectLaunchMissile>
     <CEffectLaunchMissile id="SnareEntangle" parent="ScionLaunchMissile" Race="Xayid">
         <ImpactEffect value="SnareEntangleSet"/>
         <AmmoUnit value="SnareAttackMissile"/>

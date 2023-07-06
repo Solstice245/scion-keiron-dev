@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
+    <CActorSound id="Scion_Sage_GraftLaunch" parent="SoundOneShot">
+        <On Terms="Abil.Scion_SageGraft.SourceCastStart" Send="Create"/>
+    </CActorSound>
+    <CActorAction id="Scion_SageAttack" parent="GenericAttack" effectImpact="Scion_ToxicThornsDMG" effectLaunch="Scion_ToxicThornsLM">
+        <LaunchAttachQuery Methods="AMPatternScionSage"/>
+    </CActorAction>
+    <CActorMissile id="Scion_SageAttackMissile" parent="GenericAttackMissile" unitName="Scion_WeaponToxicThorn"/>
     <CActorUnit id="Catalyzer" parent="ZergBuilding" unitName="Catalyzer">
         <On Terms="Abil.CatalystPitResearch.Start" Send="AnimGroupApply Work"/>
         <On Terms="Abil.CatalystPitResearch.Stop" Send="AnimGroupRemove Work"/>
@@ -20,6 +27,25 @@
             <Image value="Assets\Textures\wireframe-Xayid-catalystpit.dds"/>
         </Wireframe>
     </CActorUnit>
+    <CActorModel id="Scion_SageGraftBuff" parent="ModelAnimationStyleContinuousUNIT">
+        <On Terms="Behavior.Scion_SageGraft.On" Send="Create"/>
+        <On Terms="Behavior.Scion_SageGraft.Off" Send="AnimBracketStop BSD"/>
+        <AutoScaleFactor value="1.250000"/>
+        <HostSiteOps Ops="SOpAttachCenter"/>
+    </CActorModel>
+    <CActorModel id="Scion_SageGraftImpact" parent="ModelAnimationStyleOneShotUNIT">
+        <On Terms="Effect.Scion_SageGraftHeal.Start; At Target" Send="Create"/>
+        <HostSiteOps Ops="SOpAttachOverhead" HoldRotation="1"/>
+    </CActorModel>
+    <CActorModel id="Scion_SageGraftLaunch" parent="ModelAnimationStyleOneShotUNIT">
+        <On Terms="Abil.Scion_SageGraft.SourceCastStart" Send="Create"/>
+        <HostSiteOps Ops="SOpAttachWeapon00"/>
+    </CActorModel>
+    <CActorModel id="Scion_SageGraftLaunch2" parent="ModelAnimationStyleOneShotUNIT">
+        <On Terms="Abil.Scion_SageGraft.SourceCastStart" Send="Create"/>
+        <HostSiteOps Ops="SOpAttachWeapon01"/>
+        <Model value="Scion_SageGraftLaunch"/>
+    </CActorModel>
     <CActorModel id="ThistleBuild" parent="ZergBuildingBuild">
         <Model value="CasnoliskDenBuild"/>
     </CActorModel>
@@ -176,8 +202,10 @@
         </Wireframe>
     </CActorUnit>
     <CActorUnit id="Prowler">
+        <On index="69" Send="AnimPlay Cover Cover PlayForever"/>
         <On index="70" Send="$Spell"/>
         <On index="71" Send="$Spell"/>
+        <On index="72" Send="AnimClear Cover"/>
     </CActorUnit>
     <CActorModel id="SiphonBuild" parent="ModelConstruction">
         <Aliases value="_ZergBuildModel"/>
@@ -307,10 +335,9 @@
     </CActorUnit>
     <CActorModelMaterial id="Snare_Mat_EmissiveUp0" parent="GlazeParent"/>
     <CActorModelMaterial id="Snare_Mat_EmissiveUp1" parent="GlazeParent"/>
-    <CActorUnit id="Sage" parent="GenericUnitXayid" unitName="Sage">
+    <CActorUnit id="Scion_Sage" parent="GenericUnitXayid" unitName="Sage">
         <Aliases value="_UnitMedium"/>
-        <On index="61" Terms="WeaponStart.*.AttackStart" Send="AnimBracketStart Attack Spell,C"/>
-        <On Terms="Abil.Mend.SourceCastStart" Send="$Spell,B 0 -1.000000 -1.000000 1.200000 AsDuration"/>
+        <On Terms="Abil.Scion_SageGraft.SourceCastStart" Send="$Spell,B 0 -1.000000 -1.000000 1.200000 AsDuration"/>
         <On Terms="Abil.MendlingSacrificialMutation.Start" Send="AnimBracketStart Morph {} Morph {} ContentNonLooping"/>
         <On Terms="AbilMorph.*.Start" Send="Destroy"/>
         <DeathArray index="Normal" ModelLink="QueenDeath" SoundLink="Queen_Explode" VoiceLink="QueenDeathVoice"/>
@@ -344,12 +371,13 @@
             <AttachQuery Methods="AMFilterCenter"/>
             <Visuals TerrainPhysicsMaterial="Water" ActorModel="TerrainSquibHarnessContinuous" ModelLink="WaterRippleLarge"/>
         </TerrainSquibs>
-        <WalkAnimMoveSpeed value="2.5"/>
-        <BarOffset value="50"/>
-        <BarWidth value="55"/>
+        <WalkAnimMoveSpeed value="3.125"/>
+        <BarOffset value="52"/>
+        <BarWidth value="50"/>
         <GroupIcon>
             <Image index="0" value="Assets\Textures\wireframe-Xayid-Mendling.dds"/>
         </GroupIcon>
+        <HighlightTooltip value="Unit/Name/Scion_Sage"/>
         <SoundArray index="Ready" value="LairViper_Ready"/>
         <SoundArray index="What" value="LairViper_What"/>
         <SoundArray index="Yes" value="LairViper_Yes"/>
@@ -546,7 +574,7 @@
         <HostSiteOps Ops="SOpAttachOriginStationary"/>
         <Model value="FletchBlossom"/>
     </CActorModel>
-    <CActorUnit id="SageBlossom" parent="GenericUnitXayid" unitName="SageBlossom">
+    <CActorUnit id="Scion_SageBlossom" parent="GenericUnitXayid" unitName="SageBlossom">
         <On Terms="ActorCreation" Send="AnimPlay BSD Spell,End PlayForever"/>
         <On Terms="AbilMorph.XayidMorphSage.Start" Send="Create"/>
         <Model value="StructureSeed"/>
@@ -559,6 +587,7 @@
         <GroupIcon>
             <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
         </GroupIcon>
+        <HighlightTooltip value="Unit/Name/Scion_SageBlossom"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-pneumatizedcarapace.dds"/>
         <SoundArray index="Ready" value="Assailant_Ready"/>
         <SoundArray index="What" value="Assailant_What"/>
@@ -981,8 +1010,9 @@
     <CActorUnit id="ForagerDummy" parent="GenericUnitXayid" unitName="ForagerDummy">
         <Model value="Invisible"/>
     </CActorUnit>
-    <CActorUnit id="SageDummy" parent="GenericUnitXayid" unitName="SageDummy">
+    <CActorUnit id="Scion_SageDummy" parent="GenericUnitXayid" unitName="SageDummy">
         <Model value="Invisible"/>
+        <HighlightTooltip value="Unit/Name/Scion_SageDummy"/>
     </CActorUnit>
     <CActorUnit id="ScorpaliskDummy" parent="GenericUnitXayid" unitName="ScorpaliskDummy">
         <Model value="Invisible"/>
@@ -1053,7 +1083,7 @@
             <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
         </Wireframe>
     </CActorUnit>
-    <CActorUnit id="SageSeed" parent="GenericUnitXayid" unitName="SageSeed">
+    <CActorUnit id="Scion_SageSeed" parent="GenericUnitXayid" unitName="SageSeed">
         <Macros index="3" value="PhysicsDeathsSwarmAir"/>
         <Macros index="4" value="PhysicsDeathsVoidAir"/>
         <On Terms="TimerExpired; TimerName SpellStart" Send="AnimBracketStart Spell Spell,Start Spell,End"/>
@@ -1075,6 +1105,7 @@
         <GroupIcon>
             <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
         </GroupIcon>
+        <HighlightTooltip value="Unit/Name/Scion_SageSeed"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-pneumatizedcarapace.dds"/>
         <SoundArray index="Ready" value="Assailant_Ready"/>
         <SoundArray index="What" value="Assailant_What"/>
@@ -1187,7 +1218,7 @@
             <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
         </Wireframe>
     </CActorUnit>
-    <CActorUnit id="SageSprout" parent="GenericUnitXayid" unitName="SageSprout">
+    <CActorUnit id="Scion_SageSprout" parent="GenericUnitXayid" unitName="SageSprout">
         <Model value="StructureSeed"/>
         <Scale value="0.500000"/>
         <BuildModel value="StructureSeed"/>
@@ -1198,6 +1229,7 @@
         <GroupIcon>
             <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
         </GroupIcon>
+        <HighlightTooltip value="Unit/Name/Scion_SageSprout"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-pneumatizedcarapace.dds"/>
         <SoundArray index="Ready" value="Assailant_Ready"/>
         <SoundArray index="What" value="Assailant_What"/>

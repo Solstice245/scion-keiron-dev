@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
-    <CAbilEffectTarget id="CoveringSpray">
-        <Cost index="0">
-            <Vital index="Energy" value="75"/>
-        </Cost>
-    </CAbilEffectTarget>
+    <CAbilEffectTarget id="CoveringSpray"/>
     <CAbilEffectTarget id="Mend">
         <Range index="0" value="5"/>
+    </CAbilEffectTarget>
+    <CAbilEffectTarget id="Scion_SageGraft">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <Flags index="AutoCast" value="1"/>
+        <Flags index="AutoCastOn" value="1"/>
+        <Flags index="Smart" value="1"/>
+        <Cost>
+            <Vital index="Energy" value="15"/>
+            <Charge TimeUse="2.8"/>
+        </Cost>
+        <TargetFilters value="Biological;Self,Neutral,Enemy,Missile,Stasis,Dead"/>
+        <Range value="5"/>
+        <SmartValidatorArray value="NotFullLife"/>
+        <AutoCastFilters value="Biological,Visible;Neutral,Enemy,Invulnerable"/>
+        <AutoCastRange value="6"/>
+        <AutoCastValidatorArray value="NotStructureTarget"/>
+        <AutoCastValidatorArray value="LifeGTEDelta20"/>
+        <CastOutroTime value="1.12"/>
+        <UninterruptibleArray index="Channel" value="1"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Scion_Graft"/>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="Scour">
         <PreEffectBehavior Behavior="SuppressTurning" Count="1" Duration="0.5">
