@@ -1222,13 +1222,12 @@
     <CActorAction id="FixerAttack" parent="GenericAttack" effectAttack="FixerFlashGun">
         <LaunchAttachQuery Methods="AMPatternFixer"/>
     </CActorAction>
-    <CActorModel id="EchoDiscordZoneImpactStructure" parent="ModelAnimationStyleContinuous">
+    <CActorModel id="EchoDiscordZoneImpactStructure" parent="ModelAnimationStyleContinuousUNIT">
         <Inherits index="BaseModelScale" value="1"/>
         <Inherits index="Scale" value="1"/>
         <On Terms="Behavior.DiscordZoneDebuffStructure.On" Send="Create"/>
         <On Terms="Behavior.DiscordZoneDebuffStructure.Off" Send="AnimBracketStop BSD"/>
         <On Terms="ActorCreation" Send="SetTintColor 128,0,255"/>
-        <Host Subject="_Selectable"/>
         <AutoScaleFromSelectionFactor value="1.000000"/>
         <ModelFlags index="AllowHitTest" value="0"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
@@ -3445,10 +3444,10 @@
     <CActorUnit id="TeslaShockChargeUnit" parent="GenericUnitStandard" unitName="ShockCharge">
         <On Terms="ActorCreation" Send="Create TeslaShockChargeRangeFriendly"/>
         <On Terms="ActorCreation" Send="Create TeslaShockChargeRangeEnemy"/>
-        <On Terms="Behavior.ShockCharge.On" Send="$Spell 0 0.000000 0.000000 1.750000 AsDuration"/>
+        <On Terms="Behavior.ShockCharge.On" Send="$Spell 0 0.000000 0.000000 2.100000 AsDuration"/>
         <On Terms="Behavior.TeslaShockChargeOverload.On" Send="AnimPlay Cover Cover PlayForever"/>
         <On Terms="Behavior.TeslaShockChargeOverload.Off" Send="AnimClear Cover"/>
-        <On Terms="Effect.TeslaShockChargeExpireRecharge.Start" Send="$Spell 0 0.000000 0.000000 1.750000 AsDuration"/>
+        <On Terms="Effect.TeslaShockChargeExpireRecharge.Start" Send="$Spell 0 0.000000 0.000000 2.100000 AsDuration"/>
         <Model value="TeslaShockCharge"/>
         <BuildModel value="TeslaShockCharge"/>
         <DeathArray index="Normal" ModelLink="TerranSmallTriggeredExplosion"/>
@@ -6392,7 +6391,7 @@
     <CActorSound id="EchoDiscordModeSound" parent="SoundOneShot">
         <On Terms="Abil.EchoDiscordMode.Start" Send="Create"/>
     </CActorSound>
-    <CActorModel id="EchoDiscordZoneImpact" parent="ModelAnimationStyleContinuous">
+    <CActorModel id="EchoDiscordZoneImpact" parent="ModelAnimationStyleContinuousUNIT">
         <On Terms="Behavior.DiscordZoneDebuff.On" Send="Create"/>
         <On Terms="Behavior.DiscordZoneDebuff.Off" Send="AnimBracketStop BSD"/>
         <On Terms="ActorCreation" Send="SetTintColor 255,0,255"/>

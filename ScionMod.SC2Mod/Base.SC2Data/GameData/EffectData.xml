@@ -165,6 +165,28 @@
         <EffectArray value="BadgerPowershellPowerDrainCasterHealer"/>
         <EffectArray value="BadgerPowershellPowerDrainHealer"/>
     </CEffectSet>
+    <CEffectCreatePersistent id="CasnoliskStagnatingBileAINotification">
+        <EditorCategories value="Race:Xayid"/>
+        <WhichLocation Effect="StagnatingBile"/>
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <AINotifyEffect value="StagnatingBileImpact"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="SpitterSpitterSporesAINotification">
+        <EditorCategories value="Race:Xayid"/>
+        <WhichLocation Effect="SpitterSpores"/>
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <AINotifyEffect value="SpitterSporesImpact"/>
+    </CEffectCreatePersistent>
+    <CEffectDestroyPersistent id="CasnoliskStagnatingBileAINotificationDestroy">
+        <EditorCategories value="Race:Xayid"/>
+        <WhichLocation Effect="StagnatingBile" Value="TargetPoint"/>
+        <Effect value="CasnoliskStagnatingBileAINotification"/>
+    </CEffectDestroyPersistent>
+    <CEffectDestroyPersistent id="SpitterSpitterSporesAINotificationDestroy">
+        <EditorCategories value="Race:Xayid"/>
+        <WhichLocation Effect="SpitterSpores" Value="TargetPoint"/>
+        <Effect value="SpitterSpitterSporesAINotification"/>
+    </CEffectDestroyPersistent>
     <CEffectSet id="CourierCloakingFieldPowerSet">
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="CourierCloakingFieldPowerModify"/>
@@ -458,7 +480,7 @@
         <EditorCategories value="Race:Keiron"/>
         <ImpactUnit Value="Caster"/>
         <VitalArray index="Energy">
-            <Change value="60"/>
+            <Change value="45"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectModifyUnit id="ApertureTeleportMedRefund">
@@ -727,6 +749,7 @@
     <CEffectSet id="BlindingBurstSet" parent="ScionSet" Race="Xayid">
         <EffectArray value="BlindingBurstAB"/>
         <EffectArray value="BlindingBurstNotification"/>
+        <AINotifyFlags index="HurtEnemy" value="1"/>
     </CEffectSet>
     <CEffectCreatePersistent id="BlindingBurstDeath" parent="ScionCreatePersistent" Race="Xayid">
         <ValidatorArray value="BlindingBurstCooldownComplete"/>
@@ -1889,11 +1912,13 @@
         <ValidatorArray value="CasterNotDead"/>
         <ExpireDelay value="7"/>
         <ExpireEffect value="OlympusDischargeReveal"/>
+        <AINotifyEffect value="OlympusDischargeSA"/>
     </CEffectCreatePersistent>
     <CEffectDamage id="OlympusDischargeDMG">
         <EditorCategories value="Race:Genetron"/>
         <DebugTrace value="1"/>
         <Amount value="50"/>
+        <Death value="Electrocute"/>
     </CEffectDamage>
     <CEffectApplyBehavior id="OlympusDischargeDebuffAB" parent="ScionApplyBehavior">
         <ValidatorArray index="0" value="NotStructureTarget"/>
@@ -1920,6 +1945,9 @@
     <CEffectEnumArea id="OlympusDischargeSA" parent="ScionEnumArea">
         <EditorCategories value="Race:Genetron"/>
         <AreaArray Radius="6" Effect="OlympusDischargeSet"/>
+        <AINotifyFlags index="HurtFriend" value="1"/>
+        <AINotifyFlags index="HurtEnemy" value="1"/>
+        <AINotifyFlags index="MajorDanger" value="1"/>
     </CEffectEnumArea>
     <CEffectSet id="OlympusDischargeSet">
         <EditorCategories value="Race:Genetron"/>
@@ -1937,12 +1965,16 @@
         <AreaArray Radius="6" Fraction="0.5"/>
         <AreaArray Radius="8" Fraction="0.25"/>
         <SearchFilters value="-;Missile,Stasis,Dead,Invulnerable"/>
+        <AINotifyFlags index="HurtFriend" value="1"/>
+        <AINotifyFlags index="HurtEnemy" value="1"/>
+        <AINotifyFlags index="MajorDanger" value="1"/>
     </CEffectDamage>
     <CEffectCreatePersistent id="OlympusExplodeDelay">
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="CasterPoint"/>
         <InitialDelay value="3.5"/>
         <InitialEffect value="OlympusExplodeDMG"/>
+        <AINotifyEffect value="OlympusExplodeDMG"/>
     </CEffectCreatePersistent>
     <CEffectSet id="TeslaChargeCompleteCloakCharge" parent="ScionSet" Race="Genetron">
         <EffectArray value="Equipped"/>
@@ -2021,9 +2053,7 @@
         <ValidatorArray value="NotStructureTarget"/>
     </CEffectApplyBehavior>
     <CEffectApplyBehavior id="FeedingPoolHealingAura" parent="ScionApplyBehavior" Race="Xayid">
-        <ValidatorArray index="0" value="TargetLifeLessThan75Percent"/>
-        <ValidatorArray value="NotUnderConstruction"/>
-        <ValidatorArray value="NoMoreThan4FeedingPoolHealStacks"/>
+        <ValidatorArray index="0" value="TargetLifeNotFull"/>
     </CEffectApplyBehavior>
     <CEffectApplyBehavior id="FrenzyInjection" parent="ScionApplyBehavior" Race="Xayid">
         <ValidatorArray index="0" value="TargetIsAllyorPlayer"/>
@@ -2238,7 +2268,7 @@
         <EffectArray value="LaunchCloakCharge"/>
         <EffectArray value="ChargeUse"/>
         <EffectArray value="TeslaLaunchChargeCostETU"/>
-        <TargetLocationType value="UnitOrPoint"/>
+        <TargetLocationType value="Point"/>
         <ValidatorArray value="GenetronPowerSupplyGE150"/>
     </CEffectSet>
     <CEffectSet id="LaunchShockChargeLS" parent="ScionSet" Race="Genetron">
@@ -2596,6 +2626,10 @@
         <AreaArray Radius="3" Effect="TeslaShockChargeImpact"/>
         <ValidatorArray value="CasterIsNotBlindedByProwler"/>
         <ValidatorArray value="CasterHasNoNaniteGrenadeBuff"/>
+        <ValidatorArray value="CasterNotGraviton"/>
+        <ValidatorArray value="Scion_CasterNoRavenScramblerMissile"/>
+        <AINotifyFlags index="HurtEnemy" value="1"/>
+        <AINotifyFlags index="MinorDanger" value="1"/>
     </CEffectEnumArea>
     <CEffectApplyBehavior id="TeslaShockChargeExpireRecharge" parent="ScionApplyBehaviorCaster" Race="Genetron">
         <Behavior value="ShockCharge"/>
@@ -2750,6 +2784,7 @@
         <PeriodicEffectArray value="JupiterShellShockedSearch"/>
         <PeriodicEffectArray value="JupiterNapalmCreatePersistent"/>
         <PeriodicEffectArray value="JupiterRevenantBombDamage"/>
+        <AINotifyEffect value="JupiterRevenantBombDamage"/>
     </CEffectCreatePersistent>
     <CEffectModifyUnit id="JupiterSpeedModifyUnit">
         <EditorCategories value="Race:Genetron"/>
@@ -2995,6 +3030,8 @@
         <AreaArray Fraction="2"/>
         <AreaArray Radius="1.5" Fraction="1"/>
         <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <AINotifyFlags index="HurtEnemy" value="1"/>
+        <AINotifyFlags index="MinorDanger" value="1"/>
     </CEffectDamage>
     <CEffectDestroyPersistent id="JupiterRevenantBombDestroyChannel">
         <EditorCategories value="Race:Genetron"/>
@@ -3009,12 +3046,15 @@
         <ImpactEffect value="JupiterRevenantBombImpact"/>
         <AmmoUnit value="RevenantBombLMWeapon"/>
         <AmmoOwner Value="Caster"/>
+        <AINotifyFlags index="HurtEnemy" value="1"/>
+        <AINotifyFlags index="MinorDanger" value="1"/>
     </CEffectLaunchMissile>
     <CEffectCreatePersistent id="JupiterNapalmCreatePersistent" parent="ScionCreatePersistent" Race="Genetron">
         <PeriodCount value="21"/>
         <PeriodicEffectArray value="JupiterNapalmSearchArea"/>
         <PeriodicPeriodArray value="0.575"/>
         <InitialDelay value="0.575"/>
+        <AINotifyEffect value="JupiterNapalmSearchArea"/>
     </CEffectCreatePersistent>
     <CEffectDamage id="JupiterNapalmDamage" parent="ScionDamage" Race="Genetron">
         <AttributeBonus index="Structure" value="4"/>
@@ -3024,6 +3064,8 @@
     <CEffectEnumArea id="JupiterNapalmSearchArea" parent="ScionEnumAreaEnemyGround" Race="Genetron">
         <ImpactLocation Value="TargetPoint"/>
         <AreaArray Radius="1.5" Effect="JupiterNapalm"/>
+        <AINotifyFlags index="HurtEnemy" value="1"/>
+        <AINotifyFlags index="MinorDanger" value="1"/>
     </CEffectEnumArea>
     <CEffectCreatePersistent id="JupiterRevenantBombForceOffset" parent="ScionCreatePersistent" Race="Genetron">
         <WhichLocation Value="CasterUnit"/>
@@ -3251,8 +3293,7 @@
     </CEffectLaunchMissile>
     <CEffectEnumArea id="BilePitSustainSA" parent="ScionEnumArea" Race="Xayid">
         <SearchFilters value="Structure;Self,Ally,Neutral,Enemy,Missile,Stasis,Dead"/>
-        <AreaArray Radius="6" Effect="BilePitSustain"/>
-        <SearchFlags index="ExtendByUnitRadius" value="1"/>
+        <AreaArray Radius="6.5" Effect="BilePitSustain"/>
     </CEffectEnumArea>
     <CEffectCreatePersistent id="ExplosiveGlob" parent="ScionCreatePersistent" Race="Xayid">
         <WhichLocation Value="SourcePoint"/>
@@ -3261,12 +3302,11 @@
         <PeriodicOffsetArray value="0,-12.6875,0"/>
     </CEffectCreatePersistent>
     <CEffectEnumArea id="FeedingPoolHealAuraSA" parent="ScionEnumArea" Race="Xayid">
-        <SearchFilters value="-;Self,Neutral,Enemy,Missile,Stasis,Dead"/>
-        <AreaArray MaxCount="3" Radius="6" Effect="FeedingPoolHealingAura"/>
+        <SearchFilters value="-;Self,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead"/>
+        <AreaArray MaxCount="3" Radius="6.5" Effect="FeedingPoolHealingAura"/>
         <TargetSorts>
             <SortArray value="TSLifeFraction"/>
         </TargetSorts>
-        <SearchFlags index="SameCliff" value="1"/>
     </CEffectEnumArea>
     <CEffectCreatePersistent id="BileSwarm" parent="ScionCreatePersistent" Race="Xayid">
         <WhichLocation Value="TargetUnit"/>
@@ -3436,8 +3476,12 @@
         <Flags index="Channeled" value="1"/>
         <InitialEffect value="DashSpeed"/>
         <ExpireEffect value="XayidlingDashOrder"/>
-        <PeriodCount value="4"/>
+        <PeriodCount value="5"/>
         <PeriodicEffectArray value="DashEffect"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0.0625"/>
+        <PeriodicPeriodArray value="0.0625"/>
+        <PeriodicPeriodArray value="0.0625"/>
         <PeriodicPeriodArray value="0.0625"/>
     </CEffectCreatePersistent>
     <CEffectCreatePersistent id="ProtectiveCloud" parent="ScionCreatePersistent" Race="Xayid">
@@ -3485,12 +3529,14 @@
         <ImpactLocation Value="SourceUnit"/>
         <AreaArray Radius="0.8" Effect="IncendiaryInfusionDMG"/>
         <SearchFlags index="ExtendByUnitRadius" value="1"/>
+        <AINotifyFlags index="HurtEnemy" value="1"/>
     </CEffectEnumArea>
     <CEffectEnumArea id="IncendiaryInfusionSAA" parent="ScionEnumAreaEnemyAir" Race="Xayid">
         <LaunchLocation Value="TargetUnit"/>
         <ImpactLocation Value="SourceUnit"/>
         <AreaArray Radius="0.8" Effect="IncendiaryInfusionDMG"/>
         <SearchFlags index="ExtendByUnitRadius" value="1"/>
+        <AINotifyFlags index="HurtEnemy" value="1"/>
     </CEffectEnumArea>
     <CEffectSwitch id="IncendiaryInfusionSwitch">
         <EditorCategories value="Race:Xayid"/>
@@ -3559,6 +3605,7 @@
         <PeriodCount value="40"/>
         <PeriodicEffectArray value="ResidualAcidSA"/>
         <PeriodicPeriodArray value="0.5"/>
+        <AINotifyEffect value="ResidualAcidSA"/>
     </CEffectCreatePersistent>
     <CEffectDamage id="ResidualAcidDMG" parent="ScionDamage" Race="Xayid">
         <Amount value="5"/>
@@ -3566,9 +3613,9 @@
     </CEffectDamage>
     <CEffectEnumArea id="ResidualAcidSA" parent="ScionEnumAreaEnemyGround" Race="Xayid">
         <AreaArray Radius="0.75" Effect="ResidualAcid"/>
+        <AINotifyFlags index="HurtEnemy" value="1"/>
     </CEffectEnumArea>
     <CEffectSet id="SupportEffectsS" parent="ScionSet" Race="Xayid">
-        <ValidatorArray value="SupportEffectsSTargetFilters"/>
         <EffectArray value="FeedingPoolHealAuraSA"/>
         <EffectArray value="BilePitSustainSA"/>
         <EffectArray value="SupplimentationOutputSA"/>
@@ -3600,16 +3647,15 @@
         <Amount value="5"/>
     </CEffectDamage>
     <CEffectCreatePersistent id="FeedingPoolHealAuraCP" parent="ScionCreatePersistent" Race="Xayid">
-        <WhichLocation Value="SourceUnit"/>
+        <WhichLocation Value="TargetUnit"/>
         <PeriodCount value="4"/>
         <PeriodicEffectArray value="FeedingPoolHealAuraMU"/>
-        <PeriodicPeriodArray value="0.3"/>
-        <ValidatorArray value="UnitHasNoMoreThan4FeedingPoolHealStacks"/>
+        <PeriodicPeriodArray value="0.3125"/>
     </CEffectCreatePersistent>
     <CEffectModifyUnit id="FeedingPoolHealAuraMU">
         <EditorCategories value="Race:Xayid"/>
         <VitalArray index="Life">
-            <Change value="0.45"/>
+            <Change value="0.5"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectModifyUnit id="SacrificialMutationHealMU">
@@ -3648,15 +3694,20 @@
         <ExcludeArray index="0" removed="1"/>
         <IncludeArray Value="Target"/>
         <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <AINotifyFlags index="HurtEnemy" value="1"/>
     </CEffectDamage>
     <CEffectLaunchMissile id="SpitterSpores" parent="ScionLaunchMissilePoint" Race="Xayid">
         <AmmoUnit value="SpitterAcidWeapon"/>
         <Movers Link="SpitterAcidMissileLow" IfRangeLTE="4"/>
         <Movers Link="SpitterAcidMissile" IfRangeLTE="-1"/>
+        <LaunchEffect value="SpitterSpitterSporesAINotification"/>
+        <FinishEffect value="SpitterSpitterSporesAINotificationDestroy"/>
     </CEffectLaunchMissile>
     <CEffectLaunchMissile id="StagnatingBile" parent="ScionLaunchMissilePoint" Race="Xayid">
         <AmmoUnit value="StagnatingBileMissile"/>
         <AmmoOwner Value="Caster"/>
+        <LaunchEffect value="CasnoliskStagnatingBileAINotification"/>
+        <FinishEffect value="CasnoliskStagnatingBileAINotificationDestroy"/>
     </CEffectLaunchMissile>
     <CEffectEnumArea id="StagnatingBileImpact" parent="ScionEnumArea" Race="Xayid">
         <AINotifyFlags index="HurtFriend" value="1"/>
@@ -3665,7 +3716,7 @@
     </CEffectEnumArea>
     <CEffectEnumArea id="SupplimentationOutputSA" parent="ScionEnumArea" Race="Xayid">
         <SearchFilters value="-;Self,Neutral,Enemy,Missile,Stasis,Dead,Hidden,Invulnerable"/>
-        <AreaArray Radius="6" Effect="SupplimentationBuff"/>
+        <AreaArray Radius="6.5" Effect="SupplimentationBuff"/>
     </CEffectEnumArea>
     <CEffectDamage id="ThrasherSpineDMG" parent="ScionDamageRange" Race="Xayid">
         <Amount value="10"/>
@@ -3676,8 +3727,8 @@
         <EffectArray value="VenomInjection"/>
     </CEffectSet>
     <CEffectDamage id="VirulentSpitImpact" parent="ScionDamageRange" Race="Xayid">
-        <AttributeBonus index="Light" value="4"/>
-        <Amount value="8"/>
+        <AttributeBonus index="Light" value="5"/>
+        <Amount value="7"/>
         <Death value="Disintegrate"/>
     </CEffectDamage>
     <CEffectLaunchMissile id="VirulentSpit" parent="ScionLaunchMissile" Race="Xayid"/>
@@ -3774,7 +3825,7 @@
         <EditorCategories value="Race:Keiron"/>
         <ImpactUnit Value="Caster"/>
         <VitalArray index="Energy">
-            <Change value="-60"/>
+            <Change value="-45"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectLoadContainer id="ApertureTeleportLoad">
@@ -3996,6 +4047,7 @@
         <PeriodCount value="8"/>
         <PeriodicEffectArray value="HarbingerHeraldEnergyCannonsSA"/>
         <PeriodicPeriodArray value="0.25"/>
+        <AINotifyEffect value="HarbingerHeraldEnergyCannonsSA"/>
     </CEffectCreatePersistent>
     <CEffectDamage id="HarbingerHeraldEnergyCannonsAOEDMG" parent="ScionDamage" Race="Keiron">
         <Amount value="2.5"/>
@@ -4003,6 +4055,7 @@
     <CEffectEnumArea id="HarbingerHeraldEnergyCannonsSA" parent="ScionEnumAreaEnemyAir" Race="Keiron">
         <ImpactLocation Value="TargetPoint"/>
         <AreaArray Radius="1.75" Effect="HarbingerHeraldEnergyCannonsAOEAB"/>
+        <AINotifyFlags index="HurtEnemy" value="1"/>
     </CEffectEnumArea>
     <CEffectSet id="HeraldEnergyCannonsLMImpact" parent="ScionSet" Race="Keiron">
         <EffectArray value="HeraldEnergyCannonsDMG"/>
@@ -4431,6 +4484,7 @@
         <InitialDelay value="2.5"/>
         <InitialEffect value="CruxConvergenceSA"/>
         <PeriodicValidator value="CasterNotDead"/>
+        <AINotifyEffect value="CruxConvergenceSA"/>
     </CEffectCreatePersistent>
     <CEffectDamage id="CruxConvergenceDMG" parent="ScionDamage" Race="Keiron">
         <AttributeBonus index="Mechanical" value="50"/>
@@ -4439,6 +4493,8 @@
     </CEffectDamage>
     <CEffectEnumArea id="CruxConvergenceSA" parent="ScionEnumArea" Race="Keiron">
         <AreaArray Radius="2.25" Effect="CruxConvergenceDMG"/>
+        <AINotifyFlags index="HurtEnemy" value="1"/>
+        <AINotifyFlags index="MinorDanger" value="1"/>
     </CEffectEnumArea>
     <CEffectDamage id="CruxLightningBoltDMG" parent="ScionDamage" Race="Keiron">
         <Amount value="40"/>
