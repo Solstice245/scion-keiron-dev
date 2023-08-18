@@ -35,6 +35,20 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="GenetronPowerSupplyGE025"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="Detector6" parent="Detector">
+        <Alignment value="Positive"/>
+        <InfoFlags index="Hidden" value="1"/>
+        <InfoIcon value="Assets\Textures\btn-status-detector.dds"/>
+        <Modification Detect="6"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="KeironShellRestorationDisable">
+        <InfoIcon value="Assets\Textures\btn-ability-keiron-suspension.dds"/>
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <Modification>
+            <BehaviorLinkDisableArray value="KeironShellRestoration"/>
+        </Modification>
+        <Alignment value="Negative"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="ProcessingCorePower">
         <InfoFlags index="Hidden" value="1"/>
         <InfoIcon value="Assets\Textures\btn-tips-computerterminals.dds"/>
@@ -339,11 +353,11 @@
             <StateFlags index="Cloak" value="1"/>
         </Modification>
     </CBehaviorBuff>
-    <CBehaviorBuff id="Detector13" parent="Detector">
+    <CBehaviorBuff id="Detector14" parent="Detector">
         <Alignment value="Positive"/>
         <InfoFlags index="Hidden" value="1"/>
         <InfoIcon value="Assets\Textures\btn-status-detector.dds"/>
-        <Modification Detect="13"/>
+        <Modification Detect="14"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="DisableShieldRegen">
         <InfoFlags index="Hidden" value="1"/>
@@ -493,11 +507,10 @@
     </CBehaviorBuff>
     <CBehaviorBuff id="KeironShellRestoration">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
-        <RemoveValidatorArray value="NoShellRestorationDelay"/>
         <Modification>
             <VitalRegenArray index="Shields" value="3"/>
         </Modification>
-        <DamageResponse Handled="KeironShellRestorationDelayABSource">
+        <DamageResponse Handled="KeironShellRestorationControlSet">
             <Chance value="1"/>
         </DamageResponse>
         <InfoFlags index="Hidden" value="1"/>
@@ -510,12 +523,19 @@
         <DisableValidatorArray value="NotUnderConstruction"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="KeironShellRestorationDelay">
+        <Name value="Behavior/Name/KeironShellRestorationDisable"/>
+        <Tooltip value="Behavior/Tooltip/KeironShellRestorationDisable"/>
+        <Alignment value="Negative"/>
+        <InfoIcon value="Assets\Textures\btn-ability-keiron-suspension.dds"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Duration value="2"/>
-        <DamageResponse Handled="KeironShellRestorationDelayABSource">
+        <Modification>
+            <BehaviorLinkDisableArray value="KeironShellRestoration"/>
+            <BehaviorLinkDisableArray value="KeironShellRestorationDisable"/>
+        </Modification>
+        <DamageResponse Handled="KeironShellRestorationControlSet">
             <Chance value="1"/>
         </DamageResponse>
-        <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="OlympusCharging">
         <InfoFlags index="Hidden" value="1"/>
@@ -2041,7 +2061,7 @@
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <DisplayDuration index="Self" value="1"/>
         <DisplayDuration index="Ally" value="1"/>
-        <Duration value="189"/>
+        <Duration value="140"/>
         <ExpireEffect value="Suicide"/>
         <Modification>
             <StateFlags index="Cloak" value="1"/>
@@ -2053,9 +2073,12 @@
         <DisplayDuration index="Ally" value="1"/>
         <DisplayDuration index="Enemy" value="1"/>
         <BuffFlags index="Countdown" value="0"/>
-        <Duration value="5.6"/>
+        <Duration value="7"/>
         <ExpireEffect value="EmanatorFate"/>
         <InfoFlags index="Hidden" value="1"/>
+        <Modification>
+            <StateFlags index="SuppressDetection" value="1"/>
+        </Modification>
     </CBehaviorBuff>
     <CBehaviorBuff id="InducerGamutOrb">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>

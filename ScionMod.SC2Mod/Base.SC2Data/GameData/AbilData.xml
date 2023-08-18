@@ -108,13 +108,13 @@
     </CAbilResearch>
     <CAbilEffectInstant id="BlitzerOverdrive">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Effect index="0" value="BlitzerOverdrivePowerEnum"/>
         <Flags index="Transient" value="1"/>
         <Cost>
             <Vital index="Energy" value="15"/>
             <Cooldown TimeUse="5"/>
         </Cost>
         <CmdButtonArray index="Execute" DefaultButtonFace="BlitzerSupercharge" Requirements="BlitzerOverdriveReq"/>
-        <Effect index="0" value="BlitzerOverdrivePowerEnum"/>
     </CAbilEffectInstant>
     <CAbilBuildable id="BuildInProgress">
         <CmdButtonArray index="Halt" DefaultButtonFace="Halt">
@@ -414,6 +414,7 @@
         <AINotifyEffect value="FixerRepairHealer"/>
     </CAbilEffectTarget>
     <CAbilEffectInstant id="SuperCharge">
+        <AbilSetId value="Supercharge"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Effect index="0" value="BlitzerSuperchargePowerEnum"/>
         <Flags index="Transient" value="1"/>
@@ -425,7 +426,6 @@
         <CmdButtonArray index="Execute" DefaultButtonFace="BlitzerSupercharge" Requirements="IsNotSupercharged">
             <Flags index="ToSelection" value="1"/>
         </CmdButtonArray>
-        <AbilSetId value="Supercharge"/>
     </CAbilEffectInstant>
     <CAbilBehavior id="CourierCloak">
         <AbilSetId value="Clok"/>
@@ -577,8 +577,6 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <CmdButtonArray index="Load" DefaultButtonFace="CourierLoad"/>
         <CmdButtonArray index="UnloadAt" DefaultButtonFace="CourierUnloadAll"/>
-        <MaxCargoCount value="10"/>
-        <TotalCargoSpace value="10"/>
         <UnloadCargoEffect value="CargoUnloadStopOrder"/>
     </CAbilTransport>
     <CAbilEffectInstant id="MiningPriority">
@@ -810,6 +808,7 @@
         <AINotifyEffect value="SystemOffloadSA"/>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="ProcessorSystemRecharge">
+        <Alignment value="Positive"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Effect index="0" value="ProcessorSystemRechargeCH"/>
         <Flags index="AllowMovement" value="1"/>
@@ -819,26 +818,25 @@
         <Flags index="ReExecutable" value="1"/>
         <Flags index="Smart" value="1"/>
         <TargetFilters value="CanHaveEnergy;Self,Ally,Neutral,Enemy,Structure,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
-        <Range value="5"/>
-        <SmartValidatorArray value="healSmartTargetFilters"/>
-        <SmartValidatorArray value="NotWarpingIn"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="SystemRecharge"/>
-        <AutoCastFilters value="-;Ally"/>
-        <AutoCastRange value="6"/>
-        <AutoCastValidatorArray value="CasterEnergyGTE5"/>
-        <AutoCastValidatorArray value="NotWarpingIn"/>
-        <AutoCastValidatorArray value="TargetUnitTypeIsNotCasterUnitType"/>
-        <Alignment value="Positive"/>
         <TargetSorts RequestCount="1">
             <SortArray value="TSAlliancePassive"/>
             <SortArray value="TSEnergyFraction"/>
             <SortArray value="TSDistance"/>
         </TargetSorts>
+        <Range value="5"/>
         <Arc value="14.9963"/>
+        <SmartValidatorArray value="healSmartTargetFilters"/>
+        <SmartValidatorArray value="NotWarpingIn"/>
         <AutoCastAcquireLevel value="Defensive"/>
+        <AutoCastFilters value="-;Ally"/>
+        <AutoCastRange value="6"/>
+        <AutoCastValidatorArray value="CasterEnergyGTE5"/>
+        <AutoCastValidatorArray value="NotWarpingIn"/>
+        <AutoCastValidatorArray value="TargetUnitTypeIsNotCasterUnitType"/>
         <UseMarkerArray index="Approach" value="0"/>
         <UseMarkerArray index="Prep" value="0"/>
         <AINotifyEffect value="ProcessorSystemRechargeCH"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="SystemRecharge"/>
         <AcquireAttackers value="1"/>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="CoreSystemRecharge">
@@ -1067,8 +1065,7 @@
         <Cost>
             <Vital index="Energy" value="100"/>
         </Cost>
-        <CastOutroTime value="5.6"/>
-        <UninterruptibleArray index="Cast" value="1"/>
+        <CastOutroTime value="4.2"/>
         <UninterruptibleArray index="Channel" value="1"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="SelfFixProtocol" Requirements="VirtusSelfFixReq"/>
         <Effect index="0" value="VirtusSelffixProtocolChannelDummy"/>
@@ -1804,16 +1801,13 @@
             <Vital index="Energy" value="125"/>
         </Cost>
         <RangeSlop value="10"/>
-        <UninterruptibleArray index="Prep" value="1"/>
-        <UninterruptibleArray index="Cast" value="1"/>
         <UninterruptibleArray index="Channel" value="1"/>
-        <UninterruptibleArray index="Finish" value="1"/>
         <TargetFilters value="Ground;Self,Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <Alignment value="Negative"/>
-        <PrepEffect value="ParagonDisableAntiAir"/>
-        <PrepTime value="3"/>
-        <ShowProgressArray index="Prep" value="1"/>
-        <ProgressButtonArray index="Prep" value="EmissaryOrb"/>
+        <ShowProgressArray index="Channel" value="1"/>
+        <ProgressButtonArray index="Channel" value="EmissaryOrb"/>
+        <Effect index="0" value="ParagonEmissaryOrbChannel"/>
+        <CastOutroTime value="3"/>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="FuseFusion">
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
@@ -2106,7 +2100,7 @@
             <Cooldown TimeUse="94.5"/>
         </Cost>
         <Placeholder value="Emanator"/>
-        <Range value="4"/>
+        <Range value="5"/>
         <AINotifyEffect value="EmanatorLM"/>
         <ProducedUnitArray value="Emanator"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="PlaceEmanator"/>
@@ -2443,7 +2437,7 @@
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Activity value="UI/Building"/>
         <Leash value="14"/>
-        <InfoArray index="Ammo1" Time="15" CountStart="1" Manage="Recall" Unit="Elytron">
+        <InfoArray index="Ammo1" Time="15.4" CountStart="1" Manage="Recall" Unit="Elytron">
             <Charge Link="MyriadElytra" Location="Unit"/>
             <Cooldown Link="MyriadTrainElytra" TimeUse="0.01"/>
             <Button DefaultButtonFace="CreateElytron" Requirements="ArmElytra">

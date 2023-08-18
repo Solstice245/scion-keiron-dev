@@ -196,6 +196,7 @@ Behavior/Name/KeironChargeDummyDiscord=Keiron - Charge Dummy Discord
 Behavior/Name/KeironChargeDummyTS1=Keiron - Charge Dummy TS1
 Behavior/Name/KeironChargeDummyTS2=Keiron - Charge Dummy TS2
 Behavior/Name/KeironMaterializing=Materializing
+Behavior/Name/KeironShellRestorationDisable=Suspension
 Behavior/Name/LockdownMode=Lockdown Mode
 Behavior/Name/LockdownModeDuration=Lockdown Mode Duration
 Behavior/Name/MendBehavior=Mend
@@ -251,6 +252,7 @@ Behavior/Tooltip/IncendiaryInfusionAG=Dealing damage to ground units around itse
 Behavior/Tooltip/JupiterNapalm=This unit is taking damage while in the flames of a Jupiter's Revenant Bomb.
 Behavior/Tooltip/JupiterShellShocked=This unit is unable to attack or cast spells while under the effects of Shell-Shock.
 Behavior/Tooltip/KeironMaterializing=Unit is being materialized.
+Behavior/Tooltip/KeironShellRestorationDisable=Shield restoration is disabled. Bring this unit close to a <c val="FFFF80">Citadel</c> while out of combat or target it with the <c val="FFFF80">Ward's</c> Restitution spell to restart it.
 Behavior/Tooltip/LockdownMode=Under lockdown due to severe damage. Takes reduced damage, and cannot fully function. Must be repaired in order to resume a regular state.
 Behavior/Tooltip/LockdownModeDuration=Under lockdown due to severe damage. Takes reduced damage, and cannot fully function. Must be repaired in order to resume a regular state.
 Behavior/Tooltip/MendBehavior=Under the effects of Mend.
@@ -738,7 +740,7 @@ Button/Tooltip/Echo=Melee air fighter. Can use Discord Mode and Reverb.<n/><n/><
 Button/Tooltip/Edifice=Contains upgrades for Pariahs and Volts.<n/><n/><c val="FFFF80">Enables:</c><n/>- Pariahs from Citadels<n/>- Volts from Citadels<n/>- Oculi from Converters
 Button/Tooltip/Elysium=Contains an upgrade for Cruxes.<n/><n/><c val="FFFF80">Enables:</c><n/>- Cruxes from Citadels
 Button/Tooltip/Elytron=Combat escorts that automatically attack their Myriad's target.<n/><n/><c val="#ColorAttackInfo">Can attack ground units.</c>
-Button/Tooltip/Emanator=Stationary timed-life unit which provides vision in an area.
+Button/Tooltip/Emanator=Stationary timed-life unit which provides vision in an area.<n/><n/><c val="FFE303">Detector</c>
 Button/Tooltip/EmissaryOrb=Deals <d ref="Effect,EmissaryOrbDMG,Amount"/> damage to the primary target. Deals damage in an area.
 Button/Tooltip/Empyrean=<c val="FFFF80">Enables:</c><n/>- Harbingers from Citadels<n/>- Gyres from Citadels
 Button/Tooltip/EnervatingSpores=Enemies which have been attacked by the Eroder will have their weapon damage reduced by 15% for a few seconds.
@@ -865,7 +867,6 @@ Button/Tooltip/MediumOutputMode=Sets the <c val="FFFF80">Torrent</c> weapon to N
 Button/Tooltip/Mend=Instantly restores <d ref="Effect,MendMU,VitalArray[Life].Change"/> life to target biological unit or structure.
 Button/Tooltip/Mendling=Healer unit. Can use Mend, Covering Spray and Sacrificial Mutation.<n/><n/><c val="FFFF80">Can attack ground and air units.</c>
 Button/Tooltip/MiningPriority=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/> <c val="FF0000" validator="GenetronPowerSupplyLT100"><d ref="Effect,ProcessingCoreMiningPriorityMU,VitalArray[Energy].Change*(-1)"/></c><img path="Assets\Textures\blank.dds" width="1" height="24" alignment="top"/><n/>Increases the resource yield of owned nearby harvesters by <d ref="Behavior,ResourceTap,Modification.ResourceHarvestAmountBonus[Minerals]"/>. The effect lasts <d ref="Behavior,ResourceTapSearch,Duration"/> seconds.
-Button/Tooltip/MissileTurret=Anti-air defensive structure.<n/><n/><c val="#ColorAttackInfo">Can attack air units.</c><n/><c val="FFE303">Detector</c>
 Button/Tooltip/MobileForm=Returns the <c val="FFFF80">Massalisk</c> to it's mobile form.
 Button/Tooltip/MobilizeCannon=Mobilizes the <c val="FFFF80">Mole</c>, disallowing usage of its cannon.
 Button/Tooltip/Mole=Deployable artillery cannon and radar suite.<n/><n/><c val="FFFF80">Can attack ground units.</c>
@@ -963,7 +964,7 @@ Button/Tooltip/ResearchMoleSubterraneanSensors=Adds a medium ranged radar system
 Button/Tooltip/ResearchProcessorCloakingGenerator=Causes the <c val="FFFF80">Processor</c> to become permanently cloaked.
 Button/Tooltip/ResearchProcessorIntegratedOptics=Allows the <c val="FFFF80">Processor</c> to detect permanently, removing the energy consumption of detection.
 Button/Tooltip/ResearchSpitfireCalibratedEngines=Increases the movement speed of <c val="FFFF80">Spitfires</c>.
-Button/Tooltip/ResearchSpitfireMadcapRounds=Increases <c val="FFFF80">Spitfire</c> weapon range by 1.
+Button/Tooltip/ResearchSpitfireMadcapRounds=Increases <c val="FFFF80">Spitfire</c> weapon range and attack speed.
 Button/Tooltip/ResearchTeslaInternalOptimization=Increases the rate at which the Tesla builds charges by 100%.
 Button/Tooltip/ResearchTorrentEnhancedTargeting=<c val="FFFF80">Torrents</c> gain +1 gun range and +3 missile range.
 Button/Tooltip/ResearchVirtusSelfFixProtocol=<c val="FFFF80">Virtus</c> gain +<d ref="Behavior,SelffixProtocol,Modification.VitalRegenArray[Life]"/> health regeneration while in Lockdown Mode.
@@ -998,13 +999,13 @@ Button/Tooltip/SiphonerRich=Formed over a Vespene Geyser to allow harvesting of 
 Button/Tooltip/SonicImage=Places a sonic image, which the Echo can teleport back to if it remains close by.
 Button/Tooltip/SpeedCloak=Cloaks, and increases movement speed by 40% for <d ref="Behavior,SpeedCloak,Duration" precision="1"/> seconds.
 Button/Tooltip/Spitfire=Skirmish unit.<n/><n/><c val="FFFF80">Can attack ground units.</c>
-Button/Tooltip/SpitfireMadcapRounds=Increased <c val="FFFF80">Spitfire</c> weapon range by 1.
+Button/Tooltip/SpitfireMadcapRounds=Increased <c val="FFFF80">Spitfire</c> weapon range by 1 and attack speed.
 Button/Tooltip/Spitter=Long ranged beast that spits acid at enemies, dealing damage in an area. Can issue attacks to specific points on the ground<n/><n/><c val="FFFF80">Can attack ground units.</c>
 Button/Tooltip/SpitterVolatile=The Spitter deals <d ref="Effect,SpitterVolatileBurstDamage,Amount"/> damage in an area around itself when it dies.
 Button/Tooltip/StagnatingBile=Lobs bile at a point, stunning units in it's impact area for <d ref="Behavior,StagnatingBileStun,Duration"/> seconds.
 Button/Tooltip/StaticDBurrow=Buries the structure underground. While burrowed, the structure is unable to attack, and cannot be seen without detection.
 Button/Tooltip/StaticDUnburrow=Unburies the structure, allowing it to resume a normal state.
-Button/Tooltip/Stratus=Anti-air defensive structure. <n/><n/><c val="ffff8a">Can attack air units.</c><n/><c val="FFE303">Detector</c>
+Button/Tooltip/Stratus=Anti-air defensive structure. <n/><n/><c val="ffff8a">Can attack air units.</c><n/>
 Button/Tooltip/Subjecter=Ranged anti-air support unit.<n/><n/><c val="FFFF80">Can target ground and air units.</c>
 Button/Tooltip/SubterraneanSensors=While buried, the <c val="FFFF80">Mole</c> gains +<d ref="Behavior,MoleSubterraneanSensors,Modification.Radar"/> ground radar range.<n/><n/><c val="78F0FF">Drains <d ref="Effect,MoleSubterraneanSensorsPowerRate,RechargeVitalRate"/> power per second.</c>
 Button/Tooltip/SunkenWarren=Contains upgrades for Raptors and Xayithoans.<n/><n/><c val="FFFF80">Enables:</c><n/>- Krakens at the Avian Nest
@@ -1624,10 +1625,12 @@ Effect/Name/KeironChargeDummyUmbraAB=Keiron Charge Dummy Umbra (AB)
 Effect/Name/KeironConstructionModifier=Keiron Construction Modifier
 Effect/Name/KeironConstructionStart=Keiron Construction Start
 Effect/Name/KeironConstructionStop=Keiron Construction Stop
-Effect/Name/KeironShellRestorationAB=Keiron - Shell Restoration (AB)
+Effect/Name/KeironShellRestorationControlSet=Keiron - Shell Restoration (Control Set)
 Effect/Name/KeironShellRestorationDelayABCaster=Keiron - Shell Restoration Delay (ABCaster)
 Effect/Name/KeironShellRestorationDelayABSource=Keiron - Shell Restoration Delay (ABSource)
 Effect/Name/KeironShellRestorationDelayRBTarget=Keiron - Shell Restoration Delay (RBTarget)
+Effect/Name/KeironShellRestorationDisableABSource=Keiron - Shell Restoration Disable (ABSource)
+Effect/Name/KeironShellRestorationDisableRB=Keiron - Shell Restoration Disable (RB)
 Effect/Name/KeironShellRestorationSA=Keiron - Shell Restoration (SA)
 Effect/Name/KeironUnitChargeAB=Keiron - Unit Charge (AB)
 Effect/Name/LancerAutogun=Lancer Autogun
@@ -1756,6 +1759,7 @@ Effect/Name/PantheonTitanSet=Pantheon - Titan (Set)
 Effect/Name/ParagonAirWeapon=Paragon - Air Weapon (LM)
 Effect/Name/ParagonAirWeaponImpact=Paragon - Air Weapon (DMG)
 Effect/Name/ParagonDisableAntiAir=Paragon Disable Anti-Air
+Effect/Name/ParagonEmissaryOrbChannel=Paragon - Emissary Orb (Channel)
 Effect/Name/ParagonGroundWeapon=Paragon - Ground Weapon (LM)
 Effect/Name/ParagonGroundWeaponImpact=Paragon - Ground Weapon (DMG)
 Effect/Name/PariahProjectionRemoveBehavior=Pariah - Projection (Remove Behavior)

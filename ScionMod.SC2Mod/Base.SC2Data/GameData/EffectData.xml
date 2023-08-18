@@ -171,6 +171,28 @@
         <Flags index="PersistUntilDestroyed" value="1"/>
         <AINotifyEffect value="StagnatingBileImpact"/>
     </CEffectCreatePersistent>
+    <CEffectSet id="KeironShellRestorationControlSet">
+        <EditorCategories value=""/>
+        <EffectArray value="KeironShellRestorationDelayABSource"/>
+        <EffectArray value="KeironShellRestorationDisableABSource"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="KeironShellRestorationDisableABSource">
+        <EditorCategories value="Race:Keiron"/>
+        <WhichUnit Value="Source"/>
+        <Behavior value="KeironShellRestorationDisable"/>
+    </CEffectApplyBehavior>
+    <CEffectRemoveBehavior id="KeironShellRestorationDisableRB">
+        <EditorCategories value="Race:Keiron"/>
+        <BehaviorLink value="KeironShellRestorationDisable"/>
+    </CEffectRemoveBehavior>
+    <CEffectCreatePersistent id="ParagonEmissaryOrbChannel">
+        <EditorCategories value="Race:Keiron"/>
+        <WhichLocation Value="TargetUnit"/>
+        <Flags index="Channeled" value="1"/>
+        <InitialEffect value="ParagonDisableAntiAir"/>
+        <ExpireDelay value="3"/>
+        <ExpireEffect value="EmissaryOrb"/>
+    </CEffectCreatePersistent>
     <CEffectCreatePersistent id="SpitterSpitterSporesAINotification">
         <EditorCategories value="Race:Xayid"/>
         <WhichLocation Effect="SpitterSpores"/>
@@ -997,7 +1019,7 @@
         <Flags index="ContinueWhenFull" value="1"/>
         <DrainVital value="Energy"/>
         <DrainVitalCostFactor value="1"/>
-        <RechargeVitalRate value="2.8554"/>
+        <RechargeVitalRate value="3.5703"/>
         <ImpactUnit Effect="FixerRepairTarget"/>
     </CEffectCreateHealer>
     <CEffectCreateHealer id="ACRRepairCost">
@@ -1008,7 +1030,7 @@
         <Flags index="ContinueWhenFull" value="1"/>
         <DrainVital value="Energy"/>
         <DrainVitalCostFactor value="1"/>
-        <RechargeVitalRate value="1.4296"/>
+        <RechargeVitalRate value="1.7851"/>
         <ImpactUnit Effect="ACRRepairTarget"/>
     </CEffectCreateHealer>
     <CEffectCreateHealer id="MoleSubterraneanSensorsPowerRate">
@@ -1566,7 +1588,7 @@
     <CEffectSet id="WardRestitutionRechargeSet">
         <EditorCategories value="Race:Keiron"/>
         <EffectArray value="KeironShellRestorationDelayRBTarget"/>
-        <EffectArray value="KeironShellRestorationAB"/>
+        <EffectArray value="KeironShellRestorationDisableRB"/>
     </CEffectSet>
     <CEffectSet id="GenetronTrainSet">
         <ValidatorArray value="EnergyGTE5"/>
@@ -1856,12 +1878,6 @@
         <EditorCategories value="Race:Keiron"/>
         <Behavior value="KeironShellRestoration"/>
     </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="KeironShellRestorationAB">
-        <ValidatorArray index="0" value="NoShellRestorationDelay"/>
-        <ValidatorArray value="UnitIsKeiron"/>
-        <EditorCategories value="Race:Keiron"/>
-        <Behavior value="KeironShellRestoration"/>
-    </CEffectApplyBehavior>
     <CEffectApplyBehavior id="KeironShellRestorationDelayABSource">
         <EditorCategories value="Race:Keiron"/>
         <WhichUnit Value="Source"/>
@@ -1879,7 +1895,7 @@
     <CEffectEnumArea id="KeironShellRestorationSA" parent="ScionEnumArea">
         <EditorCategories value="Race:Keiron"/>
         <SearchFilters value="-;Neutral,Enemy,Missile,Stasis,Dead"/>
-        <AreaArray Radius="10" Effect="KeironShellRestorationAB"/>
+        <AreaArray Radius="10" Effect="KeironShellRestorationDisableRB"/>
     </CEffectEnumArea>
     <CEffectCreateHealer id="OlympusChargeUpHealer">
         <ValidatorArray value="EnergyGTE5"/>
@@ -2622,7 +2638,7 @@
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectEnumArea id="TeslaShockChargeExpireSearch" parent="ScionEnumArea" Race="Genetron">
-        <SearchFilters value="-;Player,Ally,Missile,Buried,Stasis,Dead,Hidden"/>
+        <SearchFilters value="-;Player,Ally,Structure,Missile,Buried,Stasis,Dead,Hidden"/>
         <AreaArray Radius="3" Effect="TeslaShockChargeImpact"/>
         <ValidatorArray value="CasterIsNotBlindedByProwler"/>
         <ValidatorArray value="CasterHasNoNaniteGrenadeBuff"/>
@@ -2986,7 +3002,7 @@
         <DrainVital value="Energy"/>
         <DrainVitalCostFactor value="0.25"/>
         <RechargeVital value="Energy"/>
-        <RechargeVitalRate value="25"/>
+        <RechargeVitalRate value="35.7148"/>
         <Marker Link="Effect/SystemRechargeCoreCH"/>
         <InitialEffect value="ProcessorSystemRechargePowerEnum"/>
     </CEffectCreateHealer>
@@ -3123,7 +3139,7 @@
         <AreaArray Radius="0.4" Fraction="0.5"/>
     </CEffectDamage>
     <CEffectDamage id="ChargeCannon" parent="ScionDamageRange" Race="Genetron">
-        <Amount value="12"/>
+        <Amount value="11"/>
         <Death value="Blast"/>
     </CEffectDamage>
     <CEffectDamage id="HalifaxGrenadesDMG" parent="ScionDamageRange" Race="Genetron">
@@ -3176,7 +3192,7 @@
         <Death value="Blast"/>
     </CEffectDamage>
     <CEffectDamage id="ChargeCannonSC" parent="ScionDamageRange" Race="Genetron">
-        <Amount value="24"/>
+        <Amount value="22"/>
         <Death value="Blast"/>
         <ArmorReduction value="0"/>
         <Kind value="Spell"/>
@@ -4078,7 +4094,7 @@
         <PeriodicPeriodArray value="0.0625"/>
     </CEffectCreatePersistent>
     <CEffectDamage id="AuguryGunsLMImpact" parent="ScionDamageRangeVisible" Race="Keiron">
-        <Amount value="11"/>
+        <Amount value="9"/>
         <Death value="Electrocute"/>
     </CEffectDamage>
     <CEffectLaunchMissile id="AuguryGunsLM" parent="ScionLaunchMissile" Race="Keiron"/>
@@ -4134,9 +4150,8 @@
         <Flags index="Channeled" value="1"/>
         <Flags index="PersistUntilDestroyed" value="1"/>
         <InitialDelay value="2.1"/>
-        <RevealRadius value="8"/>
+        <RevealRadius value="6"/>
         <RevealFlags index="Unfog" value="1"/>
-        <RevealFlags index="Detect" value="1"/>
     </CEffectCreatePersistent>
     <CEffectLaunchMissile id="ParagonAirWeapon" parent="ScionLaunchMissile" Race="Keiron">
         <AmmoUnit value="ParagonAir"/>
@@ -4776,7 +4791,7 @@
         <EffectArray value="EdificeParVolAddCharge"/>
     </CEffectSet>
     <CEffectDamage id="ElectronBoltBDMG" parent="ScionDamage" Race="Keiron">
-        <Amount value="2"/>
+        <Amount value="3"/>
         <Death value="Electrocute"/>
     </CEffectDamage>
     <CEffectDamage id="VoltElectronBoltBounceDummy" parent="ScionDamage" Race="Keiron"/>
@@ -4802,7 +4817,6 @@
         <AmmoUnit value="ElectronBoltWeapon"/>
     </CEffectLaunchMissile>
     <CEffectLaunchMissile id="ElectronBoltBLM" parent="ScionLaunchMissile" Race="Keiron">
-        <ImpactEffect value="ElectronBoltBDMG"/>
         <AmmoUnit value="ElectronBoltWeapon"/>
         <Movers Link="ElectronBoltWeaponBounce"/>
     </CEffectLaunchMissile>
