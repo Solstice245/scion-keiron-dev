@@ -8,6 +8,11 @@
         <Compare value="LT"/>
         <Value value="2"/>
     </CValidatorPlayerCompareFoodAvailable>
+    <CValidatorPlayerCompareResource id="CannotAffordToRegrowSiphon">
+        <ResultFailed value="NotEnoughMinerals"/>
+        <Compare value="LT"/>
+        <Value value="37"/>
+    </CValidatorPlayerCompareResource>
     <CValidatorPlayerCompareResource id="CannotAffordGourdGas">
         <Compare value="LT"/>
         <Resource value="Vespene"/>
@@ -122,6 +127,11 @@
     <CValidatorPlayerCompareResource id="CannotAffordCatalyzerMinerals">
         <Compare value="LT"/>
         <Value value="100"/>
+    </CValidatorPlayerCompareResource>
+    <CValidatorPlayerCompareResource id="CanAffordToRegrowSiphon">
+        <ResultFailed value="NotEnoughMinerals"/>
+        <Compare value="GE"/>
+        <Value value="37"/>
     </CValidatorPlayerCompareResource>
     <CValidatorPlayerRequirement id="NoAquifer">
         <Value value="HaveAquifer"/>
@@ -238,4 +248,31 @@
         <Compare value="GT"/>
         <Behavior value="UnitSeedLanded"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorLocationPlacement id="XayidRootNotBlocked2x2">
+        <WhichLocation Value="CasterUnit"/>
+        <Range value="0"/>
+        <Unit value="XayidRootRegrowDummy2x2"/>
+    </CValidatorLocationPlacement>
+    <CValidatorLocationPlacement id="XayidRootNotBlocked3x3">
+        <WhichLocation Value="CasterUnit"/>
+        <Range value="0"/>
+        <Unit value="XayidRootRegrowDummy3x3"/>
+    </CValidatorLocationPlacement>
+    <CValidatorCombine id="XayidRootNotBlockedGeyser">
+        <ResultFailed value="CantFindPlacementLocation"/>
+        <Type value="And"/>
+        <CombineArray value="XayidRootNotBlockedGeyserEnum"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorLocationPlacement id="XayidRootNotBlocked5x5">
+        <WhichLocation Value="CasterUnit"/>
+        <Range value="0"/>
+        <Unit value="XayidRootRegrowDummy5x5"/>
+    </CValidatorLocationPlacement>
+    <CValidatorLocationEnumArea id="XayidRootNotBlockedGeyserEnum">
+        <ResultFailed value="CantFindPlacementLocation"/>
+        <WhichLocation Value="CasterUnit"/>
+        <AreaArray Compare="GT" Count="0"/>
+        <SearchFilters value="HarvestableResource;Dead,Hidden"/>
+    </CValidatorLocationEnumArea>
 </Catalog>
