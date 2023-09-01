@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
     <CActorUnit id="AquiferRoots" parent="ZergBuilding" unitName="AquiferRoots">
-        <On index="69" Terms="ActorCreation" Send="SetOpacity 0.330000"/>
+        <On index="69" Terms="ActorCreation" Send="SetOpacity 0.300000"/>
         <On index="70" Terms="ActorCreation" Send="SetTintColor 0,255,0"/>
         <On index="71" removed="1"/>
         <On index="72" removed="1"/>
@@ -28,8 +28,99 @@
             <Image value="Assets\Textures\wireframe-Xayid-feedingpool.dds"/>
         </Wireframe>
     </CActorUnit>
+    <CActorUnit id="Pixie" parent="GenericUnitXayid" unitName="Pixie">
+        <Macros index="3" value="PhysicsDeathsSwarmAir"/>
+        <Macros index="4" value="PhysicsDeathsVoidAir"/>
+        <On index="61" Terms="WeaponStart.*.AttackStart" Send="AnimBracketStart Attack Spell"/>
+        <On Terms="AbilMorph.XayidMorphPixie.Start" Send="Destroy"/>
+        <HostSiteOps Ops="SOpBankerMutalisk"/>
+        <DeathArray index="Normal" ModelLink="Viper" SoundLink="Zerg_ExplosionMedium" VoiceLink="LairViper_Death"/>
+        <DeathCustoms>
+            <ActorModel value="ViperDeathRagdoll"/>
+            <ModelLink value="ViperDeathRagdoll"/>
+            <Name value="RagdollBasic"/>
+            <PhysicsMatchKeysOrdered value="BasicAir,Basic"/>
+        </DeathCustoms>
+        <DeathCustoms Name="RagdollNuke" InheritsFrom="RagdollBasic">
+            <BodySquibs Name="Fire"/>
+        </DeathCustoms>
+        <DeathCustoms Name="RagdollFire" InheritsFrom="RagdollBasic">
+            <BodySquibs Name="Fire"/>
+        </DeathCustoms>
+        <DeathCustoms Name="RagdollAcid" InheritsFrom="RagdollBasic">
+            <BodySquibs Name="Acid"/>
+        </DeathCustoms>
+        <DeathCustoms Name="RagdollOverkillDPRH" InheritsFrom="RagdollBasic"/>
+        <DeathCustoms Name="RagdollOverkillDOI" InheritsFrom="RagdollBasic"/>
+        <DeathCustoms Name="RagdollMidair" InheritsFrom="RagdollBasic"/>
+        <DeathCustoms ModelLink="ZergMediumUnitDeathLow" Name="Low"/>
+        <DeathActorModel value="UnitDeathModelWithDeathMotionFlier"/>
+        <PortraitModel value="ViperPortrait"/>
+        <WalkAnimMoveSpeed value="1"/>
+        <BarOffset value="40"/>
+        <BarWidth value="50"/>
+        <GroupIcon>
+            <Image index="0" value="Assets\Textures\wireframe-Xayid-Raptor.dds"/>
+        </GroupIcon>
+        <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-pneumatizedcarapace.dds"/>
+        <SoundArray index="Birth" value=""/>
+        <SoundArray index="Ready" value="Raptor_Ready"/>
+        <SoundArray index="Help" value="Raptor_Attack"/>
+        <SoundArray index="What" value="Raptor_What"/>
+        <SoundArray index="Yes" value="Raptor_Yes"/>
+        <SoundArray index="Attack" value="Raptor_Attack"/>
+        <SoundArray index="Pissed" value="Raptor_Attack"/>
+        <SoundArray index="Movement" value="Raptor_Movement"/>
+        <UnitIcon value="Assets\Textures\btn-unit-Xayid-Raptor.dds"/>
+        <Wireframe>
+            <Image index="0" value="Assets\Textures\wireframe-Xayid-Raptor.dds"/>
+        </Wireframe>
+    </CActorUnit>
+    <CActorUnit id="Sylph" parent="GenericUnitXayid" unitName="Sylph">
+        <Macros index="3" value="PhysicsDeathsSwarmAir"/>
+        <Macros index="4" value="PhysicsDeathsVoidAir"/>
+        <HostSiteOps Ops="SOpBankerQueenMP"/>
+        <DeathArray index="Normal" ModelLink="GuardianMPDeath" SoundLink="GuardianMP_Explode" VoiceLink="GuardianMP_Death"/>
+        <PortraitModel value="GuardianMPPortrait"/>
+        <BarOffset value="65"/>
+        <BarWidth value="80"/>
+        <GroupIcon>
+            <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
+        </GroupIcon>
+        <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-pneumatizedcarapace.dds"/>
+        <SoundArray index="Ready" value="Assailant_Ready"/>
+        <SoundArray index="What" value="Assailant_What"/>
+        <SoundArray index="Yes" value="Assailant_Yes"/>
+        <SoundArray index="Attack" value="Assailant_Yes"/>
+        <UnitIcon value="Assets\Textures\btn-unit-Xayid-Assailant.dds"/>
+        <Wireframe>
+            <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
+        </Wireframe>
+    </CActorUnit>
+    <CActorModel id="BiomeBuild" parent="ZergBuildingBuild">
+        <Model value="BiomassCavernBuild"/>
+    </CActorModel>
+    <CActorUnit id="Biome" parent="ZergBuilding" unitName="Biome">
+        <On Terms="Abil.BiomassCavernResearch.Start" Send="AnimGroupApply Work"/>
+        <On Terms="Abil.BiomassCavernResearch.Stop" Send="AnimGroupRemove Work"/>
+        <DeathArray index="Normal" ModelLink="LurkerDenMPDeath" SoundLink="LurkerDen_Explode"/>
+        <DeathArray index="UnderConstruction" ModelLink="ZergBuildingDeathLarge" SoundLink="UltraliskCavern_Explode"/>
+        <PortraitModel value="ZergBuildingEx2_Portrait"/>
+        <BarOffset value="120"/>
+        <BarWidth value="150"/>
+        <GroupIcon>
+            <Image value="Assets\Textures\wireframe-Xayid-biomasscavern.dds"/>
+        </GroupIcon>
+        <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-buildingarmor.dds"/>
+        <SoundArray index="Birth" value=""/>
+        <SoundArray index="What" value="LurkerDen_What"/>
+        <UnitIcon value="Assets\Textures\btn-building-Xayid-biomasscavern.dds"/>
+        <Wireframe>
+            <Image value="Assets\Textures\wireframe-Xayid-biomasscavern.dds"/>
+        </Wireframe>
+    </CActorUnit>
     <CActorUnit id="BulbRoots" parent="ZergBuilding" unitName="BulbRoots">
-        <On index="69" Terms="ActorCreation" Send="SetOpacity 0.330000"/>
+        <On index="69" Terms="ActorCreation" Send="SetOpacity 0.300000"/>
         <On index="70" Terms="ActorCreation" Send="SetTintColor 0,255,0"/>
         <On index="71" removed="1"/>
         <On index="72" removed="1"/>
@@ -67,6 +158,38 @@
         </Wireframe>
     </CActorUnit>
     <CActorMissile id="CankerMissile" parent="GenericAttackMissile" unitName="CankerMissile"/>
+    <CActorUnit id="Druid" parent="GenericUnitXayid" unitName="Druid">
+        <Aliases value="_UnitMedium"/>
+        <On Terms="Abil.ExplosiveGlob.SourceCastStart" Send="AnimBracketStart Attack Attack {} {} ClosingFull"/>
+        <On Terms="Abil.ExplosiveGlob.SourceFinishStart" Send="AnimBracketStop Attack"/>
+        <On Terms="Abil.CoveringSpray.SourceCastStart" Send="AnimBracketStart Attack Attack {} {} ClosingFull"/>
+        <On Terms="Abil.CoveringSpray.SourceFinishStart" Send="AnimBracketStop Attack"/>
+        <On Terms="Abil.StagnatingBile.SourceCastStart" Send="$Spell"/>
+        <DeathArray index="Normal" ModelLink="CasnoliskDeath" SoundLink="Casnolisk_Explode"/>
+        <PortraitModel value="CasnoliskPortrait"/>
+        <TerrainSquibs>
+            <GroupName value="RippleStandard"/>
+            <MovementDistance value="0.150000,0.150000"/>
+            <IdlePeriod value="0.100000,0.250000"/>
+            <RangeUp value="2.000000"/>
+            <RangeDown value="2.000000"/>
+            <AttachQuery Methods="AMFilterCenter"/>
+            <Visuals TerrainPhysicsMaterial="Water" ActorModel="TerrainSquibHarnessContinuous" ModelLink="WaterRippleInfestor"/>
+        </TerrainSquibs>
+        <WalkAnimMoveSpeed value="2.5"/>
+        <BarOffset value="45"/>
+        <BarWidth value="85"/>
+        <GroupIcon>
+            <Image index="0" value="Assets\Textures\wireframe-Xayid-Casnolisk.dds"/>
+        </GroupIcon>
+        <SoundArray index="Ready" value="Casnolisk_Ready"/>
+        <SoundArray index="What" value="Casnolisk_What"/>
+        <SoundArray index="Yes" value="Casnolisk_Yes"/>
+        <UnitIcon value="Assets\Textures\btn-unit-Xayid-Casnolisk.dds"/>
+        <Wireframe>
+            <Image index="0" value="Assets\Textures\wireframe-Xayid-Casnolisk.dds"/>
+        </Wireframe>
+    </CActorUnit>
     <CActorUnit id="Creeper" parent="GenericUnitXayid" unitName="Creeper">
         <Aliases value="_UnitMedium"/>
         <On Terms="Abil.BlindingBurst.SourceCastStart" Send="AnimPlay Cover Cover PlayForever"/>
@@ -100,7 +223,7 @@
         </Wireframe>
     </CActorUnit>
     <CActorUnit id="HabitatRoots" parent="ZergBuilding" unitName="HabitatRoots">
-        <On index="69" Terms="ActorCreation" Send="SetOpacity 0.330000"/>
+        <On index="69" Terms="ActorCreation" Send="SetOpacity 0.300000"/>
         <On index="70" Terms="ActorCreation" Send="SetTintColor 0,255,0"/>
         <On index="71" removed="1"/>
         <On index="72" removed="1"/>
@@ -127,6 +250,30 @@
             <Image value="Assets\Textures\wireframe-Xayid-scavengernest.dds"/>
         </Wireframe>
     </CActorUnit>
+    <CActorUnit id="MireRoots" parent="ZergBuilding" unitName="MireRoots">
+        <On index="69" Terms="ActorCreation" Send="SetOpacity 0.300000"/>
+        <On index="70" Terms="ActorCreation" Send="SetTintColor 0,255,0"/>
+        <On index="71" removed="1"/>
+        <On index="72" removed="1"/>
+        <On index="73" removed="1"/>
+        <On index="74" removed="1"/>
+        <On index="75" removed="1"/>
+        <On index="76" removed="1"/>
+        <Model value="Mire"/>
+        <BuildModel value="Mire"/>
+        <PlacementModel value="Mire"/>
+        <PlacementActorModel value="BilePitPlacement"/>
+        <PortraitModel value="ZergBuildingEx2_Portrait"/>
+        <BarWidth value="100"/>
+        <GroupIcon>
+            <Image value="Assets\Textures\wireframe-Xayid-bilepit.dds"/>
+        </GroupIcon>
+        <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-buildingarmor.dds"/>
+        <UnitIcon value="Assets\Textures\btn-building-Xayid-bilepit.dds"/>
+        <Wireframe>
+            <Image value="Assets\Textures\wireframe-Xayid-bilepit.dds"/>
+        </Wireframe>
+    </CActorUnit>
     <CActorSound id="Scion_Sage_GraftLaunch" parent="SoundOneShot">
         <On Terms="Abil.Scion_SageGraft.SourceCastStart" Send="Create"/>
     </CActorSound>
@@ -134,7 +281,7 @@
         <LaunchAttachQuery Methods="AMPatternScionSage"/>
     </CActorAction>
     <CActorMissile id="Scion_SageAttackMissile" parent="GenericAttackMissile" unitName="Scion_WeaponToxicThorn"/>
-    <CActorUnit id="Catalyzer" parent="ZergBuilding" unitName="Catalyzer">
+    <CActorUnit id="Canopy" parent="ZergBuilding" unitName="Canopy">
         <On Terms="Abil.CatalystPitResearch.Start" Send="AnimGroupApply Work"/>
         <On Terms="Abil.CatalystPitResearch.Stop" Send="AnimGroupRemove Work"/>
         <DeathArray index="Normal" ModelLink="InfestationPitDeath" SoundLink="InfestationPit_Explode"/>
@@ -347,7 +494,7 @@
         <Aliases value="_UnitHuge"/>
         <Macros index="1" removed="1"/>
         <Macros index="2" removed="1"/>
-        <On index="69" Terms="ActorCreation" Send="SetOpacity 0.330000"/>
+        <On index="69" Terms="ActorCreation" Send="SetOpacity 0.300000"/>
         <On index="70" Terms="ActorCreation" Send="SetTintColor 0,255,0"/>
         <On index="71" removed="1"/>
         <On index="72" removed="1"/>
@@ -749,14 +896,11 @@
             <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
         </Wireframe>
     </CActorUnit>
-    <CActorUnit id="Raptor">
-        <On Terms="AbilMorph.XayidMorphRaptor.Start" Send="Destroy"/>
-    </CActorUnit>
-    <CActorUnit id="RaptorBlossom" parent="GenericUnitXayid" unitName="RaptorBlossom">
+    <CActorUnit id="PixieBlossom" parent="GenericUnitXayid" unitName="PixieBlossom">
         <Macros index="3" value="PhysicsDeathsSwarmAir"/>
         <Macros index="4" value="PhysicsDeathsVoidAir"/>
         <On Terms="ActorCreation" Send="AnimPlay BSD Spell,End PlayForever"/>
-        <On Terms="AbilMorph.XayidMorphRaptor.Start" Send="Create"/>
+        <On Terms="AbilMorph.XayidMorphPixie.Start" Send="Create"/>
         <HostSiteOps Ops="SOpBankerQueenMP"/>
         <Model value="StructureSeed"/>
         <Scale value="0.450000"/>
@@ -834,7 +978,7 @@
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <ImpactModel value="SnareAttackImpactModel"/>
     </CActorAction>
-    <CActorUnit id="RaptorSprout" parent="GenericUnitXayid" unitName="RaptorSprout">
+    <CActorUnit id="PixieSprout" parent="GenericUnitXayid" unitName="PixieSprout">
         <Macros index="3" value="PhysicsDeathsSwarmAir"/>
         <Macros index="4" value="PhysicsDeathsVoidAir"/>
         <HostSiteOps Ops="SOpBankerQueenMP"/>
@@ -1171,7 +1315,7 @@
     <CActorAction id="XayidlingAttack">
         <LaunchSiteOps Ops="SOpAttachHarness SOpMoveByDot3 SOpMoveUpByDot1"/>
     </CActorAction>
-    <CActorUnit id="RaptorDummy" parent="GenericUnitXayid" unitName="RaptorDummy">
+    <CActorUnit id="PixieDummy" parent="GenericUnitXayid" unitName="PixieDummy">
         <Model value="Invisible"/>
     </CActorUnit>
     <CActorUnit id="FletchSeed" parent="GenericUnitXayid" unitName="FletchSeed">
@@ -1299,7 +1443,7 @@
             <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
         </Wireframe>
     </CActorUnit>
-    <CActorUnit id="RaptorSeed" parent="GenericUnitXayid" unitName="RaptorSeed">
+    <CActorUnit id="PixieSeed" parent="GenericUnitXayid" unitName="PixieSeed">
         <Macros index="3" value="PhysicsDeathsSwarmAir"/>
         <Macros index="4" value="PhysicsDeathsVoidAir"/>
         <On Terms="ActorCreation" Send="AnimPlay Cover Cover PlayForever"/>

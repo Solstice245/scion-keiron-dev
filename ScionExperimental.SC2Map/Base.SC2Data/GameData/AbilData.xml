@@ -137,6 +137,24 @@
     <CAbilEffectTarget id="Mend">
         <Range index="0" value="5"/>
     </CAbilEffectTarget>
+    <CAbilBuild id="XayidRegrowAquifer">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <FlagArray index="InstantPlacement" value="1"/>
+        <FlagArray index="PeonHide" value="1"/>
+        <FlagArray index="PeonKillCancel" value="1"/>
+        <FlagArray index="PeonKillFinish" value="1"/>
+        <FlagArray index="PeonMaintained" value="0"/>
+        <FlagArray index="RangeIncludesBuilding" value="0"/>
+        <InfoArray index="Build1" Unit="Aquifer" Time="30">
+            <Button DefaultButtonFace="RegrowAquifer"/>
+        </InfoArray>
+        <RefundFraction>
+            <Resource index="Minerals" value="0"/>
+            <Resource index="Vespene" value="0"/>
+            <Resource index="Terrazine" value="0"/>
+            <Resource index="Custom" value="0"/>
+        </RefundFraction>
+    </CAbilBuild>
     <CAbilEffectInstant id="XayidRegrowSiphon">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <Effect index="0" value="RegrowSiphon"/>
@@ -176,18 +194,18 @@
         <CastOutroTime index="0" value="0.5"/>
         <UninterruptibleArray index="Cast" value="1"/>
     </CAbilEffectTarget>
-    <CAbilMorphPlacement id="CankerRoot">
-        <EditorCategories value="Race:Protoss,AbilityorEffectType:MorphsandBurrows"/>
+    <CAbilMorph id="CankerRoot">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:MorphsandBurrows"/>
         <DataCollection value="SpineCrawlerRoot"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="CankerRoot"/>
         <CmdButtonArray index="Cancel" DefaultButtonFace="Cancel"/>
         <ActorKey value="Root"/>
         <Flags index="DisableAbils" value="1"/>
-        <Flags index="FastBuild" value="1"/>
         <Flags index="Interruptible" value="1"/>
         <Flags index="IgnorePlacement" value="0"/>
         <Flags index="ShowProgress" value="1"/>
-        <InfoArray Unit="Canker" CollideRange="0">
+        <Flags index="SuppressMovement" value="1"/>
+        <InfoArray Unit="Canker">
             <SectionArray index="Abils">
                 <DurationArray index="Delay" value="7"/>
             </SectionArray>
@@ -202,7 +220,7 @@
             </SectionArray>
         </InfoArray>
         <ProgressButton value="CankerRoot"/>
-    </CAbilMorphPlacement>
+    </CAbilMorph>
     <CAbilMorph id="CankerUproot">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:MorphsandBurrows"/>
         <DataCollection value="SpineCrawlerUproot"/>
@@ -233,7 +251,7 @@
     <CAbilMorph id="XayidMorphAquiferPollinator">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:MorphsandBurrows"/>
         <DataCollection value="XayidMorphFeedingPoolBilePit"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="Pollinator" Requirements="HaveMutagenChamber"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Pollinator" Requirements="HaveReservoir"/>
         <CmdButtonArray index="Cancel" DefaultButtonFace="Cancel"/>
         <ActorKey value="XayidMorphFeedingPoolBilePit"/>
         <Flags index="BestUnit" value="1"/>
@@ -268,7 +286,7 @@
     </CAbilEffectInstant>
     <CAbilMorph id="XayidMorphAquiferBilePit">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:MorphsandBurrows"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="Mire" Requirements="HaveMutagenChamber"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Mire" Requirements="HaveReservoir"/>
         <CmdButtonArray index="Cancel" DefaultButtonFace="Cancel"/>
         <Flags index="BestUnit" value="1"/>
         <Flags index="DisableAbils" value="1"/>
@@ -310,136 +328,28 @@
         <Flags index="WaitForFood" value="0"/>
         <MorphUnit value="SageBlossom"/>
         <InfoArray index="Train1" Time="15">
-            <Button DefaultButtonFace="Casnolisk" Requirements="HaveCasnoliskDen">
+            <Button DefaultButtonFace="Druid" Requirements="HaveLotus">
                 <Flags index="ToSelection" value="1"/>
             </Button>
-            <Unit value="Casnolisk"/>
+            <Unit value="Druid"/>
             <Flags index="IgnorePlacement" value="1"/>
         </InfoArray>
         <InfoArray index="Train2" Time="17">
-            <Button DefaultButtonFace="Prowler" Requirements="HaveBiomassHatchery">
+            <Button DefaultButtonFace="Creeper" Requirements="HaveThistle">
                 <Flags index="ToSelection" value="1"/>
             </Button>
             <Unit value="Prowler"/>
             <Flags index="IgnorePlacement" value="1"/>
         </InfoArray>
         <InfoArray index="Train3" Time="19">
-            <Button DefaultButtonFace="Iris" Requirements="HaveAvianNest">
+            <Button DefaultButtonFace="Iris" Requirements="HaveStem">
                 <Flags index="ToSelection" value="1"/>
             </Button>
             <Unit value="Iris"/>
             <Flags index="IgnorePlacement" value="1"/>
         </InfoArray>
-        <InfoArray index="Train4">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train5">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train6">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train7">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train8">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train9">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train10">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train11">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train12">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train13">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train14">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train15">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train16">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train17">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train18">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train19">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train20">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train21">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train22">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train23">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train24">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train25">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train26">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train27">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train28">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train29">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train30">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
     </CAbilTrain>
-    <CAbilTrain id="XayidMorphRaptor">
+    <CAbilTrain id="XayidMorphPixie">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <DataCollection value="XayidMorphXayidling"/>
         <Activity value="UI/Blossoming"/>
@@ -449,12 +359,12 @@
         <Flags index="KillOnFinish" value="1"/>
         <Flags index="Select" value="1"/>
         <Flags index="WaitForFood" value="0"/>
-        <MorphUnit value="RaptorBlossom"/>
+        <MorphUnit value="PixieBlossom"/>
         <InfoArray index="Train1" Time="15">
-            <Button DefaultButtonFace="Assailant" Requirements="HaveAvianNest">
+            <Button DefaultButtonFace="Sylph" Requirements="HaveStem">
                 <Flags index="ToSelection" value="1"/>
             </Button>
-            <Unit value="Assailant"/>
+            <Unit value="Sylph"/>
             <Flags index="IgnorePlacement" value="1"/>
         </InfoArray>
         <InfoArray index="Train2" Time="17">
@@ -463,121 +373,6 @@
             </Button>
             <Unit value="Exterminator"/>
             <Flags index="IgnorePlacement" value="1"/>
-        </InfoArray>
-        <InfoArray index="Train3" Time="19">
-            <Button DefaultButtonFace="Kraken" Requirements="HaveSunkenWarren">
-                <Flags index="ToSelection" value="1"/>
-            </Button>
-            <Unit value="Kraken"/>
-            <Flags index="IgnorePlacement" value="1"/>
-        </InfoArray>
-        <InfoArray index="Train4">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train5">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train6">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train7">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train8">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train9">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train10">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train11">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train12">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train13">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train14">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train15">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train16">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train17">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train18">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train19">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train20">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train21">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train22">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train23">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train24">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train25">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train26">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train27">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train28">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train29">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
-        </InfoArray>
-        <InfoArray index="Train30">
-            <Charge Link="Abil/XayidMorphScorpalisk2"/>
-            <Cooldown Link="Abil/XayidMorphScorpalisk2"/>
         </InfoArray>
     </CAbilTrain>
     <CAbilTrain id="XayidMorphSeedForager">
@@ -596,122 +391,6 @@
             <Button DefaultButtonFace="Forager"/>
             <Unit value="Forager"/>
             <Flags index="IgnorePlacement" value="1"/>
-        </InfoArray>
-        <InfoArray index="Train2">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train3">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train4">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train5">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train6">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train7">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train8">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train9">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train10">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train11">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train12">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train13">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train14">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train15">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train16">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train17">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train18">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train19">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train20">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train21">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train22">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train23">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train24">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train25">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train26">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train27">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train28">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train29">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
-        </InfoArray>
-        <InfoArray index="Train30">
-            <Charge Link="Abil/XayidMorphSeedScavenger"/>
-            <Cooldown Link="Abil/XayidMorphSeedScavenger"/>
         </InfoArray>
         <Alert value="MorphComplete_Zerg"/>
     </CAbilTrain>
@@ -751,7 +430,7 @@
         </InfoArray>
         <Alert value="MorphComplete_Zerg"/>
     </CAbilTrain>
-    <CAbilTrain id="XayidMorphSeedRaptor">
+    <CAbilTrain id="XayidMorphSeedPixie">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <DataCollection value=""/>
         <Activity value="UI/Sprouting"/>
@@ -760,12 +439,12 @@
         <Flags index="KillOnCancel" value="1"/>
         <Flags index="KillOnFinish" value="1"/>
         <Flags index="Select" value="1"/>
-        <MorphUnit value="RaptorSprout"/>
+        <MorphUnit value="PixieSprout"/>
         <InfoArray index="Train1" Time="15">
-            <Button DefaultButtonFace="Raptor">
+            <Button DefaultButtonFace="Pixie">
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
-            <Unit value="Raptor"/>
+            <Unit value="Pixie"/>
             <Flags index="IgnorePlacement" value="1"/>
         </InfoArray>
         <Alert value="MorphComplete_Zerg"/>
@@ -812,114 +491,6 @@
             <Unit value="Eroder"/>
             <Flags index="IgnorePlacement" value="1"/>
         </InfoArray>
-        <InfoArray index="Train4">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train5">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train6">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train7">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train8">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train9">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train10">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train11">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train12">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train13">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train14">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train15">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train16">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train17">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train18">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train19">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train20">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train21">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train22">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train23">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train24">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train25">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train26">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train27">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train28">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train29">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
-        <InfoArray index="Train30">
-            <Charge Link="Abil/XayidMorphXayidling"/>
-            <Cooldown Link="Abil/XayidMorphXayidling"/>
-        </InfoArray>
     </CAbilTrain>
     <CAbilTrain id="XayidMorphForager">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
@@ -964,14 +535,17 @@
             <Unit value="Spitter"/>
             <Flags index="IgnorePlacement" value="1"/>
         </InfoArray>
-        <InfoArray index="Train3" Time="15">
-            <Button DefaultButtonFace="Massalisk" Requirements="HaveBiomassCavern">
-                <Flags index="ToSelection" value="1"/>
-            </Button>
-            <Unit value="Massalisk"/>
-            <Flags index="IgnorePlacement" value="1"/>
-        </InfoArray>
     </CAbilTrain>
+    <CAbilEffectTarget id="XayidSproutBiomePlacementDummy">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <DataCollection value="XayidSproutHabitatPlacementDummy"/>
+        <Effect index="0" value="UnknownEffect"/>
+        <Placeholder value="Biome"/>
+        <Range value="0.5"/>
+        <CastIntroTime value="0.125"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Bulb"/>
+        <PlaceUnit value="Biome"/>
+    </CAbilEffectTarget>
     <CAbilEffectTarget id="XayidSproutGourdPlacementDummy">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <DataCollection value="XayidSproutHabitatPlacementDummy"/>
@@ -979,7 +553,6 @@
         <Placeholder value="Gourd"/>
         <Range value="0.5"/>
         <CastIntroTime value="0.125"/>
-        <AINotifyEffect value="XayidSproutHabitatPlacementDummy"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="Gourd"/>
         <PlaceUnit value="Gourd"/>
     </CAbilEffectTarget>
@@ -1005,7 +578,6 @@
         <Placeholder value="Lotus"/>
         <Range value="0.5"/>
         <CastIntroTime value="0.125"/>
-        <AINotifyEffect value="XayidSproutHabitatPlacementDummy"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="Lotus"/>
         <PlaceUnit value="Lotus"/>
     </CAbilEffectTarget>
@@ -1029,12 +601,11 @@
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <DataCollection value="XayidSproutHabitatPlacementDummy"/>
         <Effect index="0" value="UnknownEffect"/>
-        <Placeholder value="Catalyzer"/>
+        <Placeholder value="Canopy"/>
         <Range value="0.5"/>
         <CastIntroTime value="0.125"/>
-        <AINotifyEffect value="XayidSproutHabitatPlacementDummy"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="Catalyzer"/>
-        <PlaceUnit value="Catalyzer"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Canopy"/>
+        <PlaceUnit value="Canopy"/>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="XayidSproutStemPlacementDummy">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
@@ -1043,7 +614,6 @@
         <Placeholder value="Stem"/>
         <Range value="0.5"/>
         <CastIntroTime value="0.125"/>
-        <AINotifyEffect value="XayidSproutHabitatPlacementDummy"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="Stem"/>
         <PlaceUnit value="Stem"/>
     </CAbilEffectTarget>
@@ -1054,7 +624,6 @@
         <Placeholder value="XayidShrub"/>
         <Range value="0.5"/>
         <CastIntroTime value="0.125"/>
-        <AINotifyEffect value="XayidSproutHabitatPlacementDummy"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="XayidShrub"/>
         <PlaceUnit value="XayidShrub"/>
     </CAbilEffectTarget>
@@ -1065,14 +634,12 @@
         <Placeholder value="Reservoir"/>
         <Range value="0.5"/>
         <CastIntroTime value="0.125"/>
-        <AINotifyEffect value="XayidSproutHabitatPlacementDummy"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="Reservoir"/>
         <PlaceUnit value="Reservoir"/>
     </CAbilEffectTarget>
-    <CAbilEffectTarget id="XayidSproutCatalyzer">
+    <CAbilEffectTarget id="XayidSproutCanopy">
         <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
         <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
-        <Effect index="0" value="XayidSproutCatalyzerInit"/>
         <Flags index="RequireTargetVision" value="0"/>
         <Cost>
             <Resource index="Minerals" value="50"/>
@@ -1080,26 +647,25 @@
         <Range value="500"/>
         <Arc value="360"/>
         <AINotifyEffect value="XayidSproutHabitatCU"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="Catalyzer" Requirements="HaveAvianNest">
+        <CmdButtonArray index="Execute" DefaultButtonFace="Canopy" Requirements="HaveStem">
             <Flags index="ToSelection" value="1"/>
         </CmdButtonArray>
-        <PlaceUnit value="Catalyzer"/>
+        <PlaceUnit value="Canopy"/>
     </CAbilEffectTarget>
-    <CAbilEffectTarget id="XayidSproutBiomassCavern">
+    <CAbilEffectTarget id="XayidSproutBiome">
         <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
         <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
         <Flags index="RequireTargetVision" value="0"/>
         <Cost>
-            <Resource index="Minerals" value="200"/>
-            <Resource index="Vespene" value="200"/>
+            <Resource index="Minerals" value="50"/>
         </Cost>
         <Range value="500"/>
         <Arc value="360"/>
         <AINotifyEffect value="XayidSproutHabitatCU"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="BiomassCavern" Requirements="HaveBiomassHatchery">
+        <CmdButtonArray index="Execute" DefaultButtonFace="Biome" Requirements="HaveThistle">
             <Flags index="ToSelection" value="1"/>
         </CmdButtonArray>
-        <PlaceUnit value="BiomassCavern"/>
+        <PlaceUnit value="Biome"/>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="XayidSproutStem">
         <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
@@ -1189,8 +755,8 @@
                 <Flags index="IgnoreUser" value="1"/>
             </Button>
         </InfoArray>
-        <InfoArray index="Build13" Unit="Catalyzer" Time="40">
-            <Button DefaultButtonFace="Catalyzer">
+        <InfoArray index="Build13" Unit="Canopy" Time="40">
+            <Button DefaultButtonFace="Canopy">
                 <Flags index="IgnoreUser" value="1"/>
             </Button>
         </InfoArray>
@@ -1213,7 +779,6 @@
         <Placeholder value="Thistle"/>
         <Range value="0.5"/>
         <CastIntroTime value="0.125"/>
-        <AINotifyEffect value="XayidSproutHabitatPlacementDummy"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="Thistle"/>
         <PlaceUnit value="Thistle"/>
     </CAbilEffectTarget>
@@ -1260,7 +825,6 @@
         <Placeholder value="Bulb"/>
         <Range value="0.5"/>
         <CastIntroTime value="0.125"/>
-        <AINotifyEffect value="XayidSproutHabitatPlacementDummy"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="Bulb"/>
         <PlaceUnit value="Bulb"/>
     </CAbilEffectTarget>
@@ -1271,25 +835,8 @@
         <Placeholder value="XayidSiphon"/>
         <Range value="2"/>
         <CastIntroTime value="0.125"/>
-        <AINotifyEffect value="XayidSproutHabitatPlacementDummy"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="SproutSiphon"/>
         <PlaceUnit value="XayidSiphon"/>
-    </CAbilEffectTarget>
-    <CAbilEffectTarget id="XayidSproutSunkenWarren">
-        <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
-        <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
-        <Flags index="RequireTargetVision" value="0"/>
-        <Cost>
-            <Resource index="Minerals" value="150"/>
-            <Resource index="Vespene" value="150"/>
-        </Cost>
-        <Range value="500"/>
-        <Arc value="360"/>
-        <AINotifyEffect value="XayidSproutHabitatCU"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="SunkenWarren" Requirements="HaveCatalystPit">
-            <Flags index="ToSelection" value="1"/>
-        </CmdButtonArray>
-        <PlaceUnit value="SunkenWarren"/>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="XayidSproutSiphon">
         <OrderArray index="0" Model="Assets\UI\Cursors\WayPointConfirm_Void\WayPointConfirm_Void.m3"/>
@@ -1498,12 +1045,12 @@
             <Unit value="ScorpaliskDummy"/>
         </InfoArray>
     </CAbilTrain>
-    <CAbilTrain id="XayidSproutRaptor">
+    <CAbilTrain id="XayidSproutPixie">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <DataCollection value="XayidSproutXayidUnits"/>
         <Flags index="WaitForFood" value="0"/>
         <Offset value="0,0"/>
-        <InfoArray index="Train1" Effect="XayidSproutRaptorCU" Location="Rally">
+        <InfoArray index="Train1" Effect="XayidSproutPixieCU" Location="Rally">
             <Charge>
                 <CountMax value="3"/>
                 <CountUse value="1"/>
@@ -1512,10 +1059,10 @@
                 <TimeUse value="34"/>
             </Charge>
             <Cooldown Location="Unit"/>
-            <Button DefaultButtonFace="Raptor">
+            <Button DefaultButtonFace="Pixie">
                 <Flags index="ToSelection" value="1"/>
             </Button>
-            <Unit value="RaptorDummy"/>
+            <Unit value="PixieDummy"/>
         </InfoArray>
     </CAbilTrain>
     <CAbilRally id="XayidWorkerRally">
@@ -1801,8 +1348,8 @@
                 <Flags index="IgnoreUser" value="1"/>
             </Button>
         </InfoArray>
-        <InfoArray index="Build11" Unit="BiomassCavern" Time="80">
-            <Button DefaultButtonFace="BiomassCavern">
+        <InfoArray index="Build11" Unit="Biome" Time="80">
+            <Button DefaultButtonFace="Biome">
                 <Flags index="IgnoreUser" value="1"/>
             </Button>
         </InfoArray>
@@ -1811,13 +1358,8 @@
                 <Flags index="IgnoreUser" value="1"/>
             </Button>
         </InfoArray>
-        <InfoArray index="Build13" Unit="Catalyzer" Time="40">
-            <Button DefaultButtonFace="Catalyzer">
-                <Flags index="IgnoreUser" value="1"/>
-            </Button>
-        </InfoArray>
-        <InfoArray index="Build14" Unit="SunkenWarren" Time="100">
-            <Button DefaultButtonFace="SunkenWarren">
+        <InfoArray index="Build13" Unit="Canopy" Time="40">
+            <Button DefaultButtonFace="Canopy">
                 <Flags index="IgnoreUser" value="1"/>
             </Button>
         </InfoArray>
@@ -1843,7 +1385,7 @@
         <CmdButtonArray index="Execute" DefaultButtonFace="Aquifer">
             <Flags index="ToSelection" value="1"/>
         </CmdButtonArray>
-        <PlaceUnit value="XayidRootRegrowDummyGeyser"/>
+        <PlaceUnit value="Aquifer"/>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="XayidFletchSeedLand">
         <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
