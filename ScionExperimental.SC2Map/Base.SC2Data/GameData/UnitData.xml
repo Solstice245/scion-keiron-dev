@@ -7,6 +7,29 @@
         <Collide index="ForceField" value="0"/>
         <Collide index="Flying6" value="1"/>
     </CUnit>
+    <CUnit default="1" id="DefaultSettingsXayidRoots" parent="CBuildingXayid">
+        <FlagArray index="PreventDefeat" value="0"/>
+        <FlagArray index="PenaltyRevealed" value="0"/>
+        <FlagArray index="Cloaked" value="1"/>
+        <FlagArray index="Buried" value="1"/>
+        <FogVisibility value="Hidden"/>
+        <Collide index="Structure" value="0"/>
+        <Collide index="Flying6" value="0"/>
+        <LifeStart value="250"/>
+        <LifeMax value="250"/>
+        <LifeArmor value="0"/>
+        <Sight value="1.5"/>
+        <AbilArray index="0" Link="XayidRegrowStructures"/>
+        <AbilArray index="1" removed="1"/>
+        <AbilArray index="2" removed="1"/>
+        <BehaviorArray Link="XayidRootsFate3x3"/>
+        <Radius value="1.5"/>
+        <SeparationRadius value="1.5"/>
+        <InnerRadius value="1.5"/>
+        <Footprint value="Footprint3x3Roots"/>
+        <PlacementFootprint value="Footprint3x3Roots"/>
+        <MinimapRadius value="1.5"/>
+    </CUnit>
     <CUnit default="1" id="CBuildingXayidProduction" parent="CBuildingXayid">
         <CardLayouts>
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
@@ -63,8 +86,8 @@
             <LayoutButtons Face="EroderPassive" Type="Passive" Requirements="HaveGourd" Row="0" Column="2"/>
             <LayoutButtons Face="Reviler" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train1" Row="0" Column="3"/>
             <LayoutButtons Face="RevilerPassive" Type="Passive" Requirements="HaveThistle" Row="0" Column="3"/>
-            <LayoutButtons Face="Spitter" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train2" Row="0" Column="4"/>
-            <LayoutButtons Face="SpitterPassive" Type="Passive" Requirements="HaveBiome" Row="0" Column="4"/>
+            <LayoutButtons Face="Spriggan" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train2" Row="0" Column="4"/>
+            <LayoutButtons Face="SprigganPassive" Type="Passive" Requirements="HaveBiome" Row="0" Column="4"/>
             <LayoutButtons Face="Cancel" Type="CancelSubmenu" Row="2" Column="4"/>
             <LayoutButtons Face="Druid" Type="AbilCmd" AbilCmd="XayidMorphSage,Train1" Row="1" Column="0"/>
             <LayoutButtons Face="DruidPassive" Type="Passive" Requirements="HaveLotus" Row="1" Column="0"/>
@@ -100,7 +123,7 @@
             <LayoutButtons Face="Reviler" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train1" Row="1" Column="0"/>
             <LayoutButtons Face="RevilerPassive" Type="Passive" Requirements="BlossomReviler" Row="1" Column="0"/>
             <LayoutButtons Face="Spitter" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train2" Row="1" Column="1"/>
-            <LayoutButtons Face="SpitterPassive" Type="Passive" Requirements="BlossomSpitter" Row="1" Column="1"/>
+            <LayoutButtons Face="SprigganPassive" Type="Passive" Requirements="BlossomSpitter" Row="1" Column="1"/>
             <LayoutButtons Face="Massalisk" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train3" Row="1" Column="2"/>
             <LayoutButtons Face="Massalisk" Type="Passive" Requirements="BlossomMassalisk" Row="1" Column="2"/>
             <LayoutButtons Face="Ferrion" Type="AbilCmd" AbilCmd="XayidMorphForager,255" Row="1" Column="3"/>
@@ -184,7 +207,6 @@
         <FlagArray index="PreventDestroy" value="1"/>
         <FlagArray index="UseLineOfSight" value="1"/>
         <FlagArray index="Unstoppable" value="1"/>
-        <FlagArray index="ArmySelect" value="1"/>
         <FlagArray index="TreatStructureAsUnitForSelection" value="1"/>
         <PlaneArray index="Air" value="1"/>
         <Collide index="Flying" value="1"/>
@@ -245,23 +267,12 @@
         <ScoreKillCostFactor index="Vespene" value="0"/>
         <ScoreResult value=""/>
     </CUnit>
-    <CUnit id="AquiferRoots" parent="CBuildingXayid">
-        <FlagArray index="PreventDefeat" value="0"/>
-        <FlagArray index="PenaltyRevealed" value="0"/>
-        <FlagArray index="Cloaked" value="1"/>
-        <FlagArray index="Buried" value="1"/>
-        <FogVisibility value="Hidden"/>
-        <Collide index="Structure" value="0"/>
-        <Collide index="Flying6" value="0"/>
+    <CUnit id="AquiferRoots" parent="DefaultSettingsXayidRoots">
         <LifeStart value="150"/>
         <LifeMax value="150"/>
-        <LifeArmor value="0"/>
         <Sight value="1"/>
         <CostResource index="Minerals" value="50"/>
-        <AbilArray index="0" Link="XayidRegrowStructures"/>
-        <AbilArray index="1" removed="1"/>
-        <AbilArray index="2" removed="1"/>
-        <BehaviorArray Link="XayidRootsFate2x2"/>
+        <BehaviorArray index="0" Link="XayidRootsFate2x2"/>
         <CardLayouts>
             <LayoutButtons Face="RegrowAquifer" Type="AbilCmd" AbilCmd="XayidRegrowStructures,Build4" Row="0" Column="0"/>
         </CardLayouts>
@@ -273,6 +284,42 @@
         <ScoreMake value="50"/>
         <ScoreKill value="50"/>
         <MinimapRadius value="1"/>
+    </CUnit>
+    <CUnit id="BiomeRoots" parent="DefaultSettingsXayidRoots">
+        <CostResource index="Minerals" value="100"/>
+        <CostResource index="Vespene" value="100"/>
+        <CardLayouts>
+            <LayoutButtons Face="RegrowBiome" Type="AbilCmd" AbilCmd="XayidRegrowStructures,Build11" Row="0" Column="0"/>
+        </CardLayouts>
+        <ScoreMake value="200"/>
+        <ScoreKill value="200"/>
+    </CUnit>
+    <CUnit id="CanopyRoots" parent="DefaultSettingsXayidRoots">
+        <CostResource index="Minerals" value="50"/>
+        <CostResource index="Vespene" value="50"/>
+        <CardLayouts>
+            <LayoutButtons Face="RegrowCanopy" Type="AbilCmd" AbilCmd="XayidRegrowStructures,Build13" Row="0" Column="0"/>
+        </CardLayouts>
+        <ScoreMake value="100"/>
+        <ScoreKill value="100"/>
+    </CUnit>
+    <CUnit id="GourdRoots" parent="DefaultSettingsXayidRoots">
+        <CostResource index="Minerals" value="75"/>
+        <CostResource index="Vespene" value="50"/>
+        <CardLayouts>
+            <LayoutButtons Face="RegrowGourd" Type="AbilCmd" AbilCmd="XayidRegrowStructures,Build6" Row="0" Column="0"/>
+        </CardLayouts>
+        <ScoreMake value="125"/>
+        <ScoreKill value="125"/>
+    </CUnit>
+    <CUnit id="LotusRoots" parent="DefaultSettingsXayidRoots">
+        <CostResource index="Minerals" value="75"/>
+        <CostResource index="Vespene" value="75"/>
+        <CardLayouts>
+            <LayoutButtons Face="RegrowLotus" Type="AbilCmd" AbilCmd="XayidRegrowStructures,Build9" Row="0" Column="0"/>
+        </CardLayouts>
+        <ScoreMake value="150"/>
+        <ScoreKill value="150"/>
     </CUnit>
     <CUnit id="Pixie" parent="CUnitXayidFlyer">
         <Attributes index="Light" value="1"/>
@@ -298,6 +345,136 @@
         </CardLayouts>
         <SubgroupPriority value="70"/>
         <GlossaryPriority value="15"/>
+    </CUnit>
+    <CUnit id="PollinatorRoots" parent="DefaultSettingsXayidRoots">
+        <LifeStart value="150"/>
+        <LifeMax value="150"/>
+        <Sight value="1"/>
+        <CostResource index="Minerals" value="100"/>
+        <AbilArray index="0" Link="XayidRegrowAquifer"/>
+        <BehaviorArray index="0" Link="XayidRootsFate2x2"/>
+        <CardLayouts>
+            <LayoutButtons Face="RegrowAquifer" Type="AbilCmd" AbilCmd="XayidRegrowAquifer,Build1" Row="0" Column="0"/>
+        </CardLayouts>
+        <Radius value="1"/>
+        <SeparationRadius value="1"/>
+        <InnerRadius value="1"/>
+        <Footprint value="Footprint2x2Roots"/>
+        <PlacementFootprint value="Footprint2x2Roots"/>
+        <ScoreMake value="100"/>
+        <ScoreKill value="100"/>
+        <MinimapRadius value="1"/>
+    </CUnit>
+    <CUnit id="ReservoirRoots" parent="DefaultSettingsXayidRoots">
+        <CostResource index="Minerals" value="63"/>
+        <CardLayouts>
+            <LayoutButtons Face="RegrowReservoir" Type="AbilCmd" AbilCmd="XayidRegrowStructures,Build7" Row="0" Column="0"/>
+        </CardLayouts>
+        <ScoreMake value="63"/>
+        <ScoreKill value="63"/>
+    </CUnit>
+    <CUnit id="Spriggan" parent="CUnitXayid">
+        <FlagArray index="AISplash" value="1"/>
+        <FlagArray index="AISupport" value="1"/>
+        <FlagArray index="AIPressForwardDisabled" value="1"/>
+        <LifeStart value="120"/>
+        <LifeMax value="120"/>
+        <LifeArmor value="1"/>
+        <Speed value="2.5"/>
+        <Sight value="8"/>
+        <Food value="-3"/>
+        <CostResource index="Minerals" value="150"/>
+        <CostResource index="Vespene" value="150"/>
+        <BehaviorArray Link="SpitterFate"/>
+        <WeaponArray Link="SpitterSpores"/>
+        <CardLayouts index="0">
+            <LayoutButtons index="5">
+                <Face value="AttackBarrage"/>
+                <Type value="AbilCmd"/>
+                <AbilCmd value="attack,Barrage"/>
+                <SubmenuCardId value=""/>
+                <SubmenuIsSticky value="0"/>
+                <Row value="1"/>
+                <Column value="4"/>
+            </LayoutButtons>
+            <LayoutButtons Row="0" Column="2"/>
+            <LayoutButtons Face="AttackBarrage" Type="AbilCmd" AbilCmd="attack,Barrage" Row="1" Column="4"/>
+            <LayoutButtons Face="SpitterVolatile" Type="Passive" Row="2" Column="1"/>
+            <LayoutButtons Face="ProlongedSpores" Type="Passive" Requirements="UseProlongedSpores" Row="2" Column="2"/>
+            <LayoutButtons>
+                <Face value="XayidBlossom"/>
+                <Type value="Submenu"/>
+                <SubmenuCardId value="0002"/>
+                <SubmenuFullSubCmdValidation value="1"/>
+                <SubmenuIsSticky value="1"/>
+                <Row value="2"/>
+                <Column value="0"/>
+            </LayoutButtons>
+        </CardLayouts>
+        <CardLayouts index="1" CardId="0002">
+            <LayoutButtons index="1" Face="RoamerPassive" Type="Passive" Requirements="BlossomRoamer" Row="0" Column="0"/>
+            <LayoutButtons index="3" Face="SnarePassive" Type="Passive" Requirements="BlossomSnare" Row="0" Column="1"/>
+            <LayoutButtons index="5" Face="EroderPassive" Type="Passive" Requirements="BlossomEroder" Row="0" Column="2"/>
+            <LayoutButtons index="6" Face="Reviler" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train1" Row="1" Column="0"/>
+            <LayoutButtons index="7" Face="RevilerPassive" Type="Passive" Requirements="BlossomReviler" Row="1" Column="0"/>
+            <LayoutButtons index="8" Face="Spitter" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train2" Row="1" Column="1"/>
+            <LayoutButtons index="9" Face="SprigganPassive" Type="Passive" Requirements="BlossomSpitter" Row="1" Column="1"/>
+            <LayoutButtons index="10" Face="Massalisk" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train3" Row="1" Column="2"/>
+            <LayoutButtons index="11">
+                <Face value="Massalisk"/>
+                <Type value="Passive"/>
+                <AbilCmd value=""/>
+                <Requirements value="BlossomMassalisk"/>
+                <Row value="1"/>
+                <Column value="2"/>
+            </LayoutButtons>
+            <LayoutButtons index="12">
+                <Face value="Ferrion"/>
+                <Type value="AbilCmd"/>
+                <AbilCmd value="XayidMorphForager,255"/>
+                <Requirements value=""/>
+                <Row value="1"/>
+                <Column value="3"/>
+            </LayoutButtons>
+            <LayoutButtons index="13">
+                <Face value="Ferrion"/>
+                <Type value="Passive"/>
+                <AbilCmd value=""/>
+                <Requirements value="BlossomFerry"/>
+                <Row value="1"/>
+                <Column value="3"/>
+            </LayoutButtons>
+            <LayoutButtons index="14" Face="Cancel" Type="CancelSubmenu" Requirements="" Row="2" Column="4"/>
+            <LayoutButtons index="15" Face="Casnolisk" Type="AbilCmd" AbilCmd="XayidMorphSage,Train1" Row="0" Column="3"/>
+            <LayoutButtons index="16" Face="Casnolisk" Type="Passive" Requirements="BlossomCasnolisk" Row="0" Column="3"/>
+            <LayoutButtons index="17" Face="Prowler" Type="AbilCmd" AbilCmd="XayidMorphSage,Train2" Row="0" Column="4"/>
+            <LayoutButtons index="18" Face="Prowler" Type="Passive" Requirements="BlossomProwler" Row="0" Column="4"/>
+            <LayoutButtons index="19" Face="Xayithoan" Type="AbilCmd" AbilCmd="XayidMorphSage,Train3" Row="1" Column="4"/>
+            <LayoutButtons index="20" Face="Xayithoan" Type="Passive" Requirements="BlossomXayithoan" Row="1" Column="4"/>
+            <LayoutButtons Face="Assailant" Type="AbilCmd" AbilCmd="XayidMorphPixie,255" Row="2" Column="0"/>
+            <LayoutButtons Face="Assailant" Type="Passive" Requirements="BlossomAssailant" Row="2" Column="0"/>
+            <LayoutButtons Face="Exterminator" Type="AbilCmd" AbilCmd="XayidMorphPixie,255" Row="2" Column="1"/>
+            <LayoutButtons Face="Exterminator" Type="Passive" Requirements="BlossomExterminator" Row="2" Column="1"/>
+            <LayoutButtons Face="Kraken" Type="AbilCmd" AbilCmd="XayidMorphPixie,255" Row="2" Column="2"/>
+            <LayoutButtons Face="Kraken" Type="Passive" Requirements="BlossomKraken" Row="2" Column="2"/>
+        </CardLayouts>
+        <Radius value="0.875"/>
+        <SeparationRadius value="0.75"/>
+        <InnerRadius value="0.5"/>
+        <CargoSize value="4"/>
+        <SubgroupPriority value="77"/>
+        <MinimapRadius value="0.75"/>
+        <GlossaryPriority value="12"/>
+        <GlossaryAlias value="Spitter"/>
+    </CUnit>
+    <CUnit id="StemRoots" parent="DefaultSettingsXayidRoots">
+        <CostResource index="Minerals" value="75"/>
+        <CostResource index="Vespene" value="75"/>
+        <CardLayouts>
+            <LayoutButtons Face="RegrowStem" Type="AbilCmd" AbilCmd="XayidRegrowStructures,Build12" Row="0" Column="0"/>
+        </CardLayouts>
+        <ScoreMake value="150"/>
+        <ScoreKill value="150"/>
     </CUnit>
     <CUnit id="Sylph" parent="CUnitXayidFlyer">
         <Attributes index="Light" value="1"/>
@@ -336,6 +513,7 @@
         <CostResource index="Vespene" value="200"/>
         <AttackTargetPriority value="20"/>
         <AbilArray index="2" Link="BiomassCavernResearch"/>
+        <BehaviorArray Link="BiomeRoots"/>
         <BehaviorArray Link="XayidStructuresKnockbackBehavior3x3"/>
         <CardLayouts>
             <LayoutButtons Face="MutateBattleFrenzy" Type="AbilCmd" AbilCmd="BiomassCavernResearch,Research1" Row="0" Column="0"/>
@@ -402,23 +580,13 @@
         <GlossaryAlias value="Casnolisk"/>
         <KillDisplay value="Always"/>
     </CUnit>
-    <CUnit id="MireRoots" parent="CBuildingXayid">
-        <FlagArray index="PreventDefeat" value="0"/>
-        <FlagArray index="PenaltyRevealed" value="0"/>
-        <FlagArray index="Cloaked" value="1"/>
-        <FlagArray index="Buried" value="1"/>
-        <FogVisibility value="Hidden"/>
-        <Collide index="Structure" value="0"/>
-        <Collide index="Flying6" value="0"/>
+    <CUnit id="MireRoots" parent="DefaultSettingsXayidRoots">
         <LifeStart value="150"/>
         <LifeMax value="150"/>
-        <LifeArmor value="0"/>
         <Sight value="1"/>
         <CostResource index="Minerals" value="100"/>
         <AbilArray index="0" Link="XayidRegrowAquifer"/>
-        <AbilArray index="1" removed="1"/>
-        <AbilArray index="2" removed="1"/>
-        <BehaviorArray Link="XayidRootsFate2x2"/>
+        <BehaviorArray index="0" Link="XayidRootsFate2x2"/>
         <CardLayouts>
             <LayoutButtons Face="RegrowAquifer" Type="AbilCmd" AbilCmd="XayidRegrowAquifer,Build1" Row="0" Column="0"/>
         </CardLayouts>
@@ -430,39 +598,14 @@
         <ScoreMake value="100"/>
         <ScoreKill value="100"/>
         <MinimapRadius value="1"/>
-        <LeaderAlias value="AquiferRoots"/>
-        <HotkeyAlias value="AquiferRoots"/>
-        <AIEvaluateAlias value="AquiferRoots"/>
     </CUnit>
-    <CUnit id="BulbRoots" parent="CBuildingXayid">
-        <Facing value="331.3806"/>
-        <FlagArray index="PreventDefeat" value="0"/>
-        <FlagArray index="PenaltyRevealed" value="0"/>
-        <FlagArray index="Cloaked" value="1"/>
-        <FlagArray index="Buried" value="1"/>
-        <FogVisibility value="Hidden"/>
-        <Collide index="Structure" value="0"/>
-        <Collide index="Flying6" value="0"/>
-        <LifeStart value="250"/>
-        <LifeMax value="250"/>
-        <LifeArmor value="0"/>
-        <Sight value="1.5"/>
+    <CUnit id="BulbRoots" parent="DefaultSettingsXayidRoots">
         <CostResource index="Minerals" value="75"/>
-        <AbilArray index="0" Link="XayidRegrowStructures"/>
-        <AbilArray index="1" removed="1"/>
-        <AbilArray index="2" removed="1"/>
-        <BehaviorArray Link="XayidRootsFate3x3"/>
         <CardLayouts>
             <LayoutButtons Face="RegrowBulb" Type="AbilCmd" AbilCmd="XayidRegrowStructures,Build5" Row="0" Column="0"/>
         </CardLayouts>
-        <Radius value="1.5"/>
-        <SeparationRadius value="1.5"/>
-        <InnerRadius value="1.5"/>
-        <Footprint value="Footprint3x3Roots"/>
-        <PlacementFootprint value="Footprint3x3Roots"/>
         <ScoreMake value="75"/>
         <ScoreKill value="75"/>
-        <MinimapRadius value="1.5"/>
     </CUnit>
     <CUnit id="Canker" parent="CBuildingXayid">
         <Facing value="45"/>
@@ -501,6 +644,8 @@
         <GlossaryCategory value="Unit/Category/XayidUnits"/>
         <GlossaryPriority value="21"/>
         <GlossaryAlias value="Canker"/>
+        <Collide index="Burrow" value="1"/>
+        <Collide index="Flying6" value="0"/>
     </CUnit>
     <CUnit id="CankerMobile" parent="CBuildingXayid">
         <Facing value="45"/>
@@ -551,6 +696,7 @@
         <SubgroupAlias value="Canker"/>
         <GlossaryCategory value="Unit/Category/XayidUnits"/>
         <GlossaryPriority value="21"/>
+        <Attributes index="Structure" value="0"/>
     </CUnit>
     <CUnit id="CankerMissile" parent="MISSILE_INVULNERABLE">
         <Race value="Xayi"/>
@@ -596,34 +742,24 @@
         <GlossaryAlias value="Creeper"/>
         <KillDisplay value="Always"/>
     </CUnit>
-    <CUnit id="HabitatRoots" parent="CBuildingXayid">
-        <FlagArray index="PreventDefeat" value="0"/>
-        <FlagArray index="PenaltyRevealed" value="0"/>
-        <FlagArray index="Cloaked" value="1"/>
-        <FlagArray index="Buried" value="1"/>
-        <Collide index="Structure" value="0"/>
-        <Collide index="Flying6" value="0"/>
+    <CUnit id="HabitatRoots" parent="DefaultSettingsXayidRoots">
         <LifeStart value="400"/>
         <LifeMax value="400"/>
-        <LifeArmor value="0"/>
         <Sight value="2.5"/>
         <CostCategory value="Economy"/>
         <CostResource index="Minerals" value="200"/>
-        <AbilArray index="0" Link="XayidRegrowStructures"/>
-        <AbilArray index="1" removed="1"/>
-        <AbilArray index="2" removed="1"/>
-        <BehaviorArray Link="XayidRootsFate5x5"/>
+        <BehaviorArray index="0" Link="XayidRootsFate5x5"/>
         <CardLayouts>
             <LayoutButtons Face="RegrowHabitat" Type="AbilCmd" AbilCmd="XayidRegrowStructures,Build1" Row="0" Column="0"/>
         </CardLayouts>
         <Radius value="2.5"/>
+        <SeparationRadius value="2.5"/>
+        <InnerRadius value="2.5"/>
         <Footprint value="Footprint5x5Roots"/>
         <PlacementFootprint value="Footprint5x5Roots"/>
         <ScoreMake value="200"/>
         <ScoreKill value="200"/>
-        <SubgroupPriority value="40"/>
         <MinimapRadius value="2.5"/>
-        <GlossaryPriority value="1"/>
     </CUnit>
     <CUnit id="Scion_WeaponToxicThorn" parent="XayidMISSILE"/>
     <CUnit id="Canopy" parent="CBuildingXayid">
@@ -633,6 +769,7 @@
         <CostResource index="Minerals" value="100"/>
         <CostResource index="Vespene" value="100"/>
         <AbilArray index="2" Link="CatalystPitResearch"/>
+        <BehaviorArray Link="CanopyRoots"/>
         <BehaviorArray Link="XayidStructuresKnockbackBehavior3x3"/>
         <CardLayouts>
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
@@ -669,6 +806,7 @@
         <AbilArray index="1" Link="XayidBiomassRally"/>
         <AbilArray index="2" Link="XayidSproutScorpalisk"/>
         <AbilArray Link="que1"/>
+        <BehaviorArray Link="ThistleRoots"/>
         <BehaviorArray Link="XayidStructuresKnockbackBehavior3x3"/>
         <Radius value="1.625"/>
         <Footprint value="Footprint3x3Xayid"/>
@@ -694,6 +832,7 @@
         <AbilArray index="1" Link="XayidAvianRally"/>
         <AbilArray index="2" Link="XayidSproutPixie"/>
         <AbilArray Link="que1"/>
+        <BehaviorArray Link="StemRoots"/>
         <BehaviorArray Link="XayidStructuresKnockbackBehavior3x3"/>
         <Radius value="1.625"/>
         <Footprint value="Footprint3x3Xayid"/>
@@ -705,6 +844,15 @@
         <TechAliasArray value="Alias_AvianNest"/>
         <GlossaryPriority value="24"/>
         <TechTreeProducedUnitArray value="Wasp"/>
+    </CUnit>
+    <CUnit id="ThistleRoots" parent="DefaultSettingsXayidRoots">
+        <CostResource index="Minerals" value="100"/>
+        <CostResource index="Vespene" value="50"/>
+        <CardLayouts>
+            <LayoutButtons Face="RegrowThistle" Type="AbilCmd" AbilCmd="XayidRegrowStructures,Build10" Row="0" Column="0"/>
+        </CardLayouts>
+        <ScoreMake value="150"/>
+        <ScoreKill value="150"/>
     </CUnit>
     <CUnit id="XayidRootRegrowDummy2x2" parent="CBuildingXayid">
         <Collide index="Flying6" value="0"/>
@@ -737,6 +885,7 @@
         <AbilArray index="1" Link="que1"/>
         <AbilArray index="2" Link="XayidShrubRally"/>
         <AbilArray Link="XayidSproutSage"/>
+        <BehaviorArray Link="ShrubRoots"/>
         <BehaviorArray Link="XayidStructuresKnockbackBehavior3x3"/>
         <Radius value="1.25"/>
         <Footprint value="Footprint3x3Xayid"/>
@@ -758,8 +907,8 @@
         <CostResource index="Minerals" value="200"/>
         <AbilArray index="1" Link="stop"/>
         <AbilArray index="2" Link="attack"/>
-        <BehaviorArray Link="Detector11"/>
         <BehaviorArray Link="MireRoots"/>
+        <BehaviorArray Link="Detector11"/>
         <WeaponArray Link="BileGlob"/>
         <WeaponArray Link="BileGlobAG"/>
         <WeaponArray Link="BileGlobEquipment"/>
@@ -840,9 +989,9 @@
         <CostResource index="Minerals" value="100"/>
         <AbilArray index="1" Link="XayidMorphAquiferBilePit"/>
         <AbilArray index="2" Link="XayidMorphAquiferPollinator"/>
-        <BehaviorArray Link="SupplimentationOutput"/>
-        <BehaviorArray Link="XayidStructuresKnockbackBehavior2x2"/>
         <BehaviorArray Link="AquiferRoots"/>
+        <BehaviorArray Link="XayidStructuresKnockbackBehavior2x2"/>
+        <BehaviorArray Link="SupplimentationOutput"/>
         <CardLayouts>
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="XayidMorphAquiferBilePit,255" Row="2" Column="4"/>
@@ -867,6 +1016,7 @@
         <LifeMax value="1000"/>
         <CostResource index="Minerals" value="125"/>
         <AbilArray index="2" Link="MutagenChamberResearch"/>
+        <BehaviorArray Link="ReservoirRoots"/>
         <BehaviorArray Link="XayidStructuresKnockbackBehavior3x3"/>
         <CardLayouts>
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
@@ -882,8 +1032,8 @@
         <SeparationRadius value="1.4375"/>
         <Footprint value="Footprint3x3Xayid"/>
         <PlacementFootprint value="Footprint3x3Xayid"/>
-        <ScoreMake value="150"/>
-        <ScoreKill value="150"/>
+        <ScoreMake value="125"/>
+        <ScoreKill value="125"/>
         <SubgroupPriority value="36"/>
         <MinimapRadius value="1.5"/>
         <GlossaryPriority value="5"/>
@@ -942,6 +1092,7 @@
         <SubgroupPriority value="30"/>
         <MinimapRadius value="1"/>
         <GlossaryPriority value="3"/>
+        <BehaviorArray Link="PollinatorRoots"/>
         <BehaviorArray Link="Pollination"/>
     </CUnit>
     <CUnit id="Kraken">
@@ -1100,7 +1251,7 @@
             <LayoutButtons Face="Reviler" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train1" Row="1" Column="0"/>
             <LayoutButtons Face="RevilerPassive" Type="Passive" Requirements="BlossomReviler" Row="1" Column="0"/>
             <LayoutButtons Face="Spitter" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train2" Row="1" Column="1"/>
-            <LayoutButtons Face="SpitterPassive" Type="Passive" Requirements="BlossomSpitter" Row="1" Column="1"/>
+            <LayoutButtons Face="SprigganPassive" Type="Passive" Requirements="BlossomSpitter" Row="1" Column="1"/>
             <LayoutButtons Face="Massalisk" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train3" Row="1" Column="2"/>
             <LayoutButtons Face="Massalisk" Type="Passive" Requirements="BlossomMassalisk" Row="1" Column="2"/>
             <LayoutButtons Face="Ferrion" Type="AbilCmd" AbilCmd="XayidMorphForager,255" Row="1" Column="3"/>
@@ -1147,7 +1298,7 @@
             <LayoutButtons Face="Reviler" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train1" Row="1" Column="0"/>
             <LayoutButtons Face="RevilerPassive" Type="Passive" Requirements="BlossomReviler" Row="1" Column="0"/>
             <LayoutButtons Face="Spitter" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train2" Row="1" Column="1"/>
-            <LayoutButtons Face="SpitterPassive" Type="Passive" Requirements="BlossomSpitter" Row="1" Column="1"/>
+            <LayoutButtons Face="SprigganPassive" Type="Passive" Requirements="BlossomSpitter" Row="1" Column="1"/>
             <LayoutButtons Face="Massalisk" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train3" Row="1" Column="2"/>
             <LayoutButtons Face="Massalisk" Type="Passive" Requirements="BlossomMassalisk" Row="1" Column="2"/>
             <LayoutButtons Face="Ferrion" Type="AbilCmd" AbilCmd="XayidMorphForager,255" Row="1" Column="3"/>
@@ -1203,8 +1354,8 @@
         <AbilArray Link="XayidSproutStem"/>
         <AbilArray Link="XayidSproutCanopy"/>
         <AbilArray Link="XayidSproutSunkenWarren"/>
-        <BehaviorArray Link="XayidStructuresKnockbackBehavior5x5"/>
         <BehaviorArray Link="HabitatRoots"/>
+        <BehaviorArray Link="XayidStructuresKnockbackBehavior5x5"/>
         <Radius value="2.5"/>
         <Footprint value="Footprint5x5Xayid"/>
         <PlacementFootprint value="Footprint5x5Xayid"/>
@@ -1274,32 +1425,26 @@
         </CardLayouts>
         <CardLayouts CardId="0002">
             <LayoutButtons Face="Roamer" Type="AbilCmd" AbilCmd="XayidMorphFletch,Train1" Row="0" Column="0"/>
-            <LayoutButtons Face="RoamerPassive" Type="Passive" Requirements="BlossomRoamer" Row="0" Column="0"/>
+            <LayoutButtons Face="RoamerPassive" Type="Passive" Row="0" Column="0"/>
             <LayoutButtons Face="Snare" Type="AbilCmd" AbilCmd="XayidMorphFletch,Train2" Row="0" Column="1"/>
-            <LayoutButtons Face="SnarePassive" Type="Passive" Requirements="BlossomSnare" Row="0" Column="1"/>
+            <LayoutButtons Face="SnarePassive" Type="Passive" Requirements="HaveShrub" Row="0" Column="1"/>
             <LayoutButtons Face="Eroder" Type="AbilCmd" AbilCmd="XayidMorphFletch,Train3" Row="0" Column="2"/>
-            <LayoutButtons Face="EroderPassive" Type="Passive" Requirements="BlossomEroder" Row="0" Column="2"/>
-            <LayoutButtons Face="Reviler" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train1" Row="1" Column="0"/>
-            <LayoutButtons Face="RevilerPassive" Type="Passive" Requirements="BlossomReviler" Row="1" Column="0"/>
-            <LayoutButtons Face="Spitter" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train2" Row="1" Column="1"/>
-            <LayoutButtons Face="SpitterPassive" Type="Passive" Requirements="BlossomSpitter" Row="1" Column="1"/>
-            <LayoutButtons Face="Massalisk" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train3" Row="1" Column="2"/>
-            <LayoutButtons Face="Massalisk" Type="Passive" Requirements="BlossomMassalisk" Row="1" Column="2"/>
-            <LayoutButtons Face="Ferrion" Type="AbilCmd" AbilCmd="XayidMorphForager,255" Row="1" Column="3"/>
-            <LayoutButtons Face="Ferrion" Type="Passive" Requirements="BlossomFerry" Row="1" Column="3"/>
+            <LayoutButtons Face="EroderPassive" Type="Passive" Requirements="HaveGourd" Row="0" Column="2"/>
+            <LayoutButtons Face="Reviler" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train1" Row="0" Column="3"/>
+            <LayoutButtons Face="RevilerPassive" Type="Passive" Requirements="HaveThistle" Row="0" Column="3"/>
+            <LayoutButtons Face="Spriggan" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train2" Row="0" Column="4"/>
+            <LayoutButtons Face="SprigganPassive" Type="Passive" Requirements="HaveBiome" Row="0" Column="4"/>
             <LayoutButtons Face="Cancel" Type="CancelSubmenu" Row="2" Column="4"/>
-            <LayoutButtons Face="Casnolisk" Type="AbilCmd" AbilCmd="XayidMorphSage,Train1" Row="0" Column="3"/>
-            <LayoutButtons Face="Casnolisk" Type="Passive" Requirements="BlossomCasnolisk" Row="0" Column="3"/>
-            <LayoutButtons Face="Prowler" Type="AbilCmd" AbilCmd="XayidMorphSage,Train2" Row="0" Column="4"/>
-            <LayoutButtons Face="Prowler" Type="Passive" Requirements="BlossomProwler" Row="0" Column="4"/>
-            <LayoutButtons Face="Xayithoan" Type="AbilCmd" AbilCmd="XayidMorphSage,Train3" Row="1" Column="4"/>
-            <LayoutButtons Face="Xayithoan" Type="Passive" Requirements="BlossomXayithoan" Row="1" Column="4"/>
-            <LayoutButtons Face="Assailant" Type="AbilCmd" AbilCmd="XayidMorphPixie,255" Row="2" Column="0"/>
-            <LayoutButtons Face="Assailant" Type="Passive" Requirements="BlossomAssailant" Row="2" Column="0"/>
-            <LayoutButtons Face="Exterminator" Type="AbilCmd" AbilCmd="XayidMorphPixie,255" Row="2" Column="1"/>
-            <LayoutButtons Face="Exterminator" Type="Passive" Requirements="BlossomExterminator" Row="2" Column="1"/>
-            <LayoutButtons Face="Kraken" Type="AbilCmd" AbilCmd="XayidMorphPixie,255" Row="2" Column="2"/>
-            <LayoutButtons Face="Kraken" Type="Passive" Requirements="BlossomKraken" Row="2" Column="2"/>
+            <LayoutButtons Face="Druid" Type="AbilCmd" AbilCmd="XayidMorphSage,Train1" Row="1" Column="0"/>
+            <LayoutButtons Face="DruidPassive" Type="Passive" Requirements="HaveLotus" Row="1" Column="0"/>
+            <LayoutButtons Face="Creeper" Type="AbilCmd" AbilCmd="XayidMorphSage,Train2" Row="1" Column="1"/>
+            <LayoutButtons Face="CreeperPassive" Type="Passive" Requirements="HaveThistle" Row="1" Column="1"/>
+            <LayoutButtons Face="Iris" Type="AbilCmd" AbilCmd="XayidMorphSage,Train3" Row="1" Column="2"/>
+            <LayoutButtons Face="IrisPassive" Type="Passive" Requirements="HaveStem" Row="1" Column="2"/>
+            <LayoutButtons Face="Sylph" Type="AbilCmd" AbilCmd="XayidMorphPixie,Train1" Row="2" Column="0"/>
+            <LayoutButtons Face="SylphPassive" Type="Passive" Requirements="HaveStem" Row="2" Column="0"/>
+            <LayoutButtons Face="Exterminator" Type="AbilCmd" AbilCmd="XayidMorphPixie,Train2" Row="2" Column="1"/>
+            <LayoutButtons Face="Exterminator" Type="Passive" Requirements="HaveCanopy" Row="2" Column="1"/>
         </CardLayouts>
         <CostResource index="Minerals" value="150"/>
         <CostResource index="Vespene" value="0"/>
@@ -1308,36 +1453,27 @@
     <CUnit id="ScourWeapon">
         <Mover value="Scour"/>
     </CUnit>
-    <CUnit id="XayidSiphonRoots" parent="CBuildingXayid">
-        <Facing value="329.9963"/>
-        <Mob value="Multiplayer"/>
-        <FlagArray index="Movable" value="1"/>
-        <FlagArray index="PreventDefeat" value="0"/>
-        <FlagArray index="PenaltyRevealed" value="0"/>
-        <FlagArray index="Cloaked" value="1"/>
-        <FlagArray index="Buried" value="1"/>
-        <FogVisibility value="Hidden"/>
-        <Collide index="Flying6" value="0"/>
-        <LifeStart value="250"/>
-        <LifeMax value="250"/>
-        <LifeArmor value="0"/>
-        <Sight value="1.5"/>
+    <CUnit id="ShrubRoots" parent="DefaultSettingsXayidRoots">
+        <CostResource index="Minerals" value="88"/>
+        <CardLayouts>
+            <LayoutButtons Face="RegrowShrub" Type="AbilCmd" AbilCmd="XayidRegrowStructures,Build8" Row="0" Column="0"/>
+        </CardLayouts>
+        <ScoreMake value="88"/>
+        <ScoreKill value="88"/>
+    </CUnit>
+    <CUnit id="XayidSiphonRoots" parent="DefaultSettingsXayidRoots">
+        <Collide index="Structure" value="1"/>
         <CostCategory value="Economy"/>
         <CostResource index="Minerals" value="38"/>
-        <AbilArray index="0" Link="XayidRegrowStructures"/>
-        <AbilArray index="1" Link="XayidRegrowSiphon"/>
-        <AbilArray index="2" removed="1"/>
-        <BehaviorArray Link="XayidRootsFateGeyser"/>
+        <AbilArray Link="XayidRegrowSiphon"/>
+        <BehaviorArray index="0" Link="XayidRootsFateGeyser"/>
         <CardLayouts>
             <LayoutButtons Face="RegrowSiphon" Type="AbilCmd" AbilCmd="XayidRegrowSiphon,Execute" Row="0" Column="0"/>
         </CardLayouts>
-        <Radius value="1.5"/>
-        <SeparationRadius value="1.5"/>
         <Footprint value="Footprint3x3RootsGeyser"/>
         <PlacementFootprint value="Footprint3x3RootsGeyser"/>
         <ScoreMake value="38"/>
         <ScoreKill value="38"/>
-        <MinimapRadius value="1.5"/>
     </CUnit>
     <CUnit id="XayidSiphonRich">
         <Description value="Button/Tooltip/Siphoner"/>
@@ -1375,8 +1511,8 @@
         <CostResource index="Minerals" value="75"/>
         <AttackTargetPriority value="11"/>
         <AbilArray Link="BuildInProgress"/>
-        <BehaviorArray Link="HarvestableRichVespeneGeyserGasZerg"/>
         <BehaviorArray Link="SiphonRoots"/>
+        <BehaviorArray Link="HarvestableRichVespeneGeyserGasZerg"/>
         <CardLayouts>
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
         </CardLayouts>
@@ -1437,8 +1573,8 @@
         <CostResource index="Minerals" value="75"/>
         <AttackTargetPriority value="11"/>
         <AbilArray Link="BuildInProgress"/>
-        <BehaviorArray Link="HarvestableVespeneGeyserGasZerg"/>
         <BehaviorArray Link="SiphonRoots"/>
+        <BehaviorArray Link="HarvestableVespeneGeyserGasZerg"/>
         <CardLayouts>
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
         </CardLayouts>
@@ -1528,54 +1664,6 @@
             <Cooldown Link="Extractor/Revive"/>
         </ReviveInfoBase>
     </CUnit>
-    <CUnit id="Spitter">
-        <CardLayouts index="0">
-            <LayoutButtons index="5" Face="AttackBarrage" Type="AbilCmd" AbilCmd="attack,Barrage" Row="1" Column="4"/>
-            <LayoutButtons index="6" Face="" Type="Undefined" AbilCmd="" Row="0" Column="2"/>
-            <LayoutButtons Face="AttackBarrage" Type="AbilCmd" AbilCmd="attack,Barrage" Row="1" Column="4"/>
-            <LayoutButtons Face="SpitterVolatile" Type="Passive" Row="2" Column="1"/>
-            <LayoutButtons Face="ProlongedSpores" Type="Passive" Requirements="UseProlongedSpores" Row="2" Column="2"/>
-            <LayoutButtons>
-                <Face value="XayidBlossom"/>
-                <Type value="Submenu"/>
-                <SubmenuCardId value="0002"/>
-                <SubmenuFullSubCmdValidation value="1"/>
-                <SubmenuIsSticky value="1"/>
-                <Row value="2"/>
-                <Column value="0"/>
-            </LayoutButtons>
-        </CardLayouts>
-        <CardLayouts CardId="0002">
-            <LayoutButtons Face="Roamer" Type="AbilCmd" AbilCmd="XayidMorphFletch,Train1" Row="0" Column="0"/>
-            <LayoutButtons Face="RoamerPassive" Type="Passive" Requirements="BlossomRoamer" Row="0" Column="0"/>
-            <LayoutButtons Face="Snare" Type="AbilCmd" AbilCmd="XayidMorphFletch,Train2" Row="0" Column="1"/>
-            <LayoutButtons Face="SnarePassive" Type="Passive" Requirements="BlossomSnare" Row="0" Column="1"/>
-            <LayoutButtons Face="Eroder" Type="AbilCmd" AbilCmd="XayidMorphFletch,Train3" Row="0" Column="2"/>
-            <LayoutButtons Face="EroderPassive" Type="Passive" Requirements="BlossomEroder" Row="0" Column="2"/>
-            <LayoutButtons Face="Reviler" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train1" Row="1" Column="0"/>
-            <LayoutButtons Face="RevilerPassive" Type="Passive" Requirements="BlossomReviler" Row="1" Column="0"/>
-            <LayoutButtons Face="Spitter" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train2" Row="1" Column="1"/>
-            <LayoutButtons Face="SpitterPassive" Type="Passive" Requirements="BlossomSpitter" Row="1" Column="1"/>
-            <LayoutButtons Face="Massalisk" Type="AbilCmd" AbilCmd="XayidMorphScorpalisk,Train3" Row="1" Column="2"/>
-            <LayoutButtons Face="Massalisk" Type="Passive" Requirements="BlossomMassalisk" Row="1" Column="2"/>
-            <LayoutButtons Face="Ferrion" Type="AbilCmd" AbilCmd="XayidMorphForager,255" Row="1" Column="3"/>
-            <LayoutButtons Face="Ferrion" Type="Passive" Requirements="BlossomFerry" Row="1" Column="3"/>
-            <LayoutButtons Face="Cancel" Type="CancelSubmenu" Row="2" Column="4"/>
-            <LayoutButtons Face="Casnolisk" Type="AbilCmd" AbilCmd="XayidMorphSage,Train1" Row="0" Column="3"/>
-            <LayoutButtons Face="Casnolisk" Type="Passive" Requirements="BlossomCasnolisk" Row="0" Column="3"/>
-            <LayoutButtons Face="Prowler" Type="AbilCmd" AbilCmd="XayidMorphSage,Train2" Row="0" Column="4"/>
-            <LayoutButtons Face="Prowler" Type="Passive" Requirements="BlossomProwler" Row="0" Column="4"/>
-            <LayoutButtons Face="Xayithoan" Type="AbilCmd" AbilCmd="XayidMorphSage,Train3" Row="1" Column="4"/>
-            <LayoutButtons Face="Xayithoan" Type="Passive" Requirements="BlossomXayithoan" Row="1" Column="4"/>
-            <LayoutButtons Face="Assailant" Type="AbilCmd" AbilCmd="XayidMorphPixie,255" Row="2" Column="0"/>
-            <LayoutButtons Face="Assailant" Type="Passive" Requirements="BlossomAssailant" Row="2" Column="0"/>
-            <LayoutButtons Face="Exterminator" Type="AbilCmd" AbilCmd="XayidMorphPixie,255" Row="2" Column="1"/>
-            <LayoutButtons Face="Exterminator" Type="Passive" Requirements="BlossomExterminator" Row="2" Column="1"/>
-            <LayoutButtons Face="Kraken" Type="AbilCmd" AbilCmd="XayidMorphPixie,255" Row="2" Column="2"/>
-            <LayoutButtons Face="Kraken" Type="Passive" Requirements="BlossomKraken" Row="2" Column="2"/>
-        </CardLayouts>
-        <Radius value="0.875"/>
-    </CUnit>
     <CUnit id="StructureSeedLarge" parent="DefaultSettingsXayidSeed">
         <LifeStart value="200"/>
         <LifeMax value="200"/>
@@ -1653,6 +1741,7 @@
         <CostResource index="Vespene" value="100"/>
         <AbilArray index="1" Link="que1"/>
         <AbilArray index="2" removed="1"/>
+        <BehaviorArray Link="GourdRoots"/>
         <BehaviorArray Link="XayidStructuresKnockbackBehavior3x3"/>
         <CardLayouts>
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="que1,CancelLast" Row="2" Column="4"/>
@@ -1662,13 +1751,11 @@
         <SeparationRadius value="1.5"/>
         <Footprint value="Footprint3x3Xayid"/>
         <PlacementFootprint value="Footprint3x3Xayid"/>
-        <ScoreMake value="150"/>
-        <ScoreKill value="150"/>
+        <ScoreMake value="250"/>
+        <ScoreKill value="250"/>
         <SubgroupPriority value="39"/>
         <MinimapRadius value="1.5"/>
-        <TechAliasArray value="Alias_XayidDen"/>
         <GlossaryPriority value="4"/>
-        <TechTreeProducedUnitArray value="Worm"/>
     </CUnit>
     <CUnit id="Bulb" parent="CBuildingXayidProduction">
         <Facing value="331.3806"/>
@@ -1678,8 +1765,8 @@
         <AbilArray index="1" Link="XayidBulbRally"/>
         <AbilArray index="2" Link="XayidSproutFletch"/>
         <AbilArray Link="que1"/>
-        <BehaviorArray Link="XayidStructuresKnockbackBehavior3x3"/>
         <BehaviorArray Link="BulbRoots"/>
+        <BehaviorArray Link="XayidStructuresKnockbackBehavior3x3"/>
         <Radius value="1.625"/>
         <SeparationRadius value="1.5"/>
         <Footprint value="Footprint3x3Xayid"/>
@@ -1739,6 +1826,7 @@
         <CostResource index="Vespene" value="150"/>
         <AbilArray index="1" Link="que1"/>
         <AbilArray index="2" removed="1"/>
+        <BehaviorArray Link="LotusRoots"/>
         <BehaviorArray Link="TerranStructuresKnockbackBehavior"/>
         <CardLayouts>
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="que1,CancelLast" Row="2" Column="4"/>
@@ -1748,8 +1836,8 @@
         <SeparationRadius value="1.5"/>
         <Footprint value="Footprint3x3Xayid"/>
         <PlacementFootprint value="Footprint3x3Xayid"/>
-        <ScoreMake value="150"/>
-        <ScoreKill value="150"/>
+        <ScoreMake value="300"/>
+        <ScoreKill value="300"/>
         <SubgroupPriority value="39"/>
         <MinimapRadius value="1.5"/>
         <GlossaryPriority value="4"/>
@@ -1770,6 +1858,7 @@
         <Radius value="0.4375"/>
         <InnerRadius value="0.375"/>
         <SubgroupPriority value="69"/>
+        <FlagArray index="ArmySelect" value="1"/>
     </CUnit>
     <CUnit id="PixieBlossom" parent="DefaultSettingsXayidSprout">
         <Description value="Button/Tooltip/DefaultSettingsXayidSprout"/>
@@ -1799,6 +1888,7 @@
         <Radius value="0.375"/>
         <SeparationRadius value="0.375"/>
         <SubgroupPriority value="69"/>
+        <FlagArray index="ArmySelect" value="1"/>
     </CUnit>
     <CUnit id="PixieSprout" parent="DefaultSettingsXayidSprout">
         <Description value="Button/Tooltip/DefaultSettingsXayidSprout"/>
@@ -1860,6 +1950,7 @@
             <LayoutButtons index="5" removed="1"/>
         </CardLayouts>
         <CardLayouts index="1" removed="1"/>
+        <FlagArray index="ArmySelect" value="1"/>
     </CUnit>
     <CUnit id="Fletch" parent="CUnitXayid">
         <Attributes index="Light" value="1"/>
@@ -1901,6 +1992,7 @@
         <InnerRadius value="0.375"/>
         <SubgroupPriority value="69"/>
         <Description value="Button/Tooltip/DefaultSettingsXayidSprout"/>
+        <FlagArray index="ArmySelect" value="1"/>
     </CUnit>
     <CUnit id="SageDummy" parent="DefaultSettingsXayidRallyDummy">
         <Name value="Unit/Name/SageDummy"/>
@@ -1943,7 +2035,6 @@
         <ScoreResult value="BuildOrder"/>
     </CUnit>
     <CUnit id="ForagerSeed" parent="DefaultSettingsXayidSeed">
-        <FlagArray index="ArmySelect" value="0"/>
         <LifeStart value="40"/>
         <LifeMax value="40"/>
         <Food value="-1"/>
