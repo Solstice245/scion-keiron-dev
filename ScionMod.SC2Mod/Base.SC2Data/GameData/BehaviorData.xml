@@ -20,6 +20,11 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="GenetronPowerSupplyGE050"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="OlympusAbilitiesReq">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="GenetronPowerSupplyGEOlympusDischarge"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="BoarIgnitionBlastReq">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -34,6 +39,10 @@
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="GenetronPowerSupplyGE025"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="Detector13p75">
+        <InfoFlags index="Hidden" value="1"/>
+        <Modification Detect="13.75"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="Detector6" parent="Detector">
         <Alignment value="Positive"/>
@@ -66,6 +75,13 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="GenetronPowerSupplyGE150"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="UmbraStealthSuppression">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="SuppressCloak"/>
+        <Period value="0.0625"/>
+        <PeriodicEffect value="UmbraStealthSuppressionModifyUnit"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="VirtusSelfFixReq">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -79,7 +95,7 @@
     <CBehaviorBuff id="AquilaSuperchargeReq">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="GenetronPowerSupplyGE030"/>
+        <DisableValidatorArray value="GenetronPowerSupplyGEAquilaSupercharge"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="AquilaNaniteGrenadeReq">
         <InfoFlags index="Hidden" value="1"/>
@@ -118,15 +134,6 @@
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="GenetronPowerSupplyGE015"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="GenetronUnitEnergyRegenx5">
-        <InfoFlags index="Hidden" value="1"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="EnergyNotFull"/>
-        <DisableValidatorArray value="CasterDataDefaultIs0"/>
-        <DisableValidatorArray value="GenetronCasterEnergyRegenNotSuppressed"/>
-        <Period value="0.5"/>
-        <PeriodicEffect value="GenetronUnitEnergyRegenx5ETU"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="MaximumPowerProcessingCore">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -305,13 +312,7 @@
         <Duration value="2.1"/>
         <ExpireEffect value="ApertureTeleportSet"/>
         <Modification>
-            <ModifyFlags index="DisableWeapons" value="1"/>
-            <ModifyFlags index="SuppressMoving" value="1"/>
-            <ModifyFlags index="SuppressTurning" value="1"/>
-            <AbilClassDisableArray index="CAbilAttack" value="1"/>
-            <AbilClassDisableArray index="CAbilEffectInstant" value="1"/>
-            <AbilClassDisableArray index="CAbilEffectTarget" value="1"/>
-            <AbilClassDisableArray index="CAbilMove" value="1"/>
+            <StateFlags index="Stun" value="1"/>
         </Modification>
     </CBehaviorBuff>
     <CBehaviorBuff id="BoreDrill">
@@ -396,11 +397,11 @@
         <EditorCategories value="AbilityorEffectType:Units,Race:Genetron"/>
         <RemoveValidatorArray value="IsConstructing"/>
         <Modification>
-            <DamageTakenFraction index="Spell" value="1"/>
-            <DamageTakenFraction index="Melee" value="1"/>
-            <DamageTakenFraction index="Ranged" value="1"/>
-            <DamageTakenFraction index="Splash" value="1"/>
-            <DamageTakenFraction index="NoProc" value="1"/>
+            <DamageTakenFraction index="Spell" value="0.5"/>
+            <DamageTakenFraction index="Melee" value="0.5"/>
+            <DamageTakenFraction index="Ranged" value="0.5"/>
+            <DamageTakenFraction index="Splash" value="0.5"/>
+            <DamageTakenFraction index="NoProc" value="0.5"/>
         </Modification>
         <Alignment value="Negative"/>
     </CBehaviorBuff>
@@ -478,33 +479,6 @@
         </DamageResponse>
         <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="GenetronUnitEnergyRegen">
-        <InfoFlags index="Hidden" value="1"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="EnergyNotFull"/>
-        <DisableValidatorArray value="CasterDataDefaultIs0"/>
-        <DisableValidatorArray value="GenetronCasterEnergyRegenNotSuppressed"/>
-        <Period value="0.5"/>
-        <PeriodicEffect value="GenetronUnitEnergyRegenETU"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="GenetronUnitEnergyRegenx3">
-        <InfoFlags index="Hidden" value="1"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="EnergyNotFull"/>
-        <DisableValidatorArray value="CasterDataDefaultIs0"/>
-        <DisableValidatorArray value="GenetronCasterEnergyRegenNotSuppressed"/>
-        <Period value="0.5"/>
-        <PeriodicEffect value="GenetronUnitEnergyRegenx3ETU"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="GenetronUnitEnergyRegenx2">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="EnergyNotFull"/>
-        <DisableValidatorArray value="CasterDataDefaultIs0"/>
-        <DisableValidatorArray value="GenetronCasterEnergyRegenNotSuppressed"/>
-        <Period value="0.5"/>
-        <PeriodicEffect value="GenetronUnitEnergyRegenx2ETU"/>
-        <InfoFlags index="Hidden" value="1"/>
-    </CBehaviorBuff>
     <CBehaviorBuff id="KeironShellRestoration">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Modification>
@@ -579,11 +553,10 @@
             <TurretDisableArray value="InterdictorMovement"/>
             <TurretDisableArray value="RepulsorTurret"/>
         </Modification>
-        <DamageResponse ModifyFraction="0.4">
+        <DamageResponse ModifyFraction="0.25">
             <Kind index="Spell" value="0"/>
             <Chance value="1"/>
         </DamageResponse>
-        <ExpireEffect value="GenetronUpdatePowerGenerationTargetSA"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="GyreAnnexCaster">
         <InfoFlags index="Hidden" value="1"/>
@@ -601,7 +574,7 @@
         <RemoveValidatorArray value="CasterIsAnnexing"/>
         <Period value="0.0625"/>
         <PeriodicEffect value="GyreAnnexFollowOrder"/>
-        <FinalEffect value="GyreAnnexDummySuicide"/>
+        <FinalEffect value="GyreAnnexFinalSet"/>
         <Modification>
             <StateFlags index="SuppressCollision" value="1"/>
         </Modification>
@@ -609,31 +582,21 @@
     <CBehaviorBuff id="GyreAnnexed">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <RemoveValidatorArray value="AnnexDummyUnitIsAlive"/>
-        <RemoveValidatorArray value="AnnexCasterCloserThan2range"/>
-        <Period value="0.5"/>
-        <InitialEffect value="GyreAnnexInitSet"/>
-        <PeriodicEffect value="GyreAnnexDamage"/>
-        <FinalEffect value="GyreAnnexFinalSet"/>
-        <Modification>
-            <RadiusMultiplier value="0"/>
-            <Height value="0.5"/>
-            <MoveSpeedMaximum value="2.75"/>
-            <MoveSpeedMinimum value="2.75"/>
-            <ModifyFlags index="DisableAbils" value="1"/>
-            <ModifyFlags index="DisableWeapons" value="1"/>
-            <ModifyFlags index="SuppressTurning" value="1"/>
+        <InitialEffect value="GyreAnnexAK"/>
+        <FinalEffect value="GyreAnnexRK"/>
+        <Modification RadiusMultiplier="0" Height="1.5">
             <StateFlags index="Stun" value="1"/>
-            <StateFlags index="SuppressLifeRegen" value="1"/>
-            <StateFlags index="SuppressShieldsRegen" value="1"/>
             <StateFlags index="Uncommandable" value="1"/>
             <HeightTime index="Start" value="1"/>
             <HeightTime index="Stop" value="0.25"/>
+            <PlaneDelta index="Ground" value="-1"/>
+            <PlaneDelta index="Air" value="1"/>
         </Modification>
         <InfoIcon value="Assets\Textures\btn-ability-keiron-annex.dds"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="GyreShackled">
         <Alignment value="Negative"/>
-        <InfoIcon value="Assets\Textures\btn-ability-zeratul-stalker-phasebattery.dds"/>
+        <InfoIcon value="Assets\Textures\btn-upgrade-protoss-fenix-scoutchampionaoemissiles.dds"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <MaxStackCount value="5"/>
         <Duration value="5.6"/>
@@ -642,7 +605,7 @@
     <CBehaviorBuff id="GyreShackledSupress">
         <Alignment value="Negative"/>
         <InfoFlags index="Hidden" value="1"/>
-        <InfoIcon value="Assets\Textures\btn-ability-zeratul-stalker-phasebattery.dds"/>
+        <InfoIcon value="Assets\Textures\btn-upgrade-protoss-fenix-scoutchampionaoemissiles.dds"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <RemoveValidatorArray value="ShackledMaxStack"/>
         <Modification>
@@ -785,6 +748,7 @@
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Period value="0.125"/>
         <PeriodicEffect value="PulsarFacingSwitch"/>
+        <DisableValidatorArray value="NotHoldingFire"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="RepulsorInterdictorBurrowCD">
         <InfoFlags index="Hidden" value="1"/>
@@ -954,14 +918,12 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Duration value="4.2"/>
         <Modification>
-            <ModifyFlags index="DisableWeapons" value="1"/>
-            <AbilClassDisableArray index="CAbilEffect" value="1"/>
-            <AbilClassDisableArray index="CAbilAugment" value="1"/>
-            <AbilClassDisableArray index="CAbilBehavior" value="1"/>
-            <AbilClassDisableArray index="CAbilEffectInstant" value="1"/>
-            <AbilClassDisableArray index="CAbilEffectTarget" value="1"/>
-            <AbilClassDisableArray index="CAbilHarvest" value="1"/>
-            <AbilClassDisableArray index="CAbilSpecialize" value="1"/>
+            <StateFlags index="Silence" value="1"/>
+            <StateFlags index="Daze" value="1"/>
+            <AbilClassEnableArray index="CAbilBuildable" value="1"/>
+            <AbilClassEnableArray index="CAbilMove" value="1"/>
+            <AbilClassEnableArray index="CAbilStop" value="1"/>
+            <AbilClassEnableArray index="CAbilWarpable" value="1"/>
         </Modification>
     </CBehaviorBuff>
     <CBehaviorBuff id="ProwlerFate">
@@ -1078,7 +1040,7 @@
             <TurretDisableArray value="InterdictorMovement"/>
             <TurretDisableArray value="RepulsorTurret"/>
         </Modification>
-        <DamageResponse ModifyFraction="0.4">
+        <DamageResponse ModifyFraction="0.25">
             <Kind index="Spell" value="0"/>
             <Chance value="1"/>
         </DamageResponse>
@@ -1283,26 +1245,10 @@
         <DisplayDuration index="Ally" value="1"/>
         <DisplayDuration index="Enemy" value="1"/>
         <Duration value="4"/>
-        <Modification SightBonus="-8">
-            <AbilClassDisableArray index="CAbil" value="1"/>
-            <AbilClassDisableArray index="CAbilEffect" value="1"/>
-            <AbilClassDisableArray index="CAbilRedirect" value="1"/>
-            <AbilClassDisableArray index="CAbilAttack" value="1"/>
-            <AbilClassDisableArray index="CAbilAugment" value="1"/>
-            <AbilClassDisableArray index="CAbilBattery" value="1"/>
-            <AbilClassDisableArray index="CAbilBeacon" value="1"/>
-            <AbilClassDisableArray index="CAbilBehavior" value="1"/>
-            <AbilClassDisableArray index="CAbilBuild" value="1"/>
-            <AbilClassDisableArray index="CAbilEffectInstant" value="1"/>
-            <AbilClassDisableArray index="CAbilEffectTarget" value="1"/>
-            <AbilClassDisableArray index="CAbilHarvest" value="1"/>
-            <AbilClassDisableArray index="CAbilInteract" value="1"/>
-            <AbilClassDisableArray index="CAbilInventory" value="1"/>
-            <AbilClassDisableArray index="CAbilLearn" value="1"/>
-            <AbilClassDisableArray index="CAbilMerge" value="1"/>
-            <AbilClassDisableArray index="CAbilRedirectInstant" value="1"/>
-            <AbilClassDisableArray index="CAbilRedirectTarget" value="1"/>
-            <AbilClassDisableArray index="CAbilSpecialize" value="1"/>
+        <Modification SightMaximum="0">
+            <StateFlags index="Silence" value="1"/>
+            <StateFlags index="Daze" value="1"/>
+            <StateFlags index="SuppressCloak" value="1"/>
         </Modification>
         <Replace value="FarthestDistance"/>
         <AINotifyEffect value="BlindingBurst"/>
@@ -1414,7 +1360,7 @@
     <CBehaviorBuff id="FrenzyInjection">
         <InfoIcon value="Assets\Textures\btn-ability-zerg-frenzy.dds"/>
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
-        <Modification AttackSpeedMultiplier="1.4" RangedWeaponRange="2"/>
+        <Modification AttackSpeedMultiplier="1.4" RangedWeaponRange="3"/>
         <BuffFlags index="Extend" value="1"/>
         <Duration value="15"/>
         <Alignment value="Positive"/>
@@ -1422,7 +1368,7 @@
     <CBehaviorBuff id="FrenzySink">
         <InfoIcon value="Assets\Textures\btn-ability-zerg-frenzy.dds"/>
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
-        <Modification AttackSpeedMultiplier="0.6" RangedWeaponRange="-2"/>
+        <Modification AttackSpeedMultiplier="0.6" RangedWeaponRange="-3"/>
         <BuffFlags index="Extend" value="1"/>
         <Duration value="15"/>
         <Alignment value="Negative"/>
@@ -1598,7 +1544,6 @@
         <DisplayDuration index="Enemy" value="1"/>
         <Duration value="7"/>
         <Modification>
-            <ModifyFlags index="DisableAbils" value="1"/>
             <ModifyFlags index="SuppressMoving" value="1"/>
             <StateFlags index="Stun" value="1"/>
             <StateFlags index="SuppressCloak" value="1"/>
@@ -1953,11 +1898,17 @@
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
         <Duration value="3"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="UmbraStealthSuppress">
+    <CBehaviorBuff id="XayithoanWatcherTimedLife">
         <InfoFlags index="Hidden" value="1"/>
-        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <InfoIcon value="Assets\Textures\btn-ability-zerg-explode.dds"/>
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisplayDuration index="Ally" value="1"/>
+        <Duration value="56"/>
+        <DurationRandomMax value="0.5"/>
+        <ExpireEffect value="TimedLifeFate"/>
         <Modification>
-            <BehaviorLinkDisableArray value="UmbraStealth"/>
+            <StateFlags index="Summoned" value="1"/>
         </Modification>
     </CBehaviorBuff>
     <CBehaviorBuff id="ZenithParagonBase">
@@ -2208,11 +2159,14 @@
     <CBehaviorBuff id="UmbraStealth">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="NotEMPed"/>
         <Modification>
             <StateFlags index="Cloak" value="1"/>
             <DamageDealtFraction index="Ranged" value="1"/>
         </Modification>
+        <Cost>
+            <Cooldown TimeUse="11.2"/>
+        </Cost>
+        <DisableValidatorArray value="UmbraStealthCooldownComplete"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="Pulsar4DMBackward">
         <InfoFlags index="Hidden" value="1"/>

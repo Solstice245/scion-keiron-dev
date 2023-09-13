@@ -63,6 +63,12 @@
         <Find value="1"/>
         <Value value="UseVengeanceMissile"/>
     </CValidatorPlayerRequirement>
+    <CValidatorUnitCompareCooldown id="UmbraStealthCooldownComplete">
+        <Behavior value="UmbraStealth"/>
+        <Compare value="LE"/>
+        <CooldownLink value="Behavior/UmbraStealth"/>
+        <Location value="Behavior"/>
+    </CValidatorUnitCompareCooldown>
     <CValidatorUnitCompareVital id="CasterEnergyLT25">
         <WhichUnit Value="Caster"/>
         <Compare value="LT"/>
@@ -117,6 +123,30 @@
         <WhichUnit Value="Caster"/>
         <Value value="Generator"/>
     </CValidatorUnitType>
+    <CValidatorUnitCompareVital id="EnergyGTEOlympus">
+        <Compare value="GE"/>
+        <Value value="1500"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
+    <CValidatorUnitCompareVital id="EnergyLTOlympusDischarge">
+        <Compare value="LT"/>
+        <Value value="1500"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
+    <CValidatorCompareTrackedUnitsCount id="GenetronPowerSupplyGEOlympusDischarge">
+        <ResultFailed value="NotEnoughEnergy"/>
+        <Compare value="GT"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <TrackedUnitValidatorArray value="EnergyGTEOlympus"/>
+        <TrackedUnitFilters value="-;Dead"/>
+    </CValidatorCompareTrackedUnitsCount>
+    <CValidatorUnitCompareBehaviorCount id="NotHoldingFire">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="GhostHoldFireB"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareResourceContents id="HasResources">
+        <Compare value="GT"/>
+    </CValidatorUnitCompareResourceContents>
     <CValidatorUnitCompareBehaviorCount id="Scion_CasterNoRavenScramblerMissile">
         <!-- Reference from VoidMulti -->
         <WhichUnit Value="Caster"/>
@@ -279,11 +309,11 @@
         <TrackedUnitValidatorArray value="EnergyGTE15"/>
         <TrackedUnitFilters value="-;Dead"/>
     </CValidatorCompareTrackedUnitsCount>
-    <CValidatorCompareTrackedUnitsCount id="GenetronPowerSupplyGE030">
+    <CValidatorCompareTrackedUnitsCount id="GenetronPowerSupplyGEAquilaSupercharge">
         <ResultFailed value="NotEnoughEnergy"/>
         <Compare value="GT"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
-        <TrackedUnitValidatorArray value="EnergyGTE30"/>
+        <TrackedUnitValidatorArray value="EnergyGTEAquilaSupercharge"/>
         <TrackedUnitFilters value="-;Dead"/>
     </CValidatorCompareTrackedUnitsCount>
     <CValidatorCompareTrackedUnitsCount id="GenetronPowerSupplyGE050">
@@ -474,9 +504,9 @@
         <Value value="15"/>
         <Vital value="Energy"/>
     </CValidatorUnitCompareVital>
-    <CValidatorUnitCompareVital id="EnergyGTE30">
+    <CValidatorUnitCompareVital id="EnergyGTEAquilaSupercharge">
         <Compare value="GE"/>
-        <Value value="30"/>
+        <Value value="35"/>
         <Vital value="Energy"/>
     </CValidatorUnitCompareVital>
     <CValidatorUnitCompareVital id="EnergyGTE75">
@@ -493,9 +523,43 @@
         <Find value="1"/>
         <Value value="UsePersistentSpores"/>
     </CValidatorPlayerRequirement>
+    <CValidatorLocationArc id="JupiterFacingTargetWithin01">
+        <WhichLocation Value="SourceUnit"/>
+        <Find value="1"/>
+        <Arc value="0.9997"/>
+        <Value Effect="JupiterRevenantBombChannel" Value="TargetUnitOrPoint"/>
+    </CValidatorLocationArc>
+    <CValidatorPlayerRequirement id="Success">
+        <Value value="Success"/>
+    </CValidatorPlayerRequirement>
+    <CValidatorUnitBehaviorState id="SuppressCloakOff">
+        <BehaviorState value="SuppressCloak"/>
+        <ResultFailed value="Error,Error/SuppressCloak"/>
+    </CValidatorUnitBehaviorState>
+    <CValidatorUnitBehaviorState id="SuppressCloak">
+        <ResultFailed value="Error,Error/SuppressCloakOff"/>
+        <Enabled value="1"/>
+        <BehaviorState value="SuppressCloak"/>
+    </CValidatorUnitBehaviorState>
     <CValidatorUnitFilters id="TargetIsAirUnit">
         <Filters value="Air;-"/>
     </CValidatorUnitFilters>
+    <CValidatorUnitCompareVital id="TargetLifeEmpty">
+        <Compare value="LE"/>
+        <Type value="Fraction"/>
+    </CValidatorUnitCompareVital>
+    <CValidatorLocationType id="AssailantAttackTargetCheck">
+        <None value="Success"/>
+        <Point value="Success"/>
+        <Unit value="IsDead"/>
+    </CValidatorLocationType>
+    <CValidatorUnitCompareBehaviorCount id="UmbraStealthSuppressionOff">
+        <Behavior value="UmbraStealthSuppression"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="UmbraStealthOff">
+        <ResultFailed value="Error,Error/UmbraStealth"/>
+        <Behavior value="UmbraStealth"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="WardIsCastingShellDomeCaster">
         <WhichUnit Value="Caster"/>
         <Compare value="GT"/>
@@ -1130,14 +1194,20 @@
         <Behavior value="NaniteGrenadeAB"/>
     </CValidatorUnitCompareBehaviorCount>
     <CValidatorLocationEnumArea id="ProcessingCoreMiningPriority">
-        <ResultFailed value="CantFindEnoughTargets"/>
+        <ResultFailed value="MustTargetResources,Error/NoHarvestableResourcesNearby"/>
         <WhichLocation Value="SourceUnit"/>
-        <AreaArray Compare="GT" Count="0" Radius="8"/>
-        <SearchFilters value="Worker;Ally,Neutral,Enemy,Stasis,Dead,Hidden"/>
+        <AreaArray>
+            <Compare value="GT"/>
+            <Count value="0"/>
+            <Radius value="8"/>
+            <Validator value="HasResources"/>
+        </AreaArray>
+        <SearchFilters value="HarvestableResource;Stasis,Dead,Hidden"/>
     </CValidatorLocationEnumArea>
     <CValidatorUnitCompareCooldown id="BlindingBurstCooldownComplete">
         <CooldownLink value="Abil/BlindingBurst"/>
         <Ability value="BlindingBurst"/>
+        <Compare value="LE"/>
     </CValidatorUnitCompareCooldown>
     <CValidatorLocationEnumArea id="RepulsorBurrowedTacticalAI">
         <ResultFailed value="CantFindEnoughTargets"/>
@@ -1936,7 +2006,6 @@
         <ResultFailed value="Error,ErrorText/TargetIsNotFused"/>
         <Behavior value="FuseFused"/>
     </CValidatorUnitCompareBehaviorCount>
-    <CValidatorLocationVision id="TargetLocationVisible"/>
     <CValidatorUnitCompareBehaviorCount id="UnitChargeE1">
         <WhichUnit Value="Caster"/>
         <Value value="1"/>
@@ -2057,9 +2126,6 @@
     <CValidatorUnitCompareBehaviorCount id="NoAegisShieldProtection">
         <Behavior value="AegisShield"/>
     </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitType id="IsUnitTypeUmbra">
-        <Value value="Umbra"/>
-    </CValidatorUnitType>
     <CValidatorUnitCompareBehaviorCount id="MustHaveInducerGamutOrb">
         <WhichUnit Value="Caster"/>
         <Compare value="GT"/>
