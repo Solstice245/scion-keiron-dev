@@ -515,6 +515,9 @@
         </HostImpact>
         <HostImpactSiteOps Ops="SOpAttachCenter"/>
     </CActorBeamSimple>
+    <CActorModel id="ScourAttackImpactModel" parent="ModelAnimationStyleOneShot">
+        <FogVisibility value="Hidden"/>
+    </CActorModel>
     <CActorModel id="WardRestitutionImpact" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Effect.WardRestitutionRechargeSet.Start; At Target" Send="Create"/>
         <HostSiteOps Ops="SOpAttachCenter"/>
@@ -1463,6 +1466,7 @@
         <On Terms="Effect.ScourCP.Stop; FromEffectTreeDescendant" Target="ScourVisionRange" Send="Destroy"/>
         <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpHigherBy3"/>
         <ImpactMap index="None" Model="ScourImpact" Sound="DefilerMP_PlagueImpact"/>
+        <ImpactModel value="ScourAttackImpactModel"/>
     </CActorAction>
     <CActorDoodad id="SpaceSteamJet">
         <DoodadFlags index="DefaultToModelAABBBounds" value="0"/>
@@ -3845,13 +3849,15 @@
         <Radius value="0.800000,0.400000"/>
     </CActorForceSphere>
     <CActorSplat id="MoleBurrowedSplat" parent="BurrowedSplat" unitName="Mole">
-        <Scale value="0.700000"/>
+        <Scale value="0.600000"/>
         <On index="3" Terms="AbilMorph.*.Start; MorphTo MoleBurrowed; MorphFrom Mole" Send="Create"/>
         <On index="4" Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed; MorphTo Mole" Send="RefClear ::Host"/>
         <On index="5" Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed; MorphTo Mole" Send="TimerSet 4.000000,2.000000 DelayDestroy"/>
         <On Terms="AbilMorph.*.Start; MorphFrom MoleBuried; MorphTo Mole" Send="RefClear ::Host"/>
         <On Terms="AbilMorph.*.Start; MorphFrom MoleBuried; MorphTo Mole" Send="TimerSet 4.000000,2.000000 DelayDestroy"/>
         <On Terms="UnitBirth.MoleBuried" Send="Create"/>
+        <Inherits index="Visibility" value="0"/>
+        <Model value="MoleBurrowedSplat"/>
     </CActorSplat>
     <CActorSplat id="XayidBuildingSplat5x5" parent="GenericUnitSplat">
         <On index="0" Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand Death"/>
@@ -4769,11 +4775,12 @@
     <CActorRange id="ScourVisionRange">
         <On Terms="Effect.ScourCP.Start; At Target" Send="Create"/>
         <On Terms="Effect.ScourCP.Stop" Send="Destroy"/>
-        <Host Subject="GenericAttackImpactModel"/>
+        <Host Subject="ScourAttackImpactModel"/>
         <Range value="4.000000"/>
         <Icon value="Assets\Textures\radiustickdetector.dds"/>
         <IconArcLength value="0.750000"/>
         <IconTint value="255,83,83,83"/>
+        <FogVisibility value="Hidden"/>
     </CActorRange>
     <CActorSiteOpLocalOffset id="SoPMendImpactOffset">
         <LocalOffset value="0.000000,0.000000,1.000000"/>
@@ -5013,6 +5020,7 @@
     </CActorModelMaterial>
     <CActorBeamSimple id="KeironFusionBeam" parent="BeamSimpleAnimationStyleOneShot">
         <On Terms="Effect.FuseFusion.Start; At Target" Send="Create"/>
+        <ModelFlags index="AllowHitTest" value="0"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
         <HostLaunchSiteOps Ops="SOpCasterUnit" HoldPosition="1" HoldRotation="1"/>
         <HostImpactSiteOps Ops="SOpAttachCenter"/>
@@ -5020,6 +5028,7 @@
     <CActorBeamSimple id="KeironFusionEndBeam" parent="BeamSimpleAnimationStyleOneShot">
         <On Terms="Effect.FuseUnfuseSet.Start; At Caster" Send="Create"/>
         <Model value="KeironFusionBeam"/>
+        <ModelFlags index="AllowHitTest" value="0"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
         <HostLaunchSiteOps Ops="SOpAttachCenter"/>
         <HostImpactSiteOps Ops="SOpCasterUnit"/>
