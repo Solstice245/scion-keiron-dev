@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
+    <CAbilEffectInstant id="AegisActivateShield">
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <Cost>
+            <Vital index="Energy" value="25"/>
+            <Cooldown TimeUse="28"/>
+        </Cost>
+        <CmdButtonArray index="Execute" DefaultButtonFace="ActivateShield"/>
+    </CAbilEffectInstant>
+    <CAbilEffectInstant id="AegisDeactivateShield">
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <FinishTime value="0.5"/>
+        <UninterruptibleArray index="Finish" value="1"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Cancel" Requirements="AegisDeactivate"/>
+    </CAbilEffectInstant>
     <CAbilResearch id="AnalysisTerminalResearch">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <InfoArray index="Research1" Time="160" Alert="UpgradeComplete_Terr" Upgrade="GenetronGroundPlatingLevel1">
@@ -200,7 +214,7 @@
         <Flags index="Interruptible" value="1"/>
         <Flags index="IgnoreFacing" value="1"/>
         <Flags index="SuppressMovement" value="1"/>
-        <InfoArray Unit="MoleBuried">
+        <InfoArray Unit="MoleBurrowed">
             <SectionArray index="Actor">
                 <DurationArray index="Duration" value="1.4"/>
                 <EffectArray index="Start" value="MoleLockTurret"/>
@@ -261,7 +275,7 @@
         <CmdButtonArray index="Execute" DefaultButtonFace="MoleReveal"/>
         <Flags index="IgnoreFacing" value="1"/>
         <Flags index="SuppressMovement" value="1"/>
-        <InfoArray Unit="MoleBurrowed">
+        <InfoArray Unit="MoleRooted">
             <SectionArray index="Actor">
                 <DurationArray index="Duration" value="1.4"/>
                 <EffectArray index="Start" value="MoleLockTurret"/>
@@ -273,19 +287,6 @@
             </SectionArray>
         </InfoArray>
     </CAbilMorph>
-    <CAbilBehavior id="OlympusChargeUp">
-        <OrderArray index="0">
-            <DisplayType value="Confirm"/>
-            <Color value="255,0,255,0"/>
-            <Model value="Assets\UI\Cursors\WayPointAttack_Void\WayPointAttack_Void.m3"/>
-            <LineTexture value="Assets\Textures\WayPointLine.dds"/>
-        </OrderArray>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <CmdButtonArray index="On" DefaultButtonFace="OlympusChargeUp"/>
-        <CmdButtonArray index="Off" DefaultButtonFace="Cancel"/>
-        <Flags index="Toggle" value="1"/>
-        <BehaviorArray value="OlympusCharging"/>
-    </CAbilBehavior>
     <CAbilEffectTarget id="OlympusDischarge">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Cost>
@@ -564,7 +565,7 @@
         <Flags index="IgnoreFacing" value="1"/>
         <Flags index="IgnorePlacement" value="0"/>
         <Flags index="SuppressMovement" value="1"/>
-        <InfoArray Unit="MoleBurrowed" RandomDelayMax="0.125">
+        <InfoArray Unit="MoleRooted" RandomDelayMax="0.125">
             <SectionArray index="Actor">
                 <DurationArray index="Duration" value="2.5"/>
             </SectionArray>
@@ -1189,21 +1190,6 @@
         <QueueSize value="1"/>
         <Flags index="Passive" value="1"/>
     </CAbilQueue>
-    <CAbilEffectTarget id="AcidNestAttack">
-        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
-        <Flags index="AutoCast" value="1"/>
-        <Flags index="AutoCastOn" value="1"/>
-        <Flags index="Smart" value="1"/>
-        <TargetFilters value="Ground;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden,Invulnerable"/>
-        <Range value="0.15"/>
-        <Arc value="360"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="MothershipCoreAttack"/>
-        <Cost>
-            <Charge CountMax="1" CountStart="1" CountUse="1"/>
-        </Cost>
-        <AINotifyEffect value="AcidNestSDMG"/>
-        <AutoCastRange value="0.15"/>
-    </CAbilEffectTarget>
     <CAbilMorph id="AcidNestMorph">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="AcidNest"/>
@@ -1808,20 +1794,6 @@
         <Effect index="0" value="Suicide"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="Cancel"/>
     </CAbilEffectInstant>
-    <CAbilMorph id="AegisMorphToShielded">
-        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="ActivateShield"/>
-        <Cost>
-            <Vital index="Energy" value="50"/>
-            <Cooldown TimeUse="63"/>
-        </Cost>
-        <InfoArray Unit="AegisShielded">
-            <SectionArray index="Abils">
-                <DurationArray index="Delay" value="0.0625"/>
-                <EffectArray index="Start" value="AegisShieldRestore"/>
-            </SectionArray>
-        </InfoArray>
-    </CAbilMorph>
     <CAbilEffectTarget id="AegisRelocate">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Cost>
@@ -1917,10 +1889,6 @@
         <Flags index="Transient" value="1"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="HarbingerJudgementMode" Requirements="HarbingerJudgementMode"/>
     </CAbilEffectInstant>
-    <CAbilMorph id="AegisMorphToNormal">
-        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
-        <InfoArray Unit="Aegis"/>
-    </CAbilMorph>
     <CAbilEffectTarget id="OculusReveal">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Flags index="RequireTargetVision" value="0"/>
@@ -2054,13 +2022,13 @@
             <Button DefaultButtonFace="KeironShieldsLevel1" Requirements="LearnKeironShieldsLevel1"/>
         </InfoArray>
         <InfoArray index="Research14" Time="190" Upgrade="KeironShieldsLevel2">
-            <Resource index="Minerals" value="225"/>
-            <Resource index="Vespene" value="225"/>
+            <Resource index="Minerals" value="200"/>
+            <Resource index="Vespene" value="200"/>
             <Button DefaultButtonFace="KeironShieldsLevel2" Requirements="LearnKeironShieldsLevel2"/>
         </InfoArray>
         <InfoArray index="Research15" Time="220" Upgrade="KeironShieldsLevel3">
-            <Resource index="Minerals" value="300"/>
-            <Resource index="Vespene" value="300"/>
+            <Resource index="Minerals" value="250"/>
+            <Resource index="Vespene" value="250"/>
             <Button DefaultButtonFace="KeironShieldsLevel3" Requirements="LearnKeironShieldsLevel3"/>
         </InfoArray>
     </CAbilResearch>
@@ -2126,7 +2094,7 @@
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
         </InfoArray>
-        <InfoArray index="Research2" Time="110" Alert="ResearchComplete" Upgrade="ShieldCompulsion">
+        <InfoArray index="Research2" Time="140" Alert="ResearchComplete" Upgrade="ShieldCompulsion">
             <Resource index="Minerals" value="200"/>
             <Resource index="Vespene" value="200"/>
             <Button DefaultButtonFace="DevelopUmbraShieldCompulsion" Requirements="LearnShieldCompulsion"/>
@@ -2238,7 +2206,7 @@
         <InfoArray index="Build9" Unit="Elysium" Time="60">
             <Button DefaultButtonFace="Elysium" Requirements="HaveSanctum"/>
         </InfoArray>
-        <InfoArray index="Build10" Unit="Foundry" Time="50">
+        <InfoArray index="Build10" Unit="Foundry" Time="60">
             <Button DefaultButtonFace="Foundry" Requirements="HaveSanctum"/>
         </InfoArray>
         <InfoArray index="Build11" Unit="Atrium" Time="70">

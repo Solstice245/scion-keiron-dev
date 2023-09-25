@@ -83,6 +83,20 @@
         <AmmoUnit value="AcidWormsLMWeapon"/>
         <LaunchLocation Value="SourcePoint"/>
     </CEffectLaunchMissile>
+    <CEffectModifyUnit id="AegisActivateShieldCooldown">
+        <EditorCategories value="Race:Keiron"/>
+        <ImpactUnit Value="Source"/>
+        <Cost Abil="AegisActivateShield,Execute" CooldownOperation="Set" CooldownTimeUse="28"/>
+    </CEffectModifyUnit>
+    <CEffectApplyBehavior id="AegisActivateShield">
+        <EditorCategories value="Race:Keiron"/>
+        <Behavior value="AegisShieldAura"/>
+    </CEffectApplyBehavior>
+    <CEffectRemoveBehavior id="AegisDeactivateShield">
+        <EditorCategories value="Race:Keiron"/>
+        <WhichUnit Value="Source"/>
+        <BehaviorLink value="AegisShieldAura"/>
+    </CEffectRemoveBehavior>
     <CEffectRemoveBehavior id="AegisShieldAuraDamageReceivedRB">
         <ValidatorArray index="0" value="CasterShieldsLT1"/>
         <EditorCategories value="Race:Keiron"/>
@@ -90,7 +104,7 @@
         <BehaviorLink value="AegisShieldAura"/>
     </CEffectRemoveBehavior>
     <CEffectSet id="AegisShieldAuraDamageReceivedSet">
-        <EditorCategories value="Race:Protoss"/>
+        <EditorCategories value="Race:Keiron"/>
         <EffectArray value="AegisShieldAuraDamageReceivedMU"/>
         <EffectArray value="AegisShieldAuraDamageReceivedRB"/>
     </CEffectSet>
@@ -111,7 +125,6 @@
         <EditorCategories value="Race:Keiron"/>
         <EffectArray value="AegisShieldedUnmorphProtection"/>
         <EffectArray value="AegisShieldedUnmorphTP"/>
-        <EffectArray value="AegisShieldedUnmorphOrder"/>
     </CEffectSet>
     <CEffectTeleport id="AegisShieldedUnmorphTP">
         <EditorCategories value="Race:Keiron"/>
@@ -140,6 +153,12 @@
         <ModifyFlags index="InterpolateFacing" value="1"/>
         <FacingLocation Value="TargetPoint"/>
         <FacingType value="LookAt"/>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="MendMU">
+        <EditorCategories value="Race:Xayid"/>
+        <VitalArray index="Life">
+            <Change value="20"/>
+        </VitalArray>
     </CEffectModifyUnit>
     <CEffectCreatePersistent id="OlympusDischargeInitTarget">
         <ValidatorArray value="GenetronPowerSupplyGEOlympusDischarge"/>
@@ -204,7 +223,7 @@
     <CEffectModifyUnit id="OlympusDischargePowerModify">
         <EditorCategories value="Race:Genetron"/>
         <VitalArray index="Energy">
-            <Change value="-1500"/>
+            <Change value="-1200"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectEnumTrackedUnits id="OlympusDischargePowerEnum">
@@ -262,6 +281,26 @@
         <ExpireDelay value="3"/>
         <ExpireEffect value="EmissaryOrb"/>
     </CEffectCreatePersistent>
+    <CEffectEnumArea id="ProwlerAcidNestSearchTarget" parent="ScionEnumAreaEnemyGround">
+        <EditorCategories value="Race:Xayid"/>
+        <AreaArray MaxCount="1" Radius="0.25" Effect="ProwlerAcidNestTargetSet"/>
+    </CEffectEnumArea>
+    <CEffectSet id="ProwlerAcidNestFateSet">
+        <EditorCategories value="Race:Xayid"/>
+        <EffectArray value="AcidNestSDMG"/>
+        <EffectArray value="ResidualAcidCP"/>
+    </CEffectSet>
+    <CEffectSet id="ProwlerAcidNestTargetSet">
+        <EditorCategories value="Race:Xayid"/>
+        <EffectArray value="AcidNestDMG"/>
+        <EffectArray value="ProwlerAcidNestFateSet"/>
+        <EffectArray value="NukeSuicide"/>
+    </CEffectSet>
+    <CEffectCreateUnit id="ReaperKD8Knockback">
+        <ValidatorArray value="IsNotMoleRooted"/>
+        <ValidatorArray value="IsNotMoleBurrowed"/>
+    </CEffectCreateUnit>
+    <CEffectApplyBehavior id="ResidualAcid" parent="ScionApplyBehavior" Race="Xayid"/>
     <CEffectCreatePersistent id="SpitterSpitterSporesAINotification">
         <EditorCategories value="Race:Xayid"/>
         <WhichLocation Effect="SpitterSpores"/>
@@ -1959,15 +1998,10 @@
     </CEffectCreateHealer>
     <CEffectSet id="OlympusDischarge">
         <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="OlympusDischargeABCaster"/>
         <EffectArray value="OlympusDischargeInitialDelay"/>
         <TargetLocationType value="Point"/>
         <Alert value="OlympusDischargeLaunch"/>
     </CEffectSet>
-    <CEffectApplyBehavior id="OlympusDischargeABCaster" parent="ScionApplyBehaviorCaster">
-        <EditorCategories value="Race:Genetron"/>
-        <Behavior value="OlympusDischarging"/>
-    </CEffectApplyBehavior>
     <CEffectCreatePersistent id="OlympusDischargeCP">
         <EditorCategories value="Race:Genetron"/>
         <InitialEffect value="OlympusDischargeLaunchMissileUp"/>
@@ -2296,7 +2330,11 @@
         <TargetLocationType value="UnitOrPoint"/>
         <ValidatorArray value="GenetronPowerSupplyGE150"/>
     </CEffectSet>
-    <CEffectApplyBehavior id="MendBehavior" parent="ScionApplyBehavior" Race="Xayid"/>
+    <CEffectApplyBehavior id="Mend" parent="ScionApplyBehavior" Race="Xayid">
+        <ValidatorArray index="0" value="NotFullLife"/>
+        <ValidatorArray value="HasNoMendBehavior"/>
+        <Behavior value="MendBehavior"/>
+    </CEffectApplyBehavior>
     <CEffectApplyBehavior id="MiningPrioritySearch" parent="ScionApplyBehavior" Race="Genetron">
         <Behavior value="ResourceTapSearch"/>
         <WhichUnit Value="Caster"/>
@@ -2304,12 +2342,6 @@
     <CEffectIssueOrder id="MoleUnburrow">
         <Abil value="MoleDeactivate"/>
     </CEffectIssueOrder>
-    <CEffectSet id="Mend" parent="ScionSet" Race="Xayid">
-        <ValidatorArray value="NotFullLife"/>
-        <ValidatorArray value="HasNoMendBehavior"/>
-        <EffectArray value="MendMU"/>
-        <EffectArray value="MendBehavior"/>
-    </CEffectSet>
     <CEffectSet id="MoleUnburrowSet" parent="ScionSet" Race="Genetron">
         <EffectArray value="MoleUnbury"/>
         <EffectArray value="MoleUnburrow"/>
@@ -2517,7 +2549,6 @@
         <FacingType value="LookAt"/>
     </CEffectModifyUnit>
     <CEffectApplyBehavior id="PulsarDisableTurning" parent="ScionApplyBehaviorCaster" Race="Keiron"/>
-    <CEffectApplyBehavior id="ResidualAcid" parent="ScionApplyBehavior" Race="Xayid"/>
     <CEffectApplyBehavior id="ResourceTap" parent="ScionApplyBehavior" Race="Genetron"/>
     <CEffectCreatePersistent id="SeparationBeam" parent="ScionCreatePersistentUnit" Race="Keiron">
         <TimeScaleSource Value="Caster"/>
@@ -2742,12 +2773,12 @@
         <EffectArray value="RepulsorSuppressionCannonsDamage"/>
     </CEffectSet>
     <CEffectApplyBehavior id="RepulsorInterdictorBurrowCD" parent="ScionApplyBehaviorCaster" Race="Genetron"/>
-    <CEffectDamage id="SpitterVolatileBurstDamage" parent="ScionDamageRange" Race="Xayid">
+    <CEffectDamage id="SpitterVolatileBurstDamage" parent="ScionDamage" Race="Xayid">
+        <ImpactLocation Value="SourceUnitOrPoint"/>
         <Amount value="40"/>
         <Death value="Disintegrate"/>
         <AreaArray Radius="2" Fraction="1"/>
         <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
-        <ImpactLocation Value="SourceUnitOrPoint"/>
     </CEffectDamage>
     <CEffectCreateUnit id="MoleTurnTurretCreateUnitDummy">
         <EditorCategories value="Race:Genetron"/>
@@ -3149,6 +3180,7 @@
         <IncludeArray Effect="HalifaxGrenades" Value="Target"/>
         <ExcludeArray index="0" Value="Outer"/>
         <ExcludeArray Value="Target"/>
+        <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
     </CEffectDamage>
     <CEffectDamage id="HalifaxGrenadesFDMG" parent="ScionDamageRange" Race="Genetron">
         <AttributeBonus index="Light" value="4"/>
@@ -3233,33 +3265,17 @@
         <Movers Link="LaunchShockChargeWeapon" IfRangeLTE="8"/>
         <AmmoOwner Value="Caster"/>
     </CEffectLaunchMissile>
-    <CEffectSet id="AcidNestAttack" parent="ScionSet" Race="Xayid">
-        <EffectArray value="AcidNestSDMG"/>
-        <EffectArray value="AcidNestDMG"/>
-        <EffectArray value="AcidNestDelay"/>
-    </CEffectSet>
-    <CEffectCreatePersistent id="AcidNestDelay" parent="ScionCreatePersistent" Race="Xayid">
-        <WhichLocation Value="SourceUnit"/>
-        <InitialEffect value="MakePrecursor"/>
-        <ExpireDelay value="10.5"/>
-        <FinalEffect value="SuicideRemove"/>
-        <PeriodCount value="1"/>
-        <PeriodicEffectArray value="AcidNestResidualAcidRB"/>
-    </CEffectCreatePersistent>
-    <CEffectRemoveBehavior id="AcidNestResidualAcidRB">
-        <EditorCategories value="Race:Xayid"/>
-        <WhichUnit Value="Source"/>
-        <BehaviorLink value="ResidualAcidFate"/>
-    </CEffectRemoveBehavior>
     <CEffectDamage id="AcidNestSDMG" parent="ScionDamage" Race="Xayid">
+        <DebugTrace value="1"/>
         <ResponseFlags index="Acquire" value="0"/>
+        <LaunchLocation Value="SourcePoint"/>
         <ImpactLocation Value="SourcePoint"/>
         <KindSplash value="Splash"/>
         <Amount value="35"/>
         <Death value="Disintegrate"/>
         <AreaArray Radius="1.25" Fraction="1"/>
-        <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
-        <LaunchLocation Value="CasterUnit"/>
+        <ExcludeArray index="0" Effect="ProwlerAcidNestTargetSet" Value="Target"/>
+        <SearchFilters value="Ground;Player,Ally,Structure,Missile,Stasis,Dead,Hidden,Invulnerable"/>
     </CEffectDamage>
     <CEffectDamage id="AcidNestDMG" parent="ScionDamage" Race="Xayid">
         <ResponseFlags index="Acquire" value="0"/>
@@ -3380,6 +3396,7 @@
     <CEffectSet id="WardRestitution">
         <ValidatorArray value="CanHaveShields"/>
         <ValidatorArray value="ShieldsNotFull"/>
+        <ValidatorArray value="NoAegisShieldAura"/>
         <EditorCategories value="Race:Keiron"/>
         <EffectArray value="KeironShellRestorationDelayABSource"/>
         <EffectArray value="WardRestitutionSearch"/>
@@ -3576,8 +3593,8 @@
     <CEffectCreatePersistent id="ExplosiveGlobImpactDummy" parent="ScionCreatePersistent" Race="Xayid">
         <WhichLocation Value="SourceUnitOrPoint"/>
         <FinalEffect value="Suicide"/>
-        <ValidatorArray value="IsNotAdeptShade"/>
-        <ValidatorArray value="IsNotDisruptorPhased"/>
+        <ValidatorArray value="IsNotPhasedUnit"/>
+        <ValidatorArray value="IsNotTeslaCharge"/>
     </CEffectCreatePersistent>
     <CEffectEnumArea id="ExplosiveGlobImpactSearch" parent="ScionEnumAreaEnemyGround" Race="Xayid">
         <ImpactLocation Value="SourceUnitOrPoint"/>
@@ -3590,7 +3607,7 @@
     </CEffectSet>
     <CEffectEnumArea id="ExplosiveGlobSA" parent="ScionEnumArea" Race="Xayid">
         <ImpactLocation Value="SourceUnit"/>
-        <SearchFilters value="Ground;Player,Ally,Neutral,Missile,Dead,Hidden"/>
+        <SearchFilters value="Ground;Player,Ally,Missile,Buried,Dead,Hidden"/>
         <AreaArray MaxCount="1" Radius="0.625" Effect="ExplosiveGlobImpactDummy"/>
         <MinCount value="1"/>
         <MaxCount value="1"/>
@@ -3619,6 +3636,7 @@
         <PeriodicEffectArray value="ResidualAcidSA"/>
         <PeriodicPeriodArray value="0.5"/>
         <AINotifyEffect value="ResidualAcidSA"/>
+        <Chance value="0"/>
     </CEffectCreatePersistent>
     <CEffectDamage id="ResidualAcidDMG" parent="ScionDamage" Race="Xayid">
         <Amount value="5"/>
@@ -3627,6 +3645,7 @@
     <CEffectEnumArea id="ResidualAcidSA" parent="ScionEnumAreaEnemyGround" Race="Xayid">
         <AreaArray Radius="1.25" Effect="ResidualAcid"/>
         <AINotifyFlags index="HurtEnemy" value="1"/>
+        <SearchFilters value="Ground;Player,Ally,Structure,Missile,Stasis,Dead,Hidden,Invulnerable"/>
     </CEffectEnumArea>
     <CEffectSet id="SupportEffectsS" parent="ScionSet" Race="Xayid">
         <EffectArray value="FeedingPoolHealAuraSA"/>
@@ -3676,12 +3695,6 @@
         <EditorCategories value="Race:Xayid"/>
         <VitalArray index="Life">
             <Change value="10"/>
-        </VitalArray>
-    </CEffectModifyUnit>
-    <CEffectModifyUnit id="MendMU">
-        <EditorCategories value="Race:Xayid"/>
-        <VitalArray index="Life">
-            <Change value="20"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectDamage id="NeedleSpinesImpact" parent="ScionDamageRange" Race="Xayid">
@@ -3803,7 +3816,6 @@
         <EffectArray value="AegisShieldAuraKBCP"/>
     </CEffectSet>
     <CEffectCreatePersistent id="AegisShieldAuraKBCP" parent="ScionCreatePersistentUnit" Race="Keiron">
-        <ValidatorArray value="CasterIsAegisShielded"/>
         <Marker>
             <MatchFlags index="Id" value="1"/>
         </Marker>
@@ -3818,7 +3830,7 @@
         <BehaviorLink value="AegisShieldAuraKB"/>
     </CEffectRemoveBehavior>
     <CEffectEnumArea id="AegisShieldAuraKBSA" parent="ScionEnumArea" Race="Keiron">
-        <SearchFilters value="-;Player,Ally,Structure,Missile,Buried,Stasis,Dead,Hidden,Invulnerable"/>
+        <SearchFilters value="-;Player,Ally,Structure,Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <AreaArray Radius="1" RadiusBonus="1" Effect="AegisShieldAuraKBTarget"/>
     </CEffectEnumArea>
     <CEffectCreatePersistent id="AegisShieldAuraKBTarget" parent="ScionCreatePersistentUnit" Race="Keiron">
@@ -3830,11 +3842,13 @@
         <ValidatorArray value="IsNotEggUnit"/>
         <ValidatorArray value="NotAbducted"/>
         <ValidatorArray value="NoGravitonBeamInProgress"/>
-        <InitialEffect value="AegisShieldAuraKBCU"/>
+        <InitialEffect value="InstantUnburrow"/>
+        <ExpireEffect value="AegisShieldAuraKBCU"/>
     </CEffectCreatePersistent>
-    <CEffectSet id="AegisShieldAuraSASet" parent="ScionSet" Race="Keiron">
+    <CEffectSet id="AegisShieldAuraSet" parent="ScionSet" Race="Keiron">
         <EffectArray value="ShieldAura"/>
         <EffectArray value="AegisShieldAuraRevealSA"/>
+        <EffectArray value="AegisActivateShieldCooldown"/>
     </CEffectSet>
     <CEffectModifyUnit id="AegisShieldRestore">
         <EditorCategories value="Race:Keiron"/>
@@ -4192,12 +4206,6 @@
         <SearchFilters value="-;Self,Player,Ally,Neutral,Missile,Stasis,Dead,Hidden"/>
         <AreaArray Radius="20" Effect="AegisShieldAuraReveal"/>
     </CEffectEnumArea>
-    <CEffectIssueOrder id="AegisShieldedUnmorphOrder">
-        <EditorCategories value="Race:Keiron"/>
-        <WhichUnit Value="Caster"/>
-        <Abil value="AegisMorphToNormal"/>
-        <Player Value="Caster"/>
-    </CEffectIssueOrder>
     <CEffectCreateUnit id="AegisShieldAuraKBCU">
         <EditorCategories value="Race:Keiron"/>
         <WhichLocation Value="CasterUnit"/>
@@ -4213,10 +4221,11 @@
         <SpawnOwner Value="Neutral"/>
         <SpawnEffect value="AegisShieldAuraKBCUSet"/>
         <SpawnRange value="14"/>
-        <SpawnOffset value="0,-10"/>
+        <SpawnOffset value="0,-11"/>
         <TypeFallbackUnit Value="Target"/>
     </CEffectCreateUnit>
     <CEffectSet id="AegisShieldAuraKBCUSet" parent="ScionSet" Race="Keiron">
+        <EffectArray value="InstantUnburrow"/>
         <EffectArray value="AegisShieldAuraKBFate"/>
         <EffectArray value="AegisShieldAuraKBAB"/>
         <EffectArray value="AegisShieldAuraKBLM"/>
@@ -5158,7 +5167,7 @@
     <CEffectDamage id="HarbingerWeaponDummy" parent="ScionDamageRangeVisible" Race="Keiron"/>
     <CEffectEnumArea id="ShieldAura" parent="ScionEnumArea" Race="Keiron">
         <SearchFilters value="-;Self,Missile,Stasis,Dead,Hidden"/>
-        <AreaArray Radius="10" Effect="ShieldAuraS"/>
+        <AreaArray Radius="10" Effect="ShieldAuraTS"/>
     </CEffectEnumArea>
     <CEffectApplyForce id="ShieldAuraAF">
         <EditorCategories value="Race:Keiron"/>
@@ -5170,7 +5179,7 @@
         <PeriodicEffectArray value="ShieldAuraAF"/>
         <PeriodicPeriodArray value="0.0625"/>
     </CEffectCreatePersistent>
-    <CEffectSet id="ShieldAuraS" parent="ScionSet" Race="Keiron">
+    <CEffectSet id="ShieldAuraTS" parent="ScionSet" Race="Keiron">
         <EffectArray value="ShieldAuraAB"/>
         <EffectArray value="ShieldAuraCP"/>
     </CEffectSet>

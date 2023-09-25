@@ -70,6 +70,12 @@
         <InitialEffect value="ProcessingCorePowerETU"/>
         <PeriodicEffect value="ProcessingCorePowerETU"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="AcidNestVolatileAcidSearch">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <Period value="0.0625"/>
+        <PeriodicEffect value="ProwlerAcidNestSearchTarget"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="TeslaAbilitiesReq">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -190,7 +196,7 @@
     <CBehaviorBuff id="MoleSubterraneanSensors">
         <InfoIcon value="Assets\Textures\btn-upgrade-terran-nova-detector.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="IsMoleBuried"/>
+        <DisableValidatorArray value="IsMoleBurrowed"/>
         <DisableValidatorArray value="GenetronPowerSupplyGE05"/>
         <Period value="0.125"/>
         <PeriodicEffect value="MoleSubterraneanSensorsPowerEnum"/>
@@ -375,10 +381,13 @@
         <Modification MoveSpeedMultiplier="0.75" AccelerationMultiplier="0.75">
             <ResourceHarvestTimeMultiplier index="Minerals" value="0.5"/>
             <ResourceHarvestTimeMultiplier index="Vespene" value="0.5"/>
+            <RateMultiplierArray index="Charge" value="0.5"/>
+            <RateMultiplierArray index="Cooldown" value="0.5"/>
             <RateMultiplierArray index="Morph" value="0.5"/>
             <RateMultiplierArray index="Progress" value="0.5"/>
             <RateMultiplierArray index="Queueable" value="0.5"/>
             <RateMultiplierArray index="Spawn" value="0.5"/>
+            <RateMultiplierArray index="Creep" value="0.5"/>
         </Modification>
     </CBehaviorBuff>
     <CBehaviorBuff id="DiscordZoneDebuffMissile">
@@ -511,18 +520,6 @@
             <Chance value="1"/>
         </DamageResponse>
     </CBehaviorBuff>
-    <CBehaviorBuff id="OlympusCharging">
-        <InfoFlags index="Hidden" value="1"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <RemoveValidatorArray value="EnergyNotFull"/>
-        <RemoveValidatorArray value="CasterNotLockedDown"/>
-        <Period value="0.5"/>
-        <InitialEffect value="OlympusChargeUpETU"/>
-        <PeriodicEffect value="OlympusChargeUpETU"/>
-        <Modification>
-            <AbilLinkDisableArray value="OlympusDischarge"/>
-        </Modification>
-    </CBehaviorBuff>
     <CBehaviorBuff id="HornetBoreDrillBase">
         <Alignment value="Negative"/>
         <InfoIcon value="Assets\Textures\btn-ability-genetron-boredrill.dds"/>
@@ -553,7 +550,7 @@
             <TurretDisableArray value="InterdictorMovement"/>
             <TurretDisableArray value="RepulsorTurret"/>
         </Modification>
-        <DamageResponse ModifyFraction="0.25">
+        <DamageResponse ModifyFraction="0.75">
             <Kind index="Spell" value="0"/>
             <Chance value="1"/>
         </DamageResponse>
@@ -629,16 +626,6 @@
         <Period value="0.0625"/>
         <FinalEffect value="MyriadElytronTrackerRecallSet"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="OlympusDischarging">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <TimeScaleSource Value="Global"/>
-        <Duration value="10"/>
-        <Modification>
-            <AbilLinkDisableArray value="OlympusChargeUp"/>
-            <BehaviorLinkDisableArray value="OlympusCharging"/>
-        </Modification>
-        <InfoFlags index="Hidden" value="1"/>
-    </CBehaviorBuff>
     <CBehaviorBuff id="OlympusElectrified">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Duration value="10"/>
@@ -670,6 +657,7 @@
         <DamageResponse Fatal="1" Handled="OlympusExplodeDelay">
             <Chance value="1"/>
         </DamageResponse>
+        <DisableValidatorArray value="NotUnderConstruction"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="Pause">
         <Modification TimeScale="0.01"/>
@@ -1040,7 +1028,7 @@
             <TurretDisableArray value="InterdictorMovement"/>
             <TurretDisableArray value="RepulsorTurret"/>
         </Modification>
-        <DamageResponse ModifyFraction="0.25">
+        <DamageResponse ModifyFraction="0.75">
             <Kind index="Spell" value="0"/>
             <Chance value="1"/>
         </DamageResponse>
@@ -1382,13 +1370,6 @@
         <PeriodicEffect value="ResidualAcidDMG"/>
         <Alignment value="Negative"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="ResidualAcidFate">
-        <InfoIcon value="Assets\Textures\btn-upgrade-Xayid-residualacid.dds"/>
-        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
-        <FinalEffect value="ResidualAcidCP"/>
-        <InfoFlags index="Hidden" value="1"/>
-        <Requirements value="UseResidualAcid"/>
-    </CBehaviorBuff>
     <CBehaviorBuff id="ScorpaliskSnareMultiplier">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
@@ -1409,13 +1390,13 @@
         <Modification TimeScale="1.07"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="FeedingPoolHealingAura">
+        <Alignment value="Positive"/>
         <InfoIcon value="Assets\Textures\btn-ability-zerg-transfusion-color.dds"/>
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <MaxStackCount value="3"/>
         <Duration value="1.5625"/>
         <InitialEffect value="FeedingPoolHealAuraCP"/>
-        <MaxStackCount value="3"/>
         <RefreshEffect value="FeedingPoolHealAuraCP"/>
-        <Alignment value="Positive"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="SupplimentationOutput">
         <InfoFlags index="Hidden" value="1"/>
@@ -1522,6 +1503,7 @@
         <InfoIcon value="Assets\Textures\btn-ability-xayid-mendlingheal.dds"/>
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <Duration value="2.8"/>
+        <InitialEffect value="MendMU"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="SacrificialMutation">
         <Alignment value="Positive"/>
@@ -1549,11 +1531,14 @@
             <StateFlags index="SuppressCloak" value="1"/>
         </Modification>
     </CBehaviorBuff>
-    <CBehaviorBuff id="VolatileAcid">
+    <CBehaviorBuff id="VolatileAcidFate">
+        <InfoFlags index="Hidden" value="1"/>
         <InfoIcon value="Assets\Textures\btn-ability-zerg-banelingspooge.dds"/>
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
-        <FinalEffect value="AcidNestSDMG"/>
-        <InfoFlags index="Hidden" value="1"/>
+        <DamageResponse Fatal="1" Handled="ProwlerAcidNestFateSet">
+            <ExcludeEffectInChainArray value="NukeSuicide"/>
+            <Chance value="1"/>
+        </DamageResponse>
     </CBehaviorBuff>
     <CBehaviorBuff id="BilePitNotInRangeOfFeedingPool">
         <Alignment value="Negative"/>
@@ -1575,10 +1560,15 @@
     </CBehaviorBuff>
     <CBehaviorBuff id="AegisShieldAura">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
-        <Period value="0.25"/>
-        <PeriodicEffect value="AegisShieldAuraSASet"/>
-        <Modification RadiusMultiplier="6.6667">
+        <Period value="0.0625"/>
+        <PeriodicEffect value="AegisShieldAuraSet"/>
+        <Modification RadiusMultiplier="6.8">
             <ModifyFlags index="DisableWeapons" value="1"/>
+            <StateFlags index="SuppressShieldsRegen" value="1"/>
+            <StateFlags index="SuppressEnergyRegen" value="1"/>
+            <VitalMaxArray index="Shields" value="2600"/>
+            <AbilLinkDisableArray value="AegisRelocate"/>
+            <PlaneDelta index="Ground" value="1"/>
         </Modification>
         <DisplayDuration index="Self" value="1"/>
         <DisplayDuration index="Ally" value="1"/>

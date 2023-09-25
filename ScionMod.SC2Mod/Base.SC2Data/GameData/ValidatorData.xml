@@ -63,6 +63,25 @@
         <Find value="1"/>
         <Value value="UseVengeanceMissile"/>
     </CValidatorPlayerRequirement>
+    <CValidatorUnitType id="IsNotMoleBurrowed">
+        <Value value="MoleBurrowed"/>
+        <Find value="0"/>
+    </CValidatorUnitType>
+    <CValidatorUnitType id="IsNotMoleRooted">
+        <Value value="MoleRooted"/>
+        <Find value="0"/>
+    </CValidatorUnitType>
+    <CValidatorUnitType id="IsNotPariahProjection">
+        <Value value="PariahProjection"/>
+        <Find value="0"/>
+    </CValidatorUnitType>
+    <CValidatorCombine id="IsNotPhasedUnit">
+        <CombineArray value="IsNotPariahProjection"/>
+    </CValidatorCombine>
+    <CValidatorUnitType id="NotAegis">
+        <Value value="Aegis"/>
+        <Find value="0"/>
+    </CValidatorUnitType>
     <CValidatorUnitCompareCooldown id="UmbraStealthCooldownComplete">
         <Behavior value="UmbraStealth"/>
         <Compare value="LE"/>
@@ -123,21 +142,21 @@
         <WhichUnit Value="Caster"/>
         <Value value="Generator"/>
     </CValidatorUnitType>
-    <CValidatorUnitCompareVital id="EnergyGTEOlympus">
+    <CValidatorUnitCompareVital id="EnergyGTEOlympusDischarge">
         <Compare value="GE"/>
-        <Value value="1500"/>
+        <Value value="1200"/>
         <Vital value="Energy"/>
     </CValidatorUnitCompareVital>
     <CValidatorUnitCompareVital id="EnergyLTOlympusDischarge">
         <Compare value="LT"/>
-        <Value value="1500"/>
+        <Value value="1200"/>
         <Vital value="Energy"/>
     </CValidatorUnitCompareVital>
     <CValidatorCompareTrackedUnitsCount id="GenetronPowerSupplyGEOlympusDischarge">
         <ResultFailed value="NotEnoughEnergy"/>
         <Compare value="GT"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
-        <TrackedUnitValidatorArray value="EnergyGTEOlympus"/>
+        <TrackedUnitValidatorArray value="EnergyGTEOlympusDischarge"/>
         <TrackedUnitFilters value="-;Dead"/>
     </CValidatorCompareTrackedUnitsCount>
     <CValidatorUnitCompareBehaviorCount id="NotHoldingFire">
@@ -777,8 +796,8 @@
         <CheckExistence value="0"/>
         <Key value="Default"/>
     </CValidatorEffectTreeUserData>
-    <CValidatorUnitType id="IsMoleBuried">
-        <Value value="MoleBuried"/>
+    <CValidatorUnitType id="IsMoleBurrowed">
+        <Value value="MoleBurrowed"/>
     </CValidatorUnitType>
     <CValidatorLocationCompareRange id="MyriadElytronDistance">
         <WhichLocation Value="TargetUnit"/>
@@ -1059,7 +1078,7 @@
     <CValidatorCombine id="TacticalAICasnoliskStagnatingBile">
         <CombineArray value="IsDefensiveStructure"/>
         <CombineArray value="IsSiegeTankSieged"/>
-        <CombineArray value="IsMoleBurrowed"/>
+        <CombineArray value="IsMoleRooted"/>
         <CombineArray value="IsLurkerBurrowed"/>
     </CValidatorCombine>
     <CValidatorCombine id="TacticalAIMassalisk">
@@ -1467,8 +1486,8 @@
         <WhichUnit Value="Target"/>
         <AbilLink value="attack"/>
     </CValidatorUnitCompareOrderCount>
-    <CValidatorUnitType id="IsMoleBurrowed">
-        <Value value="MoleBurrowed"/>
+    <CValidatorUnitType id="IsMoleRooted">
+        <Value value="MoleRooted"/>
     </CValidatorUnitType>
     <CValidatorCombine id="RevenantLaunchTargetDistances">
         <CombineArray value="RevenantLaunchTargetFastCombine"/>
@@ -1581,8 +1600,8 @@
         <Value value="UsePiercingThrust"/>
     </CValidatorPlayerRequirement>
     <CValidatorUnitCompareBehaviorCount id="HasNoMendBehavior">
-        <ResultNoUnit value="MustTargetUnit,Cannot stack healing"/>
         <Behavior value="MendBehavior"/>
+        <ResultFailed value="Error,Error/MendStacks"/>
     </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="ProducesXayidDenLarva">
         <Compare value="GE"/>
@@ -1679,10 +1698,6 @@
         <WhichUnit Effect="AegisShieldAuraKBTarget"/>
         <Filters value="-;Dead"/>
     </CValidatorUnitFilters>
-    <CValidatorUnitType id="CasterIsAegisShielded">
-        <WhichUnit Value="Caster"/>
-        <Value value="AegisShielded"/>
-    </CValidatorUnitType>
     <CValidatorUnitType id="IsFuse">
         <Value value="Fuse"/>
     </CValidatorUnitType>
@@ -1700,18 +1715,6 @@
     </CValidatorUnitType>
     <CValidatorUnitType id="NotCitadelNormal">
         <Value value="Citadel"/>
-        <Find value="0"/>
-    </CValidatorUnitType>
-    <CValidatorCombine id="NotAegis">
-        <CombineArray value="NotAegisNormal"/>
-        <CombineArray value="NotAegisShielded"/>
-    </CValidatorCombine>
-    <CValidatorUnitType id="NotAegisNormal">
-        <Value value="Aegis"/>
-        <Find value="0"/>
-    </CValidatorUnitType>
-    <CValidatorUnitType id="NotAegisShielded">
-        <Value value="AegisShielded"/>
         <Find value="0"/>
     </CValidatorUnitType>
     <CValidatorCombine id="NotCitadel">
@@ -2122,6 +2125,7 @@
     </CValidatorLocationCompareRange>
     <CValidatorUnitCompareBehaviorCount id="NoAegisShieldAura">
         <Behavior value="AegisShieldAura"/>
+        <ResultFailed value="Error,Error/AegisShieldAura"/>
     </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="NoAegisShieldProtection">
         <Behavior value="AegisShield"/>

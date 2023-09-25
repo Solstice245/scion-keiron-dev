@@ -10,6 +10,18 @@ void libScio_InitLibraries () {
     libNtve_InitVariables();
 }
 
+// Variable Initialization
+bool libScio_InitVariables_completed = false;
+
+void libScio_InitVariables () {
+    if (libScio_InitVariables_completed) {
+        return;
+    }
+
+    libScio_InitVariables_completed = true;
+
+}
+
 // Triggers
 //--------------------------------------------------------------------------------------------------
 // Trigger: Genetron Interface
@@ -21,7 +33,6 @@ bool libScio_gt_GenetronInterface_Func (bool testConds, bool runActions) {
     int lv_genetron_energy_current_ui;
     int lv_genetron_energy_max_ui;
     int lv_genetron_energy_label_ui;
-    unit[17] lv_genetron_power_dummies;
 
     // Automatic Variable Declarations
     playergroup auto22B9A134_g;
@@ -54,10 +65,10 @@ bool libScio_gt_GenetronInterface_Func (bool testConds, bool runActions) {
         if (auto22B9A134_var < 0) { break; }
         if ((TechTreeUnitCount(auto22B9A134_var, "GenetronPowerSupplyDummy", c_techCountCompleteOnly) == 0)) {
             libNtve_gf_CreateUnitsWithDefaultFacing(1, "GenetronPowerSupplyDummy", 0, auto22B9A134_var, Point(0.0, 0.0));
-            lv_genetron_power_dummies[auto22B9A134_var] = UnitLastCreated();
+            libScio_gv_sCION_POWERDUMMIES[auto22B9A134_var] = UnitLastCreated();
         }
         else {
-            lv_genetron_power_dummies[auto22B9A134_var] = UnitGroupUnit(UnitGroup("GenetronPowerSupplyDummy", auto22B9A134_var, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0), 1);
+            libScio_gv_sCION_POWERDUMMIES[auto22B9A134_var] = UnitGroupUnit(UnitGroup("GenetronPowerSupplyDummy", auto22B9A134_var, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0), 1);
         }
     }
     DialogControlHookupStandard(c_triggerControlTypePanel, "UIContainer/FullscreenUpperContainer/GenetronEnergyPanel");
@@ -85,7 +96,7 @@ bool libScio_gt_GenetronInterface_Func (bool testConds, bool runActions) {
         while (true) {
             auto3C5077DB_var = PlayerGroupNextPlayer(auto3C5077DB_g, auto3C5077DB_var);
             if (auto3C5077DB_var < 0) { break; }
-            if ((UnitGetPropertyFixed(lv_genetron_power_dummies[auto3C5077DB_var], c_unitPropEnergyMax, c_unitPropCurrent) > 0.0)) {
+            if ((UnitGetPropertyFixed(libScio_gv_sCION_POWERDUMMIES[auto3C5077DB_var], c_unitPropEnergyMax, c_unitPropCurrent) > 0.0)) {
                 libNtve_gf_SetDialogItemTooltip(lv_genetron_energy_label_ui, (StringExternal("Param/Value/lib_Scio_E5935B94") + (IntToText(TechTreeUnitCount(auto3C5077DB_var, "ProcessingCore", c_techCountCompleteOnly)) + ((StringExternal("Param/Value/lib_Scio_447BBA71") + (StringExternal("Param/Value/lib_Scio_6FBF8CEC") + IntToText(TechTreeUnitCount(auto3C5077DB_var, "Node", c_techCountCompleteOnly)))) + (StringExternal("Param/Value/lib_Scio_D5D7C344") + (StringExternal("Param/Value/lib_Scio_8C0C3AB1") + IntToText(TechTreeUnitCount(auto3C5077DB_var, "Generator", c_techCountCompleteOnly))))))), PlayerGroupAll());
                 DialogControlSetVisible(lv_genetron_energy_panel_ui, PlayerGroupSingle(auto3C5077DB_var), true);
             }
@@ -99,8 +110,8 @@ bool libScio_gt_GenetronInterface_Func (bool testConds, bool runActions) {
             while (true) {
                 auto4A7A7230_var = PlayerGroupNextPlayer(auto4A7A7230_g, auto4A7A7230_var);
                 if (auto4A7A7230_var < 0) { break; }
-                libNtve_gf_SetDialogItemCurrentValue(lv_genetron_energy_max_ui, UnitGetPropertyFixed(lv_genetron_power_dummies[auto4A7A7230_var], c_unitPropEnergyMax, c_unitPropCurrent), PlayerGroupSingle(auto4A7A7230_var));
-                libNtve_gf_SetDialogItemCurrentValue(lv_genetron_energy_current_ui, UnitGetPropertyFixed(lv_genetron_power_dummies[auto4A7A7230_var], c_unitPropEnergy, c_unitPropCurrent), PlayerGroupSingle(auto4A7A7230_var));
+                libNtve_gf_SetDialogItemCurrentValue(lv_genetron_energy_max_ui, UnitGetPropertyFixed(libScio_gv_sCION_POWERDUMMIES[auto4A7A7230_var], c_unitPropEnergyMax, c_unitPropCurrent), PlayerGroupSingle(auto4A7A7230_var));
+                libNtve_gf_SetDialogItemCurrentValue(lv_genetron_energy_current_ui, UnitGetPropertyFixed(libScio_gv_sCION_POWERDUMMIES[auto4A7A7230_var], c_unitPropEnergy, c_unitPropCurrent), PlayerGroupSingle(auto4A7A7230_var));
             }
             Wait(0.0625, c_timeGame);
         }
@@ -131,6 +142,7 @@ void libScio_InitLib () {
     libScio_InitLib_completed = true;
 
     libScio_InitLibraries();
+    libScio_InitVariables();
     libScio_InitTriggers();
 }
 

@@ -817,6 +817,7 @@
         <VisibleTo index="Self" value="1"/>
         <VisibleTo index="Ally" value="1"/>
         <Sound value="OculusRevealStart"/>
+        <FogVisibility value="Hidden"/>
     </CActorSound>
     <CActorSound id="OculusRevealStop" parent="SoundOneShot">
         <On Terms="Effect.OculusRevealVision.Stop; At Target" Send="Create"/>
@@ -1988,14 +1989,14 @@
         <Sound value="Mule_Repair"/>
     </CActorSound>
     <CActorRange id="MoleAttackRange" parent="RangeWeapon" weapon="LynxCannon">
+        <On Terms="SelectionLocalUpdate.MoleRooted.Start" Send="Create"/>
+        <On Terms="SelectionLocalUpdate.MoleRooted.StartEditorGround" Send="Create"/>
+        <On Terms="SelectionLocalUpdate.MoleRooted.Stop" Send="Destroy"/>
         <On Terms="SelectionLocalUpdate.MoleBurrowed.Start" Send="Create"/>
         <On Terms="SelectionLocalUpdate.MoleBurrowed.StartEditorGround" Send="Create"/>
         <On Terms="SelectionLocalUpdate.MoleBurrowed.Stop" Send="Destroy"/>
-        <On Terms="SelectionLocalUpdate.MoleBuried.Start" Send="Create"/>
-        <On Terms="SelectionLocalUpdate.MoleBuried.StartEditorGround" Send="Create"/>
-        <On Terms="SelectionLocalUpdate.MoleBuried.Stop" Send="Destroy"/>
+        <On Terms="AbilMorph.*.Start; MorphTo MoleRooted; Selected" Send="Create"/>
         <On Terms="AbilMorph.*.Start; MorphTo MoleBurrowed; Selected" Send="Create"/>
-        <On Terms="AbilMorph.*.Start; MorphTo MoleBuried; Selected" Send="Create"/>
         <On Terms="AbilMorph.*.Start; MorphTo Mole" Send="Destroy"/>
         <Icon value="Assets\Textures\RadarIcon2.dds"/>
         <IconArcLength value="3.250000"/>
@@ -2301,8 +2302,8 @@
     </CActorUnit>
     <CActorTurret id="MoleTurret">
         <On Terms="TurretEnable.MoleTurret" Send="Create"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom MoleRooted; MorphTo Mole" Send="Destroy"/>
         <On Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed; MorphTo Mole" Send="Destroy"/>
-        <On Terms="AbilMorph.*.Start; MorphFrom MoleBuried; MorphTo Mole" Send="Destroy"/>
     </CActorTurret>
     <CActorRange id="MoleSubterraneanSensorsRange">
         <Filter index="Neutral" value="1"/>
@@ -3220,6 +3221,9 @@
         <On Terms="AbilTrain.ProcessingCoreTrain.Start; AbilTrainProduced Processor" Send="Create ProcessorConstruction"/>
         <On Terms="AbilTrain.ProcessingCoreTrain.Cancel" Target="_GenetronUnitConstruction" Send="Destroy Immediate"/>
         <On Terms="AbilTrain.ProcessingCoreTrain.Finish" Target="_GenetronUnitConstruction" Send="Destroy Immediate"/>
+        <On Terms="UnitBirth.ProcessingCore" Send="Create PlayerLogoDoodadList"/>
+        <On Terms="UnitBirth.ProcessingCore; PlayerHasClanDecal" Send="Create ProtossClanFlag"/>
+        <On Terms="UnitBirth.ProcessingCore; PlayerHasTrophy" Send="Create ProtossPlayerTrophy"/>
         <BarOffset value="200"/>
         <BarWidth value="225"/>
         <SoundArray index="Ready" value="CommandCenter_Ready"/>
@@ -3643,8 +3647,8 @@
         <Macros value="TerrainSquibAnimations"/>
         <Macros value="PhysicsDeathsSwarmGround"/>
         <Macros value="PhysicsDeathsVoidGround"/>
-        <On Terms="AbilMorph.*.Start; MorphTo MoleBurrowed" Send="AnimPlay Burrow Burrow PlayForever,NonLooping"/>
-        <On Terms="AbilMorph.*.Start; MorphTo MoleBurrowed" Send="AnimClear Unburrow"/>
+        <On Terms="AbilMorph.*.Start; MorphTo MoleRooted" Send="AnimPlay Burrow Burrow PlayForever,NonLooping"/>
+        <On Terms="AbilMorph.*.Start; MorphTo MoleRooted" Send="AnimClear Unburrow"/>
         <On Terms="AbilMorph.*.Start; MorphTo Mole" Send="AnimClear Burrow"/>
         <On Terms="AbilMorph.*.Start; MorphTo Mole" Send="AnimPlay Unburrow Unburrow"/>
         <On Terms="AbilMorph.*.Finish; MorphTo Mole" Send="AnimClear Unburrow"/>
@@ -3700,13 +3704,13 @@
         <HostSiteOps Ops="SOpAttachOriginStationary"/>
         <Sound value="WidowMine_Burrow"/>
     </CActorSound>
-    <CActorUnit id="MoleBurrowed" parent="Mole">
-        <On index="0" Terms="UnitBirth.MoleBurrowed"/>
-        <On index="1" Terms="UnitBirth.MoleBurrowed"/>
-        <On index="2" Terms="UnitRevive.MoleBurrowed"/>
-        <On index="3" Terms="UnitRevive.MoleBurrowed"/>
-        <On index="4" Terms="UnitConstruction.MoleBurrowed.Start"/>
-        <On index="5" Terms="UnitConstruction.MoleBurrowed.Finish"/>
+    <CActorUnit id="MoleRooted" parent="Mole" unitName="MoleRooted">
+        <On index="0" Terms="UnitBirth.MoleRooted"/>
+        <On index="1" Terms="UnitBirth.MoleRooted"/>
+        <On index="2" Terms="UnitRevive.MoleRooted"/>
+        <On index="3" Terms="UnitRevive.MoleRooted"/>
+        <On index="4" Terms="UnitConstruction.MoleRooted.Start"/>
+        <On index="5" Terms="UnitConstruction.MoleRooted.Finish"/>
         <On index="69" Terms="UnitHeightUpdate.*.Land" Send="Create WidowMine_Land"/>
         <On index="70" Terms="UnitHeightUpdate.*.Land" Send="Create Warhound_Land"/>
         <On index="71" Terms="ActorCreation" Send="AnimPlay Cover Cover PlayForever"/>
@@ -3720,23 +3724,23 @@
         <On Terms="Abil.attack.ReadyStop" Send="TimerSet 2.000000"/>
         <On Terms="TimerExpired; ValidateUnit CasterNotAttacking" Send="AnimClear Inferior"/>
         <On Terms="TimerExpired; ValidateUnit CasterNotAttacking" Send="AnimClear Superior"/>
-        <On Terms="AbilMorph.*.Finish; MorphTo MoleBurrowed; MorphFrom Mole" Send="Create"/>
+        <On Terms="AbilMorph.*.Finish; MorphTo MoleRooted; MorphFrom Mole" Send="Create"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom MoleRooted; MorphTo Mole" Send="Destroy"/>
         <On Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed; MorphTo Mole" Send="Destroy"/>
-        <On Terms="AbilMorph.*.Start; MorphFrom MoleBuried; MorphTo Mole" Send="Destroy"/>
-        <On Terms="UnitDeathCustomize; ValidateUnit IsMoleBuried" Send="DeathCustomize Upgrade"/>
-        <On Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed; MorphTo MoleBuried" Send="AnimClear Inferior"/>
-        <On Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed; MorphTo MoleBuried" Send="AnimClear Superior"/>
-        <On Terms="UnitBirth.MoleBuried" Send="Create"/>
-        <On Terms="UnitRevive.MoleBuried" Send="Create"/>
-        <On Terms="UnitRevive.MoleBuried" Send="RefSet ::HostTurretBody _Selectable"/>
-        <On Terms="UnitConstruction.MoleBuried" Send="Create"/>
-        <On Terms="UnitConstruction.MoleBuried" Send="AnimPlay ConstructionDeath Stand,Birth,Death FullMatch"/>
-        <On Terms="UnitBirth.MoleBuried" Send="AnimBracketStart Burrow Burrow,Cover,Start Burrow,Cover Burrow,Cover,End Instant"/>
-        <On Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed; MorphTo MoleBuried" Send="AnimBracketStart Burrow Burrow,Cover,Start Burrow,Cover Burrow,Cover,End"/>
-        <On Terms="AbilMorph.*.Start; MorphFrom MoleBuried; MorphTo MoleBurrowed" Send="AnimBracketStop Burrow"/>
+        <On Terms="UnitDeathCustomize; ValidateUnit IsMoleBurrowed" Send="DeathCustomize Upgrade"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom MoleRooted; MorphTo MoleBurrowed" Send="AnimClear Inferior"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom MoleRooted; MorphTo MoleBurrowed" Send="AnimClear Superior"/>
+        <On Terms="UnitBirth.MoleBurrowed" Send="Create"/>
+        <On Terms="UnitRevive.MoleBurrowed" Send="Create"/>
+        <On Terms="UnitRevive.MoleBurrowed" Send="RefSet ::HostTurretBody _Selectable"/>
+        <On Terms="UnitConstruction.MoleBurrowed" Send="Create"/>
+        <On Terms="UnitConstruction.MoleBurrowed" Send="AnimPlay ConstructionDeath Stand,Birth,Death FullMatch"/>
+        <On Terms="UnitBirth.MoleBurrowed" Send="AnimBracketStart Burrow Burrow,Cover,Start Burrow,Cover Burrow,Cover,End Instant"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom MoleRooted; MorphTo MoleBurrowed" Send="AnimBracketStart Burrow Burrow,Cover,Start Burrow,Cover Burrow,Cover,End"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed; MorphTo MoleRooted" Send="AnimBracketStop Burrow"/>
+        <AnimBlendTime value="0.000000"/>
         <Baselines index="Stand" AnimProps="Stand,Burrow"/>
         <DeathArray index="Normal" AnimProps="Death,Burrow" ModelLink="MoleBurrowedDeath"/>
-        <HighlightTooltip value="Unit/Name/MoleBurrowed"/>
         <DeathCustoms index="5">
             <ActorModel value="MoleDeathActor"/>
             <AnimProps value="Alternate"/>
@@ -3747,7 +3751,7 @@
         <DeathCustoms ActorModel="MoleDeathActor" ModelLink="MoleBurrowedUnderDeath" Name="Upgrade">
             <BodySquibs Name="TerranSquibDeathRagdoll" Model="BurrowedSplat"/>
         </DeathCustoms>
-        <AnimBlendTime value="0.000000"/>
+        <HighlightTooltip value="Unit/Name/MoleRooted"/>
     </CActorUnit>
     <CActorSplat id="RepulsorBurrowedSplat" parent="BurrowedSplat" unitName="Repulsor">
         <Inherits index="Visibility" value="0"/>
@@ -3802,7 +3806,7 @@
         <BarWidth value="40"/>
         <ModelFlags index="OutlineEmitter" value="1"/>
     </CActorUnit>
-    <CActorSound id="AcidNestDeath" parent="SoundOneShotScion" Effect="AcidNestAttack"/>
+    <CActorSound id="AcidNestDeath" parent="SoundOneShotScion" Effect="ProwlerAcidNestFateSet"/>
     <CActorAction id="AdaptiveInjectionCast" parent="GenericAttack" effectImpact="AdaptiveInjectionSet" effectLaunch="AdaptiveInjection">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <LaunchAssets Sound="Corruptor_CorruptionLaunch"/>
@@ -3850,12 +3854,13 @@
     </CActorForceSphere>
     <CActorSplat id="MoleBurrowedSplat" parent="BurrowedSplat" unitName="Mole">
         <Scale value="0.600000"/>
-        <On index="3" Terms="AbilMorph.*.Start; MorphTo MoleBurrowed; MorphFrom Mole" Send="Create"/>
-        <On index="4" Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed; MorphTo Mole" Send="RefClear ::Host"/>
-        <On index="5" Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed; MorphTo Mole" Send="TimerSet 4.000000,2.000000 DelayDestroy"/>
-        <On Terms="AbilMorph.*.Start; MorphFrom MoleBuried; MorphTo Mole" Send="RefClear ::Host"/>
-        <On Terms="AbilMorph.*.Start; MorphFrom MoleBuried; MorphTo Mole" Send="TimerSet 4.000000,2.000000 DelayDestroy"/>
-        <On Terms="UnitBirth.MoleBuried" Send="Create"/>
+        <On index="2" Terms="UnitBirth.MoleRooted" Send="Create"/>
+        <On index="3" Terms="AbilMorph.*.Start; MorphTo MoleRooted; MorphFrom Mole" Send="Create"/>
+        <On index="4" Terms="AbilMorph.*.Start; MorphFrom MoleRooted; MorphTo Mole" Send="RefClear ::Host"/>
+        <On index="5" Terms="AbilMorph.*.Start; MorphFrom MoleRooted; MorphTo Mole" Send="TimerSet 4.000000,2.000000 DelayDestroy"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed; MorphTo Mole" Send="RefClear ::Host"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed; MorphTo Mole" Send="TimerSet 4.000000,2.000000 DelayDestroy"/>
+        <On Terms="UnitBirth.MoleBurrowed" Send="Create"/>
         <Inherits index="Visibility" value="0"/>
         <Model value="MoleBurrowedSplat"/>
     </CActorSplat>
@@ -3912,7 +3917,7 @@
         <Sound value="Egg_Death"/>
     </CActorSound>
     <CActorModel id="AcidNestDeathExplosion" parent="ModelAnimationStyleOneShot">
-        <On Terms="Effect.AcidNestAttack.Start" Send="Create"/>
+        <On Terms="Effect.ProwlerAcidNestFateSet.Start; At Caster" Send="Create"/>
     </CActorModel>
     <CActorMissile id="CasnoliskCoveringSprayCastMissile" parent="GenericAttackMissile" unitName="CoveringSprayMissile"/>
     <CActorModel id="MassaliskAntiAirAttackImpact" parent="ModelAnimationStyleOneShot">
@@ -4697,6 +4702,12 @@
         <On Terms="ActorCreation" Send="SetTintColor {255,163,23 15.000000}"/>
     </CActorMissile>
     <CActorUnit id="ScavengerNest" parent="ZergBuilding" unitName="ScavengerNest">
+        <On Terms="AbilTrain.BirthScavenger.Start" Send="AnimPlay StandWork Stand PlayForever -1.000000 -1.000000 2.500000 AsTimeScale"/>
+        <On Terms="AbilTrain.BirthScavenger.Cancel" Send="AnimClear StandWork"/>
+        <On Terms="AbilTrain.BirthScavenger.Finish" Send="AnimClear StandWork"/>
+        <On Terms="UnitBirth.ScavengerNest" Send="Create PlayerLogoDoodadList"/>
+        <On Terms="UnitBirth.ScavengerNest; PlayerHasClanDecal" Send="Create ProtossClanFlag"/>
+        <On Terms="UnitBirth.ScavengerNest; PlayerHasTrophy" Send="Create ProtossPlayerTrophy"/>
         <GroupIcon>
             <Image value="Assets\Textures\wireframe-Xayid-scavengernest.dds"/>
         </GroupIcon>
@@ -5220,6 +5231,7 @@
         <On Terms="ActorDestruction" Target="OculusRevealVisualRange" Send="Destroy"/>
         <HostSiteOps Ops="SOpTargetPointStationary SOpForwardCasterPointInverted SOpMoveUpBy3 SOpMoveUpBy2" HoldPosition="1" HoldRotation="1"/>
         <Model value="OculusRevealModel"/>
+        <FogVisibility value="Hidden"/>
     </CActorModel>
     <CActorModel id="KeironMaterializeModelAirParagon" parent="ModelAddition">
         <Aliases value="_ZergBuildModel"/>
@@ -5284,19 +5296,14 @@
     </CActorMissile>
     <CActorModel/>
     <CActorUnit id="Aegis" parent="GenericUnitKeiron" unitName="Aegis">
-        <On index="66" Terms="WeaponStop.*.AttackStop" Send="AnimBracketStop Attack"/>
-        <On index="67" Terms="Abil.attack.ReadyStop" Send="AnimGroupRemove Ready"/>
-        <On index="68" Terms="Behavior.AegisShieldAura.On" Send="AnimBracketStart StandWork Stand,Work,Start Stand,Work Stand,Work,End"/>
-        <On index="69" Terms="Behavior.AegisShieldAura.Off" Send="AnimBracketStop StandWork"/>
-        <On index="70" Terms="UnitBirth.AegisShielded" Send="Create SoundEmitter Aegis_Ambience"/>
-        <On index="71" Terms="UnitBirth.AegisShielded" Send="Create"/>
-        <On index="72" Terms="UnitBirth.AegisShielded" Send="ModelSwap AegisShielded"/>
-        <On index="73" Terms="Behavior.AegisShieldAura.On" Send="ModelSwap AegisShielded"/>
-        <On Terms="Behavior.AegisShieldAura.Off" Send="ModelSwap Aegis"/>
+        <On Terms="Behavior.AegisShieldAura.On" Send="AnimBracketStart StandWork Stand,Work,Start Stand,Work Stand,Work,End"/>
+        <On Terms="Behavior.AegisShieldAura.On" Send="ModelSwap AegisShielded"/>
         <On Terms="Behavior.AegisShieldAura.On" Send="AliasAdd _ShieldAegis"/>
+        <On Terms="Behavior.AegisShieldAura.Off" Send="AnimBracketStop StandWork"/>
+        <On Terms="Behavior.AegisShieldAura.Off" Send="ModelSwap Aegis"/>
         <On Terms="Behavior.AegisShieldAura.Off" Send="AliasRemove _ShieldAegis"/>
-        <On Terms="Effect.AegisRelocate.Stop" Send="AnimPlay Spell Birth"/>
         <On Terms="Abil.AegisRelocate.SourceCastStart" Send="AnimPlay Spell Blink"/>
+        <On Terms="Effect.AegisRelocate.Stop" Send="AnimPlay Spell Birth"/>
         <On Terms="UnitBirth.Aegis.Normal" Send="Create AegisRelocateStopModel"/>
         <On Terms="UnitBirth.Aegis.Normal" Send="Create AegisRelocateStopSound"/>
         <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMassive" SoundLink="Tempest_Explode"/>
@@ -6291,7 +6298,7 @@
     <CActorUnit id="Pantheon" parent="GenericUnitKeironStructure" buildTime="81.000000" unitName="Pantheon">
         <BarOffset value="150"/>
     </CActorUnit>
-    <CActorUnit id="Foundry" parent="GenericUnitKeironStructure" buildTime="51.000000" unitName="Foundry"/>
+    <CActorUnit id="Foundry" parent="GenericUnitKeironStructure" buildTime="61.000000" unitName="Foundry"/>
     <CActorModelMaterial id="KeironConstructionGlaze" parent="GlazeParent">
         <On Terms="ActorCreation" Send="ModelMaterialApplyTo ::Main"/>
         <On Terms="Abil.KeironBuild.BuiltStart" Send="Create"/>
