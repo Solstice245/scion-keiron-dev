@@ -57,9 +57,12 @@
         </InfoArray>
         <MaxCount value="1"/>
     </CAbilSpecialize>
-    <CAbilBehavior id="BadgerEnergyShield">
+    <CAbilBehavior id="BadgerPowershell">
+        <AbilSetId value="Powershell"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <CmdButtonArray index="On" DefaultButtonFace="BadgerPowershell"/>
+        <CmdButtonArray index="On" DefaultButtonFace="BadgerPowershell">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
         <CmdButtonArray index="Off" DefaultButtonFace="Cancel"/>
         <Flags index="Toggle" value="1"/>
         <Flags index="Transient" value="1"/>
@@ -103,6 +106,37 @@
             <Flags index="ToSelection" value="1"/>
         </CmdButtonArray>
     </CAbilEffectTarget>
+    <CAbilEffectInstant id="SpitfireOverdrive">
+        <AbilSetId value="Overdrive"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Effect index="0" value="SpitfireOverdrivePowerEnum"/>
+        <Flags index="Transient" value="1"/>
+        <Cost>
+            <Vital index="Energy" value="10"/>
+            <Cooldown TimeUse="5"/>
+        </Cost>
+        <AINotifyEffect value="BlitzerOverdrive"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="SpitfireSupercharge" Requirements="SpitfireOverdriveReq">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+    </CAbilEffectInstant>
+    <CAbilBehavior id="SpitfirePowershell">
+        <AbilSetId value="Powershell"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <CmdButtonArray index="On" DefaultButtonFace="BadgerPowershell">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+        <CmdButtonArray index="Off" DefaultButtonFace="Cancel"/>
+        <Flags index="Toggle" value="1"/>
+        <Flags index="Transient" value="1"/>
+        <Cost>
+            <Cooldown TimeUse="1"/>
+        </Cost>
+        <OffCost>
+            <Cooldown TimeUse="10"/>
+        </OffCost>
+        <BehaviorArray value="SpitfirePowershell"/>
+    </CAbilBehavior>
     <CAbilResearch id="GeneratorResearch">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <InfoArray index="Research1" Time="110" Alert="ResearchComplete_Terr" Upgrade="CloakingGenerator">
@@ -128,7 +162,10 @@
             <Vital index="Energy" value="15"/>
             <Cooldown TimeUse="5"/>
         </Cost>
-        <CmdButtonArray index="Execute" DefaultButtonFace="BlitzerSupercharge" Requirements="BlitzerOverdriveReq"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="BlitzerOverdrive" Requirements="BlitzerOverdriveReq">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+        <AbilSetId value="Overdrive"/>
     </CAbilEffectInstant>
     <CAbilBuildable id="BuildInProgress">
         <CmdButtonArray index="Halt" DefaultButtonFace="Halt">
@@ -170,15 +207,15 @@
     </CAbilEffectTarget>
     <CAbilTrain id="GenetronProductionModeSwitch">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <InfoArray index="Train1" Time="2.8" Effect="GenetronProductionModePerformance">
+        <InfoArray index="Train1" Time="4.2" Effect="GenetronProductionModePerformance">
             <Button DefaultButtonFace="GenetronPerformanceMode" Requirements="GenetronPerformanceModeNotQueuedOrActive"/>
             <Unit value="GenetronPerformanceModeDummy"/>
         </InfoArray>
-        <InfoArray index="Train2" Time="2.8" Effect="GenetronProductionModeStandard">
+        <InfoArray index="Train2" Time="4.2" Effect="GenetronProductionModeStandard">
             <Button DefaultButtonFace="GenetronStandardMode" Requirements="GenetronStandardModeNotQueuedOrActive"/>
             <Unit value="GenetronStandardModeDummy"/>
         </InfoArray>
-        <InfoArray index="Train3" Time="2.8" Effect="GenetronProductionModeOverclock">
+        <InfoArray index="Train3" Time="4.2" Effect="GenetronProductionModeOverclock">
             <Button DefaultButtonFace="GenetronOverclockMode" Requirements="GenetronOverclockModeNotQueuedOrActive"/>
             <Unit value="GenetronOverclockModeDummy"/>
         </InfoArray>
@@ -214,15 +251,18 @@
         <Flags index="Interruptible" value="1"/>
         <Flags index="IgnoreFacing" value="1"/>
         <Flags index="SuppressMovement" value="1"/>
-        <InfoArray Unit="MoleBurrowed">
+        <InfoArray Unit="MoleBurrowed" RandomDelayMax="0.0625">
+            <SectionArray index="Abils">
+                <DurationArray index="Delay" value="1.25"/>
+            </SectionArray>
             <SectionArray index="Actor">
-                <DurationArray index="Duration" value="1.4"/>
+                <DurationArray index="Duration" value="1.25"/>
                 <EffectArray index="Start" value="MoleLockTurret"/>
                 <EffectArray index="Finish" value="MoleLockTurretRemove"/>
                 <EffectArray index="Cancel" value="MoleLockTurretRemove"/>
             </SectionArray>
             <SectionArray index="Stats">
-                <DurationArray index="Delay" value="1.4"/>
+                <DurationArray index="Delay" value="1.25"/>
             </SectionArray>
         </InfoArray>
     </CAbilMorph>
@@ -275,15 +315,15 @@
         <CmdButtonArray index="Execute" DefaultButtonFace="MoleReveal"/>
         <Flags index="IgnoreFacing" value="1"/>
         <Flags index="SuppressMovement" value="1"/>
-        <InfoArray Unit="MoleRooted">
+        <InfoArray Unit="MoleRooted" RandomDelayMax="0.0625">
             <SectionArray index="Actor">
-                <DurationArray index="Duration" value="1.4"/>
+                <DurationArray index="Duration" value="1.25"/>
                 <EffectArray index="Start" value="MoleLockTurret"/>
                 <EffectArray index="Finish" value="MoleLockTurretRemove"/>
                 <EffectArray index="Cancel" value="MoleLockTurretRemove"/>
             </SectionArray>
             <SectionArray index="Stats">
-                <DurationArray index="Duration" value="1.4"/>
+                <DurationArray index="Duration" value="1.25"/>
             </SectionArray>
         </InfoArray>
     </CAbilMorph>
@@ -565,7 +605,7 @@
         <Flags index="IgnoreFacing" value="1"/>
         <Flags index="IgnorePlacement" value="0"/>
         <Flags index="SuppressMovement" value="1"/>
-        <InfoArray Unit="MoleRooted" RandomDelayMax="0.125">
+        <InfoArray Unit="MoleRooted" RandomDelayMax="0.0625">
             <SectionArray index="Actor">
                 <DurationArray index="Duration" value="2.5"/>
             </SectionArray>
@@ -673,7 +713,7 @@
             <Button DefaultButtonFace="FilteringPlant"/>
             <ValidatorArray value="HasVespene"/>
         </InfoArray>
-        <InfoArray index="Build4" Unit="Manufacturer" Time="65">
+        <InfoArray index="Build4" Unit="Manufacturer" Time="70">
             <Button DefaultButtonFace="Manufacturer" Requirements="HaveNode"/>
         </InfoArray>
         <InfoArray index="Build5" Unit="Uploader" Time="30">
@@ -682,7 +722,7 @@
         <InfoArray index="Build6" Unit="OutfittingStation" Time="50">
             <Button DefaultButtonFace="OutfittingStation" Requirements="HaveAnalysisTerminal"/>
         </InfoArray>
-        <InfoArray index="Build7" Unit="Repulsor" Time="45">
+        <InfoArray index="Build7" Unit="Repulsor" Time="50">
             <Button DefaultButtonFace="Repulsor" Requirements="HaveAnalysisTerminal"/>
         </InfoArray>
         <InfoArray index="Build8" Unit="Interdictor" Time="30">
@@ -691,16 +731,16 @@
         <InfoArray index="Build9" Unit="RelayTower" Time="40">
             <Button DefaultButtonFace="RelayTower" Requirements="HaveManufacturer"/>
         </InfoArray>
-        <InfoArray index="Build10" Unit="Fabricator" Time="60">
+        <InfoArray index="Build10" Unit="Fabricator" Time="70">
             <Button DefaultButtonFace="Fabricator" Requirements="HaveManufacturer"/>
         </InfoArray>
         <InfoArray index="Build11" Unit="TechVault" Time="65">
             <Button DefaultButtonFace="TechVault" Requirements="HaveAnalysisTerminal"/>
         </InfoArray>
-        <InfoArray index="Build12" Unit="AssemblyArray" Time="60">
+        <InfoArray index="Build12" Unit="AssemblyArray" Time="70">
             <Button DefaultButtonFace="AssemblyArray" Requirements="HaveRelayTower"/>
         </InfoArray>
-        <InfoArray index="Build13" Unit="AnalysisTerminal" Time="50">
+        <InfoArray index="Build13" Unit="AnalysisTerminal" Time="55">
             <Button DefaultButtonFace="AnalysisTerminal" Requirements="HaveNode"/>
         </InfoArray>
         <InfoArray index="Build14" Unit="Generator" Time="40">
@@ -727,7 +767,7 @@
         <ActorKey value="BurrowUp"/>
         <Flags index="IgnoreFacing" value="1"/>
         <Flags index="SuppressMovement" value="1"/>
-        <InfoArray Unit="Mole" RandomDelayMax="0.5">
+        <InfoArray Unit="Mole" RandomDelayMax="0.25">
             <SectionArray index="Actor">
                 <DurationArray index="Duration" value="0.75"/>
             </SectionArray>
@@ -1042,7 +1082,7 @@
     <CAbilTrain id="TrainLightweightMechs">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Activity value="UI/Fabricating"/>
-        <InfoArray index="Train1" Time="42" Effect="ManufacturerFinishSpitfireInit">
+        <InfoArray index="Train1" Time="49" Effect="ManufacturerFinishSpitfireInit">
             <Button DefaultButtonFace="FabricateSpitfire"/>
             <Unit value="Spitfire"/>
         </InfoArray>

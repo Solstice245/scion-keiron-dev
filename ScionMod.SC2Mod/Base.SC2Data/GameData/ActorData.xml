@@ -208,12 +208,23 @@
         <On index="3" Terms="Abil.ButtonHoverOn" Send="Create"/>
         <On index="4" Terms="Abil.ButtonHoverOff" Send="Destroy"/>
     </CActorRange>
-    <CActorModelMaterial id="BadgerEnergyShieldGlaze" parent="BehaviorGlaze" buff="BadgerPowershell"/>
+    <CActorModelMaterial id="BadgerEnergyShieldGlaze" parent="BehaviorGlaze" buff="BadgerPowershell">
+        <On Terms="Behavior.SpitfirePowershell.On" Send="Create"/>
+        <On Terms="Behavior.SpitfirePowershell.Off" Send="AnimBracketStop BSD"/>
+    </CActorModelMaterial>
     <CActorSound id="Badger_PowershellOn" parent="SoundOneShotScion" Behavior="BadgerPowershell">
         <Host Subject="_Selectable"/>
     </CActorSound>
     <CActorSound id="Badger_PowershellOff" parent="SoundOneShotScion" Behavior="BadgerPowershell" BSub="Off">
         <Host Subject="_Selectable"/>
+    </CActorSound>
+    <CActorModel id="SpitfireOverdrive" parent="ModelAnimationStyleOneShotUNIT">
+        <On Terms="Abil.SpitfireOverdrive.SourceCastStart" Send="Create"/>
+        <HostSiteOps Ops="SOpAttachOrigin SOpMoveUpByDot25 SOpMoveBackByDot25"/>
+        <Model value="BlitzerOverdrive"/>
+    </CActorModel>
+    <CActorSound id="Spitfire_Overdrive" parent="SoundOneShot">
+        <On Terms="Abil.SpitfireOverdrive.SourceCastStart" Send="Create"/>
     </CActorSound>
     <CActorBeamSimple id="FixerRepairBeamAlt" parent="BeamSimpleAnimationStyleContinuous">
         <Inherits index="Visibility" value="1"/>
@@ -554,12 +565,14 @@
         <AcceptedHostedPropTransfers index="CastShadows" value="0"/>
         <Model value="Invisible"/>
         <UnitFlags index="ShowBlobShadow" value="0"/>
+        <UnitIcon value="Assets\Textures\btn-ability-genetron-productionmode-standard.dds"/>
     </CActorUnit>
     <CActorUnit id="GenetronOverclockModeDummy" parent="GenericUnitStandard" unitName="GenetronOverclockModeDummy">
         <Aliases index="1" removed="1"/>
         <AcceptedHostedPropTransfers index="CastShadows" value="0"/>
         <Model value="Invisible"/>
         <UnitFlags index="ShowBlobShadow" value="0"/>
+        <UnitIcon value="Assets\Textures\btn-ability-genetron-productionmode-overclock.dds"/>
     </CActorUnit>
     <CActorModelMaterial id="GlazeGenetronBuildHoloPlacement" parent="GlazeParent">
         <On index="0" Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand Death Instant"/>
@@ -575,6 +588,7 @@
         <AcceptedHostedPropTransfers index="CastShadows" value="0"/>
         <Model value="Invisible"/>
         <UnitFlags index="ShowBlobShadow" value="0"/>
+        <UnitIcon value="Assets\Textures\btn-ability-genetron-productionmode-performance.dds"/>
     </CActorUnit>
     <CActorModel id="OpticalDisruptionBuff" parent="ModelAnimationStyleContinuousUNIT">
         <On Terms="Behavior.OpticalDisruptionBuff.On" Send="Create"/>
@@ -1995,8 +2009,8 @@
         <On Terms="SelectionLocalUpdate.MoleBurrowed.Start" Send="Create"/>
         <On Terms="SelectionLocalUpdate.MoleBurrowed.StartEditorGround" Send="Create"/>
         <On Terms="SelectionLocalUpdate.MoleBurrowed.Stop" Send="Destroy"/>
-        <On Terms="AbilMorph.*.Start; MorphTo MoleRooted; Selected" Send="Create"/>
-        <On Terms="AbilMorph.*.Start; MorphTo MoleBurrowed; Selected" Send="Create"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom Mole; MorphTo MoleRooted; Selected" Send="Create"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom Mole; MorphTo MoleBurrowed; Selected" Send="Create"/>
         <On Terms="AbilMorph.*.Start; MorphTo Mole" Send="Destroy"/>
         <Icon value="Assets\Textures\RadarIcon2.dds"/>
         <IconArcLength value="3.250000"/>
@@ -2345,7 +2359,7 @@
     <CActorTurret id="RepulsorTurret">
         <On Terms="TurretEnable.RepulsorTurret" Send="Create"/>
     </CActorTurret>
-    <CActorUnit id="Repulsor" parent="GenetronBuilding" buildTime="44.000000" unitName="Repulsor">
+    <CActorUnit id="Repulsor" parent="GenetronBuilding" buildTime="49.000000" unitName="Repulsor">
         <On Terms="UnitDeathCustomize; ValidateUnit IsBurrowedUnit" Send="DeathCustomize Burrowed"/>
         <On Terms="UnitBirth.RepulsorBurrowed" Send="Create"/>
         <On Terms="UnitBirth.RepulsorBurrowed" Send="AnimGroupApply Burrow Burrow Unburrow ClosingFull,Instant"/>
@@ -2387,7 +2401,7 @@
         <On Terms="Behavior.ResourceTap.On" Send="Create"/>
         <On Terms="Behavior.ResourceTap.Off" Send="Destroy"/>
     </CActorModel>
-    <CActorUnit id="AnalysisTerminal" parent="GenetronBuilding" buildTime="64.000000" unitName="AnalysisTerminal">
+    <CActorUnit id="AnalysisTerminal" parent="GenetronBuilding" buildTime="54.000000" unitName="AnalysisTerminal">
         <DeathArray index="Normal" ModelLink="AnalysisTerminalDeath" SoundLink="Armory_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeath" SoundLink="Armory_Explode"/>
         <BarWidth value="130"/>
@@ -3240,7 +3254,7 @@
         <VitalNames index="Energy" value="UI/VitalName/Power"/>
     </CActorUnit>
     <CActorSplat id="ProcessingCoreSplat" parent="GenericUnitSplat" unitName="ProcessingCore"/>
-    <CActorUnit id="Manufacturer" parent="GenetronBuilding" buildTime="64.000000" unitName="Manufacturer">
+    <CActorUnit id="Manufacturer" parent="GenetronBuilding" buildTime="69.000000" unitName="Manufacturer">
         <On Terms="AbilTrain.TrainLightweightMechs.Start" Send="AnimPlay StandWork Stand,Work PlayForever,RandomStartOffset"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Finish" Send="AnimClear StandWork"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Cancel" Send="AnimClear StandWork"/>
@@ -3268,7 +3282,7 @@
         <VitalNames index="Energy" value="UI/VitalName/Power"/>
     </CActorUnit>
     <CActorSplat id="ManufacturerSplat" parent="GenericUnitSplat" unitName="Manufacturer"/>
-    <CActorUnit id="Fabricator" parent="GenetronBuilding" buildTime="64.000000" unitName="Fabricator">
+    <CActorUnit id="Fabricator" parent="GenetronBuilding" buildTime="69.000000" unitName="Fabricator">
         <On Terms="AbilTrain.TrainHeavyweightMechs.Start" Send="AnimPlay StandWork Stand,Work PlayForever,RandomStartOffset"/>
         <On Terms="AbilTrain.TrainHeavyweightMechs.Finish" Send="AnimClear StandWork"/>
         <On Terms="AbilTrain.TrainHeavyweightMechs.Cancel" Send="AnimClear StandWork"/>
@@ -3295,7 +3309,7 @@
         <VitalNames index="Energy" value="UI/VitalName/Power"/>
     </CActorUnit>
     <CActorSplat id="FabricatorSplat" parent="GenericUnitSplat" unitName="Fabricator"/>
-    <CActorUnit id="AssemblyArray" parent="GenetronBuilding" buildTime="64.000000" unitName="AssemblyArray">
+    <CActorUnit id="AssemblyArray" parent="GenetronBuilding" buildTime="69.000000" unitName="AssemblyArray">
         <On Terms="AbilTrain.BuildAircraft.Start" Send="AnimPlay StandWork Stand,Work PlayForever,RandomStartOffset"/>
         <On Terms="AbilTrain.BuildAircraft.Finish" Send="AnimClear StandWork"/>
         <On Terms="AbilTrain.BuildAircraft.Cancel" Send="AnimClear StandWork"/>
@@ -3414,7 +3428,7 @@
     <CActorModel id="AquilaConstruction" parent="GenetronConstructionBase" buildTime="56.000000" Model="Aquila"/>
     <CActorModel id="InciterConstruction" parent="GenetronConstructionBase" buildTime="70.000000" Model="Inciter"/>
     <CActorModel id="MoleConstruction" parent="GenetronConstructionBase" buildTime="42.000000" Model="Mole"/>
-    <CActorModel id="SpitfireConstruction" parent="GenetronConstructionBase" buildTime="42.000000" Model="Spitfire"/>
+    <CActorModel id="SpitfireConstruction" parent="GenetronConstructionBase" buildTime="49.000000" Model="Spitfire"/>
     <CActorModel id="TeslaConstruction" parent="GenetronConstructionBase" buildTime="56.000000" Model="Tesla"/>
     <CActorModel id="TorrentConstruction" parent="GenetronConstructionBase" buildTime="35.000000" Model="Torrent"/>
     <CActorModel id="VirtusConstruction" parent="GenetronConstructionBase" buildTime="70.000000" Model="Virtus"/>

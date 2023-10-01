@@ -146,6 +146,26 @@
         <SearchFilters value="Ground;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <AreaArray MaxCount="1" Radius="2" Effect="AcidWormsLMR"/>
     </CEffectEnumArea>
+    <CEffectApplyBehavior id="SpitfireOverdriveApplyBehavior" parent="ScionApplyBehaviorCaster" Race="Genetron">
+        <Behavior value="SpitfireOverdrive"/>
+    </CEffectApplyBehavior>
+    <CEffectModifyUnit id="SpitfireOverdrivePowerModify">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-15"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectSet id="SpitfireOverdrivePowerSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="SpitfireOverdrivePowerModify"/>
+        <EffectArray value="SpitfireOverdriveApplyBehavior"/>
+    </CEffectSet>
+    <CEffectEnumTrackedUnits id="SpitfireOverdrivePowerEnum">
+        <ValidatorArray value="GenetronPowerSupplyGE015"/>
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="SpitfireOverdrivePowerSet"/>
+    </CEffectEnumTrackedUnits>
     <CEffectModifyUnit id="JupiterRevenantBombChannelInit">
         <EditorCategories value="Race:Genetron"/>
         <ImpactUnit Value="Caster"/>
@@ -154,12 +174,98 @@
         <FacingLocation Value="TargetPoint"/>
         <FacingType value="LookAt"/>
     </CEffectModifyUnit>
+    <CEffectUserData id="ManufacturerFinishModeSwitchPerformanceDataMode">
+        <EditorCategories value="Race:Genetron"/>
+        <Key value="Mode"/>
+        <Amount value="0"/>
+        <SourceKey value="Mode"/>
+        <Operation value="Set"/>
+        <BehaviorScope Behavior="GenetronProductionInternalEnergy"/>
+    </CEffectUserData>
+    <CEffectUserData id="ManufacturerFinishModeSwitchStandardData">
+        <EditorCategories value="Race:Genetron"/>
+        <Key value="InternalEnergy"/>
+        <Amount value="0">
+            <AccumulatorArray value="ProductionModeSwitchStandard"/>
+        </Amount>
+        <SourceKey value="InternalEnergy"/>
+        <Operation value="Subtract"/>
+        <BehaviorScope Behavior="GenetronProductionInternalEnergy"/>
+    </CEffectUserData>
+    <CEffectUserData id="ManufacturerFinishModeSwitchOverclockData">
+        <EditorCategories value="Race:Genetron"/>
+        <Key value="InternalEnergy"/>
+        <Amount value="0">
+            <AccumulatorArray value="ProductionModeSwitchOverclock"/>
+        </Amount>
+        <SourceKey value="InternalEnergy"/>
+        <Operation value="Subtract"/>
+        <BehaviorScope Behavior="GenetronProductionInternalEnergy"/>
+    </CEffectUserData>
+    <CEffectUserData id="ManufacturerFinishModeSwitchStandardDataMode">
+        <EditorCategories value="Race:Genetron"/>
+        <Key value="Mode"/>
+        <SourceKey value="Mode"/>
+        <Operation value="Set"/>
+        <BehaviorScope Behavior="GenetronProductionInternalEnergy"/>
+    </CEffectUserData>
+    <CEffectUserData id="ManufacturerFinishModeSwitchOverclockDataMode">
+        <EditorCategories value="Race:Genetron"/>
+        <Key value="Mode"/>
+        <Amount value="2"/>
+        <SourceKey value="Mode"/>
+        <Operation value="Set"/>
+        <BehaviorScope Behavior="GenetronProductionInternalEnergy"/>
+    </CEffectUserData>
+    <CEffectCreatePersistent id="ManufacturerFinishModeSwitchStandardInit">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="CasterUnit"/>
+        <InitialEffect value="ManufacturerFinishModeSwitchStandardData"/>
+        <FinalEffect value="SetEnergyNeededData0"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="ManufacturerFinishModeSwitchStandardDataMode"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="ManufacturerFinishModeSwitchOverclockInit">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="CasterUnit"/>
+        <InitialEffect value="ManufacturerFinishModeSwitchOverclockData"/>
+        <FinalEffect value="SetEnergyNeededData0"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="ManufacturerFinishModeSwitchOverclockDataMode"/>
+    </CEffectCreatePersistent>
+    <CEffectUserData id="ManufacturerModeSwitchStandardData">
+        <EditorCategories value="Race:Genetron"/>
+        <Key value="EnergyNeeded"/>
+        <Amount value="0">
+            <AccumulatorArray value="ProductionModeSwitchStandard"/>
+        </Amount>
+        <SourceKey value="EnergyNeeded"/>
+        <Operation value="Set"/>
+        <BehaviorScope Behavior="GenetronProductionInternalEnergy"/>
+    </CEffectUserData>
+    <CEffectUserData id="ManufacturerModeSwitchOverclockData">
+        <EditorCategories value="Race:Genetron"/>
+        <Key value="EnergyNeeded"/>
+        <Amount value="0">
+            <AccumulatorArray value="ProductionModeSwitchOverclock"/>
+        </Amount>
+        <SourceKey value="EnergyNeeded"/>
+        <Operation value="Set"/>
+        <BehaviorScope Behavior="GenetronProductionInternalEnergy"/>
+    </CEffectUserData>
     <CEffectModifyUnit id="MendMU">
         <EditorCategories value="Race:Xayid"/>
         <VitalArray index="Life">
             <Change value="20"/>
         </VitalArray>
     </CEffectModifyUnit>
+    <CEffectApplyBehavior id="MoleLockTurretTemporary">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="MoleLockTurret"/>
+        <Flags index="UseDuration" value="1"/>
+        <Duration value="0.5"/>
+    </CEffectApplyBehavior>
     <CEffectCreatePersistent id="OlympusDischargeInitTarget">
         <ValidatorArray value="GenetronPowerSupplyGEOlympusDischarge"/>
         <EditorCategories value="Race:Genetron"/>
@@ -765,7 +871,7 @@
     </CEffectRemoveBehavior>
     <CEffectModifyUnit id="BadgerPowershellCooldown">
         <EditorCategories value="Race:Genetron"/>
-        <Cost Abil="BadgerEnergyShield,On" CooldownTimeUse="10"/>
+        <Cost Abil="BadgerPowershell,255" CooldownTimeUse="10"/>
     </CEffectModifyUnit>
     <CEffectDamage id="BadgerPowershellRemainingDMG">
         <EditorCategories value="Race:Genetron"/>
@@ -1068,6 +1174,8 @@
         <CaseArray Validator="AssemblyArrayIsTrainingBoar" Effect="AssemblyArrayTrainBoarData"/>
         <CaseArray Validator="AssemblyArrayIsTrainingJupiter" Effect="AssemblyArrayTrainJupiterData"/>
         <CaseArray Validator="AssemblyArrayIsTrainingBadger" Effect="AssemblyArrayTrainBadgerData"/>
+        <CaseArray Validator="GenetronProductionIsModeSwitchingStandard" Effect="ManufacturerModeSwitchStandardData"/>
+        <CaseArray Validator="GenetronProductionIsModeSwitchingOverclock" Effect="ManufacturerModeSwitchOverclockData"/>
         <CaseDefault value="SetEnergyNeededData0"/>
     </CEffectSwitch>
     <CEffectUserData id="FabricatorTrainInciterData">
@@ -1678,7 +1786,7 @@
         <EffectArray value="KeironShellRestorationDisableRB"/>
     </CEffectSet>
     <CEffectSet id="GenetronTrainSet">
-        <ValidatorArray value="EnergyGTE5"/>
+        <ValidatorArray value="EnergyGTE005"/>
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="GenetronTrainEnergyData"/>
         <EffectArray value="GenetronTrainCheckInternalEnergyData"/>
@@ -1857,6 +1965,8 @@
         <CaseArray Validator="ManufacturerIsTrainingFixer" Effect="ManufacturerTrainFixerData"/>
         <CaseArray Validator="ManufacturerIsTrainingEqualizer" Effect="ManufacturerTrainEqualizerData"/>
         <CaseArray Validator="ManufacturerIsTrainingAquila" Effect="ManufacturerTrainAquilaData"/>
+        <CaseArray Validator="GenetronProductionIsModeSwitchingStandard" Effect="ManufacturerModeSwitchStandardData"/>
+        <CaseArray Validator="GenetronProductionIsModeSwitchingOverclock" Effect="ManufacturerModeSwitchOverclockData"/>
         <CaseDefault value="SetEnergyNeededData0"/>
     </CEffectSwitch>
     <CEffectSwitch id="FabricatorTrainSwitch">
@@ -1866,6 +1976,8 @@
         <CaseArray Validator="FabricatorIsTrainingInciter" Effect="FabricatorTrainInciterData"/>
         <CaseArray Validator="FabricatorIsTrainingTesla" Effect="FabricatorTrainTeslaData"/>
         <CaseArray Validator="FabricatorIsTrainingVirtus" Effect="FabricatorTrainVirtusData"/>
+        <CaseArray Validator="GenetronProductionIsModeSwitchingStandard" Effect="ManufacturerModeSwitchStandardData"/>
+        <CaseArray Validator="GenetronProductionIsModeSwitchingOverclock" Effect="ManufacturerModeSwitchOverclockData"/>
         <CaseDefault value="SetEnergyNeededData0"/>
     </CEffectSwitch>
     <CEffectCreatePersistent id="CourierOpticalDisruptionCreatePersistent" parent="ScionCreatePersistentUnit" Race="Genetron">
@@ -1983,7 +2095,7 @@
         <AreaArray Radius="10" Effect="KeironShellRestorationDisableRB"/>
     </CEffectEnumArea>
     <CEffectCreateHealer id="OlympusChargeUpHealer">
-        <ValidatorArray value="EnergyGTE5"/>
+        <ValidatorArray value="EnergyGTE005"/>
         <EditorCategories value="Race:Genetron"/>
         <LaunchUnit Value="Target"/>
         <ImpactUnit Value="Caster"/>
@@ -2206,6 +2318,7 @@
         <EffectArray value="GenetronProductionModeStandardRB"/>
         <EffectArray value="GenetronProductionModePerformanceRB"/>
         <EffectArray value="GenetronProductionModeOverclockBuff"/>
+        <EffectArray value="ManufacturerFinishModeSwitchOverclockInit"/>
         <EffectArray value="KillRemove"/>
     </CEffectSet>
     <CEffectApplyBehavior id="GenetronProductionModeOverclockBuff" parent="ScionApplyBehaviorCaster" Race="Genetron"/>
@@ -2218,6 +2331,7 @@
         <EffectArray value="GenetronProductionModeOverclockRB"/>
         <EffectArray value="GenetronProductionModeStandardRB"/>
         <EffectArray value="GenetronProductionModePerformanceBuff"/>
+        <EffectArray value="ManufacturerFinishModeSwitchPerformanceDataMode"/>
         <EffectArray value="KillRemove"/>
     </CEffectSet>
     <CEffectApplyBehavior id="GenetronProductionModePerformanceBuff" parent="ScionApplyBehaviorCaster" Race="Genetron"/>
@@ -2238,6 +2352,7 @@
         <EffectArray value="GenetronProductionModeOverclockRB"/>
         <EffectArray value="GenetronProductionModePerformanceRB"/>
         <EffectArray value="GenetronProductionModeStandardBuff"/>
+        <EffectArray value="ManufacturerFinishModeSwitchStandardInit"/>
         <EffectArray value="KillRemove"/>
     </CEffectSet>
     <CEffectApplyBehavior id="GenetronProductionModeStandardBuff" parent="ScionApplyBehaviorCaster" Race="Genetron"/>
@@ -2529,7 +2644,7 @@
         <SearchFlags index="ExtendByUnitRadius" value="1"/>
     </CEffectEnumArea>
     <CEffectEnumArea id="PulsarFacingSearchGeneralTarget" parent="ScionEnumArea" Race="Keiron">
-        <SearchFilters value="Ground,Visible;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <SearchFilters value="Ground,Visible;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden,Invulnerable,Passive"/>
         <TargetSorts>
             <SortArray value="TSDistance"/>
         </TargetSorts>
