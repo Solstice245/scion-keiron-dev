@@ -106,6 +106,14 @@
             <Flags index="ToSelection" value="1"/>
         </CmdButtonArray>
     </CAbilEffectTarget>
+    <CAbilEffectTarget id="ProwlerPlaceAcidNestExecute">
+        <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
+        <Effect index="0" value="ProwlerPlaceAcidNest"/>
+        <Flags index="Transient" value="1"/>
+        <Range value="1000"/>
+        <Arc value="360"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="PlaceAcidNest"/>
+    </CAbilEffectTarget>
     <CAbilEffectInstant id="SpitfireOverdrive">
         <AbilSetId value="Overdrive"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -176,7 +184,7 @@
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Flags index="Transient" value="1"/>
         <Cost>
-            <Resource index="Minerals" value="125"/>
+            <Resource index="Minerals" value="150"/>
         </Cost>
         <CmdButtonArray index="Execute" DefaultButtonFace="ChargeCitadel"/>
     </CAbilEffectInstant>
@@ -1552,14 +1560,14 @@
         <InfoArray index="Build1" Unit="ScavengerNest" Time="100">
             <Button DefaultButtonFace="ScavengerNest"/>
         </InfoArray>
-        <InfoArray index="Build2" Unit="FeedingPool" Time="30">
+        <InfoArray index="Build2" Unit="FeedingPool" Time="25">
             <Button DefaultButtonFace="FeedingPool"/>
         </InfoArray>
         <InfoArray index="Build3" Unit="Siphoner" Time="30">
             <Button DefaultButtonFace="Siphoner"/>
             <ValidatorArray value="HasVespene"/>
         </InfoArray>
-        <InfoArray index="Build4" Unit="XayidDen" Time="68.25">
+        <InfoArray index="Build4" Unit="XayidDen" Time="65">
             <Button DefaultButtonFace="XayidDen" Requirements="HaveFeedingPool"/>
         </InfoArray>
         <InfoArray index="Build5" Unit="MutagenChamber" Time="45">
@@ -1730,14 +1738,16 @@
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <FlagArray index="PeonMaintained" value="0"/>
         <FlagArray index="ShowProgress" value="1"/>
-        <InfoArray index="Build1" Unit="AcidNestBuild" Time="15">
+        <InfoArray index="Build1" Unit="AcidNest" Time="15">
             <Charge>
                 <CountMax value="3"/>
                 <CountStart value="3"/>
                 <CountUse value="1"/>
                 <TimeUse value="25"/>
             </Charge>
-            <Button DefaultButtonFace="PlaceAcidNest"/>
+            <Button DefaultButtonFace="PlaceAcidNest">
+                <Flags index="AllowMinimap" value="1"/>
+            </Button>
         </InfoArray>
         <Range value="0.25"/>
         <EffectArray index="Finish" value="KillsToCaster"/>
@@ -1828,6 +1838,7 @@
         <Flags index="NoDeceleration" value="1"/>
         <Flags index="RequireTargetVision" value="0"/>
         <AINotifyEffect value="VolatileDischargeDMG"/>
+        <ProducedUnitArray value="VolatileDischarge"/>
     </CAbilEffectTarget>
     <CAbilEffectInstant id="VolatileDischargeCancel">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>

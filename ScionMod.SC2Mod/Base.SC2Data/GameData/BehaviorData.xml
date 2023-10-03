@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
+    <CBehaviorBuff id="AcidNestEntrenching">
+        <InfoIcon value="Assets\Textures\btn-ability-zerg-dehaka-burrow-color.dds"/>
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisplayDuration index="Ally" value="1"/>
+        <Duration value="10"/>
+        <Modification>
+            <BehaviorLinkDisableArray value="VolatileAcidFate"/>
+            <BehaviorLinkDisableArray value="AcidNestVolatileAcidSearch"/>
+        </Modification>
+    </CBehaviorBuff>
     <CBehaviorBuff id="Active">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <InitialEffect value="ProcessorActive"/>
         <FinalEffect value="ProcessorFateSet"/>
         <RemoveValidatorArray value="CasterNotDead"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="OculusRevealCaster">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
+        <MaxStackCount value="65535"/>
+        <MaxStackCountPerCaster value="1"/>
+        <TimeScaleSource Value="Global"/>
+        <Duration value="0.5625"/>
+        <RevealUnit Value="Caster"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="AegisShieldedUnmorphProtection">
         <InfoFlags index="Hidden" value="1"/>
@@ -107,6 +127,7 @@
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <Period value="0.0625"/>
         <PeriodicEffect value="ProwlerAcidNestSearchTarget"/>
+        <DisableValidatorArray value="NotUnderConstruction"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="TeslaAbilitiesReq">
         <InfoFlags index="Hidden" value="1"/>
@@ -1421,7 +1442,11 @@
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <MaxStackCount value="3"/>
         <Duration value="1.49"/>
-        <Modification TimeScale="1.07"/>
+        <Modification>
+            <RateMultiplierArray index="Charge" value="1.07"/>
+            <RateMultiplierArray index="Queueable" value="1.07"/>
+            <RateMultiplierArray index="Spawn" value="1.07"/>
+        </Modification>
     </CBehaviorBuff>
     <CBehaviorBuff id="FeedingPoolHealingAura">
         <Alignment value="Positive"/>
@@ -1573,6 +1598,11 @@
             <ExcludeEffectInChainArray value="NukeSuicide"/>
             <Chance value="1"/>
         </DamageResponse>
+        <Modification>
+            <StateFlags index="Bury" value="1"/>
+            <StateFlags index="Cloak" value="1"/>
+        </Modification>
+        <DisableValidatorArray value="NotUnderConstruction"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="BilePitNotInRangeOfFeedingPool">
         <Alignment value="Negative"/>
@@ -1627,6 +1657,8 @@
         <TimeScaleSource Value="Global"/>
         <Duration value="0.3125"/>
         <RevealUnit Value="Caster"/>
+        <MaxStackCount value="65535"/>
+        <MaxStackCountPerCaster value="1"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="ApertureRequirementDummy">
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>

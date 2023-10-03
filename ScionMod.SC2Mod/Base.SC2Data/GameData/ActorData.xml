@@ -218,6 +218,59 @@
     <CActorSound id="Badger_PowershellOff" parent="SoundOneShotScion" Behavior="BadgerPowershell" BSub="Off">
         <Host Subject="_Selectable"/>
     </CActorSound>
+    <CActorModel id="ProcessingCorePlayerDecalW" parent="ModelAddition">
+        <Inherits index="BaseModelScale" value="0"/>
+        <Inherits index="CloakEffect" value="0"/>
+        <Inherits index="CreepEngulfment" value="0"/>
+        <Inherits index="Scale" value="0"/>
+        <Remove Terms="ActorOrphan" Send="Destroy"/>
+        <On Terms="ActorOrphan" Send="AnimBracketStop BSD"/>
+        <On Terms="ActorCreation" Send="Create CitadelPlayerDecalWFoliageFXSpawner"/>
+        <HostSiteOps Ops="NexusPlayerDecalWForwardOffset KeironCommandPlayerDecalOffset SOpShadow"/>
+        <Model value="CommandPlayerDecal"/>
+    </CActorModel>
+    <CActorEventMacro id="KeironCitadelPlayerDecalMacro">
+        <On Terms="UnitBirth.Citadel; ValidateUnit NotCloaked" Send="Create CitadelPlayerDecalW"/>
+        <On Terms="UnitBirth.Citadel.EditorPlaced" Send="Create CitadelPlayerDecalW"/>
+        <On Terms="UnitBirth.CitadelCharged; ValidateUnit NotCloaked" Send="Create CitadelPlayerDecalW"/>
+        <On Terms="UnitBirth.CitadelCharged.EditorPlaced" Send="Create CitadelPlayerDecalW"/>
+        <On Terms="Behavior.CloakFieldEffect.On" Target="CitadelPlayerDecalW" Send="AnimBracketStop BSD"/>
+        <On Terms="Behavior.CloakFieldEffect.Off" Send="Create CitadelPlayerDecalW"/>
+    </CActorEventMacro>
+    <CActorModel id="CitadelPlayerDecalW" parent="ModelAddition">
+        <Inherits index="BaseModelScale" value="0"/>
+        <Inherits index="CloakEffect" value="0"/>
+        <Inherits index="CreepEngulfment" value="0"/>
+        <Inherits index="Scale" value="0"/>
+        <Remove Terms="ActorOrphan" Send="Destroy"/>
+        <On Terms="ActorOrphan" Send="AnimBracketStop BSD"/>
+        <On Terms="ActorCreation" Send="Create CitadelPlayerDecalWFoliageFXSpawner"/>
+        <HostSiteOps Ops="NexusPlayerDecalWForwardOffset KeironCommandPlayerDecalOffset SOpShadow"/>
+        <Model value="NexusPlayerDecal"/>
+        <Scale value="1.400000"/>
+    </CActorModel>
+    <CActorSiteOpLocalOffset id="KeironCommandPlayerDecalOffset">
+        <LocalOffset value="0.000000,-4.000000,0.000000"/>
+    </CActorSiteOpLocalOffset>
+    <CActorFoliageFXSpawner id="CitadelPlayerDecalWFoliageFXSpawner" parent="FoliageFXSpawnerFire">
+        <HostSiteOps Ops="NexusPlayerDecalWForwardOffset KeironCommandPlayerDecalOffset SOpShadow"/>
+        <Radius value="1.500000"/>
+    </CActorFoliageFXSpawner>
+    <CActorModel id="ScavengerNestPlayerDecalW" parent="ModelAddition">
+        <Inherits index="BaseModelScale" value="0"/>
+        <Inherits index="CloakEffect" value="0"/>
+        <Inherits index="CreepEngulfment" value="0"/>
+        <Inherits index="Scale" value="0"/>
+        <Remove Terms="ActorOrphan" Send="Destroy"/>
+        <On Terms="ActorOrphan" Send="AnimBracketStop BSD"/>
+        <On Terms="ActorCreation" Send="Create CitadelPlayerDecalWFoliageFXSpawner"/>
+        <HostSiteOps Ops="NexusPlayerDecalWForwardOffset KeironCommandPlayerDecalOffset SOpShadow"/>
+        <Model value="HatcheryPlayerDecal"/>
+        <Scale value="1.500000"/>
+    </CActorModel>
+    <CActorSound id="ScourFateSound" parent="SoundOneShot">
+        <Sound value="DefilerMP_PlagueImpact"/>
+    </CActorSound>
     <CActorModel id="SpitfireOverdrive" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Abil.SpitfireOverdrive.SourceCastStart" Send="Create"/>
         <HostSiteOps Ops="SOpAttachOrigin SOpMoveUpByDot25 SOpMoveBackByDot25"/>
@@ -356,8 +409,6 @@
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModel>
     <CActorModel id="OculusRevealModelFriendly" parent="ModelAnimationStyleContinuous">
-        <VisibleTo index="Neutral" value="1"/>
-        <VisibleTo index="Enemy" value="1"/>
         <FogVisibility value="Visible"/>
         <On Terms="Effect.OculusRevealInit.Start" Send="Create"/>
         <On Terms="Effect.OculusRevealVision.Stop" Send="AnimBracketStop BSD"/>
@@ -365,12 +416,15 @@
         <On Terms="ActorDestruction" Target="OculusRevealVisualRange" Send="Destroy"/>
         <HostSiteOps Ops="SOpTargetPointStationary SOpForwardCasterPointInverted SOpMoveUpBy3 SOpMoveUpBy2" HoldPosition="1" HoldRotation="1"/>
         <Model value="OculusRevealModel"/>
+        <AcceptedHostedPropTransfers index="Visibility" value="0"/>
+        <Filter index="Neutral" value="1"/>
+        <Filter index="Enemy" value="1"/>
     </CActorModel>
     <CActorSound id="OculusRevealStartFriendly" parent="SoundOneShotScion" Effect="OculusRevealInit">
-        <VisibleTo index="Neutral" value="1"/>
-        <VisibleTo index="Enemy" value="1"/>
         <FogVisibility value="Visible"/>
         <Sound value="OculusRevealStart"/>
+        <Filter index="Neutral" value="1"/>
+        <Filter index="Enemy" value="1"/>
     </CActorSound>
     <CActorModel id="OlympusDischargeIndicator1" parent="ModelAnimationStyleOneShot">
         <Flags index="SuppressSaveLoad" value="0"/>
@@ -526,8 +580,8 @@
         </HostImpact>
         <HostImpactSiteOps Ops="SOpAttachCenter"/>
     </CActorBeamSimple>
-    <CActorModel id="ScourAttackImpactModel" parent="ModelAnimationStyleOneShot">
-        <FogVisibility value="Hidden"/>
+    <CActorModel id="ScourFateModel" parent="ModelAnimationStyleOneShot">
+        <Model value="ScourImpact"/>
     </CActorModel>
     <CActorModel id="WardRestitutionImpact" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Effect.WardRestitutionRechargeSet.Start; At Target" Send="Create"/>
@@ -828,10 +882,9 @@
     </CActorSound>
     <CActorSound id="NullifierAttackSoundLoop" parent="SoundContinuousScion" Effect="NullifierWeaponCP"/>
     <CActorSound id="OculusRevealStartEnemy" parent="SoundOneShotScion" Effect="OculusRevealInit">
-        <VisibleTo index="Self" value="1"/>
-        <VisibleTo index="Ally" value="1"/>
         <Sound value="OculusRevealStart"/>
         <FogVisibility value="Hidden"/>
+        <Filter index="Self" value="1"/>
     </CActorSound>
     <CActorSound id="OculusRevealStop" parent="SoundOneShot">
         <On Terms="Effect.OculusRevealVision.Stop; At Target" Send="Create"/>
@@ -1431,9 +1484,6 @@
         <On Terms="Effect.SpitterVolatileBurstDamage.Start; At Caster" Send="Create"/>
     </CActorModel>
     <CActorSound id="SpitterVolatileSound" parent="SoundOneShotScion" Effect="SpitterVolatileBurstDamage"/>
-    <CActorDoodad id="Decal">
-        <DoodadFlags index="DefaultToModelAABBBounds" value="0"/>
-    </CActorDoodad>
     <CActorModel id="InterdictorAddition" parent="ModelAddition">
         <HostSiteOps Ops="SOpAttachTurretY SOpMoveBy2"/>
         <Model value="Invisible"/>
@@ -1477,11 +1527,10 @@
     <CActorAction id="ScourAttack" parent="GenericAttack" effectImpact="ScourCP" effectLaunch="Scour">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <Missile value="ScourWeapon"/>
-        <On Terms="Effect.ScourCP.Start; FromEffectTreeDescendant" Send="Create ScourVisionRange"/>
-        <On Terms="Effect.ScourCP.Stop; FromEffectTreeDescendant" Target="ScourVisionRange" Send="Destroy"/>
+        <!--<On Terms="Effect.ScourCP.Start; FromEffectTreeDescendant" Send="Create ScourVisionRange"/>
+        <On Terms="Effect.ScourCP.Stop; FromEffectTreeDescendant" Target="ScourVisionRange" Send="Destroy"/>-->
         <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpHigherBy3"/>
-        <ImpactMap index="None" Model="ScourImpact" Sound="DefilerMP_PlagueImpact"/>
-        <ImpactModel value="ScourAttackImpactModel"/>
+        <ImpactMap index="None" Model="" Sound=""/>
     </CActorAction>
     <CActorDoodad id="SpaceSteamJet">
         <DoodadFlags index="DefaultToModelAABBBounds" value="0"/>
@@ -1620,6 +1669,12 @@
         </Wireframe>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-pneumatizedcarapace.dds"/>
     </CActorUnit>
+    <CActorEventMacro id="GenetronProcessingCorePlayerDecalMacro">
+        <On Terms="UnitBirth.ProcessingCore; ValidateUnit NotCloaked" Send="Create ProcessingCorePlayerDecalW"/>
+        <On Terms="UnitBirth.ProcessingCore.EditorPlaced" Send="Create ProcessingCorePlayerDecalW"/>
+        <On Terms="Behavior.CloakFieldEffect.On" Target="ProcessingCorePlayerDecalW" Send="AnimBracketStop BSD"/>
+        <On Terms="Behavior.CloakFieldEffect.Off" Send="Create ProcessingCorePlayerDecalW"/>
+    </CActorEventMacro>
     <CActorUnit id="Xayidling" parent="GenericUnitXayid" unitName="Xayidling">
         <WalkAnimMoveSpeed value="2.8085"/>
         <BarOffset value="40"/>
@@ -3252,6 +3307,11 @@
             <ColorArray value="255,120,240,255"/>
         </VitalColors>
         <VitalNames index="Energy" value="UI/VitalName/Power"/>
+        <Macros value="BuildingFlattenTerrainMacro"/>
+        <Macros value="SnowVisualBuildingMacroMP"/>
+        <Macros value="MacroTownhallDeco_Terran"/>
+        <Macros value="GenetronProcessingCorePlayerDecalMacro"/>
+        <Macros value="SprayHelperMacro"/>
     </CActorUnit>
     <CActorSplat id="ProcessingCoreSplat" parent="GenericUnitSplat" unitName="ProcessingCore"/>
     <CActorUnit id="Manufacturer" parent="GenetronBuilding" buildTime="69.000000" unitName="Manufacturer">
@@ -4740,6 +4800,11 @@
         <SoundArray index="What" value="Hatchery_What"/>
         <StatusHarvesterData Text="UI/HarvesterCountMinerals" SearchFilters="HarvestableResource;Player,Ally,Enemy" SearchRadius="8"/>
         <PortraitModel value="ZergBuildingEx2_Portrait"/>
+        <Macros value="BuildingFlattenTerrainMacro"/>
+        <Macros value="SnowVisualBuildingMacroMP"/>
+        <Macros value="MacroTownhallDeco_Zerg"/>
+        <Macros value="XayidScavengerNestPlayerDecalMacro"/>
+        <Macros value="SprayHelperMacro"/>
     </CActorUnit>
     <CActorSite id="SitePrimalTownHallSplat">
         <AcceptedTransfers index="Rotation" value="0"/>
@@ -4790,22 +4855,25 @@
         <Model value="ZergAOECursorSplat"/>
         <Scale value="4.150000"/>
     </CActorSplat>
-    <CActorMissile id="ScourWeapon" parent="GenericAttackMissile" unitName="ScourWeapon"/>
+    <CActorUnit id="ScourWeapon" parent="GenericUnitMinimal" unitName="ScourWeapon">
+        <On Terms="Effect.ScourCP.Start" Send="Create ScourFateModel"/>
+        <On Terms="Effect.ScourCP.Start" Send="Create ScourFateSound"/>
+    </CActorUnit>
     <CActorModel id="MendImpact" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Behavior.MendBehavior.On" Send="Create"/>
         <On Terms="Effect.SacrificialMutationHealMU.Start; At Target" Send="Create"/>
         <On Terms="Effect.FeedingPoolHealAuraCP.Start; At Target" Send="Create"/>
         <HostSiteOps Ops="SOpAttachOverhead" HoldRotation="1"/>
     </CActorModel>
-    <CActorRange id="ScourVisionRange">
-        <On Terms="Effect.ScourCP.Start; At Target" Send="Create"/>
+    <CActorRange id="ScourFateRange">
+        <On Terms="Effect.ScourCP.Start" Send="Create"/>
         <On Terms="Effect.ScourCP.Stop" Send="Destroy"/>
-        <Host Subject="ScourAttackImpactModel"/>
+        <Host Scope="Source"/>
         <Range value="4.000000"/>
         <Icon value="Assets\Textures\radiustickdetector.dds"/>
-        <IconArcLength value="0.750000"/>
+        <IconScale value="0.004000,0.004000"/>
+        <IconArcLength value="0.800000"/>
         <IconTint value="255,83,83,83"/>
-        <FogVisibility value="Hidden"/>
     </CActorRange>
     <CActorSiteOpLocalOffset id="SoPMendImpactOffset">
         <LocalOffset value="0.000000,0.000000,1.000000"/>
@@ -5237,8 +5305,6 @@
         <On Terms="Abil.ConverterGather.Stop" Send="StatusDecrement Harvest"/>
     </CActorUnit>
     <CActorModel id="OculusRevealModelEnemy" parent="ModelAnimationStyleContinuous">
-        <VisibleTo index="Self" value="1"/>
-        <VisibleTo index="Ally" value="1"/>
         <On Terms="Effect.OculusRevealInit.Start" Send="Create"/>
         <On Terms="Effect.OculusRevealVision.Stop" Send="AnimBracketStop BSD"/>
         <On Terms="ActorCreation" Send="Create OculusRevealVisualRange"/>
@@ -5246,6 +5312,8 @@
         <HostSiteOps Ops="SOpTargetPointStationary SOpForwardCasterPointInverted SOpMoveUpBy3 SOpMoveUpBy2" HoldPosition="1" HoldRotation="1"/>
         <Model value="OculusRevealModel"/>
         <FogVisibility value="Hidden"/>
+        <Filter index="Self" value="1"/>
+        <Filter index="Ally" value="1"/>
     </CActorModel>
     <CActorModel id="KeironMaterializeModelAirParagon" parent="ModelAddition">
         <Aliases value="_ZergBuildModel"/>
@@ -6439,6 +6507,9 @@
         <BarOffset value="160"/>
         <BarWidth value="200"/>
         <StatusHarvesterData Text="UI/HarvesterCountMinerals" SearchFilters="HarvestableResource;Player,Ally,Enemy" SearchRadius="8"/>
+        <Macros value="MacroTownhallDeco_Protoss"/>
+        <Macros value="KeironCitadelPlayerDecalMacro"/>
+        <Macros value="SprayHelperMacro"/>
     </CActorUnit>
     <CActorUnit id="Converter" parent="GenericUnitKeiron" unitName="Converter">
         <On Terms="Abil.ProbeHarvest.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
@@ -6777,4 +6848,10 @@
         <On Terms="Effect.ELORProtocolLMImpact.Start" Send="Create"/>
         <Sound value="Inciter_JumpLand"/>
     </CActorSound>
+    <CActorEventMacro id="XayidScavengerNestPlayerDecalMacro">
+        <On Terms="UnitBirth.ScavengerNest; ValidateUnit NotCloaked" Send="Create ScavengerNestPlayerDecalW"/>
+        <On Terms="UnitBirth.ScavengerNest.EditorPlaced" Send="Create ScavengerNestPlayerDecalW"/>
+        <On Terms="Behavior.CloakFieldEffect.On" Target="ScavengerNestPlayerDecalW" Send="AnimBracketStop BSD"/>
+        <On Terms="Behavior.CloakFieldEffect.Off" Send="Create ScavengerNestPlayerDecalW"/>
+    </CActorEventMacro>
 </Catalog>

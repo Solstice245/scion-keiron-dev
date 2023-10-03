@@ -72,6 +72,9 @@
         <WhichLocation Value="TargetUnit"/>
         <InitialEffect value="ACRRepairSet"/>
     </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="AcidNestEntrenching">
+        <EditorCategories value="Race:Xayid"/>
+    </CEffectApplyBehavior>
     <CEffectSwitch id="AcidWormsLMRImpact">
         <EditorCategories value="Race:Xayid"/>
         <CaseArray Validator="TargetNotDead" Effect="AcidWormsDMG"/>
@@ -118,6 +121,13 @@
             </Change>
         </VitalArray>
     </CEffectModifyUnit>
+    <CEffectApplyBehavior id="OculusRevealRevealCaster" parent="ScionApplyBehavior" Race="Keiron">
+        <Behavior value="OculusRevealCaster"/>
+    </CEffectApplyBehavior>
+    <CEffectEnumArea id="OculusRevealRevealCasterSearch" parent="ScionEnumArea" Race="Keiron">
+        <SearchFilters value="-;Self,Player,Ally,Missile,Stasis,Dead,Hidden"/>
+        <AreaArray Radius="6" Effect="OculusRevealRevealCaster"/>
+    </CEffectEnumArea>
     <CEffectApplyBehavior id="AegisShieldedUnmorphProtection" parent="ScionApplyBehaviorCaster">
         <EditorCategories value="Race:Keiron"/>
     </CEffectApplyBehavior>
@@ -146,6 +156,29 @@
         <SearchFilters value="Ground;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <AreaArray MaxCount="1" Radius="2" Effect="AcidWormsLMR"/>
     </CEffectEnumArea>
+    <CEffectCreateUnit id="ProwlerPlaceAcidNest">
+        <EditorCategories value="Race:Xayid"/>
+        <WhichLocation Value="TargetPoint"/>
+        <CreateFlags index="Placement" value="0"/>
+        <SpawnEffect value="ProwlerPlaceAcidNestSet"/>
+        <SpawnUnit value="AcidNest"/>
+        <SpawnRange value="1"/>
+    </CEffectCreateUnit>
+    <CEffectSet id="ProwlerPlaceAcidNestSet">
+        <EditorCategories value="Race:Xayid"/>
+        <EffectArray value="AcidNestEntrenching"/>
+        <EffectArray value="ProwlerPlaceAcidNestTeleport"/>
+    </CEffectSet>
+    <CEffectTeleport id="ProwlerPlaceAcidNestTeleport">
+        <EditorCategories value="Race:Xayid"/>
+        <DebugTrace value="1"/>
+        <MinDistance value="0.5"/>
+        <PlacementArc value="360"/>
+        <PlacementAround Value="TargetUnit"/>
+        <SourceLocation Value="TargetUnit"/>
+        <TargetLocation Value="TargetUnit"/>
+        <TeleportFlags index="TestCliff" value="1"/>
+    </CEffectTeleport>
     <CEffectApplyBehavior id="SpitfireOverdriveApplyBehavior" parent="ScionApplyBehaviorCaster" Race="Genetron">
         <Behavior value="SpitfireOverdrive"/>
     </CEffectApplyBehavior>
@@ -3141,7 +3174,7 @@
         <ValidatorArray value="CasterHasEnergy"/>
         <ValidatorArray value="GenetronPowerSupplyGE001"/>
         <ValidatorArray value="GenetronPowerUser"/>
-        <ValidatorArray value="IsNotOlympus"/>
+        <ValidatorArray value="IsNotProcessor"/>
         <EditorCategories value="Race:Genetron"/>
         <DrainVital value="Energy"/>
         <DrainVitalCostFactor value="0.25"/>
@@ -4293,6 +4326,8 @@
         <InitialDelay value="2.1"/>
         <RevealRadius value="6"/>
         <RevealFlags index="Unfog" value="1"/>
+        <PeriodicEffectArray value="OculusRevealRevealCasterSearch"/>
+        <PeriodicPeriodArray value="0.5"/>
     </CEffectCreatePersistent>
     <CEffectLaunchMissile id="ParagonAirWeapon" parent="ScionLaunchMissile" Race="Keiron">
         <AmmoUnit value="ParagonAir"/>
@@ -4318,7 +4353,7 @@
         <Death value="Blast"/>
     </CEffectDamage>
     <CEffectEnumArea id="AegisShieldAuraRevealSA" parent="ScionEnumArea" Race="Keiron">
-        <SearchFilters value="-;Self,Player,Ally,Neutral,Missile,Stasis,Dead,Hidden"/>
+        <SearchFilters value="-;Self,Player,Ally,Missile,Stasis,Dead,Hidden"/>
         <AreaArray Radius="20" Effect="AegisShieldAuraReveal"/>
     </CEffectEnumArea>
     <CEffectCreateUnit id="AegisShieldAuraKBCU">
