@@ -220,17 +220,10 @@
         <WalkAnimMoveSpeed value="3.1015"/>
         <BarOffset value="60"/>
         <BarWidth value="75"/>
-        <GroupIcon>
-            <Image index="0" value="Assets\Textures\wireframe-Xayid-Spitter.dds"/>
-        </GroupIcon>
         <SoundArray index="Ready" value="Spitter_Ready"/>
         <SoundArray index="What" value="Spitter_What"/>
         <SoundArray index="Yes" value="Spitter_Yes"/>
         <SoundArray index="Attack" value="Spitter_Attack"/>
-        <UnitIcon value="Assets\Textures\btn-unit-Xayid-Spitter.dds"/>
-        <Wireframe>
-            <Image index="0" value="Assets\Textures\wireframe-Xayid-Spitter.dds"/>
-        </Wireframe>
     </CActorUnit>
     <CActorUnit id="StemRoots" parent="GenericUnitStandard" unitName="StemRoots">
         <On Terms="ActorCreation" Send="SetOpacity 0.300000"/>
@@ -317,19 +310,25 @@
         </Wireframe>
     </CActorUnit>
     <CActorUnit id="Canker" parent="GenericUnitBase" unitName="Canker">
-        <On Terms="AbilMorph.*.Finish; MorphFrom AcidNestBuild" Send="Create"/>
+        <On Terms="UnitBirth.CankerMobile" Send="Create"/>
+        <On Terms="UnitBirth.Canker" Send="AnimPlay Burrow Stand,Burrow PlayForever"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom Canker; MorphTo CankerMobile" Send="AnimPlay Burrow Burrow,End 0 -1.000000 0.000000"/>
+        <On Terms="AbilMorph.*.Finish; MorphFrom Canker; MorphTo CankerMobile" Send="AnimClear Burrow"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom CankerMobile; MorphTo Canker" Send="AnimPlay Burrow Burrow"/>
+        <On Terms="AbilMorph.*.Finish; MorphFrom CankerMobile; MorphTo Canker" Send="AnimPlay Burrow Burrow,Stand PlayForever 0.000000"/>
         <ModelFlags index="OutlineEmitter" value="1"/>
         <DeathArray index="Normal" SoundLink="AcidNestDeath"/>
         <BarOffset value="40"/>
         <BarWidth value="40"/>
         <GroupIcon>
-            <Image value="Assets\Textures\wireframe-Xayid-prowlerexplosive.dds"/>
+            <Image value="Assets\Textures\wireframe-xayid-canker.dds"/>
         </GroupIcon>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-buildingarmor.dds"/>
-        <UnitIcon value="Assets\Textures\btn-ability-Xayid-prowlerexplosive.dds"/>
+        <UnitIcon value="Assets\Textures\btn-unit-xayid-canker.dds"/>
         <Wireframe>
-            <Image value="Assets\Textures\wireframe-Xayid-prowlerexplosive.dds"/>
+            <Image value="Assets\Textures\wireframe-xayid-canker.dds"/>
         </Wireframe>
+        <WalkAnimMoveSpeed value="0.75"/>
     </CActorUnit>
     <CActorMissile id="CankerMissile" parent="GenericAttackMissile" unitName="CankerMissile"/>
     <CActorUnit id="Druid" parent="GenericUnitXayid" unitName="Druid">
@@ -384,17 +383,10 @@
         <WalkAnimMoveSpeed value="3"/>
         <BarOffset value="45"/>
         <BarWidth value="70"/>
-        <GroupIcon>
-            <Image index="0" value="Assets\Textures\wireframe-Xayid-Prowler.dds"/>
-        </GroupIcon>
         <SoundArray index="Ready" value="Prowler_Ready"/>
         <SoundArray index="What" value="Prowler_What"/>
         <SoundArray index="Yes" value="Prowler_Yes"/>
         <SoundArray index="Pissed" value="Prowler_Pissed"/>
-        <UnitIcon value="Assets\Textures\btn-unit-Xayid-Prowler.dds"/>
-        <Wireframe>
-            <Image index="0" value="Assets\Textures\wireframe-Xayid-Prowler.dds"/>
-        </Wireframe>
     </CActorUnit>
     <CActorUnit id="HabitatRoots" parent="GenericUnitStandard" unitName="HabitatRoots">
         <On Terms="ActorCreation" Send="SetOpacity 0.300000"/>
@@ -844,7 +836,7 @@
     <CActorModelMaterial id="Snare_Mat_EmissiveUp0" parent="GlazeParent"/>
     <CActorModelMaterial id="Snare_Mat_EmissiveUp1" parent="GlazeParent"/>
     <CActorUnit id="Scion_Sage" parent="GenericUnitXayid" unitName="Sage">
-        <Aliases value="_UnitMedium"/>
+        <Aliases value="_UnitSmall"/>
         <On Terms="Abil.Scion_SageGraft.SourceCastStart" Send="$Spell,B 0 -1.000000 -1.000000 1.200000 AsDuration"/>
         <On Terms="Abil.MendlingSacrificialMutation.Start" Send="AnimBracketStart Morph {} Morph {} ContentNonLooping"/>
         <On Terms="AbilMorph.*.Start" Send="Destroy"/>
@@ -882,19 +874,12 @@
         <WalkAnimMoveSpeed value="3.125"/>
         <BarOffset value="52"/>
         <BarWidth value="50"/>
-        <GroupIcon>
-            <Image index="0" value="Assets\Textures\wireframe-Xayid-Mendling.dds"/>
-        </GroupIcon>
         <HighlightTooltip value="Unit/Name/Scion_Sage"/>
         <SoundArray index="Ready" value="LairViper_Ready"/>
         <SoundArray index="What" value="LairViper_What"/>
         <SoundArray index="Yes" value="LairViper_Yes"/>
         <SoundArray index="Attack" value="LairViper_Attack"/>
         <SoundArray index="Pissed" value="LairViper_Attack"/>
-        <UnitIcon value="Assets\Textures\btn-unit-Xayid-Mendling.dds"/>
-        <Wireframe>
-            <Image index="0" value="Assets\Textures\wireframe-Xayid-Mendling.dds"/>
-        </Wireframe>
     </CActorUnit>
     <CActorUnit id="Pollinator" parent="ZergBuilding" unitName="Pollinator">
         <On Terms="AbilMorph.XayidMorphAquiferBilePit.Finish" Send="Destroy"/>
@@ -1060,18 +1045,11 @@
         <WalkAnimMoveSpeed value="2.3984"/>
         <BarOffset value="38"/>
         <BarWidth value="40"/>
-        <GroupIcon>
-            <Image index="0" value="Assets\Textures\wireframe-Xayid-Xayidling.dds"/>
-        </GroupIcon>
         <SoundArray index="Ready" value="Xayidling_Ready"/>
         <SoundArray index="What" value="Xayidling_What"/>
         <SoundArray index="Yes" value="Xayidling_Yes"/>
         <SoundArray index="Attack" value="Xayidling_Attack"/>
         <SoundArray index="Pissed" value="Xayidling_Pissed"/>
-        <UnitIcon value="Assets\Textures\btn-unit-xayid-fletch.dds"/>
-        <Wireframe>
-            <Image index="0" value="Assets\Textures\wireframe-Xayid-Xayidling.dds"/>
-        </Wireframe>
     </CActorUnit>
     <CActorModel id="FletchBlossomComplete">
         <On Terms="AbilMorph.*.Start; MorphFrom FletchBlossom" Send="Create"/>
@@ -1443,6 +1421,7 @@
         <Wireframe>
             <Image value="Assets\Textures\wireframe-Xayid-Xayidden.dds"/>
         </Wireframe>
+        <On Terms="AbilTrain.XayidSproutFletch.Finish" Send="$Spell"/>
     </CActorUnit>
     <CActorModel id="BulbBuild" parent="ZergBuildingBuild">
         <Model value="XayidDenBuild"/>
@@ -1499,18 +1478,11 @@
         <WalkAnimMoveSpeed value="2.25"/>
         <BarOffset value="46"/>
         <BarWidth value="54"/>
-        <GroupIcon>
-            <Image index="0" value="Assets\Textures\wireframe-Xayid-Xayidling.dds"/>
-        </GroupIcon>
         <SoundArray index="Ready" value="Xayidling_Ready"/>
         <SoundArray index="What" value="Xayidling_What"/>
         <SoundArray index="Yes" value="Xayidling_Yes"/>
         <SoundArray index="Attack" value="Xayidling_Attack"/>
         <SoundArray index="Pissed" value="Xayidling_Pissed"/>
-        <UnitIcon value="Assets\Textures\btn-unit-Xayid-Xayidling.dds"/>
-        <Wireframe>
-            <Image index="0" value="Assets\Textures\wireframe-Xayid-Xayidling.dds"/>
-        </Wireframe>
     </CActorUnit>
     <CActorUnit id="ForagerDummy" parent="GenericUnitXayid" unitName="ForagerDummy">
         <Model value="Invisible"/>
