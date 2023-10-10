@@ -202,6 +202,10 @@
             <Image value="Assets\Textures\wireframe-Xayid-mutagenchamber.dds"/>
         </Wireframe>
     </CActorUnit>
+    <CActorSiteOpRotator id="SOpRotZ45">
+        <LocalAxis value="0.000000,0.000000,1.000000"/>
+        <InitialAngle value="45.000000"/>
+    </CActorSiteOpRotator>
     <CActorUnit id="Spriggan" parent="GenericUnitXayid" unitName="Spriggan">
         <Aliases value="_UnitLarge"/>
         <DeathArray index="Normal" ModelLink="DefilerMPDeath" SoundLink="Spitter_Explode" VoiceLink="SpitterDeathVoice"/>
@@ -289,8 +293,8 @@
         </Wireframe>
     </CActorUnit>
     <CActorUnit id="BulbRoots" parent="GenericUnitStandard" unitName="BulbRoots">
-        <On Terms="ActorCreation" Send="SetOpacity 0.300000"/>
-        <On Terms="ActorCreation" Send="SetTintColor 0,255,0"/>
+        <On Terms="ActorCreation" Send="AnimGroupApply Placement"/>
+        <On Terms="ActorCreation" Send="SetTintColor 150,100,50"/>
         <Model value="Bulb"/>
         <ModelFlags index="OutlineOccluder" value="1"/>
         <BuildModel value="EvolutionChamber"/>
@@ -570,6 +574,39 @@
             <Image value="Assets\Textures\wireframe-Xayid-casnoliskden.dds"/>
         </Wireframe>
     </CActorUnit>
+    <CActorModel id="XayidPlaceholderModel" parent="ModelAddition">
+        <Aliases index="0" value="_Main"/>
+        <Aliases value="_Unit"/>
+        <Aliases value="_Selectable"/>
+        <Filter index="Neutral" value="1"/>
+        <Filter index="Enemy" value="1"/>
+        <Inherits index="BaseModelScale" value="0"/>
+        <Inherits index="CastShadows" value="0"/>
+        <Inherits index="CloakEffect" value="0"/>
+        <Inherits index="CreepEngulfment" value="0"/>
+        <Inherits index="Decal" value="0"/>
+        <Inherits index="ModelMaterials" value="0"/>
+        <Inherits index="Opacity" value="0"/>
+        <Inherits index="Scale" value="0"/>
+        <Inherits index="TeamColor" value="0"/>
+        <Inherits index="TimeScale" value="0"/>
+        <Inherits index="TintColor" value="0"/>
+        <Inherits index="Visibility" value="0"/>
+        <Inherits index="WarpGroup" value="0"/>
+        <FogVisibility value="Visible"/>
+        <On index="0" Terms="ActorCreation; ModelIsLowQuality" Send="SetOpacity 0.300000"/>
+        <On index="1" Terms="ActorCreation" Send="AnimGroupApply Placement"/>
+        <On index="2" Terms="ActorCreation" Send="$Stand PlayForever"/>
+        <On Terms="ActorOrphan" Send="Destroy"/>
+        <On Terms="Signal.*.HidePlacement" Send="SetVisibility"/>
+        <On Terms="Signal.*.ShowPlacement" Send="SetVisibility 1"/>
+        <On Terms="ActorCreation" Send="SetOpacity 0.450000"/>
+        <On Terms="ActorCreation" Send="SetCastShadows"/>
+        <On Terms="ActorCreation" Send="ModelSwap Invisible"/>
+        <Host Subject=""/>
+        <HostSiteOps Ops="SOpTipabilityFloorScope"/>
+        <ModelFlags index="UseSyncSeed" value="0"/>
+    </CActorModel>
     <CActorModel id="XayidShrubBuild" parent="ZergBuildingBuild">
         <Model value="CasnoliskDenBuild"/>
     </CActorModel>
@@ -1422,6 +1459,8 @@
             <Image value="Assets\Textures\wireframe-Xayid-Xayidden.dds"/>
         </Wireframe>
         <On Terms="AbilTrain.XayidSproutFletch.Finish" Send="$Spell"/>
+        <PlacementActorModel value="XayidPlacementModel"/>
+        <PlaceholderActorModel value="XayidPlaceholderModel"/>
     </CActorUnit>
     <CActorModel id="BulbBuild" parent="ZergBuildingBuild">
         <Model value="XayidDenBuild"/>
@@ -1792,4 +1831,55 @@
     <CActorProgress id="ZergConstruction">
         <On index="9" Terms="Abil.XayidSproutStructures.BuiltStart"/>
     </CActorProgress>
+    <CActorModel id="BulbPlacement" parent="ModelAnimationStyleContinuous">
+        <Aliases value="_Main"/>
+        <Filter index="Neutral" value="1"/>
+        <Filter index="Enemy" value="1"/>
+        <FogVisibility value="Visible"/>
+        <On index="0" Terms="ActorCreation; ModelIsLowQuality" Send="SetOpacity 0.300000"/>
+        <On index="1" Terms="ActorCreation" Send="AnimGroupApply Placement"/>
+        <On index="2" Terms="ActorCreation" Send="$Stand PlayForever"/>
+        <On Terms="ActorOrphan" Send="Destroy"/>
+        <On Terms="Signal.*.HidePlacement" Send="SetVisibility"/>
+        <On Terms="Signal.*.ShowPlacement" Send="SetVisibility 1"/>
+        <On Terms="ActorCreation" Send="SetOpacity 0.450000"/>
+        <On Terms="ActorCreation" Send="SetCastShadows"/>
+        <On Terms="Behavior.StructureSeedLanded.Off" Send="Destroy"/>
+        <On Terms="Effect.XayidSproutBulbCP.Start; At Target" Send="Create"/>
+        <HostSiteOps Ops="SOpSourcePoint SOpTipabilityFloorScope SOpShadow SOpRotZ45"/>
+        <Model value="Bulb"/>
+        <ModelFlags index="AllowHitTest" value="0"/>
+    </CActorModel>
+    <CActorModel id="XayidPlacementModel" parent="ModelAddition">
+        <Aliases index="0" value="_Main"/>
+        <Aliases value="_Unit"/>
+        <Aliases value="_Selectable"/>
+        <Filter index="Neutral" value="1"/>
+        <Filter index="Enemy" value="1"/>
+        <Inherits index="BaseModelScale" value="0"/>
+        <Inherits index="CastShadows" value="0"/>
+        <Inherits index="CloakEffect" value="0"/>
+        <Inherits index="CreepEngulfment" value="0"/>
+        <Inherits index="Decal" value="0"/>
+        <Inherits index="ModelMaterials" value="0"/>
+        <Inherits index="Opacity" value="0"/>
+        <Inherits index="Scale" value="0"/>
+        <Inherits index="TeamColor" value="0"/>
+        <Inherits index="TimeScale" value="0"/>
+        <Inherits index="TintColor" value="0"/>
+        <Inherits index="Visibility" value="0"/>
+        <Inherits index="WarpGroup" value="0"/>
+        <FogVisibility value="Visible"/>
+        <On index="0" Terms="ActorCreation; ModelIsLowQuality" Send="SetOpacity 0.300000"/>
+        <On index="1" Terms="ActorCreation" Send="AnimGroupApply Placement"/>
+        <On index="2" Terms="ActorCreation" Send="$Stand PlayForever"/>
+        <On Terms="ActorOrphan" Send="Destroy"/>
+        <On Terms="Signal.*.HidePlacement" Send="SetVisibility"/>
+        <On Terms="Signal.*.ShowPlacement" Send="SetVisibility 1"/>
+        <On Terms="ActorCreation" Send="SetOpacity 0.450000"/>
+        <On Terms="ActorCreation" Send="SetCastShadows"/>
+        <Host Subject=""/>
+        <HostSiteOps Ops="SOpTipabilityFloorScope"/>
+        <ModelFlags index="UseSyncSeed" value="0"/>
+    </CActorModel>
 </Catalog>
