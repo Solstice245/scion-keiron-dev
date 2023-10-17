@@ -18,6 +18,40 @@
         <SpawnUnit value="CanopyRoots"/>
         <SpawnRange value="0"/>
     </CEffectCreateUnit>
+    <CEffectLaunchMissile id="DissuasionSpike">
+        <ValidatorArray index="0" removed="1"/>
+        <EditorCategories value="Race:Xayid"/>
+        <ImpactEffect value="DissuasionSpikeImpactSet"/>
+        <AmmoUnit value="SearingSpore"/>
+    </CEffectLaunchMissile>
+    <CEffectSet id="DissuasionSpikeImpactSet">
+        <EditorCategories value="Race:Xayid"/>
+        <EffectArray value="DissuasionSpikeDamage"/>
+        <EffectArray value="DissuasionSpikeEntangle"/>
+        <EffectArray value="PixieDissuasionSpikeSearchAir"/>
+        <EffectArray value="PixieDissuasionSpikeSearchGround"/>
+    </CEffectSet>
+    <CEffectDamage id="DissuasionSpikeDamage" parent="ScionDamageRangeVisible">
+        <EditorCategories value="Race:Xayid"/>
+        <Amount value="9"/>
+        <ExcludeArray index="0" removed="1"/>
+    </CEffectDamage>
+    <CEffectEnumArea id="PixieDissuasionSpikeSearchAir" parent="ScionEnumAreaEnemyAir">
+        <ValidatorArray value="TargetIsNotGround"/>
+        <EditorCategories value="Race:Xayid"/>
+        <AreaArray Radius="1" Effect="DissuasionSpikeEntangle"/>
+    </CEffectEnumArea>
+    <CEffectEnumArea id="PixieDissuasionSpikeSearchGround" parent="ScionEnumAreaEnemyGround">
+        <ValidatorArray value="GroundUnitFilter"/>
+        <EditorCategories value="Race:Xayid"/>
+        <AreaArray Radius="1" Effect="DissuasionSpikeEntangle"/>
+    </CEffectEnumArea>
+    <CEffectApplyBehavior id="DissuasionSpikeEntangle" parent="ScionApplyBehavior">
+        <ValidatorArray index="0" value="NotStructureTarget"/>
+        <ValidatorArray value="NotFrenzied"/>
+        <EditorCategories value="Race:Xayid"/>
+        <Behavior value="PixieEntangled"/>
+    </CEffectApplyBehavior>
     <CEffectCreateUnit id="StemRootsCU">
         <EditorCategories value="Race:Xayid"/>
         <WhichLocation Value="CasterUnit"/>
@@ -147,6 +181,9 @@
         <CmdFlags index="Queued" value="1"/>
         <Target Effect="XayidSproutBiome" Value="TargetPoint"/>
     </CEffectIssueOrder>
+    <CEffectApplyBehavior id="XayidSproutStun">
+        <EditorCategories value="Race:Xayid"/>
+    </CEffectApplyBehavior>
     <CEffectEnumArea id="XayidStructuresKnockback5x5SA">
         <EditorCategories value="Race:Xayid"/>
         <SearchFilters value="Ground;Self,Neutral,Structure,Missile,Dead,Hidden"/>
@@ -223,11 +260,10 @@
         <AmmoUnit value="SnareAttackMissile"/>
     </CEffectLaunchMissile>
     <CEffectApplyBehavior id="SnareEntangleAB" parent="ScionApplyBehavior">
-        <ValidatorArray index="0" value="TargetIsEnemy"/>
-        <ValidatorArray value="NotStructureTarget"/>
+        <ValidatorArray index="0" value="NotStructureTarget"/>
         <ValidatorArray value="NotFrenzied"/>
         <EditorCategories value="Race:Xayid"/>
-        <Behavior value="XayidEntangled"/>
+        <Behavior value="SnareEntangled"/>
     </CEffectApplyBehavior>
     <CEffectEnumArea id="SnareEntangleArea" parent="ScionEnumAreaEnemyGround">
         <EditorCategories value="Race:Xayid"/>

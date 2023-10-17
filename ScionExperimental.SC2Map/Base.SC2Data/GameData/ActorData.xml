@@ -84,6 +84,13 @@
             <Image value="Assets\Textures\wireframe-Xayid-Xayidden.dds"/>
         </Wireframe>
     </CActorUnit>
+    <CActorSplat id="FletchSproutBurrowedSplat" parent="BurrowedSplat" unitName="FletchSprout">
+        <On index="2" Terms="UnitBirth.FletchSprout" Send="Create"/>
+        <On index="3" Terms="AbilMorph.*.Start; MorphTo FletchSprout" Send="Create"/>
+        <On index="4" Terms="AbilMorph.*.Finish; MorphFrom FletchSprout" Send="RefClear ::Host"/>
+        <On index="5" Terms="AbilMorph.*.Start; MorphFrom FletchSprout" Send="TimerSet 4.000000,2.000000 DelayDestroy"/>
+        <Scale value="0.750000"/>
+    </CActorSplat>
     <CActorUnit id="LotusRoots" parent="GenericUnitStandard" unitName="LotusRoots">
         <On Terms="ActorCreation" Send="SetOpacity 0.300000"/>
         <On Terms="ActorCreation" Send="SetTintColor 0,255,0"/>
@@ -177,6 +184,16 @@
             <Image value="Assets\Textures\wireframe-Xayid-feedingpool.dds"/>
         </Wireframe>
     </CActorUnit>
+    <CActorAction id="PixieAttack" parent="GenericAttack" effectImpact="DissuasionSpikeImpactSet" effectLaunch="DissuasionSpike">
+        <LaunchAttachQuery Methods="AMFilterWeapon AMFilterWeapon01"/>
+        <LaunchAssets Model="RaptorAttackLaunch" Sound="ParasiticBombLaunch"/>
+        <Beam value="RaptorAttackBeam"/>
+        <Missile value="RaptorAttackMissile"/>
+        <ImpactMap index="None" Model="RavagerWeaponImpact" Sound="Ravager_Attack_Impact" ModelReaction="RaptorAttackImpactReaction"/>
+        <ImpactMap index="Shield" Sound="RaptorAttackImpactShield" ModelReaction="RaptorAttackImpactReactionShield"/>
+        <DamageMap index="None" Model="RaptorAttackDamage" Sound="RaptorAttackDamage" ModelReaction="RaptorAttackDamageReaction"/>
+        <DamageMap index="Shield" Sound="RaptorAttackDamageShield" ModelReaction="RaptorAttackDamageReactionShield"/>
+    </CActorAction>
     <CActorUnit id="Reservoir2" parent="ZergBuilding" unitName="ReservoirRoots">
         <On index="69" Terms="ActorCreation" Send="SetOpacity 0.300000"/>
         <On index="70" Terms="ActorCreation" Send="SetTintColor 0,255,0"/>
@@ -206,6 +223,16 @@
         <LocalAxis value="0.000000,0.000000,1.000000"/>
         <InitialAngle value="45.000000"/>
     </CActorSiteOpRotator>
+    <CActorModel id="ScionXayidUnitSeedLand" parent="ModelAnimationStyleOneShotEffect" Effect="XayidUnitSeedLandAB">
+        <On Terms="Behavior.XayidSproutStun.On" Send="Create"/>
+        <AutoScaleFactor value="1.000000"/>
+    </CActorModel>
+    <CActorSound id="ScionXayid_UnitSeedLand" parent="SoundOneShotScion" Effect="XayidUnitSeedLandAB">
+        <Sound value="Scion_XayidUnitSeedLand"/>
+    </CActorSound>
+    <CActorSound id="ScionXayid_UnitSprout" parent="SoundOneShotScion" Behavior="XayidSproutStun">
+        <Sound value="Scion_XayidUnitSeedSprout"/>
+    </CActorSound>
     <CActorUnit id="Spriggan" parent="GenericUnitXayid" unitName="Spriggan">
         <Aliases value="_UnitLarge"/>
         <DeathArray index="Normal" ModelLink="DefilerMPDeath" SoundLink="Spitter_Explode" VoiceLink="SpitterDeathVoice"/>
@@ -611,8 +638,7 @@
         <Model value="CasnoliskDenBuild"/>
     </CActorModel>
     <CActorUnit id="XayidShrub" parent="ZergBuilding" unitName="XayidShrub">
-        <On Terms="Abil.CasnoliskDenResearch.Start" Send="AnimBracketStart Spell Spell Spell"/>
-        <On Terms="Abil.CasnoliskDenResearch.Stop" Send="AnimBracketStop Spell"/>
+        <On Terms="AbilTrain.XayidSproutSage.Finish" Send="$Spell"/>
         <HostSiteOps Ops="CasnoliskDenOffsetSoP"/>
         <DeathArray index="Normal" ModelLink="NydusNetworkDeath" SoundLink="NydusNetwork_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="ZergBuildingDeathLarge" SoundLink="InfestationPit_Explode"/>
@@ -688,10 +714,8 @@
         <On Terms="AnimDone; AnimName Death" Send="Destroy"/>
         <Host Subject="_Selectable"/>
         <HostSiteOps Ops="SOpAttachOriginStationary"/>
-        <Model value="FletchBlossom"/>
+        <Model value="FletchSprout"/>
     </CActorModel>
-    <CActorModelMaterial id="Fletch_Mat_EmissiveUp0" parent="GlazeParent"/>
-    <CActorModelMaterial id="Fletch_Mat_EmissiveUp1" parent="GlazeParent"/>
     <CActorModel id="ReservoirBuild" parent="ZergBuildingBuild">
         <Model value="MutagenChamberBuild"/>
     </CActorModel>
@@ -1063,12 +1087,9 @@
         <On Terms="AbilMorph.XayidMorphFletch.Finish; MorphTo Fletch" Send="Create"/>
         <On Terms="AbilMorph.XayidMorphFletch.Start" Send="Destroy"/>
         <On Terms="UnitMovementUpdate.*.Walk; AnimPlaying Birth" Send="AnimClear Birth"/>
-        <On Terms="ActorCreation; !ValidatePlayer XayidlingOcularAcuity" Send="ModelMaterialApply Fletch_Mat_EmissiveUp0"/>
-        <On Terms="ActorCreation; ValidatePlayer XayidlingOcularAcuity" Send="ModelMaterialApply Fletch_Mat_EmissiveUp1"/>
-        <On Terms="Upgrade.OcularAcuity.Add" Send="ModelMaterialRemove Fletch_Mat_EmissiveUp0"/>
-        <On Terms="Upgrade.OcularAcuity.Add" Send="ModelMaterialApply Fletch_Mat_EmissiveUp1"/>
-        <On Terms="Upgrade.OcularAcuity.Remove" Send="ModelMaterialApply Fletch_Mat_EmissiveUp0"/>
-        <On Terms="Upgrade.OcularAcuity.Remove" Send="ModelMaterialRemove Fletch_Mat_EmissiveUp1"/>
+        <On Terms="ActorCreation; ValidatePlayer XayidlingOcularAcuity" Send="AnimPlay Cover Cover PlayForever"/>
+        <On Terms="Upgrade.OcularAcuity.Add" Send="AnimPlay Cover Cover PlayForever"/>
+        <On Terms="Upgrade.OcularAcuity.Remove" Send="AnimClear Cover"/>
         <DeathArray index="Normal" ModelLink="Fletch" SoundLink="Xayidling_Explode" VoiceLink="XayidlingDeathVoice"/>
         <PortraitModel value="UltraliskPortrait"/>
         <TerrainSquibs>
@@ -1449,14 +1470,14 @@
         <PortraitModel value="ZergBuildingEx2_Portrait"/>
         <BarWidth value="150"/>
         <GroupIcon>
-            <Image value="Assets\Textures\wireframe-Xayid-Xayidden.dds"/>
+            <Image value="Assets\Textures\wireframe-xayid-bulb.dds"/>
         </GroupIcon>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-buildingarmor.dds"/>
         <SoundArray index="Birth" value=""/>
         <SoundArray index="What" value="RoachWarren_What"/>
-        <UnitIcon value="Assets\Textures\btn-building-Xayid-Xayidden.dds"/>
+        <UnitIcon value="Assets\Textures\btn-building-xayid-bulb.dds"/>
         <Wireframe>
-            <Image value="Assets\Textures\wireframe-Xayid-Xayidden.dds"/>
+            <Image value="Assets\Textures\wireframe-xayid-bulb.dds"/>
         </Wireframe>
         <On Terms="AbilTrain.XayidSproutFletch.Finish" Send="$Spell"/>
         <PlacementActorModel value="XayidPlacementModel"/>
@@ -1534,7 +1555,7 @@
         <Model value="Invisible"/>
     </CActorUnit>
     <CActorAction id="XayidlingAttack">
-        <LaunchSiteOps Ops="SOpAttachHarness SOpMoveByDot3 SOpMoveUpByDot1"/>
+        <LaunchModel value="GenericAttackLaunchModel"/>
     </CActorAction>
     <CActorUnit id="PixieDummy" parent="GenericUnitXayid" unitName="PixieDummy">
         <Model value="Invisible"/>
@@ -1542,13 +1563,6 @@
     <CActorUnit id="FletchSeed" parent="GenericUnitXayid" unitName="FletchSeed">
         <Macros index="3" value="PhysicsDeathsSwarmAir"/>
         <Macros index="4" value="PhysicsDeathsVoidAir"/>
-        <On Terms="ActorCreation; !ValidatePlayer XayidlingOcularAcuity" Send="ModelMaterialApply Fletch_Mat_EmissiveUp0"/>
-        <On Terms="ActorCreation; ValidatePlayer XayidlingOcularAcuity" Send="ModelMaterialApply Fletch_Mat_EmissiveUp1"/>
-        <On Terms="AbilMorph; MorphFrom FletchSeed; MorphTo FletchSprout" Send="AnimBracketStart Spell Stand,Spell,Start Stand,Spell"/>
-        <On Terms="Upgrade.OcularAcuity.Add" Send="ModelMaterialRemove Fletch_Mat_EmissiveUp0"/>
-        <On Terms="Upgrade.OcularAcuity.Add" Send="ModelMaterialApply Fletch_Mat_EmissiveUp1"/>
-        <On Terms="Upgrade.OcularAcuity.Remove" Send="ModelMaterialApply Fletch_Mat_EmissiveUp0"/>
-        <On Terms="Upgrade.OcularAcuity.Remove" Send="ModelMaterialRemove Fletch_Mat_EmissiveUp1"/>
         <HostSiteOps Ops="SOpBankerQueenMP"/>
         <PortraitModel value="GuardianMPPortrait"/>
         <BarOffset value="38"/>
@@ -1566,6 +1580,9 @@
             <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
         </Wireframe>
         <AnimBlendTime value="0.750000"/>
+        <On Terms="UnitBirth.FletchSeed" Send="AnimPlay Work Fly PlayForever"/>
+        <On Terms="Effect.XayidUnitSeedLandLM.Start" Send="AnimPlay Jump Land PlayForever"/>
+        <On Terms="AbilMorph.*.Finish; MorphTo FletchSprout" Send="Destroy"/>
     </CActorUnit>
     <CActorUnit id="ForagerSeed" parent="GenericUnitXayid" unitName="ForagerSeed">
         <Macros index="3" value="PhysicsDeathsSwarmAir"/>
@@ -1692,11 +1709,9 @@
         </Wireframe>
     </CActorUnit>
     <CActorUnit id="FletchSprout" parent="GenericUnitXayid" unitName="FletchSprout">
-        <On Terms="UnitBirth.FletchSprout" Send="AnimPlay Spell Stand,Spell,Start 0 0.000000"/>
-        <Model value="FletchSeed"/>
+        <On Terms="AbilMorph.*.Start; MorphTo FletchSprout" Send="Create"/>
+        <On Terms="AbilMorph.*.Start; MorphTo FletchSprout" Send="$Birth 0 0.000000"/>
         <Baselines index="Stand" AnimProps="Stand,Spell"/>
-        <BuildModel value="FletchSeed"/>
-        <PlacementModel value="FletchSeed"/>
         <PortraitModel value="GuardianMPPortrait"/>
         <BarOffset value="38"/>
         <BarWidth value="40"/>
@@ -1712,6 +1727,7 @@
         <Wireframe>
             <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
         </Wireframe>
+        <DeathArray index="Normal" ModelLink="FletchSprout"/>
     </CActorUnit>
     <CActorUnit id="ForagerSprout" parent="GenericUnitXayid" unitName="ForagerSprout">
         <Model value="StructureSeed"/>
