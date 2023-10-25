@@ -70,13 +70,13 @@
         <SpawnUnit value="LotusRoots"/>
         <SpawnRange value="0"/>
     </CEffectCreateUnit>
-    <CEffectCreateUnit id="ThistleRootsCU">
+    <CEffectCreateUnit id="TrunkRootsCU">
         <EditorCategories value="Race:Xayid"/>
         <WhichLocation Value="CasterUnit"/>
         <CreateFlags index="OffsetByRadius" value="0"/>
         <CreateFlags index="Placement" value="0"/>
         <CreateFlags index="NormalizeSpawnOffset" value="0"/>
-        <SpawnUnit value="ThistleRoots"/>
+        <SpawnUnit value="TrunkRoots"/>
         <SpawnRange value="0"/>
     </CEffectCreateUnit>
     <CEffectCreateUnit id="ReservoirRootsCU">
@@ -184,10 +184,16 @@
     <CEffectApplyBehavior id="XayidSproutStun">
         <EditorCategories value="Race:Xayid"/>
     </CEffectApplyBehavior>
+    <CEffectSet id="XayidStructuresKnockbackSet">
+        <ValidatorArray value="TargetUnitIsInBuildingPathing"/>
+        <EditorCategories value="Race:Xayid"/>
+        <EffectArray value="TerranBuildingKnockBack2Set"/>
+    </CEffectSet>
     <CEffectEnumArea id="XayidStructuresKnockback5x5SA">
         <EditorCategories value="Race:Xayid"/>
-        <SearchFilters value="Ground;Self,Neutral,Structure,Missile,Dead,Hidden"/>
-        <AreaArray Radius="1.9" Effect="TerranBuildingKnockBack2Set"/>
+        <SearchFilters value="Ground;Self,Neutral,Structure,Missile,Buried,Dead,Hidden"/>
+        <AreaArray Radius="2.6" Effect="XayidStructuresKnockbackSet"/>
+        <DebugTrace value="1"/>
     </CEffectEnumArea>
     <CEffectApplyBehavior id="CreeperSproutCankerAB">
         <EditorCategories value="Race:Xayid"/>
@@ -294,14 +300,14 @@
     <CEffectEnumArea id="XayidStructuresKnockback3x3SA">
         <EditorCategories value=""/>
         <DebugTrace value="1"/>
-        <SearchFilters value="Ground;Self,Neutral,Structure,Missile,Dead,Hidden"/>
-        <AreaArray Radius="0.9" Effect="TerranBuildingKnockBack2Set"/>
+        <SearchFilters value="Ground;Self,Neutral,Structure,Missile,Buried,Dead,Hidden"/>
+        <AreaArray Radius="1.6" Effect="XayidStructuresKnockbackSet"/>
     </CEffectEnumArea>
     <CEffectEnumArea id="XayidStructuresKnockback2x2SA">
         <EditorCategories value="Race:Xayid"/>
         <DebugTrace value="1"/>
-        <SearchFilters value="Ground;Self,Neutral,Structure,Missile,Dead,Hidden"/>
-        <AreaArray Radius="0.6" Effect="TerranBuildingKnockBack2Set"/>
+        <SearchFilters value="Ground;Self,Neutral,Structure,Missile,Buried,Dead,Hidden"/>
+        <AreaArray Radius="1.1" Effect="XayidStructuresKnockbackSet"/>
     </CEffectEnumArea>
     <CEffectCreatePersistent id="UnknownEffect">
         <EditorCategories value="Race:Xayid"/>
@@ -394,16 +400,16 @@
         <SearchFilters value="-;Ally,Neutral,Enemy,Missile,Stasis,Dead,Hidden"/>
         <AreaArray Radius="8" Effect="XayidPollinationAB"/>
     </CEffectEnumArea>
-    <CEffectIssueOrder id="XayidScorpaliskSeedStop">
+    <CEffectIssueOrder id="XayidStingerSeedStopOrder">
         <EditorCategories value="Race:Xayid"/>
         <WhichUnit Value="Caster"/>
-        <Abil value="XayidScorpaliskSeedLand"/>
+        <Abil value="XayidStingerSeedLand"/>
         <Target Value="CasterUnitOrPoint"/>
     </CEffectIssueOrder>
-    <CEffectIssueOrder id="XayidMendlingSeedStop">
+    <CEffectIssueOrder id="XayidSageSeedStopOrder">
         <EditorCategories value="Race:Xayid"/>
         <WhichUnit Value="Caster"/>
-        <Abil value="XayidMendlingSeedLand"/>
+        <Abil value="XayidSageSeedLand"/>
         <Target Value="CasterUnitOrPoint"/>
     </CEffectIssueOrder>
     <CEffectIssueOrder id="XayidSproutCanopyPlacementOrder">
@@ -586,11 +592,11 @@
         <CmdFlags index="Queued" value="1"/>
         <Target Effect="XayidSproutSiphon" Value="TargetPoint"/>
     </CEffectIssueOrder>
-    <CEffectIssueOrder id="XayidSproutThistlePlacementOrder">
+    <CEffectIssueOrder id="XayidSproutTrunkPlacementOrder">
         <EditorCategories value="Race:Xayid"/>
         <Abil value="XayidSproutLotusPlacementDummy"/>
         <CmdFlags index="Queued" value="1"/>
-        <Target Effect="XayidSproutThistleInit" Value="TargetPoint"/>
+        <Target Effect="XayidSproutTrunkInit" Value="TargetPoint"/>
     </CEffectIssueOrder>
     <CEffectCreatePersistent id="XayidSproutCanopyCP">
         <EditorCategories value="Race:Xayid"/>
@@ -684,48 +690,48 @@
         <EffectArray value="XayidSproutStemPlacementOrder"/>
         <EffectArray value="XayidSproutStemOrder"/>
     </CEffectSet>
-    <CEffectCreatePersistent id="XayidSproutThistleInit">
+    <CEffectCreatePersistent id="XayidSproutTrunkInit">
         <EditorCategories value="Race:Xayid"/>
-        <InitialEffect value="XayidSproutThistleCU"/>
+        <InitialEffect value="XayidSproutTrunkCU"/>
     </CEffectCreatePersistent>
-    <CEffectCreatePersistent id="XayidSproutThistleCP">
+    <CEffectCreatePersistent id="XayidSproutTrunkCP">
         <EditorCategories value="Race:Xayid"/>
         <WhichLocation Value="TargetUnit"/>
         <Flags index="PersistUntilDestroyed" value="1"/>
         <InitialEffect value="RotateFacing180Target"/>
         <PeriodicValidator value="TargetNotDead"/>
-        <PeriodicEffectArray value="XayidSproutThistleSet"/>
+        <PeriodicEffectArray value="XayidSproutTrunkSet"/>
         <PeriodicPeriodArray value="0.0625"/>
     </CEffectCreatePersistent>
-    <CEffectCreateUnit id="XayidSproutThistleCU">
+    <CEffectCreateUnit id="XayidSproutTrunkCU">
         <EditorCategories value="Race:Xayid"/>
         <WhichLocation Value="CasterPoint"/>
-        <Origin Effect="XayidSproutThistleInit" Value="TargetPoint"/>
+        <Origin Effect="XayidSproutTrunkInit" Value="TargetPoint"/>
         <CreateFlags index="SetFacing" value="1"/>
         <SpawnOwner Value="Caster"/>
-        <SpawnEffect value="XayidSproutThistleCP"/>
+        <SpawnEffect value="XayidSproutTrunkCP"/>
         <SpawnUnit value="StructureSeedMedium"/>
     </CEffectCreateUnit>
     <CEffectCreatePersistent id="XayidSproutBiome">
         <EditorCategories value="Race:Xayid"/>
         <InitialEffect value="XayidSproutBiomeCU"/>
     </CEffectCreatePersistent>
-    <CEffectIssueOrder id="XayidSproutThistleLand">
+    <CEffectIssueOrder id="XayidSproutTrunkLand">
         <EditorCategories value="Race:Xayid"/>
         <Abil value="XayidStructureSeedLand"/>
-        <Target Effect="XayidSproutThistleInit" Value="TargetPoint"/>
+        <Target Effect="XayidSproutTrunkInit" Value="TargetPoint"/>
     </CEffectIssueOrder>
     <CEffectIssueOrder id="XayidSproutBiomeLand">
         <EditorCategories value="Race:Xayid"/>
         <Abil value="XayidStructureSeedLand"/>
         <Target Effect="XayidSproutBiome" Value="TargetPoint"/>
     </CEffectIssueOrder>
-    <CEffectIssueOrder id="XayidSproutThistleOrder">
+    <CEffectIssueOrder id="XayidSproutTrunkOrder">
         <EditorCategories value="Race:Xayid"/>
         <Abil value="XayidSproutStructures"/>
         <AbilCmdIndex value="9"/>
         <CmdFlags index="Queued" value="1"/>
-        <Target Effect="XayidSproutThistleInit" Value="TargetPoint"/>
+        <Target Effect="XayidSproutTrunkInit" Value="TargetPoint"/>
     </CEffectIssueOrder>
     <CEffectIssueOrder id="XayidSproutBiomeOrder">
         <EditorCategories value="Race:Xayid"/>
@@ -734,12 +740,12 @@
         <CmdFlags index="Queued" value="1"/>
         <Target Effect="XayidSproutBiome" Value="TargetPoint"/>
     </CEffectIssueOrder>
-    <CEffectSet id="XayidSproutThistleSet">
+    <CEffectSet id="XayidSproutTrunkSet">
         <ValidatorArray value="TargetHasNoOrders"/>
         <EditorCategories value="Race:Xayid"/>
-        <EffectArray value="XayidSproutThistleLand"/>
-        <EffectArray value="XayidSproutThistlePlacementOrder"/>
-        <EffectArray value="XayidSproutThistleOrder"/>
+        <EffectArray value="XayidSproutTrunkLand"/>
+        <EffectArray value="XayidSproutTrunkPlacementOrder"/>
+        <EffectArray value="XayidSproutTrunkOrder"/>
     </CEffectSet>
     <CEffectSet id="XayidSproutBiomeSet">
         <ValidatorArray value="TargetHasNoOrders"/>
@@ -896,13 +902,13 @@
     </CEffectSet>
     <CEffectIssueOrder id="XayidSproutSageLand">
         <EditorCategories value="Race:Xayid"/>
-        <Abil value="XayidMendlingSeedLand"/>
+        <Abil value="XayidSageSeedLand"/>
         <Target Effect="XayidSproutSageCU" Value="TargetUnitOrPoint"/>
     </CEffectIssueOrder>
-    <CEffectIssueOrder id="XayidSproutScorpaliskLand">
+    <CEffectIssueOrder id="XayidSproutStingerLand">
         <EditorCategories value="Race:Xayid"/>
-        <Abil value="XayidScorpaliskSeedLand"/>
-        <Target Effect="XayidSproutScorpaliskCU" Value="TargetUnitOrPoint"/>
+        <Abil value="XayidStingerSeedLand"/>
+        <Target Effect="XayidSproutStingerCU" Value="TargetUnitOrPoint"/>
     </CEffectIssueOrder>
     <CEffectCreatePersistent id="XayidSproutReservoirInit">
         <EditorCategories value="Race:Xayid"/>
@@ -965,19 +971,19 @@
         <EditorCategories value="Race:Xayid"/>
         <Abil value="XayidMorphSeedSage"/>
     </CEffectIssueOrder>
-    <CEffectCreatePersistent id="XayidSproutScorpaliskCP">
+    <CEffectCreatePersistent id="XayidSproutStingerCP">
         <EditorCategories value="Race:Xayid"/>
         <WhichLocation Value="TargetUnit"/>
         <Flags index="PersistUntilDestroyed" value="1"/>
         <InitialDelay value="0.375"/>
         <PeriodicValidator value="TargetNotDead"/>
-        <PeriodicEffectArray value="XayidSproutScorpaliskSet"/>
+        <PeriodicEffectArray value="XayidSproutStingerSet"/>
         <PeriodicPeriodArray value="0.0625"/>
     </CEffectCreatePersistent>
-    <CEffectIssueOrder id="XayidSproutScorpaliskOrder">
+    <CEffectIssueOrder id="XayidSproutStingerOrder">
         <ValidatorArray value="UnitSeedIsLandedTarget"/>
         <EditorCategories value="Race:Xayid"/>
-        <Abil value="XayidMorphSeedScorpalisk"/>
+        <Abil value="XayidMorphSeedStinger"/>
     </CEffectIssueOrder>
     <CEffectCreatePersistent id="XayidSproutPixieCP">
         <EditorCategories value="Race:Xayid"/>
@@ -1038,7 +1044,7 @@
         <SpawnUnit value="SageSeed"/>
         <SpawnRange value="0"/>
     </CEffectCreateUnit>
-    <CEffectCreateUnit id="XayidSproutScorpaliskCU">
+    <CEffectCreateUnit id="XayidSproutStingerCU">
         <EditorCategories value="Race:Xayid"/>
         <WhichLocation Value="CasterUnitOrPoint"/>
         <Origin Value="TargetPoint"/>
@@ -1046,8 +1052,8 @@
         <CreateFlags index="Placement" value="0"/>
         <CreateFlags index="SetFacing" value="1"/>
         <CreateFlags index="NormalizeSpawnOffset" value="0"/>
-        <SpawnEffect value="XayidSproutScorpaliskCUSet"/>
-        <SpawnUnit value="ScorpaliskSeed"/>
+        <SpawnEffect value="XayidSproutStingerCUSet"/>
+        <SpawnUnit value="StingerSeed"/>
         <SpawnRange value="0"/>
     </CEffectCreateUnit>
     <CEffectCreateUnit id="XayidSproutPixieCU">
@@ -1083,11 +1089,11 @@
         <EffectArray value="XayidSproutSageKill"/>
         <EffectArray value="CopyCasterRally"/>
     </CEffectSet>
-    <CEffectSet id="XayidSproutScorpaliskCUSet">
+    <CEffectSet id="XayidSproutStingerCUSet">
         <EditorCategories value="Race:Xayid"/>
         <EffectArray value="RotateFacing180Target"/>
-        <EffectArray value="XayidSproutScorpaliskCP"/>
-        <EffectArray value="XayidSproutScorpaliskKill"/>
+        <EffectArray value="XayidSproutStingerCP"/>
+        <EffectArray value="XayidSproutStingerKill"/>
         <EffectArray value="CopyCasterRally"/>
     </CEffectSet>
     <CEffectSet id="XayidSproutPixieCUSet">
@@ -1115,9 +1121,9 @@
         <Flags index="Kill" value="1"/>
         <Death value="Remove"/>
     </CEffectDamage>
-    <CEffectDamage id="XayidSproutScorpaliskKill">
+    <CEffectDamage id="XayidSproutStingerKill">
         <EditorCategories value="Race:Xayid"/>
-        <ImpactLocation Effect="XayidSproutScorpaliskCU" Value="TargetUnit"/>
+        <ImpactLocation Effect="XayidSproutStingerCU" Value="TargetUnit"/>
         <Flags index="Kill" value="1"/>
         <Death value="Remove"/>
     </CEffectDamage>
@@ -1137,7 +1143,7 @@
         <Abil value="SeedMove"/>
         <Target Value="SourceUnitOrPoint"/>
     </CEffectIssueOrder>
-    <CEffectIssueOrder id="XayidSproutScorpaliskMove">
+    <CEffectIssueOrder id="XayidSproutStingerMove">
         <EditorCategories value="Race:Xayid"/>
         <Abil value="SeedMove"/>
         <Target Value="SourceUnitOrPoint"/>
@@ -1159,11 +1165,11 @@
         <EffectArray value="XayidSproutSageLand"/>
         <EffectArray value="XayidSproutSageOrder"/>
     </CEffectSet>
-    <CEffectSet id="XayidSproutScorpaliskSet">
+    <CEffectSet id="XayidSproutStingerSet">
         <EditorCategories value="Race:Xayid"/>
-        <EffectArray value="XayidSproutScorpaliskMove"/>
-        <EffectArray value="XayidSproutScorpaliskLand"/>
-        <EffectArray value="XayidSproutScorpaliskOrder"/>
+        <EffectArray value="XayidSproutStingerMove"/>
+        <EffectArray value="XayidSproutStingerLand"/>
+        <EffectArray value="XayidSproutStingerOrder"/>
     </CEffectSet>
     <CEffectCreatePersistent id="XayidSproutFletch">
         <EditorCategories value="Race:Xayid"/>
@@ -1361,7 +1367,7 @@
         <SpawnUnit value="ForagerSprout"/>
         <SpawnRange value="5"/>
     </CEffectCreateUnit>
-    <CEffectCreateUnit id="XayidMendlingSeedLandCU">
+    <CEffectCreateUnit id="XayidSageSeedLandCU">
         <ValidatorArray value="UnitSeedNotLandedCaster"/>
         <EditorCategories value="Race:Xayid"/>
         <WhichLocation Value="TargetPoint"/>
@@ -1378,7 +1384,7 @@
         <SpawnUnit value="SageSprout"/>
         <SpawnRange value="5"/>
     </CEffectCreateUnit>
-    <CEffectCreateUnit id="XayidScorpaliskSeedLandCU">
+    <CEffectCreateUnit id="XayidStingerSeedLandCU">
         <ValidatorArray value="UnitSeedNotLandedCaster"/>
         <EditorCategories value="Race:Xayid"/>
         <WhichLocation Value="TargetPoint"/>
@@ -1392,7 +1398,7 @@
         <CreateFlags index="NormalizeSpawnOffset" value="0"/>
         <SpawnOwner Value="Neutral"/>
         <SpawnEffect value="XayidUnitSeedLandCUSet"/>
-        <SpawnUnit value="ScorpaliskSprout"/>
+        <SpawnUnit value="StingerSprout"/>
         <SpawnRange value="5"/>
     </CEffectCreateUnit>
 </Catalog>

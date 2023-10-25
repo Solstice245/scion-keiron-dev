@@ -45,6 +45,56 @@
             <Image value="Assets\Textures\wireframe-Xayid-biomasscavern.dds"/>
         </Wireframe>
     </CActorUnit>
+    <CActorUnit id="Stinger" parent="GenericUnitXayid" unitName="Stinger">
+        <Aliases value="_UnitMedium"/>
+        <On Terms="ActorCreation; ValidatePlayer ScorpaliskMetabloicsCompleted" Send="AnimGroupApply Superior"/>
+        <On Terms="Upgrade.ScorpaliskMetabolics.Add" Send="AnimGroupApply Superior"/>
+        <On Terms="Upgrade.ScorpaliskMetabolics.Remove" Send="AnimGroupRemove Superior"/>
+        <On Terms="AbilMorph.XayidMorphStinger.Start" Send="Destroy"/>
+        <DeathArray index="Normal" SoundLink="Scorpalisk_Explode" VoiceLink="ScorpaliskDeathVoice"/>
+        <PortraitModel value="ZerglingPortrait"/>
+        <TerrainSquibs>
+            <MovementDistance value="0.150000,0.150000"/>
+            <IdlePeriod value="0.100000,0.250000"/>
+            <RangeUp value="0.600000"/>
+            <RangeDown value="1.000000"/>
+            <AttachQuery Methods="AMFilterCenter"/>
+            <Visuals TerrainPhysicsMaterial="Water" ActorModel="TerrainSquibHarnessContinuous" ModelLink="WaterRippleLarge"/>
+        </TerrainSquibs>
+        <WalkAnimMoveSpeed value="3"/>
+        <BarOffset value="55"/>
+        <BarWidth value="68"/>
+        <GroupIcon>
+            <Image index="0" value="Assets\Textures\wireframe-Xayid-Scorpalisk.dds"/>
+        </GroupIcon>
+        <SoundArray index="Ready" value="Scorpalisk_Ready"/>
+        <SoundArray index="What" value="Scorpalisk_What"/>
+        <SoundArray index="Yes" value="Scorpalisk_Yes"/>
+        <SoundArray index="Attack" value="Scorpalisk_Attack"/>
+        <UnitIcon value="Assets\Textures\btn-unit-Xayid-Scorpalisk.dds"/>
+        <Wireframe>
+            <Image index="0" value="Assets\Textures\wireframe-Xayid-Scorpalisk.dds"/>
+        </Wireframe>
+    </CActorUnit>
+    <CActorModel id="ShrubPlacement" parent="ModelAnimationStyleContinuous">
+        <Aliases value="_Main"/>
+        <Filter index="Neutral" value="1"/>
+        <Filter index="Enemy" value="1"/>
+        <FogVisibility value="Visible"/>
+        <On index="0" Terms="ActorCreation; ModelIsLowQuality" Send="SetOpacity 0.300000"/>
+        <On index="1" Terms="ActorCreation" Send="AnimGroupApply Placement"/>
+        <On index="2" Terms="ActorCreation" Send="$Stand PlayForever"/>
+        <On Terms="ActorOrphan" Send="Destroy"/>
+        <On Terms="Signal.*.HidePlacement" Send="SetVisibility"/>
+        <On Terms="Signal.*.ShowPlacement" Send="SetVisibility 1"/>
+        <On Terms="ActorCreation" Send="SetOpacity 0.450000"/>
+        <On Terms="ActorCreation" Send="SetCastShadows"/>
+        <On Terms="Behavior.StructureSeedLanded.Off" Send="Destroy"/>
+        <On Terms="Effect.XayidSproutShrubCP.Start; At Target" Send="Create"/>
+        <HostSiteOps Ops="SOpSourcePoint SOpTipabilityFloorScope SOpShadow"/>
+        <Model value="XayidShrub"/>
+        <ModelFlags index="AllowHitTest" value="0"/>
+    </CActorModel>
     <CActorUnit id="CanopyRoots" parent="GenericUnitStandard" unitName="CanopyRoots">
         <On Terms="ActorCreation" Send="SetOpacity 0.300000"/>
         <On Terms="ActorCreation" Send="SetTintColor 0,255,0"/>
@@ -324,10 +374,10 @@
         <On Terms="ActorCreation" Send="SetTintColor 150,100,50"/>
         <Model value="Bulb"/>
         <ModelFlags index="OutlineOccluder" value="1"/>
-        <BuildModel value="EvolutionChamber"/>
+        <BuildModel value="Bulb"/>
         <PlacementModel value="Bulb"/>
-        <PlacementActorModel value="ZergPlacementModel"/>
-        <PlaceholderActorModel value="ZergPlacementModel"/>
+        <PlacementActorModel value="XayidPlacementModel"/>
+        <PlaceholderActorModel value="XayidPlaceholderModel"/>
         <PortraitModel value="ZergBuildingEx2_Portrait"/>
         <BarWidth value="150"/>
         <GroupIcon>
@@ -512,13 +562,13 @@
         <HostSiteOps Ops="SOpAttachWeapon01"/>
         <Model value="Scion_SageGraftLaunch"/>
     </CActorModel>
-    <CActorUnit id="ThistleRoots" parent="GenericUnitStandard" unitName="ThistleRoots">
+    <CActorUnit id="TrunkRoots" parent="GenericUnitStandard" unitName="TrunkRoots">
         <On Terms="ActorCreation" Send="SetOpacity 0.300000"/>
         <On Terms="ActorCreation" Send="SetTintColor 0,255,0"/>
-        <Model value="Thistle"/>
+        <Model value="Trunk"/>
         <ModelFlags index="OutlineOccluder" value="1"/>
         <BuildModel value="HydraliskDen"/>
-        <PlacementModel value="Thistle"/>
+        <PlacementModel value="Trunk"/>
         <PlacementActorModel value="ZergPlacementModel"/>
         <PlaceholderActorModel value="ZergPlacementModel"/>
         <PortraitModel value="ZergBuildingEx2_Portrait"/>
@@ -533,10 +583,10 @@
             <Image value="Assets\Textures\wireframe-Xayid-biomasshatchery.dds"/>
         </Wireframe>
     </CActorUnit>
-    <CActorModel id="ThistleBuild" parent="ZergBuildingBuild">
+    <CActorModel id="TrunkBuild" parent="ZergBuildingBuild">
         <Model value="CasnoliskDenBuild"/>
     </CActorModel>
-    <CActorUnit id="Thistle" parent="ZergBuilding" unitName="Thistle">
+    <CActorUnit id="Trunk" parent="ZergBuilding" unitName="Trunk">
         <BuildModel value="HydraliskDen"/>
         <DeathArray index="Normal" ModelLink="HydraliskDenDeath" SoundLink="HydraliskDen_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="ZergBuildingDeathLarge" SoundLink="UltraliskCavern_Explode"/>
@@ -586,8 +636,8 @@
         <ModelFlags index="OutlineOccluder" value="1"/>
         <BuildModel value="XayidShrub"/>
         <PlacementModel value="XayidShrub"/>
-        <PlacementActorModel value="ZergPlacementModel"/>
-        <PlaceholderActorModel value="ZergPlacementModel"/>
+        <PlacementActorModel value="XayidPlacementModel"/>
+        <PlaceholderActorModel value="XayidPlaceholderModel"/>
         <PortraitModel value="ZergBuildingEx2_Portrait"/>
         <BarOffset value="120"/>
         <BarWidth value="150"/>
@@ -656,6 +706,8 @@
         <Wireframe>
             <Image value="Assets\Textures\wireframe-Xayid-casnoliskden.dds"/>
         </Wireframe>
+        <PlacementActorModel value="XayidPlacementModel"/>
+        <PlaceholderActorModel value="XayidPlaceholderModel"/>
     </CActorUnit>
     <CActorUnit id="Mire" parent="ZergBuilding" unitName="Mire">
         <On Terms="AbilMorph.XayidMorphAquiferBilePit.Finish" Send="Create"/>
@@ -1191,12 +1243,9 @@
             <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
         </Wireframe>
     </CActorUnit>
-    <CActorUnit id="Scorpalisk">
-        <On Terms="AbilMorph.XayidMorphScorpalisk.Start" Send="Destroy"/>
-    </CActorUnit>
-    <CActorUnit id="ScorpaliskBlossom" parent="GenericUnitXayid" unitName="ScorpaliskBlossom">
+    <CActorUnit id="StingerBlossom" parent="GenericUnitXayid" unitName="StingerBlossom">
         <On Terms="ActorCreation" Send="AnimPlay BSD Spell,End PlayForever"/>
-        <On Terms="AbilMorph.XayidMorphScorpalisk.Start" Send="Create"/>
+        <On Terms="AbilMorph.XayidMorphStinger.Start" Send="Create"/>
         <Model value="StructureSeed"/>
         <Scale value="0.600000"/>
         <BuildModel value="StructureSeed"/>
@@ -1464,7 +1513,6 @@
         </Wireframe>
     </CActorUnit>
     <CActorUnit id="Bulb" parent="ZergBuilding" unitName="Bulb">
-        <BuildModel value="EvolutionChamber"/>
         <DeathArray index="Normal" ModelLink="EvolutionChamberDeath" SoundLink="EvolutionChamber_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="ZergBuildingDeathLarge" SoundLink="SpawningPool_Explode"/>
         <PortraitModel value="ZergBuildingEx2_Portrait"/>
@@ -1488,7 +1536,7 @@
     </CActorModel>
     <CActorUnit id="XayidDigester" parent="ZergBuilding" unitName="XayidDigester">
         <Model value="Digester"/>
-        <BuildModel value="CasnoliskDen"/>
+        <BuildModel value="Digester"/>
         <DeathArray index="Normal" ModelLink="DigesterDeath" SoundLink="InfestationPit_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="ZergBuildingDeathLarge" SoundLink="InfestationPit_Explode"/>
         <PlacementModel value="Digester"/>
@@ -1551,7 +1599,7 @@
         <Model value="Invisible"/>
         <HighlightTooltip value="Unit/Name/Scion_SageDummy"/>
     </CActorUnit>
-    <CActorUnit id="ScorpaliskDummy" parent="GenericUnitXayid" unitName="ScorpaliskDummy">
+    <CActorUnit id="StingerDummy" parent="GenericUnitXayid" unitName="StingerDummy">
         <Model value="Invisible"/>
     </CActorUnit>
     <CActorAction id="XayidlingAttack">
@@ -1621,12 +1669,12 @@
         <Macros index="4" value="PhysicsDeathsVoidAir"/>
         <On Terms="TimerExpired; TimerName SpellStart" Send="AnimBracketStart Spell Spell,Start Spell,End"/>
         <On Terms="TimerExpired; TimerName CoverEnd" Send="AnimSetPaused Cover"/>
-        <On Terms="Abil.XayidMendlingSeedLand.SourceCastStop" Send="TimerSet 0.800000 SpellEnd"/>
+        <On Terms="Abil.XayidSageSeedLand.SourceCastStop" Send="TimerSet 0.800000 SpellEnd"/>
         <On Terms="TimerExpired; TimerName SpellEnd" Send="$Spell,End PlayForever,NonLooping"/>
         <On Terms="ActorCreation" Send="TimerSet 0.650000 CoverStart"/>
         <On Terms="TimerExpired; TimerName CoverStart" Send="AnimPlay Cover Cover PlayForever"/>
-        <On Terms="Abil.XayidMendlingSeedLand.SourceCastStop" Send="TimerSet 0.300000 SpellStart"/>
-        <On Terms="Abil.XayidMendlingSeedLand.SourceCastStop" Send="TimerSet 0.550000 CoverEnd"/>
+        <On Terms="Abil.XayidSageSeedLand.SourceCastStop" Send="TimerSet 0.300000 SpellStart"/>
+        <On Terms="Abil.XayidSageSeedLand.SourceCastStop" Send="TimerSet 0.550000 CoverEnd"/>
         <HostSiteOps Ops="SOpBankerQueenMP"/>
         <Model value="StructureSeed"/>
         <Scale value="0.500000"/>
@@ -1649,17 +1697,17 @@
             <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
         </Wireframe>
     </CActorUnit>
-    <CActorUnit id="ScorpaliskSeed" parent="GenericUnitXayid" unitName="ScorpaliskSeed">
+    <CActorUnit id="StingerSeed" parent="GenericUnitXayid" unitName="StingerSeed">
         <Macros index="3" value="PhysicsDeathsSwarmAir"/>
         <Macros index="4" value="PhysicsDeathsVoidAir"/>
         <On Terms="TimerExpired; TimerName SpellStart" Send="AnimBracketStart Spell Spell,Start Spell,End"/>
         <On Terms="TimerExpired; TimerName CoverEnd" Send="AnimSetPaused Cover"/>
-        <On Terms="Abil.XayidScorpaliskSeedLand.SourceCastStop" Send="TimerSet 0.800000 SpellEnd"/>
+        <On Terms="Abil.XayidStingerSeedLand.SourceCastStop" Send="TimerSet 0.800000 SpellEnd"/>
         <On Terms="TimerExpired; TimerName SpellEnd" Send="$Spell,End PlayForever,NonLooping"/>
         <On Terms="ActorCreation" Send="TimerSet 0.650000 CoverStart"/>
         <On Terms="TimerExpired; TimerName CoverStart" Send="AnimPlay Cover Cover PlayForever"/>
-        <On Terms="Abil.XayidScorpaliskSeedLand.SourceCastStop" Send="TimerSet 0.300000 SpellStart"/>
-        <On Terms="Abil.XayidScorpaliskSeedLand.SourceCastStop" Send="TimerSet 0.550000 CoverEnd"/>
+        <On Terms="Abil.XayidStingerSeedLand.SourceCastStop" Send="TimerSet 0.300000 SpellStart"/>
+        <On Terms="Abil.XayidStingerSeedLand.SourceCastStop" Send="TimerSet 0.550000 CoverEnd"/>
         <HostSiteOps Ops="SOpBankerQueenMP"/>
         <Model value="StructureSeed"/>
         <Scale value="0.550000"/>
@@ -1772,7 +1820,7 @@
             <Image index="0" value="Assets\Textures\wireframe-Xayid-Assailant.dds"/>
         </Wireframe>
     </CActorUnit>
-    <CActorUnit id="ScorpaliskSprout" parent="GenericUnitXayid" unitName="ScorpaliskSprout">
+    <CActorUnit id="StingerSprout" parent="GenericUnitXayid" unitName="StingerSprout">
         <Model value="StructureSeed"/>
         <Scale value="0.550000"/>
         <BuildModel value="StructureSeed"/>
