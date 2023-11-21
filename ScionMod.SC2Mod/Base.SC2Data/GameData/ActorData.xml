@@ -218,6 +218,20 @@
     <CActorSound id="Badger_PowershellOff" parent="SoundOneShotScion" Behavior="BadgerPowershell" BSub="Off">
         <Host Subject="_Selectable"/>
     </CActorSound>
+    <CActorSound id="OculusChargeFinish" parent="SoundOneShotScion" Effect="OculusChargeInstant">
+        <Sound value="CitadelChargeFinish"/>
+    </CActorSound>
+    <CActorModel id="EroderEnervatingSporesBuff" parent="ModelAnimationStyleContinuousUNIT">
+        <On Terms="Behavior.EroderEnervate.On" Send="Create"/>
+        <On Terms="Behavior.EroderEnervate.Off" Send="AnimBracketStop BSD"/>
+        <AutoScaleFactor value="1.000000"/>
+    </CActorModel>
+    <CActorRange id="OculusRevealVisualRangeEnemy">
+        <Range value="6.000000"/>
+        <Icon value="Assets\Textures\ScannerSweepRadius_Diffuse.dds"/>
+        <IconArcLength value="1.500000"/>
+        <Host Subject="OculusRevealModelEnemy"/>
+    </CActorRange>
     <CActorModel id="ProcessingCorePlayerDecalW" parent="ModelAddition">
         <Inherits index="BaseModelScale" value="0"/>
         <Inherits index="CloakEffect" value="0"/>
@@ -412,8 +426,8 @@
         <FogVisibility value="Visible"/>
         <On Terms="Effect.OculusRevealInit.Start" Send="Create"/>
         <On Terms="Effect.OculusRevealVision.Stop" Send="AnimBracketStop BSD"/>
-        <On Terms="ActorCreation" Send="Create OculusRevealVisualRange"/>
-        <On Terms="ActorDestruction" Target="OculusRevealVisualRange" Send="Destroy"/>
+        <On Terms="ActorCreation" Send="Create OculusRevealVisualRangeFriendly"/>
+        <On Terms="ActorDestruction" Target="OculusRevealVisualRangeFriendly" Send="Destroy"/>
         <HostSiteOps Ops="SOpTargetPointStationary SOpForwardCasterPointInverted SOpMoveUpBy3 SOpMoveUpBy2" HoldPosition="1" HoldRotation="1"/>
         <Model value="OculusRevealModel"/>
         <AcceptedHostedPropTransfers index="Visibility" value="0"/>
@@ -1036,11 +1050,11 @@
         <RollInArc value="100.000000"/>
         <RollOutDuration value="0.750000"/>
     </CActorSiteOpBankerUnit>
-    <CActorRange id="OculusRevealVisualRange">
-        <Host Subject="OculusRevealModelEnemy"/>
+    <CActorRange id="OculusRevealVisualRangeFriendly">
         <Range value="6.000000"/>
         <Icon value="Assets\Textures\ScannerSweepRadius_Diffuse.dds"/>
-        <IconArcLength value="0.750000"/>
+        <IconArcLength value="1.500000"/>
+        <Host Subject="OculusRevealModelFriendly"/>
     </CActorRange>
     <CActorUnit id="Scavenger" parent="GenericUnitXayid" unitName="Scavenger">
         <On Terms="Abil.DroneHarvest.Start" Send="AnimPlay Work Work PlayForever"/>
@@ -5041,7 +5055,9 @@
     <CActorSound id="Xayithoan_ProtectiveCloudStart" parent="SoundOneShotScion" Effect="ProtectiveCloud">
         <Host Subject="DynamicCloud"/>
     </CActorSound>
-    <CActorSound id="Xayithoan_SpawnWatcher" parent="SoundOneShotScion" Effect="XayithoanWatcher"/>
+    <CActorSound id="Xayithoan_SpawnWatcher" parent="SoundOneShotScion" Effect="XayithoanWatcher">
+        <On index="2" Terms="Effect.XayithoanWatcher.Start; At Caster" Send="Create"/>
+    </CActorSound>
     <!--                                                                                         -->
     <!-- Construction                                                                            -->
     <!--                                                                                         -->
@@ -5307,8 +5323,8 @@
     <CActorModel id="OculusRevealModelEnemy" parent="ModelAnimationStyleContinuous">
         <On Terms="Effect.OculusRevealInit.Start" Send="Create"/>
         <On Terms="Effect.OculusRevealVision.Stop" Send="AnimBracketStop BSD"/>
-        <On Terms="ActorCreation" Send="Create OculusRevealVisualRange"/>
-        <On Terms="ActorDestruction" Target="OculusRevealVisualRange" Send="Destroy"/>
+        <On Terms="ActorCreation" Send="Create OculusRevealVisualRangeEnemy"/>
+        <On Terms="ActorDestruction" Target="OculusRevealVisualRangeEnemy" Send="Destroy"/>
         <HostSiteOps Ops="SOpTargetPointStationary SOpForwardCasterPointInverted SOpMoveUpBy3 SOpMoveUpBy2" HoldPosition="1" HoldRotation="1"/>
         <Model value="OculusRevealModel"/>
         <FogVisibility value="Hidden"/>
@@ -6001,8 +6017,9 @@
         <BarOffset value="110"/>
         <BarWidth value="85"/>
         <On index="69" Terms="UnitConstruction.Oculus.Start" Send="Create KeironBuildModelSmall"/>
-        <On Terms="Abil.OculusReveal.SourceChannelStart" Send="AnimPlay Work Work PlayForever"/>
-        <On Terms="Abil.OculusReveal.SourceChannelStop" Send="AnimClear Work"/>
+        <On Terms="Abil.OculusReveal.SourceChannelStart" Send="AnimBracketStart Work Work,Start Work"/>
+        <On Terms="Abil.OculusReveal.SourceChannelStop" Send="AnimBracketClear Work"/>
+        <On Terms="Effect.OculusChargeInstant.Start" Send="AnimPlay Cover Cover PlayForever"/>
         <PlacementActorModel value="PlacementModelKeironOculus"/>
     </CActorUnit>
     <CActorModel id="PlaceholderModelKeiron" parent="PlacementModel">

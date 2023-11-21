@@ -35,6 +35,8 @@ bool libScio_gt_ScionInit_Func (bool testConds, bool runActions) {
     int lv_genetron_energy_label_ui;
 
     // Automatic Variable Declarations
+    const int autoA7EFE2C7_ae = 15;
+    int autoA7EFE2C7_var;
     playergroup auto22B9A134_g;
     int auto22B9A134_var;
     playergroup autoCB6C11DC_g;
@@ -56,6 +58,15 @@ bool libScio_gt_ScionInit_Func (bool testConds, bool runActions) {
     // Actions
     if (!runActions) {
         return true;
+    }
+
+    if ((libNtve_gf_CatalogFieldValueGetAsReal(c_gameCatalogUnit, "SCV", "InnerRadius", c_playerAny) == 0.3125)) {
+        autoA7EFE2C7_var = 0;
+        for ( ; autoA7EFE2C7_var <= autoA7EFE2C7_ae; autoA7EFE2C7_var += 1 ) {
+            libNtve_gf_CatalogFieldValueSetAsReal(c_gameCatalogUnit, "ACR", "InnerRadius", autoA7EFE2C7_var, 0.3125);
+            libNtve_gf_CatalogFieldValueSetAsReal(c_gameCatalogUnit, "Converter", "InnerRadius", autoA7EFE2C7_var, 0.3125);
+            libNtve_gf_CatalogFieldValueSetAsReal(c_gameCatalogUnit, "Scavenger", "InnerRadius", autoA7EFE2C7_var, 0.3125);
+        }
     }
 
     auto22B9A134_g = PlayerGroupAll();

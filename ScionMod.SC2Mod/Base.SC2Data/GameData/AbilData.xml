@@ -7,6 +7,7 @@
             <Cooldown TimeUse="28"/>
         </Cost>
         <CmdButtonArray index="Execute" DefaultButtonFace="ActivateShield"/>
+        <Effect index="0" value="AegisShieldAuraActivationSet"/>
     </CAbilEffectInstant>
     <CAbilEffectInstant id="AegisDeactivateShield">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
@@ -49,7 +50,7 @@
     </CAbilResearch>
     <CAbilSpecialize id="AvengerConstructVengeanceMissile">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <InfoArray index="Specialize1" Time="14" Effect="AvengerConstructVengeanceMissile">
+        <InfoArray index="Specialize1" Time="12.6" Effect="AvengerConstructVengeanceMissile">
             <Vital index="Energy" value="50"/>
             <Button DefaultButtonFace="ConstructVengeanceMissile" Requirements="AvengerNoVengeanceMissileAmmo"/>
             <Flags index="AutoCast" value="1"/>
@@ -106,6 +107,17 @@
             <Flags index="ToSelection" value="1"/>
         </CmdButtonArray>
     </CAbilEffectTarget>
+    <CAbilMorph id="BurrowZerglingDown">
+        <Flags index="WaitUntilStopped" value="0"/>
+    </CAbilMorph>
+    <CAbilEffectInstant id="OculusChargeInstant">
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <Flags index="Transient" value="1"/>
+        <Cost>
+            <Resource index="Vespene" value="75"/>
+        </Cost>
+        <CmdButtonArray index="Execute" DefaultButtonFace="ChargeOculus"/>
+    </CAbilEffectInstant>
     <CAbilEffectTarget id="ProwlerPlaceAcidNestExecute">
         <EditorCategories value="AbilityorEffectType:Units,Race:Xayid"/>
         <Effect index="0" value="ProwlerPlaceAcidNest"/>
@@ -114,6 +126,15 @@
         <Arc value="360"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="PlaceAcidNest"/>
     </CAbilEffectTarget>
+    <CAbilEffectInstant id="Scion_Overclock">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Effect index="0" value="Scion_OverclockPowerEnum"/>
+        <Cost>
+            <Cooldown TimeUse="44.8"/>
+        </Cost>
+        <Arc value="360"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Scion_Overclock" Requirements="ProcessingCoreMiningPriorityReq"/>
+    </CAbilEffectInstant>
     <CAbilEffectInstant id="SpitfireOverdrive">
         <AbilSetId value="Overdrive"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -259,7 +280,7 @@
         <Flags index="Interruptible" value="1"/>
         <Flags index="IgnoreFacing" value="1"/>
         <Flags index="SuppressMovement" value="1"/>
-        <InfoArray Unit="MoleBurrowed" RandomDelayMax="0.0625">
+        <InfoArray Unit="MoleBurrowed">
             <SectionArray index="Abils">
                 <DurationArray index="Delay" value="1.25"/>
             </SectionArray>
@@ -609,11 +630,10 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="DeployCannon"/>
         <ActorKey value="BurrowDown"/>
-        <Flags index="Interruptible" value="1"/>
+        <Flags index="IgnoreCollision" value="0"/>
         <Flags index="IgnoreFacing" value="1"/>
-        <Flags index="IgnorePlacement" value="0"/>
         <Flags index="SuppressMovement" value="1"/>
-        <InfoArray Unit="MoleRooted" RandomDelayMax="0.0625">
+        <InfoArray Unit="MoleRooted" RandomDelayMax="0.125">
             <SectionArray index="Actor">
                 <DurationArray index="Duration" value="2.5"/>
             </SectionArray>
@@ -700,7 +720,9 @@
     </CAbilTransport>
     <CAbilEffectInstant id="MiningPriority">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Cost/>
+        <Cost>
+            <Cooldown TimeUse="44.8"/>
+        </Cost>
         <CmdButtonArray index="Execute" DefaultButtonFace="MiningPriority" Requirements="ProcessingCoreMiningPriorityReq"/>
         <Effect index="0" value="ProcessingCoreMiningPriority"/>
         <AINotifyEffect value="MiningPrioritySearchArea"/>
@@ -968,7 +990,7 @@
         <Flags index="ReExecutable" value="1"/>
         <Flags index="Smart" value="1"/>
         <TargetFilters value="CanHaveEnergy;Self,Ally,Neutral,Enemy,Structure,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
-        <Range value="8"/>
+        <Range value="9"/>
         <Arc value="360"/>
         <SmartValidatorArray value="healSmartTargetFilters"/>
         <SmartValidatorArray value="NotWarpingIn"/>
@@ -1175,7 +1197,7 @@
             <Charge CountMax="1" CountStart="1" CountUse="1"/>
         </Cost>
         <TargetFilters value="-;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden,Invulnerable"/>
-        <Range value="8"/>
+        <Range value="7"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="VengeanceMissile" Requirements="AvengerVengeanceMissileReq"/>
         <SharedFlags index="RegisterChargeEvent" value="1"/>
         <Arc value="360"/>
@@ -1531,7 +1553,7 @@
         <Cost>
             <Cooldown TimeUse="35"/>
         </Cost>
-        <Range value="8"/>
+        <Range value="7"/>
         <FinishTime value="0.45"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="IncendiaryInfusion"/>
         <TargetFilters value="-;Player,Ally,Structure,RawResource,HarvestableResource,Missile,Stasis,Hidden,Invulnerable"/>
@@ -1897,7 +1919,7 @@
             <Vital index="Energy" value="50"/>
             <Cooldown TimeUse="21"/>
         </Cost>
-        <CmdButtonArray index="Execute" DefaultButtonFace="CitadelEnergize"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="CitadelEnergize" Requirements="CitadelIsCharged"/>
     </CAbilEffectInstant>
     <CAbilEffectTarget id="EmissaryOrb">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
@@ -1948,7 +1970,7 @@
         </Cost>
         <Range value="45"/>
         <Arc value="360"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="Reveal"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Reveal" Requirements="OculusIsCharged"/>
         <CursorEffect value="OculusRevealVision"/>
         <Effect index="0" value="OculusRevealInit"/>
         <AINotifyEffect value="OculusRevealVision"/>
@@ -2118,7 +2140,7 @@
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
         </InfoArray>
-        <InfoArray index="Research2" Time="110" Alert="ResearchComplete" Upgrade="PulsarDampener">
+        <InfoArray index="Research2" Time="140" Alert="ResearchComplete" Upgrade="PulsarDampener">
             <Resource index="Minerals" value="150"/>
             <Resource index="Vespene" value="150"/>
             <Button DefaultButtonFace="DevelopPulsarDampener" Requirements="LearnDampener"/>

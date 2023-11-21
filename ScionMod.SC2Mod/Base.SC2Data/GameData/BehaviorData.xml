@@ -18,6 +18,17 @@
         <FinalEffect value="ProcessorFateSet"/>
         <RemoveValidatorArray value="CasterNotDead"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="KeironStructureCharged">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="MassaliskHunkered">
+        <InfoIcon value="Assets\Textures\btn-ability-xayid-massaliskhunker.dds"/>
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <DamageResponse ModifyFraction="0.8">
+            <Chance value="1"/>
+        </DamageResponse>
+    </CBehaviorBuff>
     <CBehaviorBuff id="OculusRevealCaster">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
@@ -39,6 +50,16 @@
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="GenetronPowerSupplyGE050"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="Scion_Overclock">
+        <InfoIcon value="Assets\Textures\btn-ability-genetron-productionmode-overclock.dds"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisplayDuration index="Ally" value="1"/>
+        <Duration value="46.2"/>
+        <Modification>
+            <RateMultiplierArray index="Queueable" value="2"/>
+        </Modification>
     </CBehaviorBuff>
     <CBehaviorBuff id="SpitfireAbilitiesReq">
         <InfoFlags index="Hidden" value="1"/>
@@ -134,12 +155,26 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="GenetronPowerSupplyGE150"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="TitanInhibitorBeamGamutOrb">
+        <BehaviorFlags index="Permanent" value="1"/>
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
+        <Modification TimeScale="0.4"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="UmbraStealthSuppression">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="SuppressCloak"/>
         <Period value="0.0625"/>
         <PeriodicEffect value="UmbraStealthSuppressionModifyUnit"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="UnfuseDamageReduction">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <Duration value="1"/>
+        <DamageResponse ModifyFraction="0.25">
+            <Chance value="1"/>
+        </DamageResponse>
     </CBehaviorBuff>
     <CBehaviorBuff id="VirtusSelfFixReq">
         <InfoFlags index="Hidden" value="1"/>
@@ -653,7 +688,7 @@
         <Duration value="5.6"/>
         <Modification MoveSpeedMultiplier="0.6"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="GyreShackledSupress">
+    <CBehaviorBuff id="GyreShackledSuppress">
         <Alignment value="Negative"/>
         <InfoFlags index="Hidden" value="1"/>
         <InfoIcon value="Assets\Textures\btn-upgrade-protoss-fenix-scoutchampionaoemissiles.dds"/>
@@ -807,9 +842,6 @@
         <Period value="0.5"/>
         <PeriodicEffect value="MiningPrioritySearchArea"/>
         <DisplayDuration index="Self" value="1"/>
-        <Modification>
-            <AbilLinkDisableArray value="MiningPriority"/>
-        </Modification>
     </CBehaviorBuff>
     <CBehaviorBuff id="ShellDomeAura">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
@@ -926,11 +958,12 @@
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <Duration value="5"/>
         <Modification>
-            <DamageDealtFraction index="Melee" value="-0.15"/>
-            <DamageDealtFraction index="Ranged" value="-0.15"/>
-            <DamageDealtFraction index="Splash" value="-0.15"/>
+            <DamageDealtFraction index="Melee" value="-0.2"/>
+            <DamageDealtFraction index="Ranged" value="-0.2"/>
+            <DamageDealtFraction index="Splash" value="-0.2"/>
         </Modification>
         <Alignment value="Negative"/>
+        <RemoveValidatorArray value="IsNotEroder"/>
     </CBehaviorBuff>
     <CBehaviorResource id="GasRawRichVespeneGeyserBGH" parent="RawRichVespeneGeyserGas">
         <Name value="Behavior/Name/GasRawRichVespeneGeyserBGH2"/>
@@ -1010,10 +1043,11 @@
         <DisplayDuration index="Ally" value="1"/>
         <DisplayDuration index="Neutral" value="1"/>
         <DisplayDuration index="Enemy" value="1"/>
-        <Duration value="3.5"/>
+        <Duration value="2.8"/>
         <Period value="0.25"/>
         <PeriodicEffect value="IgnitionBlastSA"/>
-        <Modification MoveSpeedMultiplier="2" AccelerationMultiplier="2">
+        <Modification MoveSpeedMultiplier="2.5" AccelerationMultiplier="2.5">
+            <StateFlags index="SuppressCollision" value="1"/>
             <LifeArmorBonus value="2"/>
             <WeaponDisableArray value="TuskMachineGuns"/>
         </Modification>
@@ -1118,7 +1152,6 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Modification>
             <ResourceHarvestAmountBonus index="Minerals" value="1"/>
-            <ResourceHarvestAmountBonus index="Vespene" value="1"/>
         </Modification>
         <InfoIcon value="Assets\Textures\btn-ability-genetron-miningtap.dds"/>
         <Duration value="1"/>
@@ -1639,7 +1672,6 @@
         <DisplayDuration index="Neutral" value="1"/>
         <DisplayDuration index="Enemy" value="1"/>
         <Duration value="56"/>
-        <InitialEffect value="AegisShieldAuraActivationSet"/>
         <FinalEffect value="AegisShieldedUnmorphSet"/>
         <InfoFlags index="Hidden" value="1"/>
         <RemoveValidatorArray value="ShieldGZero"/>
@@ -1666,10 +1698,10 @@
         <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="Beholder">
-        <InfoIcon value="Assets\Textures\btn-ability-zeratul-hero-propheticvision.dds"/>
+        <InfoIcon value="Assets\Textures\btn-ability-keiron-beholder.dds"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Duration value="21"/>
-        <Modification SightBonus="3" Detect="12"/>
+        <Modification SightBonus="3" Detect="14"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="KeironChargeDummyCreation">
         <InfoFlags index="Hidden" value="1"/>
@@ -1840,7 +1872,7 @@
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <TimeScaleSource Value="Global"/>
-        <Duration value="1"/>
+        <Duration value="0.75"/>
         <Period value="0.1875"/>
         <PeriodicEffect value="Pulsar4DMUnit"/>
         <Modification MoveSpeedBonus="-0.5">
@@ -1901,7 +1933,7 @@
     <CBehaviorBuff id="HarbingerJudgementMode">
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
         <FinalEffect value="HarbingerJudgementModeStop"/>
-        <Modification MoveSpeedMultiplier="0.6667" AccelerationMultiplier="0.3332">
+        <Modification MoveSpeedMultiplier="0.75" AccelerationMultiplier="0.5">
             <WeaponDisableArray value="AuguryGuns"/>
         </Modification>
         <InfoFlags index="Hidden" value="1"/>
@@ -1911,7 +1943,7 @@
         <Duration value="2"/>
         <Period value="2"/>
         <FinalEffect value="HarbingerJudgementMode"/>
-        <Modification MoveSpeedMultiplier="0.6667" AccelerationMultiplier="0.3332">
+        <Modification MoveSpeedMultiplier="0.75" AccelerationMultiplier="0.5">
             <WeaponArray Link="HarbingerDummyWeapon"/>
             <WeaponDisableArray value="AuguryGuns"/>
             <WeaponDisableArray value="HeraldEnergyCannons"/>
@@ -1922,7 +1954,7 @@
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
         <Duration value="2"/>
         <Period value="2"/>
-        <Modification MoveSpeedMultiplier="0.6667" AccelerationMultiplier="0.3332">
+        <Modification MoveSpeedMultiplier="0.75" AccelerationMultiplier="0.5">
             <WeaponArray Link="HarbingerDummyWeapon"/>
             <WeaponDisableArray value="AuguryGuns"/>
             <WeaponDisableArray value="HeraldEnergyCannons"/>
@@ -2053,7 +2085,7 @@
         <DisableValidatorArray value="NotContaminated"/>
         <DisableValidatorArray value="NotHidden"/>
         <BuffFlags index="Countdown" value="0"/>
-        <Duration value="49"/>
+        <Duration value="51.8"/>
         <ExpireEffect value="SanctumPulSubSet"/>
         <TimeScaleSource Effect="KeironChargeDummyCUSet"/>
     </CBehaviorBuff>
@@ -2198,6 +2230,7 @@
         <TimeScaleSource Value="Global"/>
         <Duration value="1.4"/>
         <Modification AttackSpeedMultiplier="0.4"/>
+        <Alignment value="Negative"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="UmbraDamageReduction">
         <InfoFlags index="Hidden" value="1"/>
