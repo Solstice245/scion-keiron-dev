@@ -52,7 +52,10 @@ Abil/Name/FoundryResearch=Foundry Research
 Abil/Name/FuseFusion=Fusion
 Abil/Name/FuseUnfuse=Unfuse
 Abil/Name/GeneratorResearch=Generator - Research
+Abil/Name/GenetronOverclockMode=Genetron - Overclock Mode
+Abil/Name/GenetronPerformanceMode=Genetron - Performance Mode
 Abil/Name/GenetronProductionModeSwitch=Genetron Production Mode Switch
+Abil/Name/GenetronStandardMode=Genetron - Standard Mode
 Abil/Name/GyreAnnex=Gyre - Annex
 Abil/Name/GyreInflux=Gyre - Influx
 Abil/Name/GyrePrison=Gyre - Prison
@@ -142,7 +145,6 @@ Abil/Name/VolatileDischarge=Volatile Discharge
 Abil/Name/VolatileDischargeCancel=Volatile Discharge Cancel
 Abil/Name/WardRestitution=Ward - Restitution
 Abil/Name/WardShellDome=Ward - Shell Dome
-Abil/Name/WardShellDomeCancel=Ward - Shell Dome Cancel
 Abil/Name/XayidlingDash=Dash
 Abil/Name/XayithoanWatcher=Xayithoan - Watcher
 Abil/Name/que1Passive=Queue (1) Passive
@@ -176,10 +178,12 @@ Behavior/Name/Beholder=Beholder
 Behavior/Name/BilePitNotInRangeOfFeedingPool=Bile Pit Not In Range Of Feeding Pool
 Behavior/Name/BlindingBurstAB=Blinding Burst
 Behavior/Name/BlitzerOverdrive=Overdrive
+Behavior/Name/BoarIgnitionBlastInit=Boar - Ignition Blast Init
 Behavior/Name/CitadelEnergized=Energized
 Behavior/Name/CloakChargeField=Cloak Charge Field
 Behavior/Name/CourierCloak=Cloak
 Behavior/Name/CoveringSprayAB=Covering Spray
+Behavior/Name/CruxConvergenceBuff=Convergence
 Behavior/Name/DashFrenzy=Dash Frenzy
 Behavior/Name/DynamicCoatingDebuff=Dynamic Coating Debuff
 Behavior/Name/EmissaryOrbTint=Emissary Orb
@@ -196,7 +200,6 @@ Behavior/Name/GyreAnnexed=Annexed
 Behavior/Name/GyreShackled=Shackled
 Behavior/Name/GyreShieldBoost=Shield Boost
 Behavior/Name/HornetBoreDrillBase=Bore Drill
-Behavior/Name/IgnitionBlast=Ignition Blast
 Behavior/Name/IncendiaryInfusionAA=Incendiary Infusion
 Behavior/Name/IncendiaryInfusionAG=Incendiary Infusion
 Behavior/Name/JupiterNapalm=Napalm
@@ -214,7 +217,7 @@ Behavior/Name/MoleSubterraneanSensors=Subterranean Sensors
 Behavior/Name/NaniteGrenadeAB=Nanite Grenade
 Behavior/Name/OlympusElectrified=Electrified
 Behavior/Name/OlympusElectrifiedStructure=Electrified
-Behavior/Name/OpticalDisruptionBuff=Optical Disruption Buff
+Behavior/Name/OpticalDisruptionBuff=Optical Disruption
 Behavior/Name/PDDetector=Detector
 Behavior/Name/Pause=Pause
 Behavior/Name/ProtectiveCloudAB=Protective Cloud
@@ -271,16 +274,17 @@ Behavior/Tooltip/LockdownMode=Under lockdown due to severe damage. Takes reduced
 Behavior/Tooltip/LockdownModeDuration=Under lockdown due to severe damage. Takes reduced damage, and cannot fully function. Must be repaired in order to resume a regular state.
 Behavior/Tooltip/MassaliskHunkered=Takes <d ref="1-Behavior,MassaliskHunkered,DamageResponse.ModifyFraction*100"/>% reduced damage.
 Behavior/Tooltip/MendBehavior=Under the effects of Mend.
-Behavior/Tooltip/MiningPrioritySearch=Nearby harvesters mine additional resources per trip.
+Behavior/Tooltip/MiningPrioritySearch=Nearby mineral fields yield +<d ref="Behavior,ResourceTap,Modification.ResourceHarvestAmountBonus[Minerals]"/> resources per trip.
 Behavior/Tooltip/MoleSubterraneanSensors=While buried, the <c val="FFFF80">Mole</c> has <d ref="Behavior,MoleSubterraneanSensors,Modification.Radar"/> ground radar range.<n/><n/><c val="78F0FF">Drains <d ref="Effect,MoleSubterraneanSensorsPowerRate,RechargeVitalRate"/> power per second.</c>
 Behavior/Tooltip/NaniteGrenadeAB=This unit is stunned.
 Behavior/Tooltip/OlympusElectrified=Taking <d ref="Behavior,OlympusElectrified,Duration/Behavior,OlympusElectrified,Period*Effect,OlympusDischargeDebuffDMG,Amount"/> damage over <d ref="Behavior,OlympusElectrified,Duration"/> seconds.
 Behavior/Tooltip/OlympusElectrifiedStructure=Taking <d ref="Behavior,OlympusElectrifiedStructure,Duration/Behavior,OlympusElectrifiedStructure,Period*Effect,OlympusDischargeDebuffDMG,Amount"/> damage over <d ref="Behavior,OlympusElectrifiedStructure,Duration"/> seconds. This structure's production is halted and is unable to attack or use abilities.
+Behavior/Tooltip/OpticalDisruptionBuff=Attack range reduced by <d ref="-Behavior,OpticalDisruptionBuff,Modification.RangedWeaponRange"/>.
 Behavior/Tooltip/PDDetector=Detection mode currently active. Energy regeneration reduced, or negated.
 Behavior/Tooltip/ProtectiveCloudAB=Taking 30% less damage from all sources while within.
 Behavior/Tooltip/PulsarDampener=Spell and splash damage taken reduced by <d ref="-Behavior,PulsarDampener,DamageResponse.ModifyFraction+1*100"/>%.
 Behavior/Tooltip/ResidualAcid=Taking damage from the residue of an <c val="FFFF80">Acid Nest</c>.
-Behavior/Tooltip/ResourceTap=Has increased resource harvesting rates.
+Behavior/Tooltip/ResourceTap=Mineral harvesting yield increased by <d ref="Behavior,ResourceTap,Modification.ResourceHarvestAmountBonus[Minerals]"/>.
 Behavior/Tooltip/SacrificialMutation=Healing units around itself in an aura. Self destructs after timing out.
 Behavior/Tooltip/Scion_Overclock=Production speed increased by <d ref="Behavior,Scion_Overclock,Modification.RateMultiplierArray[Queueable]*100"/>%.
 Behavior/Tooltip/ShockChargeDecloak=Target was recently hit by a Tesla's Shock Charge, making it unable to cloak for a short duration.
@@ -740,7 +744,7 @@ Button/Tooltip/CoveringSpray=Cloaks a targeted friendly unit. Lasts for a durati
 Button/Tooltip/CoveringSprayU=Cloaks a targeted friendly unit. Lasts for a duration of <d ref="Behavior,CoveringSprayAB,DurationOverride[0].Duration"/> seconds.
 Button/Tooltip/CreateElytron=Builds Elytra that automatically attack the Myriad's target.
 Button/Tooltip/Crux=Spell caster. Can use Beholder and Lightning Bolt. Can be upgraded to use Convergence.<n/><n/><c val="FFFF80">Can attack ground and air units.</c>
-Button/Tooltip/CruxConvergence=Deals <d ref="Effect,CruxConvergenceDMG,Amount"/> (+<d ref="Effect,CruxConvergenceDMG,AttributeBonus[Mechanical]"/> vs Mechanical) damage in an area after channeling for <d ref="Effect,CruxConvergence,InitialDelay"/> seconds.
+Button/Tooltip/CruxConvergence=Strikes all units in an area after channeling for <d ref="Effect,CruxConvergence,InitialDelay"/> seconds. Stricken units take <d ref="Effect,CruxConvergenceDMG,Amount*Behavior,CruxConvergenceBuff,Duration/Behavior,CruxConvergenceBuff,Period"/> (<d ref="Effect,CruxConvergenceDMG,Amount+Effect,CruxConvergenceDMG,AttributeBonus[Mechanical]*Behavior,CruxConvergenceBuff,Duration/Behavior,CruxConvergenceBuff,Period"/> vs Mechanical) damage over <d ref="Behavior,CruxConvergenceBuff,Duration"/> seconds.
 Button/Tooltip/CruxLightningBolt=Deals <d ref="Effect,CruxLightningBoltInitDMG,Amount"/> damage to a primary target. Can bounce onto <d ref="Effect,CruxLightningBoltData,ValidateMax"/> additional enemies, dealing <d ref="Effect,CruxLightningBoltDMG,Amount"/> damage to each.
 Button/Tooltip/CruxSycophant=Restores <d ref="Effect,CruxWeaponCasterMU,VitalArray[Energy].Change"/> energy when attacking biological units. Also diminishes energy of attacked units.
 Button/Tooltip/Dash=Dash a short distance at high speed.
@@ -774,22 +778,22 @@ Button/Tooltip/Eroder=Long ranged anti-armor beast.<n/><n/><c val="FFFF80">Can t
 Button/Tooltip/ExplosiveGlob=Rolls a projectile across the terrain. Deals <d ref="Effect,ExplosiveGlobDMG,Amount"/> damage and knocks back enemy ground units in an area on contact with an enemy ground unit.
 Button/Tooltip/ExplosiveOrdnanceMode=Makes the Stratum Missile Launcher the active weapon.<n/><n/>The Stratum Missile Launcher has a fast fire rate, and deals splash damage.
 Button/Tooltip/Exterminator=Anti-air fighter that excels vs Light targets.<n/><n/><c val="FFFF80">Can attack air units.</c>
-Button/Tooltip/FabricateAquila=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><img path="Assets\Textures\btn-ability-genetron-productionmode-performance-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyAquila,Parameters[0]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-standard-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyAquila,Parameters[1]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-overclock-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyAquila,Parameters[2]"/><img path="Assets\Textures\blank.dds" width="1" height="48" alignment="middle"/><n/>
-Button/Tooltip/FabricateAvengerGenetron=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><img path="Assets\Textures\btn-ability-genetron-productionmode-performance-nobg.dds"width="21" height="21" alignment="absolutemiddle"/>0<img path="Assets\Textures\btn-ability-genetron-productionmode-standard-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyAvenger,Parameters[0]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-overclock-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyAvenger,Parameters[1]"/><img path="Assets\Textures\blank.dds" width="1" height="48" alignment="middle"/><n/>
-Button/Tooltip/FabricateBadger=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><img path="Assets\Textures\btn-ability-genetron-productionmode-performance-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyBadger,Parameters[0]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-standard-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyBadger,Parameters[1]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-overclock-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyBadger,Parameters[2]"/><img path="Assets\Textures\blank.dds" width="1" height="48" alignment="middle"/><n/>
-Button/Tooltip/FabricateBlitzer=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><img path="Assets\Textures\btn-ability-genetron-productionmode-performance-nobg.dds"width="21" height="21" alignment="absolutemiddle"/>0<img path="Assets\Textures\btn-ability-genetron-productionmode-standard-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyBlitzer,Parameters[0]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-overclock-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyBlitzer,Parameters[1]"/><img path="Assets\Textures\blank.dds" width="1" height="48" alignment="middle"/><n/>
-Button/Tooltip/FabricateBoar=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><img path="Assets\Textures\btn-ability-genetron-productionmode-performance-nobg.dds"width="21" height="21" alignment="absolutemiddle"/>0<img path="Assets\Textures\btn-ability-genetron-productionmode-standard-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyBoar,Parameters[0]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-overclock-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyBoar,Parameters[1]"/><img path="Assets\Textures\blank.dds" width="1" height="48" alignment="middle"/><n/>
-Button/Tooltip/FabricateCourier=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><img path="Assets\Textures\btn-ability-genetron-productionmode-performance-nobg.dds"width="21" height="21" alignment="absolutemiddle"/>0<img path="Assets\Textures\btn-ability-genetron-productionmode-standard-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyCourier,Parameters[0]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-overclock-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyCourier,Parameters[1]"/><img path="Assets\Textures\blank.dds" width="1" height="48" alignment="middle"/><n/>
-Button/Tooltip/FabricateEqualizer=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><img path="Assets\Textures\btn-ability-genetron-productionmode-performance-nobg.dds"width="21" height="21" alignment="absolutemiddle"/>0<img path="Assets\Textures\btn-ability-genetron-productionmode-standard-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyEqualizer,Parameters[0]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-overclock-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyEqualizer,Parameters[1]"/><img path="Assets\Textures\blank.dds" width="1" height="48" alignment="middle"/><n/>
-Button/Tooltip/FabricateFixer=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><img path="Assets\Textures\btn-ability-genetron-productionmode-performance-nobg.dds"width="21" height="21" alignment="absolutemiddle"/>0<img path="Assets\Textures\btn-ability-genetron-productionmode-standard-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyFixer,Parameters[0]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-overclock-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyFixer,Parameters[1]"/><img path="Assets\Textures\blank.dds" width="1" height="48" alignment="middle"/><n/>
-Button/Tooltip/FabricateHornet=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><img path="Assets\Textures\btn-ability-genetron-productionmode-performance-nobg.dds"width="21" height="21" alignment="absolutemiddle"/>0<img path="Assets\Textures\btn-ability-genetron-productionmode-standard-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyHornet,Parameters[0]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-overclock-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyHornet,Parameters[1]"/><img path="Assets\Textures\blank.dds" width="1" height="48" alignment="middle"/><n/>
-Button/Tooltip/FabricateInciter=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><img path="Assets\Textures\btn-ability-genetron-productionmode-performance-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyInciter,Parameters[0]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-standard-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyInciter,Parameters[1]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-overclock-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyInciter,Parameters[2]"/><img path="Assets\Textures\blank.dds" width="1" height="48" alignment="middle"/><n/>
-Button/Tooltip/FabricateJupiter=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><img path="Assets\Textures\btn-ability-genetron-productionmode-performance-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyJupiter,Parameters[0]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-standard-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyJupiter,Parameters[1]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-overclock-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyJupiter,Parameters[2]"/><img path="Assets\Textures\blank.dds" width="1" height="48" alignment="middle"/><n/>
-Button/Tooltip/FabricateMole=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><img path="Assets\Textures\btn-ability-genetron-productionmode-performance-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyMole,Parameters[0]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-standard-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyMole,Parameters[1]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-overclock-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyMole,Parameters[2]"/><img path="Assets\Textures\blank.dds" width="1" height="48" alignment="middle"/><n/>
-Button/Tooltip/FabricateSpitfire=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><img path="Assets\Textures\btn-ability-genetron-productionmode-performance-nobg.dds"width="21" height="21" alignment="absolutemiddle"/>0<img path="Assets\Textures\btn-ability-genetron-productionmode-standard-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergySpitfire,Parameters[0]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-overclock-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergySpitfire,Parameters[1]"/><img path="Assets\Textures\blank.dds" width="1" height="48" alignment="middle"/><n/>
-Button/Tooltip/FabricateTesla=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><img path="Assets\Textures\btn-ability-genetron-productionmode-performance-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyTesla,Parameters[0]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-standard-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyTesla,Parameters[1]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-overclock-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyTesla,Parameters[2]"/><img path="Assets\Textures\blank.dds" width="1" height="48" alignment="middle"/><n/>
-Button/Tooltip/FabricateTorrent=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><img path="Assets\Textures\btn-ability-genetron-productionmode-performance-nobg.dds"width="21" height="21" alignment="absolutemiddle"/>0<img path="Assets\Textures\btn-ability-genetron-productionmode-standard-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyTorrent,Parameters[0]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-overclock-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyTorrent,Parameters[1]"/><img path="Assets\Textures\blank.dds" width="1" height="48" alignment="middle"/><n/>
-Button/Tooltip/FabricateVirtus=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><img path="Assets\Textures\btn-ability-genetron-productionmode-performance-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyVirtus,Parameters[0]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-standard-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyVirtus,Parameters[1]"/><img path="Assets\Textures\btn-ability-genetron-productionmode-overclock-nobg.dds"width="21" height="21" alignment="absolutemiddle"/><d ref="Accumulator,ProductionEnergyVirtus,Parameters[2]"/><img path="Assets\Textures\blank.dds" width="1" height="48" alignment="middle"/><n/>
+Button/Tooltip/FabricateAquila=
+Button/Tooltip/FabricateAvengerGenetron=
+Button/Tooltip/FabricateBadger=
+Button/Tooltip/FabricateBlitzer=
+Button/Tooltip/FabricateBoar=
+Button/Tooltip/FabricateCourier=
+Button/Tooltip/FabricateEqualizer=
+Button/Tooltip/FabricateFixer=
+Button/Tooltip/FabricateHornet=
+Button/Tooltip/FabricateInciter=
+Button/Tooltip/FabricateJupiter=
+Button/Tooltip/FabricateMole=
+Button/Tooltip/FabricateSpitfire=
+Button/Tooltip/FabricateTesla=
+Button/Tooltip/FabricateTorrent=
+Button/Tooltip/FabricateVirtus=
 Button/Tooltip/Fabricator=Produces heavy machines.<n/><n/><c val="FFFF80">Enables:</c><n/>- Torrents<n/>- Moles
 Button/Tooltip/FeedingPool=Provides supply.<n/>Supply allows you to create more units.<n/>Boosts the production of nearby structures and heals nearby units.
 Button/Tooltip/FeedingPoolHealingAura=Heals up to 3 nearby friendly units at a time.
@@ -829,7 +833,7 @@ Button/Tooltip/HeavyOrdnanceMode=Makes The Great Equalizer the active weapon.<n/
 Button/Tooltip/HeavyOrdnanceMode2=Makes the Stratum Missile Launcher the active weapon.
 Button/Tooltip/Hornet=Fast anti-ground fighter that excels against armored targets.<n/><n/><c val="FFFF80">Can attack ground units.</c>
 Button/Tooltip/HunkeredForm=Hunkers the <c val="FFFF80">Massalisk</c>. While hunkered, the <c val="FFFF80">Massalisk</c> is immobile, takes decreased damage, and has a long range anti-air splash weapon</c>.
-Button/Tooltip/IgnitionBlast=Increases movement speed. Deals <d ref="Effect,IgnitionBlastDMG,Amount/Behavior,IgnitionBlast,Period"/> damage per second to enemy air units touching the caster. Lasts <d ref="Behavior,IgnitionBlast,Duration"/> seconds.<n/><n/><c val="78F0FF">Uses power.</c>
+Button/Tooltip/IgnitionBlast=After a charge up time of <d ref="Behavior,BoarIgnitionBlastInit,Duration"/> second, the caster gains increased movement speed and deals up to <d ref="Effect,IgnitionBlastDMG,Amount*(Behavior,IgnitionBlast,Duration/Behavior,IgnitionBlast,Period)"/> damage to units it comes into contact with over <d ref="Behavior,IgnitionBlast,Duration"/> seconds.<n/><n/><c val="78F0FF">Uses power.</c>
 Button/Tooltip/IncendiaryInfusion=Secretes saliva on an enemy unit. The targeted unit will deal <d ref="Effect,IncendiaryInfusionDMG,Amount"/> damage every <d ref="Behavior,IncendiaryInfusionAG,Period" precisions="1"/> seconds to other units around itself. Only damages other units on the same height plane. Lasts <d ref="Behavior,IncendiaryInfusionAG,Duration"/> seconds.
 Button/Tooltip/Inciter=Grenade attacker. Can jump up and down cliffs. Can use ELOR Protocol.<n/><n/><c val="78F0FF">Power user.</c><n/><c val="FFFF80">Can attack ground units.</c>
 Button/Tooltip/InciterCliffJumper=This unit can jump up and down cliffs.
@@ -891,7 +895,7 @@ Button/Tooltip/MaterializeWard=Produced by the <c val="FFFF80">Foundry</c>.<n/><
 Button/Tooltip/MediumOutputMode=Sets the <c val="FFFF80">Torrent</c> weapon to Normal Output Mode.
 Button/Tooltip/Mend=Instantly restores <d ref="Effect,MendMU,VitalArray[Life].Change"/> life to target biological unit or structure.
 Button/Tooltip/Mendling=Healer unit. Can use Mend, Covering Spray and Sacrificial Mutation.<n/><n/><c val="FFFF80">Can attack ground and air units.</c>
-Button/Tooltip/MiningPriority=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><c val="FF0000" validator="GenetronPowerSupplyLT100"><d ref="Effect,ProcessingCoreMiningPriorityMU,VitalArray[Energy].Change*(-1)"/></c><img path="Assets\Textures\blank.dds" width="1" height="24" alignment="top"/><n/>Increases the resource yield of owned nearby harvesters by <d ref="Behavior,ResourceTap,Modification.ResourceHarvestAmountBonus[Minerals]"/>. The effect lasts <d ref="Behavior,ResourceTapSearch,Duration"/> seconds.
+Button/Tooltip/MiningPriority=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><c val="FF0000" validator="GenetronPowerSupplyLT100"><d ref="Effect,ProcessingCoreMiningPriorityMU,VitalArray[Energy].Change*(-1)"/></c><img path="Assets\Textures\blank.dds" width="1" height="24" alignment="top"/><n/>Increases the yield of nearby mineral fields by <d ref="Behavior,ResourceTap,Modification.ResourceHarvestAmountBonus[Minerals]"/> for <d ref="Behavior,ResourceTapSearch,Duration"/> seconds.
 Button/Tooltip/MobileForm=Returns the <c val="FFFF80">Massalisk</c> to it's mobile form.
 Button/Tooltip/MobilizeCannon=Mobilizes the <c val="FFFF80">Mole</c>, disallowing usage of its cannon.
 Button/Tooltip/Mole=Deployable artillery cannon and radar suite.<n/><n/><c val="FFFF80">Can attack ground units.</c>
@@ -1007,7 +1011,7 @@ Button/Tooltip/Sanctum=Contains upgrades for Pulsars and Subjectors.<n/><n/><c v
 Button/Tooltip/ScavengerNest=Primary structure. Used to receive gathered resources.<n/><n/><c val="FFFF80">Enables:</c><n/>- Scavengers
 Button/Tooltip/SchematicTransmitLevel3=Linked to 3 <c val="FFFF80">Uploaders</c>. Production speed improved by 120%.<n/><n/>Enables:<n/> - <c val="FFFF80">Virtus</c>
 Button/Tooltip/Scion_Avenger=Quick interceptor. Can use Vengeance Missile.<n/><n/><c val="78F0FF">Power user.</c><n/><c val="FFFF80">Can attack air units.</c>
-Button/Tooltip/Scion_Overclock=Increases production speed by <d ref="Behavior,Scion_Overclock,Modification.RateMultiplierArray[Queueable]*100"/>% for <d ref="Behavior,Scion_Overclock,Duration"/> seconds.
+Button/Tooltip/Scion_Overclock=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><c val="FF0000" validator="GenetronPowerSupplyLT100"><d ref="Effect,ProcessingCoreMiningPriorityMU,VitalArray[Energy].Change*(-1)"/></c><img path="Assets\Textures\blank.dds" width="1" height="24" alignment="top"/><n/>Increases production speed by <d ref="Behavior,Scion_Overclock,Modification.RateMultiplierArray[Queueable]*100"/>% for <d ref="Behavior,Scion_Overclock,Duration"/> seconds.
 Button/Tooltip/Scion_Processor=Support unit. Can use System Recharge.<n/><n/><c val="78F0FF">Power user.</c></n><c val="FFE303">Detector</c>
 Button/Tooltip/Scion_Watcher=Stealthy spotter.
 Button/Tooltip/Scorpalisk=Armored melee attacker.<n/><n/><c val="FFFF80">Can attack ground units.</c>
@@ -1244,6 +1248,11 @@ Effect/Name/BlitzerOverdrivePowerSet=Blitzer - Overdrive (Power Set)
 Effect/Name/BlitzerSuperchargePowerEnum=Blitzer - Supercharge (Power Enum)
 Effect/Name/BlitzerSuperchargePowerModify=Blitzer - Supercharge (Power Modify)
 Effect/Name/BlitzerSuperchargePowerSet=Blitzer - Supercharge (Power Set)
+Effect/Name/BoarIgnitionBlastCreatePersistent=Boar - Ignition Blast (Create Persistent)
+Effect/Name/BoarIgnitionBlastDummy=Boar - Ignition Blast Dummy (Offset)
+Effect/Name/BoarIgnitionBlastDummyMove=Boar - Ignition Blast Dummy (Move)
+Effect/Name/BoarIgnitionBlastForce=Boar - Ignition Blast (Force)
+Effect/Name/BoarIgnitionBlastInit=Boar - Ignition Blast (Init Behavior)
 Effect/Name/BoarIgnitionBlastPowerEnum=Boar - Ignition Blast (Power Enum)
 Effect/Name/BoarIgnitionBlastPowerModify=Boar - Ignition Blast (Power Modify)
 Effect/Name/BoarIgnitionBlastPowerSet=Boar - Ignition Blast (Power Set)
@@ -1305,9 +1314,11 @@ Effect/Name/CoveringSprayAB=Covering Spray
 Effect/Name/CreateReverb=Create Reverb
 Effect/Name/CreateReverbCU=Create Reverb
 Effect/Name/CreateReverbTargetSet=Create Reverb
-Effect/Name/CruxConvergence=Crux - Convergence (CP)
-Effect/Name/CruxConvergenceDMG=Crux - Convergence (DMG)
-Effect/Name/CruxConvergenceSA=Crux - Convergence (SA)
+Effect/Name/CruxConvergence=Crux - Convergence (Channel)
+Effect/Name/CruxConvergenceBuff=Crux - Convergence (Apply Behavior)
+Effect/Name/CruxConvergenceDMG=Crux - Convergence (Damage)
+Effect/Name/CruxConvergenceSA=Crux - Convergence (Search Area)
+Effect/Name/CruxConvergenceTargetSet=Crux - Convergence (Target Set)
 Effect/Name/CruxLightningBolt=Crux - Lightning Bolt (Init)
 Effect/Name/CruxLightningBoltDMG=Crux - Lightning Bolt (DMG)
 Effect/Name/CruxLightningBoltData=Crux - Lightning Bolt (Data)
@@ -1359,6 +1370,7 @@ Effect/Name/EdificeParVolRB=Edifice - ParVol (RB)
 Effect/Name/EdificeParVolSA=Edifice - ParVol (SA)
 Effect/Name/EdificeParVolSet=Edifice - ParVol (Set)
 Effect/Name/ElectronBolt=Electron Bolt
+Effect/Name/ElectronBoltBDMG=Volt - Electron Bolt Bounce (Damage)
 Effect/Name/ElectronBoltBLM=Electron Bolt Bounce
 Effect/Name/ElectronBoltBounceSA=Electron Bolt Bounce
 Effect/Name/ElectronBoltD=Electron Bolt
@@ -1548,6 +1560,7 @@ Effect/Name/GyreAnnexAK=Gyre - Annex (AK)
 Effect/Name/GyreAnnexApplySet=Gyre - Annex (ApplySet)
 Effect/Name/GyreAnnexCU=Gyre - Annex (CU)
 Effect/Name/GyreAnnexCUSet=Gyre - Annex (CUSet)
+Effect/Name/GyreAnnexCancelOrders=Gyre - Annex (Cancel Orders)
 Effect/Name/GyreAnnexDamage=Gyre - Annex (Damage)
 Effect/Name/GyreAnnexDataDec=Gyre - Annex (DataDec)
 Effect/Name/GyreAnnexDataInc=Gyre - Annex (DataInc)
@@ -1556,7 +1569,8 @@ Effect/Name/GyreAnnexFinalSet=Gyre - Annex (FinalSet)
 Effect/Name/GyreAnnexFollowOrder=Gyre - Annex (FollowOrder)
 Effect/Name/GyreAnnexHeight=Gyre - Annex (Height)
 Effect/Name/GyreAnnexInitSet=Gyre - Annex (InitSet)
-Effect/Name/GyreAnnexInturruptOrder=Gyre - Annex (InturruptOrder)
+Effect/Name/GyreAnnexInterruptDelay=Gyre - Annex (InterruptDelay)
+Effect/Name/GyreAnnexInterruptMove=Gyre - Annex (InterruptMove)
 Effect/Name/GyreAnnexRK=Gyre - Annex (RK)
 Effect/Name/GyreAnnexRKPersistent=Gyre - Annex (RKPersistent)
 Effect/Name/GyreAnnexSA=Gyre - Annex (SA)
@@ -1607,7 +1621,6 @@ Effect/Name/IBF7FamethrowerSet=IBF-7 Famethrower
 Effect/Name/IBF7Flamethrower=IBF-7 Flamethrower
 Effect/Name/IBF7FlamethrowerDMG=IBF-7 Flamethrower
 Effect/Name/IgnitionBlast=Boar - Ignition Blast (Apply Behavior)
-Effect/Name/IgnitionBlastADB=Ignition Blast
 Effect/Name/IgnitionBlastDMG=Ignition Blast
 Effect/Name/IgnitionBlastSA=Ignition Blast
 Effect/Name/IncendiaryInfusion=Incendiary Infusion
@@ -1661,6 +1674,8 @@ Effect/Name/KeironChargeDummyUmbraAB=Keiron Charge Dummy Umbra (AB)
 Effect/Name/KeironConstructionModifier=Keiron Construction Modifier
 Effect/Name/KeironConstructionStart=Keiron Construction Start
 Effect/Name/KeironConstructionStop=Keiron Construction Stop
+Effect/Name/KeironShaperDummy=Keiron Shaper Dummy
+Effect/Name/KeironShaperSearch=Keiron Shaper Search
 Effect/Name/KeironShellRestorationControlSet=Keiron - Shell Restoration (Control Set)
 Effect/Name/KeironShellRestorationDelayABCaster=Keiron - Shell Restoration Delay (ABCaster)
 Effect/Name/KeironShellRestorationDelayABSource=Keiron - Shell Restoration Delay (ABSource)
@@ -1762,11 +1777,10 @@ Effect/Name/NeutralizerBeamLM=Neutralizer Beam
 Effect/Name/NeutralizerBeamLMImpact=Neutralizer Beam
 Effect/Name/NodePowerETU=Node - Power (ETU)
 Effect/Name/NodePowerHealer=Node - Power (Healer)
+Effect/Name/NotificationResponseDummy=Notification Response Dummy
 Effect/Name/NullifierMissilesDummy=Nullifier Missiles Dummy
 Effect/Name/NullifierWeaponCP=Nullifier - Weapon (CP)
 Effect/Name/NullifierWeaponDMG=Nullifier - Weapon (DMG)
-Effect/Name/NullifierWeaponDisplay=Nullifier - Weapon Display
-Effect/Name/NullifierWeaponDummy=Nullifier - Weapon Dummy
 Effect/Name/OculusChargeInstant=Oculus Charge Instant
 Effect/Name/OculusRevealInit=Reveal (Initial Delay)
 Effect/Name/OculusRevealRevealCaster=Oculus - Reveal (Reveal Caster)
@@ -1780,13 +1794,14 @@ Effect/Name/OlympusDischargeDMG=Olympus - Discharge (DMG)
 Effect/Name/OlympusDischargeDebuffAB=Olympus - Discharge (DebuffAB)
 Effect/Name/OlympusDischargeDebuffABStructure=Olympus - Discharge (DebuffABStructure)
 Effect/Name/OlympusDischargeDebuffDMG=Olympus - Discharge (DebuffDMG)
+Effect/Name/OlympusDischargeFinalDelay=Olympus - Discharge (Final Delay)
 Effect/Name/OlympusDischargeInitTarget=Olympus - Discharge (Init Target)
 Effect/Name/OlympusDischargeInitialDelay=Olympus - Discharge (Initial Delay)
 Effect/Name/OlympusDischargeLaunchMissileDown=Olympus - Discharge (Launch Missile Down)
 Effect/Name/OlympusDischargeLaunchMissileUp=Olympus - Discharge (Launch Missile Up)
 Effect/Name/OlympusDischargePowerEnum=Olympus - Discharge (Power Enum)
 Effect/Name/OlympusDischargePowerModify=Olympus - Discharge (Power Modify)
-Effect/Name/OlympusDischargeReveal=Olympus - Discharge (Reveal)
+Effect/Name/OlympusDischargeRevealArea=Olympus - Discharge (Reveal Area)
 Effect/Name/OlympusDischargeSA=Olympus - Discharge (SA)
 Effect/Name/OlympusDischargeSet=Olympus - Discharge (Set)
 Effect/Name/OlympusExplodeDMG=Olympus - Explode (DMG)
@@ -1862,6 +1877,7 @@ Effect/Name/PulsarFacingModifyUnit=Pulsar - Facing (Modify Unit)
 Effect/Name/PulsarFacingSearchAttackTarget=Pulsar - Facing (Search Attack Target)
 Effect/Name/PulsarFacingSearchGeneralTarget=Pulsar - Facing (Search General Target)
 Effect/Name/PulsarFacingSwitch=Pulsar - Facing (Switch)
+Effect/Name/PulsarMovementSpeed=Pulsar - Movement Speed
 Effect/Name/RepulsorInterdictorBurrowCD=Repulsor/Interdictor Burrow CD
 Effect/Name/RepulsorSuppressionCannons=Repulsor - Suppression Cannons (Set)
 Effect/Name/RepulsorSuppressionCannonsDamage=Repulsor - Suppression Cannons (Damage)
@@ -2052,7 +2068,6 @@ Effect/Name/WardShellDomeABFused=Ward - Shell Dome (ABFused)
 Effect/Name/WardShellDomeATU=Ward - Shell Dome (ATU)
 Effect/Name/WardShellDomeCU=Ward - Shell Dome (CU)
 Effect/Name/WardShellDomeCUSet=Ward - Shell Dome (CUSet)
-Effect/Name/WardShellDomeCancel=Ward - Shell Dome Cancel (RB)
 Effect/Name/WardShellDomeCooldown=Ward - Shell Dome (Cooldown)
 Effect/Name/WardShellDomeDummyCP=Ward - Shell Dome Dummy (CP)
 Effect/Name/WardShellDomeDummySA=Ward - Shell Dome Dummy (SA)
@@ -2115,30 +2130,31 @@ Race/Name/Keir=Keiron
 Race/Name/Xayi=Xayid
 RequirementNode/Tooltip/And352081205NotCountBehaviorHarbingerJudgementModeStartQueuedOrBetterAtUnitNotCountBehaviorHarbingerJudgementModeStopQueuedOrBetterAtUnit=Not Transforming
 RequirementNode/Tooltip/CountBehaviorApertureRequirementDummyQueuedOrBetterAtUnit1756462=At least 10 energy
-RequirementNode/Tooltip/CountBehaviorAquilaNaniteGrenadeReqCompleteOnlyAtUnit1897978320=Insufficient Power
+RequirementNode/Tooltip/CountBehaviorAquilaNaniteGrenadeReqCompleteOnlyAtUnit920359573=Power
 RequirementNode/Tooltip/CountBehaviorAquilaSuperchargeReqCompleteOnlyAtUnit1897978320=Insufficient Power
-RequirementNode/Tooltip/CountBehaviorAvengerVengeanceMissileReqCompleteOnlyAtUnit1897978320=Insufficient Power
+RequirementNode/Tooltip/CountBehaviorAvengerVengeanceMissileReqCompleteOnlyAtUnit920359573=Power
 RequirementNode/Tooltip/CountBehaviorBlitzerAbilitiesReqCompleteOnlyAtUnit1897978320=Insufficient Power
-RequirementNode/Tooltip/CountBehaviorBoarIgnitionBlastReqCompleteOnlyAtUnit1897978320=Insufficient Power
-RequirementNode/Tooltip/CountBehaviorCourierCloakingFieldReqCompleteOnlyAtUnit1897978320=Insufficient Power
-RequirementNode/Tooltip/CountBehaviorCourierOpticalDisruptionReqCompleteOnlyAtUnit1897978320=Insufficient Power
+RequirementNode/Tooltip/CountBehaviorBlitzerAbilitiesReqCompleteOnlyAtUnit920359573=Power
+RequirementNode/Tooltip/CountBehaviorBoarIgnitionBlastReqCompleteOnlyAtUnit920359573=Power
+RequirementNode/Tooltip/CountBehaviorCourierCloakingFieldReqCompleteOnlyAtUnit920359573=Power
+RequirementNode/Tooltip/CountBehaviorCourierOpticalDisruptionReqCompleteOnlyAtUnit920359573=Power
 RequirementNode/Tooltip/CountBehaviorEchoReverbCasterControllerCompleteOnlyAtUnit2145668228=Must Have Active Sonic Image
 RequirementNode/Tooltip/CountBehaviorElytraAmmoDummyCompleteOnlyAtUnit3668520173=Elytra must have Ammo
 RequirementNode/Tooltip/CountBehaviorGenetronProductionModeOverclockBuffCompleteOnlyAtUnit1330943493=Is In Overclocked Mode
-RequirementNode/Tooltip/CountBehaviorInciterELORReqCompleteOnlyAtUnit1897978320=Insufficient Power
+RequirementNode/Tooltip/CountBehaviorInciterELORReqCompleteOnlyAtUnit920359573=Power
 RequirementNode/Tooltip/CountBehaviorKeironStructureChargedCompleteOnlyAtUnit2373905154=Citadel is Charged
 RequirementNode/Tooltip/CountBehaviorKeironStructureChargedCompleteOnlyAtUnit2477900412=Oculus is Charged
 RequirementNode/Tooltip/CountBehaviorMoleBurrowedCompleteOnlyAtUnit3504524364=Must Be Burrowed
-RequirementNode/Tooltip/CountBehaviorOlympusAbilitiesReqCompleteOnlyAtUnit3686946770=Insufficient Power
-RequirementNode/Tooltip/CountBehaviorProcessingCoreMiningPriorityReqCompleteOnlyAtUnit1897978320=Insufficient Power
+RequirementNode/Tooltip/CountBehaviorOlympusAbilitiesReqCompleteOnlyAtUnit920359573=Power
+RequirementNode/Tooltip/CountBehaviorProcessingCoreMiningPriorityReqCompleteOnlyAtUnit920359573=Power
 RequirementNode/Tooltip/CountBehaviorSchematicTransmit2CompleteOnlyAtUnit3303085758=2 Uploaders
 RequirementNode/Tooltip/CountBehaviorSchematicTransmit3CompleteOnlyAtUnit1653320550=3 Uploaders
 RequirementNode/Tooltip/CountBehaviorSchematicTransmit3CompleteOnlyAtUnit2016240140=Has 3 Linked Uploaders
 RequirementNode/Tooltip/CountBehaviorSchematicTransmitCompleteOnlyAtUnit1791806786=1 Uploader
-RequirementNode/Tooltip/CountBehaviorSpitfireAbilitiesReqCompleteOnlyAtUnit3686946770=Insufficient Power
-RequirementNode/Tooltip/CountBehaviorTeslaAbilitiesReqCompleteOnlyAtUnit1897978320=Insufficient Power
+RequirementNode/Tooltip/CountBehaviorSpitfireAbilitiesReqCompleteOnlyAtUnit920359573=Power
+RequirementNode/Tooltip/CountBehaviorTeslaAbilitiesReqCompleteOnlyAtUnit920359573=Power
 RequirementNode/Tooltip/CountBehaviorUnderConstructionCompleteOnlyAtUnit1225867992=Construction complete
-RequirementNode/Tooltip/CountBehaviorVirtusSelfFixReqCompleteOnlyAtUnit1897978320=Insufficient Power
+RequirementNode/Tooltip/CountBehaviorVirtusSelfFixReqCompleteOnlyAtUnit920359573=Power
 RequirementNode/Tooltip/CountBehaviorWardShellDomeReqDummyQueuedOrBetterAtUnit2105069379=Not enough shell
 RequirementNode/Tooltip/CountUnitAlias_CitadelCompleteOnly2790733192=Citadel
 RequirementNode/Tooltip/CountUnitAlias_GatewayCompleteOnly4260347518TechTreeCheat=Gateway
@@ -2148,46 +2164,46 @@ RequirementNode/Tooltip/CountUnitRepulsorBurrowedQueuedOrBetterAtUnit252684872=M
 RequirementNode/Tooltip/CountUnitRepulsorQueuedOrBetterAtUnit1386945305=Not Concealed
 RequirementNode/Tooltip/CountUpgradeAAMDefenseTurretCompleteOnly1687422908TechTreeCheat=Research AAM Defense Turret at the Outfitting Station
 RequirementNode/Tooltip/CountUpgradeAnisopteraWingsCompleteOnly2056493273=Develop Anisoptera Wings at the Atrium
-RequirementNode/Tooltip/CountUpgradeApertureKeyholeCompleteOnly4277124587=Develop Keyhole at the Outlet
-RequirementNode/Tooltip/CountUpgradeBattleFrenzyCompleteOnly155926249=Research Battle Frenzy at the Biomass Cavern
+RequirementNode/Tooltip/CountUpgradeApertureKeyholeCompleteOnly4277124587TechTreeCheat=Develop Keyhole at the Outlet
+RequirementNode/Tooltip/CountUpgradeBattleFrenzyCompleteOnly155926249TechTreeCheat=Research Battle Frenzy at the Biomass Cavern
 RequirementNode/Tooltip/CountUpgradeBileDuctsCompleteOnly2217982260=Research Bile Ducts at the Casnolisk Den
 RequirementNode/Tooltip/CountUpgradeBlitzerBoreanReactorCompleteOnly3535990080=Research Borean Reactor at the Outfitting Station
 RequirementNode/Tooltip/CountUpgradeBoreDrillsCompleteOnly795306169TechTreeCheat=Research Bore Drills at the Outfitting Station
 RequirementNode/Tooltip/CountUpgradeCalcifiedHuskCompleteOnly2237663644=Research Calcified Husk at the Casnolisk Den
 RequirementNode/Tooltip/CountUpgradeCalibratedEnginesCompleteOnly2644943735TechTreeCheat=Research Calibrated Engines at the Outfitting Station
-RequirementNode/Tooltip/CountUpgradeCleavingSporesCompleteOnly2857923618=Research Cleaving Spores at the Sunken Warren
+RequirementNode/Tooltip/CountUpgradeCleavingSporesCompleteOnly2857923618TechTreeCheat=Research Cleaving Spores at the Sunken Warren
 RequirementNode/Tooltip/CountUpgradeCloakingGeneratorCompleteOnly593332043TechTreeCheat=Research Cloaking Generator at the Generator
-RequirementNode/Tooltip/CountUpgradeCruxConvergenceCompleteOnly4219486538=Develop Convergence at the Elysium
-RequirementNode/Tooltip/CountUpgradeDexterousJointsCompleteOnly2795673399=Research Dexterous Joints at the Casnolisk Den
-RequirementNode/Tooltip/CountUpgradeDissonanceProjectorCompleteOnly3767743394=Develop Dissonance Projector at the Conduit
+RequirementNode/Tooltip/CountUpgradeCruxConvergenceCompleteOnly4219486538TechTreeCheat=Develop Convergence at the Elysium
+RequirementNode/Tooltip/CountUpgradeDexterousJointsCompleteOnly2795673399TechTreeCheat=Research Dexterous Joints at the Casnolisk Den
+RequirementNode/Tooltip/CountUpgradeDissonanceProjectorCompleteOnly2123038348TechTreeCheat=Develop Dissonance Projector at the Conduit
 RequirementNode/Tooltip/CountUpgradeEnhancedTargetingCompleteOnly3566855729TechTreeCheat=Research Enhanced Targeting at the Outfitting Station
 RequirementNode/Tooltip/CountUpgradeFirewallShieldCompleteOnly2973986400TechTreeCheat=Research Firewall Shield at the Outfitting Station
 RequirementNode/Tooltip/CountUpgradeFixerFusionWeldersCompleteOnly673032562TechTreeCheat=Research Fusion Welders at the Outfitting Station
 RequirementNode/Tooltip/CountUpgradeFixerReactiveArmorCompleteOnly267640754TechTreeCheat=Research Reactive Armor at the Outfitting Station
-RequirementNode/Tooltip/CountUpgradeHunkerCompleteOnly1695018233=Research Hunker at the Biomass Cavern
+RequirementNode/Tooltip/CountUpgradeHunkerCompleteOnly1695018233TechTreeCheat=Research Hunker at the Biomass Cavern
 RequirementNode/Tooltip/CountUpgradeIncendiaryInfusionCompleteOnly2423264907=Research Incendiary Infusion at the Sunken Warren
 RequirementNode/Tooltip/CountUpgradeIntegratedOpticsCompleteOnly2260913460TechTreeCheat=Research Integrated Optics at the Generator
-RequirementNode/Tooltip/CountUpgradeInterlacingBondQueuedOrBetter2759224225=Develop Interlacing Bond at the Conduit
+RequirementNode/Tooltip/CountUpgradeInterlacingBondQueuedOrBetter2759224225TechTreeCheat=Develop Interlacing Bond at the Conduit
 RequirementNode/Tooltip/CountUpgradeInternalProducersCompleteOnly406972378TechTreeCheat=Research Internal Optimization at the Outfitting Station
 RequirementNode/Tooltip/CountUpgradeLatentChargeCompleteOnly2407529555TechTreeCheat=Develop Latent Charge at the Edifice
-RequirementNode/Tooltip/CountUpgradeOcularAcuityCompleteOnly3552356615=Research Ocular Acuity at the Casnolisk Den
-RequirementNode/Tooltip/CountUpgradePersistentSporesCompleteOnly3791809658=Research Covering Spray at the Casnolisk Den
+RequirementNode/Tooltip/CountUpgradeOcularAcuityCompleteOnly3552356615TechTreeCheat=Research Ocular Acuity at the Casnolisk Den
+RequirementNode/Tooltip/CountUpgradePersistentSporesCompleteOnly3791809658TechTreeCheat=Research Covering Spray at the Casnolisk Den
 RequirementNode/Tooltip/CountUpgradePhalanxReactorCompleteOnly583816646TechTreeCheat=Research Phalanx Reactor at the Outfitting Station
-RequirementNode/Tooltip/CountUpgradePiercingThrustCompleteOnly2826035440=Research Peircing Thrust at the Casnolisk Den
-RequirementNode/Tooltip/CountUpgradeProlongedSporesCompleteOnly2454222041=Research Prolonged Spores at the Biomass Cavern
+RequirementNode/Tooltip/CountUpgradePiercingThrustCompleteOnly2826035440TechTreeCheat=Research Peircing Thrust at the Casnolisk Den
+RequirementNode/Tooltip/CountUpgradeProlongedSporesCompleteOnly2454222041TechTreeCheat=Research Prolonged Spores at the Biomass Cavern
 RequirementNode/Tooltip/CountUpgradePulsarDampenerCompleteOnly1674898160TechTreeCheat=Develop Dampener at the Sanctum
-RequirementNode/Tooltip/CountUpgradeRefinedExcretionCompleteOnly1069588450=Research Refined Excretion at the Sunken Warren
+RequirementNode/Tooltip/CountUpgradeRefinedExcretionCompleteOnly1069588450TechTreeCheat=Research Refined Excretion at the Sunken Warren
 RequirementNode/Tooltip/CountUpgradeRefittedNozzlesCompleteOnly3013581777TechTreeCheat=Research Refitted Nozzles at the Outfitting Station
 RequirementNode/Tooltip/CountUpgradeReinforcedPlatingCompleteOnly1690510796TechTreeCheat=Research Reinforced Plating at the Outfitting Station
-RequirementNode/Tooltip/CountUpgradeResidualAcidCompleteOnly1581038296=Research Residual Acid at the Biomass Cavern
-RequirementNode/Tooltip/CountUpgradeScorpaliskMetabolicsCompleteOnly1817518820=Research Scorpalisk Metabolics at the Casnolisk Den
+RequirementNode/Tooltip/CountUpgradeResidualAcidCompleteOnly1581038296TechTreeCheat=Research Residual Acid at the Biomass Cavern
+RequirementNode/Tooltip/CountUpgradeScorpaliskMetabolicsCompleteOnly1817518820TechTreeCheat=Research Scorpalisk Metabolics at the Casnolisk Den
 RequirementNode/Tooltip/CountUpgradeShapedHullCompleteOnly616545633TechTreeCheat=Research Shaped Hull at the Outfitting Station
 RequirementNode/Tooltip/CountUpgradeShieldCompulsionCompleteOnly3365947385TechTreeCheat=Develop Stealth Compulsion At The Foundry
 RequirementNode/Tooltip/CountUpgradeSpitfireMadcapRoundsCompleteOnly3699215972TechTreeCheat=Research Madcap Rounds at the Outfitting Station
 RequirementNode/Tooltip/CountUpgradeStealthSystemsCompleteOnly2975384054TechTreeCheat=Research Stealth Systems at the Outfitting Station
 RequirementNode/Tooltip/CountUpgradeSubterraneanSensorsCompleteOnly1270547847TechTreeCheat=Research Subterranean Sensors at the Outfitting Station
 RequirementNode/Tooltip/CountUpgradeVengeanceMissileCompleteOnly2669909074TechTreeCheat=Research Vengeance Missile at the Outfitting Station
-RequirementNode/Tooltip/CountUpgradeVolatileDischargeCompleteOnly3252623346=Research Volatile Discharge at the Sunken Warren
+RequirementNode/Tooltip/CountUpgradeVolatileDischargeCompleteOnly3252623346TechTreeCheat=Research Volatile Discharge at the Sunken Warren
 RequirementNode/Tooltip/Eq1275348667CountUpgradeGenetronLightWeaponsLevel2CompleteOnly1=Mech Light Weapons Level 2
 RequirementNode/Tooltip/Eq1374853142CountUpgradeGenetronAircraftWeaponsLevel1CompleteOnly1=Aircraft Weapons Level 1
 RequirementNode/Tooltip/Eq1521202837CountUpgradeXayidFlyerCarapaceLevel1CompleteOnly1=Xayid Ground Carapace Level 1
@@ -2629,6 +2645,7 @@ Weapon/Name/BileGlob=Bile Glob
 Weapon/Name/BileGlobAG=Bile Glob
 Weapon/Name/BileGlobEquipment=Bile Glob
 Weapon/Name/BileSwarm=Bile Swarm
+Weapon/Name/BoarIgnitionBlastDummy=Boar - Ignition Blast Dummy
 Weapon/Name/BulwarkBlast=Bulwark Blast
 Weapon/Name/ChargeCannon=Charge Cannon
 Weapon/Name/ConverterDissolutionRay=Dissolution Ray

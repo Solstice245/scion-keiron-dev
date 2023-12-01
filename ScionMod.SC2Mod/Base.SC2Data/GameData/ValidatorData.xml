@@ -10,7 +10,8 @@
         <Value value="10"/>
         <BehaviorScope Behavior="GyreAnnexCaster"/>
     </CValidatorEffectTreeUserData>
-    <CValidatorLocationCompareRange id="AnnexCasterCloserThan2range">
+    <CValidatorLocationCompareRange id="AnnexCasterToAnnexTargetDistance">
+        <WhichLocation Effect="GyreAnnexDataInc" Value="TargetUnit"/>
         <Compare value="LT"/>
         <Range value="2"/>
     </CValidatorLocationCompareRange>
@@ -63,6 +64,13 @@
         <Find value="1"/>
         <Value value="UseVengeanceMissile"/>
     </CValidatorPlayerRequirement>
+    <CValidatorCombine id="BoarIgnitionBlastRemove">
+        <Type value="And"/>
+        <CombineArray value="CasterNotAbducted"/>
+        <CombineArray value="CasterNotFungalGrowthed"/>
+        <CombineArray value="CasterNotShackled"/>
+        <CombineArray value="Scion_CasterNoRavenScramblerMissile"/>
+    </CValidatorCombine>
     <CValidatorEffectTreeUserData id="CasterGPIEDataModeIs0">
         <CheckExistence value="0"/>
         <Key value="Mode"/>
@@ -85,6 +93,26 @@
         <Compare value="NE"/>
         <Behavior value="TitanWeapon"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="CasterHasNoStagnatingBileBuff">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="StagnatingBileStun"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorCombine id="CasterHasNoOrdersOrIsHoldingPosition">
+        <CombineArray value="CasterHasNoOrders"/>
+        <CombineArray value="CasterIsHoldingPosition"/>
+    </CValidatorCombine>
+    <CValidatorUnitOrderQueue id="CasterIsHoldingPosition">
+        <AbilLink value="move"/>
+        <AbilCmdIndex value="2"/>
+    </CValidatorUnitOrderQueue>
+    <CValidatorUnitCompareBehaviorCount id="CasterIsNotAnnexed">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="GyreAnnexed"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitOrderQueue id="CasterNotMoving">
+        <AbilLink value="move"/>
+        <Find value="0"/>
+    </CValidatorUnitOrderQueue>
     <CValidatorUnitCompareBehaviorCount id="CasterNotShackled">
         <ResultFailed value="Error,Error/Shackled"/>
         <WhichUnit Value="Caster"/>
@@ -154,6 +182,10 @@
         <Compare value="NE"/>
         <Behavior value="TitanInhibitorBeamGamutOrb"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareOrderCount id="AnnexTargetHasNoMoveOrders" parent="CasterHasNoOrders">
+        <WhichUnit Effect="GyreAnnexDataInc" Value="Target"/>
+        <AbilLink value="move"/>
+    </CValidatorUnitCompareOrderCount>
     <CValidatorUnitCompareCooldown id="UmbraStealthCooldownComplete">
         <Behavior value="UmbraStealth"/>
         <Compare value="LE"/>
@@ -1293,7 +1325,7 @@
             <Compare value="GT"/>
             <Count value="0"/>
             <Radius value="8"/>
-            <Validator value="HasResources"/>
+            <Validator value="Minerals"/>
         </AreaArray>
         <SearchFilters value="HarvestableResource;Stasis,Dead,Hidden"/>
     </CValidatorLocationEnumArea>
@@ -2130,15 +2162,15 @@
     <CValidatorUnitFilters id="IsMassive">
         <Filters value="Massive;-"/>
     </CValidatorUnitFilters>
-    <CValidatorCombine id="IsMaterializingOrSourceIsDead">
-        <CombineArray value="IsMaterializing"/>
+    <CValidatorCombine id="SourceIsMaterializingOrDead">
+        <CombineArray value="SourceIsMaterializing"/>
         <CombineArray value="SourceIsDead"/>
     </CValidatorCombine>
     <CValidatorCombine id="IsStructureOrMassive">
         <CombineArray value="IsMassive"/>
         <CombineArray value="IsStructure"/>
     </CValidatorCombine>
-    <CValidatorUnitCompareBehaviorCount id="IsMaterializing">
+    <CValidatorUnitCompareBehaviorCount id="SourceIsMaterializing">
         <WhichUnit Value="Source"/>
         <Compare value="GT"/>
         <Behavior value="KeironMaterializing"/>

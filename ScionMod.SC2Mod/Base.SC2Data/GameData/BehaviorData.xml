@@ -18,6 +18,26 @@
         <FinalEffect value="ProcessorFateSet"/>
         <RemoveValidatorArray value="CasterNotDead"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="BoarIgnitionBlastInit">
+        <InfoIcon value="Assets\Textures\btn-ability-genetron-ignitionblast.dds"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisplayDuration index="Ally" value="1"/>
+        <DisplayDuration index="Neutral" value="1"/>
+        <DisplayDuration index="Enemy" value="1"/>
+        <BuffFlags index="Countdown" value="0"/>
+        <Duration value="1"/>
+        <Modification>
+            <StateFlags index="SuppressCollision" value="1"/>
+            <StateFlags index="Resistant" value="1"/>
+            <LifeArmorBonus value="2"/>
+            <WeaponArray Link="BoarIgnitionBlastDummy"/>
+            <WeaponDisableArray value="TuskMachineGuns"/>
+        </Modification>
+        <RemoveValidatorArray value="BoarIgnitionBlastRemove"/>
+        <FinalEffect value="IgnitionBlast"/>
+        <AINotifyEffect value="IgnitionBlastSA"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="KeironStructureCharged">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
@@ -51,12 +71,33 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="GenetronPowerSupplyGE050"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="PulsarMovementSpeed">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <BuffFlags index="Channeling" value="1"/>
+        <Modification MoveSpeedBonus="-0.5"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="CruxConvergenceBuff">
+        <Alignment value="Negative"/>
+        <InfoIcon value="Assets\Textures\btn-ability-keiron-convergence.dds"/>
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <MaxStackCount value="65535"/>
+        <Duration value="4.2"/>
+        <Period value="0.21"/>
+        <PeriodicEffect value="CruxConvergenceDMG"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="PurificationNovaTargettedTarget">
+        <RemoveValidatorArray value="CasterIsNotAnnexed"/>
+        <RemoveValidatorArray value="CasterIsNotBlindedByProwler"/>
+        <RemoveValidatorArray value="CasterHasNoStagnatingBileBuff"/>
+        <RemoveValidatorArray value="CasterHasNoNaniteGrenadeBuff"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="Scion_Overclock">
         <InfoIcon value="Assets\Textures\btn-ability-genetron-productionmode-overclock.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisplayDuration index="Self" value="1"/>
         <DisplayDuration index="Ally" value="1"/>
-        <Duration value="46.2"/>
+        <Duration value="40"/>
         <Modification>
             <RateMultiplierArray index="Queueable" value="2"/>
         </Modification>
@@ -97,6 +138,7 @@
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="GenetronPowerSupplyGEOlympusDischarge"/>
+        <DisableValidatorArray value="NotUnderConstruction"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="BoarIgnitionBlastReq">
         <InfoFlags index="Hidden" value="1"/>
@@ -201,6 +243,7 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <RemoveValidatorArray value="hasEnergy"/>
         <RemoveValidatorArray value="GenetronPowerSupplyGE001"/>
+        <RemoveValidatorArray value="Scion_CasterNoRavenScramblerMissile"/>
         <DamageResponse>
             <Handled value="BadgerPowershellSet"/>
             <ModifyFraction value="0"/>
@@ -325,10 +368,12 @@
         <Requirements value="FabricatorUnitQueuedOrBetter"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="OpticalDisruptionBuff">
+        <Alignment value="Negative"/>
+        <InfoIcon value="Assets\Textures\btn-upgrade-genetron-integratedoptics.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <TimeScaleSource Value="Global"/>
         <Duration value="1"/>
         <Modification RangedWeaponRange="-4"/>
-        <TimeScaleSource Value="Global"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="OpticalDisruptionCaster">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -341,6 +386,7 @@
         <DisplayDuration index="Ally" value="1"/>
         <DisplayDuration index="Neutral" value="1"/>
         <DisplayDuration index="Enemy" value="1"/>
+        <RemoveValidatorArray value="Scion_CasterNoRavenScramblerMissile"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="ShellDomeCaster">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
@@ -656,7 +702,7 @@
     </CBehaviorBuff>
     <CBehaviorBuff id="GyreAnnexDummy">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
-        <RemoveValidatorArray value="AnnexCasterCloserThan2range"/>
+        <RemoveValidatorArray value="AnnexCasterToAnnexTargetDistance"/>
         <RemoveValidatorArray value="CasterIsAnnexing"/>
         <Period value="0.0625"/>
         <PeriodicEffect value="GyreAnnexFollowOrder"/>
@@ -668,11 +714,13 @@
     <CBehaviorBuff id="GyreAnnexed">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <RemoveValidatorArray value="AnnexDummyUnitIsAlive"/>
+        <RemoveValidatorArray value="AnnexCasterToAnnexTargetDistance"/>
         <InitialEffect value="GyreAnnexAK"/>
         <FinalEffect value="GyreAnnexRK"/>
-        <Modification RadiusMultiplier="0" Height="1.5">
+        <Modification Height="1.5">
             <StateFlags index="Stun" value="1"/>
-            <StateFlags index="Uncommandable" value="1"/>
+            <StateFlags index="SuppressCollision" value="1"/>
+            <StateFlags index="SuppressPassenger" value="1"/>
             <HeightTime index="Start" value="1"/>
             <HeightTime index="Stop" value="0.25"/>
             <PlaneDelta index="Ground" value="-1"/>
@@ -838,7 +886,7 @@
         <Alignment value="Positive"/>
         <InfoIcon value="Assets\Textures\btn-ability-genetron-miningtap.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Duration value="46.2"/>
+        <Duration value="40"/>
         <Period value="0.5"/>
         <PeriodicEffect value="MiningPrioritySearchArea"/>
         <DisplayDuration index="Self" value="1"/>
@@ -978,16 +1026,6 @@
         <HarvestAmount value="4"/>
         <DepletionVariationCount value="4"/>
     </CBehaviorResource>
-    <CBehaviorBuff id="IgnitionBlastADB">
-        <InfoFlags index="Hidden" value="1"/>
-        <InfoIcon value="Assets\Textures\btn-ability-genetron-ignitionblast.dds"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <MaxStackCount value="65535"/>
-        <MaxStackCountPerCaster value="1"/>
-        <Duration value="0.1875"/>
-        <PeriodCount value="0"/>
-        <FinalEffect value="IgnitionBlastDMG"/>
-    </CBehaviorBuff>
     <CBehaviorBuff id="JupiterShellShocked">
         <Alignment value="Negative"/>
         <InfoIcon value="Assets\Textures\btn-ability-genetron-shellshockbomb.dds"/>
@@ -1014,11 +1052,13 @@
         <Name value="Behavior/Name/MineralFieldMineralsBGH"/>
         <Capacity value="20000"/>
         <Contents value="20000"/>
+        <TechAliasArray value="Alias_ResourceHarvestableMinerals"/>
     </CBehaviorResource>
     <CBehaviorResource id="MineralsHighYieldBGH" parent="HighYieldMineralFieldMinerals">
         <Name value="Behavior/Name/HighYieldMineralFieldMineralsBGH"/>
         <Capacity value="20000"/>
         <Contents value="20000"/>
+        <TechAliasArray value="Alias_ResourceHarvestableMinerals"/>
     </CBehaviorResource>
     <CBehaviorBuff id="PDDetector">
         <InfoIcon value="Assets\Textures\btn-status-detector.dds"/>
@@ -1036,22 +1076,15 @@
         <Requirements value="UseIntegratedOptics"/>
         <Modification Detect="12" DetectFilters="-;Missile,Dead"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="IgnitionBlast">
-        <InfoIcon value="Assets\Textures\btn-ability-genetron-ignitionblast.dds"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisplayDuration index="Self" value="1"/>
-        <DisplayDuration index="Ally" value="1"/>
-        <DisplayDuration index="Neutral" value="1"/>
-        <DisplayDuration index="Enemy" value="1"/>
-        <Duration value="2.8"/>
+    <CBehaviorBuff id="IgnitionBlast" parent="BoarIgnitionBlastInit">
+        <Name value="Behavior/Name/IgnitionBlast"/>
+        <InfoFlags index="Hidden" value="1"/>
+        <BuffFlags index="Countdown" value="1"/>
+        <Duration value="2.5"/>
         <Period value="0.25"/>
-        <PeriodicEffect value="IgnitionBlastSA"/>
-        <Modification MoveSpeedMultiplier="2.5" AccelerationMultiplier="2.5">
-            <StateFlags index="SuppressCollision" value="1"/>
-            <LifeArmorBonus value="2"/>
-            <WeaponDisableArray value="TuskMachineGuns"/>
-        </Modification>
-        <Alignment value="Positive"/>
+        <PeriodicEffect value="BoarIgnitionBlastCreatePersistent"/>
+        <Modification MoveSpeedMultiplier="2.5" AccelerationBonus="100" DecelerationBonus="100"/>
+        <FinalEffect value=""/>
     </CBehaviorBuff>
     <CBehaviorBuff id="SuperChargeCannon">
         <InfoIcon value="Assets\Textures\btn-ability-genetron-cannonreset.dds"/>
@@ -1154,7 +1187,7 @@
             <ResourceHarvestAmountBonus index="Minerals" value="1"/>
         </Modification>
         <InfoIcon value="Assets\Textures\btn-ability-genetron-miningtap.dds"/>
-        <Duration value="1"/>
+        <Duration value="0.5625"/>
         <Alignment value="Positive"/>
         <TimeScaleSource Value="Global"/>
     </CBehaviorBuff>
@@ -1203,10 +1236,11 @@
     <CBehaviorBuff id="JupiterSpeed">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <RemoveValidatorArray value="NotBeingAbducted"/>
+        <RemoveValidatorArray value="CasterNotAbducted"/>
+        <RemoveValidatorArray value="CasterNotShackled"/>
         <MaxStackCount value="50"/>
         <Duration value="3.125"/>
-        <Modification MoveSpeedBonus="0.1992"/>
+        <Modification MoveSpeedMultiplier="1.031"/>
         <InitialEffect value="JupiterSpeedModifyUnit"/>
         <RefreshEffect value="JupiterSpeedModifyUnit"/>
     </CBehaviorBuff>
@@ -1497,7 +1531,6 @@
         <DisableValidatorArray value="NotUnderConstruction"/>
         <Period value="1.5"/>
         <PeriodicEffect value="SupportEffectsS"/>
-        <InitialEffect value="SupportEffectsS"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="BilePitPower">
         <InfoFlags index="Hidden" value="1"/>
@@ -1875,7 +1908,7 @@
         <Duration value="0.75"/>
         <Period value="0.1875"/>
         <PeriodicEffect value="Pulsar4DMUnit"/>
-        <Modification MoveSpeedBonus="-0.5">
+        <Modification>
             <ModifyFlags index="SuppressTurning" value="1"/>
         </Modification>
     </CBehaviorBuff>
@@ -2210,7 +2243,7 @@
         <PlacementMinPowerLevel value="1"/>
         <Flags index="KillIfUnpowered" value="1"/>
         <PoweredWhileUnderConstruction value="1"/>
-        <PowerStageArray/>
+        <PowerStageArray LevelGainEffect="KeironShaperSearch"/>
     </CBehaviorPowerUser>
     <CBehaviorBuff id="ElysiumCruxBase">
         <InfoFlags index="Hidden" value="1"/>
@@ -2256,6 +2289,7 @@
             <Cooldown TimeUse="11.2"/>
         </Cost>
         <DisableValidatorArray value="UmbraStealthCooldownComplete"/>
+        <DisableValidatorArray value="NotMaterializing"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="Pulsar4DMBackward">
         <InfoFlags index="Hidden" value="1"/>

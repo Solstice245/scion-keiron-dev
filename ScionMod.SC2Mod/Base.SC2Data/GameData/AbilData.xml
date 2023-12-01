@@ -110,6 +110,23 @@
     <CAbilMorph id="BurrowZerglingDown">
         <Flags index="WaitUntilStopped" value="0"/>
     </CAbilMorph>
+    <CAbilEffectInstant id="GenetronPerformanceMode">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Effect index="0" value="GenetronProductionModePerformance"/>
+        <Arc value="360"/>
+    </CAbilEffectInstant>
+    <CAbilEffectInstant id="GenetronStandardMode">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Effect index="0" value="GenetronProductionModeStandard"/>
+        <Arc value="360"/>
+        <AINotifyEffect value="GenetronPerformanceMode"/>
+    </CAbilEffectInstant>
+    <CAbilEffectInstant id="GenetronOverclockMode">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Effect index="0" value="GenetronProductionModeOverclock"/>
+        <Arc value="360"/>
+        <AINotifyEffect value="GenetronPerformanceMode"/>
+    </CAbilEffectInstant>
     <CAbilEffectInstant id="OculusChargeInstant">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Flags index="Transient" value="1"/>
@@ -130,10 +147,10 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Effect index="0" value="Scion_OverclockPowerEnum"/>
         <Cost>
-            <Cooldown TimeUse="44.8"/>
+            <Cooldown TimeUse="38.6"/>
         </Cost>
         <Arc value="360"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="Scion_Overclock" Requirements="ProcessingCoreMiningPriorityReq"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Scion_Overclock" Requirements="UseOverclock"/>
     </CAbilEffectInstant>
     <CAbilEffectInstant id="SpitfireOverdrive">
         <AbilSetId value="Overdrive"/>
@@ -630,10 +647,9 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="DeployCannon"/>
         <ActorKey value="BurrowDown"/>
-        <Flags index="IgnoreCollision" value="0"/>
         <Flags index="IgnoreFacing" value="1"/>
         <Flags index="SuppressMovement" value="1"/>
-        <InfoArray Unit="MoleRooted" RandomDelayMax="0.125">
+        <InfoArray Unit="MoleRooted">
             <SectionArray index="Actor">
                 <DurationArray index="Duration" value="2.5"/>
             </SectionArray>
@@ -721,7 +737,7 @@
     <CAbilEffectInstant id="MiningPriority">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Cost>
-            <Cooldown TimeUse="44.8"/>
+            <Cooldown TimeUse="38.6"/>
         </Cost>
         <CmdButtonArray index="Execute" DefaultButtonFace="MiningPriority" Requirements="ProcessingCoreMiningPriorityReq"/>
         <Effect index="0" value="ProcessingCoreMiningPriority"/>
@@ -970,7 +986,7 @@
         <SmartValidatorArray value="healSmartTargetFilters"/>
         <SmartValidatorArray value="NotWarpingIn"/>
         <AutoCastAcquireLevel value="Defensive"/>
-        <AutoCastFilters value="-;Ally"/>
+        <AutoCastFilters value="Visible;Neutral,Enemy,Missile,Stasis,Dead,Invulnerable"/>
         <AutoCastRange value="6"/>
         <AutoCastValidatorArray value="CasterEnergyGTE5"/>
         <AutoCastValidatorArray value="NotWarpingIn"/>
@@ -1112,15 +1128,15 @@
     <CAbilTrain id="TrainLightweightMechs">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Activity value="UI/Fabricating"/>
-        <InfoArray index="Train1" Time="49" Effect="ManufacturerFinishSpitfireInit">
+        <InfoArray index="Train1" Time="44.8" Effect="ManufacturerFinishSpitfireInit">
             <Button DefaultButtonFace="FabricateSpitfire"/>
             <Unit value="Spitfire"/>
         </InfoArray>
-        <InfoArray index="Train2" Time="56" Effect="ManufacturerFinishEqualizerInit">
+        <InfoArray index="Train2" Time="50.4" Effect="ManufacturerFinishEqualizerInit">
             <Button DefaultButtonFace="FabricateEqualizer" Requirements="HaveOutfittingStation"/>
             <Unit value="Equalizer"/>
         </InfoArray>
-        <InfoArray index="Train3" Time="49" Effect="ManufacturerFinishBlitzerInit">
+        <InfoArray index="Train3" Time="44.8" Effect="ManufacturerFinishBlitzerInit">
             <Button DefaultButtonFace="FabricateBlitzer" Requirements="HaveAnalysisTerminal"/>
             <Unit value="Blitzer"/>
         </InfoArray>
@@ -1128,11 +1144,11 @@
             <Button DefaultButtonFace="Blaze" Requirements="HaveOutfittingStation"/>
             <Unit value="Blaze"/>
         </InfoArray>
-        <InfoArray index="Train5" Time="63" Effect="ManufacturerFinishAquilaInit">
+        <InfoArray index="Train5" Time="56" Effect="ManufacturerFinishAquilaInit">
             <Button DefaultButtonFace="FabricateAquila" Requirements="HaveChemicalFirm"/>
             <Unit value="Aquila"/>
         </InfoArray>
-        <InfoArray index="Train6" Time="49" Effect="ManufacturerFinishFixerInit">
+        <InfoArray index="Train6" Time="44.8" Effect="ManufacturerFinishFixerInit">
             <Button DefaultButtonFace="FabricateFixer" Requirements="HaveOutfittingStation"/>
             <Unit value="Fixer"/>
         </InfoArray>
@@ -1226,22 +1242,14 @@
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Range value="8"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="ShellDome" Requirements="WardShellDome"/>
+        <CmdButtonArray index="Cancel" DefaultButtonFace="Cancel"/>
         <Cost>
             <Charge Location="Unit"/>
             <Cooldown Location="Unit" TimeStart="0.0625"/>
         </Cost>
-        <UninterruptibleArray index="Channel" value="1"/>
         <CursorEffect value="WardShellDomeDummySA"/>
+        <CancelableArray index="Channel" value="1"/>
     </CAbilEffectTarget>
-    <CAbilEffectInstant id="WardShellDomeCancel">
-        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
-        <Flags index="Transient" value="1"/>
-        <Cost>
-            <Charge Link="Abil/WardShellDome" Location="Unit"/>
-            <Cooldown Link="Abil/WardShellDome" Location="Unit" TimeUse="10"/>
-        </Cost>
-        <CmdButtonArray index="Execute" DefaultButtonFace="Cancel" Requirements="WardShellDomeCancel"/>
-    </CAbilEffectInstant>
     <CAbilEffectTarget id="XayithoanWatcher">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <Effect index="0" value="XayithoanWatcherInitTarget"/>
@@ -1288,6 +1296,9 @@
         <Range value="10"/>
         <CastIntroTime value="0.25"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="AdaptiveInjection"/>
+        <Marker>
+            <MatchFlags index="CasterPlayer" value="1"/>
+        </Marker>
     </CAbilEffectTarget>
     <CAbilTrain id="AerialNestWaspMutateXayidFlyers">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
@@ -1479,9 +1490,8 @@
         <Cost>
             <Vital index="Energy" value="75"/>
         </Cost>
-        <TargetFilters value="-;Self,Neutral,Enemy,Structure,Missile,Cloaked,Stasis"/>
+        <TargetFilters value="-;Neutral,Enemy,Structure,Missile,Cloaked,Stasis"/>
         <Range value="5"/>
-        <CastIntroTime value="0.25"/>
         <CastOutroTime value="0.25"/>
         <CursorEffect value="CoveringSprayAB"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="CoveringSpray"/>
@@ -2694,7 +2704,6 @@
     </CAbilMove>
     <CAbilWarpable id="KeironWarpable">
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
-        <DataCollection value="Warpable"/>
         <PowerUserBehavior value="KeironMaterializing"/>
     </CAbilWarpable>
     <CAbilTransport id="ApertureLoadUnload">
