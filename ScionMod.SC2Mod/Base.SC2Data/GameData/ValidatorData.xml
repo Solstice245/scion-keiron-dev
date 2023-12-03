@@ -71,6 +71,23 @@
         <CombineArray value="CasterNotShackled"/>
         <CombineArray value="Scion_CasterNoRavenScramblerMissile"/>
     </CValidatorCombine>
+    <CValidatorPlayerCompareFoodAvailable id="CannotAfford1Dot5Supply">
+        <Compare value="LT"/>
+        <Value value="1.5"/>
+    </CValidatorPlayerCompareFoodAvailable>
+    <CValidatorPlayerCompareResource id="CannotAffordFuseGas">
+        <Compare value="LT"/>
+        <Resource value="Vespene"/>
+        <Value value="50"/>
+    </CValidatorPlayerCompareResource>
+    <CValidatorPlayerCompareResource id="CannotAffordFuseMinerals">
+        <Compare value="LT"/>
+        <Value value="100"/>
+    </CValidatorPlayerCompareResource>
+    <CValidatorPlayerCompareResource id="CannotAffordXayidlingMinerals">
+        <Compare value="LT"/>
+        <Value value="75"/>
+    </CValidatorPlayerCompareResource>
     <CValidatorEffectTreeUserData id="CasterGPIEDataModeIs0">
         <CheckExistence value="0"/>
         <Key value="Mode"/>
@@ -123,11 +140,23 @@
         <Value value="10"/>
         <Vital value="Energy"/>
     </CValidatorUnitCompareVital>
+    <CValidatorUnitCompareVital id="EnergyLT15">
+        <Compare value="LT"/>
+        <Value value="15"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
     <CValidatorCompareTrackedUnitsCount id="GenetronPowerSupplyGE010">
         <ResultFailed value="NotEnoughEnergy"/>
         <Compare value="GT"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
         <TrackedUnitValidatorArray value="EnergyGTE010"/>
+        <TrackedUnitFilters value="-;Dead"/>
+    </CValidatorCompareTrackedUnitsCount>
+    <CValidatorCompareTrackedUnitsCount id="GenetronPowerSupplyLT15">
+        <ResultFailed value="NotEnoughEnergy"/>
+        <Compare value="GT"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <TrackedUnitValidatorArray value="EnergyLT15"/>
         <TrackedUnitFilters value="-;Dead"/>
     </CValidatorCompareTrackedUnitsCount>
     <CValidatorPlayerRequirement id="GenetronProductionIsModeSwitchingStandard">
