@@ -192,6 +192,21 @@
         <InitialDelay value="0.125"/>
         <ExpireEffect value="GyreAnnexInterruptMove"/>
     </CEffectCreatePersistent>
+    <!--Prevents the worker from going inside of structures while constructing them-->
+    <CEffectApplyForce id="KeironConstructionForce">
+        <ValidatorArray value="CasterUnitIsInBuildingPathing"/>
+        <EditorCategories value="Race:Keiron"/>
+        <WhichLocation Value="TargetUnit"/>
+        <WhichUnit Value="Caster"/>
+        <Amount value="1"/>
+    </CEffectApplyForce>
+    <!--Prevents Scavengers from going inside of structures while constructing them-->
+    <CEffectCreatePersistent id="XayidConstructionStart" parent="ScionCreatePersistentUnit" Race="Keiron">
+        <InitialEffect value="KeironConstructionForce"/>
+        <PeriodCount value="5"/>
+        <PeriodicEffectArray value="KeironConstructionForce"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
     <CEffectCreatePersistent id="KeironShaperDummy">
         <ValidatorArray value="IsCitadel"/>
         <EditorCategories value="Race:Keiron"/>
@@ -4870,6 +4885,14 @@
     </CEffectEnumArea>
     <CEffectCreatePersistent id="KeironConstructionStart" parent="ScionCreatePersistentUnit" Race="Keiron">
         <InitialEffect value="KeironConstructionModifier"/>
+        <PeriodCount value="6"/>
+        <PeriodicEffectArray value="KeironConstructionForce"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0.0625"/>
+        <PeriodicPeriodArray value="0.0625"/>
+        <PeriodicPeriodArray value="0.0625"/>
+        <PeriodicPeriodArray value="0.0625"/>
+        <PeriodicPeriodArray value="0.0625"/>
     </CEffectCreatePersistent>
     <CEffectCreatePersistent id="KeironConstructionStop" parent="ScionCreatePersistentUnit" Race="Keiron"/>
     <CEffectCreatePersistent id="CruxConvergence" parent="ScionCreatePersistent" Race="Keiron">
