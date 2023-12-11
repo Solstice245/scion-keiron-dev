@@ -148,6 +148,13 @@
         <Effect index="0" value="Scion_OverclockPowerEnum"/>
         <Arc value="360"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="Scion_Overclock" Requirements="UseOverclock"/>
+        <Cost>
+            <Cooldown TimeStart="0.0625"/>
+        </Cost>
+        <PreEffectBehavior Behavior="Scion_OverclockTargetMarker" Count="1"/>
+        <TargetSorts>
+            <SortArray value="OverclockCount"/>
+        </TargetSorts>
     </CAbilEffectInstant>
     <CAbilEffectInstant id="SpitfireOverdrive">
         <AbilSetId value="Overdrive"/>
@@ -523,12 +530,6 @@
         </InfoArray>
     </CAbilMorph>
     <CAbilRally id="RallyProcessingCore">
-        <OrderArray index="0">
-            <DisplayType value="Rally"/>
-            <Color value="255,128,255,255"/>
-            <Model value="Assets\UI\Feedback\WayPointRally\WayPointRally.m3"/>
-            <LineTexture value="Assets\Textures\WayPointLine.dds"/>
-        </OrderArray>
         <OrderArray index="1">
             <DisplayType value="Rally"/>
             <Color value="255,255,140,70"/>
@@ -536,8 +537,7 @@
             <LineTexture value="Assets\Textures\WayPointLine.dds"/>
         </OrderArray>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Structures"/>
-        <CmdButtonArray index="Rally1" DefaultButtonFace="RallyProcessor"/>
-        <CmdButtonArray index="Rally2" DefaultButtonFace="Rally"/>
+        <CmdButtonArray index="Rally2" DefaultButtonFace="RallyWorkerGen"/>
         <InfoArray index="0" SetFilters="-;RawResource,HarvestableResource" UseFilters="-;Worker">
             <SetValidators value="ProcessorIsQueuedGlobal"/>
         </InfoArray>
@@ -749,6 +749,13 @@
         <Effect index="0" value="ProcessingCoreMiningPriority"/>
         <AINotifyEffect value="MiningPrioritySearchArea"/>
         <Flags index="Transient" value="1"/>
+        <Cost>
+            <Cooldown TimeStart="0.0625"/>
+        </Cost>
+        <TargetSorts>
+            <SortArray value="MiningPriorityCount"/>
+            <SortArray value="MiningPriorityDuration"/>
+        </TargetSorts>
     </CAbilEffectInstant>
     <CAbilBuild id="ACRBuild">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -979,7 +986,6 @@
         <Flags index="AutoCast" value="1"/>
         <Flags index="AutoCastOn" value="1"/>
         <Flags index="NoDeceleration" value="1"/>
-        <Flags index="ReExecutable" value="1"/>
         <Flags index="Smart" value="1"/>
         <TargetFilters value="CanHaveEnergy;Self,Ally,Neutral,Enemy,Structure,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
         <TargetSorts RequestCount="1">
@@ -1187,16 +1193,13 @@
         <ValidatorArray value="IsBurrowedRepulsor"/>
         <AbilClassDisableArray index="CAbilAttack" value="1"/>
     </CAbilMorph>
-    <CAbilBuild id="UploaderAddonDummyBuild">
+    <CAbilBuild id="ScionAddonDummyBuild">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <FlagArray index="InstantPlacement" value="1"/>
         <FlagArray index="PeonDisableAbils" value="1"/>
         <FlagArray index="ShowProgress" value="1"/>
         <Alert value=""/>
-        <InfoArray index="Build1" Unit="Uploader3x3AddonDummy">
-            <Button DefaultButtonFace="Uploader"/>
-        </InfoArray>
-        <InfoArray index="Build2" Unit="Uploader4x4AddonDummy">
+        <InfoArray index="Build1" Unit="AddonDummy">
             <Button DefaultButtonFace="Uploader"/>
         </InfoArray>
         <Type value="AddOn"/>

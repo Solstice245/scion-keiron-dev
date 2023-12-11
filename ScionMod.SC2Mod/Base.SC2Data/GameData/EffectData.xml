@@ -86,6 +86,30 @@
         <AmmoUnit value="AcidWormsLMWeapon"/>
         <LaunchLocation Value="SourcePoint"/>
     </CEffectLaunchMissile>
+    <CEffectApplyBehavior id="Scion_OverclockTargetMarkerApply">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="Scion_OverclockTargetMarker"/>
+    </CEffectApplyBehavior>
+    <CEffectRemoveBehavior id="Scion_OverclockTargetMarkerRemove">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="Scion_OverclockTargetMarker"/>
+    </CEffectRemoveBehavior>
+    <CEffectApplyBehavior id="Scion_OverclockAddonDummyApplyFate">
+        <Behavior value="Scion_OverclockAddonDummy"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="ProcessingCoreMiningPriorityAddonDummyApplyFate">
+        <Behavior value="MiningPriorityAddonDummy"/>
+    </CEffectApplyBehavior>
+    <CEffectCreateUnit id="Scion_OverclockAddonDummyCreateUnit">
+        <Origin Value="CasterPoint"/>
+        <CreateFlags index="OffsetByRadius" value="0"/>
+        <CreateFlags index="Placement" value="0"/>
+        <CreateFlags index="NormalizeSpawnOffset" value="0"/>
+        <SpawnEffect value="Scion_OverclockAddonDummyApplyFate"/>
+        <SpawnUnit value="AddonDummy"/>
+        <SpawnOffset value="0,0"/>
+    </CEffectCreateUnit>
     <CEffectModifyUnit id="AegisActivateShieldCooldown">
         <EditorCategories value="Race:Keiron"/>
         <ImpactUnit Value="Source"/>
@@ -200,6 +224,104 @@
         <WhichUnit Value="Caster"/>
         <Amount value="1"/>
     </CEffectApplyForce>
+    <CEffectCreateUnit id="ProcessingCoreMiningPriorityAddonDummyCreateUnit">
+        <Origin Value="CasterPoint"/>
+        <CreateFlags index="OffsetByRadius" value="0"/>
+        <CreateFlags index="Placement" value="0"/>
+        <CreateFlags index="NormalizeSpawnOffset" value="0"/>
+        <SpawnEffect value="ProcessingCoreMiningPriorityAddonDummyApplyFate"/>
+        <SpawnUnit value="AddonDummy"/>
+        <SpawnOffset value="0,0"/>
+    </CEffectCreateUnit>
+    <CEffectCreatePersistent id="Scion_OverclockPowerSet">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="CasterUnit"/>
+        <InitialDelay value="0.0625"/>
+        <InitialEffect value="Scion_OverclockPowerModify"/>
+        <ExpireEffect value="Scion_OverclockTargetSort"/>
+    </CEffectCreatePersistent>
+    <CEffectModifyUnit id="Scion_OverclockRefreshCooldownAdd">
+        <EditorCategories value="Race:Genetron"/>
+        <Cost Abil="Scion_Overclock,Execute" CooldownOperation="Add" CooldownTimeUse="1"/>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="ProcessingCoreMiningPriorityRefreshCooldownAdd">
+        <EditorCategories value="Race:Genetron"/>
+        <Cost Abil="MiningPriority,Execute" CooldownOperation="Add" CooldownTimeUse="1"/>
+    </CEffectModifyUnit>
+    <CEffectCreatePersistent id="Scion_OverclockRefreshCooldownLoop">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="CasterUnit"/>
+        <InitialEffect value="Scion_OverclockRefreshCooldownAdd"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="Scion_OverclockRefreshQueryCooldown"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
+    <CEffectEnumTrackedUnits id="Scion_OverclockPowerEnum">
+        <ValidatorArray value="GenetronPowerSupplyGE100"/>
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="Scion_OverclockPowerSet"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectCreatePersistent id="ProcessingCoreMiningPriorityRefreshCooldownLoop">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="CasterUnit"/>
+        <InitialEffect value="ProcessingCoreMiningPriorityRefreshCooldownAdd"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="ProcessingCoreMiningPriorityRefreshQueryCooldown"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
+    <CEffectUserData id="Scion_OverclockRefreshQueryCooldown">
+        <EditorCategories value="Race:Genetron"/>
+        <Amount value="-1"/>
+        <ValidateMin value="-500000"/>
+        <ValidateMax value="120"/>
+        <EffectFailure value="Scion_OverclockRefreshCooldownLoop"/>
+    </CEffectUserData>
+    <CEffectUserData id="ProcessingCoreMiningPriorityRefreshQueryCooldown">
+        <EditorCategories value="Race:Genetron"/>
+        <Amount value="-1"/>
+        <ValidateMin value="-500000"/>
+        <ValidateMax value="120"/>
+        <EffectFailure value="ProcessingCoreMiningPriorityRefreshCooldownLoop"/>
+    </CEffectUserData>
+    <CEffectUserData id="Scion_OverclockRefreshQueryDuration">
+        <EditorCategories value="Race:Genetron"/>
+        <Amount value="0">
+            <AccumulatorArray value="OverclockBehaviorDurationRemaining"/>
+        </Amount>
+        <ValidateMin value="-500000"/>
+        <ValidateMax value="120"/>
+        <EffectFailure value="Scion_OverclockRefreshQueryCooldown"/>
+    </CEffectUserData>
+    <CEffectUserData id="ProcessingCoreMiningPriorityRefreshQueryDuration">
+        <EditorCategories value="Race:Genetron"/>
+        <Amount value="0">
+            <AccumulatorArray value="MiningPriorityBehaviorDurationRemaining"/>
+        </Amount>
+        <ValidateMin value="-500000"/>
+        <ValidateMax value="120"/>
+        <EffectFailure value="ProcessingCoreMiningPriorityRefreshQueryCooldown"/>
+    </CEffectUserData>
+    <CEffectSet id="Scion_OverclockTargetFound">
+        <!--<ValidatorArray value="Scion_OverclockTargetMarker"/>
+        <ValidatorArray value="TargetUnitTypeIsCasterUnitType"/>-->
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="Scion_Overclock"/>
+        <EffectArray value="Scion_OverclockTargetMarkerRemove"/>
+    </CEffectSet>
+    <CEffectEnumArea id="Scion_OverclockTargetSort">
+        <EditorCategories value="Race:Genetron"/>
+        <DebugTrace value="1"/>
+        <LaunchLocation Value="CasterUnit"/>
+        <ImpactLocation Value="CasterUnit"/>
+        <SearchFilters value="-;Ally,Neutral,Enemy,Missile,Stasis,Dead,Hidden"/>
+        <TargetSorts>
+            <SortArray value="OverclockCount"/>
+            <SortArray value="OverclockDuration"/>
+        </TargetSorts>
+        <AreaArray Radius="10" Effect="Scion_OverclockTargetFound"/>
+        <MaxCount value="1"/>
+    </CEffectEnumArea>
     <!--Prevents Scavengers from going inside of structures while constructing them-->
     <CEffectCreatePersistent id="XayidConstructionStart" parent="ScionCreatePersistentUnit" Race="Keiron">
         <InitialEffect value="KeironConstructionForce"/>
@@ -331,25 +453,14 @@
     </CEffectApplyBehavior>
     <CEffectApplyBehavior id="Scion_Overclock">
         <EditorCategories value="Race:Genetron"/>
-        <WhichUnit Value="Caster"/>
     </CEffectApplyBehavior>
-    <CEffectEnumTrackedUnits id="Scion_OverclockPowerEnum">
-        <ValidatorArray value="GenetronPowerSupplyGE100"/>
-        <EditorCategories value="Race:Genetron"/>
-        <BehaviorLink value="GenetronPowerSupplyTracker"/>
-        <Effect value="Scion_OverclockPowerSet"/>
-    </CEffectEnumTrackedUnits>
     <CEffectModifyUnit id="Scion_OverclockPowerModify">
         <EditorCategories value="Race:Genetron"/>
         <VitalArray index="Energy">
             <Change value="-100"/>
         </VitalArray>
+        <ImpactUnit Effect="Scion_OverclockPowerEnum"/>
     </CEffectModifyUnit>
-    <CEffectSet id="Scion_OverclockPowerSet">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="Scion_OverclockPowerModify"/>
-        <EffectArray value="Scion_Overclock"/>
-    </CEffectSet>
     <CEffectApplyBehavior id="SpitfireOverdriveApplyBehavior" parent="ScionApplyBehaviorCaster" Race="Genetron">
         <Behavior value="SpitfireOverdrive"/>
     </CEffectApplyBehavior>
@@ -4639,7 +4750,7 @@
         <ValidatorArray value="SourceIsMaterializingOrDead"/>
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Dead,Hidden"/>
         <TargetSorts>
-            <SortArray value="HighestUnitCharge"/>
+            <SortArray value="TSKeironProductionChargeDesc"/>
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="ZenithParagonRB"/>
     </CEffectEnumArea>
@@ -4695,7 +4806,7 @@
         <ValidatorArray value="SourceIsMaterializingOrDead"/>
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Dead,Hidden"/>
         <TargetSorts>
-            <SortArray value="HighestUnitCharge"/>
+            <SortArray value="TSKeironProductionChargeDesc"/>
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="EmpyreanHarParRB"/>
     </CEffectEnumArea>
@@ -4738,7 +4849,7 @@
         <ValidatorArray value="SourceIsMaterializingOrDead"/>
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Dead,Hidden"/>
         <TargetSorts>
-            <SortArray value="HighestUnitCharge"/>
+            <SortArray value="TSKeironProductionChargeDesc"/>
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="CelestialOutletAurApeRB"/>
     </CEffectEnumArea>
@@ -4813,7 +4924,7 @@
         <ValidatorArray value="SourceIsMaterializingOrDead"/>
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Dead,Hidden"/>
         <TargetSorts>
-            <SortArray value="HighestUnitCharge"/>
+            <SortArray value="TSKeironProductionChargeDesc"/>
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="AstralConduitEchoRB"/>
     </CEffectEnumArea>
@@ -4879,7 +4990,7 @@
         <ValidatorArray value="SourceIsMaterializingOrDead"/>
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Dead,Hidden"/>
         <TargetSorts>
-            <SortArray value="HighestUnitCharge"/>
+            <SortArray value="TSKeironProductionChargeDesc"/>
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="AtriumIndMyrRB"/>
     </CEffectEnumArea>
@@ -4983,7 +5094,7 @@
         <ValidatorArray value="SourceIsMaterializingOrDead"/>
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Dead,Hidden"/>
         <TargetSorts>
-            <SortArray value="HighestUnitCharge"/>
+            <SortArray value="TSKeironProductionChargeDesc"/>
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="PantheonTitanRB"/>
     </CEffectEnumArea>
@@ -5031,7 +5142,7 @@
         <ValidatorArray value="SourceIsMaterializingOrDead"/>
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Dead,Hidden"/>
         <TargetSorts>
-            <SortArray value="HighestUnitCharge"/>
+            <SortArray value="TSKeironProductionChargeDesc"/>
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="FoundryUmbraRB"/>
     </CEffectEnumArea>
@@ -5096,7 +5207,7 @@
         <ValidatorArray value="SourceIsMaterializingOrDead"/>
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Dead,Hidden"/>
         <TargetSorts>
-            <SortArray value="HighestUnitCharge"/>
+            <SortArray value="TSKeironProductionChargeDesc"/>
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="ElysiumCruxRB"/>
     </CEffectEnumArea>
@@ -5144,7 +5255,7 @@
         <ValidatorArray value="SourceIsMaterializingOrDead"/>
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Dead,Hidden"/>
         <TargetSorts>
-            <SortArray value="HighestUnitCharge"/>
+            <SortArray value="TSKeironProductionChargeDesc"/>
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="SanctumPulSubRB"/>
     </CEffectEnumArea>
@@ -5190,7 +5301,7 @@
         <ValidatorArray value="SourceIsMaterializingOrDead"/>
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Dead,Hidden"/>
         <TargetSorts>
-            <SortArray value="HighestUnitCharge"/>
+            <SortArray value="TSKeironProductionChargeDesc"/>
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="EdificeParVolRB"/>
     </CEffectEnumArea>

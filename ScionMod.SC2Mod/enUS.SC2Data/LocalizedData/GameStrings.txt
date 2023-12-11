@@ -121,6 +121,7 @@ Abil/Name/RevenantBomb=Revenant Bomb
 Abil/Name/ReverbRB=Reverb Teleport
 Abil/Name/SanctumResearch=Sanctum Research
 Abil/Name/SchematicTransmit=Schematic Transmit
+Abil/Name/ScionAddonDummyBuild=Scion Addon Dummy Build
 Abil/Name/Scion_Overclock=Genetron - Overclock
 Abil/Name/Scour=Scour
 Abil/Name/SonicImage=Sonic Image
@@ -137,7 +138,6 @@ Abil/Name/TrainHeavyweightMechs=Train Heavyweight Mechs
 Abil/Name/TrainLightweightMechs=Train Lightweight Mechs
 Abil/Name/TransportFerrion=Transport
 Abil/Name/UmbraShieldCompulsion=Umbra - Shield Compulsion
-Abil/Name/UploaderAddonDummyBuild=Uploader Addon Dummy Build
 Abil/Name/UploaderSmartLink=Uploader Smart Link
 Abil/Name/VengeanceMissile=Vengeance Missile
 Abil/Name/VirtusSelffixProtocol=Virtus - Self-fix Protocol
@@ -148,6 +148,9 @@ Abil/Name/WardShellDome=Ward - Shell Dome
 Abil/Name/XayidlingDash=Dash
 Abil/Name/XayithoanWatcher=Xayithoan - Watcher
 Abil/Name/que1Passive=Queue (1) Passive
+Actor/AddonIndicator/Reactor=R
+Actor/AddonIndicator/Scion_MiningPriority=M
+Actor/AddonIndicator/Scion_Overclock=OC
 Actor/AddonIndicator/UploaderCount0=0
 Actor/AddonIndicator/UploaderCount1=1
 Actor/AddonIndicator/UploaderCount2=2
@@ -213,6 +216,7 @@ Behavior/Name/LockdownMode=Lockdown Mode
 Behavior/Name/LockdownModeDuration=Lockdown Mode Duration
 Behavior/Name/MassaliskHunkered=Hunkered
 Behavior/Name/MendBehavior=Mend
+Behavior/Name/MiningPriorityAddonDummy=Mining Priority Addon Dummy
 Behavior/Name/MoleSubterraneanSensors=Subterranean Sensors
 Behavior/Name/NaniteGrenadeAB=Nanite Grenade
 Behavior/Name/OlympusElectrified=Electrified
@@ -227,6 +231,8 @@ Behavior/Name/ResourceTap=Resource Tap
 Behavior/Name/ResourceTapSearch=Resource Tap
 Behavior/Name/SacrificialMutation=Sacrificial Mutation
 Behavior/Name/Scion_Overclock=Overclock
+Behavior/Name/Scion_OverclockAddonDummy=Genetron Overclock Addon Dummy
+Behavior/Name/Scion_OverclockTargetMarker=Overclock (Target Marker)
 Behavior/Name/ShockChargeDecloak=Shock Charge Decloak
 Behavior/Name/SpeedCloak=Speed Cloak
 Behavior/Name/SpitfireOverdrive=Overdrive
@@ -572,7 +578,7 @@ Button/Name/ProlongedSpores=Prolonged Spores
 Button/Name/ProtectiveCloud=Protective Cloud
 Button/Name/Prowler=Mutate into Prowler
 Button/Name/PulsarDampener=Dampener
-Button/Name/RallyProcessor=Set Processor Rally Point
+Button/Name/RallyWorkerGen=Set Worker Rally Point
 Button/Name/Raptor=Mutate into Raptors
 Button/Name/ReactiveArmor=Reactive Armor
 Button/Name/RefinedExcretion=Refined Excretion
@@ -711,7 +717,7 @@ Button/Tooltip/Blitzer=General purpose combat unit. Can use Supercharge and Over
 Button/Tooltip/BlitzerBoreanReactor=<c val="FFFF80">Blitzers</c> gain +15 maximum and starting energy.
 Button/Tooltip/BlitzerOverdrive=Increases movement speed by <d ref="Behavior,BlitzerOverdrive,Modification.MoveSpeedMultiplier-1*100"/>% for <d ref="Behavior,BlitzerOverdrive,Duration"/> seconds.<n/><n/><c val="78F0FF">Uses <d ref="Effect,BlitzerOverdrivePowerModify,VitalArray[Energy].Change*(-1)"/> power</c>
 Button/Tooltip/BlitzerSupercharge=The caster's next attack will deal <d ref="Effect,ChargeCannonSC,Amount/Effect,ChargeCannon,Amount*100"/>% damage as spell damage. Weapon range is extended by <d ref="Behavior,SuperChargeCannon,Modification.RangedWeaponRange"/> while charged. The charge lasts for <d ref="Behavior,SuperChargeCannon,Duration"/> seconds.<n/><n/><c val="78F0FF">Uses <d ref="Effect,BlitzerSuperchargePowerModify,VitalArray[Energy].Change*(-1)"/> power</c>
-Button/Tooltip/BlitzerSuperchargeCost=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconEnergy" width="24" height="24" alignment="absolutemiddle"/><c val="FF0000"><c val="FFFFFF" validator="!EnergyLT15"><d ref="Abil,SuperCharge,Cost[0].Vital[Energy]"/></c></c> <img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><c val="FF0000" validator="GenetronPowerSupplyLT15"><d ref="Effect,BlitzerSuperchargePowerModify,VitalArray[Energy].Change*(-1)"/></c><img path="Assets\Textures\blank.dds" width="1" height="24" alignment="top"/><n/>
+Button/Tooltip/BlitzerSuperchargeCost=
 Button/Tooltip/BlitzerSupercharged=The caster's weapon is currently supercharged.
 Button/Tooltip/Boar=Armored craft with a bladed hull, and light machine guns. Can use Ignition Blast.<n/><n/><c val="78F0FF">Power user.</c><n/><c val="FFFF80">Can attack ground and air units.</c>
 Button/Tooltip/BoreDrills=<c val="FFFF80">Hornets</c> reduce the armor of their targets by 1 for each <c val="FFFF80">Hornet</c> attacking it. Stacks up to 5 times. The effect lasts for <d ref="Behavior,BoreDrill,Duration"/> seconds unless refreshed.
@@ -898,7 +904,7 @@ Button/Tooltip/MaterializeWard=Produced by the <c val="FFFF80">Foundry</c>.<n/><
 Button/Tooltip/MediumOutputMode=Sets the <c val="FFFF80">Torrent</c> weapon to Normal Output Mode.
 Button/Tooltip/Mend=Instantly restores <d ref="Effect,MendMU,VitalArray[Life].Change"/> life to target biological unit or structure.
 Button/Tooltip/Mendling=Healer unit. Can use Mend, Covering Spray and Sacrificial Mutation.<n/><n/><c val="FFFF80">Can attack ground and air units.</c>
-Button/Tooltip/MiningPriority=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><c val="FF0000" validator="GenetronPowerSupplyLT100"><d ref="Effect,ProcessingCoreMiningPriorityMU,VitalArray[Energy].Change*(-1)"/></c><img path="Assets\Textures\blank.dds" width="1" height="24" alignment="top"/><n/>Increases the yield of nearby mineral fields by <d ref="Behavior,ResourceTap,Modification.ResourceHarvestAmountBonus[Minerals]"/> for <d ref="Behavior,ResourceTapSearch,Duration"/> seconds.
+Button/Tooltip/MiningPriority=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><c val="FF0000" validator="GenetronPowerSupplyLT100"><d ref="Effect,ProcessingCoreMiningPriorityMU,VitalArray[Energy].Change*(-1)"/></c><img path="Assets\Textures\blank.dds" width="1" height="24" alignment="top"/><n/>Increases the yield of nearby mineral fields by <d ref="Behavior,ResourceTap,Modification.ResourceHarvestAmountBonus[Minerals]"/> for <d ref="Behavior,ResourceTapSearch,Duration"/> seconds. Repeated casts increase the duration up to <d ref="Behavior,ResourceTapSearch,Duration*4"/> seconds.
 Button/Tooltip/MobileForm=Returns the <c val="FFFF80">Massalisk</c> to it's mobile form.
 Button/Tooltip/MobilizeCannon=Mobilizes the <c val="FFFF80">Mole</c>, disallowing usage of its cannon.
 Button/Tooltip/Mole=Deployable artillery cannon and radar suite.<n/><n/><c val="FFFF80">Can attack ground units.</c>
@@ -974,7 +980,7 @@ Button/Tooltip/ProtectiveCloud=Casts a cloud of gas, affected friendly units tak
 Button/Tooltip/Prowler=Quick specialist unit. Can use Acid Nest and Blinding Burst.
 Button/Tooltip/Pulsar=Durable close range combat unit. Can be upgraded to use Dampener.<n/><n/><c val="FFFF80">Can attack ground units.</c>
 Button/Tooltip/PulsarDampener=Absorbs <d ref="-Behavior,PulsarDampener,DamageResponse.ModifyFraction+1*100"/>% of spell and splash damage. Lasts for <d ref="Behavior,PulsarDampener,Duration"/> seconds. This effect can only occur once every <d ref="Behavior,PulsarDampenerTrigger,Cost.Cooldown.TimeUse"/> seconds.
-Button/Tooltip/RallyProcessor=Sends constructed units to the designated point. Workers rallied to resources will begin gathering automatically.
+Button/Tooltip/RallyWorkerGen=Sends constructed worker units to the designated point. Workers rallied to resources will begin gathering automatically.
 Button/Tooltip/Raptor=Fast, weak flyer. Effective against Armored targets. Two Raptors hatch from a single egg.<n/><n/><c val="FFFF80">Can attack ground and air units.</c>
 Button/Tooltip/ReactiveArmor=Incoming ranged damage reduced by 2.
 Button/Tooltip/RefinedExcretion=<c val="FFFF80">Xayithoans</c> abilities gain +50% duration.
@@ -1015,7 +1021,7 @@ Button/Tooltip/Sanctum=Contains upgrades for Pulsars and Subjectors.<n/><n/><c v
 Button/Tooltip/ScavengerNest=Primary structure. Used to receive gathered resources.<n/><n/><c val="FFFF80">Enables:</c><n/>- Scavengers
 Button/Tooltip/SchematicTransmitLevel3=Linked to 3 <c val="FFFF80">Uploaders</c>. Production speed improved by 120%.<n/><n/>Enables:<n/> - <c val="FFFF80">Virtus</c>
 Button/Tooltip/Scion_Avenger=Quick interceptor. Can use Vengeance Missile.<n/><n/><c val="78F0FF">Power user.</c><n/><c val="FFFF80">Can attack air units.</c>
-Button/Tooltip/Scion_Overclock=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><c val="FF0000" validator="GenetronPowerSupplyLT100"><d ref="Effect,ProcessingCoreMiningPriorityMU,VitalArray[Energy].Change*(-1)"/></c><img path="Assets\Textures\blank.dds" width="1" height="24" alignment="top"/><n/>Increases production speed by <d ref="Behavior,Scion_Overclock,Modification.RateMultiplierArray[Queueable]*100"/>% for <d ref="Behavior,Scion_Overclock,Duration"/> seconds.
+Button/Tooltip/Scion_Overclock=<s val="VerySmallFont">  </s><img path="@@UI/ResourceIconPower" width="24" height="24" alignment="absolutemiddle"/><c val="FF0000" validator="GenetronPowerSupplyLT100"><d ref="Effect,ProcessingCoreMiningPriorityMU,VitalArray[Energy].Change*(-1)"/></c><img path="Assets\Textures\blank.dds" width="1" height="24" alignment="top"/><n/>Increases production speed by <d ref="Behavior,Scion_Overclock,Modification.RateMultiplierArray[Queueable]*100"/>% for <d ref="Behavior,Scion_Overclock,Duration"/> seconds. Repeated casts increase the duration up to <d ref="Behavior,Scion_Overclock,Duration*4"/> seconds.
 Button/Tooltip/Scion_Processor=Support unit. Can use System Recharge.<n/><n/><c val="78F0FF">Power user.</c></n><c val="FFE303">Detector</c>
 Button/Tooltip/Scion_Watcher=Stealthy spotter.
 Button/Tooltip/Scorpalisk=Armored melee attacker.<n/><n/><c val="FFFF80">Can attack ground units.</c>
@@ -1835,7 +1841,13 @@ Effect/Name/ParagonGroundWeaponImpact=Paragon - Ground Weapon (DMG)
 Effect/Name/PariahProjectionRemoveBehavior=Pariah - Projection (Remove Behavior)
 Effect/Name/Pause=Pause
 Effect/Name/ProcessingCoreMiningPriority=Processing Core - Mining Priority (ETU)
+Effect/Name/ProcessingCoreMiningPriorityAddonDummyApplyFate=Processing Core - Mining Priority Addon Dummy (Apply Fate)
+Effect/Name/ProcessingCoreMiningPriorityAddonDummyCreateUnit=Processing Core - Mining Priority Addon Dummy (Create Unit)
 Effect/Name/ProcessingCoreMiningPriorityMU=Processing Core - Mining Priority (MU)
+Effect/Name/ProcessingCoreMiningPriorityRefreshCooldownAdd=Processing Core - Mining Priority Refresh (Cooldown Add)
+Effect/Name/ProcessingCoreMiningPriorityRefreshCooldownLoop=Processing Core - Mining Priority Refresh (Cooldown Loop)
+Effect/Name/ProcessingCoreMiningPriorityRefreshQueryCooldown=Processing Core - Mining Priority Refresh (Query Cooldown)
+Effect/Name/ProcessingCoreMiningPriorityRefreshQueryDuration=Processing Core - Mining Priority Refresh (Query Duration)
 Effect/Name/ProcessingCoreMiningPrioritySet=Processing Core - Mining Priority (Set)
 Effect/Name/ProcessingCorePowerETU=Processing Core - Power (ETU)
 Effect/Name/ProcessingCorePowerHealer=Processing Core - Power (Healer)
@@ -1934,9 +1946,19 @@ Effect/Name/ScionLaunchMissile2=_ScionLaunchMissile Copy
 Effect/Name/ScionLaunchMissilePoint=_ScionLaunchMissilePoint
 Effect/Name/ScionSet=_ScionSet
 Effect/Name/Scion_Overclock=Genetron - Overclock (Apply Behavior)
+Effect/Name/Scion_OverclockAddonDummyApplyFate=Genetron - Overclock Addon Dummy (Apply Fate)
+Effect/Name/Scion_OverclockAddonDummyCreateUnit=Genetron - Overclock Addon Dummy (Create Unit)
 Effect/Name/Scion_OverclockPowerEnum=Genetron - Overclock (Power Enum)
 Effect/Name/Scion_OverclockPowerModify=Genetron - Overclock (Power Modify)
 Effect/Name/Scion_OverclockPowerSet=Genetron - Overclock (Power Set)
+Effect/Name/Scion_OverclockRefreshCooldownAdd=Genetron - Overclock Refresh (Cooldown Add)
+Effect/Name/Scion_OverclockRefreshCooldownLoop=Genetron - Overclock Refresh (Cooldown Loop)
+Effect/Name/Scion_OverclockRefreshQueryCooldown=Genetron - Overclock Refresh (Query Cooldown)
+Effect/Name/Scion_OverclockRefreshQueryDuration=Genetron - Overclock Refresh (Query Duration)
+Effect/Name/Scion_OverclockTargetFound=Genetron - Overclock (Target Found)
+Effect/Name/Scion_OverclockTargetMarkerApply=Genetron - Overclock (Target Marker Apply)
+Effect/Name/Scion_OverclockTargetMarkerRemove=Genetron - Overclock (Target Marker Remove)
+Effect/Name/Scion_OverclockTargetSort=Genetron - Overclock (Target Sort)
 Effect/Name/Scour=Scour
 Effect/Name/ScourCP=Scour
 Effect/Name/SearingSpores=Searing Spores (Launch Missile)

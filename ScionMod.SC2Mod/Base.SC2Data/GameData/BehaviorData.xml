@@ -92,16 +92,30 @@
         <RemoveValidatorArray value="CasterHasNoStagnatingBileBuff"/>
         <RemoveValidatorArray value="CasterHasNoNaniteGrenadeBuff"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="Scion_OverclockAddonDummy">
+        <RemoveValidatorArray value="CasterIsOverclocked"/>
+        <FinalEffect value="Suicide"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="Scion_Overclock">
         <InfoIcon value="Assets\Textures\btn-ability-genetron-productionmode-overclock.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisplayDuration index="Self" value="1"/>
         <DisplayDuration index="Ally" value="1"/>
         <Duration value="40"/>
-        <Modification>
+        <Modification QueueCount="1">
             <RateMultiplierArray index="Queueable" value="2"/>
         </Modification>
         <BuffFlags index="Extend" value="1"/>
+        <InitialEffect value="Scion_OverclockAddonDummyCreateUnit"/>
+        <RefreshEffect value="Scion_OverclockRefreshQueryDuration"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="MiningPriorityAddonDummy">
+        <RemoveValidatorArray value="CasterIsUsingMiningPriority"/>
+        <FinalEffect value="Suicide"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="Scion_OverclockTargetMarker">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Duration value="0.125"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="SpitfireAbilitiesReq">
         <InfoFlags index="Hidden" value="1"/>
@@ -891,7 +905,10 @@
         <Period value="0.5"/>
         <PeriodicEffect value="MiningPrioritySearchArea"/>
         <DisplayDuration index="Self" value="1"/>
+        <DisplayDuration index="Ally" value="1"/>
         <BuffFlags index="Extend" value="1"/>
+        <InitialEffect value="ProcessingCoreMiningPriorityAddonDummyCreateUnit"/>
+        <RefreshEffect value="ProcessingCoreMiningPriorityRefreshQueryDuration"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="ShellDomeAura">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
