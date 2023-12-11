@@ -86,6 +86,20 @@
         <AmmoUnit value="AcidWormsLMWeapon"/>
         <LaunchLocation Value="SourcePoint"/>
     </CEffectLaunchMissile>
+    <CEffectSet id="ProcessingCoreMiningPriorityTargetFound">
+        <ValidatorArray value="TargetUnitTypeIsCasterUnitType"/>
+        <ValidatorArray value="Scion_OverclockTargetMarker"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="ProcessingCoreMiningPriorityAB"/>
+        <EffectArray value="Scion_OverclockTargetMarkerRemove"/>
+    </CEffectSet>
+    <CEffectCreatePersistent id="GenetronOverclockPowerSet">
+        <ValidatorArray value="GenetronPowerSupplyGE100"/>
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="TargetUnit"/>
+        <InitialEffect value="Scion_OverclockPowerModify"/>
+        <ExpireEffect value="Scion_OverclockTargetSort"/>
+    </CEffectCreatePersistent>
     <CEffectRemoveBehavior id="Scion_OverclockTargetMarkerRemove">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="Scion_OverclockTargetMarker"/>
@@ -220,7 +234,7 @@
         <Amount value="1"/>
     </CEffectApplyForce>
     <CEffectCreateUnit id="ProcessingCoreMiningPriorityAddonDummyCreateUnit">
-        <Origin Value="CasterPoint"/>
+        <Origin Value="TargetUnit"/>
         <CreateFlags index="OffsetByRadius" value="0"/>
         <CreateFlags index="Placement" value="0"/>
         <CreateFlags index="NormalizeSpawnOffset" value="0"/>
@@ -228,13 +242,6 @@
         <SpawnUnit value="AddonDummy"/>
         <SpawnOffset value="0,0"/>
     </CEffectCreateUnit>
-    <CEffectCreatePersistent id="Scion_OverclockPowerSet">
-        <EditorCategories value="Race:Genetron"/>
-        <WhichLocation Value="TargetUnit"/>
-        <InitialEffect value="Scion_OverclockPowerModify"/>
-        <ExpireEffect value="Scion_OverclockTargetSort"/>
-        <ValidatorArray value="GenetronPowerSupplyGE100"/>
-    </CEffectCreatePersistent>
     <CEffectModifyUnit id="Scion_OverclockRefreshCooldownAdd">
         <EditorCategories value="Race:Genetron"/>
         <Cost Abil="Scion_Overclock,Execute" CooldownOperation="Add" CooldownTimeUse="1"/>
@@ -254,11 +261,11 @@
     <CEffectEnumTrackedUnits id="Scion_OverclockPowerEnum">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
-        <Effect value="Scion_OverclockPowerSet"/>
+        <Effect value="GenetronOverclockPowerSet"/>
     </CEffectEnumTrackedUnits>
     <CEffectCreatePersistent id="ProcessingCoreMiningPriorityRefreshCooldownLoop">
         <EditorCategories value="Race:Genetron"/>
-        <WhichLocation Value="CasterUnit"/>
+        <WhichLocation Value="TargetUnit"/>
         <InitialEffect value="ProcessingCoreMiningPriorityRefreshCooldownAdd"/>
         <PeriodCount value="1"/>
         <PeriodicEffectArray value="ProcessingCoreMiningPriorityRefreshQueryCooldown"/>
@@ -314,7 +321,18 @@
             <SortArray value="OverclockCount"/>
             <SortArray value="OverclockDuration"/>
         </TargetSorts>
-        <AreaArray MaxCount="1" Radius="1000" Effect="Scion_OverclockTargetFound"/>
+        <AreaArray MaxCount="1" Radius="500" Effect="Scion_OverclockTargetFound"/>
+    </CEffectEnumArea>
+    <CEffectEnumArea id="ProcessingCoreMiningPriorityTargetSort">
+        <EditorCategories value="Race:Genetron"/>
+        <LaunchLocation Value="CasterUnit"/>
+        <ImpactLocation Value="CasterUnit"/>
+        <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
+        <TargetSorts>
+            <SortArray value="MiningPriorityCount"/>
+            <SortArray value="MiningPriorityDuration"/>
+        </TargetSorts>
+        <AreaArray MaxCount="1" Radius="500" Effect="ProcessingCoreMiningPriorityTargetFound"/>
     </CEffectEnumArea>
     <!--Prevents Scavengers from going inside of structures while constructing them-->
     <CEffectCreatePersistent id="XayidConstructionStart" parent="ScionCreatePersistentUnit" Race="Keiron">
@@ -1957,7 +1975,6 @@
         <AmmoUnit value="OlympusDischargeWeapon"/>
     </CEffectLaunchMissile>
     <CEffectEnumTrackedUnits id="ProcessingCoreMiningPriority">
-        <ValidatorArray value="GenetronPowerSupplyGE100"/>
         <ValidatorArray value="ProcessingCoreMiningPriority"/>
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
@@ -1969,12 +1986,13 @@
             <Change value="-100"/>
         </VitalArray>
     </CEffectModifyUnit>
-    <CEffectSet id="ProcessingCoreMiningPrioritySet">
-        <ValidatorArray value="EnergyGTE100"/>
+    <CEffectCreatePersistent id="ProcessingCoreMiningPrioritySet">
+        <ValidatorArray value="GenetronPowerSupplyGE100"/>
         <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="ProcessingCoreMiningPriorityMU"/>
-        <EffectArray value="MiningPrioritySearch"/>
-    </CEffectSet>
+        <WhichLocation Value="TargetUnit"/>
+        <InitialEffect value="ProcessingCoreMiningPriorityMU"/>
+        <ExpireEffect value="ProcessingCoreMiningPriorityTargetSort"/>
+    </CEffectCreatePersistent>
     <CEffectAddTrackedUnit id="TrackGenetronPowerSupplyATU">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
@@ -2760,9 +2778,8 @@
         <ValidatorArray value="HasNoMendBehavior"/>
         <Behavior value="MendBehavior"/>
     </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="MiningPrioritySearch" parent="ScionApplyBehavior" Race="Genetron">
+    <CEffectApplyBehavior id="ProcessingCoreMiningPriorityAB" parent="ScionApplyBehavior" Race="Genetron">
         <Behavior value="ResourceTapSearch"/>
-        <WhichUnit Value="Caster"/>
     </CEffectApplyBehavior>
     <CEffectIssueOrder id="MoleUnburrow">
         <Abil value="MoleDeactivate"/>
@@ -2977,8 +2994,9 @@
         <FacingType value="LookAt"/>
     </CEffectModifyUnit>
     <CEffectApplyBehavior id="PulsarDisableTurning" parent="ScionApplyBehaviorCaster" Race="Keiron"/>
-    <CEffectApplyBehavior id="ResourceTap" parent="ScionApplyBehavior" Race="Genetron">
+    <CEffectApplyBehavior id="ProcessingCoreMiningPrioritySearchAB" parent="ScionApplyBehavior" Race="Genetron">
         <ValidatorArray index="0" value="Minerals"/>
+        <Behavior value="ResourceTap"/>
     </CEffectApplyBehavior>
     <CEffectCreatePersistent id="SeparationBeam" parent="ScionCreatePersistentUnit" Race="Keiron">
         <TimeScaleSource Value="Caster"/>
@@ -3414,7 +3432,7 @@
     </CEffectLaunchMissile>
     <CEffectEnumArea id="MiningPrioritySearchArea" parent="ScionEnumArea" Race="Genetron">
         <SearchFilters value="-;Missile,Stasis,Dead"/>
-        <AreaArray Radius="8" Effect="ResourceTap"/>
+        <AreaArray Radius="8" Effect="ProcessingCoreMiningPrioritySearchAB"/>
     </CEffectEnumArea>
     <CEffectLaunchMissile id="NeutralizerBeamLM" parent="ScionLaunchMissile" Race="Genetron">
         <LaunchEffect value="RepulsorInterdictorBurrowCD"/>
