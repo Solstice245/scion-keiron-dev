@@ -86,11 +86,6 @@
         <AmmoUnit value="AcidWormsLMWeapon"/>
         <LaunchLocation Value="SourcePoint"/>
     </CEffectLaunchMissile>
-    <CEffectApplyBehavior id="Scion_OverclockTargetMarkerApply">
-        <EditorCategories value="Race:Genetron"/>
-        <WhichUnit Value="Caster"/>
-        <Behavior value="Scion_OverclockTargetMarker"/>
-    </CEffectApplyBehavior>
     <CEffectRemoveBehavior id="Scion_OverclockTargetMarkerRemove">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="Scion_OverclockTargetMarker"/>
@@ -102,7 +97,7 @@
         <Behavior value="MiningPriorityAddonDummy"/>
     </CEffectApplyBehavior>
     <CEffectCreateUnit id="Scion_OverclockAddonDummyCreateUnit">
-        <Origin Value="CasterPoint"/>
+        <Origin Value="TargetUnit"/>
         <CreateFlags index="OffsetByRadius" value="0"/>
         <CreateFlags index="Placement" value="0"/>
         <CreateFlags index="NormalizeSpawnOffset" value="0"/>
@@ -235,10 +230,10 @@
     </CEffectCreateUnit>
     <CEffectCreatePersistent id="Scion_OverclockPowerSet">
         <EditorCategories value="Race:Genetron"/>
-        <WhichLocation Value="CasterUnit"/>
-        <InitialDelay value="0.0625"/>
+        <WhichLocation Value="TargetUnit"/>
         <InitialEffect value="Scion_OverclockPowerModify"/>
         <ExpireEffect value="Scion_OverclockTargetSort"/>
+        <ValidatorArray value="GenetronPowerSupplyGE100"/>
     </CEffectCreatePersistent>
     <CEffectModifyUnit id="Scion_OverclockRefreshCooldownAdd">
         <EditorCategories value="Race:Genetron"/>
@@ -250,14 +245,13 @@
     </CEffectModifyUnit>
     <CEffectCreatePersistent id="Scion_OverclockRefreshCooldownLoop">
         <EditorCategories value="Race:Genetron"/>
-        <WhichLocation Value="CasterUnit"/>
+        <WhichLocation Value="TargetUnit"/>
         <InitialEffect value="Scion_OverclockRefreshCooldownAdd"/>
         <PeriodCount value="1"/>
         <PeriodicEffectArray value="Scion_OverclockRefreshQueryCooldown"/>
         <PeriodicPeriodArray value="0.0625"/>
     </CEffectCreatePersistent>
     <CEffectEnumTrackedUnits id="Scion_OverclockPowerEnum">
-        <ValidatorArray value="GenetronPowerSupplyGE100"/>
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
         <Effect value="Scion_OverclockPowerSet"/>
@@ -308,6 +302,8 @@
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="Scion_Overclock"/>
         <EffectArray value="Scion_OverclockTargetMarkerRemove"/>
+        <ValidatorArray value="TargetUnitTypeIsCasterUnitType"/>
+        <ValidatorArray value="Scion_OverclockTargetMarker"/>
     </CEffectSet>
     <CEffectEnumArea id="Scion_OverclockTargetSort">
         <EditorCategories value="Race:Genetron"/>
@@ -319,8 +315,7 @@
             <SortArray value="OverclockCount"/>
             <SortArray value="OverclockDuration"/>
         </TargetSorts>
-        <AreaArray Radius="10" Effect="Scion_OverclockTargetFound"/>
-        <MaxCount value="1"/>
+        <AreaArray MaxCount="1" Radius="20" Effect="Scion_OverclockTargetFound"/>
     </CEffectEnumArea>
     <!--Prevents Scavengers from going inside of structures while constructing them-->
     <CEffectCreatePersistent id="XayidConstructionStart" parent="ScionCreatePersistentUnit" Race="Keiron">
@@ -459,7 +454,6 @@
         <VitalArray index="Energy">
             <Change value="-100"/>
         </VitalArray>
-        <ImpactUnit Effect="Scion_OverclockPowerEnum"/>
     </CEffectModifyUnit>
     <CEffectApplyBehavior id="SpitfireOverdriveApplyBehavior" parent="ScionApplyBehaviorCaster" Race="Genetron">
         <Behavior value="SpitfireOverdrive"/>
