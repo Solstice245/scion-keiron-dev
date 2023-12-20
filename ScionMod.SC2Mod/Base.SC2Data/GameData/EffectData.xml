@@ -86,31 +86,89 @@
         <AmmoUnit value="AcidWormsLMWeapon"/>
         <LaunchLocation Value="SourcePoint"/>
     </CEffectLaunchMissile>
+    <CEffectCreatePersistent id="DisplayCooldownDummyAddPersistent">
+        <WhichLocation Value="TargetUnit"/>
+        <PeriodCount value="0">
+            <AccumulatorArray value="Scion_DisplayCooldownMin0"/>
+        </PeriodCount>
+        <PeriodicEffectArray value="Scion_DisplayCooldownDummyAddCooldown"/>
+    </CEffectCreatePersistent>
+    <CEffectUserData id="ProcessingCoreMiningPriorityDisplayCooldownBasis">
+        <EditorCategories value="Race:Genetron"/>
+        <Key value="DisplayCooldown"/>
+        <Amount value="168"/>
+        <SourceKey value="DisplayCooldown"/>
+    </CEffectUserData>
+    <CEffectCreatePersistent id="Scion_DisplayCooldownDummySubtractPersistent">
+        <WhichLocation Value="TargetUnit"/>
+        <PeriodCount value="0">
+            <AccumulatorArray value="Scion_DisplayCooldownMin0"/>
+        </PeriodCount>
+        <PeriodicEffectArray value="Scion_DisplayCooldownDummySubtractCooldown"/>
+    </CEffectCreatePersistent>
+    <CEffectUserData id="Scion_OverclockDisplayCooldownQueryDurationBasis">
+        <EditorCategories value="Race:Genetron"/>
+        <Key value="DisplayCooldown"/>
+        <Amount value="112"/>
+        <SourceKey value="DisplayCooldown"/>
+    </CEffectUserData>
     <CEffectSet id="ProcessingCoreMiningPriorityTargetFound">
         <ValidatorArray value="TargetUnitTypeIsCasterUnitType"/>
         <ValidatorArray value="Scion_OverclockTargetMarker"/>
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="ProcessingCoreMiningPriorityAB"/>
         <EffectArray value="Scion_OverclockTargetMarkerRemove"/>
+        <EffectArray value="Scion_DisplayCooldownDummyCooldownResetCooldown"/>
+        <EffectArray value="ProcessingCoreMiningPriorityDisplayCooldownBasis"/>
+        <EffectArray value="DisplayCooldownDummyAddPersistent"/>
+        <EffectArray value="ProcessingCoreMiningPriorityDisplayCooldownSubtractDurationCopy"/>
+        <EffectArray value="Scion_DisplayCooldownDummySubtractPersistent"/>
     </CEffectSet>
     <CEffectCreatePersistent id="GenetronOverclockPowerSet">
-        <ValidatorArray value="GenetronPowerSupplyGE100"/>
+        <ValidatorArray value="GenetronPowerSupplyGE075"/>
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="TargetUnit"/>
         <InitialEffect value="Scion_OverclockPowerModify"/>
         <ExpireEffect value="Scion_OverclockTargetSort"/>
     </CEffectCreatePersistent>
+    <CEffectModifyUnit id="Scion_DisplayCooldownDummyAddCooldown">
+        <Cost Abil="Scion_DisplayCooldownDummy,Execute" CooldownOperation="Add" CooldownTimeUse="1"/>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="Scion_DisplayCooldownDummySubtractCooldown">
+        <Cost Abil="Scion_DisplayCooldownDummy,Execute" CooldownOperation="Add" CooldownTimeUse="-1"/>
+    </CEffectModifyUnit>
+    <CEffectUserData id="Scion_DisplayCooldownDummyResetData">
+        <Key value="DisplayCooldown"/>
+        <Amount value="0"/>
+        <SourceKey value="DisplayCooldown"/>
+        <Operation value="Set"/>
+    </CEffectUserData>
+    <CEffectModifyUnit id="Scion_DisplayCooldownDummyCooldownResetCooldown">
+        <Cost Abil="Scion_DisplayCooldownDummy,Execute" CooldownOperation="Set"/>
+    </CEffectModifyUnit>
+    <CEffectUserData id="ProcessingCoreMiningPriorityDisplayCooldownSubtractDurationCopy">
+        <EditorCategories value="Race:Genetron"/>
+        <Key value="DisplayCooldown"/>
+        <Amount value="0">
+            <AccumulatorArray value="MiningPriorityBehaviorDurationRemaining"/>
+        </Amount>
+        <SourceKey value="DisplayCooldown"/>
+        <Operation value="Subtract"/>
+    </CEffectUserData>
     <CEffectRemoveBehavior id="Scion_OverclockTargetMarkerRemove">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="Scion_OverclockTargetMarker"/>
     </CEffectRemoveBehavior>
     <CEffectApplyBehavior id="Scion_OverclockAddonDummyApplyFate">
+        <EditorCategories value="Race:Genetron"/>
         <Behavior value="Scion_OverclockAddonDummy"/>
     </CEffectApplyBehavior>
     <CEffectApplyBehavior id="ProcessingCoreMiningPriorityAddonDummyApplyFate">
+        <EditorCategories value="Race:Genetron"/>
         <Behavior value="MiningPriorityAddonDummy"/>
     </CEffectApplyBehavior>
     <CEffectCreateUnit id="Scion_OverclockAddonDummyCreateUnit">
+        <EditorCategories value="Race:Genetron"/>
         <Origin Value="TargetUnit"/>
         <CreateFlags index="OffsetByRadius" value="0"/>
         <CreateFlags index="Placement" value="0"/>
@@ -234,6 +292,7 @@
         <Amount value="1"/>
     </CEffectApplyForce>
     <CEffectCreateUnit id="ProcessingCoreMiningPriorityAddonDummyCreateUnit">
+        <EditorCategories value="Race:Genetron"/>
         <Origin Value="TargetUnit"/>
         <CreateFlags index="OffsetByRadius" value="0"/>
         <CreateFlags index="Placement" value="0"/>
@@ -275,14 +334,14 @@
         <EditorCategories value="Race:Genetron"/>
         <Amount value="-1"/>
         <ValidateMin value="-500000"/>
-        <ValidateMax value="120"/>
+        <ValidateMax value="84"/>
         <EffectFailure value="Scion_OverclockRefreshCooldownLoop"/>
     </CEffectUserData>
     <CEffectUserData id="ProcessingCoreMiningPriorityRefreshQueryCooldown">
         <EditorCategories value="Race:Genetron"/>
         <Amount value="-1"/>
         <ValidateMin value="-500000"/>
-        <ValidateMax value="120"/>
+        <ValidateMax value="126"/>
         <EffectFailure value="ProcessingCoreMiningPriorityRefreshCooldownLoop"/>
     </CEffectUserData>
     <CEffectUserData id="Scion_OverclockRefreshQueryDuration">
@@ -291,8 +350,17 @@
             <AccumulatorArray value="OverclockBehaviorDurationRemaining"/>
         </Amount>
         <ValidateMin value="-500000"/>
-        <ValidateMax value="120"/>
+        <ValidateMax value="84"/>
         <EffectFailure value="Scion_OverclockRefreshQueryCooldown"/>
+    </CEffectUserData>
+    <CEffectUserData id="Scion_OverclockDisplayCooldownSubtractDuration">
+        <EditorCategories value="Race:Genetron"/>
+        <Key value="DisplayCooldown"/>
+        <Amount value="0">
+            <AccumulatorArray value="OverclockBehaviorDurationRemaining"/>
+        </Amount>
+        <SourceKey value="DisplayCooldown"/>
+        <Operation value="Subtract"/>
     </CEffectUserData>
     <CEffectUserData id="ProcessingCoreMiningPriorityRefreshQueryDuration">
         <EditorCategories value="Race:Genetron"/>
@@ -300,15 +368,18 @@
             <AccumulatorArray value="MiningPriorityBehaviorDurationRemaining"/>
         </Amount>
         <ValidateMin value="-500000"/>
-        <ValidateMax value="120"/>
+        <ValidateMax value="126"/>
         <EffectFailure value="ProcessingCoreMiningPriorityRefreshQueryCooldown"/>
     </CEffectUserData>
     <CEffectSet id="Scion_OverclockTargetFound">
-        <!--<ValidatorArray value="Scion_OverclockTargetMarker"/>
-        <ValidatorArray value="TargetUnitTypeIsCasterUnitType"/>-->
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="Scion_Overclock"/>
         <EffectArray value="Scion_OverclockTargetMarkerRemove"/>
+        <EffectArray value="Scion_DisplayCooldownDummyCooldownResetCooldown"/>
+        <EffectArray value="Scion_OverclockDisplayCooldownQueryDurationBasis"/>
+        <EffectArray value="DisplayCooldownDummyAddPersistent"/>
+        <EffectArray value="Scion_OverclockDisplayCooldownSubtractDuration"/>
+        <EffectArray value="Scion_DisplayCooldownDummySubtractPersistent"/>
         <ValidatorArray value="TargetUnitTypeIsCasterUnitType"/>
         <ValidatorArray value="Scion_OverclockTargetMarker"/>
     </CEffectSet>
@@ -469,7 +540,7 @@
     <CEffectModifyUnit id="Scion_OverclockPowerModify">
         <EditorCategories value="Race:Genetron"/>
         <VitalArray index="Energy">
-            <Change value="-100"/>
+            <Change value="-75"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectApplyBehavior id="SpitfireOverdriveApplyBehavior" parent="ScionApplyBehaviorCaster" Race="Genetron">
@@ -3616,7 +3687,7 @@
         <AreaArray Radius="0.4" Fraction="0.5"/>
     </CEffectDamage>
     <CEffectDamage id="ChargeCannon" parent="ScionDamageRange" Race="Genetron">
-        <Amount value="11"/>
+        <Amount value="12"/>
         <Death value="Blast"/>
     </CEffectDamage>
     <CEffectDamage id="HalifaxGrenadesDMG" parent="ScionDamageRange" Race="Genetron">
@@ -3670,7 +3741,7 @@
         <Death value="Blast"/>
     </CEffectDamage>
     <CEffectDamage id="ChargeCannonSC" parent="ScionDamageRange" Race="Genetron">
-        <Amount value="22"/>
+        <Amount value="24"/>
         <Death value="Blast"/>
         <ArmorReduction value="0"/>
         <Kind value="Spell"/>
@@ -3832,9 +3903,8 @@
         <ImpactEffect value="CoveringSprayAB"/>
         <AmmoUnit value="CoveringSprayMissile"/>
         <ValidatorArray index="0" value="noMarkers"/>
-        <Marker Duration="1" Link="Abil/CoveringSpray">
+        <Marker Duration="1.4" Link="Abil/CoveringSpray">
             <MatchFlags index="Link" value="1"/>
-            <MismatchFlags index="Id" value="1"/>
         </Marker>
     </CEffectLaunchMissile>
     <CEffectCreatePersistent id="DashEffect" parent="ScionCreatePersistent" Race="Xayid">

@@ -691,7 +691,7 @@
         <CostResource index="Vespene" value="150"/>
         <RepairTime value="65"/>
         <AbilArray Link="que5"/>
-        <AbilArray Link="ScionAddonDummyBuild"/>
+        <AbilArray Link="Scion_DisplayCooldownDummy"/>
         <AbilArray Link="Rally"/>
         <!--<AbilArray Link="GenetronProductionModeSwitch"/>-->
         <AbilArray Link="BuildAircraft"/>
@@ -703,7 +703,7 @@
         <BehaviorArray Link="AssemblyArray"/>
         <BehaviorArray Link="TrackAndMirrorGenetronPowerSupply"/>
         <BehaviorArray Link="UnderConstruction"/>
-        <BehaviorArray Link="ProcessingCoreMiningPriorityReq"/>
+        <BehaviorArray Link="OverclockPowerReq"/>
         <Radius value="1.875"/>
         <Footprint value="Footprint4x4ContourReduced"/>
         <PlacementFootprint value="Footprint4x4Contour"/>
@@ -734,7 +734,7 @@
             <LayoutButtons Face="GenetronStandardMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="1"/>
             <LayoutButtons Face="GenetronOverclockMode" Type="AbilCmd" AbilCmd="GenetronProductionModeSwitch,Train3" Row="2" Column="2"/>
             <LayoutButtons Face="GenetronOverclockMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="2"/>
-            -->
+        -->
     </CUnit>
     <CUnit id="Eroder" parent="CUnitXayid">
         <LifeStart value="200"/>
@@ -1374,7 +1374,7 @@
         <RepairTime value="100"/>
         <AbilArray Link="stop"/>
         <AbilArray Link="que5"/>
-        <AbilArray Link="ScionAddonDummyBuild"/>
+        <AbilArray Link="Scion_DisplayCooldownDummy"/>
         <AbilArray Link="RallyProcessingCore"/>
         <AbilArray Link="ProcessingCoreTrain"/>
         <AbilArray Link="MiningPriority"/>
@@ -1416,7 +1416,7 @@
         <CostResource index="Minerals" value="175"/>
         <RepairTime value="70"/>
         <AbilArray Link="que5"/>
-        <AbilArray Link="ScionAddonDummyBuild"/>
+        <AbilArray Link="Scion_DisplayCooldownDummy"/>
         <AbilArray Link="Rally"/>
         <!--<AbilArray Link="GenetronProductionModeSwitch"/>-->
         <AbilArray Link="TrainLightweightMechs"/>
@@ -1428,7 +1428,7 @@
         <BehaviorArray Link="Manufacturer"/>
         <BehaviorArray Link="TrackAndMirrorGenetronPowerSupply"/>
         <BehaviorArray Link="UnderConstruction"/>
-        <BehaviorArray Link="ProcessingCoreMiningPriorityReq"/>
+        <BehaviorArray Link="OverclockPowerReq"/>
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
@@ -1448,7 +1448,7 @@
             <LayoutButtons Face="GenetronStandardMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="1"/>
             <LayoutButtons Face="GenetronOverclockMode" Type="AbilCmd" AbilCmd="GenetronProductionModeSwitch,Train3" Row="2" Column="2"/>
             <LayoutButtons Face="GenetronOverclockMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="2"/>
-            -->
+        -->
         <SubgroupPriority value="10"/>
         <MinimapRadius value="1.75"/>
         <GlossaryPriority value="19"/>
@@ -1466,7 +1466,7 @@
         <CostResource index="Vespene" value="100"/>
         <RepairTime value="65"/>
         <AbilArray Link="que5"/>
-        <AbilArray Link="ScionAddonDummyBuild"/>
+        <AbilArray Link="Scion_DisplayCooldownDummy"/>
         <AbilArray Link="Rally"/>
         <!--<AbilArray Link="GenetronProductionModeSwitch"/>-->
         <AbilArray Link="TrainHeavyweightMechs"/>
@@ -1478,7 +1478,7 @@
         <BehaviorArray Link="Fabricator"/>
         <BehaviorArray Link="TrackAndMirrorGenetronPowerSupply"/>
         <BehaviorArray Link="UnderConstruction"/>
-        <BehaviorArray Link="ProcessingCoreMiningPriorityReq"/>
+        <BehaviorArray Link="OverclockPowerReq"/>
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
@@ -1497,7 +1497,7 @@
             <LayoutButtons Face="GenetronStandardMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="1"/>
             <LayoutButtons Face="GenetronOverclockMode" Type="AbilCmd" AbilCmd="GenetronProductionModeSwitch,Train3" Row="2" Column="2"/>
             <LayoutButtons Face="GenetronOverclockMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="2"/>
-            -->
+        -->
         <Radius value="1.875"/>
         <Footprint value="Footprint4x4ContourReduced"/>
         <PlacementFootprint value="Footprint4x4Contour"/>
@@ -1530,6 +1530,7 @@
             <LayoutButtons Face="AcquireMove" Type="AbilCmd" AbilCmd="move,AcquireMove" Row="0" Column="4"/>
             <LayoutButtons Face="DeployCannon" Type="AbilCmd" AbilCmd="MoleActivate,Execute" Row="2" Column="0"/>
             <LayoutButtons Face="SubterraneanSensors" Type="AbilCmd" AbilCmd="MoleSubterraneanSensors,On" Row="1" Column="0"/>
+            <LayoutButtons Face="SubterraneanSensors" Type="Passive" Requirements="MoleSubterraneanPassive" Row="1" Column="0"/>
             <LayoutButtons Face="MoleSubterraneanSensorsOff" Type="AbilCmd" AbilCmd="MoleSubterraneanSensors,Off" Row="1" Column="1"/>
         </CardLayouts>
         <Radius value="0.75"/>
@@ -1574,8 +1575,15 @@
             <LayoutButtons index="5" Face="MoleConceal" Type="AbilCmd" AbilCmd="MoleBury,Execute" Row="2" Column="2"/>
             <LayoutButtons index="6" Face="Move" Type="AbilCmd" AbilCmd="move,Move" Row="0" Column="0"/>
             <LayoutButtons index="7" Face="MoveHoldPosition" Type="AbilCmd" AbilCmd="move,HoldPos" Row="0" Column="2"/>
-            <LayoutButtons index="8" Face="MovePatrol" Type="AbilCmd" AbilCmd="move,Patrol" Row="0" Column="3"/>
-            <LayoutButtons Face="MoleSubterraneanSensorsOff" Type="AbilCmd" AbilCmd="MoleSubterraneanSensors,Off" Row="1" Column="1"/>
+            <LayoutButtons index="8">
+                <Face value="MovePatrol"/>
+                <Type value="AbilCmd"/>
+                <AbilCmd value="move,Patrol"/>
+                <Requirements value=""/>
+                <Row value="0"/>
+                <Column value="3"/>
+            </LayoutButtons>
+            <LayoutButtons Face="SubterraneanSensors" Type="Passive" Requirements="MoleSubterraneanPassive" Row="1" Column="0"/>
         </CardLayouts>
         <CargoSize value="0"/>
         <ScoreResult value=""/>
@@ -1595,9 +1603,18 @@
         <CardLayouts index="0">
             <LayoutButtons index="5" Face="MoleReveal" Type="AbilCmd" AbilCmd="MoleUnbury,Execute" Row="2" Column="3"/>
             <LayoutButtons index="6" Face="MoleSubterraneanSensorsOff" Type="AbilCmd" AbilCmd="MoleSubterraneanSensors,Off" Row="1" Column="1"/>
-            <LayoutButtons index="7" removed="1"/>
+            <LayoutButtons index="7">
+                <Face value="SubterraneanSensors"/>
+                <Type value="Passive"/>
+                <AbilCmd value=""/>
+                <Behavior value="MoleSubterraneanSensors"/>
+                <Requirements value="MoleSubterraneanPassive"/>
+                <Row value="1"/>
+                <Column value="0"/>
+            </LayoutButtons>
             <LayoutButtons index="8" removed="1"/>
             <LayoutButtons index="9" removed="1"/>
+            <LayoutButtons index="10" removed="1"/>
         </CardLayouts>
         <EquipmentArray>
             <Effect value=""/>
@@ -2162,7 +2179,7 @@
     <CUnit id="RevenantBombLMWeapon" parent="CProjectileGenetronInvulnerable"/>
     <CUnit id="VengeanceMissilesLMWeapon" parent="CProjectileGenetronInvulnerable"/>
     <CUnit id="CoveringSprayMissile" parent="XayidMISSILE_INVULNERBLE">
-        <Mover value="AcidSalivaWeapon"/>
+        <Mover value="AcidSpinesWeapon"/>
     </CUnit>
     <CUnit id="Wasp" parent="CUnitXayid">
         <FlagArray index="TownAlert" value="1"/>
@@ -2952,6 +2969,7 @@
         <GlossaryPriority value="11"/>
         <SubgroupPriority value="74"/>
         <KillDisplay value="Always"/>
+        <FlagArray index="AlwaysThreatens" value="1"/>
         <FlagArray index="AICaster" value="1"/>
         <FlagArray index="AIPressForwardDisabled" value="1"/>
         <MinimapRadius value="0.75"/>
@@ -3318,6 +3336,7 @@
         <Food value="-1"/>
     </CUnit>
     <CUnit id="Xayithoan" parent="CUnitXayidFlyer">
+        <FlagArray index="AlwaysThreatens" value="1"/>
         <FlagArray index="AICaster" value="1"/>
         <FlagArray index="AISupport" value="1"/>
         <FlagArray index="AIPressForwardDisabled" value="1"/>
