@@ -66,6 +66,11 @@
         <?token id="Race" value="Neutral"?>
         <EditorCategories value="Race:##Race##"/>
     </CEffectSet>
+    <CEffectApplyBehavior id="ACRPowerDown">
+        <ValidatorArray index="0" value="CasterIsNotUnstoppable"/>
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Caster"/>
+    </CEffectApplyBehavior>
     <CEffectCreatePersistent id="ACRRepairTarget">
         <ValidatorArray value="GenetronPowerSupplyGE001"/>
         <EditorCategories value="Race:Genetron"/>
@@ -93,12 +98,62 @@
         </PeriodCount>
         <PeriodicEffectArray value="Scion_DisplayCooldownDummyAddCooldown"/>
     </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="InciterTargetVelocityDirectionGetL">
+        <WhichLocation Effect="HalifaxGrenades" Value="TargetUnit"/>
+        <OffsetVectorStartLocation Value="CasterUnit"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="InciterTargetVelocityDirectionSetL"/>
+        <PeriodicOffsetArray value="-0.27,0,0"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="InciterTargetVelocityDirectionObserveL">
+        <WhichLocation Value="TargetUnit"/>
+        <InitialDelay value="0.0625"/>
+        <ExpireEffect value="InciterTargetVelocityDirectionGetL"/>
+    </CEffectCreatePersistent>
+    <CEffectSet id="InciterTargetVelocityDummySpawnL">
+        <EffectArray value="InciterTargetVelocityDirectionObserveL"/>
+        <EffectArray value="InciterTargetVelocitySpeedScopeL"/>
+        <EffectArray value="InciterTargetVelocityMovePersistentL"/>
+        <EffectArray value="HalifaxGrenadesLM"/>
+    </CEffectSet>
+    <CEffectApplyForce id="InciterTargetVelocityMoveForceL">
+        <WhichLocation Effect="InciterTargetVelocityMoveScopeL" Value="TargetPoint"/>
+        <WhichUnit Effect="InciterTargetVelocityDummySpawnL"/>
+        <Amount value="1"/>
+    </CEffectApplyForce>
+    <CEffectCreatePersistent id="InciterTargetVelocityMovePersistentL">
+        <WhichLocation Value="TargetUnit"/>
+        <InitialDelay value="0.125"/>
+        <FinalEffect value="KillTargetDeathNormal"/>
+        <PeriodCount value="32"/>
+        <PeriodicEffectArray value="InciterTargetVelocityMoveScopeL"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="InciterTargetVelocityMoveScopeL">
+        <WhichLocation Value="TargetUnit"/>
+        <OffsetVectorStartLocation Value="TargetUnit"/>
+        <InitialEffect value="InciterTargetVelocityMoveForceL"/>
+        <InitialOffset value="0,-1,0"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="InciterTargetVelocitySpeedScopeL">
+        <WhichLocation Effect="HalifaxGrenades" Value="TargetUnit"/>
+        <InitialEffect value="InciterTargetVelocitySpeedSwitchL"/>
+    </CEffectCreatePersistent>
     <CEffectUserData id="ProcessingCoreMiningPriorityDisplayCooldownBasis">
         <EditorCategories value="Race:Genetron"/>
         <Key value="DisplayCooldown"/>
         <Amount value="168"/>
         <SourceKey value="DisplayCooldown"/>
     </CEffectUserData>
+    <CEffectApplyBehavior id="Scion_SuppressMovementCaster">
+        <EditorCategories value="Race:Xayid"/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="Scion_SuppressMovement"/>
+    </CEffectApplyBehavior>
+    <CEffectRemoveBehavior id="Scion_SuppressMovementCasterClear">
+        <WhichUnit Value="Caster"/>
+        <BehaviorLink value="Scion_SuppressMovement"/>
+    </CEffectRemoveBehavior>
     <CEffectCreatePersistent id="Scion_DisplayCooldownDummySubtractPersistent">
         <WhichLocation Value="TargetUnit"/>
         <PeriodCount value="0">
@@ -405,12 +460,43 @@
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="ProcessingCoreMiningPriorityTargetFound"/>
     </CEffectEnumArea>
+    <CEffectApplyBehavior id="InciterTargetVelocitySpeedApplyL">
+        <WhichUnit Effect="InciterTargetVelocityDummySpawnL"/>
+        <Behavior value="TargetVelocityDummyAmount"/>
+    </CEffectApplyBehavior>
+    <CEffectCreateUnit id="InciterTargetVelocityDummyCreateL">
+        <WhichLocation Value="TargetPoint"/>
+        <Origin Value="TargetPoint"/>
+        <CreateFlags index="OffsetByRadius" value="0"/>
+        <CreateFlags index="Placement" value="0"/>
+        <CreateFlags index="SetFacing" value="1"/>
+        <SpawnEffect value="InciterTargetVelocityDummySpawnL"/>
+        <SpawnUnit value="TargetVelocityDummy"/>
+    </CEffectCreateUnit>
+    <CEffectModifyUnit id="InciterTargetVelocityDirectionSetL">
+        <ImpactUnit Effect="InciterTargetVelocityDummySpawnL"/>
+        <FacingLocation Value="TargetPoint"/>
+        <FacingType value="LookAt"/>
+    </CEffectModifyUnit>
+    <CEffectSwitch id="InciterTargetVelocitySpeedSwitchL">
+        <CaseArray Validator="TargetSpeedGT0D5" Effect="InciterTargetVelocitySpeedApplyL" FallThrough="1"/>
+        <CaseArray Validator="TargetSpeedGT1D5" Effect="InciterTargetVelocitySpeedApplyL" FallThrough="1"/>
+        <CaseArray Validator="TargetSpeedGT2D5" Effect="InciterTargetVelocitySpeedApplyL" FallThrough="1"/>
+        <CaseArray Validator="TargetSpeedGT3D5" Effect="InciterTargetVelocitySpeedApplyL" FallThrough="1"/>
+        <CaseArray Validator="TargetSpeedGT4D5" Effect="InciterTargetVelocitySpeedApplyL" FallThrough="1"/>
+        <CaseArray Validator="TargetSpeedGT5D5" Effect="InciterTargetVelocitySpeedApplyL" FallThrough="1"/>
+    </CEffectSwitch>
+    <CEffectModifyUnit id="UnknownEffect">
+        <EditorCategories value=""/>
+    </CEffectModifyUnit>
     <!--Prevents Scavengers from going inside of structures while constructing them-->
     <CEffectCreatePersistent id="XayidConstructionStart" parent="ScionCreatePersistentUnit" Race="Keiron">
         <InitialEffect value="KeironConstructionForce"/>
-        <PeriodCount value="5"/>
+        <PeriodCount value="32"/>
         <PeriodicEffectArray value="KeironConstructionForce"/>
         <PeriodicPeriodArray value="0.0625"/>
+        <FinalEffect value="Scion_SuppressMovementCaster"/>
+        <PeriodicValidator value="CasterUnitIsInBuildingPathing"/>
     </CEffectCreatePersistent>
     <CEffectCreatePersistent id="KeironShaperDummy">
         <ValidatorArray value="IsCitadel"/>
@@ -2696,6 +2782,8 @@
     <CEffectApplyBehavior id="GenetronConstruction" parent="ScionApplyBehavior" Race="Genetron"/>
     <CEffectSet id="GenetronConstructionInit" parent="ScionSet" Race="Genetron">
         <EffectArray value="GenetronConstruction"/>
+        <EffectArray value="GenetronConstructionWorkerMove"/>
+        <EffectArray value="ACRPowerDown"/>
     </CEffectSet>
     <CEffectApplyBehavior id="GenetronEnergyStateFull" parent="ScionApplyBehaviorCaster" Race="Genetron">
         <ValidatorArray index="0" value="CasterIsNotHidden"/>
@@ -3004,7 +3092,7 @@
     <CEffectDamage id="FixerFlashGun" parent="ScionDamageRange" Race="Genetron">
         <AttributeBonus index="Light" value="8"/>
         <Amount value="16"/>
-        <AreaArray Radius="0.4375" Fraction="0.5"/>
+        <AreaArray Radius="0.375" Fraction="0.5"/>
         <AreaArray Radius="0.5625" Fraction="0.25"/>
         <ExcludeArray Value="Outer"/>
         <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
@@ -3485,7 +3573,8 @@
     </CEffectEnumArea>
     <CEffectCreatePersistent id="HalifaxGrenades" parent="ScionCreatePersistent" Race="Genetron">
         <WhichLocation Value="TargetUnit"/>
-        <PeriodCount value="2"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="InciterTargetVelocityDummyCreateL"/>
         <PeriodicEffectArray value="HalifaxGrenadesLM"/>
         <PeriodicOffsetArray value="-0.27,0,0"/>
         <PeriodicOffsetArray value="0.27,0,0"/>
@@ -3774,7 +3863,11 @@
     <CEffectApplyBehavior id="Supercharge" parent="ScionApplyBehaviorCaster" Race="Genetron">
         <Behavior value="SuperChargeCannon"/>
     </CEffectApplyBehavior>
-    <CEffectLaunchMissile id="HalifaxGrenadesLM" parent="ScionLaunchMissilePoint" Race="Genetron"/>
+    <CEffectLaunchMissile id="HalifaxGrenadesLM" parent="ScionLaunchMissilePoint" Race="Genetron">
+        <LaunchLocation Value="CasterUnit"/>
+        <ImpactLocation Value="TargetUnit"/>
+        <Movers Link="MissileDefault"/>
+    </CEffectLaunchMissile>
     <CEffectLaunchMissile id="LaunchCloakCharge" parent="ScionLaunchMissilePoint" Race="Genetron">
         <Movers Link="TeslaChargeMoverLow" IfRangeLTE="2"/>
         <Movers Link="LaunchShockChargeWeapon" IfRangeLTE="8"/>
@@ -4022,6 +4115,13 @@
         </VitalArray>
         <ModifyFlags index="SetVitals" value="1"/>
     </CEffectModifyUnit>
+    <CEffectCreatePersistent id="GenetronConstructionWorkerMove" parent="ScionCreatePersistentUnit" Race="Keiron">
+        <InitialEffect value="KeironConstructionForce"/>
+        <PeriodCount value="32"/>
+        <PeriodicValidator value="CasterUnitIsInBuildingPathing"/>
+        <PeriodicEffectArray value="KeironConstructionForce"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
     <CEffectApplyBehavior id="XayidSpawnTimedLife" parent="ScionApplyBehavior" Race="Xayid"/>
     <CEffectCreatePersistent id="XayidlingDash" parent="ScionCreatePersistent" Race="Xayid">
         <Flags index="Channeled" value="1"/>

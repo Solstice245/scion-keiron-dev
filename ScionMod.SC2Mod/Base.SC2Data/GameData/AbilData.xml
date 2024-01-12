@@ -706,7 +706,7 @@
     <CAbilEffectTarget id="LaunchShockCharge">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Effect index="0" value="LaunchShockChargeLS"/>
-        <Range value="9"/>
+        <Range value="10"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="LaunchShockCharge" Requirements="TeslaAbilitiesReq"/>
         <Cost>
             <Charge>
@@ -720,11 +720,12 @@
         <EffectRange index="0" value="1,500"/>
         <Arc value="360"/>
         <IgnoreFilters value="-;Ally,Neutral,Enemy"/>
+        <CursorEffect value="TeslaShockChargeExpireSearch"/>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="LaunchCloakCharge">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Effect index="0" value="LaunchCloakChargeLS"/>
-        <Range value="9"/>
+        <Range value="10"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="LaunchCloakCharge" Requirements="TeslaAbilitiesReq"/>
         <Cost>
             <Charge>
@@ -739,6 +740,7 @@
         <EffectRange index="0" value="1,500"/>
         <Arc value="360"/>
         <IgnoreFilters value="-;Ally,Neutral,Enemy"/>
+        <CursorEffect value="CloakChargeFieldSA"/>
     </CAbilEffectTarget>
     <CAbilTransport id="CourierTransport" parent="MedivacTransport">
         <Name value="Abil/Name/CourierTransport"/>
@@ -762,6 +764,7 @@
         <HaltCmdButton DefaultButtonFace="Halt"/>
         <FlagArray index="PeonDisableCollision" value="1"/>
         <FlagArray index="PeonMaintained" value="0"/>
+        <FlagArray index="RequireFacing" value="1"/>
         <InfoArray index="Build1" Unit="ProcessingCore" Time="100">
             <Button DefaultButtonFace="ProcessingCore"/>
         </InfoArray>
@@ -781,7 +784,7 @@
         <InfoArray index="Build6" Unit="OutfittingStation" Time="50">
             <Button DefaultButtonFace="OutfittingStation" Requirements="HaveAnalysisTerminal"/>
         </InfoArray>
-        <InfoArray index="Build7" Unit="Repulsor" Time="50">
+        <InfoArray index="Build7" Unit="Repulsor" Time="45">
             <Button DefaultButtonFace="Repulsor" Requirements="HaveAnalysisTerminal"/>
         </InfoArray>
         <InfoArray index="Build8" Unit="Interdictor" Time="30">
@@ -814,8 +817,6 @@
         <InfoArray index="Build17" Unit="OrdnanceCache" Time="65">
             <Button DefaultButtonFace="OrdnanceCache" Requirements="HaveTechVault"/>
         </InfoArray>
-        <FidgetDelayMin value="5"/>
-        <FidgetDelayMax value="10"/>
         <ConstructionMover value="Construction"/>
         <EffectArray index="Start" value="GenetronConstructionInit"/>
     </CAbilBuild>
@@ -1595,6 +1596,7 @@
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <FlagArray index="Interruptible" value="1"/>
         <FlagArray index="PeonDisableCollision" value="1"/>
+        <FlagArray index="PeonFidgetAcross" value="1"/>
         <FlagArray index="RequireFacing" value="1"/>
         <ConstructionMover value="Construction"/>
         <InfoArray index="Build1" Unit="ScavengerNest" Time="100">
@@ -1635,6 +1637,10 @@
             <Button DefaultButtonFace="BilePit" Requirements="HaveXayidDen"/>
         </InfoArray>
         <EffectArray index="Start" value="XayidConstructionStart"/>
+        <EffectArray index="Finish" value="Scion_SuppressMovementCasterClear"/>
+        <EffectArray index="Cancel" value="Scion_SuppressMovementCasterClear"/>
+        <FidgetDelayMin value="5"/>
+        <FidgetDelayMax value="10"/>
     </CAbilBuild>
     <CAbilMorph id="Hunker">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
@@ -2271,6 +2277,8 @@
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
         <FlagArray index="Interruptible" value="1"/>
         <FlagArray index="PeonDisableCollision" value="1"/>
+        <FlagArray index="PeonCanBeMoved" value="1"/>
+        <FlagArray index="RequireFacing" value="1"/>
         <InfoArray index="Build1" Unit="Citadel" Time="100">
             <Button DefaultButtonFace="Citadel"/>
         </InfoArray>

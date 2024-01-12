@@ -655,8 +655,15 @@
     <CActorModel id="ScourFateModel" parent="ModelAnimationStyleOneShot">
         <Model value="ScourImpact"/>
     </CActorModel>
+    <CActorUnit id="TargetVelocityDummy" parent="GenericUnitStandard" unitName="TargetVelocityDummy">
+        <Model value="Axis"/>
+        <HighlightTooltip value="Unit/Name/Bogus"/>
+    </CActorUnit>
     <CActorSound id="TeslaChargeFly" parent="SoundContinuous"/>
     <CActorSound id="TeslaChargeLand" parent="SoundOneShot"/>
+    <CActorModel id="TestModel" parent="ModelAnimationStyleOneShotEffect" Effect="InciterTargetVelocityMoveForceL">
+        <Model value="ScoutMPAirLeftAttackImpact"/>
+    </CActorModel>
     <CActorModel id="WardRestitutionImpact" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Effect.WardRestitutionRechargeSet.Start; At Target" Send="Create"/>
         <HostSiteOps Ops="SOpAttachCenter"/>
@@ -2523,7 +2530,7 @@
     <CActorTurret id="RepulsorTurret">
         <On Terms="TurretEnable.RepulsorTurret" Send="Create"/>
     </CActorTurret>
-    <CActorUnit id="Repulsor" parent="GenetronBuilding" buildTime="49.000000" unitName="Repulsor">
+    <CActorUnit id="Repulsor" parent="GenetronBuilding" buildTime="44.000000" unitName="Repulsor">
         <On Terms="UnitDeathCustomize; ValidateUnit IsBurrowedUnit" Send="DeathCustomize Burrowed"/>
         <On Terms="UnitBirth.RepulsorBurrowed" Send="Create"/>
         <On Terms="UnitBirth.RepulsorBurrowed" Send="AnimGroupApply Burrow Burrow Unburrow ClosingFull,Instant"/>
@@ -3348,6 +3355,8 @@
         <On Terms="TimerExpired; TimerName Build" Send="Create SCVBuildSound"/>
         <On Terms="Abil.SCVHarvest.Start" Send="TimerSet 0.000000,0.300000 Gather"/>
         <On Terms="TimerExpired; TimerName Gather" Send="Create ACRGatherSound"/>
+        <On Terms="Behavior.ACRPowerDown.On" Send="AnimBracketStart Spell Spell,Start Spell Spell,End"/>
+        <On Terms="Behavior.ACRPowerDown.Off" Send="AnimBracketStop Spell"/>
         <ModelFlags index="OutlineEmitter" value="1"/>
         <DeathArray index="Normal" ModelLink="ACRDeath" SoundLink="Mule_Explode"/>
         <DeathCustoms>
