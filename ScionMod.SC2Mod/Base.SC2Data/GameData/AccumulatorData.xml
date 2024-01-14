@@ -34,6 +34,26 @@
         </Parameters>
         <Operation value="Subtract"/>
     </CAccumulatorArithmetic>
+    <CAccumulatorDistance id="InciterWeaponTrackingDistance">
+        <StartLocation Effect="InciterHalifaxGrenadesInit" Value="TargetUnit"/>
+        <EndLocation Effect="InciterHalifaxGrenadesCUSet" Value="TargetUnit"/>
+        <Scale value="9"/>
+    </CAccumulatorDistance>
+    <CAccumulatorArithmetic id="SpitterWeaponTrackingArithmetic">
+        <ApplicationRule value="Multiply"/>
+        <Parameters value="10"/>
+        <Parameters value="1">
+            <AccumulatorArray value="SpitterWeaponTrackingDistance3"/>
+        </Parameters>
+        <Operation value="Divide"/>
+        <MinAccumulation value="0.75"/>
+        <MaxAccumulation value="4"/>
+    </CAccumulatorArithmetic>
+    <CAccumulatorDistance id="SpitterWeaponTrackingDistance">
+        <StartLocation Effect="SpitterSpitterSpores" Value="TargetUnit"/>
+        <EndLocation Effect="SpitterSpitterSporesCUSet" Value="TargetUnit"/>
+        <Scale value="10"/>
+    </CAccumulatorDistance>
     <CAccumulatorBehavior id="MaximumPowerGeneratorStackCaster">
         <Behavior value="MaximumPowerGenerator"/>
     </CAccumulatorBehavior>
@@ -405,9 +425,11 @@
         <VitalType value="Shields"/>
         <ModificationType value="PerUnitMaxVital"/>
     </CAccumulatorVitals>
-    <CAccumulatorUserData id="TargetVelocityUserData">
-        <Key value="TargetVelocity"/>
-    </CAccumulatorUserData>
+    <CAccumulatorDistance id="SpitterWeaponTrackingDistance2">
+        <ApplicationRule value="Multiply"/>
+        <EndLocation Effect="SpitterSpitterSporesCUSet" Value="TargetUnit"/>
+        <Scale value="0.01"/>
+    </CAccumulatorDistance>
     <CAccumulatorArithmetic id="TeslaShockChargeOverloadMultiply">
         <ApplicationRule value="Multiply"/>
         <Parameters value="3"/>

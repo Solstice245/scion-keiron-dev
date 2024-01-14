@@ -91,6 +91,46 @@
         <AmmoUnit value="AcidWormsLMWeapon"/>
         <LaunchLocation Value="SourcePoint"/>
     </CEffectLaunchMissile>
+    <CEffectUserData id="CasnoliskExplosiveGlobData">
+        <EditorCategories value="Race:Xayid"/>
+        <Amount value="0.25"/>
+        <ValidateMax value="12.5"/>
+        <EffectSuccess value="CasnoliskExplosiveGlobSwitch"/>
+        <EffectFailure value="ExplosiveGlobLM"/>
+    </CEffectUserData>
+    <CEffectCreatePersistent id="CasnoliskExplosiveGlobInit">
+        <EditorCategories value="Race:Xayid"/>
+        <WhichLocation Value="CasterPoint"/>
+        <InitialEffect value="CasnoliskExplosiveGlobSwitch"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="CasnoliskExplosiveGlobOffset">
+        <EditorCategories value="Race:Xayid"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="CasnoliskExplosiveGlobData"/>
+        <PeriodicOffsetArray value="0,-0.25,0"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="CasnoliskExplosiveGlobOffsetBack">
+        <EditorCategories value="Race:Xayid"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="ExplosiveGlobLM"/>
+        <PeriodicOffsetArray value="0,0.5,0"/>
+    </CEffectCreatePersistent>
+    <CEffectSwitch id="CasnoliskExplosiveGlobSwitch">
+        <EditorCategories value="Race:Xayid"/>
+        <CaseArray Validator="NotPathable" Effect="CasnoliskExplosiveGlobOffsetBack"/>
+        <CaseDefault value="CasnoliskExplosiveGlobOffset"/>
+    </CEffectSwitch>
+    <CEffectSet id="CasnoliskExplosiveGlobTravelCheck">
+        <ValidatorArray value="NotWalkableSourceUnit"/>
+        <EditorCategories value="Race:Xayid"/>
+        <EffectArray value="ExplosiveGlobImpactDummy"/>
+    </CEffectSet>
+    <CEffectSet id="CasnoliskExplosiveGlobTravelSet">
+        <EditorCategories value="Race:Xayid"/>
+        <EffectArray value="CasnoliskExplosiveGlobTravelCheck"/>
+        <EffectArray value="ExplosiveGlobSA"/>
+    </CEffectSet>
     <CEffectCreatePersistent id="DisplayCooldownDummyAddPersistent">
         <WhichLocation Value="TargetUnit"/>
         <PeriodCount value="0">
@@ -98,47 +138,234 @@
         </PeriodCount>
         <PeriodicEffectArray value="Scion_DisplayCooldownDummyAddCooldown"/>
     </CEffectCreatePersistent>
-    <CEffectCreatePersistent id="InciterTargetVelocityDirectionGetL">
-        <WhichLocation Effect="HalifaxGrenades" Value="TargetUnit"/>
-        <OffsetVectorStartLocation Value="CasterUnit"/>
-        <PeriodCount value="1"/>
-        <PeriodicEffectArray value="InciterTargetVelocityDirectionSetL"/>
+    <CEffectCreatePersistent id="InciterHalifaxGrenadesCPLM" parent="ScionCreatePersistent" Race="Genetron">
+        <InitialEffect value="HalifaxGrenadesInit"/>
+        <ExpireEffect value="HalifaxGrenadesExpire"/>
+        <FinalEffect value="HalifaxGrenadesFinal"/>
+        <PeriodCount value="2"/>
+        <PeriodicEffectArray value="HalifaxGrenadesLM"/>
+        <PeriodicEffectArray value="HalifaxGrenadesLM"/>
         <PeriodicOffsetArray value="-0.27,0,0"/>
+        <PeriodicOffsetArray value="0.27,0,0"/>
     </CEffectCreatePersistent>
-    <CEffectCreatePersistent id="InciterTargetVelocityDirectionObserveL">
-        <WhichLocation Value="TargetUnit"/>
-        <InitialDelay value="0.0625"/>
-        <ExpireEffect value="InciterTargetVelocityDirectionGetL"/>
-    </CEffectCreatePersistent>
-    <CEffectSet id="InciterTargetVelocityDummySpawnL">
-        <EffectArray value="InciterTargetVelocityDirectionObserveL"/>
-        <EffectArray value="InciterTargetVelocitySpeedScopeL"/>
-        <EffectArray value="InciterTargetVelocityMovePersistentL"/>
-        <EffectArray value="HalifaxGrenadesLM"/>
-    </CEffectSet>
-    <CEffectApplyForce id="InciterTargetVelocityMoveForceL">
-        <WhichLocation Effect="InciterTargetVelocityMoveScopeL" Value="TargetPoint"/>
-        <WhichUnit Effect="InciterTargetVelocityDummySpawnL"/>
-        <Amount value="1"/>
-    </CEffectApplyForce>
-    <CEffectCreatePersistent id="InciterTargetVelocityMovePersistentL">
-        <WhichLocation Value="TargetUnit"/>
-        <InitialDelay value="0.125"/>
-        <FinalEffect value="KillTargetDeathNormal"/>
-        <PeriodCount value="32"/>
-        <PeriodicEffectArray value="InciterTargetVelocityMoveScopeL"/>
+    <CEffectUserData id="SpitterSpitterSporesBreakDataCheck">
+        <EditorCategories value="Race:Xayid"/>
+        <Key value="Break"/>
+        <Amount value="0"/>
+        <SourceKey value="Break"/>
+        <EffectSuccess value="SpitterSpitterSporesDataInit2"/>
+        <EffectFailure value="SpitterSpitterSporesLM"/>
+    </CEffectUserData>
+    <CEffectUserData id="SpitterSpitterSporesBreakDataSet">
+        <EditorCategories value="Race:Xayid"/>
+        <Key value="Break"/>
+        <SourceKey value="Break"/>
+    </CEffectUserData>
+    <CEffectUserData id="SpitterSpitterSporesDataInit2">
+        <EditorCategories value="Race:Xayid"/>
+        <Amount value="0">
+            <AccumulatorArray value="SpitterWeaponTrackingDistance"/>
+            <AccumulatorArray value="SpitterWeaponTrackingDistance2"/>
+        </Amount>
+        <EffectSuccess value="SpitterSpitterSporesDataLoop2"/>
+        <EffectFailure value="SpitterSpitterSporesDataLoop2"/>
+    </CEffectUserData>
+    <CEffectUserData id="SpitterSpitterSporesDataLoop2">
+        <EditorCategories value="Race:Xayid"/>
+        <Amount value="0.1"/>
+        <Operation value="Subtract"/>
+        <ValidateMax value="500000"/>
+        <EffectSuccess value="SpitterSpitterSporesOffsetLoop2"/>
+        <EffectFailure value="SpitterSpitterSporesLM"/>
+    </CEffectUserData>
+    <CEffectUserData id="SpitterSpitterSporesLowRangeCheck">
+        <ValidatorArray value="DistanceLessThan3"/>
+        <EditorCategories value="Race:Xayid"/>
+        <Amount value="0"/>
+        <Operation value="Set"/>
+        <EffectSuccess value="SpitterSpitterSporestest22"/>
+        <EffectFailure value="SpitterSpitterSporestest22"/>
+    </CEffectUserData>
+    <CEffectUserData id="SpitterSpitterSporesMinimumRange">
+        <ValidatorArray value="DistanceLessThan1Dot5"/>
+        <ValidatorArray value="BreakDataIs0"/>
+        <EditorCategories value="Race:Xayid"/>
+        <Amount value="0.4"/>
+        <Operation value="Set"/>
+        <EffectSuccess value="SpitterSpitterSporesBreakDataSet"/>
+        <EffectFailure value="SpitterSpitterSporesBreakDataSet"/>
+    </CEffectUserData>
+    <CEffectUserData id="SpitterSpitterSporesPathingCheck">
+        <ValidatorArray value="NotWalkable"/>
+        <EditorCategories value="Race:Xayid"/>
+        <Amount value="0"/>
+        <Operation value="Set"/>
+        <EffectSuccess value="SpitterSpitterSporesBreakDataSet"/>
+        <EffectFailure value="SpitterSpitterSporesBreakDataSet"/>
+    </CEffectUserData>
+    <CEffectCreatePersistent id="SpitterSpitterSporesOffsetLoop2">
+        <EditorCategories value="Race:Xayid"/>
+        <OffsetVectorStartLocation Value="Unknown"/>
+        <OffsetVectorEndLocation Value="Unknown"/>
+        <OffsetFacingFallback Effect="SpitterSpitterSporesCUSet" Value="TargetUnit"/>
+        <InitialEffect value="SpitterSpitterSporesTP"/>
+        <ExpireEffect value="SpitterSpitterSporesLowRangeCheck"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="SpitterSpitterSporesDataLoop2"/>
+        <PeriodicOffsetArray value="0,-0.1,0"/>
         <PeriodicPeriodArray value="0.0625"/>
     </CEffectCreatePersistent>
-    <CEffectCreatePersistent id="InciterTargetVelocityMoveScopeL">
-        <WhichLocation Value="TargetUnit"/>
-        <OffsetVectorStartLocation Value="TargetUnit"/>
-        <InitialEffect value="InciterTargetVelocityMoveForceL"/>
-        <InitialOffset value="0,-1,0"/>
+    <CEffectUserData id="SpitterSpitterSporesRangeSlop">
+        <ValidatorArray value="TargetNotInWeaponRange"/>
+        <ValidatorArray value="BreakDataIs0"/>
+        <EditorCategories value="Race:Xayid"/>
+        <Operation value="Set"/>
+        <EffectSuccess value="SpitterSpitterSporesBreakDataSet"/>
+        <EffectFailure value="SpitterSpitterSporesBreakDataSet"/>
+    </CEffectUserData>
+    <CEffectSet id="SpitterSpitterSporesTPSet">
+        <EditorCategories value="Race:Xayid"/>
+        <EffectArray value="SpitterSpitterSporesMinimumRange"/>
+        <EffectArray value="SpitterSpitterSporesRangeSlop"/>
+        <EffectArray value="SpitterSpitterSporesPathingCheck"/>
+    </CEffectSet>
+    <CEffectTeleport id="SpitterSpitterSporesTP">
+        <EditorCategories value="Race:Xayid"/>
+        <WhichUnit Effect="SpitterSpitterSporesCUSet"/>
+        <MinDistance value="0"/>
+        <SourceLocation Effect="SpitterSpitterSporesCUSet" Value="TargetUnit"/>
+        <TargetLocation Value="TargetPoint"/>
+        <TeleportFlags index="TestFog" value="0"/>
+        <TeleportEffect value="SpitterSpitterSporesTPSet"/>
+    </CEffectTeleport>
+    <CEffectCreatePersistent id="SpitterSpitterSporesOffsetLoop">
+        <EditorCategories value="Race:Xayid"/>
+        <OffsetVectorStartLocation Value="Unknown"/>
+        <OffsetVectorEndLocation Value="Unknown"/>
+        <OffsetFacingFallback Effect="SpitterSpitterSporesCUSet" Value="TargetUnit"/>
+        <InitialEffect value="SpitterSpitterSporesTP"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="SpitterSpitterSporesDataLoop"/>
+        <PeriodicOffsetArray value="0,-0.1,0"/>
+        <PeriodicPeriodArray value="0.0625"/>
     </CEffectCreatePersistent>
-    <CEffectCreatePersistent id="InciterTargetVelocitySpeedScopeL">
-        <WhichLocation Effect="HalifaxGrenades" Value="TargetUnit"/>
-        <InitialEffect value="InciterTargetVelocitySpeedSwitchL"/>
+    <CEffectUserData id="SpitterSpitterSporesDataInit">
+        <EditorCategories value="Race:Xayid"/>
+        <Amount value="0">
+            <AccumulatorArray value="SpitterWeaponTrackingDistance"/>
+        </Amount>
+    </CEffectUserData>
+    <CEffectUserData id="SpitterSpitterSporesDataLoop">
+        <EditorCategories value="Race:Xayid"/>
+        <Amount value="0.1"/>
+        <Operation value="Subtract"/>
+        <ValidateMax value="500000"/>
+        <EffectSuccess value="SpitterSpitterSporesOffsetLoop"/>
+        <EffectFailure value="SpitterSpitterSporesBreakDataCheck"/>
+    </CEffectUserData>
+    <CEffectModifyUnit id="SpitterSpitterSporesFacing">
+        <EditorCategories value="Race:Xayid"/>
+        <FacingLocation Effect="SpitterSpitterSpores" Value="TargetUnit"/>
+        <FacingType value="LookAt"/>
+    </CEffectModifyUnit>
+    <CEffectCreateUnit id="SpitterSpitterSporesCU">
+        <EditorCategories value="Race:Xayid"/>
+        <WhichLocation Value="TargetPoint"/>
+        <CreateFlags index="OffsetByRadius" value="0"/>
+        <CreateFlags index="Placement" value="0"/>
+        <SpawnEffect value="SpitterSpitterSporesCUSet"/>
+        <SpawnUnit value="TargetVelocityDummy"/>
+    </CEffectCreateUnit>
+    <CEffectUserData id="InciterHalifaxGrenadesDataInit">
+        <EditorCategories value="Race:Genetron"/>
+        <Amount value="0">
+            <AccumulatorArray value="InciterWeaponTrackingDistance"/>
+        </Amount>
+    </CEffectUserData>
+    <CEffectUserData id="InciterHalifaxGrenadesDataLoop">
+        <EditorCategories value="Race:Genetron"/>
+        <Amount value="0.1"/>
+        <Operation value="Subtract"/>
+        <ValidateMax value="500000"/>
+        <EffectSuccess value="InciterHalifaxGrenadesOffsetLoop"/>
+        <EffectFailure value="InciterHalifaxGrenadesCPLM"/>
+    </CEffectUserData>
+    <CEffectCreatePersistent id="InciterHalifaxGrenadesDelay" parent="ScionCreatePersistent" Race="Genetron">
+        <Flags index="Channeled" value="1"/>
+        <InitialEffect value="InciterHalifaxGrenadesInitInit"/>
+        <ExpireDelay value="0.125"/>
+        <ExpireEffect value="InciterHalifaxGrenadesInitExpire"/>
+        <FinalEffect value="InciterHalifaxGrenadesCU"/>
     </CEffectCreatePersistent>
+    <CEffectSet id="SpitterSpitterSporesCUSet">
+        <EditorCategories value="Race:Xayid"/>
+        <EffectArray value="SpitterSpitterSporesFacing"/>
+        <EffectArray value="SpitterSpitterSporesDataInit"/>
+        <EffectArray value="SpitterSpitterSporesDataLoop"/>
+        <EffectArray value="KillRemove"/>
+    </CEffectSet>
+    <CEffectCreatePersistent id="SpitterSpitterSporesDelay" parent="ScionCreatePersistent" Race="Genetron">
+        <EditorCategories value="Race:Xayid"/>
+        <Flags index="Channeled" value="1"/>
+        <ExpireDelay value="0.125"/>
+        <FinalEffect value="SpitterSpitterSporesCU"/>
+    </CEffectCreatePersistent>
+    <CEffectModifyUnit id="InciterHalifaxGrenadesFacing">
+        <EditorCategories value="Race:Genetron"/>
+        <FacingLocation Effect="InciterHalifaxGrenadesInit" Value="TargetUnit"/>
+        <FacingType value="LookAt"/>
+    </CEffectModifyUnit>
+    <CEffectCreatePersistent id="SpitterSpitterSpores" parent="ScionCreatePersistent" Race="Genetron">
+        <EditorCategories value="Race:Xayid"/>
+        <WhichLocation Value="TargetUnitOrPoint"/>
+        <InitialEffect value="SpitterSpitterSporesDelay"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="InciterHalifaxGrenadesOffsetLoop">
+        <EditorCategories value="Race:Genetron"/>
+        <OffsetVectorStartLocation Value="Unknown"/>
+        <OffsetVectorEndLocation Value="Unknown"/>
+        <OffsetFacingFallback Effect="InciterHalifaxGrenadesCUSet" Value="TargetUnit"/>
+        <InitialEffect value="InciterHalifaxGrenadesTP"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="InciterHalifaxGrenadesDataLoop"/>
+        <PeriodicOffsetArray value="0,-0.1,0"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
+    <CEffectUserData id="InciterHalifaxGrenadesRangeSlop">
+        <EditorCategories value="Race:Genetron"/>
+        <Amount value="0.9"/>
+        <Operation value="Set"/>
+        <ValidatorArray value="TargetNotInWeaponRange"/>
+        <ValidatorArray value="CasterDataDefaultGT1"/>
+    </CEffectUserData>
+    <CEffectUserData id="InciterHalifaxGrenadesMinimumRange">
+        <ValidatorArray value="DistanceLessThan1"/>
+        <ValidatorArray value="CasterDataDefaultGTDot5"/>
+        <EditorCategories value="Race:Genetron"/>
+        <Amount value="0.4"/>
+        <Operation value="Set"/>
+    </CEffectUserData>
+    <CEffectTeleport id="InciterHalifaxGrenadesTP">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Effect="InciterHalifaxGrenadesCUSet"/>
+        <MinDistance value="0"/>
+        <SourceLocation Effect="InciterHalifaxGrenadesCUSet" Value="TargetUnit"/>
+        <TargetLocation Value="TargetPoint"/>
+        <TeleportFlags index="TestFog" value="0"/>
+        <TeleportEffect value="InciterHalifaxGrenadesTPSet"/>
+    </CEffectTeleport>
+    <CEffectSet id="InciterHalifaxGrenadesTPSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="InciterHalifaxGrenadesMinimumRange"/>
+        <EffectArray value="InciterHalifaxGrenadesRangeSlop"/>
+    </CEffectSet>
+    <CEffectSet id="InciterHalifaxGrenadesCUSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="InciterHalifaxGrenadesFacing"/>
+        <EffectArray value="InciterHalifaxGrenadesDataInit"/>
+        <EffectArray value="InciterHalifaxGrenadesDataLoop"/>
+        <EffectArray value="KillRemove"/>
+    </CEffectSet>
     <CEffectUserData id="ProcessingCoreMiningPriorityDisplayCooldownBasis">
         <EditorCategories value="Race:Genetron"/>
         <Key value="DisplayCooldown"/>
@@ -460,32 +687,14 @@
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="500" Effect="ProcessingCoreMiningPriorityTargetFound"/>
     </CEffectEnumArea>
-    <CEffectApplyBehavior id="InciterTargetVelocitySpeedApplyL">
-        <WhichUnit Effect="InciterTargetVelocityDummySpawnL"/>
-        <Behavior value="TargetVelocityDummyAmount"/>
-    </CEffectApplyBehavior>
-    <CEffectCreateUnit id="InciterTargetVelocityDummyCreateL">
+    <CEffectCreateUnit id="InciterHalifaxGrenadesCU">
+        <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="TargetPoint"/>
-        <Origin Value="TargetPoint"/>
         <CreateFlags index="OffsetByRadius" value="0"/>
         <CreateFlags index="Placement" value="0"/>
-        <CreateFlags index="SetFacing" value="1"/>
-        <SpawnEffect value="InciterTargetVelocityDummySpawnL"/>
+        <SpawnEffect value="InciterHalifaxGrenadesCUSet"/>
         <SpawnUnit value="TargetVelocityDummy"/>
     </CEffectCreateUnit>
-    <CEffectModifyUnit id="InciterTargetVelocityDirectionSetL">
-        <ImpactUnit Effect="InciterTargetVelocityDummySpawnL"/>
-        <FacingLocation Value="TargetPoint"/>
-        <FacingType value="LookAt"/>
-    </CEffectModifyUnit>
-    <CEffectSwitch id="InciterTargetVelocitySpeedSwitchL">
-        <CaseArray Validator="TargetSpeedGT0D5" Effect="InciterTargetVelocitySpeedApplyL" FallThrough="1"/>
-        <CaseArray Validator="TargetSpeedGT1D5" Effect="InciterTargetVelocitySpeedApplyL" FallThrough="1"/>
-        <CaseArray Validator="TargetSpeedGT2D5" Effect="InciterTargetVelocitySpeedApplyL" FallThrough="1"/>
-        <CaseArray Validator="TargetSpeedGT3D5" Effect="InciterTargetVelocitySpeedApplyL" FallThrough="1"/>
-        <CaseArray Validator="TargetSpeedGT4D5" Effect="InciterTargetVelocitySpeedApplyL" FallThrough="1"/>
-        <CaseArray Validator="TargetSpeedGT5D5" Effect="InciterTargetVelocitySpeedApplyL" FallThrough="1"/>
-    </CEffectSwitch>
     <CEffectModifyUnit id="UnknownEffect">
         <EditorCategories value=""/>
     </CEffectModifyUnit>
@@ -891,7 +1100,7 @@
     <CEffectApplyBehavior id="ResidualAcid" parent="ScionApplyBehavior" Race="Xayid"/>
     <CEffectCreatePersistent id="SpitterSpitterSporesAINotification">
         <EditorCategories value="Race:Xayid"/>
-        <WhichLocation Effect="SpitterSpores"/>
+        <WhichLocation Effect="SpitterSpitterSporesLM"/>
         <Flags index="PersistUntilDestroyed" value="1"/>
         <AINotifyEffect value="SpitterSporesImpact"/>
     </CEffectCreatePersistent>
@@ -902,7 +1111,7 @@
     </CEffectDestroyPersistent>
     <CEffectDestroyPersistent id="SpitterSpitterSporesAINotificationDestroy">
         <EditorCategories value="Race:Xayid"/>
-        <WhichLocation Effect="SpitterSpores" Value="TargetPoint"/>
+        <WhichLocation Effect="SpitterSpitterSporesLM" Value="TargetPoint"/>
         <Effect value="SpitterSpitterSporesAINotification"/>
     </CEffectDestroyPersistent>
     <CEffectSet id="CourierCloakingFieldPowerSet">
@@ -3571,13 +3780,9 @@
         <SearchFlags index="CallForHelp" value="1"/>
         <SearchFlags index="SameCliff" value="1"/>
     </CEffectEnumArea>
-    <CEffectCreatePersistent id="HalifaxGrenades" parent="ScionCreatePersistent" Race="Genetron">
+    <CEffectCreatePersistent id="InciterHalifaxGrenadesInit" parent="ScionCreatePersistent" Race="Genetron">
         <WhichLocation Value="TargetUnit"/>
-        <PeriodCount value="1"/>
-        <PeriodicEffectArray value="InciterTargetVelocityDummyCreateL"/>
-        <PeriodicEffectArray value="HalifaxGrenadesLM"/>
-        <PeriodicOffsetArray value="-0.27,0,0"/>
-        <PeriodicOffsetArray value="0.27,0,0"/>
+        <InitialEffect value="InciterHalifaxGrenadesDelay"/>
     </CEffectCreatePersistent>
     <CEffectLaunchMissile id="LancerAutogun" parent="ScionLaunchMissile" Race="Genetron"/>
     <CEffectCreateUnit id="LaunchCloakChargeImpact">
@@ -3786,7 +3991,7 @@
         <AreaArray Radius="0.75" Fraction="1"/>
         <AreaArray Radius="1" Fraction="0.5"/>
         <AreaArray Radius="1.25" Fraction="0.25"/>
-        <IncludeArray Effect="HalifaxGrenades" Value="Target"/>
+        <IncludeArray Effect="InciterHalifaxGrenadesInit" Value="Target"/>
         <ExcludeArray index="0" Value="Outer"/>
         <ExcludeArray Value="Target"/>
         <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
@@ -3799,7 +4004,7 @@
         <AreaArray Radius="1" Fraction="0.5"/>
         <AreaArray Radius="1.25" Fraction="0.25"/>
         <ExcludeArray index="0" Value="Outer"/>
-        <ExcludeArray Effect="HalifaxGrenades" Value="Target"/>
+        <ExcludeArray Effect="InciterHalifaxGrenadesInit" Value="Target"/>
         <SearchFilters value="Ground;Self,Neutral,Enemy,Missile,Stasis,Dead,Hidden,Invulnerable"/>
     </CEffectDamage>
     <CEffectDamage id="HurricaneMissilesLMImpact" parent="ScionDamageRange" Race="Genetron">
@@ -3865,8 +4070,6 @@
     </CEffectApplyBehavior>
     <CEffectLaunchMissile id="HalifaxGrenadesLM" parent="ScionLaunchMissilePoint" Race="Genetron">
         <LaunchLocation Value="CasterUnit"/>
-        <ImpactLocation Value="TargetUnit"/>
-        <Movers Link="MissileDefault"/>
     </CEffectLaunchMissile>
     <CEffectLaunchMissile id="LaunchCloakCharge" parent="ScionLaunchMissilePoint" Race="Genetron">
         <Movers Link="TeslaChargeMoverLow" IfRangeLTE="2"/>
@@ -3940,12 +4143,6 @@
         <SearchFilters value="Structure;Self,Ally,Neutral,Enemy,Missile,Stasis,Dead"/>
         <AreaArray Radius="8.5" Effect="BilePitSustain"/>
     </CEffectEnumArea>
-    <CEffectCreatePersistent id="ExplosiveGlob" parent="ScionCreatePersistent" Race="Xayid">
-        <WhichLocation Value="SourcePoint"/>
-        <PeriodCount value="1"/>
-        <PeriodicEffectArray value="ExplosiveGlobLM"/>
-        <PeriodicOffsetArray value="0,-12.6875,0"/>
-    </CEffectCreatePersistent>
     <CEffectEnumArea id="FeedingPoolHealAuraSA" parent="ScionEnumArea" Race="Xayid">
         <SearchFilters value="-;Self,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead"/>
         <AreaArray MaxCount="3" Radius="6.5" Effect="FeedingPoolHealingAura"/>
@@ -4206,13 +4403,6 @@
         <Amount value="6"/>
         <Death value="Fire"/>
     </CEffectDamage>
-    <CEffectDestroyPersistent id="ExplosiveGlobDP">
-        <EditorCategories value="Race:Xayid"/>
-        <WhichLocation Value="SourceUnitOrPoint"/>
-        <Effect value="ExplosiveGlob"/>
-        <Count value="1"/>
-        <Radius value="0.5"/>
-    </CEffectDestroyPersistent>
     <CEffectDamage id="ExplosiveGlobDMG" parent="ScionDamage" Race="Xayid">
         <Amount value="60"/>
         <Death value="Disintegrate"/>
@@ -4244,7 +4434,7 @@
     </CEffectEnumArea>
     <CEffectLaunchMissile id="ExplosiveGlobLM" parent="ScionLaunchMissilePoint" Race="Xayid">
         <AmmoUnit value="ExplosiveGlobMissile"/>
-        <PeriodicEffect value="ExplosiveGlobSA"/>
+        <PeriodicEffect value="CasnoliskExplosiveGlobTravelSet"/>
         <FinishEffect value="ExplosiveGlobImpactSearch"/>
         <AmmoOwner Value="Caster"/>
     </CEffectLaunchMissile>
@@ -4349,16 +4539,17 @@
         <Death value="Disintegrate"/>
         <AreaArray Radius="0.75" Fraction="1"/>
         <ExcludeArray index="0" removed="1"/>
-        <IncludeArray Effect="SpitterSpores" Value="Target"/>
+        <IncludeArray Effect="SpitterSpitterSporesLM" Value="Target"/>
         <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <AINotifyFlags index="HurtEnemy" value="1"/>
     </CEffectDamage>
-    <CEffectLaunchMissile id="SpitterSpores" parent="ScionLaunchMissilePoint" Race="Xayid">
+    <CEffectLaunchMissile id="SpitterSpitterSporesLM" parent="ScionLaunchMissilePoint" Race="Xayid">
+        <LaunchEffect value="SpitterSpitterSporesAINotification"/>
+        <ImpactEffect value="SpitterSporesImpact"/>
+        <FinishEffect value="SpitterSpitterSporesAINotificationDestroy"/>
         <AmmoUnit value="SpitterAcidWeapon"/>
         <Movers Link="SpitterAcidMissileLow" IfRangeLTE="4"/>
         <Movers Link="SpitterAcidMissile" IfRangeLTE="-1"/>
-        <LaunchEffect value="SpitterSpitterSporesAINotification"/>
-        <FinishEffect value="SpitterSpitterSporesAINotificationDestroy"/>
     </CEffectLaunchMissile>
     <CEffectLaunchMissile id="StagnatingBile" parent="ScionLaunchMissilePoint" Race="Xayid">
         <AmmoUnit value="StagnatingBileMissile"/>

@@ -71,6 +71,10 @@
         <CombineArray value="CasterNotShackled"/>
         <CombineArray value="Scion_CasterNoRavenScramblerMissile"/>
     </CValidatorCombine>
+    <CValidatorEffectTreeUserData id="BreakDataIs0">
+        <CheckExistence value="0"/>
+        <Key value="Break"/>
+    </CValidatorEffectTreeUserData>
     <CValidatorPlayerCompareFoodAvailable id="CannotAfford1Dot5Supply">
         <Compare value="LT"/>
         <Value value="1.5"/>
@@ -88,6 +92,18 @@
         <Compare value="LT"/>
         <Value value="75"/>
     </CValidatorPlayerCompareResource>
+    <CValidatorEffectTreeUserData id="CasterDataDefaultGT1">
+        <CheckExistence value="0"/>
+        <Compare value="GT"/>
+        <Key value="Default"/>
+        <Value value="1"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorEffectTreeUserData id="CasterDataDefaultGTDot5">
+        <CheckExistence value="0"/>
+        <Compare value="GT"/>
+        <Key value="Default"/>
+        <Value value="0.5"/>
+    </CValidatorEffectTreeUserData>
     <CValidatorEffectTreeUserData id="CasterGPIEDataModeIs0">
         <CheckExistence value="0"/>
         <Key value="Mode"/>
@@ -145,6 +161,16 @@
         <WhichUnit Value="Caster"/>
         <Behavior value="GyreShackled"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorLocationCompareRange id="DistanceLessThan1Dot5">
+        <WhichLocation Value="TargetUnit"/>
+        <Compare value="LT"/>
+        <Range value="1.5"/>
+    </CValidatorLocationCompareRange>
+    <CValidatorLocationCompareRange id="DistanceLessThan3">
+        <WhichLocation Value="TargetUnit"/>
+        <Compare value="LT"/>
+        <Range value="3"/>
+    </CValidatorLocationCompareRange>
     <CValidatorUnitCompareVital id="EnergyGTE010">
         <Compare value="GE"/>
         <Value value="10"/>
@@ -242,6 +268,15 @@
         <Types index="Ground" value="0"/>
         <Types index="WaterShallow" value="0"/>
     </CValidatorLocationPathable>
+    <CValidatorCombine id="NotPathable">
+        <CombineArray value="Pathable"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="NotWalkableSourceUnit">
+        <ResultFailed value="MustTargetWalkableLocation"/>
+        <CombineArray value="WalkableSourceUnit"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
     <CValidatorPlayerRequirement id="ProcessorIsQueuedGlobal">
         <Find value="1"/>
         <Value value="ProcessorIsQueuedGlobal"/>
@@ -254,6 +289,10 @@
         <WhichUnit Value="Caster"/>
         <Filters value="-;Unstoppable"/>
     </CValidatorUnitFilters>
+    <CValidatorCombine id="TargetNotInWeaponRange">
+        <CombineArray value="WeaponInRange"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
     <CValidatorUnitCompareSpeed id="TargetSpeedGT0D5">
         <Compare value="GT"/>
         <Value value="0.5"/>
@@ -783,6 +822,16 @@
         <ResultFailed value="Error,Error/UmbraStealth"/>
         <Behavior value="UmbraStealth"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorCombine id="NotWalkable">
+        <ResultFailed value="MustTargetWalkableLocation"/>
+        <CombineArray value="Walkable"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorLocationPathable id="WalkableSourceUnit">
+        <ResultFailed value="MustTargetWalkableLocation"/>
+        <WhichLocation Value="SourceUnit"/>
+        <Types index="Building" value="0"/>
+    </CValidatorLocationPathable>
     <CValidatorUnitCompareBehaviorCount id="WardIsCastingShellDomeCaster">
         <WhichUnit Value="Caster"/>
         <Compare value="GT"/>
