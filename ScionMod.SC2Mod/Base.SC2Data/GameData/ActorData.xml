@@ -881,8 +881,8 @@
             <Visuals TerrainPhysicsMaterial="Water" ActorModel="TerrainSquibHarnessContinuous" ModelLink="WaterRippleInfestor"/>
         </TerrainSquibs>
         <WalkAnimMoveSpeed value="2.5"/>
-        <BarOffset value="45"/>
-        <BarWidth value="85"/>
+        <BarOffset value="50"/>
+        <BarWidth value="65"/>
     </CActorUnit>
     <CActorUnit id="ChangelingXayidling" parent="GenericUnitXayid" unitName="ChangelingXayidling">
         <Aliases value="_UnitSmall"/>
@@ -952,7 +952,7 @@
         <On Terms="Abil.CoveringSpray.SourceCastStart" Send="AnimPlay Attack Spell,C"/>
         <PortraitModel value="QueenPortrait"/>
         <WalkAnimMoveSpeed value="2.5"/>
-        <BarOffset value="45"/>
+        <BarOffset value="40"/>
         <SoundArray index="Ready" value="LairViper_Ready"/>
         <SoundArray index="What" value="LairViper_What"/>
         <SoundArray index="Yes" value="LairViper_Yes"/>
@@ -1097,7 +1097,7 @@
     </CActorUnit>
     <CActorUnit id="Roamer" parent="GenericUnitXayid" unitName="Roamer">
         <WalkAnimMoveSpeed value="1.25"/>
-        <BarOffset value="35"/>
+        <BarOffset value="33"/>
         <BarWidth value="50"/>
         <On Terms="Abil.Scour.SourceCastStart" Send="AnimPlay Attack Attack 0 -1.000000 -1.000000 0.575000 AsDuration"/>
         <On Terms="Abil.Scour.SourceFinishStop" Send="AnimBracketStop Attack"/>
@@ -1250,8 +1250,8 @@
         <DeathArray index="Disintegrate" ModelLink="DefilerMPAcidDeath"/>
         <DeathArray index="Fire" ModelLink="DefilerMPFireDeath"/>
         <PortraitModel value="Defiler_Portrait"/>
-        <BarOffset value="60"/>
-        <BarWidth value="75"/>
+        <BarOffset value="70"/>
+        <BarWidth value="80"/>
         <Aliases value="_UnitLarge"/>
         <TerrainSquibs>
             <GroupName value="RippleStandard"/>
@@ -1799,7 +1799,7 @@
     </CActorEventMacro>
     <CActorUnit id="Xayidling" parent="GenericUnitXayid" unitName="Xayidling">
         <WalkAnimMoveSpeed value="2.8085"/>
-        <BarOffset value="40"/>
+        <BarOffset value="38"/>
         <BarWidth value="40"/>
         <On Terms="Abil.XayidlingDash.SourceCastStart" Send="$Spell 0 -1.000000 0.000000 0.700000 AsDuration"/>
         <PortraitModel value="UltraliskPortrait"/>
@@ -2568,7 +2568,7 @@
         <On Terms="Behavior.ResourceTap.Off" Send="Destroy"/>
         <HostSiteOps Ops="SOpAttachOriginStationary"/>
     </CActorModel>
-    <CActorUnit id="AnalysisTerminal" parent="GenetronBuilding" buildTime="54.000000" unitName="AnalysisTerminal">
+    <CActorUnit id="AnalysisTerminal" parent="GenetronBuilding" buildTime="49.000000" unitName="AnalysisTerminal">
         <DeathArray index="Normal" ModelLink="AnalysisTerminalDeath" SoundLink="Armory_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeath" SoundLink="Armory_Explode"/>
         <BarWidth value="130"/>
@@ -2672,7 +2672,7 @@
         <On Terms="Abil.TechVaultResearch.Stop" Send="AnimClear StandWork"/>
     </CActorUnit>
     <CActorModel id="OutfittingStationBuild" parent="GenetronBuildingBuild"/>
-    <CActorUnit id="OutfittingStation" parent="GenetronBuilding" buildTime="49.000000" unitName="OutfittingStation">
+    <CActorUnit id="OutfittingStation" parent="GenetronBuilding" buildTime="59.000000" unitName="OutfittingStation">
         <On Terms="Abil.OutfittingStationResearch.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
         <On Terms="Abil.OutfittingStationResearch.Stop" Send="AnimClear StandWork"/>
         <BarWidth value="130"/>
@@ -4191,16 +4191,18 @@
     <CActorMissile id="IncendiaryInfusionCastMissile" parent="GenericAttackMissile" unitName="IncendiaryInfusionMissile">
         <On Terms="ActorCreation" Send="SetTintColor {255,124,28 3.000000}"/>
     </CActorMissile>
-    <CActorAction id="IncendiaryInfusionCast" parent="GenericAttack" effectImpact="IncendiaryInfusionImpact" effectLaunch="IncendiaryInfusion">
+    <CActorAction id="IncendiaryInfusionCast" parent="GenericAttack" effectImpact="IncendiaryInfusionImpact" effectLaunch="IncendiaryInfusionLM">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <LaunchAssets Sound="NydusDestroyer_AttackLaunch"/>
         <ImpactMap index="None" Model="" Sound="IncendiaryInfusionImpact"/>
     </CActorAction>
-    <CActorModel id="IncendiaryInfusionGroundExplosion" parent="ModelAnimationStyleOneShot">
-        <On Terms="Effect.IncendiaryInfusionSAG.Impact" Send="Create"/>
+    <CActorModel id="IncendiaryInfusionGroundExplosion" parent="ModelAnimationStyleOneShotUNIT">
+        <On Terms="Effect.IncendiaryInfusionSAG.Impact; At Target" Send="Create"/>
+        <HostSiteOps Ops="SOpAttachCenter"/>
     </CActorModel>
-    <CActorModel id="IncendiaryInfusionAirExplosion" parent="ModelAnimationStyleOneShot">
-        <On Terms="Effect.IncendiaryInfusionSAA.Impact" Send="Create"/>
+    <CActorModel id="IncendiaryInfusionAirExplosion" parent="ModelAnimationStyleOneShotUNIT">
+        <On Terms="Effect.IncendiaryInfusionSAA.Impact; At Target" Send="Create"/>
+        <HostSiteOps Ops="SOpAttachCenter"/>
     </CActorModel>
     <CActorModel id="FeedingPoolPlacement" parent="PlacementModel">
         <On Terms="ActorCreation; ModelName FeedingPool" Send="Create FeedingPoolBuffRange"/>
@@ -4416,9 +4418,10 @@
         <PortraitModel value="ZergBuildingEx2_Portrait"/>
     </CActorUnit>
     <CActorAction id="CasnoliskExplosiveGlobCast" parent="GenericAttack" effectImpact="ExplosiveGlobSA" effectLaunch="ExplosiveGlobLM">
-        <LaunchAttachQuery Methods="AMFilterWeapon01"/>
+        <LaunchAttachQuery Methods="AMFilterCenter"/>
         <LaunchAssets Sound="DevourerMP_AttackLaunch"/>
         <ImpactMap index="None" Model="" Sound="Baneling_Death"/>
+        <LaunchSiteOps Ops="SOpAttachHarness SOpMoveByDot5"/>
     </CActorAction>
     <CActorModel id="CasnoliskExplosiveGlobImpactModel" parent="ModelAnimationStyleOneShot">
         <On Terms="Effect.ExplosiveGlobImpactSearch.Impact" Send="Create"/>
@@ -4839,8 +4842,8 @@
             <Visuals TerrainPhysicsMaterial="Water" ActorModel="TerrainSquibHarnessContinuous" ModelLink="WaterRippleUltralisk"/>
         </TerrainSquibs>
         <WalkAnimMoveSpeed value="1.2773"/>
-        <BarOffset value="115"/>
-        <BarWidth value="150"/>
+        <BarOffset value="130"/>
+        <BarWidth value="130"/>
         <GroupIcon>
             <Image index="0" value="Assets\Textures\wireframe-Xayid-massalisk.dds"/>
         </GroupIcon>

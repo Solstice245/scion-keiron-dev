@@ -138,6 +138,23 @@
         </PeriodCount>
         <PeriodicEffectArray value="Scion_DisplayCooldownDummyAddCooldown"/>
     </CEffectCreatePersistent>
+    <CEffectSet id="IncendiaryInfusion">
+        <ValidatorArray value="IncendiaryInfusionTargetFilters"/>
+        <ValidatorArray value="noMarkers"/>
+        <EditorCategories value="Race:Xayid"/>
+        <EffectArray value="IncendiaryInfusionLM"/>
+    </CEffectSet>
+    <CEffectRemoveBehavior id="ExterminatorIncendiaryInfusionMarkerRemove">
+        <EditorCategories value="Race:Xayid"/>
+        <BehaviorLink value="ExterminatorIncendiaryInfusionMarker"/>
+        <Count value="1"/>
+        <RequireOriginPlayer Value="Caster"/>
+    </CEffectRemoveBehavior>
+    <CEffectApplyBehavior id="ExterminatorIncendiaryInfusionMarker">
+        <EditorCategories value="Race:Xayid"/>
+        <OwningPlayer Value="Caster"/>
+        <WhichUnit Effect="IncendiaryInfusionLM"/>
+    </CEffectApplyBehavior>
     <CEffectCreatePersistent id="InciterHalifaxGrenadesCPLM" parent="ScionCreatePersistent" Race="Genetron">
         <InitialEffect value="HalifaxGrenadesInit"/>
         <ExpireEffect value="HalifaxGrenadesExpire"/>
@@ -3781,7 +3798,7 @@
         <SearchFlags index="SameCliff" value="1"/>
     </CEffectEnumArea>
     <CEffectCreatePersistent id="InciterHalifaxGrenadesInit" parent="ScionCreatePersistent" Race="Genetron">
-        <WhichLocation Value="TargetUnit"/>
+        <WhichLocation Value="TargetUnitOrPoint"/>
         <InitialEffect value="InciterHalifaxGrenadesDelay"/>
     </CEffectCreatePersistent>
     <CEffectLaunchMissile id="LancerAutogun" parent="ScionLaunchMissile" Race="Genetron"/>
@@ -4364,14 +4381,12 @@
     <CEffectLaunchMissile id="EvisceratorSpinesLM" parent="ScionLaunchMissile" Race="Xayid">
         <AmmoUnit value="EvisceratorSpineLMWeapon"/>
     </CEffectLaunchMissile>
-    <CEffectLaunchMissile id="IncendiaryInfusion" parent="ScionLaunchMissile" Race="Xayid">
-        <AmmoUnit value="IncendiaryInfusionMissile"/>
+    <CEffectLaunchMissile id="IncendiaryInfusionLM" parent="ScionLaunchMissile" Race="Xayid">
+        <LaunchEffect value="ExterminatorIncendiaryInfusionMarker"/>
+        <ImpactEffect value="IncendiaryInfusionImpact"/>
+        <FinishEffect value="ExterminatorIncendiaryInfusionMarkerRemove"/>
         <AmmoOwner Value="Caster"/>
-        <ValidatorArray value="noMarkers"/>
-        <Marker Duration="1" Link="Abil/IncendiaryInfusion">
-            <MatchFlags index="Link" value="1"/>
-            <MismatchFlags index="Id" value="1"/>
-        </Marker>
+        <AmmoUnit value="IncendiaryInfusionMissile"/>
     </CEffectLaunchMissile>
     <CEffectSet id="IncendiaryInfusionImpact" parent="ScionSet" Race="Xayid">
         <EffectArray value="GlazeFire"/>
@@ -4384,6 +4399,7 @@
         <SearchFlags index="ExtendByUnitRadius" value="1"/>
         <AINotifyFlags index="HurtEnemy" value="1"/>
         <SearchFilters value="Ground;Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <Marker Count="0"/>
     </CEffectEnumArea>
     <CEffectEnumArea id="IncendiaryInfusionSAA" parent="ScionEnumAreaEnemyAir" Race="Xayid">
         <LaunchLocation Value="TargetUnit"/>
@@ -4392,6 +4408,7 @@
         <SearchFlags index="ExtendByUnitRadius" value="1"/>
         <AINotifyFlags index="HurtEnemy" value="1"/>
         <SearchFilters value="Air;Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <Marker Count="0"/>
     </CEffectEnumArea>
     <CEffectSwitch id="IncendiaryInfusionSwitch">
         <EditorCategories value="Race:Xayid"/>
@@ -4402,6 +4419,8 @@
     <CEffectDamage id="IncendiaryInfusionDMG" parent="ScionDamage" Race="Xayid">
         <Amount value="6"/>
         <Death value="Fire"/>
+        <Marker Count="0"/>
+        <ResponseFlags index="Acquire" value="0"/>
     </CEffectDamage>
     <CEffectDamage id="ExplosiveGlobDMG" parent="ScionDamage" Race="Xayid">
         <Amount value="60"/>
