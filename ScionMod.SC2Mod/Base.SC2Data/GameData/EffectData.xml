@@ -715,14 +715,26 @@
     <CEffectModifyUnit id="UnknownEffect">
         <EditorCategories value=""/>
     </CEffectModifyUnit>
+    <CEffectCreateUnit id="XayidConstructionCU">
+        <EditorCategories value="Race:Xayid"/>
+        <CreateFlags index="Birth" value="0"/>
+        <CreateFlags index="Precursor" value="1"/>
+        <CreateFlags index="ProvideFood" value="0"/>
+        <CreateFlags index="TechComplete" value="0"/>
+        <CreateFlags index="UseFood" value="0"/>
+        <SpawnOwner Value="Neutral"/>
+        <SpawnEffect value="XayidConstructionCUSet"/>
+        <SpawnUnit value="Scavenger"/>
+        <SpawnRange value="4"/>
+    </CEffectCreateUnit>
     <!--Prevents Scavengers from going inside of structures while constructing them-->
-    <CEffectCreatePersistent id="XayidConstructionStart" parent="ScionCreatePersistentUnit" Race="Keiron">
-        <InitialEffect value="KeironConstructionForce"/>
+    <CEffectCreatePersistent id="XayidConstructionCP" parent="ScionCreatePersistentUnit" Race="Keiron">
+        <InitialEffect value="XayidConstructionForce"/>
+        <FinalEffect value="XayidConstructionFinalSet"/>
         <PeriodCount value="32"/>
-        <PeriodicEffectArray value="KeironConstructionForce"/>
-        <PeriodicPeriodArray value="0.0625"/>
-        <FinalEffect value="Scion_SuppressMovementCaster"/>
         <PeriodicValidator value="CasterUnitIsInBuildingPathing"/>
+        <PeriodicEffectArray value="XayidConstructionForce"/>
+        <PeriodicPeriodArray value="0.0625"/>
     </CEffectCreatePersistent>
     <CEffectCreatePersistent id="KeironShaperDummy">
         <ValidatorArray value="IsCitadel"/>
@@ -4336,6 +4348,36 @@
         <PeriodicEffectArray value="KeironConstructionForce"/>
         <PeriodicPeriodArray value="0.0625"/>
     </CEffectCreatePersistent>
+    <CEffectSet id="XayidConstructionCUSet">
+        <EditorCategories value="Race:Xayid"/>
+        <EffectArray value="SuppressCollision"/>
+        <EffectArray value="XayidConstructionAB"/>
+        <EffectArray value="XayidConstructionCP"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="XayidConstructionAB">
+        <EditorCategories value="Race:Xayid"/>
+        <Behavior value="DummyUnit"/>
+    </CEffectApplyBehavior>
+    <CEffectModifyUnit id="XayidConstructionFacing">
+        <EditorCategories value="Race:Xayid"/>
+        <ImpactUnit Value="Caster"/>
+        <ModifyFlags index="InterpolateFacing" value="1"/>
+        <FacingLocation Effect="XayidConstructionCU" Value="TargetUnit"/>
+        <FacingType value="LookAt"/>
+    </CEffectModifyUnit>
+    <CEffectSet id="XayidConstructionFinalSet">
+        <EditorCategories value="Race:Xayid"/>
+        <EffectArray value="Scion_SuppressMovementCaster"/>
+        <EffectArray value="XayidConstructionFacing"/>
+        <EffectArray value="KillRemove"/>
+    </CEffectSet>
+    <CEffectApplyForce id="XayidConstructionForce">
+        <ValidatorArray value="CasterUnitIsInBuildingPathing"/>
+        <EditorCategories value="Race:Xayid"/>
+        <WhichLocation Value="TargetUnit"/>
+        <WhichUnit Value="Caster"/>
+        <Amount value="-1"/>
+    </CEffectApplyForce>
     <CEffectApplyBehavior id="XayidSpawnTimedLife" parent="ScionApplyBehavior" Race="Xayid"/>
     <CEffectCreatePersistent id="XayidlingDash" parent="ScionCreatePersistent" Race="Xayid">
         <Flags index="Channeled" value="1"/>
