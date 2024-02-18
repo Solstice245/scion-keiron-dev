@@ -27,6 +27,51 @@
         <CombineArray value="Aperture4CargoAnd40Energy"/>
         <CombineArray value="Aperture8CargoAnd80Energy"/>
     </CValidatorCombine>
+    <CValidatorCombine id="JupiterRevenantBombForce">
+        <CombineArray value="CasterHasNoOrders"/>
+        <CombineArray value="CasterIsHoldingPosition"/>
+        <CombineArray value="CanCharge"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareCooldown id="RevenantBombCooldownComplete">
+        <WhichUnit Value="Caster"/>
+        <Compare value="LE"/>
+        <CooldownLink value="Abil/RevenantBomb"/>
+        <Ability value="RevenantBomb"/>
+    </CValidatorUnitCompareCooldown>
+    <CValidatorUnitCompareBehaviorCount id="CasterHasAdaptiveInjectionDebuff">
+        <WhichUnit Value="Caster"/>
+        <Compare value="NE"/>
+        <Behavior value="FrenzySink"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="CasterHasAdaptiveInjectionBuff">
+        <WhichUnit Value="Caster"/>
+        <Compare value="NE"/>
+        <Behavior value="FrenzyInjection"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="CasterHasNaniteEmitterBuff">
+        <WhichUnit Value="Caster"/>
+        <Compare value="GT"/>
+        <Behavior value="NaniteEmitterBuff"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="GamutOrbHasTimeWarp">
+        <WhichUnit Effect="GamutOrbRM" Value="Source"/>
+        <Compare value="NE"/>
+        <Behavior value="InducerGamutOrbTimeWarp"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="GamutOrbHasNaniteEmitter">
+        <WhichUnit Effect="GamutOrbRM" Value="Source"/>
+        <Compare value="NE"/>
+        <Behavior value="InducerGamutOrbNaniteEmitter"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="NaniteEmitterBuffCountE1">
+        <Value value="1"/>
+        <Behavior value="NaniteEmitterBuff"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorCombine id="NaniteEmitterMassiveCap">
+        <Type value="And"/>
+        <CombineArray value="IsMassive"/>
+        <CombineArray value="NaniteEmitterBuffCountE2"/>
+    </CValidatorCombine>
     <CValidatorPlayerRequirement id="AssemblyArrayIsTrainingAvenger">
         <Find value="1"/>
         <Value value="AssemblyArrayIsTrainingAvenger"/>
@@ -126,6 +171,10 @@
         <Compare value="NE"/>
         <Behavior value="TitanWeapon"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="CasterHasNoNaniteEmitterBuff">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="NaniteEmitterBuff"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="CasterHasNoStagnatingBileBuff">
         <WhichUnit Value="Caster"/>
         <Behavior value="StagnatingBileStun"/>
@@ -161,6 +210,11 @@
         <WhichUnit Value="Caster"/>
         <Behavior value="GyreShackled"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorLocationCompareRange id="KeironBuilderRange">
+        <WhichLocation Effect="KeironConstructionStart" Value="TargetUnit"/>
+        <Compare value="GT"/>
+        <Range value="4.5"/>
+    </CValidatorLocationCompareRange>
     <CValidatorLocationCompareRange id="DistanceLessThan1Dot5">
         <WhichLocation Value="TargetUnit"/>
         <Compare value="LT"/>
@@ -246,9 +300,25 @@
         <Find value="1"/>
         <Value value="GenetronProductionIsModeSwitchingPerformance"/>
     </CValidatorPlayerRequirement>
+    <CValidatorCombine id="NaniteEmitterTargetTest">
+        <Type value="And"/>
+        <CombineArray value="NoNaniteEmitterBuff"/>
+        <CombineArray value="ThreatensAquila"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareBehaviorCount id="CasterNoBeamWeaponCooldown">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="BeamWeaponCooldown"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="NoKeyhole">
         <ResultFailed value="Error,Error/Scion_Keyhole"/>
         <Behavior value="ApertureTeleportTarget"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="NoNaniteEmitterBuff">
+        <Behavior value="NaniteEmitterBuff"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="NaniteEmitterBuffCountE2">
+        <Value value="2"/>
+        <Behavior value="NaniteEmitterBuff"/>
     </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitType id="NotAegis">
         <Value value="Aegis"/>
@@ -257,7 +327,7 @@
     <CValidatorUnitCompareBehaviorCount id="GamutOrbHasInhibitorBeam">
         <WhichUnit Effect="GamutOrbRM" Value="Source"/>
         <Compare value="NE"/>
-        <Behavior value="TitanInhibitorBeamGamutOrb"/>
+        <Behavior value="InducerGamutOrbInhibitorBeam"/>
     </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareOrderCount id="AnnexTargetHasNoMoveOrders" parent="CasterHasNoOrders">
         <WhichUnit Effect="GyreAnnexDataInc" Value="Target"/>
@@ -276,6 +346,13 @@
         <CombineArray value="Pathable"/>
         <Negate value="1"/>
     </CValidatorCombine>
+    <CValidatorCombine id="NotStructureOrIsNonBuildingUnit">
+        <CombineArray value="NotStructureTarget"/>
+        <CombineArray value="IsNonBuildingUnit"/>
+    </CValidatorCombine>
+    <CValidatorUnitFilters id="IsNonBuildingUnit">
+        <Filters value="NonBuildingUnit;-"/>
+    </CValidatorUnitFilters>
     <CValidatorCombine id="NotWalkableSourceUnit">
         <ResultFailed value="MustTargetWalkableLocation"/>
         <CombineArray value="WalkableSourceUnit"/>
@@ -285,6 +362,15 @@
         <Find value="1"/>
         <Value value="ProcessorIsQueuedGlobal"/>
     </CValidatorPlayerRequirement>
+    <CValidatorUnitCompareBehaviorCount id="Scion_BuilderMovementNotSuppresed">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="Scion_BuilderSuppressMovement"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="Scion_BuilderMovementIsSuppresed">
+        <WhichUnit Value="Caster"/>
+        <Compare value="NE"/>
+        <Behavior value="Scion_BuilderSuppressMovement"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="Scion_OverclockTargetMarker">
         <Compare value="NE"/>
         <Behavior value="Scion_OverclockTargetMarker"/>
@@ -293,6 +379,13 @@
         <WhichUnit Value="Caster"/>
         <Filters value="-;Unstoppable"/>
     </CValidatorUnitFilters>
+    <CValidatorUnitFilters id="TargetIsInRadar">
+        <Filters value="Radar;-"/>
+    </CValidatorUnitFilters>
+    <CValidatorCombine id="TargetIsVisibleOrInRadar">
+        <CombineArray value="TargetIsVisible"/>
+        <CombineArray value="TargetIsInRadar"/>
+    </CValidatorCombine>
     <CValidatorCombine id="TargetNotInWeaponRange">
         <CombineArray value="WeaponInRange"/>
         <Negate value="1"/>
@@ -330,10 +423,11 @@
         <Flags index="IsThreat" value="1"/>
     </CValidatorUnitCompareAttackPriority>
     <CValidatorUnitCompareCooldown id="UmbraStealthCooldownComplete">
-        <Behavior value="UmbraStealth"/>
+        <WhichUnit Value="Caster"/>
         <Compare value="LE"/>
         <CooldownLink value="Behavior/UmbraStealth"/>
         <Location value="Behavior"/>
+        <Behavior value="UmbraStealth"/>
     </CValidatorUnitCompareCooldown>
     <CValidatorUnitCompareVital id="CasterEnergyLT25">
         <WhichUnit Value="Caster"/>
@@ -819,6 +913,13 @@
         <Point value="Success"/>
         <Unit value="IsDead"/>
     </CValidatorLocationType>
+    <CValidatorUnitCompareCooldown id="ChannelWeaponCooldownComplete">
+        <WhichUnit Value="Caster"/>
+        <Compare value="LE"/>
+        <CooldownLink value="Behavior/ChannelWeaponCooldown"/>
+        <Location value="Behavior"/>
+        <Behavior value="ChannelWeaponCooldown"/>
+    </CValidatorUnitCompareCooldown>
     <CValidatorUnitCompareBehaviorCount id="UmbraStealthSuppressionOff">
         <Behavior value="UmbraStealthSuppression"/>
     </CValidatorUnitCompareBehaviorCount>
@@ -1463,7 +1564,7 @@
         <CombineArray value="CasterIdleOrAttacking"/>
         <CombineArray value="MoleNotWantsToMoveOrEnemiesInRange"/>
     </CValidatorCombine>
-    <CValidatorCombine id="NaniteTargetTest">
+    <CValidatorCombine id="NaniteGrenadeTargetTest">
         <Type value="And"/>
         <CombineArray value="NoNaniteGrenadeBuff"/>
         <CombineArray value="ThreatensAquila"/>
@@ -1483,9 +1584,10 @@
         <SearchFilters value="HarvestableResource;Stasis,Dead,Hidden"/>
     </CValidatorLocationEnumArea>
     <CValidatorUnitCompareCooldown id="BlindingBurstCooldownComplete">
+        <WhichUnit Value="Caster"/>
+        <Compare value="LE"/>
         <CooldownLink value="Abil/BlindingBurst"/>
         <Ability value="BlindingBurst"/>
-        <Compare value="LE"/>
     </CValidatorUnitCompareCooldown>
     <CValidatorLocationEnumArea id="RepulsorBurrowedTacticalAI">
         <ResultFailed value="CantFindEnoughTargets"/>
@@ -2121,6 +2223,10 @@
         <Compare value="GT"/>
         <Behavior value="HarbingerJudgementMode"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorCombine id="IsBuildingCombine" parent="NotBuildingCombine">
+        <Type value="Or"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
     <CValidatorUnitType id="IsElytron">
         <Value value="Elytron"/>
     </CValidatorUnitType>

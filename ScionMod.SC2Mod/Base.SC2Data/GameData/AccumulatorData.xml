@@ -1,11 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
+    <CAccumulatorUserData id="CasterAttackCooldownBase">
+        <Key value="BeamWeaponCooldownBase"/>
+    </CAccumulatorUserData>
+    <CAccumulatorArithmetic id="CasterAttackCooldownFinal">
+        <MinAccumulation value="0.0625"/>
+        <Parameters value="-0.0625">
+            <AccumulatorArray value="CasterAttackRateReciprocal"/>
+        </Parameters>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="CasterAttackRateAdditiveFactor">
+        <Parameters value="-0.4">
+            <AccumulatorArray value="CasterStackCountMultiplyAdaptiveInjectionEnemy"/>
+        </Parameters>
+        <Parameters value="0.4">
+            <AccumulatorArray value="CasterStackCountMultiplyAdaptiveInjectionFriend"/>
+        </Parameters>
+        <Parameters value="-0.25">
+            <AccumulatorArray value="CasterStackCountMultiplyNaniteEmitterBuff"/>
+        </Parameters>
+        <Parameters value="1"/>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="CasterAttackRateMultipliers">
+        <Parameters value="0">
+            <AccumulatorArray value="CasterAttackRateAdditiveFactor"/>
+        </Parameters>
+        <Parameters value="0">
+            <AccumulatorArray value="CasterAttackRatePowerInhibitorBeam"/>
+        </Parameters>
+        <Parameters value="0">
+            <AccumulatorArray value="CasterAttackRatePowerTimeWarp"/>
+        </Parameters>
+        <MinAccumulation value="0.25"/>
+        <MaxAccumulation value="128"/>
+        <Operation value="Multiply"/>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="CasterAttackRateReciprocal">
+        <Parameters value="0">
+            <AccumulatorArray value="CasterAttackCooldownBase"/>
+        </Parameters>
+        <Parameters value="0">
+            <AccumulatorArray value="CasterAttackRateMultipliers"/>
+        </Parameters>
+        <Operation value="Divide"/>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="CasterAttackRatePowerInhibitorBeam">
+        <Parameters value="0.4"/>
+        <Parameters value="0">
+            <AccumulatorArray value="CasterStackCountAddInhibitorBeam"/>
+        </Parameters>
+        <Operation value="Power"/>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="CasterAttackRatePowerTimeWarp">
+        <Parameters value="0.5"/>
+        <Parameters value="0">
+            <AccumulatorArray value="CasterStackCountAddTimeWarp"/>
+        </Parameters>
+        <Operation value="Power"/>
+    </CAccumulatorArithmetic>
+    <CAccumulatorBehavior id="CasterStackCountAddInhibitorBeam">
+        <Behavior value="TitanWeapon"/>
+    </CAccumulatorBehavior>
+    <CAccumulatorBehavior id="CasterStackCountAddTimeWarp">
+        <Behavior value="TemporalField"/>
+    </CAccumulatorBehavior>
+    <CAccumulatorBehavior id="CasterStackCountMultiplyAdaptiveInjectionFriend">
+        <ApplicationRule value="Multiply"/>
+        <Behavior value="FrenzyInjection"/>
+    </CAccumulatorBehavior>
+    <CAccumulatorBehavior id="CasterStackCountMultiplyAdaptiveInjectionEnemy">
+        <ApplicationRule value="Multiply"/>
+        <Behavior value="FrenzySink"/>
+    </CAccumulatorBehavior>
+    <CAccumulatorBehavior id="CasterStackCountMultiplyNaniteEmitterBuff">
+        <ApplicationRule value="Multiply"/>
+        <Behavior value="NaniteEmitterBuff"/>
+    </CAccumulatorBehavior>
     <CAccumulatorArithmetic id="BadgerRemainingDamage">
         <Parameters value="0">
             <AccumulatorArray value="EnergyDataAdd"/>
             <AccumulatorArray value="MultiplyByNeg1"/>
         </Parameters>
     </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="EqualizerTargetDamageBonus">
+        <MinAccumulation value="0"/>
+        <MaxAccumulation value="25"/>
+        <Parameters value="-0.01">
+            <AccumulatorArray value="EqualizerTargetLifeMaxBonus"/>
+        </Parameters>
+        <Parameters value="0">
+            <AccumulatorArray value="EqualizerTargetShieldMaxSwitch"/>
+        </Parameters>
+    </CAccumulatorArithmetic>
+    <CAccumulatorSwitch id="EqualizerTargetShieldMaxSwitch">
+        <CaseArray Validator="IsShieldCapable" Accumulator="EqualizerTargetShieldMaxBonus"/>
+    </CAccumulatorSwitch>
     <CAccumulatorBehavior id="FuseFusionStacksOnCaster">
         <Behavior value="FuseFused"/>
     </CAccumulatorBehavior>
@@ -430,6 +519,17 @@
         <EndLocation Effect="SpitterSpitterSporesCUSet" Value="TargetUnit"/>
         <Scale value="0.01"/>
     </CAccumulatorDistance>
+    <CAccumulatorVitals id="EqualizerTargetLifeMaxBonus">
+        <Ratio value="0.085"/>
+        <UnitSource Value="Target"/>
+        <ModificationType value="PerUnitMaxVital"/>
+    </CAccumulatorVitals>
+    <CAccumulatorVitals id="EqualizerTargetShieldMaxBonus">
+        <Ratio value="0.085"/>
+        <VitalType value="Shields"/>
+        <UnitSource Value="Target"/>
+        <ModificationType value="PerUnitMaxVital"/>
+    </CAccumulatorVitals>
     <CAccumulatorArithmetic id="TeslaShockChargeOverloadMultiply">
         <ApplicationRule value="Multiply"/>
         <Parameters value="3"/>

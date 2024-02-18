@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
+    <!-- =============================================-->
+    <!--         Fixes beam weapon attack speed for all -->
+    <!--          attack speed modification behaviors.-->
+    <!--    ============================================== -->
+    <CBehaviorBuff id="BeamTargetCD">
+        <Duration value="0.0625">
+            <AccumulatorArray value="CasterAttackCooldownFinal"/>
+        </Duration>
+    </CBehaviorBuff>
     <CBehaviorBuff id="ACRPowerDown">
         <Alignment value="Negative"/>
         <InfoIcon value="Assets\Textures\btn-techupgrade-terran-tomahawkpowercell.dds"/>
@@ -29,6 +38,14 @@
         <FinalEffect value="ProcessorFateSet"/>
         <RemoveValidatorArray value="CasterNotDead"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="BeamWeaponCooldown">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units,Race:Neutral"/>
+        <TimeScaleSource Value="Caster"/>
+        <Duration value="0.0625">
+            <AccumulatorArray value="CasterAttackCooldownFinal"/>
+        </Duration>
+    </CBehaviorBuff>
     <CBehaviorBuff id="BoarIgnitionBlastInit">
         <InfoIcon value="Assets\Textures\btn-ability-genetron-ignitionblast.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -53,6 +70,11 @@
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <MaxStackCount value="65535"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="GuardianShield">
+        <DamageResponse>
+            <Kind index="NoProc" value="0"/>
+        </DamageResponse>
+    </CBehaviorBuff>
     <CBehaviorBuff id="KeironStructureCharged">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
@@ -63,6 +85,20 @@
         <DamageResponse ModifyFraction="0.8">
             <Chance value="1"/>
         </DamageResponse>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="NaniteEmitterBuff">
+        <Alignment value="Negative"/>
+        <InfoIcon value="Assets\Textures\btn-upgrade-nova-pulsegrenade.dds"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="NotFrenzied"/>
+        <BuffFlags index="RefreshStack" value="1"/>
+        <MaxStackCount value="2"/>
+        <Duration value="0.3125"/>
+        <RefreshEffect value="AquilaNaniteEmitterRemoveBehavior"/>
+        <Modification>
+            <AdditiveMoveSpeedFactor value="-0.25"/>
+            <AdditiveAttackSpeedFactor value="-0.25"/>
+        </Modification>
     </CBehaviorBuff>
     <CBehaviorBuff id="OculusRevealCaster">
         <InfoFlags index="Hidden" value="1"/>
@@ -112,12 +148,11 @@
         <RemoveValidatorArray value="CasterHasNoStagnatingBileBuff"/>
         <RemoveValidatorArray value="CasterHasNoNaniteGrenadeBuff"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="Scion_SuppressMovement">
+    <CBehaviorBuff id="Scion_BuilderSuppressMovement">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
-        <Modification>
-            <ModifyFlags index="SuppressMoving" value="1"/>
-        </Modification>
+        <RemoveValidatorArray value="IsBuildingCombine"/>
+        <Modification MoveSpeedMaximum="0.004" MoveSpeedMultiplier="0.01" AccelerationMultiplier="0.01"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="Scion_OverclockAddonDummy">
         <RemoveValidatorArray value="AddonDummyCasterIsOverclocked"/>
@@ -130,7 +165,7 @@
         <DisplayDuration index="Ally" value="1"/>
         <Duration value="28"/>
         <Modification QueueCount="1">
-            <RateMultiplierArray index="Queueable" value="2"/>
+            <RateMultiplierArray index="Queueable" value="1.75"/>
         </Modification>
         <BuffFlags index="Extend" value="1"/>
         <RefreshEffect value="Scion_OverclockRefreshQueryDuration"/>
@@ -239,11 +274,23 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="GenetronPowerSupplyGE150"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="TitanInhibitorBeamGamutOrb">
+    <CBehaviorBuff id="InducerGamutOrbInhibitorBeam">
         <BehaviorFlags index="Permanent" value="1"/>
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
         <Modification TimeScale="0.4"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="InducerGamutOrbNaniteEmitter">
+        <BehaviorFlags index="Permanent" value="1"/>
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
+        <Modification TimeScale="0.675"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="InducerGamutOrbTimeWarp">
+        <BehaviorFlags index="Permanent" value="1"/>
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
+        <Modification TimeScale="0.5"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="UmbraStealthSuppression">
         <InfoFlags index="Hidden" value="1"/>
@@ -409,7 +456,7 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <TimeScaleSource Value="Global"/>
         <Duration value="1"/>
-        <Modification RangedWeaponRange="-4"/>
+        <Modification SightMaximum="3" RangedWeaponRange="-3"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="OpticalDisruptionCaster">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -656,6 +703,7 @@
             <Kind index="Spell" value="0"/>
             <Kind index="Melee" value="0"/>
             <Kind index="Splash" value="0"/>
+            <Kind index="NoProc" value="0"/>
             <ModifyAmount value="-2"/>
             <Chance value="1"/>
         </DamageResponse>
@@ -879,7 +927,7 @@
         <InfoFlags index="Hidden" value="1"/>
         <InfoIcon value="Assets\Textures\btn-ability-keiron-dampener.dds"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
-        <Duration value="3.5"/>
+        <Duration value="2.8"/>
         <DamageResponse ModifyFraction="0.3">
             <RequireEffectArray value="InfernalFlameThrower"/>
             <RequireEffectArray value="HellionTankDamage"/>
@@ -1269,9 +1317,9 @@
         <Alignment value="Negative"/>
         <InfoIcon value="Assets\Textures\btn-ability-hornerhan-bomberplatform-napalm.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Duration value="0.75"/>
+        <Duration value="0.8125"/>
         <Period value="0.7"/>
-        <InitialEffect value="JupiterNapalmDamage"/>
+        <InitialEffect value="JupiterNapalmDamageInitial"/>
         <PeriodicEffect value="JupiterNapalmDamage"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="JupiterSpeed">
@@ -1282,8 +1330,8 @@
         <MaxStackCount value="50"/>
         <Duration value="3.125"/>
         <Modification MoveSpeedMultiplier="1.031"/>
-        <InitialEffect value="JupiterSpeedModifyUnit"/>
-        <RefreshEffect value="JupiterSpeedModifyUnit"/>
+        <InitialEffect value="JupiterSpeedRefresh"/>
+        <RefreshEffect value="JupiterSpeedRefresh"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="SpeedCloak">
         <InfoIcon value="Assets\Textures\btn-ability-genetron-blazespeedcloak.dds"/>
@@ -1511,15 +1559,19 @@
     <CBehaviorBuff id="FrenzyInjection">
         <InfoIcon value="Assets\Textures\btn-ability-zerg-frenzy.dds"/>
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
-        <Modification AttackSpeedMultiplier="1.4" RangedWeaponRange="3"/>
+        <Modification RangedWeaponRange="3">
+            <AdditiveAttackSpeedFactor value="0.4"/>
+        </Modification>
         <BuffFlags index="Extend" value="1"/>
-        <Duration value="15"/>
+        <Duration value="21"/>
         <Alignment value="Positive"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="FrenzySink">
         <InfoIcon value="Assets\Textures\btn-ability-zerg-frenzy.dds"/>
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
-        <Modification AttackSpeedMultiplier="0.6" RangedWeaponRange="-3"/>
+        <Modification RangedWeaponRange="-3">
+            <AdditiveAttackSpeedFactor value="-0.4"/>
+        </Modification>
         <BuffFlags index="Extend" value="1"/>
         <Duration value="15"/>
         <Alignment value="Negative"/>
@@ -1922,7 +1974,7 @@
         <InfoIcon value="Assets\Textures\btn-progression-protoss-fenix-10-acceleratedtech.dds"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Duration value="2.8"/>
-        <Modification MoveSpeedMultiplier="1.25" AccelerationMultiplier="1.75" ShieldArmorBonus="3">
+        <Modification MoveSpeedMultiplier="1.25" AccelerationMultiplier="1.75" ShieldArmorBonus="2">
             <ResourceHarvestTimeMultiplier index="Minerals" value="-0.5"/>
             <VitalRegenMultiplier index="Life" value="4"/>
             <VitalRegenMultiplier index="Shields" value="4"/>
@@ -2046,7 +2098,7 @@
     <CBehaviorBuff id="PulsarDampener">
         <InfoIcon value="Assets\Textures\btn-ability-keiron-dampener.dds"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
-        <Duration value="3.5"/>
+        <Duration value="2.8"/>
         <DamageResponse ModifyFraction="0.3">
             <Kind index="Melee" value="0"/>
             <Kind index="Ranged" value="0"/>
@@ -2066,7 +2118,7 @@
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <DisplayDuration index="Self" value="1"/>
         <DisplayDuration index="Ally" value="1"/>
-        <Duration value="56"/>
+        <Duration value="84"/>
         <DurationRandomMax value="0.5"/>
         <ExpireEffect value="TimedLifeFate"/>
         <Modification>

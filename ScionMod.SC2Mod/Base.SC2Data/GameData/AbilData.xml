@@ -47,6 +47,20 @@
             <Resource index="Vespene" value="250"/>
             <Button DefaultButtonFace="UpgradeLightWeaponsLevel3" Requirements="LearnMechLightWeapons3"/>
         </InfoArray>
+        <InfoArray index="Research7" Time="160" Upgrade="CalibratedEngines">
+            <Resource index="Minerals" value="100"/>
+            <Resource index="Vespene" value="100"/>
+            <Button DefaultButtonFace="ResearchSpitfireCalibratedEngines" Requirements="LearnCalibratedEngines">
+                <Flags index="ShowInGlossary" value="1"/>
+            </Button>
+        </InfoArray>
+        <InfoArray index="Research8" Time="80" Upgrade="SpitfireMadcapRounds">
+            <Resource index="Minerals" value="100"/>
+            <Resource index="Vespene" value="100"/>
+            <Button DefaultButtonFace="ResearchSpitfireMadcapRounds" Requirements="LearnSpitfireMadcapRounds">
+                <Flags index="ShowInGlossary" value="1"/>
+            </Button>
+        </InfoArray>
     </CAbilResearch>
     <CAbilSpecialize id="AvengerConstructVengeanceMissile">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -127,6 +141,46 @@
         <Arc value="360"/>
         <AINotifyEffect value="GenetronPerformanceMode"/>
     </CAbilEffectInstant>
+    <CAbilEffectTarget id="AquilaNaniteEmitter">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Effect index="0" value="AquilaNaniteEmitterInitTarget"/>
+        <Cost>
+            <Vital index="Energy" value="50"/>
+            <Charge Link="Abil/FlashGrenade"/>
+            <Cooldown Link="Abil/FlashGrenade" TimeUse="4.2"/>
+        </Cost>
+        <Range value="9"/>
+        <FinishTime value="0.5"/>
+        <UninterruptibleArray index="Cast" value="1"/>
+        <UninterruptibleArray index="Finish" value="1"/>
+        <CursorEffect value="AquilaNaniteEmitterSearchArea"/>
+        <AINotifyEffect value="AquilaNaniteEmitterLaunchMissile"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="AquilaNaniteEmitter" Requirements="AquilaNaniteGrenadeReq"/>
+    </CAbilEffectTarget>
+    <CAbilMorph id="MoleBuryFull">
+        <AbilSetId value="MBuryD"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DataCollection value="MoleBury"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="MoleConceal"/>
+        <ActorKey value="BurrowDown"/>
+        <Flags index="Interruptible" value="1"/>
+        <Flags index="IgnoreFacing" value="1"/>
+        <Flags index="SuppressMovement" value="1"/>
+        <InfoArray Unit="MoleBurrowed">
+            <SectionArray index="Abils">
+                <DurationArray index="Delay" value="3.75"/>
+            </SectionArray>
+            <SectionArray index="Actor">
+                <DurationArray index="Duration" value="3.75"/>
+                <EffectArray index="Start" value="MoleLockTurret"/>
+                <EffectArray index="Finish" value="MoleLockTurretRemove"/>
+                <EffectArray index="Cancel" value="MoleLockTurretRemove"/>
+            </SectionArray>
+            <SectionArray index="Stats">
+                <DurationArray index="Delay" value="3.75"/>
+            </SectionArray>
+        </InfoArray>
+    </CAbilMorph>
     <CAbilEffectInstant id="OculusChargeInstant">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Flags index="Transient" value="1"/>
@@ -230,7 +284,7 @@
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Flags index="Transient" value="1"/>
         <Cost>
-            <Resource index="Minerals" value="150"/>
+            <Resource index="Minerals" value="175"/>
         </Cost>
         <CmdButtonArray index="Execute" DefaultButtonFace="ChargeCitadel"/>
     </CAbilEffectInstant>
@@ -384,7 +438,7 @@
     <CAbilEffectTarget id="OlympusDischarge">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Cost>
-            <Cooldown TimeUse="21"/>
+            <Cooldown TimeUse="28"/>
         </Cost>
         <Range value="500"/>
         <Arc value="360"/>
@@ -407,20 +461,6 @@
     </CAbilEffectTarget>
     <CAbilResearch id="OutfittingStationResearch">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <InfoArray index="Research1" Time="80" Upgrade="CalibratedEngines">
-            <Resource index="Minerals" value="100"/>
-            <Resource index="Vespene" value="100"/>
-            <Button DefaultButtonFace="ResearchSpitfireCalibratedEngines" Requirements="LearnCalibratedEngines">
-                <Flags index="ShowInGlossary" value="1"/>
-            </Button>
-        </InfoArray>
-        <InfoArray index="Research2" Time="80" Upgrade="SpitfireMadcapRounds">
-            <Resource index="Minerals" value="100"/>
-            <Resource index="Vespene" value="100"/>
-            <Button DefaultButtonFace="ResearchSpitfireMadcapRounds" Requirements="LearnSpitfireMadcapRounds">
-                <Flags index="ShowInGlossary" value="1"/>
-            </Button>
-        </InfoArray>
         <InfoArray index="Research3" Time="110" Upgrade="BlitzerBoreanReactor">
             <Resource index="Minerals" value="150"/>
             <Resource index="Vespene" value="150"/>
@@ -781,7 +821,7 @@
         <InfoArray index="Build5" Unit="Uploader" Time="30">
             <Button DefaultButtonFace="Uploader" Requirements="HaveNode"/>
         </InfoArray>
-        <InfoArray index="Build6" Unit="OutfittingStation" Time="60">
+        <InfoArray index="Build6" Unit="OutfittingStation" Time="65">
             <Button DefaultButtonFace="OutfittingStation" Requirements="HaveAnalysisTerminal"/>
         </InfoArray>
         <InfoArray index="Build7" Unit="Repulsor" Time="45">
@@ -802,7 +842,7 @@
         <InfoArray index="Build12" Unit="AssemblyArray" Time="70">
             <Button DefaultButtonFace="AssemblyArray" Requirements="HaveRelayTower"/>
         </InfoArray>
-        <InfoArray index="Build13" Unit="AnalysisTerminal" Time="50">
+        <InfoArray index="Build13" Unit="AnalysisTerminal" Time="45">
             <Button DefaultButtonFace="AnalysisTerminal" Requirements="HaveNode"/>
         </InfoArray>
         <InfoArray index="Build14" Unit="Generator" Time="40">
@@ -818,7 +858,9 @@
             <Button DefaultButtonFace="OrdnanceCache" Requirements="HaveTechVault"/>
         </InfoArray>
         <ConstructionMover value="Construction"/>
-        <EffectArray index="Start" value="GenetronConstructionInit"/>
+        <EffectArray index="Start" value="GenetronConstructionStart"/>
+        <EffectArray index="Finish" value="ScionStaticBuilderSuppressMovementClear"/>
+        <EffectArray index="Cancel" value="ScionStaticBuilderSuppressMovementClear"/>
     </CAbilBuild>
     <CAbilMorph id="MoleDeactivate">
         <AbilSetId value="MBrwU"/>
@@ -1577,6 +1619,7 @@
         <CmdButtonArray index="Execute" DefaultButtonFace="IncendiaryInfusion"/>
         <TargetFilters value="-;Player,Ally,Structure,RawResource,HarvestableResource,Missile,Stasis,Hidden,Invulnerable"/>
         <Flags index="AllowMovement" value="1"/>
+        <Flags index="TransientPreferred" value="1"/>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="ExplosiveGlob">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
@@ -1597,9 +1640,7 @@
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <FlagArray index="Interruptible" value="1"/>
         <FlagArray index="PeonDisableCollision" value="1"/>
-        <FlagArray index="PeonFidgetAcross" value="1"/>
         <FlagArray index="RequireFacing" value="1"/>
-        <ConstructionMover value="Construction"/>
         <InfoArray index="Build1" Unit="ScavengerNest" Time="100">
             <Button DefaultButtonFace="ScavengerNest"/>
         </InfoArray>
@@ -1622,7 +1663,7 @@
         <InfoArray index="Build8" Unit="BiomassHatchery" Time="60">
             <Button DefaultButtonFace="BiomassHatchery" Requirements="HaveMutagenChamber"/>
         </InfoArray>
-        <InfoArray index="Build9" Unit="BiomassCavern" Time="80">
+        <InfoArray index="Build9" Unit="BiomassCavern" Time="65">
             <Button DefaultButtonFace="BiomassCavern" Requirements="HaveBiomassHatchery"/>
         </InfoArray>
         <InfoArray index="Build10" Unit="AvianNest" Time="60">
@@ -1637,11 +1678,12 @@
         <InfoArray index="Build14" Unit="BilePit" Time="40">
             <Button DefaultButtonFace="BilePit" Requirements="HaveXayidDen"/>
         </InfoArray>
-        <EffectArray index="Start" value="XayidConstructionCU"/>
-        <EffectArray index="Finish" value="Scion_SuppressMovementCasterClear"/>
-        <EffectArray index="Cancel" value="Scion_SuppressMovementCasterClear"/>
         <FidgetDelayMin value="5"/>
         <FidgetDelayMax value="10"/>
+        <ConstructionMover value="Construction"/>
+        <EffectArray index="Start" value="ScionStaticBuilderSwitch"/>
+        <EffectArray index="Finish" value="ScionStaticBuilderSuppressMovementClear"/>
+        <EffectArray index="Cancel" value="ScionStaticBuilderSuppressMovementClear"/>
     </CAbilBuild>
     <CAbilMorph id="Hunker">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
@@ -1786,12 +1828,12 @@
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <FlagArray index="PeonMaintained" value="0"/>
         <FlagArray index="ShowProgress" value="1"/>
-        <InfoArray index="Build1" Unit="AcidNest" Time="15">
+        <InfoArray index="Build1" Unit="AcidNest" Time="10">
             <Charge>
                 <CountMax value="3"/>
                 <CountStart value="3"/>
                 <CountUse value="1"/>
-                <TimeUse value="25"/>
+                <TimeUse value="20"/>
             </Charge>
             <Button DefaultButtonFace="PlaceAcidNest">
                 <Flags index="AllowMinimap" value="1"/>
@@ -2176,8 +2218,8 @@
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
         <Activity value="UI/Developing"/>
         <InfoArray index="Research1" Time="80" Upgrade="CruxConvergence">
-            <Resource index="Minerals" value="200"/>
-            <Resource index="Vespene" value="200"/>
+            <Resource index="Minerals" value="150"/>
+            <Resource index="Vespene" value="150"/>
             <Button DefaultButtonFace="DevelopConvergence" Requirements="LearnConvergence">
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
@@ -2276,6 +2318,7 @@
     </CAbilEffectTarget>
     <CAbilBuild id="KeironBuild">
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
+        <TechAliasArray value="AliasScion_GenericBuild"/>
         <FlagArray index="Interruptible" value="1"/>
         <FlagArray index="PeonDisableCollision" value="1"/>
         <FlagArray index="PeonCanBeMoved" value="1"/>
@@ -2289,7 +2332,7 @@
         <InfoArray index="Build3" Unit="Reliquary" Time="35">
             <Button DefaultButtonFace="Reliquary" Requirements="HaveCitadel"/>
         </InfoArray>
-        <InfoArray index="Build4" Unit="Nullifier" Time="50">
+        <InfoArray index="Build4" Unit="Nullifier" Time="40">
             <Button DefaultButtonFace="Nullifier" Requirements="HaveReliquary"/>
         </InfoArray>
         <InfoArray index="Build5" Unit="Stratus" Time="30">
@@ -2332,6 +2375,9 @@
             <Button DefaultButtonFace="Formulator"/>
         </InfoArray>
         <Range value="4.5"/>
+        <FidgetDelayMin value="5"/>
+        <FidgetDelayMax value="10"/>
+        <ConstructionMover value="Construction"/>
         <EffectArray index="Start" value="KeironConstructionStart"/>
         <EffectArray index="Finish" value="KeironConstructionStop"/>
         <EffectArray index="Cancel" value="KeironConstructionStop"/>
@@ -2565,12 +2611,10 @@
     <CAbilEffectTarget id="CruxConvergence">
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
         <Cost>
-            <Vital index="Energy" value="150"/>
+            <Vital index="Energy" value="125"/>
         </Cost>
         <Range value="11"/>
-        <FinishTime value="0.25"/>
         <UninterruptibleArray index="Channel" value="1"/>
-        <UninterruptibleArray index="Finish" value="1"/>
         <CursorEffect value="CruxConvergenceSA"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="CruxConvergence" Requirements="UseConvergence"/>
     </CAbilEffectTarget>
@@ -2781,5 +2825,6 @@
         <AINotifyEffect value="ELORProtocolLM"/>
         <EffectRange index="0" value="1,500"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="ELORProtocol" Requirements="InciterELORReq"/>
+        <Arc value="225"/>
     </CAbilEffectTarget>
 </Catalog>
