@@ -9,6 +9,15 @@
         <SpawnUnit value="AquiferRoots"/>
         <SpawnRange value="0"/>
     </CEffectCreateUnit>
+    <CEffectCreateUnit id="XayidEntRootsCU">
+        <EditorCategories value="Race:Xayid"/>
+        <WhichLocation Value="CasterUnit"/>
+        <CreateFlags index="OffsetByRadius" value="0"/>
+        <CreateFlags index="Placement" value="0"/>
+        <CreateFlags index="NormalizeSpawnOffset" value="0"/>
+        <SpawnUnit value="XayidEntRoots"/>
+        <SpawnRange value="0"/>
+    </CEffectCreateUnit>
     <CEffectCreateUnit id="CanopyRootsCU">
         <EditorCategories value="Race:Xayid"/>
         <WhichLocation Value="CasterUnit"/>
@@ -52,6 +61,10 @@
         <EditorCategories value="Race:Xayid"/>
         <Behavior value="PixieEntangled"/>
     </CEffectApplyBehavior>
+    <CEffectRemoveBehavior id="RemoveDummyUnitFateTarget">
+        <EditorCategories value=""/>
+        <BehaviorLink value="DummyUnitFate"/>
+    </CEffectRemoveBehavior>
     <CEffectCreateUnit id="StemRootsCU">
         <EditorCategories value="Race:Xayid"/>
         <WhichLocation Value="CasterUnit"/>
@@ -175,6 +188,29 @@
         <SpawnUnit value="BiomeRoots"/>
         <SpawnRange value="0"/>
     </CEffectCreateUnit>
+    <CEffectDamage id="XayidEntRootsKill">
+        <ValidatorArray value="IsStructure"/>
+        <ValidatorArray value="NotSpineCrawlerUprooted"/>
+        <ValidatorArray value="NotSporeCrawlerUprooted"/>
+        <EditorCategories value="Race:Xayid"/>
+        <ImpactLocation Value="SourceUnit"/>
+        <Flags index="Kill" value="1"/>
+    </CEffectDamage>
+    <CEffectDamage id="XayidEntRootsKill2">
+        <ValidatorArray value="XayidEntRootsPlacement"/>
+        <EditorCategories value="Race:Xayid"/>
+        <ImpactLocation Value="SourceUnit"/>
+        <Flags index="Kill" value="1"/>
+    </CEffectDamage>
+    <CEffectEnumArea id="XayidEntRootsSA">
+        <EditorCategories value="Race:Xayid"/>
+        <DebugTrace value="1"/>
+        <ExcludeArray/>
+        <SearchFilters value="Ground;Dead,Hidden,NonBuildingUnit"/>
+        <AreaArray Radius="0.45" Effect="XayidEntRootsKill"/>
+        <AreaArray Radius="0.8" Effect="XayidEntRootsKill2"/>
+        <SearchFlags index="SameCliff" value="1"/>
+    </CEffectEnumArea>
     <CEffectIssueOrder id="XayidSproutBiomePlacementOrder">
         <EditorCategories value="Race:Xayid"/>
         <Abil value="XayidSproutBiomePlacementDummy"/>
@@ -309,9 +345,6 @@
         <SearchFilters value="Ground;Self,Neutral,Structure,Missile,Buried,Dead,Hidden"/>
         <AreaArray Radius="1.1" Effect="XayidStructuresKnockbackSet"/>
     </CEffectEnumArea>
-    <CEffectCreatePersistent id="UnknownEffect">
-        <EditorCategories value="Race:Xayid"/>
-    </CEffectCreatePersistent>
     <CEffectDamage id="VirulentSpitImpact">
         <AttributeBonus index="Light" value="0"/>
         <Amount value="10"/>
@@ -985,20 +1018,20 @@
         <EditorCategories value="Race:Xayid"/>
         <Abil value="XayidMorphSeedStinger"/>
     </CEffectIssueOrder>
-    <CEffectCreatePersistent id="XayidSproutPixieCP">
+    <CEffectCreatePersistent id="XayidSproutNymphCP">
         <EditorCategories value="Race:Xayid"/>
         <WhichLocation Value="TargetUnit"/>
         <Flags index="PersistUntilDestroyed" value="1"/>
         <InitialDelay value="0.375"/>
-        <InitialEffect value="XayidSproutPixieMove"/>
+        <InitialEffect value="XayidSproutNymphMove"/>
         <PeriodicValidator value="TargetNotDead"/>
-        <PeriodicEffectArray value="XayidSproutPixieOrder"/>
+        <PeriodicEffectArray value="XayidSproutNymphOrder"/>
         <PeriodicPeriodArray value="0.0625"/>
     </CEffectCreatePersistent>
-    <CEffectIssueOrder id="XayidSproutPixieOrder">
+    <CEffectIssueOrder id="XayidSproutNymphOrder">
         <ValidatorArray value="TargetHasNoOrders"/>
         <EditorCategories value="Race:Xayid"/>
-        <Abil value="XayidMorphSeedPixie"/>
+        <Abil value="XayidMorphSeedNymph"/>
         <Target Value="SourceUnitOrPoint"/>
     </CEffectIssueOrder>
     <CEffectSet id="XayidSproutReservoirSet">
@@ -1056,7 +1089,7 @@
         <SpawnUnit value="StingerSeed"/>
         <SpawnRange value="0"/>
     </CEffectCreateUnit>
-    <CEffectCreateUnit id="XayidSproutPixieCU">
+    <CEffectCreateUnit id="XayidSproutNymphCU">
         <EditorCategories value="Race:Xayid"/>
         <WhichLocation Value="CasterUnitOrPoint"/>
         <Origin Value="TargetPoint"/>
@@ -1064,8 +1097,8 @@
         <CreateFlags index="Placement" value="0"/>
         <CreateFlags index="SetFacing" value="1"/>
         <CreateFlags index="NormalizeSpawnOffset" value="0"/>
-        <SpawnEffect value="XayidSproutPixieCUSet"/>
-        <SpawnUnit value="PixieSeed"/>
+        <SpawnEffect value="XayidSproutNymphCUSet"/>
+        <SpawnUnit value="NymphSeed"/>
         <SpawnRange value="0"/>
     </CEffectCreateUnit>
     <CEffectSet id="XayidSproutFletchCUSet">
@@ -1097,11 +1130,11 @@
         <EffectArray value="XayidSproutStingerKill"/>
         <EffectArray value="CopyCasterRally"/>
     </CEffectSet>
-    <CEffectSet id="XayidSproutPixieCUSet">
+    <CEffectSet id="XayidSproutNymphCUSet">
         <EditorCategories value="Race:Xayid"/>
         <EffectArray value="RotateFacing180Target"/>
-        <EffectArray value="XayidSproutPixieCP"/>
-        <EffectArray value="XayidSproutPixieKill"/>
+        <EffectArray value="XayidSproutNymphCP"/>
+        <EffectArray value="XayidSproutNymphKill"/>
         <EffectArray value="CopyCasterRally"/>
     </CEffectSet>
     <CEffectDamage id="XayidSproutFletchKill">
@@ -1128,9 +1161,9 @@
         <Flags index="Kill" value="1"/>
         <Death value="Remove"/>
     </CEffectDamage>
-    <CEffectDamage id="XayidSproutPixieKill">
+    <CEffectDamage id="XayidSproutNymphKill">
         <EditorCategories value="Race:Xayid"/>
-        <ImpactLocation Effect="XayidSproutPixieCU" Value="TargetUnit"/>
+        <ImpactLocation Effect="XayidSproutNymphCU" Value="TargetUnit"/>
         <Flags index="Kill" value="1"/>
         <Death value="Remove"/>
     </CEffectDamage>
@@ -1149,7 +1182,7 @@
         <Abil value="SeedMove"/>
         <Target Value="SourceUnitOrPoint"/>
     </CEffectIssueOrder>
-    <CEffectIssueOrder id="XayidSproutPixieMove">
+    <CEffectIssueOrder id="XayidSproutNymphMove">
         <EditorCategories value="Race:Xayid"/>
         <Abil value="SeedMove"/>
         <Target Value="SourceUnitOrPoint"/>
@@ -1402,4 +1435,79 @@
         <SpawnUnit value="StingerSprout"/>
         <SpawnRange value="5"/>
     </CEffectCreateUnit>
+    <CEffectCreatePersistent id="YggdrasilUnload">
+        <EditorCategories value="Race:Xayid"/>
+        <Flags index="Channeled" value="1"/>
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <PeriodicValidator value="CasterHasCargo"/>
+        <PeriodicEffectArray value="YggdrasilUnloadInterateTransport"/>
+        <PeriodicPeriodArray value="0.3125"/>
+        <InitialDelay value="0.0625"/>
+        <InitialEffect value="YggdrasilUnloadInterateTransport"/>
+    </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="YggdrasilUnloadAB">
+        <EditorCategories value="Race:Xayid"/>
+        <WhichUnit Effect="YggdrasilUnloadCU"/>
+        <Behavior value="YggdrasilUnload"/>
+    </CEffectApplyBehavior>
+    <CEffectCreateUnit id="YggdrasilUnloadCU">
+        <EditorCategories value="Race:Xayid"/>
+        <WhichLocation Effect="YggdrasilUnload" Value="TargetPoint"/>
+        <CreateFlags index="Birth" value="0"/>
+        <CreateFlags index="DropOff" value="0"/>
+        <CreateFlags index="OffsetByRadius" value="0"/>
+        <CreateFlags index="Precursor" value="1"/>
+        <CreateFlags index="ProvideFood" value="0"/>
+        <CreateFlags index="TechComplete" value="0"/>
+        <CreateFlags index="UseFood" value="0"/>
+        <CreateFlags index="NormalizeSpawnOffset" value="0"/>
+        <SpawnOwner Value="Neutral"/>
+        <SpawnEffect value="YggdrasilUnloadCUSet"/>
+        <SpawnRange value="5"/>
+        <TypeFallbackUnit Value="Target"/>
+    </CEffectCreateUnit>
+    <CEffectSet id="YggdrasilUnloadCUSet">
+        <EditorCategories value="Race:Xayid"/>
+        <EffectArray value="YggdrasilUnloadAB"/>
+        <EffectArray value="YggdrasilUnloadApplyFate"/>
+        <EffectArray value="YggdrasilUnloadUnload"/>
+        <EffectArray value="YggdrasilUnloadLMHeight"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="YggdrasilUnloadApplyFate">
+        <EditorCategories value="Race:Xayid"/>
+        <Behavior value="DummyUnitFate"/>
+        <Flags index="UseDuration" value="1"/>
+        <Duration value="2"/>
+    </CEffectApplyBehavior>
+    <CEffectEnumTransport id="YggdrasilUnloadInterateTransport">
+        <EditorCategories value="Race:Xayid"/>
+        <WhichUnit Value="Caster"/>
+        <MaxCount value="1"/>
+        <Effect value="YggdrasilUnloadCU"/>
+    </CEffectEnumTransport>
+    <CEffectLaunchMissile id="YggdrasilUnloadLM">
+        <EditorCategories value="Race:Xayid"/>
+        <LaunchLocation Effect="YggdrasilUnloadCU" Value="TargetUnit"/>
+        <FinishEffect value="RemoveDummyUnitFateTarget"/>
+        <Movers Link="YggdrasilUnload"/>
+        <DeathType value="Unknown"/>
+        <ImpactLocation Effect="YggdrasilUnloadCUSet"/>
+        <AmmoUnit value=""/>
+    </CEffectLaunchMissile>
+    <CEffectLaunchMissile id="YggdrasilUnloadLMHeight">
+        <EditorCategories value="Race:Xayid"/>
+        <LaunchLocation Effect="YggdrasilUnloadCU" Value="TargetUnit"/>
+        <ImpactLocation Value="CasterUnit"/>
+        <LaunchOffset value="0,0.1,0"/>
+        <FinishEffect value="YggdrasilUnloadLM"/>
+        <AmmoUnit value=""/>
+        <Movers Link="YggdrasilUnloadHeight"/>
+        <DeathType value="Unknown"/>
+    </CEffectLaunchMissile>
+    <CEffectModifyUnit id="YggdrasilUnloadUnload">
+        <EditorCategories value="Race:Xayid"/>
+        <ImpactUnit Effect="YggdrasilUnloadCU"/>
+        <ModifyFlags index="DropFromContainerPassenger" value="1"/>
+        <FacingLocation Value="CasterUnit"/>
+    </CEffectModifyUnit>
 </Catalog>

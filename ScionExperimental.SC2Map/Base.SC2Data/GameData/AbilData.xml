@@ -134,6 +134,38 @@
         <Range value="4"/>
         <EffectArray index="Start" value="CreeperSproutCankerInit"/>
     </CAbilBuild>
+    <CAbilMorph id="XayidEntUproot">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <DataCollection value="Mobile"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="XayidEntUproot"/>
+        <ActorKey value="Mobile"/>
+        <Flags index="IgnoreFacing" value="1"/>
+        <Flags index="IgnoreFood" value="1"/>
+        <Flags index="IgnoreUnitCost" value="1"/>
+        <Flags index="WaitUntilStopped" value="0"/>
+        <InfoArray Unit="XayidEnt">
+            <SectionArray index="Stats">
+                <DurationArray index="Duration" value="1"/>
+            </SectionArray>
+        </InfoArray>
+    </CAbilMorph>
+    <CAbilMorph id="XayidEntRoot">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="XayidEntRoot"/>
+        <ActorKey value="Hunker"/>
+        <Flags index="Interruptible" value="1"/>
+        <Flags index="IgnoreFacing" value="1"/>
+        <Flags index="IgnoreFood" value="1"/>
+        <Flags index="IgnorePlacement" value="0"/>
+        <Flags index="IgnoreUnitCost" value="1"/>
+        <Flags index="SuppressMovement" value="1"/>
+        <InfoArray Unit="XayidEntRooted">
+            <SectionArray index="Stats">
+                <DurationArray index="Delay" value="1"/>
+                <DurationArray index="Duration" value="1"/>
+            </SectionArray>
+        </InfoArray>
+    </CAbilMorph>
     <CAbilEffectTarget id="Mend">
         <Range index="0" value="5"/>
     </CAbilEffectTarget>
@@ -356,15 +388,21 @@
             <Resource index="Custom" value="-0.75"/>
         </RefundFraction>
     </CAbilTrain>
-    <CAbilTrain id="XayidMorphPixie">
+    <CAbilTrain id="XayidMorphNymph">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <RefundFraction>
+            <Resource index="Minerals" value="-0.75"/>
+            <Resource index="Vespene" value="-0.75"/>
+            <Resource index="Terrazine" value="-0.75"/>
+            <Resource index="Custom" value="-0.75"/>
+        </RefundFraction>
         <Activity value="UI/Blossoming"/>
         <ActorKey value="PixieBlossom"/>
         <Flags index="CopyLifePercentage" value="1"/>
         <Flags index="KillOnFinish" value="1"/>
         <Flags index="Select" value="1"/>
         <Flags index="WaitForFood" value="0"/>
-        <MorphUnit value="PixieBlossom"/>
+        <MorphUnit value="NymphBlossom"/>
         <InfoArray index="Train1" Time="15">
             <Button DefaultButtonFace="Sylph" Requirements="HaveStem">
                 <Flags index="ToSelection" value="1"/>
@@ -379,12 +417,6 @@
             <Unit value="Exterminator"/>
             <Flags index="IgnorePlacement" value="1"/>
         </InfoArray>
-        <RefundFraction>
-            <Resource index="Minerals" value="-0.75"/>
-            <Resource index="Vespene" value="-0.75"/>
-            <Resource index="Terrazine" value="-0.75"/>
-            <Resource index="Custom" value="-0.75"/>
-        </RefundFraction>
     </CAbilTrain>
     <CAbilTrain id="XayidMorphSeedForager">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
@@ -438,7 +470,7 @@
         </InfoArray>
         <Alert value="MorphComplete_Zerg"/>
     </CAbilTrain>
-    <CAbilTrain id="XayidMorphSeedPixie">
+    <CAbilTrain id="XayidMorphSeedNymph">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <Activity value="UI/Sprouting"/>
         <ActorKey value="PixieSprout"/>
@@ -446,12 +478,12 @@
         <Flags index="KillOnCancel" value="1"/>
         <Flags index="KillOnFinish" value="1"/>
         <Flags index="Select" value="1"/>
-        <MorphUnit value="PixieSprout"/>
+        <MorphUnit value="NymphSprout"/>
         <InfoArray index="Train1" Time="15">
-            <Button DefaultButtonFace="Pixie">
+            <Button DefaultButtonFace="Nymph">
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
-            <Unit value="Pixie"/>
+            <Unit value="Nymph"/>
             <Flags index="IgnorePlacement" value="1"/>
         </InfoArray>
         <Alert value="MorphComplete_Zerg"/>
@@ -758,6 +790,9 @@
         </InfoArray>
         <InfoArray index="Build13" Unit="Canopy" Time="40">
             <Button DefaultButtonFace="RegrowCanopy"/>
+        </InfoArray>
+        <InfoArray index="Build14" Unit="XayidEnt" Time="30">
+            <Button DefaultButtonFace="RegrowXayidEnt"/>
         </InfoArray>
         <RefundFraction>
             <Resource index="Minerals" value="-0.375"/>
@@ -1158,12 +1193,12 @@
             <Cooldown Link="Abil/XayidSproutScorpalisk"/>
         </InfoArray>
     </CAbilTrain>
-    <CAbilTrain id="XayidSproutPixie">
+    <CAbilTrain id="XayidSproutNymph">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <DataCollection value="XayidSproutXayidUnits"/>
         <Flags index="WaitForFood" value="0"/>
         <Offset value="0,0"/>
-        <InfoArray index="Train1" Effect="XayidSproutPixieCU" Location="Rally">
+        <InfoArray index="Train1" Effect="XayidSproutNymphCU" Location="Rally">
             <Charge>
                 <CountMax value="3"/>
                 <CountUse value="1"/>
@@ -1173,10 +1208,10 @@
                 <TimeUse value="34"/>
             </Charge>
             <Cooldown Link="Abil/XayidSproutBasicUnits" Location="Unit"/>
-            <Button DefaultButtonFace="Pixie">
+            <Button DefaultButtonFace="Nymph">
                 <Flags index="ToSelection" value="1"/>
             </Button>
-            <Unit value="PixieDummy"/>
+            <Unit value="NymphDummy"/>
         </InfoArray>
     </CAbilTrain>
     <CAbilRally id="XayidWorkerRally">
@@ -1570,5 +1605,19 @@
         <UninterruptibleArray index="Finish" value="1"/>
         <AINotifyEffect value="XayidStructureSeedLand"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="PlantSeed"/>
+    </CAbilEffectTarget>
+    <CAbilTransport id="YggdrasilLoadUnload">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <CmdButtonArray index="Load" DefaultButtonFace="LoadYggdrasil"/>
+        <CmdButtonArray index="UnloadAt" DefaultButtonFace="UnloadAllYggdrasil"/>
+        <MaxCargoCount value="24"/>
+        <MaxCargoSize value="8"/>
+        <TotalCargoSpace value="24"/>
+        <UnloadPeriod value="0.3125"/>
+    </CAbilTransport>
+    <CAbilEffectTarget id="YggdrasilUnload">
+        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
+        <Flags index="BestUnit" value="0"/>
+        <Range value="5"/>
     </CAbilEffectTarget>
 </Catalog>
