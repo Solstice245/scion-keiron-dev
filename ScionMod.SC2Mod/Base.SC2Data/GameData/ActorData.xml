@@ -687,6 +687,10 @@
     <CActorModel id="ScourFateModel" parent="ModelAnimationStyleOneShot">
         <Model value="ScourImpact"/>
     </CActorModel>
+    <CActorModel id="WardAttackLaunchModel" parent="ModelAnimationStyleOneShot">
+        <On Terms="ActorCreation" Send="SetTintColor {255,89,0 2.000000}"/>
+        <Model value="SubjecterAirAttackLaunch"/>
+    </CActorModel>
     <CActorUnit id="TargetVelocityDummy" parent="GenericUnitStandard" unitName="TargetVelocityDummy">
         <Model value="Axis"/>
         <HighlightTooltip value="Unit/Name/Bogus"/>
@@ -880,7 +884,6 @@
         </DeathArray>
         <BarOffset value="200"/>
         <BarWidth value="225"/>
-        <GlossaryAnim value="Stand,Portrait"/>
         <On Terms="Behavior.OlympusAbilitiesReq.On" Send="AnimGroupApply Ready"/>
         <On Terms="Behavior.OlympusAbilitiesReq.On; !ScopeContains Olympus_Charged_Loop" Send="Create Olympus_Charged_Loop"/>
         <On Terms="Behavior.OlympusAbilitiesReq.Off" Send="AnimGroupRemove Ready"/>
@@ -1667,8 +1670,8 @@
         <On Terms="TurretEnable.InterdictorMovement" Send="Create"/>
         <YawQuery Methods="TurretY 0"/>
     </CActorTurret>
-    <CActorSound id="JupiterBombRunStart" parent="SoundOneShotScion" Behavior="JupiterSpeed">
-        <On Terms="Behavior.JupiterSpeed.Off" Send="Destroy"/>
+    <CActorSound id="JupiterBombRunStart" parent="SoundOneShotScion" Behavior="JupiterSpeedBuff">
+        <On Terms="Behavior.JupiterSpeedBuff.Off" Send="Destroy"/>
     </CActorSound>
     <CActorModel id="GenetronPlacementModel" parent="PlacementModel">
         <On index="1" Terms="ActorCreation; !ModelIsLowQuality"/>
@@ -1717,7 +1720,6 @@
         <On Terms="Abil.WardRestitution.SourceCastStart" Send="$Spell"/>
         <On Terms="Abil.WardShellDome.SourceCastStart" Send="$Spell"/>
         <BarWidth value="70"/>
-        <GlossaryAnim value="Stand,Portrait"/>
     </CActorUnit>
     <CActorSound id="UmbraShieldCompulsionSound" parent="SoundOneShotScion" Effect="UmbraStealthCompulsion"/>
     <CActorSound id="Umbra_CloakOff" parent="SoundOneShotScion" Behavior="UmbraStealth" BSub="Off"/>
@@ -2090,10 +2092,10 @@
         </Wireframe>
     </CActorUnit>
     <CActorModel id="JupiterShellShockImpact" parent="ModelAnimationStyleContinuousUNIT">
-        <On Terms="Behavior.JupiterShellShocked.On" Send="Create"/>
-        <On Terms="Behavior.JupiterShellShocked.Off" Send="AnimBracketStop BSD"/>
+        <On Terms="Behavior.Scion_ShellShocked.On" Send="Create"/>
+        <On Terms="Behavior.Scion_ShellShocked.Off" Send="AnimBracketStop BSD"/>
         <HostSiteOps Ops="SOpAttachOverhead"/>
-        <Model value="JupiterShellShockedModel"/>
+        <Model value="Scion_ShellShockedBuff"/>
     </CActorModel>
     <CActorForceSphere id="TorrentDeathDetonationForce" parent="DeathRagdollDetonationForce">
         <HostSiteOps Ops="SOpRandomPointInSphereDot5"/>
@@ -2274,12 +2276,12 @@
     <CActorSound id="JupiterBombRun" parent="SoundOneShot">
         <FogVisibility value="Visible"/>
         <On Terms="ActorOrphan" Send="Destroy"/>
-        <On Terms="Behavior.JupiterSpeed.On" Send="Create"/>
-        <On Terms="Behavior.JupiterSpeed.Off" Send="Destroy"/>
+        <On Terms="Behavior.JupiterSpeedBuff.On" Send="Create"/>
+        <On Terms="Behavior.JupiterSpeedBuff.Off" Send="Destroy"/>
         <On Terms="ActorCreation" Send="SoundSetPaused 1 0"/>
-        <On Terms="BehaviorStackItem.JupiterSpeed.Add; ValidateUnit CasterIsMovingGTE8; IsStatus JupiterSound 0" Send="SoundSetPaused"/>
-        <On Terms="BehaviorStackItem.JupiterSpeed.Add; ValidateUnit CasterIsMovingGTE8; IsStatus JupiterSound 0" Send="StatusSet JupiterSound 1"/>
-        <On Terms="BehaviorStackItem.JupiterSpeed.Remove; ValidateUnit CasterIsMovingLT8; IsStatus JupiterSound 1" Send="Destroy"/>
+        <On Terms="BehaviorStackItem.JupiterSpeedBuff.Add; ValidateUnit CasterIsMovingGTE8; IsStatus JupiterSound 0" Send="SoundSetPaused"/>
+        <On Terms="BehaviorStackItem.JupiterSpeedBuff.Add; ValidateUnit CasterIsMovingGTE8; IsStatus JupiterSound 0" Send="StatusSet JupiterSound 1"/>
+        <On Terms="BehaviorStackItem.JupiterSpeedBuff.Remove; ValidateUnit CasterIsMovingLT8; IsStatus JupiterSound 1" Send="Destroy"/>
     </CActorSound>
     <CActorUnit id="Interdictor" parent="GenetronBuilding" buildTime="29.000000" unitName="Interdictor">
         <On index="65" Terms="WeaponStart.NeutralizerBeam.AttackStart" Send="AnimPlay Attack Attack"/>
@@ -2310,7 +2312,6 @@
         <BarWidth value="85"/>
         <SoundArray index="Ready" value="MissileTurret_Ready"/>
         <SoundArray index="What" value="MissileTurret_What"/>
-        <GlossaryAnim value="Stand,Portrait"/>
     </CActorUnit>
     <CActorAction id="InterdictorAttack" parent="GenericAttack" effectImpact="NeutralizerBeamLMImpact" effectLaunch="NeutralizerBeamLM">
         <LaunchAttachQuery Methods="AMPatternInterdictor"/>
@@ -2568,7 +2569,6 @@
         <BarWidth value="85"/>
         <SoundArray index="Ready" value="Raven_AutoTurretReady"/>
         <SoundArray index="What" value="Raven_AutoTurretWhat"/>
-        <GlossaryAnim value="Stand,Portrait"/>
     </CActorUnit>
     <CActorAction id="RepulsorAttack" parent="GenericAttack" effectAttack="RepulsorSuppressionCannonsDamage">
         <LaunchAttachQuery Methods="AMFilterBoar"/>
@@ -3179,8 +3179,8 @@
     </CActorSound>
     <CActorUnit id="Jupiter" parent="GenericUnitStandard" unitName="Jupiter">
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-aircraftplating-level0.dds"/>
-        <On Terms="Behavior.JupiterSpeed.On" Send="$Spell PlayForever"/>
-        <On Terms="Behavior.JupiterSpeed.Off" Send="AnimClear Spell"/>
+        <On Terms="Behavior.JupiterSpeedBuff.On" Send="$Spell PlayForever"/>
+        <On Terms="Behavior.JupiterSpeedBuff.Off" Send="AnimClear Spell"/>
         <Macros value="TerrainSquibAnimations"/>
         <Macros value="PhysicsDeathsSwarmAir"/>
         <Macros value="PhysicsDeathsVoidAir"/>
@@ -6746,7 +6746,6 @@
         <BarWidth value="80"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-mechanicalarmorlevel0.dds"/>
         <WalkAnimMoveSpeed value="1"/>
-        <GlossaryAnim value="Portrait"/>
     </CActorUnit>
     <CActorAction id="InducerGamutOrbAttack" parent="GenericAttack" effectImpact="GamutOrbLMImpact" effectLaunch="GamutOrbLM">
         <Missile value="InducerAttackMissile"/>
@@ -6826,17 +6825,16 @@
     <CActorSiteOpLocalOffset id="SOpRaiseBy4"/>
     <CActorAction id="SubjecterAirAttack" parent="GenericAttack" effectImpact="EnthrallerQuillsLMImpact" effectLaunch="EnthrallerQuillsLM">
         <LaunchAttachQuery Methods="AMFilterSubjugatorLeft AMPatternSubjugatorLeft"/>
-        <LaunchModel value="SubjecterAirAttackLaunch"/>
-        <ImpactModel value="SubjecterAirAttackImpact"/>
         <Missile value="EnthrallerQuillAttackMissile"/>
+        <LaunchSiteOps HoldPosition="1" HoldRotation="1"/>
     </CActorAction>
-    <CActorModel id="SubjecterAirAttackImpact" parent="ModelAnimationStyleOneShot">
+    <CActorModel id="WardAttackImpactModel" parent="ModelAnimationStyleOneShot">
         <On Terms="ActorCreation" Send="SetTintColor {255,134,0 2.500000}"/>
+        <Model value="SubjecterAirAttackImpact"/>
     </CActorModel>
     <CActorAction id="SubjecterAirAttackR" parent="SubjecterAirAttack" effectLaunch="EnthrallerQuillsLMR">
         <On index="6" Terms="Effect.EnthrallerQuillsLMR.Start; At Caster" Send="Create"/>
         <LaunchAttachQuery Methods="AMFilterSubjugatorRight AMPatternSubjugatorRight"/>
-        <Beam value="SubjugatorAirAttackBeam"/>
         <ImpactMap index="None" ModelReaction="SubjugatorAirAttackImpactReaction"/>
         <ImpactMap index="Shield" Sound="SubjugatorAirAttackImpactShield" ModelReaction="SubjugatorAirAttackImpactReactionShield"/>
         <DamageMap index="None" Model="SubjugatorAirAttackDamage" Sound="SubjugatorAirAttackDamage" ModelReaction="SubjugatorAirAttackDamageReaction"/>
@@ -6844,23 +6842,12 @@
     </CActorAction>
     <CActorAction id="WardAttack" parent="GenericAttack" effectImpact="WardWeaponLMImpact" effectLaunch="WardWeaponLM">
         <LaunchAttachQuery Methods="AMFilterWeapon AMPatternWard"/>
-        <LaunchModel value="SubjecterAirAttackLaunch"/>
-        <ImpactModel value="SubjecterAirAttackImpact"/>
+        <LaunchModel value="WardAttackLaunchModel"/>
+        <ImpactModel value="WardAttackImpactModel"/>
     </CActorAction>
     <CActorAction id="SubjecterAttack" parent="GenericAttack" effectAttack="ForceBlast">
         <LaunchAttachQuery Methods="AMFilterSubjugatorGround"/>
-        <LaunchModel value="SubjecterAttackLaunch"/>
-        <ImpactModel value="SubjecterAttackImpact"/>
     </CActorAction>
-    <CActorModel id="SubjecterAirAttackLaunch" parent="ModelAnimationStyleOneShot">
-        <On Terms="ActorCreation" Send="SetTintColor {255,89,0 2.000000}"/>
-    </CActorModel>
-    <CActorModel id="SubjecterAttackImpact" parent="ModelAnimationStyleOneShot">
-        <On Terms="ActorCreation" Send="SetTintColor {255,89,0 2.000000} 0.250000"/>
-    </CActorModel>
-    <CActorModel id="SubjecterAttackLaunch" parent="ModelAnimationStyleOneShot">
-        <On Terms="ActorCreation" Send="SetTintColor {255,134,0 2.000000} 0.150000"/>
-    </CActorModel>
     <CActorAction id="UmbraAttack" parent="GenericAttack" effectImpact="ShadowCannonImpact" effectLaunch="ShadowCannon"/>
     <CActorUnit id="Myriad" parent="GenericUnitKeiron" unitName="Myriad">
         <On index="65" Terms="WeaponStart.Lunge" Send="AnimBracketStart Attack Attack"/>
@@ -6910,14 +6897,23 @@
         <On Terms="AbilMorph.ProjectionStart.Start" Send="AnimPlay Walk Walk PlayForever"/>
     </CActorUnit>
     <CActorUnit id="Subjecter" parent="GenericUnitKeiron" unitName="Subjecter">
-        <WalkAnimMoveSpeed value="2.6992"/>
+        <WalkAnimMoveSpeed value="2.625"/>
         <BarOffset value="65"/>
         <BarWidth value="65"/>
         <DeathArray index="Normal" SoundLink="KeironUnitSmall_Death"/>
+        <On Terms="ActorCreation; ValidatePlayer SubjecterRangeUpgrade" Send="AnimPlay Upgrade Upgrade PlayForever 0.000000"/>
+        <On Terms="Upgrade.AmplifiedSphere.Add" Send="AnimPlay Upgrade Upgrade PlayForever 0.000000"/>
+        <On Terms="Upgrade.AmplifiedSphere.Remove" Send="AnimClear Upgrade"/>
+        <On Terms="WeaponStart.*.AttackStart; WeaponTargetElevation GE 20.000000" Send="AnimPlay Stance Superior PlayForever"/>
+        <On Terms="WeaponStart.*.AttackStart; WeaponTargetElevation LE -20.000000" Send="AnimPlay Stance Inferior PlayForever"/>
+        <On Terms="WeaponStart.ForceBlast.AttackStart; WeaponTargetDistance LE 0.500000" Send="AnimPlay Stance Inferior PlayForever"/>
+        <On Terms="WeaponStop.*.AttackStop" Send="AnimClear Stance"/>
+        <On Terms="WeaponStart.EnthrallerQuills.AttackStart" Send="TimerKill CoverDelay"/>
+        <On Terms="WeaponStart.EnthrallerQuills.AttackStart" Send="AnimPlay Cover Cover PlayForever"/>
+        <On Terms="WeaponStop.EnthrallerQuills.AttackStop" Send="TimerSet 2.500000 CoverDelay"/>
+        <On Terms="TimerExpired; TimerName CoverDelay" Send="AnimClear Cover"/>
     </CActorUnit>
     <CActorMissile id="EnthrallerQuillAttackMissile" parent="GenericAttackMissile" unitName="EnthrallerQuillsLMWeapon">
-        <On Terms="UnitBirth" Send="AnimSetTimeScaleAbsolute Lifetime 1.000000"/>
-        <On Terms="ActorCreation" Send="SetTintColor {255,89,0 2.000000}"/>
         <Model value="SubjecterAirAttackMissile"/>
     </CActorMissile>
     <CActorMissile id="AuroraAttackMissile" parent="GenericAttackMissile" unitName="AuroraAttackMissile">

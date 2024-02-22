@@ -75,6 +75,24 @@
             <Kind index="NoProc" value="0"/>
         </DamageResponse>
     </CBehaviorBuff>
+    <CBehaviorBuff id="JupiterSpeedAccelerator">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="CasterHasEnergy"/>
+        <RemoveValidatorArray value="CasterNotAbducted"/>
+        <RemoveValidatorArray value="CasterNotShackled"/>
+        <Period value="0.0625"/>
+        <InitialEffect value="JupiterSpeedApplyController"/>
+        <PeriodicEffect value="JupiterSpeedBuffSwitch"/>
+        <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="JupiterSpeedController">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="JupiterSpeedAcceleratorOrBuff"/>
+        <Period value="0.0625"/>
+        <InitialEffect value="JupiterSpeedBuff"/>
+        <PeriodicEffect value="JupiterSpeedPeriodic"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="KeironStructureCharged">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
@@ -1026,11 +1044,11 @@
             <Chance value="1"/>
         </DamageResponse>
     </CBehaviorBuff>
-    <CBehaviorBuff id="JupiterStealth">
+    <CBehaviorBuff id="JupiterSpeedStealth">
         <InfoFlags index="Hidden" value="1"/>
         <InfoIcon value="Assets\Textures\btn-ability-hornerhan-wraith-permanentcloak.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Duration value="3.125"/>
+        <Duration value="1.4"/>
         <Modification>
             <StateFlags index="Cloak" value="1"/>
         </Modification>
@@ -1115,7 +1133,7 @@
         <HarvestAmount value="4"/>
         <DepletionVariationCount value="4"/>
     </CBehaviorResource>
-    <CBehaviorBuff id="JupiterShellShocked">
+    <CBehaviorBuff id="Scion_ShellShocked">
         <Alignment value="Negative"/>
         <InfoIcon value="Assets\Textures\btn-ability-genetron-shellshockbomb.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -1292,14 +1310,6 @@
         <PeriodicEffect value="NodePowerETU"/>
         <InitialEffect value="NodePowerETU"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="RevenantBombAbilityChannel">
-        <InfoFlags index="Hidden" value="1"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <BuffFlags index="Channeling" value="1"/>
-        <Modification>
-            <StateFlags index="SuppressEnergyRegen" value="1"/>
-        </Modification>
-    </CBehaviorBuff>
     <CBehaviorBuff id="NaniteGrenadeAB">
         <Alignment value="Negative"/>
         <InfoIcon value="Assets\Textures\btn-upgrade-nova-flashgrenade.dds"/>
@@ -1322,16 +1332,13 @@
         <InitialEffect value="JupiterNapalmDamageInitial"/>
         <PeriodicEffect value="JupiterNapalmDamage"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="JupiterSpeed">
+    <CBehaviorBuff id="JupiterSpeedBuff">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <RemoveValidatorArray value="CasterNotAbducted"/>
         <RemoveValidatorArray value="CasterNotShackled"/>
         <MaxStackCount value="50"/>
-        <Duration value="3.125"/>
         <Modification MoveSpeedMultiplier="1.031"/>
-        <InitialEffect value="JupiterSpeedRefresh"/>
-        <RefreshEffect value="JupiterSpeedRefresh"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="SpeedCloak">
         <InfoIcon value="Assets\Textures\btn-ability-genetron-blazespeedcloak.dds"/>

@@ -70,6 +70,7 @@ Abil/Name/IncendiaryInfusion=Incendiary Infusion
 Abil/Name/InciterELORProtocol=Inciter - ELOR Protocol
 Abil/Name/InterdictorBurrow=Burrow
 Abil/Name/InterdictorUnburrow=Unburrow
+Abil/Name/JupiterAccelerator=Jupiter - Accelerator
 Abil/Name/KeironBuild=Keiron Build
 Abil/Name/KeironCitadelAegisTrain=Keiron - Citadel Aegis Train
 Abil/Name/KeironCitadelMaterialize=Keiron - Citadel Materialize
@@ -211,7 +212,6 @@ Behavior/Name/HornetBoreDrillBase=Bore Drill
 Behavior/Name/IncendiaryInfusionAA=Incendiary Infusion
 Behavior/Name/IncendiaryInfusionAG=Incendiary Infusion
 Behavior/Name/JupiterNapalm=Napalm
-Behavior/Name/JupiterShellShocked=Shell-Shocked
 Behavior/Name/KeironChargeDummyDiscord=Keiron - Charge Dummy Discord
 Behavior/Name/KeironChargeDummyTS1=Keiron - Charge Dummy TS1
 Behavior/Name/KeironChargeDummyTS2=Keiron - Charge Dummy TS2
@@ -238,6 +238,7 @@ Behavior/Name/ResourceTapSearch=Resource Tap
 Behavior/Name/SacrificialMutation=Sacrificial Mutation
 Behavior/Name/Scion_Overclock=Overclock
 Behavior/Name/Scion_OverclockAddonDummy=Genetron Overclock Addon Dummy
+Behavior/Name/Scion_ShellShocked=Shell-Shocked
 Behavior/Name/ShockChargeDecloak=Shock Charge Decloak
 Behavior/Name/SpeedCloak=Speed Cloak
 Behavior/Name/SpitfireOverdrive=Overdrive
@@ -279,7 +280,6 @@ Behavior/Tooltip/HornetBoreDrillBase=Armor is reduced by the attacks of the <c v
 Behavior/Tooltip/IncendiaryInfusionAA=Dealing damage to air units around itself.
 Behavior/Tooltip/IncendiaryInfusionAG=Dealing damage to ground units around itself.
 Behavior/Tooltip/JupiterNapalm=This unit is taking damage while in the flames of a Jupiter's Revenant Bomb.
-Behavior/Tooltip/JupiterShellShocked=This unit is dazed and silenced.
 Behavior/Tooltip/KeironMaterializing=Unit is being materialized.
 Behavior/Tooltip/KeironShellRestorationDisable=Shield restoration is disabled. Bring this unit close to a <c val="FFFF80">Citadel</c> while out of combat or target it with the <c val="FFFF80">Ward's</c> Restitution spell to restart it.
 Behavior/Tooltip/LockdownMode=Under lockdown due to severe damage. Takes reduced damage, and cannot fully function. Must be repaired in order to resume a regular state.
@@ -300,6 +300,7 @@ Behavior/Tooltip/ResidualAcid=Taking damage from the residue of an <c val="FFFF8
 Behavior/Tooltip/ResourceTap=Mineral harvesting yield increased by <d ref="Behavior,ResourceTap,Modification.ResourceHarvestAmountBonus[Minerals]"/>.
 Behavior/Tooltip/SacrificialMutation=Healing units around itself in an aura. Self destructs after timing out.
 Behavior/Tooltip/Scion_Overclock=Production speed increased by <d ref="Behavior,Scion_Overclock,Modification.RateMultiplierArray[Queueable]*100"/>%.
+Behavior/Tooltip/Scion_ShellShocked=This unit is dazed and silenced.
 Behavior/Tooltip/ShockChargeDecloak=Target was recently hit by a Tesla's Shock Charge, making it unable to cloak for a short duration.
 Behavior/Tooltip/SpeedCloak=Cloaked, and moving 40% faster.
 Behavior/Tooltip/SpitfirePowershell=The energy of this unit absorbs damage.
@@ -472,6 +473,7 @@ Button/Name/Interdictor=Build Interdictor
 Button/Name/InterlacingBond=Interlacing Bond
 Button/Name/InternalOptimization=Internal Optimization
 Button/Name/InternalRepairSystem=Internal Repair System
+Button/Name/JupiterAccelerator=Accelerator
 Button/Name/JupiterNapalm=Napalm
 Button/Name/JupiterStealthSystems=Stealth Systems
 Button/Name/KeironBioArmorLevel1=Upgrade Biological Armor Level 1
@@ -866,6 +868,7 @@ Button/Tooltip/InterlacingBond=The infused unit gains +0.5 shield armor.
 Button/Tooltip/InternalOptimization=<c val="FFFF80">Teslas</c> gain +100% charge constructon speed.
 Button/Tooltip/InternalRepairSystem=The <c val="FFFF80">Processor</c> regenerates health while out of combat.
 Button/Tooltip/Jupiter=Bomber aircraft. Can use Revenant Bomb to damage enemies, and apply napalm on the ground for damage over time.<n/><n/><c val="78F0FF">Power user.</c>
+Button/Tooltip/JupiterAccelerator=Activates additional thrusters, massively increasing speed while consuming energy and power.<n/><n/>Is activated automatically when engaging in a long distance bombing.
 Button/Tooltip/JupiterNapalm=Revenant Bomb applies napalm to the ground, dealing <d ref="Effect,JupiterNapalmDamage,Amount*(1+Effect,JupiterNapalmCreatePersistent,PeriodCount)"/> damage in the area over <d ref="(1+Effect,JupiterNapalmCreatePersistent,PeriodCount)*Effect,JupiterNapalmCreatePersistent,PeriodicPeriodArray[0]"/> seconds.
 Button/Tooltip/JupiterStealthSystems=During a bombing run the <c val="FFFF80">Jupiter</c> expends <c val="f078ff">energy</c> and <c val="78F0FF">power</c> in order to accelerate to high speeds.<n/><n/>Sustained speed after using at least 30 <c val="f078ff">energy</c> and <c val="78F0FF">power</c> causes the <c val="FFFF80">Jupiter</c> to become cloaked.
 Button/Tooltip/KeironBioArmorLevel1=Upgrades the armor of biological units.
@@ -1022,7 +1025,7 @@ Button/Tooltip/ResearchVirtusSelfFixProtocol=<c val="FFFF80">Virtus</c> gain +<d
 Button/Tooltip/ResidualAcid=<c val="FFFF80">Acid Nests</c> leave behind a puddle of acid upon death, dealing <d ref="200/Effect,ResidualAcidCP,PeriodicPeriodArray[0]/Effect,ResidualAcidCP,PeriodCount"/> damage per second, and slowing enemy movement speed by 30% in an area. Lasts <d ref="Behavior,ResidualAcid,Period*Effect,ResidualAcidCP,PeriodCount" precision="0"/> seconds.
 Button/Tooltip/Restitution=Restores the target unit's shields proportional to the shields expended by the caster. The target and units in an area have their shield's charge restored as well.
 Button/Tooltip/Reveal=Grants vision on an area on the map.
-Button/Tooltip/RevenantBomb=Drops a bomb which deals <d ref="Effect,JupiterRevenantBombDamage,Amount"/> damage in an area. <n/><n/>Units hit directly by the bomb take <d ref="Effect,JupiterRevenantBombDamage,Amount*Effect,JupiterRevenantBombDamage,AreaArray[0].Fraction"/> damage.<n/><n/>Units in the impact area are unable to attack or cast spells for <d ref="Behavior,JupiterShellShocked,Duration"/> seconds.
+Button/Tooltip/RevenantBomb=Drops a bomb which deals <d ref="Effect,JupiterRevenantBombDMG,Amount"/> damage in an area. <n/><n/>Units hit directly by the bomb take <d ref="Effect,JupiterRevenantBombDMG,Amount*Effect,JupiterRevenantBombDMG,AreaArray[0].Fraction"/> damage.<n/><n/>Units in the impact area are unable to attack or cast spells for <d ref="Behavior,Scion_ShellShocked,Duration"/> seconds.
 Button/Tooltip/RevenantBombLMWeapon=Marks a location for the <c val="FFFF80">Jupiter</c> to drop a bomb, which deals 30 damage in the impact area, and applies napalm to the ground, dealing <d ref="Effect,RevenantBombNapalmDMG,Amount/Behavior,RevenantBombNapalm,Period" precision="1"/> damage per second in the area. The napalm lasts <d ref="Effect,RevenantBombNapalmCP,PeriodCount*Effect,RevenantBombNapalmCP,PeriodicPeriodArray[0]" /> seconds.<n/>The <c val="FFFF80">Jupiter</c> has increased speed when it's run commences.
 Button/Tooltip/Reverb=Teleports the Echo back to its Sonic Image.
 Button/Tooltip/Reviler=Ranged attacker.<n/><n/><c val="FFFF80">Can attack ground and air units.</c>
@@ -1303,6 +1306,7 @@ Effect/Name/CEffectCreatePersistentKeiron2=CEffectCreatePersistentKeiron Copy
 Effect/Name/CEffectDamageGenetron=CEffectDamageGenetron
 Effect/Name/CEffectPersistentKeiron=CEffectPersistentKeiron
 Effect/Name/CSetGenetron=CSetGenetron
+Effect/Name/CancelActiveBarrageAttackForQueue=Cancel Active Barrage Attack For Queue
 Effect/Name/CargoUnloadStopOrder=Cargo Unload (Stop Order)
 Effect/Name/CasnoliskExplosiveGlobData=Casnolisk - Explosive Glob (Data)
 Effect/Name/CasnoliskExplosiveGlobInit=Casnolisk - Explosive Glob (Init)
@@ -1705,34 +1709,42 @@ Effect/Name/JupiterNapalmCreatePersistent=Jupiter - Napalm (Create Persistent)
 Effect/Name/JupiterNapalmDamage=Jupiter - Napalm (Damage)
 Effect/Name/JupiterNapalmDamageInitial=Jupiter - Napalm (Damage Initial)
 Effect/Name/JupiterNapalmSearchArea=Jupiter - Napalm (Search Area)
-Effect/Name/JupiterNapalmSearchAreaNotification=Jupiter - Napalm (Search Area Notification)
 Effect/Name/JupiterRevenantBombChannel=Jupiter - Revenant Bomb (Channel)
-Effect/Name/JupiterRevenantBombChannelInit=Jupiter - Revenant Bomb (Channel Init)
-Effect/Name/JupiterRevenantBombCooldownFinal=Jupiter - Revenant Bomb (Cooldown Final)
-Effect/Name/JupiterRevenantBombDamage=Jupiter - Revenant Bomb (Damage)
-Effect/Name/JupiterRevenantBombDestroyChannel=Jupiter - Revenant Bomb (Destroy Channel)
-Effect/Name/JupiterRevenantBombFaceTarget=Jupiter - Revenant Bomb (Face Target)
-Effect/Name/JupiterRevenantBombFinalForceMandatory=Jupiter - Revenant Bomb (Final Force Mandatory)
-Effect/Name/JupiterRevenantBombFinalForceOptional=Jupiter - Revenant Bomb (Final Force Optional)
-Effect/Name/JupiterRevenantBombForce=Jupiter - Revenant Bomb (Force)
-Effect/Name/JupiterRevenantBombForceOffset=Jupiter - Revenant Bomb (Force Offset)
-Effect/Name/JupiterRevenantBombForceOptional=Jupiter - Revenant Bomb (Force Optional)
+Effect/Name/JupiterRevenantBombChannelPeriodSet=Jupiter - Revenant Bomb (Channel>Period Set)
+Effect/Name/JupiterRevenantBombDMG=Jupiter - Revenant Bomb (Impact Damage)
 Effect/Name/JupiterRevenantBombImpact=Jupiter - Revenant Bomb (Impact)
+Effect/Name/JupiterRevenantBombImpactNotification=Jupiter - Revenant Bomb (Impact Notification)
+Effect/Name/JupiterRevenantBombImpactShellShock=Jupiter - Revenant Bomb (Impact ShellShock)
+Effect/Name/JupiterRevenantBombLaunchCooldown=Jupiter - Revenant Bomb (Launch Cooldown)
 Effect/Name/JupiterRevenantBombLaunchMissile=Jupiter - Revenant Bomb (Launch Missile)
-Effect/Name/JupiterRevenantBombLaunchQueryPoint=Jupiter - Revenant Bomb (Launch Query Point)
-Effect/Name/JupiterRevenantBombLaunchQuerySwitch=Jupiter - Revenant Bomb (Launch Query Switch)
-Effect/Name/JupiterRevenantBombLaunchQueryUnit=Jupiter - Revenant Bomb (Launch Query Unit)
-Effect/Name/JupiterRevenantBombLaunchQueryUnitTargetPoint=Jupiter - Revenant Bomb (Launch Query Unit Target Point)
-Effect/Name/JupiterRevenantBombWeaponInit=Jupiter - Revenant Bomb (Weapon Init)
+Effect/Name/JupiterRevenantBombLaunchSwitch=Jupiter - Revenant Bomb (Launch Switch)
+Effect/Name/JupiterRevenantBombLaunchTargetUnitPoint=Jupiter - Revenant Bomb (Launch Target Unit Point)
+Effect/Name/JupiterRevenantBombSpellCooldown=Jupiter - Revenant Bomb (Spell Cooldown)
+Effect/Name/JupiterRevenantBombSpellDelay=Jupiter - Revenant Bomb (Spell Delay)
+Effect/Name/JupiterRevenantBombWeaponCancelDelay=Jupiter - Revenant Bomb (Weapon Cancel Delay)
+Effect/Name/JupiterRevenantBombWeaponSet=Jupiter - Revenant Bomb (Weapon Set)
 Effect/Name/JupiterRevenantBombWeaponSwitch=Jupiter - Revenant Bomb (Weapon Switch)
 Effect/Name/JupiterShellShocked=Jupiter - Shell-Shocked (Apply Behavior)
-Effect/Name/JupiterShellShockedSearch=Jupiter - Shell-Shocked (Search)
-Effect/Name/JupiterSpeed=Jupiter - Speed (Apply Behavior)
+Effect/Name/JupiterSpeedAccelerator=Jupiter - Speed (Apply Accelerator)
+Effect/Name/JupiterSpeedApplyController=Jupiter - Speed (Apply Controller)
+Effect/Name/JupiterSpeedBuff=Jupiter - Speed (Apply Buff)
+Effect/Name/JupiterSpeedBuffSet=Jupiter - Speed (Buff Set)
+Effect/Name/JupiterSpeedBuffSwitch=Jupiter - Speed (Buff Switch)
+Effect/Name/JupiterSpeedCancelOrder=Jupiter - Speed (Cancel Order)
+Effect/Name/JupiterSpeedData0=Jupiter - Speed (Data 0)
+Effect/Name/JupiterSpeedData1=Jupiter - Speed (Data 1)
+Effect/Name/JupiterSpeedDataSwitch=Jupiter - Speed (Data Switch)
+Effect/Name/JupiterSpeedForce0=Jupiter - Speed (Force 0)
+Effect/Name/JupiterSpeedForce1=Jupiter - Speed (Force 1)
 Effect/Name/JupiterSpeedModifyUnit=Jupiter - Speed (Modify Unit)
+Effect/Name/JupiterSpeedPeriodic=Jupiter - Speed (Periodic)
 Effect/Name/JupiterSpeedPowerEnum=Jupiter - Speed (Power Enum)
 Effect/Name/JupiterSpeedPowerModify=Jupiter - Speed (Power Modify)
-Effect/Name/JupiterSpeedRefresh=Jupiter - Speed (Refresh)
-Effect/Name/JupiterStealth=Jupiter - Stealth
+Effect/Name/JupiterSpeedRemoveAccelerator=Jupiter - Speed (Remove Accelerator)
+Effect/Name/JupiterSpeedRemoveBuff=Jupiter - Speed (Remove Buff)
+Effect/Name/JupiterSpeedRemoveBuffDeceleration=Jupiter - Speed (Remove Buff Deceleration)
+Effect/Name/JupiterSpeedRemoveController=Jupiter - Speed (Remove Controller)
+Effect/Name/JupiterSpeedStealth=Jupiter - Speed (Apply Stealth)
 Effect/Name/KeironChargeDummyAurApeAB=Keiron Charge Dummy AurApe (AB)
 Effect/Name/KeironChargeDummyCU=Keiron - Charge Dummy (CU)
 Effect/Name/KeironChargeDummyCUSet=Keiron - Charge Dummy (CUSet)
@@ -1983,7 +1995,7 @@ Effect/Name/RepulsorSuppressionCannonsDamage=Repulsor - Suppression Cannons (Dam
 Effect/Name/ResidualAcidCP=Residual Acid
 Effect/Name/ResidualAcidDMG=Residual Acid
 Effect/Name/ResidualAcidSA=Residual Acid
-Effect/Name/RevenantBomb=Jupiter - Revenant Bomb (Init)
+Effect/Name/RevenantBomb=Jupiter - Revenant Bomb (Spell Switch)
 Effect/Name/ReverbCasterController=Reverb Caster Controller
 Effect/Name/ReverbFateBounds=Reverb Fate Bounds
 Effect/Name/ReverbFateMU=Reverb Fate
@@ -2065,6 +2077,7 @@ Effect/Name/ScionStaticBuilderSetFacing=Scion Static Builder (Set Facing)
 Effect/Name/ScionStaticBuilderSuppressMovement=Scion Static Builder (Suppress Movement)
 Effect/Name/ScionStaticBuilderSuppressMovementClear=Scion Static Builder (Suppress Movement Clear)
 Effect/Name/ScionStaticBuilderSwitch=Scion Static Builder (Switch)
+Effect/Name/Scion_CasterLookAtTarget=Caster Look At Target
 Effect/Name/Scion_DisplayCooldownDummyAddCooldown=Display Cooldown Dummy (Add Cooldown)
 Effect/Name/Scion_DisplayCooldownDummyCooldownResetCooldown=Display Cooldown Dummy (Reset Cooldown)
 Effect/Name/Scion_DisplayCooldownDummyResetData=Display Cooldown Dummy (Reset Data)

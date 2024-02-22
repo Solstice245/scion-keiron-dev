@@ -27,10 +27,81 @@
         <CombineArray value="Aperture4CargoAnd40Energy"/>
         <CombineArray value="Aperture8CargoAnd80Energy"/>
     </CValidatorCombine>
-    <CValidatorCombine id="JupiterRevenantBombForce">
-        <CombineArray value="CasterHasNoOrders"/>
-        <CombineArray value="CasterIsHoldingPosition"/>
-        <CombineArray value="CanCharge"/>
+    <CValidatorUnitCompareOrderCount id="CasterHasQueuedOrders">
+        <Compare value="GT"/>
+        <Value value="1"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitOrderTargetType id="CasterIsBarrageAttacking">
+        <ResultFailed value="MustTargetUnit"/>
+        <AbilLink value="attack"/>
+        <AbilCmdIndex value="2"/>
+        <Type value="Point"/>
+    </CValidatorUnitOrderTargetType>
+    <CValidatorUnitCompareBehaviorCount id="JupiterSpeedAccelerator">
+        <WhichUnit Value="Caster"/>
+        <Compare value="NE"/>
+        <Behavior value="JupiterSpeedAccelerator"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="JupiterSpeedNoAccelerator">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="JupiterSpeedAccelerator"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorCombine id="JupiterSpeedAcceleratorOrBuff">
+        <CombineArray value="JupiterSpeedAccelerator"/>
+        <CombineArray value="JupiterSpeedBuffGT0"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareBehaviorCount id="JupiterSpeedBuffGT0">
+        <WhichUnit Value="Caster"/>
+        <Compare value="GT"/>
+        <Behavior value="JupiterSpeedBuff"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorEffectTreeUserData id="JupiterSpeedControlData0">
+        <CheckExistence value="0"/>
+        <Key value="Default"/>
+        <BehaviorScope Behavior="JupiterSpeedController"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorUnitOrderTargetType id="CasterIsAttackingPoint">
+        <ResultFailed value="MustTargetUnit"/>
+        <AbilLink value="attack"/>
+        <Type value="Point"/>
+    </CValidatorUnitOrderTargetType>
+    <CValidatorUnitCompareSpeed id="JupiterIsMovingSlow">
+        <WhichUnit Value="Caster"/>
+        <Compare value="LE"/>
+        <Value value="2.75"/>
+    </CValidatorUnitCompareSpeed>
+    <CValidatorUnitCompareBehaviorCount id="JupiterSpeedBuffGTE40">
+        <WhichUnit Value="Caster"/>
+        <Compare value="GE"/>
+        <Value value="40"/>
+        <Behavior value="JupiterSpeedBuff"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorEffectTreeUserData id="JupiterSpeedControlData1">
+        <CheckExistence value="0"/>
+        <Key value="Default"/>
+        <Value value="1"/>
+        <BehaviorScope Behavior="JupiterSpeedController"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorCombine id="JupiterSpeedForce1">
+        <CombineArray value="JupiterHasBombingOrder"/>
+        <CombineArray value="JupiterNoOrdersOrMovingSlow"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="JupiterNoOrdersOrMovingSlow">
+        <CombineArray value="CasterHasNoOrdersOrIsHoldingPosition"/>
+        <CombineArray value="JupiterIsMovingSlow"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="CasterIsMovingOrAttackingPoint">
+        <CombineArray value="CasterIsMoving"/>
+        <CombineArray value="CasterIsAttackingPoint"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareOrderCount id="JupiterUsingRevenantBomb">
+        <AbilLink value="RevenantBomb"/>
+        <Value value="1"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorCombine id="JupiterSpeedForce0">
+        <CombineArray value="JupiterHasBombingOrder"/>
+        <CombineArray value="JupiterNoOrdersOrMovingSlow"/>
+        <CombineArray value="JupiterSpeedBuffGTE40"/>
     </CValidatorCombine>
     <CValidatorUnitCompareCooldown id="RevenantBombCooldownComplete">
         <WhichUnit Value="Caster"/>
@@ -390,30 +461,6 @@
         <CombineArray value="WeaponInRange"/>
         <Negate value="1"/>
     </CValidatorCombine>
-    <CValidatorUnitCompareSpeed id="TargetSpeedGT0D5">
-        <Compare value="GT"/>
-        <Value value="0.5"/>
-    </CValidatorUnitCompareSpeed>
-    <CValidatorUnitCompareSpeed id="TargetSpeedGT1D5">
-        <Compare value="GT"/>
-        <Value value="1.5"/>
-    </CValidatorUnitCompareSpeed>
-    <CValidatorUnitCompareSpeed id="TargetSpeedGT2D5">
-        <Compare value="GT"/>
-        <Value value="2.5"/>
-    </CValidatorUnitCompareSpeed>
-    <CValidatorUnitCompareSpeed id="TargetSpeedGT3D5">
-        <Compare value="GT"/>
-        <Value value="3.5"/>
-    </CValidatorUnitCompareSpeed>
-    <CValidatorUnitCompareSpeed id="TargetSpeedGT4D5">
-        <Compare value="GT"/>
-        <Value value="4.5"/>
-    </CValidatorUnitCompareSpeed>
-    <CValidatorUnitCompareSpeed id="TargetSpeedGT5D5">
-        <Compare value="GT"/>
-        <Value value="5.5"/>
-    </CValidatorUnitCompareSpeed>
     <CValidatorUnitType id="TargetUnitTypeIsCasterUnitType">
         <OtherUnit Value="Caster"/>
     </CValidatorUnitType>
@@ -883,12 +930,6 @@
         <Find value="1"/>
         <Value value="UsePersistentSpores"/>
     </CValidatorPlayerRequirement>
-    <CValidatorLocationArc id="JupiterFacingTargetWithin01">
-        <WhichLocation Value="SourceUnit"/>
-        <Find value="1"/>
-        <Arc value="0.9997"/>
-        <Value Effect="JupiterRevenantBombChannel" Value="TargetUnitOrPoint"/>
-    </CValidatorLocationArc>
     <CValidatorPlayerRequirement id="Success">
         <Value value="Success"/>
     </CValidatorPlayerRequirement>
@@ -932,6 +973,11 @@
         <CombineArray value="Walkable"/>
         <Negate value="1"/>
     </CValidatorCombine>
+    <CValidatorPlayerRequirement id="SubjecterRangeUpgrade">
+        <ResultNoPlayer value="Error"/>
+        <Find value="1"/>
+        <Value value="UseAmplifiedSpheres"/>
+    </CValidatorPlayerRequirement>
     <CValidatorLocationPathable id="WalkableSourceUnit">
         <ResultFailed value="MustTargetWalkableLocation"/>
         <WhichLocation Value="SourceUnit"/>
@@ -955,7 +1001,7 @@
         <Type value="And"/>
         <CombineArray value="CasterNoCourierCloak"/>
         <CombineArray value="CasterNoProcessorDetectionMode"/>
-        <CombineArray value="NoJupiterSpeed"/>
+        <CombineArray value="JupiterSpeedBuffE0"/>
         <CombineArray value="NoPowershellCaster"/>
     </CValidatorCombine>
     <CValidatorUnitCompareBehaviorCount id="CasterNoCourierCloak">
@@ -1086,9 +1132,9 @@
         <Behavior value="SeparationBeamTarget"/>
         <RequireCasterUnit Value="Caster"/>
     </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitCompareBehaviorCount id="NoJupiterSpeed">
+    <CValidatorUnitCompareBehaviorCount id="JupiterSpeedBuffE0">
         <WhichUnit Value="Caster"/>
-        <Behavior value="JupiterSpeed"/>
+        <Behavior value="JupiterSpeedBuff"/>
     </CValidatorUnitCompareBehaviorCount>
     <CValidatorCombine id="ManufacturerIsTraining">
         <CombineArray value="ManufacturerIsTrainingSpitfire"/>
@@ -1280,19 +1326,16 @@
     <CValidatorUnitType id="IsUploader">
         <Value value="Uploader"/>
     </CValidatorUnitType>
-    <CValidatorCombine id="JupiterChannelForce">
-        <CombineArray value="JupiterHasBombingOrder"/>
-        <CombineArray value="CasterHasNoOrders"/>
+    <CValidatorCombine id="JupiterHasBombingOrder">
+        <CombineArray value="CanCharge"/>
+        <CombineArray value="CasterIsBarrageAttacking"/>
+        <CombineArray value="JupiterUsingRevenantBomb"/>
     </CValidatorCombine>
-    <CValidatorUnitCompareOrderCount id="JupiterHasBombingOrder">
-        <AbilLink value="RevenantBomb"/>
-        <Value value="1"/>
-    </CValidatorUnitCompareOrderCount>
-    <CValidatorUnitCompareBehaviorCount id="JupiterStealthSpeedCost">
+    <CValidatorUnitCompareBehaviorCount id="JupiterSpeedBuffGTEStealth">
         <WhichUnit Value="Caster"/>
         <Compare value="GE"/>
         <Value value="30"/>
-        <Behavior value="JupiterSpeed"/>
+        <Behavior value="JupiterSpeedBuff"/>
     </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareVital id="LifeGTEDelta20">
         <ResultFailed value="TooMuchLife"/>
@@ -1373,12 +1416,6 @@
         <CombineArray value="IsBlitzer"/>
         <CombineArray value="IsBadger"/>
     </CValidatorCombine>
-    <CValidatorUnitCompareBehaviorCount id="JupiterSpeedNotMaxed">
-        <WhichUnit Value="Caster"/>
-        <Compare value="LT"/>
-        <Value value="50"/>
-        <Behavior value="JupiterSpeed"/>
-    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="NoAnalyzeWeaknessBuff">
         <Behavior value="AnalyzeWeakness"/>
     </CValidatorUnitCompareBehaviorCount>
