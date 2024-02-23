@@ -37,6 +37,10 @@
         <AbilCmdIndex value="2"/>
         <Type value="Point"/>
     </CValidatorUnitOrderTargetType>
+    <CValidatorUnitBehaviorState id="IsNotStunned">
+        <ResultFailed value="Error,Error/IsStunned"/>
+        <BehaviorState value="Stun"/>
+    </CValidatorUnitBehaviorState>
     <CValidatorUnitCompareBehaviorCount id="JupiterSpeedAccelerator">
         <WhichUnit Value="Caster"/>
         <Compare value="NE"/>
@@ -450,6 +454,11 @@
         <WhichUnit Value="Caster"/>
         <Filters value="-;Unstoppable"/>
     </CValidatorUnitFilters>
+    <CValidatorUnitBehaviorState id="IsStunned">
+        <ResultFailed value="Error,Error/IsNotStunned"/>
+        <Enabled value="1"/>
+        <BehaviorState value="Stun"/>
+    </CValidatorUnitBehaviorState>
     <CValidatorUnitFilters id="TargetIsInRadar">
         <Filters value="Radar;-"/>
     </CValidatorUnitFilters>
@@ -973,7 +982,7 @@
         <CombineArray value="Walkable"/>
         <Negate value="1"/>
     </CValidatorCombine>
-    <CValidatorPlayerRequirement id="SubjecterRangeUpgrade">
+    <CValidatorPlayerRequirement id="CataractRangeUpgrade">
         <ResultNoPlayer value="Error"/>
         <Find value="1"/>
         <Value value="UseAmplifiedSpheres"/>
@@ -1245,8 +1254,8 @@
     <CValidatorUnitType id="IsPulsar">
         <Value value="Pulsar"/>
     </CValidatorUnitType>
-    <CValidatorUnitType id="IsSubjecter">
-        <Value value="Subjecter"/>
+    <CValidatorUnitType id="IsCataract">
+        <Value value="Cataract"/>
     </CValidatorUnitType>
     <CValidatorUnitType id="IsCrux">
         <Value value="Crux"/>
@@ -1334,7 +1343,7 @@
     <CValidatorUnitCompareBehaviorCount id="JupiterSpeedBuffGTEStealth">
         <WhichUnit Value="Caster"/>
         <Compare value="GE"/>
-        <Value value="30"/>
+        <Value value="27"/>
         <Behavior value="JupiterSpeedBuff"/>
     </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareVital id="LifeGTEDelta20">

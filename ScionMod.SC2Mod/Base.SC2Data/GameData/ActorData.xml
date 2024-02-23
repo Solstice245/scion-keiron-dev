@@ -448,8 +448,8 @@
         <On Terms="ActorCreation; ValidateUnit IsVolt" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveDownByDot1 SOpMoveDownByDot025} 0 1"/>
         <On Terms="ActorCreation; ValidateUnit IsPulsar" Send="SetScale 1.000000,1.000000,0.600000"/>
         <On Terms="ActorCreation; ValidateUnit IsPulsar" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveDownByDot15} 0 1"/>
-        <On Terms="ActorCreation; ValidateUnit IsSubjecter" Send="SetScale 0.800000"/>
-        <On Terms="ActorCreation; ValidateUnit IsSubjecter" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveDownByDot025} 0 1"/>
+        <On Terms="ActorCreation; ValidateUnit IsCataract" Send="SetScale 0.800000"/>
+        <On Terms="ActorCreation; ValidateUnit IsCataract" Send="HostSiteOpsSet ::Host {SOpAttachCenter SOpMoveDownByDot025} 0 1"/>
         <On Terms="ActorCreation; ValidateUnit IsCrux" Send="SetScale 0.900000,0.900000,1.100000"/>
         <On Terms="ActorCreation; ValidateUnit IsCrux" Send="HostSiteOpsSet ::Host SOpMoveUpByDot5 0 1"/>
         <On Terms="ActorCreation; ValidateUnit IsUmbra" Send="SetScale 0.600000"/>
@@ -689,7 +689,7 @@
     </CActorModel>
     <CActorModel id="WardAttackLaunchModel" parent="ModelAnimationStyleOneShot">
         <On Terms="ActorCreation" Send="SetTintColor {255,89,0 2.000000}"/>
-        <Model value="SubjecterAirAttackLaunch"/>
+        <Model value="CataractAirAttackLaunch"/>
     </CActorModel>
     <CActorUnit id="TargetVelocityDummy" parent="GenericUnitStandard" unitName="TargetVelocityDummy">
         <Model value="Axis"/>
@@ -716,7 +716,7 @@
         <On Terms="Effect.KeironShaperDummy.Start; At Caster" Send="Create"/>
         <On Terms="Behavior.KeironMaterializing.Destroy" Send="AnimBracketStop BSD"/>
         <On Terms="Effect.KeironShaperDummy.Start; ValidateUnit IsPulsar" Send="ModelSwap KeironShaperBeamMedium"/>
-        <On Terms="Effect.KeironShaperDummy.Start; ValidateUnit IsSubjecter" Send="ModelSwap KeironShaperBeamMedium"/>
+        <On Terms="Effect.KeironShaperDummy.Start; ValidateUnit IsCataract" Send="ModelSwap KeironShaperBeamMedium"/>
         <On Terms="Effect.KeironShaperDummy.Start; ValidateUnit IsCrux" Send="ModelSwap KeironShaperBeamMedium"/>
         <On Terms="Effect.KeironShaperDummy.Start; ValidateUnit IsUmbra" Send="ModelSwap KeironShaperBeamMedium"/>
         <On Terms="Effect.KeironShaperDummy.Start; ValidateUnit IsWard" Send="ModelSwap KeironShaperBeamMedium"/>
@@ -6823,16 +6823,16 @@
         <Model value="Stalker_Deluxe_Collection_BlinkOut"/>
     </CActorModel>
     <CActorSiteOpLocalOffset id="SOpRaiseBy4"/>
-    <CActorAction id="SubjecterAirAttack" parent="GenericAttack" effectImpact="EnthrallerQuillsLMImpact" effectLaunch="EnthrallerQuillsLM">
+    <CActorAction id="CataractAirAttack" parent="GenericAttack" effectImpact="EnthrallerQuillsLMImpact" effectLaunch="EnthrallerQuillsLM">
         <LaunchAttachQuery Methods="AMFilterSubjugatorLeft AMPatternSubjugatorLeft"/>
         <Missile value="EnthrallerQuillAttackMissile"/>
         <LaunchSiteOps HoldPosition="1" HoldRotation="1"/>
     </CActorAction>
     <CActorModel id="WardAttackImpactModel" parent="ModelAnimationStyleOneShot">
         <On Terms="ActorCreation" Send="SetTintColor {255,134,0 2.500000}"/>
-        <Model value="SubjecterAirAttackImpact"/>
+        <Model value="CataractAirAttackImpact"/>
     </CActorModel>
-    <CActorAction id="SubjecterAirAttackR" parent="SubjecterAirAttack" effectLaunch="EnthrallerQuillsLMR">
+    <CActorAction id="CataractAirAttackR" parent="CataractAirAttack" effectLaunch="EnthrallerQuillsLMR">
         <On index="6" Terms="Effect.EnthrallerQuillsLMR.Start; At Caster" Send="Create"/>
         <LaunchAttachQuery Methods="AMFilterSubjugatorRight AMPatternSubjugatorRight"/>
         <ImpactMap index="None" ModelReaction="SubjugatorAirAttackImpactReaction"/>
@@ -6845,7 +6845,7 @@
         <LaunchModel value="WardAttackLaunchModel"/>
         <ImpactModel value="WardAttackImpactModel"/>
     </CActorAction>
-    <CActorAction id="SubjecterAttack" parent="GenericAttack" effectAttack="ForceBlast">
+    <CActorAction id="CataractAttack" parent="GenericAttack" effectAttack="ForceBlast">
         <LaunchAttachQuery Methods="AMFilterSubjugatorGround"/>
     </CActorAction>
     <CActorAction id="UmbraAttack" parent="GenericAttack" effectImpact="ShadowCannonImpact" effectLaunch="ShadowCannon"/>
@@ -6896,12 +6896,12 @@
         <On Terms="AbilMorph.ProjectionEnd.Finish" Send="AnimClear Walk"/>
         <On Terms="AbilMorph.ProjectionStart.Start" Send="AnimPlay Walk Walk PlayForever"/>
     </CActorUnit>
-    <CActorUnit id="Subjecter" parent="GenericUnitKeiron" unitName="Subjecter">
+    <CActorUnit id="Cataract" parent="GenericUnitKeiron" unitName="Cataract">
         <WalkAnimMoveSpeed value="2.625"/>
         <BarOffset value="65"/>
         <BarWidth value="65"/>
         <DeathArray index="Normal" SoundLink="KeironUnitSmall_Death"/>
-        <On Terms="ActorCreation; ValidatePlayer SubjecterRangeUpgrade" Send="AnimPlay Upgrade Upgrade PlayForever 0.000000"/>
+        <On Terms="ActorCreation; ValidatePlayer CataractRangeUpgrade" Send="AnimPlay Upgrade Upgrade PlayForever 0.000000"/>
         <On Terms="Upgrade.AmplifiedSphere.Add" Send="AnimPlay Upgrade Upgrade PlayForever 0.000000"/>
         <On Terms="Upgrade.AmplifiedSphere.Remove" Send="AnimClear Upgrade"/>
         <On Terms="WeaponStart.*.AttackStart; WeaponTargetElevation GE 20.000000" Send="AnimPlay Stance Superior PlayForever"/>
@@ -6914,7 +6914,7 @@
         <On Terms="TimerExpired; TimerName CoverDelay" Send="AnimClear Cover"/>
     </CActorUnit>
     <CActorMissile id="EnthrallerQuillAttackMissile" parent="GenericAttackMissile" unitName="EnthrallerQuillsLMWeapon">
-        <Model value="SubjecterAirAttackMissile"/>
+        <Model value="CataractAirAttackMissile"/>
     </CActorMissile>
     <CActorMissile id="AuroraAttackMissile" parent="GenericAttackMissile" unitName="AuroraAttackMissile">
         <On Terms="UnitBirth" Send="AnimSetTimeScaleAbsolute Lifetime 1.000000"/>
