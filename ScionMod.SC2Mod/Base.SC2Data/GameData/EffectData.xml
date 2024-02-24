@@ -141,6 +141,11 @@
         <WhichUnit Value="Caster"/>
         <BehaviorLink value="JupiterSpeedController"/>
     </CEffectRemoveBehavior>
+    <CEffectSwitch id="RevenantBombUnit">
+        <EditorCategories value="Race:Genetron"/>
+        <CaseArray Validator="RevenantLaunchTargetSlow" Effect="JupiterRevenantBombLaunchMissile"/>
+        <CaseDefault value="JupiterRevenantBombSpellDelay"/>
+    </CEffectSwitch>
     <CEffectModifyUnit id="Scion_CasterLookAtTarget">
         <ImpactUnit Value="Caster"/>
         <ModifyFlags index="InterpolateFacing" value="1"/>
@@ -184,6 +189,7 @@
         <InitialDelay value="0.0625"/>
         <InitialEffect value="JupiterRevenantBombSpellCooldown"/>
         <ExpireEffect value="JupiterRevenantBombChannel"/>
+        <WhichLocation Value="TargetUnitOrPoint"/>
     </CEffectCreatePersistent>
     <CEffectSwitch id="JupiterRevenantBombLaunchSwitch">
         <ValidatorArray value="RevenantLaunchTargetDistances"/>
@@ -3980,7 +3986,7 @@
         <Flags index="ContinueWhenFull" value="1"/>
         <PeriodicValidator value="GenetronEnergyGenValidators"/>
         <RechargeVital value="Energy"/>
-        <RechargeVitalRate value="0.7148"/>
+        <RechargeVitalRate value="0.543"/>
         <InitialEffect value="DataDefaultSet1"/>
         <FinalEffect value="DataDefaultSet0"/>
     </CEffectCreateHealer>
@@ -4335,7 +4341,7 @@
         <Amount value="10"/>
     </CEffectDamage>
     <CEffectDamage id="D15Magnum" parent="ScionDamageRange" Race="Genetron">
-        <Amount value="15"/>
+        <Amount value="16"/>
         <Death value="Impact"/>
     </CEffectDamage>
     <CEffectCreateUnit id="DisguiseAsSpitfireCU" parent="DisguiseEx3CU">
@@ -4598,7 +4604,7 @@
     <CEffectDamage id="330mmStrikeCannon" parent="ScionDamageRange" Race="Genetron">
         <Amount value="45"/>
         <Death value="Blast"/>
-        <AreaArray Radius="0.4" Fraction="0.5"/>
+        <AreaArray Radius="0.375" Fraction="0.25"/>
     </CEffectDamage>
     <CEffectDamage id="ChargeCannon" parent="ScionDamageRange" Race="Genetron">
         <Amount value="11"/>
@@ -6320,7 +6326,7 @@
     </CEffectLaunchMissile>
     <CEffectDamage id="ElectronBoltD" parent="ScionDamageRange" Race="Keiron"/>
     <CEffectDamage id="ElectronBoltDMG" parent="ScionDamageRange" Race="Keiron">
-        <Amount value="8"/>
+        <Amount value="7"/>
         <Death value="Electrocute"/>
     </CEffectDamage>
     <CEffectSet id="ElectronBolt" parent="ScionSet" Race="Keiron">

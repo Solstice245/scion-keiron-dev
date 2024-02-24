@@ -47,7 +47,7 @@
             <Resource index="Vespene" value="250"/>
             <Button DefaultButtonFace="UpgradeLightWeaponsLevel3" Requirements="LearnMechLightWeapons3"/>
         </InfoArray>
-        <InfoArray index="Research7" Time="160" Upgrade="CalibratedEngines">
+        <InfoArray index="Research7" Time="150" Upgrade="CalibratedEngines">
             <Resource index="Minerals" value="100"/>
             <Resource index="Vespene" value="100"/>
             <Button DefaultButtonFace="ResearchSpitfireCalibratedEngines" Requirements="LearnCalibratedEngines">
@@ -850,7 +850,7 @@
         <InfoArray index="Build12" Unit="AssemblyArray" Time="70">
             <Button DefaultButtonFace="AssemblyArray" Requirements="HaveRelayTower"/>
         </InfoArray>
-        <InfoArray index="Build13" Unit="AnalysisTerminal" Time="45">
+        <InfoArray index="Build13" Unit="AnalysisTerminal" Time="50">
             <Button DefaultButtonFace="AnalysisTerminal" Requirements="HaveNode"/>
         </InfoArray>
         <InfoArray index="Build14" Unit="Generator" Time="40">
@@ -974,21 +974,27 @@
     </CAbilMorph>
     <CAbilEffectTarget id="RevenantBomb">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Range value="72"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="RevenantBomb"/>
+        <PostEffectBehavior Behavior="RevenantBombAbilityChannel"/>
         <Flags index="AllowMovement" value="1"/>
         <Flags index="NoDeceleration" value="1"/>
         <Flags index="RequireTargetVision" value="0"/>
         <Cost>
-            <Cooldown TimeUse="10"/>
+            <Cooldown Location="Unit" TimeUse="10"/>
         </Cost>
-        <CursorEffect value="JupiterRevenantBombDMG"/>
-        <PostEffectBehavior Behavior="RevenantBombAbilityChannel"/>
+        <Range value="72"/>
         <Arc value="360"/>
+        <CursorEffect value="JupiterRevenantBombDMG"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="RevenantBomb"/>
     </CAbilEffectTarget>
     <CAbilHarvest id="ACRGather">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
     </CAbilHarvest>
+    <CAbilEffectTarget id="RevenantBombUnit" parent="RevenantBomb">
+        <Name value="Abil/Name/RevenantBombUnit"/>
+        <DataCollection value="RevenantBombUnit"/>
+        <Effect index="0" value="RevenantBombUnit"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="RevenantBombUnit"/>
+    </CAbilEffectTarget>
     <CAbilEffectTarget id="SchematicTransmit">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Effect index="0" value="SchematicTransmitCP"/>
@@ -1168,12 +1174,12 @@
             <Button DefaultButtonFace="FabricateTesla" Requirements="HaveChemicalFirm"/>
             <Unit value="Tesla"/>
         </InfoArray>
-        <InfoArray index="Train4" Time="70">
+        <InfoArray index="Train4" Time="63">
             <Button DefaultButtonFace="FabricateInciter" Requirements="HaveTechVault"/>
             <Unit value="Inciter"/>
         </InfoArray>
         <InfoArray index="Train5" Time="70">
-            <Button DefaultButtonFace="FabricateVirtus" Requirements="HaveChemicalFirm"/>
+            <Button DefaultButtonFace="FabricateVirtus" Requirements="HaveTechVault"/>
             <Unit value="Virtus"/>
         </InfoArray>
     </CAbilTrain>

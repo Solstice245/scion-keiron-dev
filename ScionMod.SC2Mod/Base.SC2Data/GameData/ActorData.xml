@@ -1853,7 +1853,12 @@
         <Range value="3.000000"/>
     </CActorRange>
     <CActorRange id="AvengerVengeanceMissileRange" parent="RangeAbilStandard" abil="VengeanceMissile"/>
-    <CActorRange id="JupiterRevenantBombRange" parent="RangeAbilStandard" abil="RevenantBomb"/>
+    <CActorRange id="JupiterRevenantBombRange" parent="RangeAbilStandard" abil="RevenantBomb">
+        <On Terms="Abil.RevenantBombUnit.TargetOn" Send="Create"/>
+        <On Terms="Abil.RevenantBombUnit.TargetOff" Send="Destroy"/>
+        <On Terms="Abil.RevenantBombUnit.ButtonHoverOn" Send="Create"/>
+        <On Terms="Abil.RevenantBombUnit.ButtonHoverOff" Send="Destroy"/>
+    </CActorRange>
     <CActorRange id="ProcessorAnalyzeWeaknessRange" parent="RangeAbilStandard" abil="ProcessorAnalyzeWeakness"/>
     <CActorModel id="AvengerVengeanceMissileAdd" parent="ModelAddition">
         <HostSiteOps Ops="SOpAttachHardPoint"/>
@@ -2588,7 +2593,7 @@
         <On Terms="Behavior.ResourceTap.Off" Send="Destroy"/>
         <HostSiteOps Ops="SOpAttachOriginStationary"/>
     </CActorModel>
-    <CActorUnit id="AnalysisTerminal" parent="GenetronBuilding" buildTime="44.000000" unitName="AnalysisTerminal">
+    <CActorUnit id="AnalysisTerminal" parent="GenetronBuilding" buildTime="49.000000" unitName="AnalysisTerminal">
         <DeathArray index="Normal" ModelLink="AnalysisTerminalDeath" SoundLink="Armory_Explode"/>
         <DeathArray index="UnderConstruction" ModelLink="TerranBuildingDeath" SoundLink="Armory_Explode"/>
         <BarWidth value="130"/>
@@ -2843,6 +2848,7 @@
         <LaunchAttachQuery Methods="AMFilterAquila"/>
         <LaunchAssets Model="GhostSnipeAttackLaunch"/>
         <ImpactMap index="None" Model="GhostAttackImpact"/>
+        <LaunchSiteOps HoldPosition="1" HoldRotation="1"/>
     </CActorAction>
     <CActorAction id="Scion_AvengerAttack" parent="GenericAttack" effectImpact="NemesisMissilesLMImpact" effectLaunch="NemesisMissilesLM">
         <LaunchAttachQuery Methods="AMPatternAvenger"/>
@@ -3033,6 +3039,7 @@
     </CActorAction>
     <CActorSplat id="JupiterAttackSplat" parent="GuideVisualCircle" unitName="Bogus">
         <On index="0" Terms="Abil.RevenantBomb.Cursor" Send="Create"/>
+        <On Terms="Abil.RevenantBombUnit.Cursor" Send="Create"/>
         <Model value="JupiterAttackSplat"/>
     </CActorSplat>
     <CActorMissile id="JupiterAttackMissile" parent="GenericAttackMissile" unitName="RevenantBombLMWeapon">
@@ -4291,7 +4298,7 @@
         <On Terms="Behavior.ResidualAcid.On" Send="Create"/>
         <On Terms="Behavior.ResidualAcid.Off" Send="AnimBracketStop BSD"/>
     </CActorModel>
-    <CActorAction id="ScorpaliskAttack" parent="GenericAttack" effectAttack="VenomousStrike">
+    <CActorAction id="ScorpaliskAttack" parent="GenericAttack" effectAttack="VenomousStrikeDMG">
         <ImpactAttachQuery Methods="AMFilterTargetVolumes"/>
         <ImpactMap index="None" Sound="Hydralisk_AttackImpactMelee"/>
     </CActorAction>
