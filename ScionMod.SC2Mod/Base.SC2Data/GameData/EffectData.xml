@@ -141,6 +141,17 @@
         <WhichUnit Value="Caster"/>
         <BehaviorLink value="JupiterSpeedController"/>
     </CEffectRemoveBehavior>
+    <CEffectSet id="OlympusExplodeExpireSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="OlympusExplodeDMG"/>
+        <EffectArray value="OlympusExplodeSearch"/>
+    </CEffectSet>
+    <CEffectEnumArea id="OlympusExplodeSearch">
+        <EditorCategories value="Race:Genetron"/>
+        <DebugTrace value="1"/>
+        <SearchFilters value="-;Structure,Missile,Stasis,Dead,Hidden"/>
+        <AreaArray Radius="8" Effect="AegisShieldAuraKBTarget"/>
+    </CEffectEnumArea>
     <CEffectSwitch id="RevenantBombUnit">
         <EditorCategories value="Race:Genetron"/>
         <CaseArray Validator="RevenantLaunchTargetSlow" Effect="JupiterRevenantBombLaunchMissile"/>
@@ -260,6 +271,26 @@
         <EffectArray value="NullifierWeaponDMG"/>
         <EffectArray value="BeamWeaponCooldown"/>
     </CEffectSet>
+    <CEffectApplyBehavior id="SpitfirePowershellBuff" parent="ScionApplyBehaviorCaster" Race="Genetron">
+        <Behavior value="SpitfirePowershell"/>
+    </CEffectApplyBehavior>
+    <CEffectModifyUnit id="SpitfirePowershellPowerModify">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-25"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectSet id="SpitfirePowershellPowerSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="SpitfirePowershellPowerModify"/>
+        <EffectArray value="SpitfirePowershellBuff"/>
+    </CEffectSet>
+    <CEffectEnumTrackedUnits id="SpitfirePowershellPowerEnum">
+        <ValidatorArray value="GenetronPowerSupplyGE025"/>
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="SpitfirePowershellPowerSet"/>
+    </CEffectEnumTrackedUnits>
     <CEffectDamage id="StratumMissilePodBonus" parent="ScionDamageRange" Race="Genetron">
         <ArmorReduction value="0"/>
         <Kind value="NoProc"/>
@@ -1074,7 +1105,6 @@
         <EffectArray value="Scion_DisplayCooldownDummySubtractPersistent"/>
     </CEffectSet>
     <CEffectCreatePersistent id="GenetronOverclockPowerSet">
-        <ValidatorArray value="GenetronPowerSupplyGE075"/>
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="TargetUnit"/>
         <InitialEffect value="Scion_OverclockPowerModify"/>
@@ -1259,6 +1289,7 @@
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
         <Effect value="GenetronOverclockPowerSet"/>
+        <ValidatorArray value="GenetronPowerSupplyGE075"/>
     </CEffectEnumTrackedUnits>
     <CEffectCreatePersistent id="ProcessingCoreMiningPriorityRefreshCooldownLoop">
         <EditorCategories value="Race:Genetron"/>
@@ -3004,6 +3035,7 @@
     </CEffectLaunchMissile>
     <CEffectEnumTrackedUnits id="ProcessingCoreMiningPriority">
         <ValidatorArray value="ProcessingCoreMiningPriority"/>
+        <ValidatorArray value="GenetronPowerSupplyGE100"/>
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
         <Effect value="ProcessingCoreMiningPrioritySet"/>
@@ -3537,7 +3569,7 @@
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="CasterPoint"/>
         <InitialDelay value="4.2"/>
-        <InitialEffect value="OlympusExplodeDMG"/>
+        <InitialEffect value="OlympusExplodeExpireSet"/>
         <AINotifyEffect value="OlympusExplodeDMG"/>
     </CEffectCreatePersistent>
     <CEffectSet id="TeslaChargeCompleteCloakCharge" parent="ScionSet" Race="Genetron">
@@ -3986,7 +4018,7 @@
         <Flags index="ContinueWhenFull" value="1"/>
         <PeriodicValidator value="GenetronEnergyGenValidators"/>
         <RechargeVital value="Energy"/>
-        <RechargeVitalRate value="0.543"/>
+        <RechargeVitalRate value="0.7148"/>
         <InitialEffect value="DataDefaultSet1"/>
         <FinalEffect value="DataDefaultSet0"/>
     </CEffectCreateHealer>
@@ -4604,7 +4636,6 @@
     <CEffectDamage id="330mmStrikeCannon" parent="ScionDamageRange" Race="Genetron">
         <Amount value="45"/>
         <Death value="Blast"/>
-        <AreaArray Radius="0.375" Fraction="0.25"/>
     </CEffectDamage>
     <CEffectDamage id="ChargeCannon" parent="ScionDamageRange" Race="Genetron">
         <Amount value="11"/>
@@ -5656,7 +5687,7 @@
     </CEffectEnumArea>
     <CEffectCreateUnit id="AegisShieldAuraKBCU">
         <EditorCategories value="Race:Keiron"/>
-        <WhichLocation Value="CasterUnit"/>
+        <WhichLocation Value="CasterUnitOrPoint"/>
         <Origin Value="TargetUnit"/>
         <CreateFlags index="Birth" value="0"/>
         <CreateFlags index="DropOff" value="0"/>

@@ -47,7 +47,7 @@
             <Resource index="Vespene" value="250"/>
             <Button DefaultButtonFace="UpgradeLightWeaponsLevel3" Requirements="LearnMechLightWeapons3"/>
         </InfoArray>
-        <InfoArray index="Research7" Time="150" Upgrade="CalibratedEngines">
+        <InfoArray index="Research7" Time="140" Upgrade="CalibratedEngines">
             <Resource index="Minerals" value="100"/>
             <Resource index="Vespene" value="100"/>
             <Button DefaultButtonFace="ResearchSpitfireCalibratedEngines" Requirements="LearnCalibratedEngines">
@@ -228,31 +228,13 @@
         <Effect index="0" value="SpitfireOverdrivePowerEnum"/>
         <Flags index="Transient" value="1"/>
         <Cost>
-            <Vital index="Energy" value="10"/>
+            <Vital index="Energy" value="15"/>
             <Cooldown TimeUse="5"/>
         </Cost>
-        <AINotifyEffect value="BlitzerOverdrive"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="SpitfireSupercharge" Requirements="SpitfireOverdriveReq">
             <Flags index="ToSelection" value="1"/>
         </CmdButtonArray>
     </CAbilEffectInstant>
-    <CAbilBehavior id="SpitfirePowershell">
-        <AbilSetId value="Powershell"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <CmdButtonArray index="On" DefaultButtonFace="BadgerPowershell">
-            <Flags index="ToSelection" value="1"/>
-        </CmdButtonArray>
-        <CmdButtonArray index="Off" DefaultButtonFace="Cancel"/>
-        <Flags index="Toggle" value="1"/>
-        <Flags index="Transient" value="1"/>
-        <Cost>
-            <Cooldown TimeUse="1"/>
-        </Cost>
-        <OffCost>
-            <Cooldown TimeUse="10"/>
-        </OffCost>
-        <BehaviorArray value="SpitfirePowershell"/>
-    </CAbilBehavior>
     <CAbilResearch id="GeneratorResearch">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <InfoArray index="Research1" Time="110" Alert="ResearchComplete_Terr" Upgrade="CloakingGenerator">
@@ -446,7 +428,7 @@
     <CAbilEffectTarget id="OlympusDischarge">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Cost>
-            <Cooldown TimeUse="28"/>
+            <Cooldown TimeUse="35"/>
         </Cost>
         <Range value="500"/>
         <Arc value="360"/>
@@ -631,6 +613,18 @@
         <AutoCastValidatorArray value="NotStructureTarget"/>
         <AINotifyEffect value="FixerRepairHealer"/>
     </CAbilEffectTarget>
+    <CAbilEffectInstant id="SpitfirePowershell">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Effect index="0" value="SpitfirePowershellPowerEnum"/>
+        <Flags index="Transient" value="1"/>
+        <Cost>
+            <Vital index="Energy" value="25"/>
+            <Cooldown TimeUse="5"/>
+        </Cost>
+        <CmdButtonArray index="Execute" DefaultButtonFace="BadgerPowershell" Requirements="SpitfireOverdriveReq">
+            <Flags index="ToSelection" value="1"/>
+        </CmdButtonArray>
+    </CAbilEffectInstant>
     <CAbilEffectInstant id="SuperCharge">
         <AbilSetId value="Supercharge"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
