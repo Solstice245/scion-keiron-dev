@@ -66,11 +66,206 @@
         <?token id="Race" value="Neutral"?>
         <EditorCategories value="Race:##Race##"/>
     </CEffectSet>
+    <CEffectModifyUnit id="TeslaCloakChargeFieldModifyChargeEnergy">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-2.23"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectSet id="TeslaCloakChargeFieldPeriodSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="TeslaCloakChargeFieldModifyChargeEnergy"/>
+        <EffectArray value="CloakChargeFieldSA"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="TorrentLunaMineEnergyDrain">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="0">
+                <AccumulatorArray value="LunaMineEnergyDrain"/>
+            </Change>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectCreatePersistent id="TorrentLunaMineMissileNanitePersistent">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="TargetUnit"/>
+        <InitialEffect value="NaniteEmitterBuff"/>
+        <PeriodCount value="8"/>
+        <PeriodicEffectArray value="NaniteEmitterBuff"/>
+        <PeriodicPeriodArray value="0.3125"/>
+    </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="TorrentPlaceLunaMinesStun">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Source"/>
+        <Behavior value="LunaMineStun"/>
+    </CEffectApplyBehavior>
+    <CEffectEnumTrackedUnits id="EqualizerHardenedFramePowerEnum">
+        <ValidatorArray value="GenetronPowerSupplyGE050"/>
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="EqualizerHardenedFramePowerSet"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectModifyUnit id="EqualizerHardenedFramePowerModify">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-50"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectSet id="EqualizerHardenedFramePowerSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="EqualizerHardenedFramePowerModify"/>
+        <EffectArray value="EqualizerHardenedFrame"/>
+    </CEffectSet>
+    <CEffectCreatePersistent id="CasnoliskExplosiveGlobImpactDelay">
+        <EditorCategories value="Race:Xayid"/>
+        <WhichLocation Value="TargetUnit"/>
+        <ExpireEffect value="ExplosiveGlobDMGB"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="CasnoliskExplosiveGlobImpactSet">
+        <EditorCategories value="Race:Xayid"/>
+    </CEffectCreatePersistent>
+    <CEffectSet id="CitadelEnergizedHealers">
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="CitadelEnergizedHealerLife"/>
+        <EffectArray value="CitadelEnergizedHealerShields"/>
+    </CEffectSet>
     <CEffectCancelOrder id="CancelActiveBarrageAttackForQueue">
         <ValidatorArray value="CasterHasQueuedOrders"/>
         <WhichUnit Value="Caster"/>
         <AbilCmd value="attack,Barrage"/>
     </CEffectCancelOrder>
+    <CEffectCreateHealer id="CitadelEnergizedHealerLife">
+        <ValidatorArray value="IsEnergized"/>
+        <EditorCategories value="Race:Keiron"/>
+        <Flags index="Channeled" value="0"/>
+        <Flags index="ContinueWhenFull" value="1"/>
+        <RechargeVitalRate value="3.0664"/>
+    </CEffectCreateHealer>
+    <CEffectCreateHealer id="CitadelEnergizedHealerShields">
+        <ValidatorArray value="IsEnergized"/>
+        <EditorCategories value="Race:Keiron"/>
+        <Flags index="Channeled" value="0"/>
+        <Flags index="ContinueWhenFull" value="1"/>
+        <RechargeVital value="Shields"/>
+        <RechargeVitalRate value="8.168"/>
+    </CEffectCreateHealer>
+    <CEffectCreatePersistent id="DisruptionBeam">
+        <PeriodicValidator value="CasterIsNotDazed"/>
+    </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="EqualizerHardenedFrame">
+        <EditorCategories value="Race:Genetron"/>
+    </CEffectApplyBehavior>
+    <CEffectDamage id="ExplosiveGlobDMGB" parent="ScionDamage" Race="Xayid">
+        <ValidatorArray value="NoReaperKD8Knockback"/>
+        <ResponseFlags index="Acquire" value="0"/>
+        <ImpactLocation Effect="ExplosiveGlobImpactDummy" Value="TargetUnit"/>
+        <ImpactUnitValidator value="TargetIsEnemyOrNeutral"/>
+        <Amount value="40"/>
+        <Death value="Disintegrate"/>
+    </CEffectDamage>
+    <CEffectApplyBehavior id="GenetronPowerBalance015On">
+        <EditorCategories value="Race:Genetron"/>
+        <ValidatorArray index="0" value="EnergyGTE015"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="GenetronPowerBalance025On">
+        <EditorCategories value="Race:Genetron"/>
+        <ValidatorArray index="0" value="EnergyGTE025"/>
+    </CEffectApplyBehavior>
+    <CEffectCreatePersistent id="GenetronPowerBalance015OnDelay">
+        <EditorCategories value="Race:Genetron"/>
+        <Flags index="EffectSuccess" value="1"/>
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <PeriodicValidator value="SourceNotDead"/>
+        <PeriodicEffectArray value="GenetronPowerBalance015On"/>
+        <WhichLocation Value="TargetUnit"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="GenetronPowerBalance020On">
+        <ValidatorArray index="0" value="EnergyGTE020"/>
+        <EditorCategories value="Race:Genetron"/>
+    </CEffectApplyBehavior>
+    <CEffectCreatePersistent id="GenetronPowerBalance020OnDelay">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="TargetUnit"/>
+        <Flags index="EffectSuccess" value="1"/>
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <PeriodicValidator value="SourceNotDead"/>
+        <PeriodicEffectArray value="GenetronPowerBalance020On"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="GenetronPowerBalance050On">
+        <EditorCategories value="Race:Genetron"/>
+        <ValidatorArray index="0" value="EnergyGTE050"/>
+    </CEffectApplyBehavior>
+    <CEffectCreatePersistent id="GenetronPowerBalance025OnDelay">
+        <EditorCategories value="Race:Genetron"/>
+        <Flags index="EffectSuccess" value="1"/>
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <PeriodicEffectArray value="GenetronPowerBalance025On"/>
+        <PeriodicValidator value="SourceNotDead"/>
+        <WhichLocation Value="TargetUnit"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="GenetronPowerBalance075On">
+        <EditorCategories value="Race:Genetron"/>
+        <ValidatorArray index="0" value="EnergyGTE075"/>
+    </CEffectApplyBehavior>
+    <CEffectCreatePersistent id="GenetronPowerBalance050OnDelay">
+        <EditorCategories value="Race:Genetron"/>
+        <Flags index="EffectSuccess" value="1"/>
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <PeriodicEffectArray value="GenetronPowerBalance050On"/>
+        <PeriodicValidator value="SourceNotDead"/>
+        <WhichLocation Value="TargetUnit"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="GenetronPowerBalance075OnDelay">
+        <EditorCategories value="Race:Genetron"/>
+        <Flags index="EffectSuccess" value="1"/>
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <PeriodicEffectArray value="GenetronPowerBalance075On"/>
+        <PeriodicValidator value="SourceNotDead"/>
+        <WhichLocation Value="TargetUnit"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="GenetronPowerBalance100On">
+        <ValidatorArray index="0" value="EnergyGTE100"/>
+        <EditorCategories value="Race:Genetron"/>
+    </CEffectApplyBehavior>
+    <CEffectCreatePersistent id="GenetronPowerBalance100OnDelay">
+        <EditorCategories value="Race:Genetron"/>
+        <Flags index="EffectSuccess" value="1"/>
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <PeriodicEffectArray value="GenetronPowerBalance100On"/>
+        <PeriodicValidator value="SourceNotDead"/>
+        <WhichLocation Value="TargetUnit"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="GenetronPowerBalance150OnDelay">
+        <EditorCategories value="Race:Genetron"/>
+        <Flags index="EffectSuccess" value="1"/>
+        <Flags index="PersistUntilDestroyed" value="1"/>
+        <PeriodicEffectArray value="GenetronPowerBalance150On"/>
+        <PeriodicValidator value="SourceNotDead"/>
+        <WhichLocation Value="TargetUnit"/>
+        <PeriodicPeriodArray value="0.0625"/>
+    </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="GenetronPowerBalance150On">
+        <ValidatorArray index="0" value="EnergyGTE150"/>
+        <EditorCategories value="Race:Genetron"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="GyreAnnexABStun" parent="ScionApplyBehavior" Race="Keiron">
+        <ValidatorArray index="0" value="NotFrenzied"/>
+        <Behavior value="GyreAnnexedStun"/>
+    </CEffectApplyBehavior>
+    <CEffectSet id="GyreAnnexSearchEnumSet">
+        <ValidatorArray value="NoKeyhole"/>
+        <ValidatorArray value="IsNotNexusMassRecallTargetPhased"/>
+        <ValidatorArray value="AnnexCasterToAnnexTargetDistance"/>
+        <ValidatorArray value="IsNotPhasedUnit"/>
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="GyreAnnexDataInc"/>
+        <EffectArray value="GyreAnnexABStun"/>
+    </CEffectSet>
     <CEffectCreatePersistent id="JupiterRevenantBombWeaponCancelDelay">
         <EditorCategories value="Race:Genetron"/>
         <InitialDelay value="0.25"/>
@@ -141,6 +336,15 @@
         <WhichUnit Value="Caster"/>
         <BehaviorLink value="JupiterSpeedController"/>
     </CEffectRemoveBehavior>
+    <CEffectApplyBehavior id="KillsToCasterFromSource">
+        <EditorCategories value="Race:Terran"/>
+        <WhichUnit Value="Source"/>
+        <Behavior value="KillsToCaster"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="MakePrecursorCaster">
+        <WhichUnit Value="Caster"/>
+        <Behavior value="Precursor"/>
+    </CEffectApplyBehavior>
     <CEffectSet id="OlympusExplodeExpireSet">
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="OlympusExplodeDMG"/>
@@ -271,6 +475,30 @@
         <EffectArray value="NullifierWeaponDMG"/>
         <EffectArray value="BeamWeaponCooldown"/>
     </CEffectSet>
+    <CEffectApplyBehavior id="SpitfireCounterStabilization">
+        <ValidatorArray index="0" value="NotDead"/>
+        <EditorCategories value="Race:Genetron"/>
+    </CEffectApplyBehavior>
+    <CEffectApplyBehavior id="SpitfireDeadeyeModuleApplyBehavior" parent="ScionApplyBehaviorCaster" Race="Genetron">
+        <Behavior value="SpitfireDeadeyeModule"/>
+    </CEffectApplyBehavior>
+    <CEffectModifyUnit id="SpitfireDeadeyeModulePowerModify">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-15"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectSet id="SpitfireDeadeyeModulePowerSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="SpitfireDeadeyeModulePowerModify"/>
+        <EffectArray value="SpitfireDeadeyeModuleApplyBehavior"/>
+    </CEffectSet>
+    <CEffectEnumTrackedUnits id="SpitfireDeadeyeModulePowerEnum">
+        <ValidatorArray value="GenetronPowerSupplyGE015"/>
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="SpitfireDeadeyeModulePowerSet"/>
+    </CEffectEnumTrackedUnits>
     <CEffectApplyBehavior id="SpitfirePowershellBuff" parent="ScionApplyBehaviorCaster" Race="Genetron">
         <Behavior value="SpitfirePowershell"/>
     </CEffectApplyBehavior>
@@ -291,6 +519,19 @@
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
         <Effect value="SpitfirePowershellPowerSet"/>
     </CEffectEnumTrackedUnits>
+    <CEffectCreatePersistent id="SpitfireRiotGunCreatePersistent">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="TargetUnit"/>
+        <InitialEffect value="RiotGun"/>
+        <ExpireDelay value="0.125"/>
+        <PeriodCount value="0">
+            <AccumulatorArray value="SpitfireCounterStabilizationBurst1"/>
+            <AccumulatorArray value="SpitfireCounterStabilizationBurst2"/>
+        </PeriodCount>
+        <PeriodicValidator value="SpitfireBurstRoundValidator"/>
+        <PeriodicEffectArray value="RiotGun"/>
+        <PeriodicPeriodArray value="0.1875"/>
+    </CEffectCreatePersistent>
     <CEffectDamage id="StratumMissilePodBonus" parent="ScionDamageRange" Race="Genetron">
         <ArmorReduction value="0"/>
         <Kind value="NoProc"/>
@@ -304,6 +545,187 @@
         <EffectArray value="StratumMissilePodDMG"/>
         <EffectArray value="StratumMissilePodBonus"/>
     </CEffectSet>
+    <CEffectDamage id="SuicideRemoveCaster">
+        <ImpactLocation Value="CasterUnit"/>
+        <Flags index="Kill" value="1"/>
+        <Death value="Remove"/>
+    </CEffectDamage>
+    <CEffectModifyUnit id="SuperchargeSCC">
+        <EditorCategories value="Race:Genetron"/>
+        <ImpactUnit Value="Source"/>
+        <Cost Abil="SuperCharge,Execute" CooldownOperation="Set" CooldownTimeUse="14"/>
+    </CEffectModifyUnit>
+    <CEffectApplyBehavior id="TorrentLunaMineMissileAddStack">
+        <EditorCategories value="Race:Genetron"/>
+        <Behavior value="LunaMineMissileData"/>
+    </CEffectApplyBehavior>
+    <CEffectCreatePersistent id="TorrentLunaMineMissileCreatePersistent">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="TargetUnit"/>
+        <Flags index="Channeled" value="1"/>
+        <ExpireDelay value="1.05"/>
+        <ExpireEffect value="TorrentLunaMineMissileLaunchSet"/>
+        <FinalEffect value="TorrentLunaMineMissileRemoveSet"/>
+        <PeriodicValidator value="TargetIsValidWeaponTarget"/>
+    </CEffectCreatePersistent>
+    <CEffectDamage id="TorrentLunaMineMissileDamage">
+        <EditorCategories value="Race:Genetron"/>
+        <Amount value="60"/>
+    </CEffectDamage>
+    <CEffectSet id="TorrentLunaMineMissileImpactSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="TorrentLunaMineMissileDamage"/>
+        <EffectArray value="TorrentLunaMineMissileSearchAreaGround"/>
+        <EffectArray value="TorrentLunaMineMissileSearchAreaAir"/>
+        <EffectArray value="SuicideRemoveCaster"/>
+    </CEffectSet>
+    <CEffectLaunchMissile id="TorrentLunaMineMissileLaunchMissile">
+        <EditorCategories value="Race:Genetron"/>
+        <ImpactEffect value="TorrentLunaMineMissileImpactSet"/>
+        <FinishEffect value="TorrentLunaMineMissileRemoveStack"/>
+        <Flags index="ValidateAbil" value="0"/>
+        <Flags index="ValidateWeapon" value="0"/>
+        <AmmoUnit value="TorrentLunaMineMissile"/>
+    </CEffectLaunchMissile>
+    <CEffectSet id="TorrentLunaMineMissileLaunchSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="DataDefaultSet1"/>
+        <EffectArray value="TorrentLunaMineMissileAddStack"/>
+        <EffectArray value="TorrentLunaMineMissileLaunchMissile"/>
+        <EffectArray value="MakePrecursorCaster"/>
+    </CEffectSet>
+    <CEffectSet id="TorrentLunaMineMissileRemoveSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="TorrentLunaMineMissileRemoveStack"/>
+        <EffectArray value="TorrentLunaMineMissileUserData"/>
+    </CEffectSet>
+    <CEffectRemoveBehavior id="TorrentLunaMineMissileRemoveStack">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="LunaMineMissileData"/>
+        <Count value="1"/>
+        <RequireCasterUnit Value="Caster"/>
+    </CEffectRemoveBehavior>
+    <CEffectCreatePersistent id="TorrentLunaMineMissileScanInit">
+        <ValidatorArray value="LunaMineScanValidator"/>
+        <ValidatorArray value="LunaMineNotOverkilling"/>
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="TargetUnit"/>
+        <InitialEffect value="TorrentLunaMineMissileAddStack"/>
+        <FinalEffect value="TorrentLunaMineMissileCreatePersistent"/>
+    </CEffectCreatePersistent>
+    <CEffectSet id="TorrentLunaMineMissileAutoInit">
+        <ValidatorArray value="LunaMineScanValidator"/>
+        <ValidatorArray value="LunaMineNotOverkilling"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="TorrentLunaMineMissileAddStack"/>
+        <EffectArray value="TorrentLunaMineMissileCreatePersistent"/>
+    </CEffectSet>
+    <CEffectEnumArea id="TorrentLunaMineMissileSearchAreaAir">
+        <ValidatorArray value="AirUnitFilter"/>
+        <EditorCategories value="Race:Genetron"/>
+        <SearchFilters value="Air;Structure,Missile,Stasis,Dead,Hidden"/>
+        <AreaArray Radius="1.5" Effect="TorrentLunaMineMissileNanitePersistent"/>
+    </CEffectEnumArea>
+    <CEffectEnumArea id="TorrentLunaMineMissileSearchAreaGround">
+        <ValidatorArray value="GroundUnitFilter"/>
+        <EditorCategories value="Race:Genetron"/>
+        <SearchFilters value="Ground;Structure,Missile,Stasis,Dead,Hidden"/>
+        <AreaArray Radius="1.5" Effect="TorrentLunaMineMissileNanitePersistent"/>
+    </CEffectEnumArea>
+    <CEffectUserData id="TorrentLunaMineMissileUserData">
+        <EditorCategories value="Race:Genetron"/>
+        <Amount value="0">
+            <AccumulatorArray value="LunaMineMissileOverkill"/>
+        </Amount>
+        <Operation value="Set"/>
+        <TargetLocationType value="Unit"/>
+        <BehaviorScope Value="Target" Behavior="LunaMineMissileData"/>
+    </CEffectUserData>
+    <CEffectSet id="TorrentLunaMineMissileManualInit">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="TorrentLunaMineMissileAddStack"/>
+        <EffectArray value="TorrentLunaMineMissileCreatePersistent"/>
+    </CEffectSet>
+    <CEffectCreatePersistent id="TorrentPlaceLunaMinesCreatePersistent">
+        <ValidatorArray value="GenetronPowerSupplyGE075"/>
+        <EditorCategories value="Race:Genetron"/>
+        <InitialEffect value="TorrentPlaceLunaMinesPowerEnum"/>
+        <PeriodCount value="2"/>
+        <PeriodicEffectArray value="TorrentPlaceLunaMinesLaunchMissile"/>
+        <PeriodicOffsetArray value="-0.4,0,0"/>
+        <PeriodicOffsetArray value="0.4,0,0"/>
+        <PeriodicPeriodArray value="0.125"/>
+    </CEffectCreatePersistent>
+    <CEffectSet id="TorrentPlaceLunaMinesImpact">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="KillsToCasterFromSource"/>
+        <EffectArray value="TorrentPlaceLunaMinesStun"/>
+    </CEffectSet>
+    <CEffectCreatePersistent id="TorrentPlaceLunaMinesLaunchDelay">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="TargetUnit"/>
+        <InitialDelay value="0.0625"/>
+        <InitialEffect value="RemovePrecursor"/>
+        <ExpireEffect value="TorrentPlaceLunaMinesLaunchMissile"/>
+    </CEffectCreatePersistent>
+    <CEffectLaunchMissile id="TorrentPlaceLunaMinesLaunchMissile">
+        <EditorCategories value="Race:Genetron"/>
+        <ImpactLocation Value="TargetPoint"/>
+        <ImpactOffset value="0,0,3.75"/>
+        <LaunchEffect value="TorrentPlaceLunaMinesMorph"/>
+        <ImpactEffect value="TorrentPlaceLunaMinesImpact"/>
+        <AmmoUnit value="LunaMineLaunch"/>
+        <Movers Link="LunaMineMissile"/>
+        <DeathType value="Unknown"/>
+    </CEffectLaunchMissile>
+    <CEffectMorph id="TorrentPlaceLunaMinesMorph">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Source"/>
+        <MorphFlags index="IgnoreFacing" value="1"/>
+        <MorphFlags index="IgnorePlacement" value="1"/>
+        <MorphFlags index="IgnoreMorphing" value="1"/>
+        <MorphUnit value="LunaMine"/>
+    </CEffectMorph>
+    <CEffectEnumTrackedUnits id="TorrentPlaceLunaMinesPowerEnum">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="TorrentPlaceLunaMinesPowerModify"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectModifyUnit id="TorrentPlaceLunaMinesPowerModify">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-75"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectApplyBehavior id="UmbraStealthCompulsion">
+        <EditorCategories value="Race:Keiron"/>
+        <WhichUnit Value="Caster"/>
+        <ValidatorArray index="0" value="SuppressCloakOff"/>
+    </CEffectApplyBehavior>
+    <CEffectSet id="UmbraStealthCompulsionBuffInit">
+        <ValidatorArray value="UmbraStealthOff"/>
+        <ValidatorArray value="SuppressCloakOff"/>
+        <EditorCategories value="Race:Keiron"/>
+        <EffectArray value="UmbraStealthCompulsionModifyCooldown"/>
+        <EffectArray value="UmbraStealthCompulsionModifyVital"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="UmbraStealthCompulsionModifyVital">
+        <ValidatorArray value="UmbraStealthCompulsion"/>
+        <ValidatorArray value="UmbraStealthCompulsionVital"/>
+        <EditorCategories value="Race:Keiron"/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Life">
+            <Change value="-15"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectSwitch id="UmbraStealthSuppressionSwitch">
+        <EditorCategories value="Race:Keiron"/>
+        <CaseArray Effect="UmbraStealthCompulsionModifyVital"/>
+        <CaseDefault value="UmbraStealthSuppressionModifyCooldown"/>
+    </CEffectSwitch>
+    <CEffectCreatePersistent id="VoidRaySwarm">
+        <PeriodicValidator value="CasterIsNotDazed"/>
+    </CEffectCreatePersistent>
     <CEffectApplyBehavior id="VoidRayWeaponABTarget" parent="Scion_UseDurationBase">
         <Behavior value="BeamTargetCD"/>
         <Flags index="UseDuration" value="0"/>
@@ -1987,11 +2409,11 @@
     <CEffectSet id="UmbraShadowCannonSet">
         <EditorCategories value="Race:Keiron"/>
         <EffectArray value="ShadowCannon"/>
-        <EffectArray value="UmbraStealthSuppressionModifyUnit"/>
+        <EffectArray value="UmbraStealthSuppressionSwitch"/>
     </CEffectSet>
-    <CEffectModifyUnit id="UmbraStealthSuppressionModifyUnit">
+    <CEffectModifyUnit id="UmbraStealthSuppressionModifyCooldown">
         <EditorCategories value="Race:Keiron"/>
-        <ImpactUnit Value="Source"/>
+        <ImpactUnit Value="Caster"/>
         <Cost Behavior="UmbraStealth" CooldownOperation="Set">
             <Fraction Cooldown="1"/>
         </Cost>
@@ -2316,7 +2738,7 @@
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
         <Effect value="BlitzerSuperchargePowerSet"/>
-        <ValidatorArray value="GenetronPowerSupplyGE015"/>
+        <ValidatorArray value="GenetronPowerSupplyGE025"/>
     </CEffectEnumTrackedUnits>
     <CEffectEnumTrackedUnits id="BlitzerOverdrivePowerEnum">
         <EditorCategories value="Race:Genetron"/>
@@ -2348,7 +2770,7 @@
     <CEffectModifyUnit id="BlitzerSuperchargePowerModify">
         <EditorCategories value="Race:Genetron"/>
         <VitalArray index="Energy">
-            <Change value="-15"/>
+            <Change value="-25"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectModifyUnit id="BlitzerOverdrivePowerModify">
@@ -3414,7 +3836,7 @@
         <DrainVital value="Energy"/>
         <DrainVitalCostFactor value="0.25"/>
         <RechargeVital value="Energy"/>
-        <RechargeVitalRate value="50"/>
+        <RechargeVitalRate value="71.4296"/>
     </CEffectCreateHealer>
     <CEffectDamage id="TeslaShockChargeDummyDMG">
         <EditorCategories value="Race:Genetron"/>
@@ -3915,11 +4337,7 @@
     <CEffectUserData id="GyreAnnexDataInc">
         <ValidatorArray value="NotMassive"/>
         <ValidatorArray value="NotAnnexed"/>
-        <ValidatorArray value="NoKeyhole"/>
-        <ValidatorArray value="IsNotNexusMassRecallTargetPhased"/>
         <ValidatorArray value="AnnexCapNotReached"/>
-        <ValidatorArray value="AnnexCasterToAnnexTargetDistance"/>
-        <ValidatorArray value="IsNotPhasedUnit"/>
         <EditorCategories value="Race:Keiron"/>
         <Key value="Annex"/>
         <SourceKey value="Annex"/>
@@ -3965,7 +4383,7 @@
     </CEffectRemoveKinetic>
     <CEffectEnumArea id="GyreAnnexSA" parent="ScionEnumArea" Race="Keiron">
         <SearchFilters value="Ground;Structure,Missile,Stasis,Dead,Hidden"/>
-        <AreaArray Radius="1" Effect="GyreAnnexDataInc"/>
+        <AreaArray Radius="1" Effect="GyreAnnexSearchEnumSet"/>
     </CEffectEnumArea>
     <CEffectTeleport id="GyreAnnexTP">
         <EditorCategories value="Race:Keiron"/>
@@ -4078,6 +4496,7 @@
         <PeriodicEffectArray value="SeparationBeamBeamWeaponCooldownComplete"/>
         <PeriodicPeriodArray value="0.0625"/>
         <ValidatorArray value="NotHoldingFire"/>
+        <PeriodicValidator value="CasterIsNotDazed"/>
     </CEffectCreatePersistent>
     <CEffectSet id="SeparationBeamInit" parent="ScionSet" Race="Keiron">
         <EffectArray value="PulsarMovementSpeed"/>
@@ -4315,7 +4734,7 @@
     <CEffectModifyUnit id="MoleTurnTurretSetTarget">
         <EditorCategories value="Race:Genetron"/>
         <ImpactUnit Value="Caster"/>
-        <ModifyTurret Turret="MoleTurret" AimCompleteEffect="MoleTurnTurretAimComplete">
+        <ModifyTurret Turret="MoleTurretSieged" AimCompleteEffect="MoleTurnTurretAimComplete">
             <Target Effect="MoleTurnTurretChannel" Value="TargetUnit"/>
             <Flags index="Tracking" value="1"/>
         </ModifyTurret>
@@ -4327,7 +4746,7 @@
     <CEffectModifyUnit id="MoleTurnTurretClearTarget">
         <EditorCategories value="Race:Genetron"/>
         <ImpactUnit Value="Caster"/>
-        <ModifyTurret Action="ClearTarget" Turret="MoleTurret">
+        <ModifyTurret Action="ClearTarget" Turret="MoleTurretSieged">
             <Target Effect="MoleTurnTurretChannel" Value="TargetUnit"/>
         </ModifyTurret>
     </CEffectModifyUnit>
@@ -4355,7 +4774,7 @@
     <CEffectModifyUnit id="JupiterRevenantBombLaunchCooldown">
         <EditorCategories value="Race:Genetron"/>
         <ImpactUnit Value="Caster"/>
-        <Cost Abil="RevenantBomb,Execute" CooldownOperation="Set" CooldownTimeUse="10"/>
+        <Cost Abil="RevenantBomb,Execute" CooldownOperation="Set" CooldownTimeUse="8.4"/>
     </CEffectModifyUnit>
     <CEffectApplyBehavior id="JupiterSpeedApplyController" parent="ScionApplyBehaviorCaster" Race="Genetron">
         <ValidatorArray index="0" value="CasterHasEnergy"/>
@@ -4373,7 +4792,7 @@
         <Amount value="10"/>
     </CEffectDamage>
     <CEffectDamage id="D15Magnum" parent="ScionDamageRange" Race="Genetron">
-        <Amount value="16"/>
+        <Amount value="18"/>
         <Death value="Impact"/>
     </CEffectDamage>
     <CEffectCreateUnit id="DisguiseAsSpitfireCU" parent="DisguiseEx3CU">
@@ -4506,7 +4925,7 @@
         <ContainerUnit Effect="LaunchShockCharge" Value="Target"/>
     </CEffectLoadContainer>
     <CEffectDamage id="TwinP1Dash0Guns" parent="ScionDamageRange" Race="Genetron">
-        <Amount value="6"/>
+        <Amount value="4"/>
     </CEffectDamage>
     <CEffectCreatePersistent id="StingerDrills" parent="ScionCreatePersistent" Race="Genetron">
         <WhichLocation Value="TargetUnit"/>
@@ -4515,11 +4934,6 @@
         <PeriodicPeriodArray value="0.0625"/>
     </CEffectCreatePersistent>
     <CEffectLaunchMissile id="StingerDrillLM" parent="ScionLaunchMissile" Race="Genetron"/>
-    <CEffectModifyUnit id="SuperchargeSCC">
-        <EditorCategories value="Race:Genetron"/>
-        <ImpactUnit Value="Source"/>
-        <Cost Abil="SuperCharge,Execute" CooldownOperation="Set" CooldownTimeUse="14"/>
-    </CEffectModifyUnit>
     <CEffectRemoveBehavior id="SuperchargeRB">
         <EditorCategories value="Race:Genetron"/>
         <WhichUnit Value="Caster"/>
@@ -4539,7 +4953,7 @@
         <DrainVital value="Energy"/>
         <DrainVitalCostFactor value="0.25"/>
         <RechargeVital value="Energy"/>
-        <RechargeVitalRate value="35.7148"/>
+        <RechargeVitalRate value="42.8593"/>
         <Marker Link="Effect/SystemRechargeCoreCH"/>
         <InitialEffect value="ProcessorSystemRechargePowerEnum"/>
     </CEffectCreateHealer>
@@ -4688,11 +5102,11 @@
         <Death value="Eviscerate"/>
     </CEffectDamage>
     <CEffectDamage id="StratumMissilePodDMG" parent="ScionDamageRange" Race="Genetron">
-        <Amount value="20"/>
+        <Amount value="17"/>
         <Death value="Blast"/>
     </CEffectDamage>
     <CEffectDamage id="ChargeCannonSC" parent="ScionDamageRange" Race="Genetron">
-        <Amount value="22"/>
+        <Amount value="27.5"/>
         <Death value="Blast"/>
         <ArmorReduction value="0"/>
         <Kind value="Spell"/>
@@ -4850,6 +5264,7 @@
         <ImpactEffect value="CoveringSprayAB"/>
         <AmmoUnit value="CoveringSprayMissile"/>
         <ValidatorArray index="0" value="noMarkers"/>
+        <ValidatorArray value="NotStructureOrIsNonBuildingUnit"/>
         <Marker Duration="1.4" Link="Abil/CoveringSpray">
             <MatchFlags index="Link" value="1"/>
         </Marker>
@@ -4996,7 +5411,7 @@
         <PeriodicPeriodArray value="0.25"/>
     </CEffectCreatePersistent>
     <CEffectEnumArea id="ProtectiveCloudSA" parent="ScionEnumArea" Race="Xayid">
-        <SearchFilters value="Ground;Neutral,Enemy,Structure,Missile,Stasis,Dead,Hidden"/>
+        <SearchFilters value="Ground;Neutral,Enemy,Missile,Stasis,Dead,Hidden"/>
         <AreaArray Radius="3" Effect="ProtectiveCloudAB"/>
         <ImpactLocation Value="TargetPoint"/>
     </CEffectEnumArea>
@@ -5066,21 +5481,24 @@
         <Amount value="60"/>
         <Death value="Disintegrate"/>
         <ResponseFlags index="Acquire" value="0"/>
+        <ImpactUnitValidator value="TargetIsEnemyOrNeutral"/>
     </CEffectDamage>
     <CEffectCreatePersistent id="ExplosiveGlobImpactDummy" parent="ScionCreatePersistent" Race="Xayid">
-        <WhichLocation Value="SourceUnitOrPoint"/>
-        <FinalEffect value="Suicide"/>
+        <WhichLocation Value="TargetUnit"/>
+        <FinalEffect value="KillSource"/>
         <ValidatorArray value="IsNotPhasedUnit"/>
         <ValidatorArray value="IsNotTeslaCharge"/>
+        <InitialEffect value="CasnoliskExplosiveGlobImpactDelay"/>
     </CEffectCreatePersistent>
-    <CEffectEnumArea id="ExplosiveGlobImpactSearch" parent="ScionEnumAreaEnemyGround" Race="Xayid">
+    <CEffectEnumArea id="ExplosiveGlobExplodeSearch" parent="ScionEnumAreaEnemyGround" Race="Xayid">
         <ImpactLocation Value="SourceUnitOrPoint"/>
-        <AreaArray Radius="1.75" Effect="ExplosiveGlobImpactSet"/>
+        <SearchFilters value="Ground;Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <AreaArray Radius="1.75" Effect="ExplosiveGlobExplodeSet"/>
     </CEffectEnumArea>
-    <CEffectSet id="ExplosiveGlobImpactSet" parent="ScionSet" Race="Xayid">
+    <CEffectSet id="ExplosiveGlobExplodeSet" parent="ScionSet" Race="Xayid">
+        <ValidatorArray value="IsNotTeslaCharge"/>
         <EffectArray value="ExplosiveGlobDMG"/>
         <EffectArray value="ReaperKD8Knockback"/>
-        <ValidatorArray value="IsNotTeslaCharge"/>
     </CEffectSet>
     <CEffectEnumArea id="ExplosiveGlobSA" parent="ScionEnumArea" Race="Xayid">
         <ImpactLocation Value="SourceUnit"/>
@@ -5094,7 +5512,7 @@
     <CEffectLaunchMissile id="ExplosiveGlobLM" parent="ScionLaunchMissilePoint" Race="Xayid">
         <AmmoUnit value="ExplosiveGlobMissile"/>
         <PeriodicEffect value="CasnoliskExplosiveGlobTravelSet"/>
-        <FinishEffect value="ExplosiveGlobImpactSearch"/>
+        <FinishEffect value="ExplosiveGlobExplodeSearch"/>
         <AmmoOwner Value="Caster"/>
     </CEffectLaunchMissile>
     <CEffectDamage id="ExterminationImpact" parent="ScionDamageRange" Race="Xayid">
@@ -5108,7 +5526,7 @@
     </CEffectLaunchMissile>
     <CEffectCreatePersistent id="ResidualAcidCP" parent="ScionCreatePersistent" Race="Xayid">
         <WhichLocation Value="SourcePoint"/>
-        <PeriodCount value="40"/>
+        <PeriodCount value="25"/>
         <PeriodicEffectArray value="ResidualAcidSA"/>
         <PeriodicPeriodArray value="0.5"/>
         <AINotifyEffect value="ResidualAcidSA"/>
@@ -5728,10 +6146,9 @@
         <PeriodicEffectArray value="AegisShieldAuraKBRB"/>
         <PeriodicPeriodArray value="0.0625"/>
     </CEffectCreatePersistent>
-    <CEffectModifyUnit id="UmbraStealthCompulsion">
-        <ValidatorArray value="UmbraStealthOff"/>
-        <ValidatorArray value="SuppressCloakOff"/>
+    <CEffectModifyUnit id="UmbraStealthCompulsionModifyCooldown">
         <EditorCategories value="Race:Keiron"/>
+        <ImpactUnit Value="Caster"/>
         <Cost Behavior="UmbraStealth" CooldownOperation="Set"/>
     </CEffectModifyUnit>
     <CEffectIssueOrder id="XayidlingDashOrder">
@@ -6630,7 +7047,7 @@
         <TargetLocation Effect="ReverbCasterController" Value="TargetUnit"/>
     </CEffectTeleport>
     <CEffectDamage id="ReverberatorFlare" parent="ScionDamageRange" Race="Keiron">
-        <Amount value="10"/>
+        <Amount value="12"/>
         <Death value="Electrocute"/>
     </CEffectDamage>
     <CEffectDamage id="EchoReverbSuicide" parent="ScionDamage" Race="Keiron">
@@ -6641,7 +7058,7 @@
         <AmmoUnit value="AuroraAttackMissile"/>
     </CEffectLaunchMissile>
     <CEffectDamage id="HalationPlasmaLMImpact" parent="ScionDamageRangeVisible" Race="Keiron">
-        <Amount value="25"/>
+        <Amount value="28"/>
         <Death value="Electrocute"/>
     </CEffectDamage>
     <CEffectSet id="ElysiumCruxSet" parent="ScionSet" Race="Keiron">
@@ -6695,6 +7112,7 @@
         <PeriodicPeriodArray value="0.0625"/>
         <ValidatorArray value="CasterAndTargetNotDead"/>
         <TimeScaleSource Value="Caster"/>
+        <PeriodicValidator value="CasterIsNotDazed"/>
     </CEffectCreatePersistent>
     <CEffectCreatePersistent id="NullifierWeaponCP" parent="ScionCreatePersistent" Race="Keiron">
         <WhichLocation Value="TargetUnit"/>
@@ -6729,7 +7147,7 @@
         <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
     </CEffectDamage>
     <CEffectDamage id="ShadowCannonImpact" parent="ScionDamageRange" Race="Keiron">
-        <Amount value="25"/>
+        <Amount value="38"/>
         <Death value="Electrocute"/>
     </CEffectDamage>
     <CEffectSet id="TitanBlastS" parent="ScionSet" Race="Keiron">

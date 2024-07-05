@@ -7,11 +7,11 @@
         <CheckExistence value="0"/>
         <Compare value="LT"/>
         <Key value="Annex"/>
-        <Value value="10"/>
+        <Value value="5"/>
         <BehaviorScope Behavior="GyreAnnexCaster"/>
     </CValidatorEffectTreeUserData>
     <CValidatorLocationCompareRange id="AnnexCasterToAnnexTargetDistance">
-        <WhichLocation Effect="GyreAnnexDataInc" Value="TargetUnit"/>
+        <WhichLocation Effect="GyreAnnexSearchEnumSet" Value="TargetUnit"/>
         <Compare value="LT"/>
         <Range value="2"/>
     </CValidatorLocationCompareRange>
@@ -27,6 +27,24 @@
         <CombineArray value="Aperture4CargoAnd40Energy"/>
         <CombineArray value="Aperture8CargoAnd80Energy"/>
     </CValidatorCombine>
+    <CValidatorPlayerCompareResource id="CannotAffordRoamerGas">
+        <Compare value="LT"/>
+        <Resource value="Vespene"/>
+        <Value value="25"/>
+    </CValidatorPlayerCompareResource>
+    <CValidatorPlayerCompareResource id="CannotAffordMendlingGas">
+        <Compare value="LT"/>
+        <Resource value="Vespene"/>
+        <Value value="75"/>
+    </CValidatorPlayerCompareResource>
+    <CValidatorPlayerCompareResource id="CannotAffordRoamerMinerals">
+        <Compare value="LT"/>
+        <Value value="75"/>
+    </CValidatorPlayerCompareResource>
+    <CValidatorPlayerCompareResource id="CannotAffordMendlingMinerals">
+        <Compare value="LT"/>
+        <Value value="25"/>
+    </CValidatorPlayerCompareResource>
     <CValidatorUnitCompareOrderCount id="CasterHasQueuedOrders">
         <Compare value="GT"/>
         <Value value="1"/>
@@ -37,9 +55,125 @@
         <AbilCmdIndex value="2"/>
         <Type value="Point"/>
     </CValidatorUnitOrderTargetType>
+    <CValidatorUnitBehaviorState id="CasterIsDazed">
+        <ResultFailed value="Error,Error/IsNotStunned"/>
+        <WhichUnit Value="Caster"/>
+        <Enabled value="1"/>
+        <BehaviorState value="Daze"/>
+    </CValidatorUnitBehaviorState>
+    <CValidatorUnitType id="IsNotLunaMine">
+        <Value value="LunaMine"/>
+        <Find value="0"/>
+    </CValidatorUnitType>
+    <CValidatorUnitCompareBehaviorCount id="LunaMineMissileStack0">
+        <Behavior value="LunaMineMissileData"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="LunaMineMissileStackFromCaster">
+        <Compare value="GT"/>
+        <Behavior value="LunaMineMissileData"/>
+        <RequireCasterUnit Value="Caster"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorCombine id="LunaMineNotOverkilling">
+        <CombineArray value="LunaMineMissileStack0"/>
+        <CombineArray value="LunaMineMissileStackFromCaster"/>
+        <CombineArray value="LunaMineNotOverkillingData"/>
+    </CValidatorCombine>
+    <CValidatorEffectTreeUserData id="LunaMineNotOverkillingData">
+        <CheckExistence value="0"/>
+        <Compare value="LE"/>
+        <Key value="Default"/>
+        <BehaviorScope Value="Target" Behavior="LunaMineMissileData"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorCombine id="LunaMineScanValidator">
+        <Type value="And"/>
+        <CombineArray value="NotStructureOrIsNonBuildingUnit"/>
+        <CombineArray value="IsNotEggUnit"/>
+        <CombineArray value="IsNotLarva"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareVital id="EnergyGTE020">
+        <Compare value="GE"/>
+        <Value value="20"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
+    <CValidatorLocationCompareRange id="SpitfireAttackTargetUnitDistance">
+        <WhichLocation Effect="SpitfireRiotGunCreatePersistent"/>
+        <Compare value="LT"/>
+        <Range value="3"/>
+        <Value Value="TargetUnit"/>
+    </CValidatorLocationCompareRange>
+    <CValidatorCombine id="SpitfireBurstRoundValidator">
+        <Type value="And"/>
+        <CombineArray value="CasterNotDeadOrHiddenOrStasisOrStunned"/>
+        <CombineArray value="TargetIsValidGroundWeaponTarget"/>
+        <CombineArray value="SpitfireAttackTargetUnitDistance"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareVital id="SpitfireLifeBurst1">
+        <WhichUnit Value="Caster"/>
+        <Compare value="GE"/>
+        <Value value="20"/>
+    </CValidatorUnitCompareVital>
+    <CValidatorUnitCompareVital id="SpitfireLifeBurst2">
+        <WhichUnit Value="Caster"/>
+        <Compare value="GE"/>
+        <Value value="40"/>
+    </CValidatorUnitCompareVital>
+    <CValidatorUnitFilters id="CasterNotDeadOrHiddenOrStasisOrStunned">
+        <WhichUnit Value="Caster"/>
+        <Filters value="-;Stasis,Dead,Hidden,Stunned"/>
+    </CValidatorUnitFilters>
+    <CValidatorCombine id="CasterNotDeadHiddenStasisStunnedAndTargetIsValidGroundWeaponTarget">
+        <Type value="And"/>
+        <CombineArray value="CasterNotDeadOrHiddenOrStasisOrStunned"/>
+        <CombineArray value="TargetIsValidGroundWeaponTarget"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareVital id="EnergyLT025">
+        <Compare value="LT"/>
+        <Value value="25"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
+    <CValidatorUnitCompareVital id="EnergyLT050">
+        <Compare value="LT"/>
+        <Value value="50"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
+    <CValidatorUnitCompareVital id="EnergyLT150">
+        <Compare value="LT"/>
+        <Value value="150"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
+    <CValidatorCompareTrackedUnitsCount id="GenetronPowerSupplyGE020">
+        <ResultFailed value="NotEnoughEnergy"/>
+        <Compare value="GT"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <TrackedUnitValidatorArray value="EnergyGTE020"/>
+        <TrackedUnitFilters value="-;Dead"/>
+    </CValidatorCompareTrackedUnitsCount>
+    <CValidatorUnitOrderQueue id="SourceIsNotMoving">
+        <WhichUnit Value="Source"/>
+        <AbilLink value="move"/>
+        <Find value="0"/>
+    </CValidatorUnitOrderQueue>
+    <CValidatorUnitCompareBehaviorCount id="IsEnergized">
+        <Compare value="NE"/>
+        <Behavior value="CitadelEnergized"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitBehaviorState id="CasterIsNotDazed">
+        <ResultFailed value="Error,Error/IsStunned"/>
+        <WhichUnit Value="Caster"/>
+        <BehaviorState value="Daze"/>
+    </CValidatorUnitBehaviorState>
     <CValidatorUnitBehaviorState id="IsNotStunned">
         <ResultFailed value="Error,Error/IsStunned"/>
         <BehaviorState value="Stun"/>
+    </CValidatorUnitBehaviorState>
+    <CValidatorUnitBehaviorState id="IsDazed">
+        <ResultFailed value="Error,Error/IsNotStunned"/>
+        <Enabled value="1"/>
+        <BehaviorState value="Daze"/>
+    </CValidatorUnitBehaviorState>
+    <CValidatorUnitBehaviorState id="IsNotDazed">
+        <ResultFailed value="Error,Error/IsStunned"/>
+        <BehaviorState value="Daze"/>
     </CValidatorUnitBehaviorState>
     <CValidatorUnitCompareBehaviorCount id="JupiterSpeedAccelerator">
         <WhichUnit Value="Caster"/>
@@ -281,7 +415,7 @@
         <Compare value="GT"/>
         <Behavior value="ResourceTapSearch"/>
     </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitOrderQueue id="CasterNotMoving">
+    <CValidatorUnitOrderQueue id="CasterIsNotMoving">
         <AbilLink value="move"/>
         <Find value="0"/>
     </CValidatorUnitOrderQueue>
@@ -310,12 +444,12 @@
         <Value value="10"/>
         <Vital value="Energy"/>
     </CValidatorUnitCompareVital>
-    <CValidatorUnitCompareVital id="EnergyLT75">
+    <CValidatorUnitCompareVital id="EnergyLT075">
         <Compare value="LT"/>
         <Value value="75"/>
         <Vital value="Energy"/>
     </CValidatorUnitCompareVital>
-    <CValidatorUnitCompareVital id="EnergyLT15">
+    <CValidatorUnitCompareVital id="EnergyLT015">
         <Compare value="LT"/>
         <Value value="15"/>
         <Vital value="Energy"/>
@@ -415,6 +549,7 @@
     <CValidatorCombine id="NotStructureOrIsNonBuildingUnit">
         <CombineArray value="NotStructureTarget"/>
         <CombineArray value="IsNonBuildingUnit"/>
+        <ResultFailed value="CantTargetStructures"/>
     </CValidatorCombine>
     <CValidatorUnitFilters id="IsNonBuildingUnit">
         <Filters value="NonBuildingUnit;-"/>
@@ -450,8 +585,22 @@
         <Enabled value="1"/>
         <BehaviorState value="Stun"/>
     </CValidatorUnitBehaviorState>
+    <CValidatorUnitCompareVital id="SourceEnergyGT0">
+        <Compare value="GT"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
+    <CValidatorUnitOrderQueue id="SourceIsMoving">
+        <WhichUnit Value="Source"/>
+        <AbilLink value="move"/>
+    </CValidatorUnitOrderQueue>
     <CValidatorUnitFilters id="TargetIsInRadar">
         <Filters value="Radar;-"/>
+    </CValidatorUnitFilters>
+    <CValidatorUnitFilters id="TargetIsValidGroundWeaponTarget">
+        <Filters value="Ground,Visible;Missile,Stasis,Dead,Hidden,Invulnerable"/>
+    </CValidatorUnitFilters>
+    <CValidatorUnitFilters id="TargetIsValidWeaponTarget">
+        <Filters value="Visible;Missile,Stasis,Dead,Hidden,Invulnerable"/>
     </CValidatorUnitFilters>
     <CValidatorCombine id="TargetIsVisibleOrInRadar">
         <CombineArray value="TargetIsVisible"/>
@@ -469,6 +618,16 @@
         <AttackerAlternateType value="Blitzer"/>
         <Flags index="IsThreat" value="1"/>
     </CValidatorUnitCompareAttackPriority>
+    <CValidatorUnitCompareBehaviorCount id="UmbraStealthCompulsion">
+        <WhichUnit Value="Caster"/>
+        <Compare value="NE"/>
+        <Behavior value="UmbraStealthCompulsion"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareVital id="UmbraStealthCompulsionVital">
+        <WhichUnit Value="Caster"/>
+        <Compare value="GT"/>
+        <Value value="15"/>
+    </CValidatorUnitCompareVital>
     <CValidatorUnitCompareCooldown id="UmbraStealthCooldownComplete">
         <WhichUnit Value="Caster"/>
         <Compare value="LE"/>

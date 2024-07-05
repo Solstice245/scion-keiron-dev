@@ -122,9 +122,17 @@ bool lib30DDA1CB_gt_MapInit_Func (bool testConds, bool runActions) {
         else if (autoD6390572_val == "0003") {
             if ((GameAttributePlayerValue("[bnet:Liberty (Mod)/0.0/999,file:Mods/Liberty.SC2Mod]3001", auto3183AA6B_var) == "RAND")) {
                 lv_factionRoll = RandomInt(0, 5);
+                if ((auto3183AA6B_var == 1)) {
+                    TriggerDebugOutput(1, StringExternal("Param/Value/lib_30DDA1CB_141DB9A0"), true);
+                }
+
             }
             else {
                 lv_factionRoll = RandomInt(0, 3);
+                if ((auto3183AA6B_var == 1)) {
+                    TriggerDebugOutput(1, StringExternal("Param/Value/lib_30DDA1CB_AA3D8561"), true);
+                }
+
             }
         }
         else {
@@ -143,6 +151,10 @@ bool lib30DDA1CB_gt_MapInit_Func (bool testConds, bool runActions) {
         else {
         }
         PlayerModifyPropertyInt(auto3183AA6B_var, c_playerPropSuppliesLimit, c_playerPropOperSetTo, lv_supplyLimit);
+        if ((auto3183AA6B_var == 1)) {
+            TriggerDebugOutput(1, IntToText(lv_factionRoll), true);
+        }
+
     }
     return true;
 }

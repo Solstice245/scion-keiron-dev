@@ -39,6 +39,25 @@
         <HeightMap value="Air"/>
         <PathMode value="Scaler"/>
     </CMoverFlock>
+    <CMoverMissile id="LunaMineMissile">
+        <MotionPhases>
+            <Driver value="AdaptableParabola"/>
+            <MinSpeed value="1.5"/>
+            <MaxSpeed value="12"/>
+            <Clearance value="0"/>
+            <ActorTracking value="Actual"/>
+            <ArrivalTestType value="3D"/>
+            <ThrowBandYaw value="-360,-360,-360,-360"/>
+            <ThrowBandPitch value="-360,-360,-360,-360"/>
+            <AdaptableParabolaIsUpright value="1"/>
+            <AdaptableParabolaClearance value="0.1,0.1"/>
+            <AdaptableParabolaAccels index="Launch" value="1000"/>
+            <AdaptableParabolaAccels index="Ascent" value="-7"/>
+            <AdaptableParabolaAccels index="Apex" value="-7"/>
+            <AdaptableParabolaAccels index="Descent" value="-7"/>
+            <AdaptableParabolaAccels index="Land" value="-7"/>
+        </MotionPhases>
+    </CMoverMissile>
     <CMoverMissile id="LynxCannonWeaponStraight">
         <MotionPhases>
             <Driver value="Guidance"/>
@@ -73,6 +92,32 @@
             <Overlays Scale="1,1"/>
         </MotionPhases>
         <MotionPhases YawPitchRoll="MAX"/>
+    </CMoverMissile>
+    <CMoverMissile id="LunaMineMissileAttack">
+        <MotionPhases>
+            <Driver value="Guidance"/>
+            <Acceleration value="3200"/>
+            <MaxSpeed value="18.75"/>
+            <ClearanceAcceleration value="75"/>
+            <Outro value="-1"/>
+            <YawPitchRoll value="719.2968"/>
+        </MotionPhases>
+        <MotionPhases YawPitchRoll="MAX"/>
+    </CMoverMissile>
+    <CMoverMissile id="NeutralizerBeamLMWeapon2">
+        <MotionPhases>
+            <Driver value="Guidance"/>
+            <Acceleration value="-500"/>
+            <Speed value="100"/>
+            <MinSpeed value="8.75"/>
+            <MaxSpeed value="200"/>
+            <ActorTracking value="Actual"/>
+            <Outro value="-4"/>
+            <ThrowBandYaw value="-360,-360,-360,-360"/>
+            <ThrowBandPitch value="-360,-360,-360,-360"/>
+            <YawPitchRoll value="5759.6484"/>
+        </MotionPhases>
+        <MotionPhases MaxSpeed="200" ThrowBandYaw="-360,-360,-360,-360" ThrowBandPitch="-360,-360,-360,-360"/>
     </CMoverMissile>
     <CMoverMissile id="ShadowCannon" parent="MissileDefault">
         <MotionPhases index="0">
@@ -279,9 +324,8 @@
     <CMoverMissile id="HurricaneMissilesLMWeapon">
         <MotionPhases>
             <Driver value="Guidance"/>
-            <Acceleration value="10"/>
-            <Speed value="25"/>
-            <MaxSpeed value="50"/>
+            <Speed value="18"/>
+            <MaxSpeed value="18"/>
             <Outro value="-1"/>
             <ThrowBandYaw value="-360,-360,-360,-360"/>
             <ThrowBandPitch value="-360,-360,-360,-360"/>
@@ -367,18 +411,28 @@
     </CMoverMissile>
     <CMoverMissile id="NeutralizerBeamLMWeapon">
         <MotionPhases>
-            <Driver value="Guidance"/>
-            <Acceleration value="-500"/>
+            <Driver value="AdaptableParabola"/>
             <Speed value="100"/>
-            <MinSpeed value="8.75"/>
-            <MaxSpeed value="200"/>
+            <MinSpeed value="8"/>
+            <MaxSpeed value="75"/>
             <ActorTracking value="Actual"/>
-            <Outro value="-4"/>
+            <Outro value="-2"/>
             <ThrowBandYaw value="-360,-360,-360,-360"/>
             <ThrowBandPitch value="-360,-360,-360,-360"/>
+            <AdaptableParabolaClearance value="1,-1"/>
             <YawPitchRoll value="5759.6484"/>
+            <AdaptableParabolaAccels index="Launch" value="10000"/>
+            <AdaptableParabolaAccels index="Ascent" value="-100"/>
+            <AdaptableParabolaAccels index="Apex" value="-100"/>
+            <AdaptableParabolaAccels index="Descent" value="-100"/>
+            <AdaptableParabolaAccels index="Land" value="0"/>
         </MotionPhases>
-        <MotionPhases MaxSpeed="200" ThrowBandYaw="-360,-360,-360,-360" ThrowBandPitch="-360,-360,-360,-360"/>
+        <MotionPhases>
+            <MinSpeed value="8"/>
+            <MaxSpeed value="200"/>
+            <ThrowBandYaw value="-360,-360,-360,-360"/>
+            <ThrowBandPitch value="-360,-360,-360,-360"/>
+        </MotionPhases>
     </CMoverMissile>
     <CMoverMissile id="LynxCannonWeapon">
         <MotionPhases>
@@ -684,7 +738,7 @@
             <Driver value="AdaptableParabola"/>
             <MinSpeed value="6"/>
             <MaxSpeed value="15"/>
-            <AdaptableParabolaClearance value="13,-1"/>
+            <AdaptableParabolaClearance value="7.5,-1"/>
             <AdaptableParabolaAccels index="Descent" value="5"/>
         </MotionPhases>
     </CMoverMissile>
@@ -693,7 +747,7 @@
             <Driver value="AdaptableParabola"/>
             <MinSpeed value="6"/>
             <MaxSpeed value="15"/>
-            <AdaptableParabolaClearance value="4,-1"/>
+            <AdaptableParabolaClearance value="3,-1"/>
             <AdaptableParabolaAccels index="Descent" value="5"/>
         </MotionPhases>
     </CMoverMissile>
@@ -702,7 +756,7 @@
             <Driver value="AdaptableParabola"/>
             <MinSpeed value="6"/>
             <MaxSpeed value="15"/>
-            <AdaptableParabolaClearance value="5,-1"/>
+            <AdaptableParabolaClearance value="3.5,-1"/>
             <AdaptableParabolaAccels index="Descent" value="5"/>
         </MotionPhases>
     </CMoverMissile>
@@ -711,7 +765,7 @@
             <Driver value="AdaptableParabola"/>
             <MinSpeed value="6"/>
             <MaxSpeed value="15"/>
-            <AdaptableParabolaClearance value="6,-1"/>
+            <AdaptableParabolaClearance value="4,-1"/>
             <AdaptableParabolaAccels index="Descent" value="5"/>
         </MotionPhases>
     </CMoverMissile>
@@ -720,7 +774,7 @@
             <Driver value="AdaptableParabola"/>
             <MinSpeed value="6"/>
             <MaxSpeed value="15"/>
-            <AdaptableParabolaClearance value="7,-1"/>
+            <AdaptableParabolaClearance value="4.5,-1"/>
             <AdaptableParabolaAccels index="Descent" value="5"/>
         </MotionPhases>
     </CMoverMissile>
@@ -729,7 +783,7 @@
             <Driver value="AdaptableParabola"/>
             <MinSpeed value="6"/>
             <MaxSpeed value="15"/>
-            <AdaptableParabolaClearance value="8,-1"/>
+            <AdaptableParabolaClearance value="5,-1"/>
             <AdaptableParabolaAccels index="Descent" value="5"/>
         </MotionPhases>
     </CMoverMissile>
@@ -738,7 +792,7 @@
             <Driver value="AdaptableParabola"/>
             <MinSpeed value="6"/>
             <MaxSpeed value="15"/>
-            <AdaptableParabolaClearance value="9,-1"/>
+            <AdaptableParabolaClearance value="5.5,-1"/>
             <AdaptableParabolaAccels index="Descent" value="5"/>
         </MotionPhases>
     </CMoverMissile>
@@ -747,7 +801,7 @@
             <Driver value="AdaptableParabola"/>
             <MinSpeed value="6"/>
             <MaxSpeed value="15"/>
-            <AdaptableParabolaClearance value="10,-1"/>
+            <AdaptableParabolaClearance value="6,-1"/>
             <AdaptableParabolaAccels index="Descent" value="5"/>
         </MotionPhases>
     </CMoverMissile>
@@ -756,7 +810,7 @@
             <Driver value="AdaptableParabola"/>
             <MinSpeed value="6"/>
             <MaxSpeed value="15"/>
-            <AdaptableParabolaClearance value="11,-1"/>
+            <AdaptableParabolaClearance value="6.5,-1"/>
             <AdaptableParabolaAccels index="Descent" value="5"/>
         </MotionPhases>
     </CMoverMissile>
@@ -765,7 +819,7 @@
             <Driver value="AdaptableParabola"/>
             <MinSpeed value="6"/>
             <MaxSpeed value="15"/>
-            <AdaptableParabolaClearance value="12,-1"/>
+            <AdaptableParabolaClearance value="7,-1"/>
             <AdaptableParabolaAccels index="Descent" value="5"/>
         </MotionPhases>
     </CMoverMissile>

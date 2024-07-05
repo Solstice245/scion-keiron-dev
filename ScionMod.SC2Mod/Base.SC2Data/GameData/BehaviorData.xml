@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
+    <CBehaviorBuff id="LunaMineEnergyDrain">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="SourceEnergyGT0"/>
+        <Period value="0.7"/>
+        <PeriodicEffect value="TorrentLunaMineEnergyDrain"/>
+        <FinalEffect value="Suicide"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="LunaMineStun">
+        <Alignment value="Negative"/>
+        <InfoFlags index="Hidden" value="1"/>
+        <InfoIcon value="Assets\Textures\btn-techupgrade-terran-tomahawkpowercell.dds"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisplayDuration index="Ally" value="1"/>
+        <Duration value="2.8"/>
+        <Modification>
+            <StateFlags index="Stun" value="1"/>
+        </Modification>
+    </CBehaviorBuff>
     <!-- =============================================-->
     <!--         Fixes beam weapon attack speed for all -->
     <!--          attack speed modification behaviors.-->
@@ -66,13 +86,77 @@
         <FinalEffect value="IgnitionBlast"/>
         <AINotifyEffect value="IgnitionBlastSA"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="LunaMineMissileData">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <MaxStackCount value="0"/>
+        <InitialEffect value="TorrentLunaMineMissileUserData"/>
+        <RefreshEffect value="TorrentLunaMineMissileUserData"/>
+        <InfoFlags index="Hidden" value="1"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="ExterminatorIncendiaryInfusionMarker">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <MaxStackCount value="65535"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="GenetronPowerBalance015On">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="EnergyGTE015"/>
+        <FinalEffect value="GenetronPowerBalance015OnDelay"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="GenetronPowerBalance020On">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="EnergyGTE020"/>
+        <FinalEffect value="GenetronPowerBalance020OnDelay"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="GenetronPowerBalance025On">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="EnergyGTE025"/>
+        <FinalEffect value="GenetronPowerBalance025OnDelay"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="GenetronPowerBalance050On">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="EnergyGTE050"/>
+        <FinalEffect value="GenetronPowerBalance050OnDelay"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="GenetronPowerBalance075On">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="EnergyGTE075"/>
+        <FinalEffect value="GenetronPowerBalance075OnDelay"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="GenetronPowerBalance100On">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="EnergyGTE100"/>
+        <FinalEffect value="GenetronPowerBalance100OnDelay"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="GenetronPowerBalance150On">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="EnergyGTE150"/>
+        <FinalEffect value="GenetronPowerBalance150OnDelay"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="GuardianShield">
         <DamageResponse>
             <Kind index="NoProc" value="0"/>
+        </DamageResponse>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="GyreAnnexedStun">
+        <Tooltip value="Behavior/Tooltip/GyreAnnexed"/>
+        <InfoIcon value="Assets\Textures\btn-ability-keiron-annex.dds"/>
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <Duration value="0.25"/>
+        <Modification>
+            <StateFlags index="Stun" value="1"/>
+            <StateFlags index="SuppressCollision" value="1"/>
+            <StateFlags index="SuppressPassenger" value="1"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="EqualizerHardenedFrame">
+        <Tooltip value="Behavior/Tooltip/HardenedShield"/>
+        <Alignment value="Positive"/>
+        <InfoIcon value="Assets\Textures\btn-ability-protoss-hardenedshields.dds"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Duration value="5.6"/>
+        <DamageResponse ClampMaximum="10" Minimum="10">
+            <Kind index="Spell" value="0"/>
+            <Chance value="1"/>
         </DamageResponse>
     </CBehaviorBuff>
     <CBehaviorBuff id="JupiterSpeedAccelerator">
@@ -135,16 +219,6 @@
             <Chance value="1"/>
         </DamageResponse>
     </CBehaviorBuff>
-    <CBehaviorBuff id="AvengerVengeanceMissileReq">
-        <InfoFlags index="Hidden" value="1"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="GenetronPowerSupplyGE050"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="OverclockPowerReq">
-        <InfoFlags index="Hidden" value="1"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="GenetronPowerSupplyGE075"/>
-    </CBehaviorBuff>
     <CBehaviorBuff id="PulsarMovementSpeed">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
@@ -202,6 +276,18 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="GenetronPowerSupplyGE010"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="SpitfireCounterStabilization">
+        <InfoFlags index="Hidden" value="1"/>
+        <InfoIcon value="Assets\Textures\btn-upgrade-terran-recalibratedexplosives.dds"/>
+        <EditorCategories value="AbilityorEffectType:Units,Race:Genetron"/>
+        <Duration value="0.125"/>
+        <FinalEffect value="SpitfireCounterStabilization"/>
+        <Modification>
+            <AdditiveAttackSpeedFactor value="0">
+                <AccumulatorArray value="SpitfireCounterStabilization"/>
+            </AdditiveAttackSpeedFactor>
+        </Modification>
+    </CBehaviorBuff>
     <CBehaviorBuff id="SpitfireOverdrive">
         <Tooltip value="Button/Tooltip/SpitfireOverdrive"/>
         <Alignment value="Positive"/>
@@ -210,6 +296,16 @@
         <TechAliasArray value="Alias_Overdrive"/>
         <Duration value="5.6"/>
         <Modification MoveSpeedMultiplier="1.6"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="SpitfireDeadeyeModule">
+        <Tooltip value="Button/Tooltip/SpitfireDeadeyeModule"/>
+        <Alignment value="Positive"/>
+        <InfoIcon value="Assets\Textures\btn-ability-terran-detectionconedebuff.dds"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisplayDuration index="Ally" value="1"/>
+        <Duration value="9.8"/>
+        <Modification RangedWeaponRange="1" WeaponScanBonus="1"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="SpitfirePowershell">
         <InfoIcon value="Assets\Textures\btn-ability-stetmann-garypersonalstetzone-speed.dds"/>
@@ -228,21 +324,6 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="GenetronPowerSupplyGEOlympusDischarge"/>
         <DisableValidatorArray value="NotUnderConstruction"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="BoarIgnitionBlastReq">
-        <InfoFlags index="Hidden" value="1"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="GenetronPowerSupplyGE050"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="CourierOpticalDisruptionReq">
-        <InfoFlags index="Hidden" value="1"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="GenetronPowerSupplyGE050"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="CourierCloakingFieldReq">
-        <InfoFlags index="Hidden" value="1"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="GenetronPowerSupplyGE025"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="Detector13p75">
         <InfoFlags index="Hidden" value="1"/>
@@ -281,11 +362,6 @@
         <PeriodicEffect value="ProwlerAcidNestSearchTarget"/>
         <DisableValidatorArray value="NotUnderConstruction"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="TeslaAbilitiesReq">
-        <InfoFlags index="Hidden" value="1"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="GenetronPowerSupplyGE150"/>
-    </CBehaviorBuff>
     <CBehaviorBuff id="InducerGamutOrbInhibitorBeam">
         <BehaviorFlags index="Permanent" value="1"/>
         <InfoFlags index="Hidden" value="1"/>
@@ -304,40 +380,28 @@
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
         <Modification TimeScale="0.5"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="UmbraStealthCompulsion">
+        <InfoIcon value="Assets\Textures\btn-ability-keiron-shieldcompulsion.dds"/>
+        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
+        <Duration value="11.2"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisplayDuration index="Ally" value="1"/>
+        <InitialEffect value="UmbraStealthCompulsionBuffInit"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="UmbraStealthSuppression">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="SuppressCloak"/>
         <Period value="0.0625"/>
-        <PeriodicEffect value="UmbraStealthSuppressionModifyUnit"/>
+        <PeriodicEffect value="UmbraStealthSuppressionModifyCooldown"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="UnfuseDamageReduction">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
-        <Duration value="1"/>
+        <Duration value="1.4"/>
         <DamageResponse ModifyFraction="0.25">
             <Chance value="1"/>
         </DamageResponse>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="VirtusSelfFixReq">
-        <InfoFlags index="Hidden" value="1"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="GenetronPowerSupplyGE100"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="InciterELORReq">
-        <InfoFlags index="Hidden" value="1"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="GenetronPowerSupplyGE075"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="AquilaSuperchargeReq">
-        <InfoFlags index="Hidden" value="1"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="GenetronPowerSupplyGEAquilaSupercharge"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="AquilaNaniteGrenadeReq">
-        <InfoFlags index="Hidden" value="1"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="GenetronPowerSupplyGE050"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="BadgerPowershell">
         <InfoIcon value="Assets\Textures\btn-ability-stetmann-garypersonalstetzone-speed.dds"/>
@@ -366,11 +430,6 @@
         <Modification QueueCount="-2"/>
         <InfoFlags index="Hidden" value="1"/>
         <Requirements value="AssemblyArrayUnitQueuedOrBetter"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="BlitzerAbilitiesReq">
-        <InfoFlags index="Hidden" value="1"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="GenetronPowerSupplyGE015"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="MaximumPowerProcessingCore">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -421,7 +480,7 @@
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Modification>
-            <TurretDisableArray value="MoleTurret"/>
+            <TurretDisableArray value="MoleTurretSieged"/>
         </Modification>
     </CBehaviorBuff>
     <CBehaviorBuff id="MoleSubterraneanSensors">
@@ -524,11 +583,6 @@
         <FinalEffect value="TrackGenetronPowerSupplyEndUnitOrphan"/>
         <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="ProcessingCoreMiningPriorityReq">
-        <InfoFlags index="Hidden" value="1"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="GenetronPowerSupplyGE100"/>
-    </CBehaviorBuff>
     <CBehaviorBuff id="WardShellDome">
         <InfoIcon value="Assets\Textures\btn-ability-keiron-shelldome.dds"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
@@ -557,7 +611,7 @@
         <InfoIcon value="Assets\Textures\btn-ability-genetron-boredrill.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <MaxStackCountPerCaster value="1"/>
-        <Duration value="8"/>
+        <Duration value="14"/>
         <Modification>
             <LifeArmorBonus value="-1"/>
         </Modification>
@@ -568,18 +622,22 @@
     <CBehaviorBuff id="BoreDrill2" parent="BoreDrill">
         <MaxStackCount value="2"/>
         <StackAliasPriority value="2"/>
+        <Duration value="8"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="BoreDrill3" parent="BoreDrill">
         <MaxStackCount value="3"/>
         <StackAliasPriority value="3"/>
+        <Duration value="8"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="BoreDrill4" parent="BoreDrill">
         <MaxStackCount value="4"/>
         <StackAliasPriority value="4"/>
+        <Duration value="8"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="BoreDrill5" parent="BoreDrill">
         <MaxStackCount value="5"/>
         <StackAliasPriority value="5"/>
+        <Duration value="8"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="CloakingGenerator">
         <InfoFlags index="Hidden" value="1"/>
@@ -745,7 +803,7 @@
         <Alignment value="Negative"/>
         <InfoIcon value="Assets\Textures\btn-ability-keiron-suspension.dds"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
-        <Duration value="2"/>
+        <Duration value="3.5"/>
         <Modification>
             <BehaviorLinkDisableArray value="KeironShellRestoration"/>
             <BehaviorLinkDisableArray value="KeironShellRestorationDisable"/>
@@ -1018,6 +1076,7 @@
         <DamageResponse Handled="TeslaShockChargeOverload" ModifyFraction="0">
             <Chance value="1"/>
         </DamageResponse>
+        <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="VirtusSelffixProtocolBuff">
         <InfoIcon value="Assets\Textures\btn-upgrade-swann-regenerativebiosteel.dds"/>
@@ -1192,7 +1251,7 @@
         <InfoIcon value="Assets\Textures\btn-ability-genetron-cannonreset.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Duration value="5"/>
-        <Modification RangedWeaponRange="1" WeaponScanBonus="1" CriticalAttackChanceUnscaledBonus="1"/>
+        <Modification CriticalAttackChanceUnscaledBonus="1"/>
         <Alignment value="Positive"/>
         <RemoveValidatorArray value="NotEMPed"/>
     </CBehaviorBuff>
@@ -1215,7 +1274,7 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <RemoveValidatorArray value="hasEnergy"/>
         <Period value="0.3125"/>
-        <PeriodicEffect value="CloakChargeFieldSA"/>
+        <PeriodicEffect value="TeslaCloakChargeFieldPeriodSet"/>
         <FinalEffect value="Suicide"/>
         <DisableValidatorArray value="CasterIsNotHidden"/>
         <DisableValidatorArray value="CasterIsNotBlindedByProwler"/>
@@ -1533,6 +1592,7 @@
         <PeriodicEffect value="IncendiaryInfusionSAA"/>
         <Alignment value="Negative"/>
         <AINotifyEffect value="IncendiaryInfusionSAA"/>
+        <PeriodCount value="8"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="IncendiaryInfusionAG">
         <InfoIcon value="Assets\Textures\btn-ability-Xayid-incendiaryinfusion.dds"/>
@@ -1542,6 +1602,7 @@
         <PeriodicEffect value="IncendiaryInfusionSAG"/>
         <Alignment value="Negative"/>
         <AINotifyEffect value="IncendiaryInfusionSAG"/>
+        <PeriodCount value="8"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="CoveringSprayAB">
         <Alignment value="Positive"/>
@@ -1564,7 +1625,6 @@
         <Modification RangedWeaponRange="3">
             <AdditiveAttackSpeedFactor value="0.4"/>
         </Modification>
-        <BuffFlags index="Extend" value="1"/>
         <Duration value="21"/>
         <Alignment value="Positive"/>
     </CBehaviorBuff>
@@ -1574,8 +1634,7 @@
         <Modification RangedWeaponRange="-3">
             <AdditiveAttackSpeedFactor value="-0.4"/>
         </Modification>
-        <BuffFlags index="Extend" value="1"/>
-        <Duration value="15"/>
+        <Duration value="21"/>
         <Alignment value="Negative"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="ResidualAcid">
@@ -1735,6 +1794,7 @@
         <Period value="1.05"/>
         <PeriodicEffect value="SacrificialMutationHealSA"/>
         <ExpireEffect value="Suicide"/>
+        <PeriodCount value="10"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="StagnatingBileStun">
         <Alignment value="Negative"/>
@@ -1976,11 +2036,10 @@
         <InfoIcon value="Assets\Textures\btn-progression-protoss-fenix-10-acceleratedtech.dds"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Duration value="2.8"/>
-        <Modification MoveSpeedMultiplier="1.25" AccelerationMultiplier="1.75" ShieldArmorBonus="2">
+        <Modification MoveSpeedMultiplier="1.25" AccelerationMultiplier="1.75" ShieldArmorBonus="1">
             <ResourceHarvestTimeMultiplier index="Minerals" value="-0.5"/>
-            <VitalRegenMultiplier index="Life" value="4"/>
-            <VitalRegenMultiplier index="Shields" value="4"/>
         </Modification>
+        <InitialEffect value="CitadelEnergizedHealers"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="KeironConstructionFreeze">
         <InfoFlags index="Hidden" value="1"/>
@@ -2364,7 +2423,9 @@
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
         <DisableValidatorArray value="CasterIsMoving"/>
-        <DamageResponse ModifyFraction="0.75">
+        <DisableValidatorArray value="hasShields"/>
+        <DamageResponse ModifyFraction="0.6667">
+            <Kind index="Melee" value="0"/>
             <Chance value="1"/>
         </DamageResponse>
     </CBehaviorBuff>
@@ -2378,7 +2439,7 @@
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Modification>
             <StateFlags index="Cloak" value="1"/>
-            <DamageDealtFraction index="Ranged" value="1"/>
+            <DamageDealtScaled index="Ranged" value="20"/>
         </Modification>
         <Cost>
             <Cooldown TimeUse="11.2"/>

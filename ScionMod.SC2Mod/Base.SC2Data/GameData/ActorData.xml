@@ -278,6 +278,248 @@
         <On Terms="Behavior.BoarIgnitionBlastInit.On" Send="Create"/>
         <On Terms="Behavior.BoarIgnitionBlastInit.Off" Send="Destroy"/>
     </CActorSound>
+    <CActorMissile id="LunaMine" parent="GenericAttackMissile" unitName="LunaMine">
+        <CopySource value="_Unit"/>
+        <Aliases value="_Selectable"/>
+        <Macros value="DeadAnimationMacro"/>
+        <On index="0" Terms="UnitBirth.LunaMine" Send="Create SoundEmitter LunaMine_Ambience"/>
+        <On index="1" Terms="UnitBirth.LunaMine" Send="Create"/>
+        <On index="2" Terms="UnitRevive.LunaMine" Send="Create"/>
+        <On index="3" Terms="UnitRevive.LunaMine" Send="RefSet ::HostTurretBody _Selectable"/>
+        <On Terms="UnitBirth.LunaMineLaunch.*" Send="Create"/>
+        <On Terms="UnitConstruction.LunaMine.Start" Send="Create"/>
+        <On Terms="UnitConstruction.LunaMine.Finish" Send="AnimPlay ConstructionDeath Stand,Birth,Death FullMatch"/>
+        <On Terms="AnimDone.*.Missing; AnimName ConstructionDeath" Send="Destroy"/>
+        <On Terms="ActorCreation; Option Shadow Low; $AllowBlobShadow" Send="Create FlyerShadow"/>
+        <On Terms="StatusOn.*.PreTargetingModel" Send="Create ModelPretargetGround"/>
+        <On Terms="StatusOff.*.PreTargetingModel" Target="ModelPretargetGround" Send="Destroy"/>
+        <On Terms="StatusOn.*.PreTargetingModel" Send="Create GroundPreSelection"/>
+        <On Terms="StatusOff.*.PreTargetingModel" Target="GroundPreSelection" Send="Destroy"/>
+        <On Terms="StatusIncrement.*.PreTargetingModel; IsStatus PreTargetingModel 2" Send="StatusSet PreTargetingModel 1"/>
+        <On Terms="PreTargetingUpdate.*.Start" Send="SetTintColorBlendPair 255,192,192 255,128,128 0.150000 Bounce Pretarget"/>
+        <On Terms="PreTargetingUpdate.*.Stop" Send="ClearTintColor 0.100000 Pretarget"/>
+        <On Terms="StatusOn.*.PreTargetingTint" Send="PreTargetingUpdate Start"/>
+        <On Terms="StatusOff.*.PreTargetingTint" Send="PreTargetingUpdate Stop"/>
+        <On Terms="StatusIncrement.*.PreTargetingTint; IsStatus PreTargetingTint 2" Send="StatusSet PreTargetingTint 1"/>
+        <On Terms="CursorUpdate.*.Start; ValidateUnit IsFlying" Send="StatusIncrement FlyerHelper"/>
+        <On Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying; HasStatus FlyerHelper" Send="StatusDecrement FlyerHelper"/>
+        <On Terms="ActorCreation; ScopeContains GroundLocalSelection" Send="StatusSet Selected 1"/>
+        <On Terms="SelectionLocalUpdate.*.Start" Send="StatusSet Selected 1"/>
+        <On Terms="SelectionLocalUpdate.*.Stop" Send="StatusSet Selected 0"/>
+        <On Terms="StatusOn.*.Selected; ValidateUnit IsFlying" Send="StatusIncrement FlyerHelper"/>
+        <On Terms="StatusOff.*.Selected; ValidateUnit IsFlying; HasStatus FlyerHelper" Send="StatusDecrement FlyerHelper"/>
+        <On Terms="StatusOn.*.FlyerHelper; FlyerHelper All" Send="Create FlyerHelperSplat"/>
+        <On Terms="StatusOn.*.FlyerHelper; FlyerHelper Selected" Send="Create FlyerHelperSplat"/>
+        <On Terms="StatusOff.*.FlyerHelper; FlyerHelper Selected" Target="FlyerHelperSplat" Send="Destroy"/>
+        <On Terms="ActorCreation; FlyerHelper All" Send="Create FlyerHelperSplat"/>
+        <On Terms="ActorDestruction; FlyerHelper All; !HasStatus FlyerHelper" Target="FlyerHelperSplat" Send="Destroy"/>
+        <On Terms="FlyerHelperChange; FlyerHelper None" Target="FlyerHelperSplat" Send="Destroy"/>
+        <On Terms="FlyerHelperChange; FlyerHelper Selected; HasStatus FlyerHelper; !ScopeContains FlyerHelperSplat" Send="Create FlyerHelperSplat"/>
+        <On Terms="FlyerHelperChange; FlyerHelper Selected; !HasStatus FlyerHelper" Target="FlyerHelperSplat" Send="Destroy"/>
+        <On Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying; !ScopeContains FlyerHelperSplat" Send="Create FlyerHelperSplat"/>
+        <On Terms="UnitBirth.*.Normal" Send="$Birth 0 0.000000"/>
+        <On Terms="UnitFidget" Send="AnimPlay Fidget Fidget"/>
+        <On Terms="UnitMovementUpdate.*.Walk" Send="AnimClear Fidget"/>
+        <On Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination" Target="_HallucinationTinter" Send="Signal HallucinationTintOn"/>
+        <On Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination" Target="_HallucinationTinter" Send="Signal HallucinationTintOff"/>
+        <On Terms="UnitDeathCustomize; ValidateUnit NotStructure; IsStatus InAir 1" Send="DeathCustomize AntiGravGeneric"/>
+        <On Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit; IsStatus InAir 1" Send="DeathCustomize AntiGravProtoss"/>
+        <On Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit; IsStatus InAir 1" Send="DeathCustomize AntiGravTerran"/>
+        <On Terms="UnitDeathCustomize; ValidateUnit IsZergUnit; IsStatus InAir 1" Send="DeathCustomize AntiGravZerg"/>
+        <On Terms="UnitDeathCustomize; ValidateUnit IsVortexed" Send="DeathCustomize Vortex"/>
+        <On Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss" Send="DeathCustomize AntiGravProtoss"/>
+        <On Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg" Send="DeathCustomize AntiGravZerg"/>
+        <On Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran" Send="DeathCustomize AntiGravTerran"/>
+        <On Terms="Behavior.PhoenixAntiGrav.On" Send="ModelSuddenMotionStart"/>
+        <On Terms="Behavior.PhoenixAntiGrav.Off" Send="ModelSuddenMotionStop"/>
+        <On Terms="Behavior.ForceLowDeath.On" Send="DeathCustomsEnablePhysics 0"/>
+        <On Terms="ActorCreation" Send="StatusSet InAir 0"/>
+        <On Terms="UnitHeightUpdate.*.Lift" Send="StatusSet InAir 1"/>
+        <On Terms="UnitHeightUpdate.*.Land" Send="StatusSet InAir 0"/>
+        <On Terms="BuildCoachHover.*.On" Send="TimerKill DelayUnhighlight"/>
+        <On Terms="BuildCoachHover.*.On" Send="SetTintColor 0,255,0 0.100000"/>
+        <On Terms="BuildCoachHover.*.Off" Send="TimerSet 0.300000 DelayUnhighlight"/>
+        <On Terms="TimerExpired; TimerName DelayUnhighlight" Send="SetTintColor 255,255,255 0.500000"/>
+        <On Terms="UnitBirth.*.Normal" Send="TimerSet 0.500000 SetUp"/>
+        <On Terms="TimerExpired; TimerName SetUp" Send="AnimBracketStart Cover Cover,Start Cover Cover,End OpeningPlayForever"/>
+        <On Terms="TimerExpired; TimerName SetUp" Send="AnimBracketStart Work Work,Start Work Work,End OpeningPlayForever"/>
+        <On Terms="UnitBirth.*.EditorPlaced" Send="AnimBracketStart Cover Cover,Start Cover Cover,End OpeningPlayForever,Instant"/>
+        <On Terms="UnitBirth.*.EditorPlaced" Send="AnimBracketStart Work Work,Start Work Work,End OpeningPlayForever"/>
+        <On Terms="UnitBirth.*.EditorPlacementCursor" Send="AnimBracketStart Cover Cover,Start Cover Cover,End OpeningPlayForever,Instant"/>
+        <On Terms="UnitBirth.*.EditorPlacementCursor" Send="AnimBracketStart Work Work,Start Work Work,End OpeningPlayForever,Instant"/>
+        <On Terms="UnitBirth.*.Suppressed" Send="AnimBracketStart Cover Cover,Start Cover Cover,End OpeningPlayForever,Instant"/>
+        <On Terms="UnitBirth.*.Suppressed" Send="AnimBracketStart Work Work,Start Work Work,End OpeningPlayForever,Instant"/>
+        <On Terms="Effect.TorrentLunaMineMissileCreatePersistent.Start; At Caster" Send="Create LunaMineLookAt"/>
+        <On Terms="Effect.TorrentLunaMineMissileCreatePersistent.Start; At Caster" Target="LunaMineLookAt" Send="LookAtStart"/>
+        <On Terms="Effect.TorrentLunaMineMissileCreatePersistent.Stop; At Caster" Target="LunaMineLookAt" Send="LookAtStop"/>
+        <On Terms="Effect.TorrentLunaMineMissileCreatePersistent.Stop; At Caster" Target="LunaMineLookAt" Send="Destroy"/>
+        <On Terms="Behavior.LunaMineStun.On" Send="$Spell PlayForever"/>
+        <On Terms="Behavior.LunaMineStun.Off" Send="AnimClear Spell"/>
+        <ModelFlags index="AutomateGlobalLoops" value="1"/>
+        <ModelFlags index="NeedsVolumeMonitoring" value="1"/>
+        <ModelFlags index="UseSyncSeed" value="1"/>
+        <EventDataFootprint Actor="UnitFootprint" Model="LunaMineFootprint"/>
+        <EventDataSound Actor="UnitSound"/>
+        <Baselines index="Stand" AnimProps="Stand" BlendIn="-1.000000" BlendOut="-1.000000"/>
+        <Baselines index="Walk" AnimProps="Walk" BlendIn="-1.000000" BlendOut="-1.000000"/>
+        <BuildModel value="LunaMine"/>
+        <DeathArray index="Normal">
+            <AnimProps value="Death"/>
+            <ModelLink value="LunaMine"/>
+            <SoundLink value="LunaMineDeath"/>
+            <VoiceLink value="LunaMineDeathVoice"/>
+        </DeathArray>
+        <DeathCustoms ModelLink="Invisible" Name="Vortex"/>
+        <DeathCustomData Name="RagdollBasic" SyncPassChance="50"/>
+        <DeathActorModel value="UnitDeathModel"/>
+        <DeathActorModelLow value="UnitDeathModelUnscaled"/>
+        <DeathActorSound value="UnitDeathSound"/>
+        <DeathActorVoice value="UnitDeathVoice"/>
+        <PhysicsMatchKeysOrdered value="Basic"/>
+        <PlacementModel value="LunaMine"/>
+        <PlacementActorModel value="PlacementModel"/>
+        <PlaceholderActorModel value="PlaceholderModel"/>
+        <PortraitActor value="PortraitActor"/>
+        <PortraitModel value="StaticPortrait"/>
+        <BarDistance value="34"/>
+        <BarHeight value="7"/>
+        <BarOffset value="38"/>
+        <BarWidth value="42"/>
+        <GlossaryAnim value="Portrait"/>
+        <GroupSoundThreshold value="2"/>
+        <HighlightTooltip value="Unit/Name/LunaMine"/>
+        <MinimapIconScale value="1.000000"/>
+        <MinimapIconBackgroundScale value="1.000000"/>
+        <MinimapRenderPriority value="Normal"/>
+        <MinimapFlashWhenAttacked value="1"/>
+        <MinimapUseSelfColor value="1"/>
+        <MinimapUseSelectionColor value="1"/>
+        <NameOffset value="30"/>
+        <ShieldArmorIcon value="Assets\Textures\btn-upgrade-protoss-shieldslevel0.dds"/>
+        <SnapshotActor value="Snapshot"/>
+        <StatusBarFlags index="Shields" value="1"/>
+        <StatusBarFlags index="Life" value="1"/>
+        <StatusBarFlags index="Energy" value="1"/>
+        <StatusBarFlags index="Cargo" value="1"/>
+        <StatusBarFlags index="Progress" value="1"/>
+        <StatusBarFlags index="Duration" value="1"/>
+        <StatusBarFlags index="Magazine" value="1"/>
+        <StatusBarFlags index="Workers" value="1"/>
+        <StatusBarFlags index="Custom" value="1"/>
+        <StatusBarGroups index="Owner" value="1"/>
+        <StatusBarGroups index="Allied" value="1"/>
+        <StatusBarGroups index="Enemy" value="1"/>
+        <StatusBarGroups index="All" value="1"/>
+        <StatusColors index="Shields" BackgroundColor="255,0,0,0" EmptyColor="255,80,80,80">
+            <ColorArray value="255,0,0,255"/>
+        </StatusColors>
+        <StatusColors index="Life" BackgroundColor="255,0,0,0" EmptyColor="255,80,80,80">
+            <ColorArray value="255,208,34,0"/>
+            <ColorArray value="255,208,34,0"/>
+            <ColorArray value="255,229,129,0"/>
+            <ColorArray value="255,229,129,0"/>
+            <ColorArray value="255,229,221,0"/>
+            <ColorArray value="255,229,221,0"/>
+            <ColorArray value="255,22,229,0"/>
+            <ColorArray value="255,22,229,0"/>
+        </StatusColors>
+        <StatusColors index="Energy" BackgroundColor="255,0,0,0" EmptyColor="255,80,80,80">
+            <ColorArray value="255,150,40,220"/>
+        </StatusColors>
+        <StatusColors index="Cargo" BackgroundColor="255,0,0,0" EmptyColor="255,77,60,15">
+            <ColorArray value="255,255,255,255"/>
+        </StatusColors>
+        <StatusColors index="Progress" BackgroundColor="255,0,0,0" EmptyColor="255,80,80,80">
+            <ColorArray value="255,0,200,200"/>
+        </StatusColors>
+        <StatusColors index="Duration" BackgroundColor="255,0,0,0" EmptyColor="255,40,40,40">
+            <ColorArray value="255,120,120,120"/>
+        </StatusColors>
+        <StatusColors index="Magazine" BackgroundColor="255,0,0,0" EmptyColor="255,77,60,15">
+            <ColorArray value="255,128,128,64"/>
+        </StatusColors>
+        <StatusTextInfo>
+            <Offset value="0,16"/>
+            <Attachment value="Ref_StatusBar"/>
+            <FontSize value="16"/>
+            <BackgroundColor value="255,255,255,255"/>
+            <BackgroundImage value="Assets\Textures\ui_ingame_workercount_bg.dds"/>
+        </StatusTextInfo>
+        <UnitFlags index="ShowBlobShadow" value="1"/>
+        <UnitFlags index="StandAnimBirthVariation" value="1"/>
+        <UnitIcon value="Assets\Textures\btn-unit-genetron-torrentdrone.dds"/>
+        <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-aircraftplating-level0.dds"/>
+        <GroupIcon>
+            <Image value="Assets\Textures\wireframe-genetron-torrentdrone.dds"/>
+        </GroupIcon>
+        <Wireframe>
+            <Image value="Assets\Textures\wireframe-genetron-torrentdrone.dds"/>
+        </Wireframe>
+    </CActorMissile>
+    <CActorLookAt id="LunaMineLookAt" parent="UnitTurret">
+        <Types Id="DefaultLookAtTurret">
+            <Start>
+                <Group value="Turret_Right"/>
+                <Weight value="1"/>
+                <Time value="500"/>
+                <Rate value="540.000000"/>
+            </Start>
+            <Stop>
+                <Group value="Turret_Right"/>
+                <Weight value="1"/>
+                <Time value="500"/>
+                <Rate value="540.000000"/>
+            </Stop>
+        </Types>
+        <HostTarget>
+            <Subject value="_Unit"/>
+            <Scope value="Target"/>
+            <Actor value="Find"/>
+            <Effect value="TorrentLunaMineMissileCreatePersistent"/>
+            <FailOnNoHost value="1"/>
+        </HostTarget>
+    </CActorLookAt>
+    <CActorSiteOpLocalOffset id="SOpLunaMinePlacementLOffset">
+        <LocalOffset value="-0.400000,0.000000,3.750000"/>
+    </CActorSiteOpLocalOffset>
+    <CActorSiteOpLocalOffset id="SOpLunaMinePlacementROffset">
+        <LocalOffset value="0.400000,0.000000,3.750000"/>
+    </CActorSiteOpLocalOffset>
+    <CActorQuad id="TorrentLunaMinesVisualQuadDown" parent="GuideVisualQuadDown" abil="TorrentLunaMines">
+        <On Terms="ActorCreation" Send="Create TorrentLunaMinePlacementL"/>
+        <On Terms="ActorCreation" Send="Create TorrentLunaMinePlacementR"/>
+        <LaunchActor value=""/>
+        <CenterActor value=""/>
+        <ImpactActor value=""/>
+    </CActorQuad>
+    <CActorSound id="TorrentLunaMineMissileFired" parent="SoundOneShotScion" Effect="TorrentLunaMineMissileLaunchMissile" ESub="Start; At Caster"/>
+    <CActorModel id="TorrentLunaMinePlacementL" parent="ModelAnimationStyleContinuous">
+        <On index="0" Terms="ActorCreation" Send="AnimBracketStart BSD {} Stand,Placement {} Instant"/>
+        <Host Subject="TorrentLunaMinesVisualQuadDown"/>
+        <HostSiteOps Ops="SOpBasicScopePositionFollowHoldRotation SOpLunaMinePlacementLOffset" HoldRotation="1"/>
+        <Model value="LunaMine"/>
+    </CActorModel>
+    <CActorModel id="TorrentLunaMinePlacementR" parent="ModelAnimationStyleContinuous">
+        <On index="0" Terms="ActorCreation" Send="AnimBracketStart BSD {} Stand,Placement {} Instant"/>
+        <Host Subject="TorrentLunaMinesVisualQuadDown"/>
+        <HostSiteOps Ops="SOpBasicScopePositionFollowHoldRotation SOpLunaMinePlacementROffset" HoldRotation="1"/>
+        <Model value="LunaMine"/>
+    </CActorModel>
+    <CActorBeamSimple id="TorrentLunaMineTargetingBeam" parent="BeamSimpleAnimationStyleContinuous">
+        <Inherits index="Visibility" value="1"/>
+        <Supporter Subject="_Unit" Scope="Caster" Actor="Find"/>
+        <On Terms="Effect.TorrentLunaMineMissileCreatePersistent.Start" Send="Create"/>
+        <On Terms="Effect.TorrentLunaMineMissileCreatePersistent.Stop" Send="Destroy"/>
+        <HostForProps Subject="_Unit" Scope="Caster" Actor="Find"/>
+        <Host Subject="_Unit" Scope="Caster" Actor="Find"/>
+        <HostLaunch Subject="_Unit" Scope="Caster" Actor="Find"/>
+        <HostLaunchSiteOps Ops="SOpAttachHead"/>
+        <HostImpact Subject="_Unit" Scope="Target" Actor="Find"/>
+        <HostImpactSiteOps Ops="SOpAttachCenter"/>
+    </CActorBeamSimple>
+    <CActorMissile id="TorrentLunaMineMissile" parent="GenericAttackMissile" unitName="TorrentLunaMineMissile">
+        <On Terms="UnitBirth" Send="AnimPlay Work Work,End 0 0.000000 -1.000000 0.500000 AsDuration"/>
+    </CActorMissile>
     <CActorModel id="GenetronOverclockModel" parent="ModelAddition">
         <Inherits index="TimeScale" value="0"/>
         <On index="0" Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand,C Death"/>
@@ -289,9 +531,29 @@
     <CActorSound id="Genetron_Overclock" parent="SoundOneShot">
         <On Terms="Effect.Scion_OverclockTargetFound.Start" Send="Create"/>
     </CActorSound>
+    <CActorModel id="HornetBoreDrillsBuff" parent="ModelAnimationStyleContinuousUNIT">
+        <On Terms="ActorCreation" Send="SetOpacity 0.900000"/>
+        <On Terms="ActorCreation" Send="TimerSet 0.750000"/>
+        <On Terms="TimerExpired" Send="AnimSetPaused BSD"/>
+        <On Terms="BehaviorStackAlias.BoreDrill.On" Send="Create"/>
+        <On Terms="BehaviorStackAlias.BoreDrill.Off" Send="AnimSetPaused BSD 0"/>
+        <HostSiteOps Ops="SOpAttachOverhead SOpMoveUpByDot5"/>
+    </CActorModel>
+    <CActorSiteOpLocalOffset id="SOpLunaMinesOffset">
+        <LocalOffset value="0.000000,0.000000,3.750000"/>
+    </CActorSiteOpLocalOffset>
+    <CActorModel id="SpitfireDeadeyeModuleAttachment" parent="ModelAddition">
+        <HostSiteOps Ops="SOpAttachHardPoint"/>
+        <Model value="Genetron_Unit_TrackingMunitions_Beam_Hardpoint"/>
+    </CActorModel>
+    <CActorSound id="Spitfire_DeadeyeModule" parent="SoundOneShotScion" Behavior="SpitfireDeadeyeModule"/>
     <CActorSound id="KeironShape_End" parent="SoundOneShot"/>
     <CActorSound id="KeironShape_Loop" parent="SoundContinuous"/>
     <CActorSound id="KeironShape_Start" parent="SoundOneShot"/>
+    <CActorTurret id="MoleTurretMobile">
+        <On Terms="TurretEnable.MoleTurretMobile" Send="Create"/>
+        <On Terms="AbilMorph.*.Start; MorphFrom Mole" Send="Destroy"/>
+    </CActorTurret>
     <CActorSound id="OculusChargeFinish" parent="SoundOneShotScion" Effect="OculusChargeInstant">
         <Sound value="CitadelChargeFinish"/>
     </CActorSound>
@@ -687,6 +949,22 @@
     <CActorModel id="ScourFateModel" parent="ModelAnimationStyleOneShot">
         <Model value="ScourImpact"/>
     </CActorModel>
+    <CActorAction id="TorrentLunaMinesAttack" parent="GenericAttack" effectImpact="TorrentPlaceLunaMinesImpact" effectLaunch="TorrentPlaceLunaMinesLaunchMissile">
+        <LaunchAttachQuery Methods="AMFilterWeaponSetA0 AMPatternTorrentLunaMines"/>
+        <LaunchAssets Sound="TorrentLunaMineAttackLaunch"/>
+        <Missile value="LunaMine"/>
+        <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpLunaMinesOffset"/>
+        <ImpactMap index="None" Sound="TorrentLunaMineAttackImpact"/>
+    </CActorAction>
+    <CActorAction id="TorrentLunaMineMissileAttack" parent="GenericAttack" effectImpact="TorrentLunaMineMissileImpactSet" effectLaunch="TorrentLunaMineMissileLaunchMissile">
+        <Missile value="TorrentLunaMineMissile"/>
+        <LaunchAttachQuery Methods="" Fallback="Origin"/>
+    </CActorAction>
+    <CActorSound id="TorrentLunaMineTargetAcquire" parent="SoundOneShotScion" Effect="TorrentLunaMineMissileCreatePersistent" ESub="Start; At Caster"/>
+    <CActorModel id="UmbraShieldDeflectionProc" parent="ModelAnimationStyleOneShotUNIT">
+        <On Terms="Behavior.UmbraDamageReduction.DamageHandled; !Cap 3" Send="Create"/>
+        <HostSiteOps Ops="SOpAttachCenter"/>
+    </CActorModel>
     <CActorModel id="WardAttackLaunchModel" parent="ModelAnimationStyleOneShot">
         <On Terms="ActorCreation" Send="SetTintColor {255,89,0 2.000000}"/>
         <Model value="CataractAirAttackLaunch"/>
@@ -920,7 +1198,6 @@
         </TerrainSquibs>
         <WalkAnimMoveSpeed value="2.5"/>
         <BarOffset value="50"/>
-        <BarWidth value="65"/>
     </CActorUnit>
     <CActorUnit id="ChangelingXayidling" parent="GenericUnitXayid" unitName="ChangelingXayidling">
         <Aliases value="_UnitSmall"/>
@@ -1258,7 +1535,7 @@
     <CActorUnit id="Scorpalisk" parent="GenericUnitXayid" unitName="Scorpalisk">
         <PortraitModel value="ZerglingPortrait"/>
         <WalkAnimMoveSpeed value="3"/>
-        <BarOffset value="55"/>
+        <BarOffset value="53"/>
         <Aliases value="_UnitMedium"/>
         <TerrainSquibs>
             <MovementDistance value="0.150000,0.150000"/>
@@ -1271,7 +1548,6 @@
         <On Terms="ActorCreation; ValidatePlayer ScorpaliskMetabloicsCompleted" Send="AnimGroupApply Superior"/>
         <On Terms="Upgrade.ScorpaliskMetabolics.Add" Send="AnimGroupApply Superior"/>
         <On Terms="Upgrade.ScorpaliskMetabolics.Remove" Send="AnimGroupRemove Superior"/>
-        <BarWidth value="68"/>
     </CActorUnit>
     <CActorUnit id="ShellDome" parent="GenericUnitKeiron" unitName="ShellDome">
         <DeathArray index="Normal" ActorModel="" ModelLink="ShellDome" SoundLink="WardShellDeath"/>
@@ -1497,15 +1773,14 @@
         <Filter index="Enemy" value="1"/>
         <On Terms="Effect.CreateReverbTargetSet.Start; At Caster" Send="Create"/>
         <On Terms="Behavior.EchoReverbCasterController.Off" Send="Destroy"/>
+        <On Terms="ActorCreation" Send="$Spell PlayForever"/>
         <On Terms="ActorCreation" Send="TimerSet 0.062500 BeamCycle"/>
         <On Terms="TimerExpired; TimerName BeamCycle" Send="TimerSet 0.062500 BeamCycle"/>
         <On Terms="TimerExpired; TimerName BeamCycle" Send="SetOpacity"/>
         <On Terms="TimerExpired; TimerName BeamCycle; ScopeContains _ReverbBeamVisible" Send="SetOpacity 1.000000"/>
-        <On Terms="TimerExpired; TimerName BeamCycle" Send="AnimGroupRemoveAll"/>
-        <On Terms="TimerExpired; TimerName BeamCycle; ValidateCreationEffect DistanceLT9" Send="AnimGroupApply A"/>
-        <On Terms="TimerExpired; TimerName BeamCycle; ValidateCreationEffect DistanceGE9" Send="AnimGroupApply B"/>
-        <On Terms="TimerExpired; TimerName BeamCycle; ValidateCreationEffect DistanceGE14" Send="AnimGroupApply C"/>
-        <On Terms="ActorCreation" Send="$Spell PlayForever"/>
+        <On Terms="TimerExpired; TimerName BeamCycle; ValidateCreationEffect DistanceLT9" Send="$Spell,A PlayForever"/>
+        <On Terms="TimerExpired; TimerName BeamCycle; ValidateCreationEffect DistanceGE9" Send="$Spell,B PlayForever"/>
+        <On Terms="TimerExpired; TimerName BeamCycle; ValidateCreationEffect DistanceGE14" Send="$Spell,C PlayForever"/>
         <HostLaunchSiteOps Ops="SOpCasterUnit SOpAttachCenter"/>
         <HostImpactSiteOps Ops="SOpTargetUnit SOpAttachCenter"/>
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
@@ -1532,8 +1807,8 @@
     </CActorModel>
     <CActorSound id="Gyre_Annexed" parent="SoundOneShotScion" Behavior="GyreAnnexed"/>
     <CActorModel id="GyreAnnexedModel" parent="ModelAnimationStyleContinuousUNIT">
-        <On Terms="Behavior.GyreAnnexed.On" Send="Create"/>
-        <On Terms="Behavior.GyreAnnexed.Off" Send="Destroy"/>
+        <On Terms="Behavior.GyreAnnexedStun.On" Send="Create"/>
+        <On Terms="Behavior.GyreAnnexedStun.Off" Send="Destroy"/>
         <HostSiteOps Ops="SOpAttachCenter"/>
         <AutoScaleFactor value="1.000000"/>
     </CActorModel>
@@ -1721,7 +1996,7 @@
         <On Terms="Abil.WardShellDome.SourceCastStart" Send="$Spell"/>
         <BarWidth value="70"/>
     </CActorUnit>
-    <CActorSound id="UmbraShieldCompulsionSound" parent="SoundOneShotScion" Effect="UmbraStealthCompulsion"/>
+    <CActorSound id="UmbraShieldCompulsionSound" parent="SoundOneShotScion" Effect="UmbraStealthCompulsionModifyCooldown"/>
     <CActorSound id="Umbra_CloakOff" parent="SoundOneShotScion" Behavior="UmbraStealth" BSub="Off"/>
     <CActorSound id="Umbra_CloakOn" parent="SoundOneShotScion" Behavior="UmbraStealth"/>
     <CActorSound id="VirtusSelfFixProtocol_Loop" parent="SoundContinuousScion" Behavior="VirtusSelffixProtocolBuff"/>
@@ -2511,8 +2786,8 @@
     <CActorUnit id="InciterPlaceholder" parent="GenericUnitStandard" unitName="InciterPlaceholder">
         <ModelFlags index="OutlineEmitter" value="1"/>
     </CActorUnit>
-    <CActorTurret id="MoleTurret">
-        <On Terms="TurretEnable.MoleTurret" Send="Create"/>
+    <CActorTurret id="MoleTurretSieged">
+        <On Terms="TurretEnable.MoleTurretSieged" Send="Create"/>
         <On Terms="AbilMorph.*.Start; MorphFrom MoleRooted; MorphTo Mole" Send="Destroy"/>
         <On Terms="AbilMorph.*.Start; MorphFrom MoleBurrowed; MorphTo Mole" Send="Destroy"/>
     </CActorTurret>
@@ -2725,13 +3000,16 @@
         <StatusBarFlags index="Workers" value="0"/>
         <StatusBarFlags index="Custom" value="0"/>
         <Wireframe>
-            <Image value="Assets\Textures\btn-ability-genetron-teslacloakcharge.dds"/>
+            <Image value="Assets\Textures\wireframe-genetron-cloakcharge.dds"/>
         </Wireframe>
         <ModelFlags index="OutlineEmitter" value="1"/>
         <Macros value="UnloadDropAnim"/>
         <GlossaryAnim value="Cover,B"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-mechstructurearmor.dds"/>
         <UnitIcon value="Assets\Textures\btn-unit-genetron-teslastealthcharge.dds"/>
+        <GroupIcon>
+            <Image value="Assets\Textures\wireframe-genetron-cloakcharge.dds"/>
+        </GroupIcon>
     </CActorUnit>
     <CActorSplat id="TeslaCloakChargeCursor" parent="TerranCursorSplat" abil="LaunchCloakCharge">
         <Scale value="3.400000"/>
@@ -3617,11 +3895,13 @@
         <On Terms="Upgrade.CalibratedEngines.Remove" Send="AnimClear Cover"/>
         <On Terms="WeaponStart.*.AttackStart; WeaponTargetElevation GE 20.000000" Send="AnimPlay Stance Superior PlayForever"/>
         <On Terms="WeaponStart.*.AttackStart; WeaponTargetElevation LE -20.000000" Send="AnimPlay Stance Inferior PlayForever"/>
-        <On Terms="WeaponStart.*.AttackStart" Send="AnimBracketStart Attack Attack"/>
+        <On Terms="Effect.RiotGun.Start; At Caster" Send="AnimPlay Attack Attack"/>
         <On Terms="WeaponStop.*.AttackStop" Send="AnimClear Stance"/>
         <On Terms="ActorCreation; ValidatePlayer SpitfireMadcapRounds" Send="Create SpitfireMadcapRoundsAttachment"/>
         <On Terms="Upgrade.SpitfireMadcapRounds.Add" Send="Create SpitfireMadcapRoundsAttachment"/>
         <On Terms="Upgrade.SpitfireMadcapRounds.Remove" Target="SpitfireMadcapRoundsAttachment" Send="Destroy"/>
+        <On Terms="Behavior.SpitfireDeadeyeModule.Enable" Send="Create SpitfireDeadeyeModuleAttachment"/>
+        <On Terms="Behavior.SpitfireDeadeyeModule.Disable" Target="SpitfireDeadeyeModuleAttachment" Send="Destroy"/>
         <PortraitModel value="SpitfirePortrait"/>
         <ModelFlags index="OutlineEmitter" value="1"/>
     </CActorUnit>
@@ -3761,12 +4041,15 @@
         <StatusBarFlags index="Workers" value="0"/>
         <StatusBarFlags index="Custom" value="0"/>
         <Wireframe>
-            <Image value="Assets\Textures\btn-ability-genetron-teslacharge.dds"/>
+            <Image value="Assets\Textures\wireframe-genetron-shockcharge.dds"/>
         </Wireframe>
         <ModelFlags index="OutlineEmitter" value="1"/>
         <Macros value="UnloadDropAnim"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-mechstructurearmor.dds"/>
         <UnitIcon value="Assets\Textures\btn-unit-genetron-teslashockcharge.dds"/>
+        <GroupIcon>
+            <Image value="Assets\Textures\wireframe-genetron-shockcharge.dds"/>
+        </GroupIcon>
     </CActorUnit>
     <CActorMissile id="AvengerNemesisAttackMissile" parent="GenericAttackMissile" unitName="NemesisMissilesLMWeapon">
         <Model value="AvengerNemesisMissileWeapon"/>
@@ -4054,6 +4337,8 @@
         <On index="6" removed="1"/>
     </CActorSplat>
     <CActorUnit id="AcidNest" parent="GenericUnitBase" unitName="AcidNest">
+        <On Terms="UnitConstruction.*.Start" Send="SetScale 0.300000"/>
+        <On Terms="UnitConstruction.*.Start" Send="SetScale 1.000000 7.000000"/>
         <GroupIcon>
             <Image value="Assets\Textures\wireframe-Xayid-prowlerexplosive.dds"/>
         </GroupIcon>
@@ -4062,7 +4347,6 @@
         <Wireframe>
             <Image value="Assets\Textures\wireframe-Xayid-prowlerexplosive.dds"/>
         </Wireframe>
-        <On Terms="AbilMorph.*.Finish; MorphFrom AcidNestBuild" Send="Create"/>
         <BarOffset value="40"/>
         <BarWidth value="40"/>
         <ModelFlags index="OutlineOccluder" value="1"/>
@@ -4073,34 +4357,13 @@
         <Aliases value="_UnitSmall"/>
         <UnitFlags index="ShowBlobShadow" value="0"/>
     </CActorUnit>
-    <CActorUnit id="AcidNestBuild" parent="GenericUnitBase" unitName="AcidNestBuild">
-        <On Terms="UnitConstruction.*.Start" Send="SetScale 0.300000"/>
-        <On Terms="UnitConstruction.*.Start" Send="SetScale 1.000000 10.000000"/>
-        <On Terms="AbilMorph.*.Finish" Send="Destroy"/>
-        <On Terms="AbilMorph.*.Finish; MorphTo AcidNest" Send="Destroy"/>
-        <Model value="ProwlerEgg"/>
-        <BuildModel value="ProwlerEgg"/>
-        <DeathArray index="Normal" ModelLink="ProwlerEgg"/>
-        <PlacementModel value="ProwlerEgg"/>
-        <GroupIcon>
-            <Image value="Assets\Textures\wireframe-Xayid-prowlerexplosive.dds"/>
-        </GroupIcon>
-        <LifeArmorIcon value="Assets\Textures\btn-upgrade-zerg-buildingarmor.dds"/>
-        <UnitIcon value="Assets\Textures\btn-ability-Xayid-prowlerexplosive.dds"/>
-        <Wireframe>
-            <Image value="Assets\Textures\wireframe-Xayid-prowlerexplosive.dds"/>
-        </Wireframe>
-        <BarOffset value="40"/>
-        <BarWidth value="40"/>
-        <ModelFlags index="OutlineEmitter" value="1"/>
-    </CActorUnit>
     <CActorSound id="AcidNestDeath" parent="SoundOneShotScion" Effect="ProwlerAcidNestFateSet"/>
     <CActorAction id="AdaptiveInjectionCast" parent="GenericAttack" effectImpact="AdaptiveInjectionSet" effectLaunch="AdaptiveInjection">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <LaunchAssets Sound="Corruptor_CorruptionLaunch"/>
         <ImpactMap index="None" Sound="Hydralisk_AttackImpactRanged"/>
     </CActorAction>
-    <CActorSound id="CasnoliskExplosiveGlobExplodeSound" parent="SoundOneShotScion" Effect="ExplosiveGlobImpactSearch" ESub="Impact">
+    <CActorSound id="CasnoliskExplosiveGlobExplodeSound" parent="SoundOneShotScion" Effect="ExplosiveGlobExplodeSearch" ESub="Impact">
         <Sound value="Baneling_Suicide"/>
         <SoundFlags index="UpdateVisibility" value="0"/>
     </CActorSound>
@@ -4500,7 +4763,7 @@
         <LaunchSiteOps Ops="SOpAttachHarness SOpMoveByDot5"/>
     </CActorAction>
     <CActorModel id="CasnoliskExplosiveGlobImpactModel" parent="ModelAnimationStyleOneShot">
-        <On Terms="Effect.ExplosiveGlobImpactSearch.Impact" Send="Create"/>
+        <On Terms="Effect.ExplosiveGlobExplodeSearch.Impact" Send="Create"/>
     </CActorModel>
     <CActorAction id="CasnoliskStagnatingBileCast" parent="GenericAttack" effectImpact="StagnatingBileImpact" effectLaunch="StagnatingBile">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
@@ -4895,13 +5158,14 @@
         <On Terms="UnitBirth.MassaliskHunkered" Send="Create"/>
         <On Terms="UnitBirth.MassaliskHunkered" Send="AnimBracketStart BurrowStand Burrow Burrow,Stand Unburrow OpeningPlayForever,Instant"/>
         <On Terms="AbilMorph.*.Start; MorphTo MassaliskHunkered" Send="AnimBracketStart BurrowStand Burrow Burrow,Stand Unburrow OpeningPlayForever 1.900000 AsDuration"/>
-        <On Terms="AbilMorph.*.Start; MorphTo Massalisk" Send="AnimBracketStop BurrowStand 0 0.900000 AsDuration"/>
+        <On Terms="AbilMorph.*.Start; MorphTo Massalisk" Send="AnimBracketStop BurrowStand 0 1.000000 AsDuration"/>
         <On Terms="AbilMorph.*.Start; MorphTo MassaliskHunkered" Send="Create BurrowDownLarge"/>
         <On Terms="AbilMorph.*.Start; MorphTo MassaliskHunkered" Send="Create LargeBurrowDownEffects"/>
         <On Terms="AbilMorph.*.Start; MorphTo MassaliskHunkered" Send="Create PrimalTownHallBase"/>
         <On Terms="AbilMorph.*.Start; MorphTo Massalisk" Send="Create BurrowUpLarge"/>
         <On Terms="AbilMorph.*.Start; MorphTo Massalisk" Send="Create LargeBurrowUpEffects"/>
         <On Terms="AbilMorph.*.Finish; MorphTo Massalisk" Target="PrimalTownHallBase" Send="Destroy"/>
+        <On Terms="UnitMovementUpdate.*.Walk" Send="AnimBracketClear BurrowStand"/>
         <EventDataFootprint index="0" Model="PrimalTownHallFootprint"/>
         <PortraitModel value="UltraliskPortrait"/>
         <TerrainSquibs>
@@ -4965,20 +5229,6 @@
         <Model value="ZergAOECursorSplat"/>
         <Scale value="1.500000"/>
     </CActorSplat>
-    <CActorModel id="CasnoliskStagnatingBilePrecursor">
-        <Flags index="SuppressSaveLoad" value="1"/>
-        <On Terms="Effect.StagnatingBile.Start" Send="Create"/>
-        <On Terms="ActorCreation" Send="AnimBracketStart BSD {} Stand Death ContentPlayOnce"/>
-        <On Terms="AnimBracketState.*.AfterClosing; AnimName BSD" Send="Destroy"/>
-        <On Terms="ActorOrphan" Send="AnimBracketStop BSD"/>
-        <On Terms="ActorCreation" Send="AnimSetTimeScale BSD 1.000000"/>
-        <On Terms="ActorCreation" Send="TimerSet 1.250000 Anim"/>
-        <On Terms="TimerExpired; TimerName Anim" Send="AnimSetTimeScale BSD 0.500000"/>
-        <On Terms="ActorCreation" Send="SetTintColor 13,255,0"/>
-        <HostSiteOps Ops="SOpShadow"/>
-        <Model value="RavagerCorrosiveBilePrecursor"/>
-        <Scale value="2.250000,2.250000,1.500000"/>
-    </CActorModel>
     <CActorSplat id="PrimalTownHallBase" parent="BurrowedSplatBase">
         <InheritType value="OneShot"/>
         <AcceptedTransfers index="Rotation" value="0"/>
@@ -5362,7 +5612,7 @@
         <Model value="Invisible"/>
     </CActorUnit>
     <CActorModel id="UmbraShieldCompulsionModel" parent="ModelAnimationStyleOneShotUNIT">
-        <On Terms="Effect.UmbraStealthCompulsion.Start" Send="Create"/>
+        <On Terms="Effect.UmbraStealthCompulsionModifyCooldown.Start" Send="Create"/>
         <On Terms="ActorCreation" Send="SetTintColor 193,255,6"/>
         <HostSiteOps Ops="SOpAttachShield"/>
     </CActorModel>
@@ -6901,7 +7151,6 @@
     <CActorUnit id="Cataract" parent="GenericUnitKeiron" unitName="Cataract">
         <WalkAnimMoveSpeed value="2.625"/>
         <BarOffset value="65"/>
-        <BarWidth value="65"/>
         <DeathArray index="Normal" SoundLink="KeironUnitSmall_Death"/>
         <On Terms="ActorCreation; ValidatePlayer CataractRangeUpgrade" Send="AnimPlay Upgrade Upgrade PlayForever 0.000000"/>
         <On Terms="Upgrade.AmplifiedSphere.Add" Send="AnimPlay Upgrade Upgrade PlayForever 0.000000"/>
@@ -6924,10 +7173,10 @@
         <Scale value="1.600000"/>
     </CActorMissile>
     <CActorModel id="UmbraShieldEffect" parent="ModelAddition">
-        <On Terms="Behavior.UmbraShieldVisualControl.On" Send="Create"/>
+        <!--<On Terms="Behavior.UmbraShieldVisualControl.On" Send="Create"/>
         <On Terms="ActorCreation" Send="SetTintColor 138,136,208"/>
         <On Terms="ActorCreation" Send="SetOpacity 0.600000"/>
-        <On Terms="Behavior.UmbraShieldVisualControl.Off" Send="Destroy"/>
+        <On Terms="Behavior.UmbraShieldVisualControl.Off" Send="Destroy"/>-->
         <HostSiteOps Ops="SOpAttachCenter"/>
     </CActorModel>
     <CActorAction id="VoltAttack" parent="GenericAttack" effectImpact="ElectronBoltD" effectLaunch="ElectronBoltLM">
