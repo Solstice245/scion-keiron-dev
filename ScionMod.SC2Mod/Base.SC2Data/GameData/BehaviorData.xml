@@ -5,7 +5,7 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <RemoveValidatorArray value="SourceEnergyGT0"/>
         <Period value="0.7"/>
-        <PeriodicEffect value="TorrentLunaMineEnergyDrain"/>
+        <PeriodicEffect value="TorrentLunaMineDrainSwitch"/>
         <FinalEffect value="Suicide"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="LunaMineStun">
@@ -219,6 +219,24 @@
             <Chance value="1"/>
         </DamageResponse>
     </CBehaviorBuff>
+    <CBehaviorBuff id="ProcessingCorePowerFieldBase">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="EnergyGTE005"/>
+        <TimeScaleSource Value="Global"/>
+        <Period value="0.5"/>
+        <InitialEffect value="ProcessingCorePowerFieldSA"/>
+        <PeriodicEffect value="ProcessingCorePowerFieldSA"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="ProcessingCorePowerField">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="GenetronPowerSupplyGE05"/>
+        <TimeScaleSource Value="Global"/>
+        <Duration value="1"/>
+        <Period value="0.0625"/>
+        <InitialEffect value="ProcessingCorePowerFieldDataCheck"/>
+        <PeriodicEffect value="ProcessingCorePowerFieldDataCheck"/>
+        <FinalEffect value="ProcessingCorePowerFieldData0"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="PulsarMovementSpeed">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
@@ -424,6 +442,8 @@
             <StateFlags index="SuppressEnergyRegen" value="1"/>
         </Modification>
         <TechAliasArray value="Alias_Powershell"/>
+        <Period value="0.375"/>
+        <PeriodicEffect value="BadgerPowershellPowerDrainETU"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="AssemblyArray">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -1266,7 +1286,9 @@
             <StateFlags index="Cloak" value="1"/>
             <StateFlags index="SuppressEnergyRegen" value="1"/>
         </Modification>
-        <InitialEffect value="CourierCloakingFieldPowerEnum"/>
+        <InitialEffect value="CourierCloakingFieldDrainInitETU"/>
+        <Period value="0.5"/>
+        <PeriodicEffect value="CourierCloakingFieldDrainETU"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="CloakChargeGenerator">
         <InfoFlags index="Hidden" value="1"/>

@@ -66,18 +66,141 @@
         <?token id="Race" value="Neutral"?>
         <EditorCategories value="Race:##Race##"/>
     </CEffectSet>
+    <CEffectModifyUnit id="BadgerPowershellPowerDrainEnergyMU">
+        <EditorCategories value="Race:Genetron"/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Energy">
+            <Change value="-0.5"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="BadgerPowershellPowerDrainPowerMU">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-0.5"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectEnumTrackedUnits id="CourierCloakingFieldDrainETU">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="CourierCloakingFieldDrainSet"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectModifyUnit id="CourierCloakingFieldDrainPowerMU">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-0.5"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="CourierCloakingFieldDrainEnergyMU">
+        <EditorCategories value="Race:Genetron"/>
+        <ImpactUnit Value="Caster"/>
+        <VitalArray index="Energy">
+            <Change value="-0.5"/>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectApplyBehavior id="ProcessingCorePowerFieldAB" parent="ScionApplyBehavior">
+        <ValidatorArray index="0" value="IsTeslaChargeOrLunaMine"/>
+        <EditorCategories value="Race:Genetron"/>
+        <Behavior value="ProcessingCorePowerField"/>
+    </CEffectApplyBehavior>
+    <CEffectUserData id="ProcessingCorePowerFieldData0">
+        <EditorCategories value="Race:Genetron"/>
+        <Amount value="0"/>
+        <Operation value="Set"/>
+        <BehaviorScope Value="Target" Behavior="ProcessingCorePowerField"/>
+    </CEffectUserData>
+    <CEffectUserData id="ProcessingCorePowerFieldData1">
+        <EditorCategories value="Race:Genetron"/>
+        <Operation value="Set"/>
+        <BehaviorScope Value="Target" Behavior="ProcessingCorePowerField"/>
+    </CEffectUserData>
+    <CEffectUserData id="ProcessingCorePowerFieldDataCheck">
+        <ValidatorArray value="EnergyNotFull"/>
+        <EditorCategories value="Race:Genetron"/>
+        <Amount value="0"/>
+        <EffectSuccess value="ProcessingCorePowerFieldETU"/>
+        <BehaviorScope Value="Target" Behavior="ProcessingCorePowerField"/>
+    </CEffectUserData>
+    <CEffectEnumTrackedUnits id="ProcessingCorePowerFieldETU">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <TrackerUnit Value="Target"/>
+        <Effect value="ProcessingCorePowerFieldHealer"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectCreateHealer id="ProcessingCorePowerFieldHealer">
+        <EditorCategories value="Race:Genetron"/>
+        <LaunchUnit Value="Target"/>
+        <ImpactUnit Effect="ProcessingCorePowerFieldETU"/>
+        <Flags index="Channeled" value="0"/>
+        <PeriodicValidator value="GenetronHasPowerField"/>
+        <DrainVital value="Energy"/>
+        <DrainVitalCostFactor value="0.25"/>
+        <RechargeVital value="Energy"/>
+        <RechargeVitalRate value="150"/>
+        <InitialEffect value="ProcessingCorePowerFieldData1"/>
+        <FinalEffect value="ProcessingCorePowerFieldData0"/>
+    </CEffectCreateHealer>
+    <CEffectEnumArea id="ProcessingCorePowerFieldSA" parent="ScionEnumArea">
+        <EditorCategories value="Race:Genetron"/>
+        <SearchFilters value="-;Ally,Neutral,Enemy,Stasis,Dead,Hidden"/>
+        <AreaArray Radius="9" Effect="ProcessingCorePowerFieldAB"/>
+    </CEffectEnumArea>
+    <CEffectEnumTrackedUnits id="TeslaCloakChargeFieldETU">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <TrackerUnit Value="Target"/>
+        <Effect value="TeslaCloakChargeFieldModifyChargePower"/>
+    </CEffectEnumTrackedUnits>
     <CEffectModifyUnit id="TeslaCloakChargeFieldModifyChargeEnergy">
         <EditorCategories value="Race:Genetron"/>
         <VitalArray index="Energy">
             <Change value="-2.23"/>
         </VitalArray>
     </CEffectModifyUnit>
+    <CEffectModifyUnit id="TeslaCloakChargeFieldModifyChargePower">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-2.23">
+                <AccumulatorArray value="DivideBy4"/>
+            </Change>
+        </VitalArray>
+    </CEffectModifyUnit>
     <CEffectSet id="TeslaCloakChargeFieldPeriodSet">
         <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="TeslaCloakChargeFieldModifyChargeEnergy"/>
+        <EffectArray value="TeslaCloakChargeFieldSwitch"/>
         <EffectArray value="CloakChargeFieldSA"/>
     </CEffectSet>
-    <CEffectModifyUnit id="TorrentLunaMineEnergyDrain">
+    <CEffectSwitch id="TeslaCloakChargeFieldSwitch">
+        <EditorCategories value="Race:Genetron"/>
+        <CaseArray Validator="PowerGTE5AndHasPowerField" Effect="TeslaCloakChargeFieldETU"/>
+        <CaseDefault value="TeslaCloakChargeFieldModifyChargeEnergy"/>
+    </CEffectSwitch>
+    <CEffectEnumTrackedUnits id="TeslaShockChargeExpireETU">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <TrackerUnit Value="Target"/>
+        <Effect value="TeslaShockChargeExpirePower"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectModifyUnit id="TeslaShockChargeExpirePower">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-10">
+                <AccumulatorArray value="TeslaShockChargeOverloadSwitch"/>
+                <AccumulatorArray value="DivideBy4"/>
+            </Change>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectSwitch id="TeslaShockChargeExpireSwitch">
+        <EditorCategories value="Race:Genetron"/>
+        <CaseArray Validator="PowerGTE5AndHasPowerField" Effect="TeslaShockChargeExpireETU"/>
+        <CaseDefault value="TeslaShockChargeExpireEnergy"/>
+    </CEffectSwitch>
+    <CEffectEnumTrackedUnits id="TorrentLunaMineDrainETU">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <TrackerUnit Value="Target"/>
+        <Effect value="TorrentLunaMineDrainPowerMU"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectModifyUnit id="TorrentLunaMineDrainEnergyMU">
         <EditorCategories value="Race:Genetron"/>
         <VitalArray index="Energy">
             <Change value="0">
@@ -85,6 +208,20 @@
             </Change>
         </VitalArray>
     </CEffectModifyUnit>
+    <CEffectModifyUnit id="TorrentLunaMineDrainPowerMU">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="0">
+                <AccumulatorArray value="LunaMineEnergyDrain"/>
+                <AccumulatorArray value="DivideBy4"/>
+            </Change>
+        </VitalArray>
+    </CEffectModifyUnit>
+    <CEffectSwitch id="TorrentLunaMineDrainSwitch">
+        <EditorCategories value="Race:Genetron"/>
+        <CaseArray Validator="PowerGTE5AndHasPowerField" Effect="TorrentLunaMineDrainETU"/>
+        <CaseDefault value="TorrentLunaMineDrainEnergyMU"/>
+    </CEffectSwitch>
     <CEffectCreatePersistent id="TorrentLunaMineMissileNanitePersistent">
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="TargetUnit"/>
@@ -677,6 +814,7 @@
         <AmmoUnit value="LunaMineLaunch"/>
         <Movers Link="LunaMineMissile"/>
         <DeathType value="Unknown"/>
+        <AmmoOwner Value="Caster"/>
     </CEffectLaunchMissile>
     <CEffectMorph id="TorrentPlaceLunaMinesMorph">
         <EditorCategories value="Race:Genetron"/>
@@ -2128,8 +2266,8 @@
     </CEffectCreateHealer>
     <CEffectSet id="BadgerPowershellPowerDrainSet">
         <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="BadgerPowershellPowerDrainCasterHealer"/>
-        <EffectArray value="BadgerPowershellPowerDrainHealer"/>
+        <EffectArray value="BadgerPowershellPowerDrainEnergyMU"/>
+        <EffectArray value="BadgerPowershellPowerDrainPowerMU"/>
     </CEffectSet>
     <CEffectModifyUnit id="OlympusDischargePowerModify">
         <EditorCategories value="Race:Genetron"/>
@@ -2227,11 +2365,10 @@
         <WhichLocation Effect="SpitterSpitterSporesLM" Value="TargetPoint"/>
         <Effect value="SpitterSpitterSporesAINotification"/>
     </CEffectDestroyPersistent>
-    <CEffectSet id="CourierCloakingFieldPowerSet">
+    <CEffectSet id="CourierCloakingFieldDrainSet">
         <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="CourierCloakingFieldPowerModify"/>
-        <EffectArray value="CourierCloakingFieldEnergyRate"/>
-        <EffectArray value="CourierCloakingFieldPowerRate"/>
+        <EffectArray value="CourierCloakingFieldDrainEnergyMU"/>
+        <EffectArray value="CourierCloakingFieldDrainPowerMU"/>
     </CEffectSet>
     <CEffectCreateHealer id="CourierCloakingFieldEnergyRate">
         <EditorCategories value="Race:Genetron"/>
@@ -2242,7 +2379,7 @@
         <DrainVitalCostFactor value="1"/>
         <RechargeVitalRate value="0.914"/>
     </CEffectCreateHealer>
-    <CEffectModifyUnit id="CourierCloakingFieldPowerModify">
+    <CEffectModifyUnit id="CourierCloakingFieldDrainInitPowerMU">
         <EditorCategories value="Race:Genetron"/>
         <VitalArray index="Energy">
             <Change value="-25"/>
@@ -2339,10 +2476,10 @@
             <Change value="-0.75"/>
         </VitalArray>
     </CEffectModifyUnit>
-    <CEffectEnumTrackedUnits id="CourierCloakingFieldPowerEnum">
+    <CEffectEnumTrackedUnits id="CourierCloakingFieldDrainInitETU">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
-        <Effect value="CourierCloakingFieldPowerSet"/>
+        <Effect value="CourierCloakingFieldDrainInitPowerMU"/>
     </CEffectEnumTrackedUnits>
     <CEffectCreateHealer id="CourierCloakingFieldPowerRate">
         <EditorCategories value="Race:Genetron"/>
@@ -2393,7 +2530,7 @@
         <Flags index="ContinueWhenFull" value="1"/>
         <DrainVital value="Energy"/>
         <DrainVitalCostFactor value="0.25"/>
-        <RechargeVitalRate value="25"/>
+        <RechargeVitalRate value="42.8593"/>
     </CEffectCreateHealer>
     <CEffectEnumTrackedUnits id="TeslaLaunchChargeCostETU">
         <EditorCategories value="Race:Genetron"/>
@@ -4601,7 +4738,7 @@
         <Behavior value="SystemOffload"/>
     </CEffectApplyBehavior>
     <CEffectSet id="TeslaShockChargeExpire" parent="ScionSet" Race="Genetron">
-        <EffectArray value="TeslaShockChargeExpireEnergy"/>
+        <EffectArray value="TeslaShockChargeExpireSwitch"/>
         <EffectArray value="TeslaShockChargeExpireSearch"/>
         <EffectArray value="TeslaShockChargeOverloadRemove"/>
         <EffectArray value="TeslaShockChargeExpireRecharge"/>

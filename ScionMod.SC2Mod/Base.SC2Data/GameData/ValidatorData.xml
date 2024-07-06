@@ -61,10 +61,22 @@
         <Enabled value="1"/>
         <BehaviorState value="Daze"/>
     </CValidatorUnitBehaviorState>
+    <CValidatorUnitCompareBehaviorCount id="GenetronHasPowerField">
+        <Compare value="GT"/>
+        <Behavior value="ProcessingCorePowerField"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitType id="IsNotLunaMine">
         <Value value="LunaMine"/>
         <Find value="0"/>
     </CValidatorUnitType>
+    <CValidatorUnitType id="IsLunaMine">
+        <Value value="LunaMine"/>
+    </CValidatorUnitType>
+    <CValidatorCombine id="IsTeslaChargeOrLunaMine">
+        <CombineArray value="IsTeslaCloakCharge"/>
+        <CombineArray value="IsTeslaShockCharge"/>
+        <CombineArray value="IsLunaMine"/>
+    </CValidatorCombine>
     <CValidatorUnitCompareBehaviorCount id="LunaMineMissileStack0">
         <Behavior value="LunaMineMissileData"/>
     </CValidatorUnitCompareBehaviorCount>
@@ -95,6 +107,11 @@
         <Value value="20"/>
         <Vital value="Energy"/>
     </CValidatorUnitCompareVital>
+    <CValidatorCombine id="PowerGTE5AndHasPowerField">
+        <Type value="And"/>
+        <CombineArray value="GenetronPowerSupplyGE05"/>
+        <CombineArray value="GenetronHasPowerField"/>
+    </CValidatorCombine>
     <CValidatorLocationCompareRange id="SpitfireAttackTargetUnitDistance">
         <WhichLocation Effect="SpitfireRiotGunCreatePersistent"/>
         <Compare value="LT"/>
