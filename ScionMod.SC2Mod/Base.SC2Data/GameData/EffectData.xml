@@ -97,53 +97,72 @@
             <Change value="-0.5"/>
         </VitalArray>
     </CEffectModifyUnit>
-    <CEffectApplyBehavior id="ProcessingCorePowerFieldAB" parent="ScionApplyBehavior">
+    <CEffectApplyBehavior id="ProcessingCoreChargingFieldAB" parent="ScionApplyBehavior">
         <ValidatorArray index="0" value="IsTeslaChargeOrLunaMine"/>
         <EditorCategories value="Race:Genetron"/>
-        <Behavior value="ProcessingCorePowerField"/>
+        <Behavior value="ProcessingCoreChargingField"/>
     </CEffectApplyBehavior>
-    <CEffectUserData id="ProcessingCorePowerFieldData0">
+    <CEffectUserData id="ProcessingCoreChargingFieldData0">
         <EditorCategories value="Race:Genetron"/>
         <Amount value="0"/>
         <Operation value="Set"/>
-        <BehaviorScope Value="Target" Behavior="ProcessingCorePowerField"/>
+        <BehaviorScope Value="Target" Behavior="ProcessingCoreChargingField"/>
     </CEffectUserData>
-    <CEffectUserData id="ProcessingCorePowerFieldData1">
+    <CEffectUserData id="ProcessingCoreChargingFieldData1">
         <EditorCategories value="Race:Genetron"/>
         <Operation value="Set"/>
-        <BehaviorScope Value="Target" Behavior="ProcessingCorePowerField"/>
+        <BehaviorScope Value="Target" Behavior="ProcessingCoreChargingField"/>
     </CEffectUserData>
-    <CEffectUserData id="ProcessingCorePowerFieldDataCheck">
+    <CEffectUserData id="ProcessingCoreChargingFieldDataCheck">
         <ValidatorArray value="EnergyNotFull"/>
         <EditorCategories value="Race:Genetron"/>
         <Amount value="0"/>
-        <EffectSuccess value="ProcessingCorePowerFieldETU"/>
-        <BehaviorScope Value="Target" Behavior="ProcessingCorePowerField"/>
+        <EffectSuccess value="ProcessingCoreChargingFieldETU"/>
+        <BehaviorScope Value="Target" Behavior="ProcessingCoreChargingField"/>
     </CEffectUserData>
-    <CEffectEnumTrackedUnits id="ProcessingCorePowerFieldETU">
+    <CEffectEnumTrackedUnits id="ProcessingCoreChargingFieldETU">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
         <TrackerUnit Value="Target"/>
-        <Effect value="ProcessingCorePowerFieldHealer"/>
+        <Effect value="ProcessingCoreChargingFieldHealer"/>
     </CEffectEnumTrackedUnits>
-    <CEffectCreateHealer id="ProcessingCorePowerFieldHealer">
+    <CEffectCreateHealer id="ProcessingCoreChargingFieldHealer">
         <EditorCategories value="Race:Genetron"/>
         <LaunchUnit Value="Target"/>
-        <ImpactUnit Effect="ProcessingCorePowerFieldETU"/>
+        <ImpactUnit Effect="ProcessingCoreChargingFieldETU"/>
         <Flags index="Channeled" value="0"/>
-        <PeriodicValidator value="GenetronHasPowerField"/>
+        <PeriodicValidator value="GenetronHasChargingField"/>
         <DrainVital value="Energy"/>
         <DrainVitalCostFactor value="0.25"/>
         <RechargeVital value="Energy"/>
-        <RechargeVitalRate value="150"/>
-        <InitialEffect value="ProcessingCorePowerFieldData1"/>
-        <FinalEffect value="ProcessingCorePowerFieldData0"/>
+        <RechargeVitalRate value="20"/>
+        <InitialEffect value="ProcessingCoreChargingFieldData1"/>
+        <FinalEffect value="ProcessingCoreChargingFieldData0"/>
     </CEffectCreateHealer>
-    <CEffectEnumArea id="ProcessingCorePowerFieldSA" parent="ScionEnumArea">
+    <CEffectEnumArea id="ProcessingCoreChargingFieldSA" parent="ScionEnumArea">
         <EditorCategories value="Race:Genetron"/>
         <SearchFilters value="-;Ally,Neutral,Enemy,Stasis,Dead,Hidden"/>
-        <AreaArray Radius="9" Effect="ProcessingCorePowerFieldAB"/>
+        <AreaArray Radius="9" Effect="ProcessingCoreChargingFieldAB"/>
+        <SearchFlags index="ExtendByUnitRadius" value="1"/>
     </CEffectEnumArea>
+    <CEffectModifyUnit id="SpitfireRiotGunFreeTurret">
+        <EditorCategories value="Race:Genetron"/>
+        <ImpactUnit Value="Caster"/>
+        <ModifyTurret Action="ClearTarget" Turret="Spitfire"/>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="SpitfireRiotGunLockTurret">
+        <EditorCategories value="Race:Genetron"/>
+        <ImpactUnit Value="Caster"/>
+        <ModifyTurret Turret="Spitfire">
+            <Target Value="TargetUnit"/>
+            <Flags index="Tracking" value="1"/>
+        </ModifyTurret>
+    </CEffectModifyUnit>
+    <CEffectSet id="SpitfireRiotGunCreatePersistentInit">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="RiotGun"/>
+        <EffectArray value="SpitfireRiotGunLockTurret"/>
+    </CEffectSet>
     <CEffectEnumTrackedUnits id="TeslaCloakChargeFieldETU">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
@@ -171,7 +190,7 @@
     </CEffectSet>
     <CEffectSwitch id="TeslaCloakChargeFieldSwitch">
         <EditorCategories value="Race:Genetron"/>
-        <CaseArray Validator="PowerGTE5AndHasPowerField" Effect="TeslaCloakChargeFieldETU"/>
+        <CaseArray Validator="PowerGTE5AndHasChargingField" Effect="TeslaCloakChargeFieldETU"/>
         <CaseDefault value="TeslaCloakChargeFieldModifyChargeEnergy"/>
     </CEffectSwitch>
     <CEffectEnumTrackedUnits id="TeslaShockChargeExpireETU">
@@ -191,7 +210,7 @@
     </CEffectModifyUnit>
     <CEffectSwitch id="TeslaShockChargeExpireSwitch">
         <EditorCategories value="Race:Genetron"/>
-        <CaseArray Validator="PowerGTE5AndHasPowerField" Effect="TeslaShockChargeExpireETU"/>
+        <CaseArray Validator="PowerGTE5AndHasChargingField" Effect="TeslaShockChargeExpireETU"/>
         <CaseDefault value="TeslaShockChargeExpireEnergy"/>
     </CEffectSwitch>
     <CEffectEnumTrackedUnits id="TorrentLunaMineDrainETU">
@@ -219,7 +238,7 @@
     </CEffectModifyUnit>
     <CEffectSwitch id="TorrentLunaMineDrainSwitch">
         <EditorCategories value="Race:Genetron"/>
-        <CaseArray Validator="PowerGTE5AndHasPowerField" Effect="TorrentLunaMineDrainETU"/>
+        <CaseArray Validator="PowerGTE5AndHasChargingField" Effect="TorrentLunaMineDrainETU"/>
         <CaseDefault value="TorrentLunaMineDrainEnergyMU"/>
     </CEffectSwitch>
     <CEffectCreatePersistent id="TorrentLunaMineMissileNanitePersistent">
@@ -659,15 +678,17 @@
     <CEffectCreatePersistent id="SpitfireRiotGunCreatePersistent">
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="TargetUnit"/>
-        <InitialEffect value="RiotGun"/>
-        <ExpireDelay value="0.125"/>
-        <PeriodCount value="0">
+        <InitialEffect value="SpitfireRiotGunCreatePersistentInit"/>
+        <PeriodCount value="2">
             <AccumulatorArray value="SpitfireCounterStabilizationBurst1"/>
             <AccumulatorArray value="SpitfireCounterStabilizationBurst2"/>
         </PeriodCount>
         <PeriodicValidator value="SpitfireBurstRoundValidator"/>
-        <PeriodicEffectArray value="RiotGun"/>
-        <PeriodicPeriodArray value="0.1875"/>
+        <PeriodicEffectArray value="SpitfireRiotGunLockTurret"/>
+        <PeriodicEffectArray value="SpitfireRiotGunLockTurret"/>
+        <PeriodicEffectArray value="SpitfireRiotGunCreatePersistentInit"/>
+        <PeriodicPeriodArray value="0.0625"/>
+        <ExpireEffect value="SpitfireRiotGunFreeTurret"/>
     </CEffectCreatePersistent>
     <CEffectDamage id="StratumMissilePodBonus" parent="ScionDamageRange" Race="Genetron">
         <ArmorReduction value="0"/>
@@ -4754,11 +4775,8 @@
     <CEffectEnumArea id="TeslaShockChargeExpireSearch" parent="ScionEnumArea" Race="Genetron">
         <SearchFilters value="-;Player,Ally,Structure,Missile,Buried,Stasis,Dead,Hidden"/>
         <AreaArray Radius="3" Effect="TeslaShockChargeImpact"/>
-        <ValidatorArray value="CasterIsNotBlindedByProwler"/>
+        <ValidatorArray value="CasterNotStunnedSilencedDazed"/>
         <ValidatorArray value="CasterHasNoNaniteEmitterBuff"/>
-        <ValidatorArray value="CasterNotGraviton"/>
-        <ValidatorArray value="Scion_CasterNoRavenScramblerMissile"/>
-        <ValidatorArray value="CasterHasNoNaniteGrenadeBuff"/>
         <AINotifyFlags index="HurtEnemy" value="1"/>
         <AINotifyFlags index="MinorDanger" value="1"/>
     </CEffectEnumArea>

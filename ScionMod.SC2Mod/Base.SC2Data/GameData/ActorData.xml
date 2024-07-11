@@ -212,6 +212,28 @@
         <MaxScale value="2.500000"/>
         <AutoScaleFactor value="0.800000"/>
     </CActorModel>
+    <CActorModel id="ChargingFieldBuffImpact" parent="ModelAnimationStyleContinuousUNIT">
+        <On Terms="Behavior.ProcessingCoreChargingField.On" Send="Create"/>
+        <On Terms="Behavior.ProcessingCoreChargingField.Off" Send="AnimBracketStop BSD"/>
+        <HostSiteOps Ops="SOpMoveUpByDot1"/>
+        <AutoScaleFactor value="1.000000"/>
+    </CActorModel>
+    <CActorModel id="ChargingFieldBuffBase" parent="ModelAnimationStyleContinuousUNIT">
+        <On Terms="Behavior.ProcessingCoreChargingFieldBase.On" Send="Create"/>
+        <On Terms="Behavior.ProcessingCoreChargingFieldBase.Off" Send="AnimBracketStop BSD"/>
+        <HostSiteOps Ops="SOpMoveUpByDot15"/>
+        <AutoScaleFactor value="1.000000"/>
+    </CActorModel>
+    <CActorSound id="LunaMineDeath" parent="SoundOneShotScion" Effect="TorrentLunaMineMissileImpactSet"/>
+    <CActorTurret id="SpitfireTurret">
+        <On Terms="TurretEnable.Spitfire" Send="Create"/>
+    </CActorTurret>
+    <CActorBeamSimple id="SpitfireAttackBeam" parent="BeamSimpleAnimationStyleContinuousClosingFull">
+        <Macros value="GlobalLoopMacro"/>
+        <Macros value="ActionTargetTeleportDestroy"/>
+        <On Terms="Effect.RiotGun.Stop; FromEffectTreeDescendant" Send="$Spell"/>
+        <On Terms="Effect.SpitfireRiotGunCreatePersistent.Stop; At Effect" Send="AnimBracketStop BSD"/>
+    </CActorBeamSimple>
     <CActorModel id="AquilaNaniteEmitter" parent="ModelAnimationStyleContinuous">
         <On Terms="Effect.AquilaNaniteEmitterCreatePersistent.Start" Send="Create"/>
         <On Terms="Effect.AquilaNaniteEmitterCreatePersistent.Stop" Send="Create TerranSmallTriggeredExplosion"/>
@@ -286,7 +308,7 @@
         <On index="1" Terms="UnitBirth.LunaMine" Send="Create"/>
         <On index="2" Terms="UnitRevive.LunaMine" Send="Create"/>
         <On index="3" Terms="UnitRevive.LunaMine" Send="RefSet ::HostTurretBody _Selectable"/>
-        <On Terms="UnitBirth.LunaMineLaunch.*" Send="Create"/>
+        <On Terms="UnitBirth.LunaMineLaunch" Send="Create"/>
         <On Terms="UnitConstruction.LunaMine.Start" Send="Create"/>
         <On Terms="UnitConstruction.LunaMine.Finish" Send="AnimPlay ConstructionDeath Stand,Birth,Death FullMatch"/>
         <On Terms="AnimDone.*.Missing; AnimName ConstructionDeath" Send="Destroy"/>
@@ -365,7 +387,7 @@
         <BuildModel value="LunaMine"/>
         <DeathArray index="Normal">
             <AnimProps value="Death"/>
-            <ModelLink value="LunaMine"/>
+            <ModelLink value="LunaMineDeath"/>
             <SoundLink value="LunaMineDeath"/>
             <VoiceLink value="LunaMineDeathVoice"/>
         </DeathArray>
@@ -485,6 +507,30 @@
     <CActorSiteOpLocalOffset id="SOpLunaMinePlacementROffset">
         <LocalOffset value="0.400000,0.000000,3.750000"/>
     </CActorSiteOpLocalOffset>
+    <CActorSiteOpHostBearings id="SOpSpitfireAttackImpact">
+        <HostBearings Subject="SpitfireAttackImpactSource" Actor="Find"/>
+    </CActorSiteOpHostBearings>
+    <CActorModel id="SpitfireAttackLaunch" parent="ModelAnimationStyleOneShotUNIT">
+        <On Terms="Effect.RiotGun.Start; At Caster" Send="Create"/>
+        <HostSiteOps Ops="SOpAttachWeapon"/>
+    </CActorModel>
+    <CActorSound id="Spitfire_AttackImpact" parent="SoundOneShotScion" Effect="RiotGun" ESub="Start; At Target">
+        <Sound value="Viking_AssaultAttackImpact"/>
+    </CActorSound>
+    <CActorSound id="Spitfire_AttackLaunch" parent="SoundOneShotScion" Effect="RiotGun" ESub="Start; At Caster">
+        <EditorCategories value=""/>
+        <Sound value="SpitfireAttackLaunch"/>
+    </CActorSound>
+    <CActorRange id="GenetronChargingFieldRange">
+        <Filter index="Neutral" value="1"/>
+        <Filter index="Enemy" value="1"/>
+        <Range value="9.000000"/>
+        <Icon value="Assets\Textures\rangeicon_lightning.dds"/>
+        <IconArcLength value="1.500000"/>
+        <IconTint value="255,0,255,255"/>
+        <On Terms="Behavior.ProcessingCoreChargingFieldBase.On" Send="Create"/>
+        <On Terms="Behavior.ProcessingCoreChargingFieldBase.Off" Send="Destroy"/>
+    </CActorRange>
     <CActorQuad id="TorrentLunaMinesVisualQuadDown" parent="GuideVisualQuadDown" abil="TorrentLunaMines">
         <On Terms="ActorCreation" Send="Create TorrentLunaMinePlacementL"/>
         <On Terms="ActorCreation" Send="Create TorrentLunaMinePlacementR"/>
@@ -1611,17 +1657,17 @@
         <On index="67" Terms="UnitHeightUpdate.*.Land" Send="Create Warhound_Land"/>
         <On index="68" Terms="Abil.FixerRepair.SourceChannelStart" Send="$Spell PlayForever"/>
         <On Terms="Abil.FixerRepair.SourceChannelStop" Send="AnimClear Spell"/>
-        <On Terms="Behavior.SpeedCloak.On" Send="AnimPlay SpeedCloakSpell Cover,A,Spell PlayForever"/>
+        <!--On Terms="Behavior.SpeedCloak.On" Send="AnimPlay SpeedCloakSpell Cover,A,Spell PlayForever"/>
         <On Terms="Behavior.SpeedCloak.Off" Send="AnimClear SpeedCloakSpell"/>
         <On Terms="AnimDone.*.Cleared; AnimName SpeedCloakSpell" Send="AnimBracketStart SpeedCloak Cover,A,Start Cover,A,Stand Cover,A,End"/>
-        <On Terms="AbilCooldown.SpeedCloak.Regen" Send="AnimBracketStop SpeedCloak"/>
+        <On Terms="AbilCooldown.SpeedCloak.Regen" Send="AnimBracketStop SpeedCloak"/-->
         <!--<On Terms="ActorCreation; ValidatePlayer FixerNoFusionWelders" Send="AnimPlay NoWelders Cover,B PlayForever 0.000000"/>
         <On Terms="Upgrade.FixerFusionWelders.Add" Send="AnimClear NoWelders"/>
         <On Terms="Upgrade.FixerFusionWelders.Remove" Send="AnimPlay NoWelders Cover,B PlayForever"/>-->
         <!--<On Terms="ActorCreation; ValidatePlayer FixerNoReactiveArmor" Send="AnimPlay NoReactiveArmor Cover,C PlayForever 0.000000"/>
         <On Terms="Upgrade.FixerReactiveArmor.Add" Send="AnimClear NoReactiveArmor"/>
-        <On Terms="Upgrade.FixerReactiveArmor.Remove" Send="AnimPlay NoReactiveArmor Cover,C PlayForever"/>-->
-        <On Terms="ActorCreation" Send="AnimPlay NoReactiveArmor Cover,C PlayForever 0.000000"/>
+        <On Terms="Upgrade.FixerReactiveArmor.Remove" Send="AnimPlay NoReactiveArmor Cover,C PlayForever"/>
+        <On Terms="ActorCreation" Send="AnimPlay NoReactiveArmor Cover,C PlayForever 0.000000"/-->
         <On Terms="ActorCreation" Send="StatusSet WeaponNext 0"/>
         <On Terms="Effect.FixerFlashGun.Start; At Caster" Send="StatusIncrement WeaponNext"/>
         <On Terms="Effect.FixerFlashGun.Start; At Caster; IsStatus WeaponNext 2" Send="StatusSet WeaponNext 0"/>
@@ -3905,10 +3951,19 @@
         <PortraitModel value="SpitfirePortrait"/>
         <ModelFlags index="OutlineEmitter" value="1"/>
     </CActorUnit>
-    <CActorAction id="SpitfireAttack" parent="GenericAttack" effectAttack="RiotGun">
+    <CActorAction id="SpitfireAttack" parent="GenericAttackBase">
+        <On Terms="Effect.SpitfireRiotGunCreatePersistent.Start; At Caster" Send="Create"/>
+        <On Terms="Effect.RiotGun.Start; FromEffectTreeDescendant" Send="ActionDamage"/>
+        <On Terms="Effect.SpitfireRiotGunCreatePersistent.Stop" Send="Destroy"/>
+        <ImpactSiteOps Ops="SOpAttachHarness SOpAttachVolumeNoVizEnhance SOpForwardLaunchGuide"/>
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
-        <ImpactMap index="None" Sound="Viking_AssaultAttackImpact"/>
+        <ImpactMap index="None" Model="" Sound=""/>
         <ImpactPhysics Name="BulletImpact" MatchKeys="Basic" Physics="SpitfireAttackForce"/>
+        <ActionFlags index="AlignedImpactsAndDamages" value="1"/>
+        <LaunchAssets Model="" Sound=""/>
+        <AcquisitionYawHalfArc value="10.000000"/>
+        <AcquisitionPitchHalfArc value="15.000000"/>
+        <AccuracyHalfArc value="5.000000"/>
     </CActorAction>
     <CActorModel id="ACRConstruction" parent="GenetronConstructionBase" buildTime="17.000000" Model="ACR">
         <HostSiteOps Ops="SOpAttachHardPoint SOpMoveDownByDot25 SOpMoveDownByDot1"/>

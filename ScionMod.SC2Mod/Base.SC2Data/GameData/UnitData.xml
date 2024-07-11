@@ -728,7 +728,6 @@
         <AbilArray index="0" Link="attack"/>
         <AbilArray index="1" Link="move"/>
         <AbilArray index="2" Link="stop"/>
-        <AbilArray Link="BadgerPowershell"/>
         <WeaponArray Link="StratumMissilePod"/>
         <InnerRadius value="0.5"/>
         <SubgroupPriority value="30"/>
@@ -744,9 +743,7 @@
         <GlossaryWeakArray value="Zergling"/>
         <Radius value="0.625"/>
         <CardLayouts index="0">
-            <LayoutButtons Face="StratumMissilePod" Type="Passive" Row="2" Column="1"/>
-            <LayoutButtons Face="BadgerPowershell" Type="AbilCmd" AbilCmd="BadgerPowershell,On" Row="2" Column="0"/>
-            <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="BadgerPowershell,Off" Row="2" Column="4"/>
+            <LayoutButtons Face="StratumMissilePod" Type="Passive" Row="2" Column="0"/>
         </CardLayouts>
         <EnergyStart value="50"/>
         <EnergyMax value="50"/>
@@ -1055,9 +1052,12 @@
         <LifeMax value="500"/>
         <AbilArray Link="stop"/>
         <AbilArray Link="CoreSystemRecharge"/>
+        <AbilArray Link="ProcessingCoreChargingField"/>
         <CardLayouts index="0">
             <LayoutButtons Face="CoreSystemRecharge" Type="AbilCmd" AbilCmd="CoreSystemRecharge,Execute" Row="2" Column="0"/>
             <LayoutButtons Face="Stop" Type="AbilCmd" AbilCmd="stop,Stop" Row="0" Column="1"/>
+            <LayoutButtons Face="ProcessingCoreChargingFieldOff" Type="AbilCmd" AbilCmd="ProcessingCoreChargingField,Off" Row="2" Column="2"/>
+            <LayoutButtons Face="ProcessingCoreChargingField" Type="AbilCmd" AbilCmd="ProcessingCoreChargingField,On" Row="2" Column="1"/>
         </CardLayouts>
         <Footprint value="Footprint2x2Contour"/>
         <PlacementFootprint value="Footprint2x2"/>
@@ -1449,20 +1449,20 @@
         <AbilArray Link="ProcessingCoreTrain"/>
         <AbilArray Link="MiningPriority"/>
         <AbilArray Link="CoreSystemRecharge"/>
-        <AbilArray Link="ProcessingCorePowerField"/>
+        <AbilArray Link="ProcessingCoreChargingField"/>
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
             <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="RallyProcessingCore,Rally1" Row="1" Column="4"/>
             <LayoutButtons Face="ACR" Type="AbilCmd" AbilCmd="ProcessingCoreTrain,Train1" Row="0" Column="0"/>
-            <LayoutButtons Face="MiningPriority" Type="AbilCmd" AbilCmd="MiningPriority,Execute" Row="2" Column="1"/>
+            <LayoutButtons Face="MiningPriority" Type="AbilCmd" AbilCmd="MiningPriority,Execute" Row="2" Column="3"/>
             <LayoutButtons Face="CoreSystemRecharge" Type="AbilCmd" AbilCmd="CoreSystemRecharge,Execute" Row="2" Column="0"/>
             <LayoutButtons Face="Scion_Processor" Type="AbilCmd" AbilCmd="ProcessingCoreTrain,Train2" Row="0" Column="1"/>
             <LayoutButtons Face="StopPlanetaryFortress" Type="AbilCmd" AbilCmd="stop,Stop" Row="0" Column="3"/>
-            <LayoutButtons Face="ProcessingCorePowerGrid" Type="Passive" Requirements="NotUnderConstructionAndNotLockedDown" Row="2" Column="2"/>
             <LayoutButtons Face="RallyWorkerGen" Type="AbilCmd" AbilCmd="RallyProcessingCore,Rally2" Row="1" Column="3"/>
-            <LayoutButtons Face="ProcessingCorePowerField" Type="AbilCmd" AbilCmd="ProcessingCorePowerField,On" Row="2" Column="3"/>
-            <LayoutButtons Face="ProcessingCorePowerFieldOff" Type="AbilCmd" AbilCmd="ProcessingCorePowerField,Off" Row="2" Column="3"/>
+            <LayoutButtons Face="ProcessingCoreChargingField" Type="AbilCmd" AbilCmd="ProcessingCoreChargingField,On" Row="2" Column="1"/>
+            <LayoutButtons Face="ProcessingCoreChargingFieldOff" Type="AbilCmd" AbilCmd="ProcessingCoreChargingField,Off" Row="2" Column="2"/>
+            <LayoutButtons Face="ProcessingCorePowerGrid" Type="Passive" Requirements="NotUnderConstructionAndNotLockedDown" Row="1" Column="0"/>
         </CardLayouts>
         <Radius value="2.5"/>
         <Footprint value="Footprint5x5Contour"/>
@@ -1591,7 +1591,7 @@
         <CostResource index="Minerals" value="150"/>
         <CostResource index="Vespene" value="100"/>
         <RepairTime value="42"/>
-        <AbilArray Link="MoleSubterraneanSensors"/>
+        <AbilArray index="2" Link="MoleSubterraneanSensors"/>
         <AbilArray Link="MoleActivate"/>
         <AbilArray Link="MoleBuryFull"/>
         <CardLayouts index="0">
@@ -1621,7 +1621,6 @@
         <KillDisplay value="Always"/>
         <BehaviorArray Link="GenetronPowerSupplyTracker"/>
         <BehaviorArray Link="TrackGenetronPowerSupplyUnit"/>
-        <WeaponArray Link="LynxCannonMobile" Turret="MoleTurretMobile"/>
     </CUnit>
     <CUnit id="MoleRooted" parent="Mole">
         <FlagArray index="Turnable" value="0"/>
@@ -1629,11 +1628,10 @@
         <Speed value="0"/>
         <AbilArray index="0" Link="stop"/>
         <AbilArray index="1" Link="attack"/>
-        <AbilArray index="2" Link="MoleSubterraneanSensors"/>
         <AbilArray index="3" Link="MoleDeactivate"/>
         <AbilArray index="4" Link="MoleBury"/>
-        <AbilArray index="5" Link="MoleTurnTurret"/>
-        <WeaponArray index="0" Link="LynxCannon" Turret="MoleTurretSieged"/>
+        <AbilArray Link="MoleTurnTurret"/>
+        <WeaponArray Link="LynxCannon" Turret="MoleTurretSieged"/>
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="Attack" Type="AbilCmd" AbilCmd="attack,Execute" Row="0" Column="4"/>
             <LayoutButtons index="1" Face="Stop" Type="AbilCmd" AbilCmd="stop,Stop" Row="0" Column="1"/>
@@ -1732,7 +1730,7 @@
         <AbilArray index="1" Link="move"/>
         <AbilArray index="2" Link="stop"/>
         <AbilArray Link="SpitfireDeadeyeModule"/>
-        <WeaponArray Link="RiotGun" Turret="Hellion"/>
+        <WeaponArray Link="RiotGun" Turret="Spitfire"/>
         <SeparationRadius value="0.375"/>
         <InnerRadius value="0.375"/>
         <SubgroupPriority value="30"/>
@@ -1779,6 +1777,7 @@
         <EnergyMax value="0"/>
         <EnergyRegenRate value="0"/>
         <Speed value="2.5"/>
+        <WeaponArray index="0" Link="RiotGun" Turret="Hellion"/>
     </CUnit>
     <CUnit id="Tesla" parent="CUnitGenetron">
         <Attributes index="Armored" value="1"/>

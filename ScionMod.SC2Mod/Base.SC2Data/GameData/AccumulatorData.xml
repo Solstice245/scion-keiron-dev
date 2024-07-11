@@ -93,8 +93,8 @@
         <Amount value="0.25"/>
     </CAccumulatorConstant>
     <CAccumulatorSwitch id="LunaMineEnergyDrain">
-        <CaseArray Validator="SourceIsMoving" Accumulator="Sub1"/>
-        <CaseDefault value="SubDot5"/>
+        <CaseArray Validator="SourceIsMoving" Accumulator="LunaMineDrainRateMovement"/>
+        <CaseDefault value="LunaMineDrainRateNormal"/>
     </CAccumulatorSwitch>
     <CAccumulatorArithmetic id="LunaMineMissileOverkill">
         <Parameters value="0">
@@ -188,11 +188,14 @@
     <CAccumulatorSwitch id="ShieldsCurrentTargetSwitch">
         <CaseArray Validator="hasShields" Accumulator="ShieldsCurrentTarget"/>
     </CAccumulatorSwitch>
+    <CAccumulatorConstant id="SpitfireCounterStabilizationBurstPeriodCount">
+        <Amount value="3"/>
+    </CAccumulatorConstant>
     <CAccumulatorSwitch id="SpitfireCounterStabilizationBurst1">
-        <CaseArray Validator="SpitfireLifeBurst1" Accumulator="Add1"/>
+        <CaseArray Validator="SpitfireLifeBurst1" Accumulator="SpitfireCounterStabilizationBurstPeriodCount"/>
     </CAccumulatorSwitch>
     <CAccumulatorSwitch id="SpitfireCounterStabilizationBurst2">
-        <CaseArray Validator="SpitfireLifeBurst2" Accumulator="Add1"/>
+        <CaseArray Validator="SpitfireLifeBurst2" Accumulator="SpitfireCounterStabilizationBurstPeriodCount"/>
     </CAccumulatorSwitch>
     <!--Defines the most extreme value applied to the Spitfire's attack speed additive factor.-->
     <CAccumulatorConstant id="SpitfireCounterStabilizationMax">
@@ -626,11 +629,11 @@
         <UnitSource Value="Target"/>
         <ModificationType value="PerUnitMaxVital"/>
     </CAccumulatorVitals>
-    <CAccumulatorConstant id="Sub1">
-        <Amount value="-1"/>
+    <CAccumulatorConstant id="LunaMineDrainRateMovement">
+        <Amount value="-1.25"/>
     </CAccumulatorConstant>
-    <CAccumulatorConstant id="SubDot5">
-        <Amount value="-0.5"/>
+    <CAccumulatorConstant id="LunaMineDrainRateNormal">
+        <Amount value="-0.625"/>
     </CAccumulatorConstant>
     <CAccumulatorArithmetic id="TeslaShockChargeOverloadMultiply">
         <ApplicationRule value="Multiply"/>
