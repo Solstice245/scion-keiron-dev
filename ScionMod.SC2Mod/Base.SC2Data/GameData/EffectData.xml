@@ -70,13 +70,13 @@
         <EditorCategories value="Race:Genetron"/>
         <ImpactUnit Value="Caster"/>
         <VitalArray index="Energy">
-            <Change value="-0.5"/>
+            <Change value="-0.5625"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectModifyUnit id="BadgerPowershellPowerDrainPowerMU">
         <EditorCategories value="Race:Genetron"/>
         <VitalArray index="Energy">
-            <Change value="-0.5"/>
+            <Change value="-0.5625"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectEnumTrackedUnits id="CourierCloakingFieldDrainETU">
@@ -87,16 +87,25 @@
     <CEffectModifyUnit id="CourierCloakingFieldDrainPowerMU">
         <EditorCategories value="Race:Genetron"/>
         <VitalArray index="Energy">
-            <Change value="-0.5"/>
+            <Change value="-0.45"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectModifyUnit id="CourierCloakingFieldDrainEnergyMU">
         <EditorCategories value="Race:Genetron"/>
         <ImpactUnit Value="Caster"/>
         <VitalArray index="Energy">
-            <Change value="-0.5"/>
+            <Change value="-0.45"/>
         </VitalArray>
     </CEffectModifyUnit>
+    <CEffectSet id="GenetronOverclockInit">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="GenetronOverclockTargetMarkerApply"/>
+        <EffectArray value="Scion_OverclockPowerEnum"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="GenetronOverclockTargetMarkerApply">
+        <EditorCategories value="Race:Genetron"/>
+        <Behavior value="Scion_OverclockTargetMarker"/>
+    </CEffectApplyBehavior>
     <CEffectApplyBehavior id="ProcessingCoreChargingFieldAB" parent="ScionApplyBehavior">
         <ValidatorArray index="0" value="IsTeslaChargeOrLunaMine"/>
         <EditorCategories value="Race:Genetron"/>
@@ -145,6 +154,12 @@
         <AreaArray Radius="9" Effect="ProcessingCoreChargingFieldAB"/>
         <SearchFlags index="ExtendByUnitRadius" value="1"/>
     </CEffectEnumArea>
+    <CEffectSet id="ProcessingCoreMiningPriorityInit">
+        <ValidatorArray value="ProcessingCoreMiningPriority"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="GenetronOverclockTargetMarkerApply"/>
+        <EffectArray value="ProcessingCoreMiningPriority"/>
+    </CEffectSet>
     <CEffectModifyUnit id="SpitfireRiotGunFreeTurret">
         <EditorCategories value="Race:Genetron"/>
         <ImpactUnit Value="Caster"/>
@@ -1674,6 +1689,7 @@
         <SourceKey value="DisplayCooldown"/>
     </CEffectUserData>
     <CEffectSet id="ProcessingCoreMiningPriorityTargetFound">
+        <ValidatorArray value="ProcessingCoreMiningPriority"/>
         <ValidatorArray value="TargetUnitTypeIsCasterUnitType"/>
         <ValidatorArray value="Scion_OverclockTargetMarker"/>
         <EditorCategories value="Race:Genetron"/>
@@ -1922,6 +1938,8 @@
         <EffectFailure value="ProcessingCoreMiningPriorityRefreshQueryCooldown"/>
     </CEffectUserData>
     <CEffectSet id="Scion_OverclockTargetFound">
+        <ValidatorArray value="TargetUnitTypeIsCasterUnitType"/>
+        <ValidatorArray value="Scion_OverclockTargetMarker"/>
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="Scion_Overclock"/>
         <EffectArray value="Scion_OverclockTargetMarkerRemove"/>
@@ -1930,13 +1948,9 @@
         <EffectArray value="DisplayCooldownDummyAddPersistent"/>
         <EffectArray value="Scion_OverclockDisplayCooldownSubtractDuration"/>
         <EffectArray value="Scion_DisplayCooldownDummySubtractPersistent"/>
-        <ValidatorArray value="TargetUnitTypeIsCasterUnitType"/>
-        <ValidatorArray value="Scion_OverclockTargetMarker"/>
     </CEffectSet>
     <CEffectEnumArea id="Scion_OverclockTargetSort">
         <EditorCategories value="Race:Genetron"/>
-        <LaunchLocation Value="CasterUnit"/>
-        <ImpactLocation Value="CasterUnit"/>
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
         <TargetSorts>
             <SortArray value="OverclockCount"/>
@@ -1946,8 +1960,6 @@
     </CEffectEnumArea>
     <CEffectEnumArea id="ProcessingCoreMiningPriorityTargetSort">
         <EditorCategories value="Race:Genetron"/>
-        <LaunchLocation Value="CasterUnit"/>
-        <ImpactLocation Value="CasterUnit"/>
         <SearchFilters value="Structure;Ally,Neutral,Enemy,Missile,Stasis,UnderConstruction,Dead,Hidden"/>
         <TargetSorts>
             <SortArray value="MiningPriorityCount"/>
@@ -2266,16 +2278,6 @@
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
         <Effect value="BadgerPowershellPowerDrainSet"/>
     </CEffectEnumTrackedUnits>
-    <CEffectCreateHealer id="BadgerPowershellPowerDrainHealer">
-        <EditorCategories value="Race:Genetron"/>
-        <LaunchUnit Value="Target"/>
-        <Flags index="Channeled" value="0"/>
-        <Flags index="ContinueWhenFull" value="1"/>
-        <PeriodicValidator value="CasterHasPowershell"/>
-        <DrainVital value="Energy"/>
-        <DrainVitalCostFactor value="1"/>
-        <RechargeVitalRate value="1.4765"/>
-    </CEffectCreateHealer>
     <CEffectCreateHealer id="BadgerPowershellPowerDrainCasterHealer">
         <EditorCategories value="Race:Genetron"/>
         <Flags index="Channeled" value="0"/>
@@ -2391,15 +2393,6 @@
         <EffectArray value="CourierCloakingFieldDrainEnergyMU"/>
         <EffectArray value="CourierCloakingFieldDrainPowerMU"/>
     </CEffectSet>
-    <CEffectCreateHealer id="CourierCloakingFieldEnergyRate">
-        <EditorCategories value="Race:Genetron"/>
-        <Flags index="Channeled" value="0"/>
-        <Flags index="ContinueWhenFull" value="1"/>
-        <PeriodicValidator value="CourierCloakingField"/>
-        <DrainVital value="Energy"/>
-        <DrainVitalCostFactor value="1"/>
-        <RechargeVitalRate value="0.914"/>
-    </CEffectCreateHealer>
     <CEffectModifyUnit id="CourierCloakingFieldDrainInitPowerMU">
         <EditorCategories value="Race:Genetron"/>
         <VitalArray index="Energy">
@@ -2502,16 +2495,6 @@
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
         <Effect value="CourierCloakingFieldDrainInitPowerMU"/>
     </CEffectEnumTrackedUnits>
-    <CEffectCreateHealer id="CourierCloakingFieldPowerRate">
-        <EditorCategories value="Race:Genetron"/>
-        <LaunchUnit Value="Target"/>
-        <Flags index="Channeled" value="0"/>
-        <Flags index="ContinueWhenFull" value="1"/>
-        <PeriodicValidator value="CourierCloakingField"/>
-        <DrainVital value="Energy"/>
-        <DrainVitalCostFactor value="1"/>
-        <RechargeVitalRate value="0.914"/>
-    </CEffectCreateHealer>
     <CEffectCreatePersistent id="OculusRevealInit" parent="ScionCreatePersistent" Race="Keiron">
         <Flags index="Channeled" value="1"/>
         <ExpireDelay value="2"/>
@@ -3614,7 +3597,6 @@
         <AmmoUnit value="OlympusDischargeWeapon"/>
     </CEffectLaunchMissile>
     <CEffectEnumTrackedUnits id="ProcessingCoreMiningPriority">
-        <ValidatorArray value="ProcessingCoreMiningPriority"/>
         <ValidatorArray value="GenetronPowerSupplyGE100"/>
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
@@ -3627,7 +3609,6 @@
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectCreatePersistent id="ProcessingCoreMiningPrioritySet">
-        <ValidatorArray value="GenetronPowerSupplyGE100"/>
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Value="TargetUnit"/>
         <InitialEffect value="ProcessingCoreMiningPriorityMU"/>

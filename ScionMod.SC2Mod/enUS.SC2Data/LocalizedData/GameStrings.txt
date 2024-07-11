@@ -56,6 +56,7 @@ Abil/Name/GeneratorResearch=Generator - Research
 Abil/Name/GenetronOverclockMode=Genetron - Overclock Mode
 Abil/Name/GenetronPerformanceMode=Genetron - Performance Mode
 Abil/Name/GenetronProductionModeSwitch=Genetron Production Mode Switch
+Abil/Name/GenetronSelfDestruct=Genetron Self Destruct
 Abil/Name/GenetronStandardMode=Genetron - Standard Mode
 Abil/Name/GyreAnnex=Gyre - Annex
 Abil/Name/GyreInflux=Gyre - Influx
@@ -660,6 +661,7 @@ Button/Name/SelectBuilderKeiron=Select Builder
 Button/Name/SelectGrubs=Select Grubs
 Button/Name/SelectWasp=Select Wasp
 Button/Name/SelectWorms=Select Worms
+Button/Name/SelfDestruct=Self Destruct
 Button/Name/SelfFixProtocol=Self-Fix Protocol
 Button/Name/ShapeAdvancedStructure=Shape Advanced Structure
 Button/Name/ShapeStructure=Shape Structure
@@ -742,7 +744,7 @@ Button/Tooltip/AttackBarrage=Orders the selected units which can use this functi
 Button/Tooltip/Aurora=Tactical-strike aircraft. Can use Emanator.<n/><n/><c val="FFFF80">Can attack ground units.</c>
 Button/Tooltip/AvianNest=Creates Wasps, which are mutated into Xayid flyers.<n/><n/><c val="FFFF80">Enables:</c><n/>- Raptors<n/>- Assailants
 Button/Tooltip/Badger=Large gunship. Can use Powershell.<n/><n/><c val="78F0FF">Power user.</c><n/><c val="FFFF80">Can attack ground and air units simultaneously.</c>
-Button/Tooltip/BadgerPowershell=Causes all damage received to be absorbed by energy.<n/><n/><c val="f078ff">Drains <d ref="Effect,BadgerPowershellPowerDrainHealer,RechargeVitalRate" precision="1"/> energy and <c val="78F0FF">power</c> per second.</c><n/><c val="78F0FF">100% of damage received is taken from the power grid.</c>
+Button/Tooltip/BadgerPowershell=Causes all damage received to be absorbed by energy.<n/><n/><c val="f078ff">Drains <d ref="-Effect,BadgerPowershellPowerDrainEnergyMU,VitalArray[Energy].Change/Behavior,BadgerPowershell,Period" precision="1"/> energy and <c val="78F0FF">power</c> per second.</c><n/><c val="78F0FF">100% of damage received is taken from the power grid.</c>
 Button/Tooltip/BattleFrenzy=<c val="FFFF80">Reviler</c> attack speed increases by <d ref="Behavior,BattleFrenzy,Modification.UnifiedAttackSpeedFactor*100"/>% each time they attack. The attack speed bonus maxes at <d ref="Behavior,BattleFrenzy,Modification.UnifiedAttackSpeedFactor*Behavior,BattleFrenzy,MaxStackCount*100"/>%. Lasts <d ref="Behavior,BattleFrenzy,Duration"/> seconds. Continued attacks will refresh the duration.
 Button/Tooltip/Beholder=The Crux gains detection and additional sight range for <d ref="Behavior,Beholder,Duration"/> seconds.
 Button/Tooltip/BileDucts=Weapon range increased by 3.
@@ -779,7 +781,7 @@ Button/Tooltip/CitadelEnergize=Buffs nearby friendly units. Boosts movement spee
 Button/Tooltip/CleavingSpores=<c val="FFFF80">Raptor</c> attacks deal <d ref="Effect,CleavingSporesCP,PeriodCount"/> spell damage to Armored units over <d ref="Effect,CleavingSporesCP,PeriodicPeriodArray[0]*Effect,CleavingSporesCP,PeriodCount" precision="1"/> seconds.
 Button/Tooltip/CloakCharge=Cloaks units in an area. Energy is used over time.<n/><n/>The charge is destroyed when its energy is exhausted.
 Button/Tooltip/CloakOffCourier=Decloaks the selected unit, making it visible to enemies.
-Button/Tooltip/CloakOnCourier=Cloaks the unit, preventing enemy units from seeing or attacking it. A cloaked unit will only be revealed by detectors or effects.<n/><n/><c val="f078ff">Drains <d ref="Effect,CourierCloakingFieldEnergyRate,RechargeVitalRate" precision="1"/> energy and <c val="78F0FF">power</c> per second.</c><n/><c val="78F0FF">Uses <d ref="Effect,CourierCloakingFieldDrainInitPowerMU,VitalArray[Energy].Change*(-1)"/> power.</c>
+Button/Tooltip/CloakOnCourier=Cloaks the unit, preventing enemy units from seeing or attacking it. A cloaked unit will only be revealed by detectors or effects.<n/><n/><c val="f078ff">Drains <d ref="-Effect,CourierCloakingFieldDrainEnergyMU,VitalArray[Energy].Change/Behavior,CourierCloak,Period" precision="1"/> energy and <c val="78F0FF">power</c> per second.</c><n/><c val="78F0FF">Uses <d ref="Effect,CourierCloakingFieldDrainInitPowerMU,VitalArray[Energy].Change*(-1)"/> power.</c>
 Button/Tooltip/CloakingGenerator=<c val="FFFF80">Processors</c> gain permanent cloaking.
 Button/Tooltip/Conduit=Contains upgrades for Echoes and Fuses.<n/><n/><c val="FFFF80">Enables:</c><n/>- Echoes from Citadels<n/>- Fuses from Citadels
 Button/Tooltip/ConstructCloakCharge=Constructs a <c val="FFFF80">Cloak Charge</c>, preparing it for launch. The <c val="FFFF80">Cloak Charge</c> cloaks all friendly units in an area.<n/><n/>The <c val="FFFF80">Cloak Charge</c> degenerates energy over time, and is destroyed when its energy is exhausted.
@@ -1076,6 +1078,7 @@ Button/Tooltip/Scour=Reveals a small area. Lasts for a duration of <d ref="Effec
 Button/Tooltip/SelectBuilderKeiron=Selects the unit constructing this structure.
 Button/Tooltip/SelectWasp=Can mutate into various Xayid flyers.
 Button/Tooltip/SelectWorms=Can mutate into various Xayid ground units.
+Button/Tooltip/SelfDestruct=Immediately destroys the unit.
 Button/Tooltip/SelfFixProtocol=Heals <d ref="(Abil,VirtusSelffixProtocol,CastOutroTime[0])*Effect,VirtusSelffixProtocol,RechargeVitalRate"/> health over <d ref="Abil,VirtusSelffixProtocol,CastOutroTime[0]"/> seconds while disabling movement and weapons. Reduces received weapon damage by <d ref="-(Behavior,VirtusSelffixProtocolBuff,DamageResponse.ModifyFraction-1)*100"/>%.<n/><n/><c val="78F0FF">Uses <d ref="Effect,VirtusSelffixProtocolPowerModify,VitalArray[Energy].Change*(-1)"/> power.<c/>
 Button/Tooltip/ShapeAdvancedStructure=A list of advanced structures.
 Button/Tooltip/ShapeStructure=A list of basic structures.
@@ -1295,7 +1298,6 @@ Effect/Name/BadgerPowershellPowerDamageMU=Badger - Powershell Power Damage (MU)
 Effect/Name/BadgerPowershellPowerDrainCasterHealer=Badger - Powershell Power Drain Caster (Healer)
 Effect/Name/BadgerPowershellPowerDrainETU=Badger - Powershell Power Drain (ETU)
 Effect/Name/BadgerPowershellPowerDrainEnergyMU=Badger - Powershell Power Drain (EnergyMU)
-Effect/Name/BadgerPowershellPowerDrainHealer=Badger - Powershell Power Drain (Healer)
 Effect/Name/BadgerPowershellPowerDrainPowerMU=Badger - Powershell Power Drain (PowerMU)
 Effect/Name/BadgerPowershellPowerDrainSet=Badger - Powershell Power Drain (Set)
 Effect/Name/BadgerPowershellRemainingDMG=Badger - Powershell (Remaining DMG)
@@ -1385,8 +1387,6 @@ Effect/Name/CourierCloakingFieldDrainInitETU=Courier - Cloaking Field Drain Init
 Effect/Name/CourierCloakingFieldDrainInitPowerMU=Courier - Cloaking Field Drain Init (PowerMU)
 Effect/Name/CourierCloakingFieldDrainPowerMU=Courier - Cloaking Field Drain (PowerMU)
 Effect/Name/CourierCloakingFieldDrainSet=Courier - Cloaking Field Drain (Set)
-Effect/Name/CourierCloakingFieldEnergyRate=Courier - Cloaking Field (Energy Rate)
-Effect/Name/CourierCloakingFieldPowerRate=Courier - Cloaking Field (Power Rate)
 Effect/Name/CourierOpticalDisruptionAirSA=Courier - Optical Disruption Air (SA)
 Effect/Name/CourierOpticalDisruptionCreatePersistent=Courier - Optical Disruption (Create Persistent)
 Effect/Name/CourierOpticalDisruptionDataSet0=Courier - Optical Disruption (DataSet0)
@@ -1629,7 +1629,9 @@ Effect/Name/GenetronConstructionStart=Genetron Construction Start
 Effect/Name/GenetronEnergyStateFull=Genetron Energy State Full (AB)
 Effect/Name/GenetronEnergyStateNotFull=Genetron Energy State Not Full (AB)
 Effect/Name/GenetronEnergyStateSet=Genetron Energy State (Set)
+Effect/Name/GenetronOverclockInit=Genetron - Overclock (Init)
 Effect/Name/GenetronOverclockPowerSet=Genetron - Overclock (Power Set)
+Effect/Name/GenetronOverclockTargetMarkerApply=Genetron - Overclock (Target Marker Apply)
 Effect/Name/GenetronPowerBalance015On=Genetron Power Balance 015 On
 Effect/Name/GenetronPowerBalance015OnDelay=Genetron Power Balance 015 On Delay
 Effect/Name/GenetronPowerBalance020On=Genetron Power Balance 020 On
@@ -2009,6 +2011,7 @@ Effect/Name/ProcessingCoreMiningPriorityAddonDummyApplyFate=Processing Core - Mi
 Effect/Name/ProcessingCoreMiningPriorityAddonDummyCreateUnit=Processing Core - Mining Priority Addon Dummy (Create Unit)
 Effect/Name/ProcessingCoreMiningPriorityDisplayCooldownBasis=Processing Core - Mining Priority Display Cooldown (Basis)
 Effect/Name/ProcessingCoreMiningPriorityDisplayCooldownSubtractDurationCopy=Processing Core - Mining Priority Display Cooldown (Subtract Duration)
+Effect/Name/ProcessingCoreMiningPriorityInit=Processing Core - Mining Priority (Init)
 Effect/Name/ProcessingCoreMiningPriorityMU=Processing Core - Mining Priority (MU)
 Effect/Name/ProcessingCoreMiningPriorityRefreshCooldownAdd=Processing Core - Mining Priority Refresh (Cooldown Add)
 Effect/Name/ProcessingCoreMiningPriorityRefreshCooldownLoop=Processing Core - Mining Priority Refresh (Cooldown Loop)
@@ -2457,23 +2460,21 @@ RequirementNode/Tooltip/And352081205NotCountBehaviorHarbingerJudgementModeStartQ
 RequirementNode/Tooltip/CountBehaviorApertureRequirementDummyQueuedOrBetterAtUnit1756462=At least 10 energy
 RequirementNode/Tooltip/CountBehaviorEchoReverbCasterControllerCompleteOnlyAtUnit2145668228=Must Have Active Sonic Image
 RequirementNode/Tooltip/CountBehaviorElytraAmmoDummyCompleteOnlyAtUnit3668520173=Elytra must have Ammo
-RequirementNode/Tooltip/CountBehaviorGenetronPowerBalance015OnCompleteOnly3686946770=Insufficient Power
-RequirementNode/Tooltip/CountBehaviorGenetronPowerBalance020OnCompleteOnly3686946770=Insufficient Power
+RequirementNode/Tooltip/CountBehaviorGenetronPowerBalance015OnCompleteOnly920359573=Power
+RequirementNode/Tooltip/CountBehaviorGenetronPowerBalance020OnCompleteOnly920359573=Power
 RequirementNode/Tooltip/CountBehaviorGenetronPowerBalance025OnCompleteOnly3686946770=Insufficient Power
-RequirementNode/Tooltip/CountBehaviorGenetronPowerBalance050OnCompleteOnly3686946770=Insufficient Power
+RequirementNode/Tooltip/CountBehaviorGenetronPowerBalance025OnCompleteOnly920359573=Power
+RequirementNode/Tooltip/CountBehaviorGenetronPowerBalance050OnCompleteOnly920359573=Power
 RequirementNode/Tooltip/CountBehaviorGenetronPowerBalance050OnCompleteOnlyAtUnit3686946770=Insufficient Power
-RequirementNode/Tooltip/CountBehaviorGenetronPowerBalance075OnCompleteOnly3686946770=Insufficient Power
 RequirementNode/Tooltip/CountBehaviorGenetronPowerBalance075OnCompleteOnly920359573=Power
-RequirementNode/Tooltip/CountBehaviorGenetronPowerBalance100OnCompleteOnly3686946770=Insufficient Power
-RequirementNode/Tooltip/CountBehaviorGenetronPowerBalance150OnCompleteOnly3686946770=Insufficient Power
-RequirementNode/Tooltip/CountBehaviorGenetronPowerBalanceOlympusCompleteOnly3686946770=Insufficient Power
+RequirementNode/Tooltip/CountBehaviorGenetronPowerBalance100OnCompleteOnly920359573=Power
+RequirementNode/Tooltip/CountBehaviorGenetronPowerBalance150OnCompleteOnly920359573=Power
 RequirementNode/Tooltip/CountBehaviorGenetronProductionModeOverclockBuffCompleteOnlyAtUnit1330943493=Is In Overclocked Mode
 RequirementNode/Tooltip/CountBehaviorKeironStructureChargedCompleteOnlyAtUnit2373905154=Citadel is Charged
 RequirementNode/Tooltip/CountBehaviorKeironStructureChargedCompleteOnlyAtUnit2477900412=Oculus is Charged
 RequirementNode/Tooltip/CountBehaviorMoleBurrowedCompleteOnlyAtUnit3504524364=Must Be Burrowed
 RequirementNode/Tooltip/CountBehaviorMoleSubterraneanSensorsCompleteOnlyAtUnit1021359958=Must be burrowed
 RequirementNode/Tooltip/CountBehaviorOlympusAbilitiesReqCompleteOnlyAtUnit920359573=Power
-RequirementNode/Tooltip/CountBehaviorProcessingCoreMiningPriorityReqCompleteOnlyAtUnit920359573=Power
 RequirementNode/Tooltip/CountBehaviorSchematicTransmit2CompleteOnlyAtUnit3303085758=2 Uploaders
 RequirementNode/Tooltip/CountBehaviorSchematicTransmit3CompleteOnlyAtUnit1653320550=3 Uploaders
 RequirementNode/Tooltip/CountBehaviorSchematicTransmit3CompleteOnlyAtUnit2016240140=Has 3 Linked Uploaders
