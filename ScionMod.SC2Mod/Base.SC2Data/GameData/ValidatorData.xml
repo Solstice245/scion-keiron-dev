@@ -65,6 +65,18 @@
         <Compare value="GT"/>
         <Behavior value="ProcessingCoreChargingField"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="HasCourierCloak">
+        <Compare value="GT"/>
+        <Behavior value="CourierCloak"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorCondition id="IfHasEnergyDrainThenDeltaGTE10">
+        <IfArray Test="HasPowershell" Return="EnergyDeltaGTE10"/>
+        <IfArray Test="HasCourierCloak" Return="EnergyDeltaGTE10"/>
+    </CValidatorCondition>
+    <CValidatorUnitCompareBehaviorCount id="HasPowershell">
+        <Compare value="GT"/>
+        <Behavior value="BadgerPowershell"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitType id="IsNotLunaMine">
         <Value value="LunaMine"/>
         <Find value="0"/>
@@ -111,6 +123,12 @@
         <WhichUnit Value="Caster"/>
         <Filters value="-;Stunned,Silenced,Dazed"/>
     </CValidatorUnitFilters>
+    <CValidatorUnitCompareVital id="EnergyDeltaGTE10">
+        <Compare value="GE"/>
+        <Type value="Delta"/>
+        <Value value="10"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
     <CValidatorCombine id="PowerGTE5AndHasChargingField">
         <Type value="And"/>
         <CombineArray value="GenetronPowerSupplyGE05"/>
