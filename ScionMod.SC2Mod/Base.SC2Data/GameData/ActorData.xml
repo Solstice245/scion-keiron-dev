@@ -224,7 +224,11 @@
         <HostSiteOps Ops="SOpMoveUpByDot15"/>
         <AutoScaleFactor value="1.000000"/>
     </CActorModel>
+    <CActorRange id="PlaceLunaMinesRange" parent="RangeAbilStandard" abil="TorrentLunaMines"/>
     <CActorSound id="LunaMineDeath" parent="SoundOneShotScion" Effect="TorrentLunaMineMissileImpactSet"/>
+    <CActorTurret id="TorrentTurret">
+        <On Terms="TurretEnable.Torrent" Send="Create"/>
+    </CActorTurret>
     <CActorTurret id="SpitfireTurret">
         <On Terms="TurretEnable.Spitfire" Send="Create"/>
     </CActorTurret>
@@ -531,6 +535,13 @@
         <On Terms="Behavior.ProcessingCoreChargingFieldBase.On" Send="Create"/>
         <On Terms="Behavior.ProcessingCoreChargingFieldBase.Off" Send="Destroy"/>
     </CActorRange>
+    <CActorLookAt id="TorrentLookAtPitch" parent="UnitTurret">
+        <On Terms="TurretEnable" Send="Create"/>
+        <Types Id="DefaultLookAtTurret">
+            <Start Group="Turret_Right" Weight="1" Time="250"/>
+            <Stop Group="Turret_Right" Weight="1" Time="500"/>
+        </Types>
+    </CActorLookAt>
     <CActorQuad id="TorrentLunaMinesVisualQuadDown" parent="GuideVisualQuadDown" abil="TorrentLunaMines">
         <On Terms="ActorCreation" Send="Create TorrentLunaMinePlacementL"/>
         <On Terms="ActorCreation" Send="Create TorrentLunaMinePlacementR"/>
@@ -996,7 +1007,7 @@
         <Model value="ScourImpact"/>
     </CActorModel>
     <CActorAction id="TorrentLunaMinesAttack" parent="GenericAttack" effectImpact="TorrentPlaceLunaMinesImpact" effectLaunch="TorrentPlaceLunaMinesLaunchMissile">
-        <LaunchAttachQuery Methods="AMFilterWeaponSetA0 AMPatternTorrentLunaMines"/>
+        <LaunchAttachQuery Methods="AMFilterWeaponSetA2 AMPatternTorrentLunaMines"/>
         <LaunchAssets Sound="TorrentLunaMineAttackLaunch"/>
         <Missile value="LunaMine"/>
         <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpLunaMinesOffset"/>
@@ -4111,11 +4122,8 @@
     </CActorMissile>
     <CActorUnit id="Torrent" parent="GenericUnitStandard" unitName="Torrent">
         <On index="65" Terms="WeaponStart.HurricaneMissiles.AttackStart" Send="AnimBracketStart Attack Attack"/>
-        <On Terms="WeaponStart.HurricaneMissiles.AttackStart; WeaponTargetDistance LT 2.000000" Send="AnimPlay Superior Superior,03 0 -1.000000 -1.000000 7.000000 AsDuration"/>
-        <On Terms="WeaponStart.HurricaneMissiles.AttackStart; WeaponTargetDistance GE 2.000000" Send="AnimPlay Superior Superior,02 0 -1.000000 -1.000000 7.000000 AsDuration"/>
-        <On Terms="WeaponStart.HurricaneMissiles.AttackStart; WeaponTargetDistance GE 4.000000" Send="AnimPlay Superior Superior,01 0 -1.000000 -1.000000 7.000000 AsDuration"/>
-        <On Terms="WeaponStart.HurricaneMissiles.AttackStart; WeaponTargetDistance GE 8.000000" Send="AnimPlay Superior Superior,00 0 -1.000000 -1.000000 7.000000 AsDuration"/>
-        <On Terms="WeaponStop.HurricaneMissiles.AttackStop" Send="AnimBracketStop Superior"/>
+        <On Terms="WeaponStart.HurricaneMissiles.AttackStart" Target="TorrentLookAtPitch" Send="LookAtEngage"/>
+        <On Terms="WeaponStop.HurricaneMissiles.AttackStop" Target="TorrentLookAtPitch" Send="LookAtStop"/>
         <On Terms="UnitHeightUpdate.*.Land" Send="Create Cyclone_Land"/>
         <Macros value="UnloadDropAnim"/>
         <Macros value="TerrainSquibAnimations"/>
