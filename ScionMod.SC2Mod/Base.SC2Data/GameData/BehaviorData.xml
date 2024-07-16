@@ -1,5 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
+    <CBehaviorBuff id="BlitzerSuperCharger">
+        <InfoFlags index="Hidden" value="1"/>
+        <InfoIcon value="Assets\Textures\btn-ability-genetron-cannonreset.dds"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisplayDuration index="Self" value="1"/>
+        <DisplayDuration index="Ally" value="1"/>
+        <Duration value="11.2"/>
+        <Period value="0.25"/>
+        <PeriodicEffect value="BlitzerSuperChargerPeriod"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="FixerHoldFire">
+        <InfoIcon value="Assets\Textures\btn-ability-terran-holdfire.dds"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="CasterIsNotAttackingUnit"/>
+        <Modification WeaponScanLimit="0">
+            <StateFlags index="Passive" value="1"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="HeatBurning">
+        <InfoIcon value="Assets\Textures\btn-ability-zerg-fireroach-increasefiredamage.dds"/>
+        <RemoveValidatorArray value="HeatBurningTest"/>
+        <Period value="0.5"/>
+        <InitialEffect value="HeatBurningOrphanIncrement"/>
+        <PeriodicEffect value="HeatBurningDamage"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="DamageTakenNoneBenign">
         <InfoFlags index="Hidden" value="1"/>
         <Modification>
@@ -8,6 +33,20 @@
         <DamageResponse ModifyFraction="0" ModifyMinimumDamage="1">
             <Chance value="1"/>
         </DamageResponse>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="ELORProtocolBuff">
+        <InfoFlags index="Hidden" value="1"/>
+        <InfoIcon value="Assets\Textures\btn-ability-genetron-elorprotocol.dds"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <BuffFlags index="Channeling" value="1"/>
+        <DamageResponse ModifyFraction="0.5">
+            <Chance value="1"/>
+        </DamageResponse>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="Heat">
+        <Period value="0.5"/>
+        <PeriodicEffect value="HeatDataDecrement"/>
+        <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="LunaMineEnergyDrain">
         <InfoFlags index="Hidden" value="1"/>
@@ -233,6 +272,7 @@
         <InfoIcon value="Assets\Textures\btn-ability-stetmann-garystetelliteovercharge-speed.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="EnergyGTE005"/>
+        <DisableValidatorArray value="CasterNotLockedDown"/>
         <TimeScaleSource Value="Global"/>
         <Period value="0.5"/>
         <InitialEffect value="ProcessingCoreChargingFieldSA"/>
@@ -248,7 +288,6 @@
         <Period value="0.0625"/>
         <InitialEffect value="ProcessingCoreChargingFieldDataCheck"/>
         <PeriodicEffect value="ProcessingCoreChargingFieldDataCheck"/>
-        <FinalEffect value="ProcessingCoreChargingFieldData0"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="PulsarMovementSpeed">
         <InfoFlags index="Hidden" value="1"/>
@@ -302,6 +341,11 @@
         <Duration value="0.125"/>
         <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="SpellDamageTest">
+        <Modification>
+            <DamageDealtFraction index="Spell" value="10"/>
+        </Modification>
+    </CBehaviorBuff>
     <CBehaviorBuff id="SpitfireAbilitiesReq">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -335,7 +379,7 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisplayDuration index="Self" value="1"/>
         <DisplayDuration index="Ally" value="1"/>
-        <Duration value="9.8"/>
+        <Duration value="11.2"/>
         <Modification RangedWeaponRange="1" WeaponScanBonus="1"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="SpitfirePowershell">
@@ -418,6 +462,7 @@
         <DisplayDuration index="Self" value="1"/>
         <DisplayDuration index="Ally" value="1"/>
         <InitialEffect value="UmbraStealthCompulsionBuffInit"/>
+        <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="UmbraStealthSuppression">
         <InfoFlags index="Hidden" value="1"/>
@@ -1284,7 +1329,6 @@
         <InfoIcon value="Assets\Textures\btn-ability-genetron-cannonreset.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Duration value="5"/>
-        <Modification CriticalAttackChanceUnscaledBonus="1"/>
         <Alignment value="Positive"/>
         <RemoveValidatorArray value="NotEMPed"/>
     </CBehaviorBuff>
@@ -1413,10 +1457,11 @@
         <Alignment value="Negative"/>
         <InfoIcon value="Assets\Textures\btn-ability-hornerhan-bomberplatform-napalm.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Duration value="0.8125"/>
-        <Period value="0.7"/>
-        <InitialEffect value="JupiterNapalmDamageInitial"/>
-        <PeriodicEffect value="JupiterNapalmDamage"/>
+        <Duration value="0.4375"/>
+        <Period value="0.3125"/>
+        <InitialEffect value="JupiterHeatPeriodIncrement"/>
+        <PeriodicEffect value="JupiterHeatPeriodIncrement"/>
+        <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="JupiterSpeedBuff">
         <InfoFlags index="Hidden" value="1"/>

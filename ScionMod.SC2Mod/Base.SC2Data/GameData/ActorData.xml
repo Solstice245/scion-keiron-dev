@@ -212,6 +212,12 @@
         <MaxScale value="2.500000"/>
         <AutoScaleFactor value="0.800000"/>
     </CActorModel>
+    <CActorModel id="BurningHeat" parent="ModelAnimationStyleContinuousUNIT">
+        <On Terms="Behavior.HeatBurning.On" Send="Create"/>
+        <On Terms="Behavior.HeatBurning.Off" Send="AnimBracketStop BSD"/>
+        <HostSiteOps Ops="SOpAttachCenterSoft"/>
+        <AutoScaleFactor value="1.000000"/>
+    </CActorModel>
     <CActorModel id="ChargingFieldBuffImpact" parent="ModelAnimationStyleContinuousUNIT">
         <On Terms="Behavior.ProcessingCoreChargingField.On" Send="Create"/>
         <On Terms="Behavior.ProcessingCoreChargingField.Off" Send="AnimBracketStop BSD"/>
@@ -224,6 +230,25 @@
         <HostSiteOps Ops="SOpMoveUpByDot15"/>
         <AutoScaleFactor value="1.000000"/>
     </CActorModel>
+    <CActorModel id="JupiterRevenantBombImpact" parent="ModelAnimationStyleOneShot">
+        <On Terms="Effect.JupiterRevenantBombImpact.Start" Send="Create"/>
+    </CActorModel>
+    <CActorAction id="JupiterAttackTargetUnit" parent="GenericAttack" effectImpact="JupiterRevenantBombImpact" effectLaunch="JupiterRevenantBombLaunchMissileTargetUnit">
+        <LaunchAttachQuery Methods="AMFilterWeapon"/>
+        <LaunchAssets Model="JupiterAttackLaunch" Sound="JupiterAttackLaunch"/>
+        <Beam value="JupiterAttackBeam"/>
+        <Missile value="JupiterAttackMissile"/>
+        <ImpactSiteOps Ops="SOpAttachHarness SOpAttachVolumeStandard SOpTargetUnit"/>
+        <ImpactMap index="None" Model="JupiterAttackImpact" Sound="JupiterAttackImpact" ModelReaction="JupiterAttackImpactReaction"/>
+        <ImpactMap index="Shield" Sound="JupiterAttackImpactShield" ModelReaction="JupiterAttackImpactReactionShield"/>
+        <ImpactPhysics Name="Explosion" MatchKeys="Basic" Physics="SiegeTankSiegedForce"/>
+        <DamageMap index="None" Model="JupiterAttackDamage" Sound="JupiterAttackDamage" ModelReaction="JupiterAttackDamageReaction"/>
+        <DamageMap index="Shield" Sound="JupiterAttackDamageShield" ModelReaction="JupiterAttackDamageReactionShield"/>
+        <ShieldFlashType value="None"/>
+    </CActorAction>
+    <CActorSound id="Jupiter_RevenantBombImpact" parent="SoundOneShot">
+        <On Terms="Effect.JupiterRevenantBombImpact.Start" Send="Create"/>
+    </CActorSound>
     <CActorRange id="PlaceLunaMinesRange" parent="RangeAbilStandard" abil="TorrentLunaMines"/>
     <CActorSound id="LunaMineDeath" parent="SoundOneShotScion" Effect="TorrentLunaMineMissileImpactSet"/>
     <CActorTurret id="TorrentTurret">
@@ -2498,7 +2523,7 @@
         <HostSiteOps Ops="SOpAttachWeapon SOpPitchTeslaFX"/>
         <Model value="TelsaChargeConstructionEffect"/>
     </CActorModel>
-    <CActorAction id="BlitzerSuperchargeAttack" parent="GenericAttack" effectAttack="ChargeCannonSC">
+    <CActorAction id="BlitzerSuperchargeAttack" parent="GenericAttack" effectAttack="BlitzerChargeCannonSuperChargeDamage">
         <LaunchAttachQuery Methods="AMFilterWeapon02"/>
         <LaunchAssets Sound="Blitzer_AttackLaunch_SuperCharged"/>
         <ImpactMap index="None" Scale="0.400000" Sound="Missile_Basic_Impact_Sweetner" ModelReaction="BlitzerAttackLeftImpactReaction"/>
@@ -2831,8 +2856,7 @@
         <DeathCustoms index="3" removed="1"/>
         <DeathCustoms index="4" removed="1"/>
     </CActorUnit>
-    <CActorAction id="InciterAttack" parent="GenericAttack" effectImpact="HalifaxGrenadesLMImpact" effectLaunch="HalifaxGrenadesLMR">
-        <On index="6" Terms="Effect.HalifaxGrenadesLM.Start; At Caster" Send="Create"/>
+    <CActorAction id="InciterAttack" parent="GenericAttack" effectImpact="HalifaxGrenadesLMImpact" effectLaunch="HalifaxGrenadesLM">
         <LaunchAttachQuery Methods="AMFilterBoar AMPatternInciter"/>
     </CActorAction>
     <CActorSound id="Inciter_JumpLaunch" parent="SoundOneShot">
@@ -3367,7 +3391,6 @@
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <ImpactPhysics Name="Explosion" MatchKeys="Basic" Physics="SiegeTankSiegedForce"/>
         <ImpactSiteOps Ops="SOpTargetPointStationary"/>
-        <ImpactAttachQuery Methods=""/>
         <ShieldFlashType value="None"/>
     </CActorAction>
     <CActorSplat id="JupiterAttackSplat" parent="GuideVisualCircle" unitName="Bogus">
@@ -3494,7 +3517,7 @@
         <DeathActorModel value="UnitDeathModelWithDeathMotionGround"/>
         <Aliases value="_UnitMedium"/>
     </CActorUnit>
-    <CActorAction id="BlitzerAttack" parent="GenericAttack" effectAttack="ChargeCannon">
+    <CActorAction id="BlitzerAttack" parent="GenericAttack" effectAttack="BlitzerChargeCannonDamage">
         <LaunchAttachQuery Methods="AMFilterBlitzer"/>
         <LaunchAssets AnimProps="Stand,00" Sound="Blitzer_AttackLaunch"/>
         <Beam value="BlitzerAttackLeftBeam"/>
@@ -4230,9 +4253,9 @@
         <Macros value="PhysicsDeathsVoidGround"/>
         <On Terms="AbilMorph.*.Start; MorphTo MoleRooted" Send="AnimPlay Burrow Burrow PlayForever,NonLooping"/>
         <On Terms="AbilMorph.*.Start; MorphTo MoleRooted" Send="AnimClear Unburrow"/>
-        <On Terms="AbilMorph.*.Start; MorphTo MoleBurrowed" Send="AnimPlay Burrow Burrow PlayForever,NonLooping -1.000000 -1.000000 2.500000 AsDuration"/>
+        <On Terms="AbilMorph.*.Start; MorphTo MoleBurrowed" Send="AnimPlay Burrow Burrow PlayForever,NonLooping -1.000000 -1.000000 2.000000 AsDuration"/>
         <On Terms="AbilMorph.*.Start; MorphTo MoleBurrowed" Send="AnimClear Unburrow"/>
-        <On Terms="AbilMorph.*.Start; MorphTo MoleBurrowed" Send="TimerSet 2.500000 Burrow"/>
+        <On Terms="AbilMorph.*.Start; MorphTo MoleBurrowed" Send="TimerSet 2.000000 Burrow"/>
         <On Terms="AbilMorph.*.Start; MorphTo Mole" Send="AnimClear Burrow"/>
         <On Terms="AbilMorph.*.Start; MorphTo Mole" Send="AnimPlay Unburrow Unburrow"/>
         <On Terms="AbilMorph.*.Finish; MorphTo Mole" Send="AnimClear Unburrow"/>

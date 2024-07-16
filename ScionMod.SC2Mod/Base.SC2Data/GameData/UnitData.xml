@@ -315,8 +315,8 @@
     <CUnit id="Aquila" parent="CUnitGenetron">
         <Attributes index="Light" value="1"/>
         <Attributes index="Psionic" value="1"/>
-        <LifeStart value="80"/>
-        <LifeMax value="80"/>
+        <LifeStart value="75"/>
+        <LifeMax value="75"/>
         <LifeArmor value="0"/>
         <EnergyStart value="75"/>
         <EnergyMax value="75"/>
@@ -644,8 +644,7 @@
         <CostResource index="Vespene" value="50"/>
         <RepairTime value="39.2"/>
         <AbilArray Link="FixerRepair"/>
-        <AbilArray Link="GhostHoldFire"/>
-        <AbilArray Link="GhostWeaponsFree"/>
+        <AbilArray Link="FixerHoldFire"/>
         <BehaviorArray Link="GenetronPowerSupplyTracker"/>
         <BehaviorArray Link="TrackGenetronPowerSupplyUnit"/>
         <BehaviorArray Link="FixerReactiveArmor"/>
@@ -653,11 +652,11 @@
         <CardLayouts index="0">
             <LayoutButtons Face="ACRRepair" Type="AbilCmd" AbilCmd="FixerRepair,Execute" Row="2" Column="0"/>
             <LayoutButtons Face="ReactiveArmor" Type="Passive" Behavior="FixerReactiveArmor" Row="2" Column="1"/>
-            <LayoutButtons Face="GhostHoldFire" Type="AbilCmd" AbilCmd="GhostHoldFire,Execute" Row="1" Column="2"/>
-            <LayoutButtons Face="WeaponsFree" Type="AbilCmd" AbilCmd="GhostWeaponsFree,Execute" Row="1" Column="3"/>
+            <LayoutButtons Face="GhostHoldFire" Type="AbilCmd" AbilCmd="FixerHoldFire,On" Row="1" Column="2"/>
+            <LayoutButtons Face="WeaponsFree" Type="AbilCmd" AbilCmd="FixerHoldFire,Off" Row="1" Column="3"/>
         </CardLayouts>
         <InnerRadius value="0.4375"/>
-        <SubgroupPriority value="44"/>
+        <SubgroupPriority value="29"/>
         <TacticalAI value="Blaze"/>
         <GlossaryPriority value="4"/>
         <GlossaryStrongArray value="Equalizer"/>
@@ -681,20 +680,14 @@
         <AbilArray index="0" Link="attack"/>
         <AbilArray index="1" Link="move"/>
         <AbilArray index="2" Link="stop"/>
-        <AbilArray Link="SuperCharge"/>
         <AbilArray Link="BlitzerOverdrive"/>
+        <AbilArray Link="BlitzerSuperCharger"/>
+        <AbilArray Link="BlitzerSuperChargerRemove"/>
         <WeaponArray Link="ChargeCannon" Turret="Blitzer"/>
         <CardLayouts index="0">
-            <LayoutButtons Face="BlitzerSupercharge" Type="AbilCmd" AbilCmd="SuperCharge,Execute" Row="2" Column="0"/>
-            <LayoutButtons>
-                <Face value="BlitzerSupercharged"/>
-                <Type value="Passive"/>
-                <Behavior value="SuperChargeCannon"/>
-                <ShowInGlossary value="0"/>
-                <Row value="2"/>
-                <Column value="0"/>
-            </LayoutButtons>
-            <LayoutButtons Face="BlitzerOverdrive" Type="AbilCmd" AbilCmd="BlitzerOverdrive,Execute" Row="2" Column="1"/>
+            <LayoutButtons Face="BlitzerOverdrive" Type="AbilCmd" AbilCmd="BlitzerOverdrive,Execute" Row="2" Column="0"/>
+            <LayoutButtons Face="BlitzerSuperCharger" Type="AbilCmd" AbilCmd="BlitzerSuperCharger,Execute" Row="2" Column="1"/>
+            <LayoutButtons Face="BlitzerDisableSuperCharger" Type="AbilCmd" AbilCmd="BlitzerSuperChargerRemove,Execute" Row="2" Column="2"/>
         </CardLayouts>
         <Radius value="0.5625"/>
         <InnerRadius value="0.5"/>
@@ -911,18 +904,24 @@
         <Sight value="4"/>
     </CUnit>
     <CUnit id="Inciter" parent="CUnitGenetron">
+        <Collide index="Flying5" value="1"/>
         <Attributes index="Armored" value="1"/>
-        <LifeStart value="185"/>
-        <LifeMax value="185"/>
+        <LifeStart value="180"/>
+        <LifeMax value="180"/>
+        <EnergyStart value="75"/>
+        <EnergyMax value="75"/>
+        <EnergyRegenRate value="1.6875"/>
         <Mover value="CliffJumper"/>
-        <Speed value="3.125"/>
+        <Speed value="2.75"/>
         <Acceleration value="15"/>
+        <TurningRate value="360"/>
         <Sight value="10"/>
         <Height value="0.15"/>
         <Food value="-3"/>
         <CostResource index="Minerals" value="175"/>
         <CostResource index="Vespene" value="125"/>
         <RepairTime value="56"/>
+        <AbilArray Link="InciterELORProtocol"/>
         <BehaviorArray Link="GenetronPowerSupplyTracker"/>
         <BehaviorArray Link="TrackGenetronPowerSupplyUnit"/>
         <BehaviorArray Link="InciterJump"/>
@@ -931,11 +930,14 @@
             <LayoutButtons Face="InciterCliffJumper" Type="Passive" Row="2" Column="1"/>
             <LayoutButtons Face="ELORProtocol" Type="AbilCmd" AbilCmd="InciterELORProtocol,Execute" Row="2" Column="0"/>
             <LayoutButtons Face="AttackBarrage" Type="AbilCmd" AbilCmd="attack,Barrage" Row="1" Column="4"/>
+            <LayoutButtons Face="Heat" Type="Passive" Row="1" Column="0"/>
         </CardLayouts>
         <Radius value="0.75"/>
+        <SeparationRadius value="0.75"/>
         <InnerRadius value="0.375"/>
         <CargoSize value="4"/>
         <SubgroupPriority value="31"/>
+        <MinimapRadius value="0.75"/>
         <GlossaryPriority value="9"/>
         <GlossaryStrongArray value="Spitfire"/>
         <GlossaryStrongArray value="Adept"/>
@@ -945,14 +947,6 @@
         <GlossaryWeakArray value="Immortal"/>
         <GlossaryWeakArray value="Marauder"/>
         <GlossaryWeakArray value="Roach"/>
-        <TurningRate value="360"/>
-        <EnergyStart value="75"/>
-        <EnergyMax value="75"/>
-        <AbilArray Link="InciterELORProtocol"/>
-        <Collide index="Flying5" value="1"/>
-        <EnergyRegenRate value="1.6875"/>
-        <SeparationRadius value="0.75"/>
-        <MinimapRadius value="0.75"/>
     </CUnit>
     <CUnit id="InciterPlaceholder">
         <Race value="Gen"/>
@@ -1233,6 +1227,7 @@
         <CardLayouts>
             <LayoutButtons Face="SelfDestruct" Type="AbilCmd" AbilCmd="GenetronSelfDestruct,Execute" Row="2" Column="4"/>
         </CardLayouts>
+        <HotkeyCategory value="Unit/Category/GenetronUnits"/>
     </CUnit>
     <CUnit id="AnalysisTerminal" parent="CStructureGenetron">
         <LifeStart value="850"/>
@@ -1589,8 +1584,8 @@
         <FlagArray index="AlwaysThreatens" value="1"/>
         <FlagArray index="AISupport" value="1"/>
         <FlagArray index="AIPressForwardDisabled" value="1"/>
-        <LifeStart value="125"/>
-        <LifeMax value="125"/>
+        <LifeStart value="140"/>
+        <LifeMax value="140"/>
         <LifeArmor value="0"/>
         <Speed value="2.6875"/>
         <TurningRate value="360"/>
@@ -1740,7 +1735,7 @@
         <WeaponArray Link="RiotGun" Turret="Spitfire"/>
         <SeparationRadius value="0.375"/>
         <InnerRadius value="0.375"/>
-        <SubgroupPriority value="30"/>
+        <SubgroupPriority value="45"/>
         <MinimapRadius value="0.375"/>
         <GlossaryPriority value="2"/>
         <GlossaryStrongArray value="Blitzer"/>
@@ -1785,6 +1780,7 @@
         <EnergyRegenRate value="0"/>
         <Speed value="2.5"/>
         <WeaponArray index="0" Link="RiotGun" Turret="Hellion"/>
+        <SubgroupPriority value="30"/>
     </CUnit>
     <CUnit id="Tesla" parent="CUnitGenetron">
         <Attributes index="Armored" value="1"/>
@@ -1858,6 +1854,7 @@
         <CardLayouts>
             <LayoutButtons Face="SelfDestruct" Type="AbilCmd" AbilCmd="GenetronSelfDestruct,Execute" Row="2" Column="4"/>
         </CardLayouts>
+        <HotkeyCategory value="Unit/Category/GenetronUnits"/>
     </CUnit>
     <CUnit id="Torrent" parent="CUnitGenetron">
         <LifeStart value="150"/>
@@ -1872,7 +1869,7 @@
         <WeaponArray Link="TwinP1Dash0Guns" Turret="Torrent"/>
         <Radius value="0.625"/>
         <InnerRadius value="0.5"/>
-        <SubgroupPriority value="30"/>
+        <SubgroupPriority value="42"/>
         <MinimapRadius value="0.625"/>
         <GlossaryPriority value="7"/>
         <GlossaryStrongArray value="Badger"/>
@@ -1988,7 +1985,7 @@
         </CardLayouts>
         <Radius value="0.75"/>
         <SeparationRadius value="0.75"/>
-        <SubgroupPriority value="45"/>
+        <SubgroupPriority value="44"/>
         <MinimapRadius value="0.75"/>
         <TacticalAI value="AvengerGenetron"/>
         <GlossaryPriority value="13"/>
@@ -2115,7 +2112,7 @@
         </CardLayouts>
         <Radius value="0.875"/>
         <SeparationRadius value="0.875"/>
-        <SubgroupPriority value="45"/>
+        <SubgroupPriority value="44"/>
         <GlossaryPriority value="14"/>
         <Mob value="Multiplayer"/>
         <FlagArray index="AISupport" value="1"/>
@@ -2187,6 +2184,7 @@
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="JupiterAccelerator,Off" Row="2" Column="4"/>
             <LayoutButtons Face="AttackBarrage" Type="AbilCmd" AbilCmd="attack,Barrage" Row="1" Column="4"/>
             <LayoutButtons Face="JupiterAccelerator" Type="AbilCmd" AbilCmd="JupiterAccelerator,On" Row="2" Column="3"/>
+            <LayoutButtons Face="Heat" Type="Passive" Row="1" Column="0"/>
             <LayoutButtons Face="RevenantBombUnit" Type="AbilCmd" AbilCmd="RevenantBombUnit,Execute" Row="2" Column="1"/>
         </CardLayouts>
         <Radius value="1"/>
@@ -2233,7 +2231,7 @@
             <LayoutButtons Face="SystemRecharge" Type="AbilCmd" AbilCmd="ProcessorSystemRecharge,Execute" Row="2" Column="2"/>
             <LayoutButtons Face="ProcessorStaticMode" Type="AbilCmd" AbilCmd="ProcessorStaticMode,Execute" Row="2" Column="0"/>
         </CardLayouts>
-        <SubgroupPriority value="44"/>
+        <SubgroupPriority value="29"/>
         <TacticalAI value="Processor"/>
         <AIEvalConstant value="1"/>
         <GlossaryPriority value="1"/>

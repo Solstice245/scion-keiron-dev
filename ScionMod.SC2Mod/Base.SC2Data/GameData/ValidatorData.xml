@@ -27,6 +27,77 @@
         <CombineArray value="Aperture4CargoAnd40Energy"/>
         <CombineArray value="Aperture8CargoAnd80Energy"/>
     </CValidatorCombine>
+    <CValidatorUnitOrderTargetType id="CasterIsNotAttackingUnit">
+        <ResultFailed value="MustTargetUnit"/>
+        <AbilLink value="attack"/>
+        <Find value="0"/>
+    </CValidatorUnitOrderTargetType>
+    <CValidatorUnitCompareOrderTargetRange id="BlitzerSuperChargeMaxDistance">
+        <WhichUnit Value="Source"/>
+        <Compare value="LE"/>
+        <AbilLink value="attack"/>
+        <Value value="6"/>
+    </CValidatorUnitCompareOrderTargetRange>
+    <CValidatorUnitCompareVital id="SourceEnergyGTE025">
+        <WhichUnit Value="Source"/>
+        <Compare value="GE"/>
+        <Value value="25"/>
+        <Vital value="Energy"/>
+    </CValidatorUnitCompareVital>
+    <CValidatorEffectTreeUserData id="HeatDataMax">
+        <CheckExistence value="0"/>
+        <Compare value="LT"/>
+        <Key value="Heat"/>
+        <Value value="40"/>
+        <BehaviorScope Value="Target" Behavior="Heat"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorUnitCompareBehaviorCount id="SourceSuperCharger">
+        <WhichUnit Value="Source"/>
+        <Compare value="NE"/>
+        <Behavior value="BlitzerSuperCharger"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorCombine id="SourceSuperChargerAndCanSuperCharge">
+        <Type value="And"/>
+        <CombineArray value="SourceSuperCharger"/>
+        <CombineArray value="SourceEnergyGTE025"/>
+        <CombineArray value="GenetronPowerSupplyGE025"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareBehaviorCount id="SourceNotSuperCharged">
+        <WhichUnit Value="Source"/>
+        <Behavior value="SuperChargeCannon"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="NotHeatedBurning">
+        <Behavior value="HeatBurning"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="IsHeatedBurning">
+        <Compare value="GT"/>
+        <Behavior value="HeatBurning"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorEffectTreeUserData id="SourceHeatDataMax">
+        <CheckExistence value="0"/>
+        <Compare value="LT"/>
+        <Key value="Heat"/>
+        <Value value="40"/>
+        <BehaviorScope Value="Source" Behavior="Heat"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorUnitCompareField id="HeatDataRadius3">
+        <Compare value="LT"/>
+        <Field value="Radius"/>
+        <Value value="1"/>
+    </CValidatorUnitCompareField>
+    <CValidatorEffectTreeUserData id="HeatDataTest4">
+        <Compare value="GE"/>
+        <Key value="Heat"/>
+        <Value value="20"/>
+        <BehaviorScope Value="Target" Behavior="Heat"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorFunction id="HeatBurningTest">
+        <Line Test="FilterWorker" Return="HeatDataTest2" Break="1"/>
+        <Line Test="HeatDataRadius1" Return="HeatDataTest1" Break="1"/>
+        <Line Test="HeatDataRadius2" Return="HeatDataTest2" Break="1"/>
+        <Line Test="HeatDataRadius3" Return="HeatDataTest3" Break="1"/>
+        <Line Return="HeatDataTest4" Break="1"/>
+    </CValidatorFunction>
     <CValidatorPlayerCompareResource id="CannotAffordRoamerGas">
         <Compare value="LT"/>
         <Resource value="Vespene"/>
@@ -61,6 +132,9 @@
         <Enabled value="1"/>
         <BehaviorState value="Daze"/>
     </CValidatorUnitBehaviorState>
+    <CValidatorUnitFilters id="FilterWorker">
+        <Filters value="Worker;-"/>
+    </CValidatorUnitFilters>
     <CValidatorUnitCompareBehaviorCount id="GenetronHasChargingField">
         <Compare value="GT"/>
         <Behavior value="ProcessingCoreChargingField"/>
@@ -69,6 +143,30 @@
         <Compare value="GT"/>
         <Behavior value="CourierCloak"/>
     </CValidatorUnitCompareBehaviorCount>
+    <CValidatorEffectTreeUserData id="HeatDataTest3">
+        <Compare value="GE"/>
+        <Key value="Heat"/>
+        <Value value="15"/>
+        <BehaviorScope Value="Target" Behavior="Heat"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorEffectTreeUserData id="HeatDataTestAny">
+        <Compare value="GE"/>
+        <Key value="Heat"/>
+        <BehaviorScope Value="Target" Behavior="Heat"/>
+        <CheckExistence value="0"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorEffectTreeUserData id="HeatDataTest1">
+        <Compare value="GE"/>
+        <Key value="Heat"/>
+        <Value value="5"/>
+        <BehaviorScope Value="Target" Behavior="Heat"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorEffectTreeUserData id="HeatDataTest2">
+        <Compare value="GE"/>
+        <Key value="Heat"/>
+        <Value value="10"/>
+        <BehaviorScope Value="Target" Behavior="Heat"/>
+    </CValidatorEffectTreeUserData>
     <CValidatorCondition id="IfHasEnergyDrainThenDeltaGTE10">
         <IfArray Test="HasPowershell" Return="EnergyDeltaGTE10"/>
         <IfArray Test="HasCourierCloak" Return="EnergyDeltaGTE10"/>
@@ -76,6 +174,13 @@
     <CValidatorUnitCompareBehaviorCount id="HasPowershell">
         <Compare value="GT"/>
         <Behavior value="BadgerPowershell"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="IsHeated">
+        <Compare value="GT"/>
+        <Behavior value="Heat"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="NotHeated">
+        <Behavior value="Heat"/>
     </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitType id="IsNotLunaMine">
         <Value value="LunaMine"/>
@@ -290,6 +395,8 @@
         <CooldownLink value="Abil/RevenantBomb"/>
         <Ability value="RevenantBomb"/>
         <Location value="Unit"/>
+        <ResultFailed value="Cooldown"/>
+        <ResultNoUnit value="Cooldown"/>
     </CValidatorUnitCompareCooldown>
     <CValidatorUnitCompareBehaviorCount id="CasterHasAdaptiveInjectionDebuff">
         <WhichUnit Value="Caster"/>
@@ -649,6 +756,16 @@
         <CombineArray value="WeaponInRange"/>
         <Negate value="1"/>
     </CValidatorCombine>
+    <CValidatorUnitCompareField id="HeatDataRadius1">
+        <Compare value="LE"/>
+        <Field value="Radius"/>
+        <Value value="0.5"/>
+    </CValidatorUnitCompareField>
+    <CValidatorUnitCompareField id="HeatDataRadius2">
+        <Compare value="LT"/>
+        <Field value="Radius"/>
+        <Value value="0.75"/>
+    </CValidatorUnitCompareField>
     <CValidatorUnitType id="TargetUnitTypeIsCasterUnitType">
         <OtherUnit Value="Caster"/>
     </CValidatorUnitType>
@@ -1993,7 +2110,8 @@
         <Find value="1"/>
         <Value value="UseBoreDrills"/>
     </CValidatorPlayerRequirement>
-    <CValidatorUnitCompareBehaviorCount id="Supercharged">
+    <CValidatorUnitCompareBehaviorCount id="SourceSuperCharged">
+        <WhichUnit Value="Source"/>
         <Compare value="NE"/>
         <Behavior value="SuperChargeCannon"/>
     </CValidatorUnitCompareBehaviorCount>
