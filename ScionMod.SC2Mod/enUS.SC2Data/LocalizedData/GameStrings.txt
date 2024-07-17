@@ -153,6 +153,7 @@ Abil/Name/TrainLightweightMechs=Train Lightweight Mechs
 Abil/Name/TransportFerrion=Transport
 Abil/Name/UmbraShieldCompulsion=Umbra - Shield Compulsion
 Abil/Name/UmbraStealthCompulsion=Umbra - Stealth Compulsion
+Abil/Name/UmbraStealthCompulsionRemove=Umbra - Stealth Compulsion Remove
 Abil/Name/UploaderSmartLink=Uploader Smart Link
 Abil/Name/VengeanceMissile=Vengeance Missile
 Abil/Name/VirtusSelffixProtocol=Virtus - Self-fix Protocol
@@ -701,6 +702,7 @@ Button/Name/TorrentDroneDetonate=Detonate
 Button/Name/TorrentPlaceLunaMines=Place Luna Mines
 Button/Name/UmbraCloakingSystems=Cloaking Systems
 Button/Name/UmbraDamageReduction=Deflection
+Button/Name/UmbraDisableStealthCompulsion=Disable Stealth Compulsion
 Button/Name/UmbraShieldCompulsion=Stealth Compulsion
 Button/Name/Unfuse=Unfuse
 Button/Name/UnloadAllFerrion=Unload All
@@ -767,7 +769,7 @@ Button/Tooltip/Blitzer=General purpose combat unit. Can use Overdrive and Super 
 Button/Tooltip/BlitzerBoreanReactor=<c val="FFFF80">Blitzers</c> gain +15 maximum and starting energy.
 Button/Tooltip/BlitzerDisableSuperCharger=Disables the Super Charger.
 Button/Tooltip/BlitzerOverdrive=Increases movement speed by <d ref="Behavior,BlitzerOverdrive,Modification.MoveSpeedMultiplier-1*100"/>% for <d ref="Behavior,BlitzerOverdrive,Duration"/> seconds.<n/><n/><c val="78F0FF">Uses <d ref="Effect,BlitzerOverdrivePowerModify,VitalArray[Energy].Change*(-1)"/> power.</c>
-Button/Tooltip/BlitzerSuperCharger=While active, 25 energy and power will be automatically used for a single attack boost. Boosted attacks deal <d ref="Effect,BlitzerChargeCannonSuperChargeDamage,Amount/Effect,BlitzerChargeCannonDamage,Amount*100"/>% damage as spell damage.<n/><n/>Lasts <d ref="Behavior,BlitzerSuperCharger,Duration"/> seconds and can be refreshed.
+Button/Tooltip/BlitzerSuperCharger=While active, attacks will use 25 energy and power if available. Boosted attacks deal <d ref="Effect,BlitzerChargeCannonSuperChargeDamage,Amount/Effect,BlitzerChargeCannonDamage,Amount*100"/>% damage as spell damage.<n/><n/>Is activated for <d ref="Behavior,BlitzerSuperCharger,Duration"/> seconds before automatically deactivating. Can be refreshed.
 Button/Tooltip/BlitzerSupercharge=The next attack will deal <d ref="Effect,BlitzerChargeCannonSuperChargeDamage,Amount/Effect,BlitzerChargeCannonDamage,Amount*100"/>% damage as spell damage. Expires after <d ref="Behavior,SuperChargeCannon,Duration"/> seconds.<n/><n/><c val="78F0FF">Uses <d ref="Effect,BlitzerSuperchargePowerModify,VitalArray[Energy].Change*(-1)"/> power.</c>
 Button/Tooltip/BlitzerSuperchargeCost=
 Button/Tooltip/BlitzerSupercharged=Weapon is currently supercharged.
@@ -1113,7 +1115,7 @@ Button/Tooltip/SpitterVolatile=The Spitter deals <d ref="Effect,SpitterVolatileB
 Button/Tooltip/StagnatingBile=Launches a missile at the target location, stunning units in an area for <d ref="Behavior,StagnatingBileStun,Duration"/> seconds.
 Button/Tooltip/StaticDBurrow=Buries the structure underground. While burrowed, the structure is unable to attack, and cannot be seen without detection.
 Button/Tooltip/StaticDUnburrow=Unburies the structure, allowing it to resume a normal state.
-Button/Tooltip/StratumMissilePod=This weapon deals bonus damage equal to <d ref="Accumulator,EqualizerTargetLifeMaxBonus,Ratio*100" precision="1"/>% of the target's total maximum health. Caps at +<d ref="Accumulator,EqualizerTargetDamageBonus,MaxAccumulation"/>.
+Button/Tooltip/StratumMissilePod=This weapon deals bonus damage equal to <d ref="Accumulator,EqualizerTargetDamageBonus,Parameters[1]*100" precision="2"/>% of the target's total maximum health. Caps at +<d ref="Accumulator,EqualizerTargetDamageBonus,MaxAccumulation"/>.
 Button/Tooltip/Stratus=Anti-air defensive structure. <n/><n/><c val="ffff8a">Can attack air units.</c><n/>
 Button/Tooltip/SubterraneanSensors=While burrowed, the <c val="FFFF80">Mole</c> gains +<d ref="Behavior,MoleSubterraneanSensors,Modification.Radar"/> ground radar range.<n/><n/><c val="78F0FF">Drains <d ref="Effect,MoleSubterraneanSensorsPowerRate,RechargeVitalRate"/> power per second.</c>
 Button/Tooltip/SunkenWarren=<c val="FFFF80">Enables:</c><n/>- Krakens at the Avian Nest
@@ -1131,7 +1133,8 @@ Button/Tooltip/TorrentPlaceLunaMines=Launches <d ref="Effect,TorrentPlaceLunaMin
 Button/Tooltip/Umbra=Stealthed direct-fire combatant. Can be upgraded to use Stealth Compulsion.<n/><n/><c val="FFFF80">Can attack ground units.</c>
 Button/Tooltip/UmbraCloakingSystems=Maintains cloaking except after attacking. Weapon damage is increased while cloaked. Re-cloaks after <d ref="Behavior,UmbraStealth,Cost.Cooldown.TimeUse"/> seconds of not attacking.
 Button/Tooltip/UmbraDamageReduction=All non-melee damage taken by shields is reduced by <d ref="1-Behavior,UmbraDamageReduction,DamageResponse.ModifyFraction*100"/>% while moving.
-Button/Tooltip/UmbraShieldCompulsion=While active, instead of decloaking, attacks will cost <d ref="-Effect,UmbraStealthCompulsionModifyVital,VitalArray[Life].Change"/> life. Is activated for <d ref="Behavior,UmbraStealthCompulsion,Duration"/> seconds before automatically deactivating.
+Button/Tooltip/UmbraDisableStealthCompulsion=Disables Stealth Compulsion.
+Button/Tooltip/UmbraShieldCompulsion=While active, instead of decloaking, attacks will cost <d ref="-Effect,UmbraStealthCompulsionModifyVital,VitalArray[Life].Change"/> life. Is activated for <d ref="Behavior,UmbraStealthCompulsion,Duration"/> seconds before automatically deactivating. Can be refreshed.
 Button/Tooltip/Unfuse=Releases the Fuses inhabiting this unit, losing the associated bonus.
 Button/Tooltip/UnloadAllFerrion=Unloads all units currently loaded into the Ferrion's hold.
 Button/Tooltip/UpgradeAircraftPlating=Upgrades the armor of Genetron air units.
@@ -1251,26 +1254,6 @@ Effect/Name/AquilaNaniteGrenadePowerModify=Aquila - Nanite Grenade (Power Modify
 Effect/Name/AquilaSuperchargePowerEnum=Aquila - Supercharge (Power Enum)
 Effect/Name/AquilaSuperchargePowerModify=Aquila - Supercharge (Power Modify)
 Effect/Name/AquilaSuperchargePowerSet=Aquila - Supercharge (Power Set)
-Effect/Name/AssemblyArrayFinishAvengerData=Assembly Array Finish Avenger (Data)
-Effect/Name/AssemblyArrayFinishAvengerInit=Assembly Array Finish Avenger (Init)
-Effect/Name/AssemblyArrayFinishBadgerData=Assembly Array Finish Badger (Data)
-Effect/Name/AssemblyArrayFinishBadgerInit=Assembly Array Finish Badger (Init)
-Effect/Name/AssemblyArrayFinishBoarData=Assembly Array Finish Boar (Data)
-Effect/Name/AssemblyArrayFinishBoarInit=Assembly Array Finish Boar (Init)
-Effect/Name/AssemblyArrayFinishCourierData=Assembly Array Finish Courier (Data)
-Effect/Name/AssemblyArrayFinishCourierInit=Assembly Array Finish Courier (Init)
-Effect/Name/AssemblyArrayFinishHornetData=Assembly Array Finish Hornet (Data)
-Effect/Name/AssemblyArrayFinishHornetInit=Assembly Array Finish Hornet (Init)
-Effect/Name/AssemblyArrayFinishJupiterData=Assembly Array Finish Jupiter (Data)
-Effect/Name/AssemblyArrayFinishJupiterInit=Assembly Array Finish Jupiter (Init)
-Effect/Name/AssemblyArrayTrainAvengerData=Assembly Array Train Avenger (Data)
-Effect/Name/AssemblyArrayTrainBadgerData=Assembly Array Train Badger (Data)
-Effect/Name/AssemblyArrayTrainBoarData=Assembly Array Train Boar (Data)
-Effect/Name/AssemblyArrayTrainCourierData=Assembly Array Train Courier (Data)
-Effect/Name/AssemblyArrayTrainHornetData=Assembly Array Train Hornet (Data)
-Effect/Name/AssemblyArrayTrainJupiterData=Assembly Array Train Jupiter (Data)
-Effect/Name/AssemblyArrayTrainSet=Assembly Array Train (Set)
-Effect/Name/AssemblyArrayTrainSwitch=Assembly Array Train (Switch)
 Effect/Name/AstralConduitEchoAB=Astral Conduit - Echo (AB)
 Effect/Name/AstralConduitEchoAddCharge=Astral Conduit - Echo (AddCharge)
 Effect/Name/AstralConduitEchoDeathCP=Astral Conduit - Echo Death (CP)
@@ -1334,17 +1317,21 @@ Effect/Name/BlitzerChargeCannonDamage=Blitzer - Charge Cannon (Damage)
 Effect/Name/BlitzerChargeCannonInitSwitch=Blitzer - Charge Cannon (Init Switch)
 Effect/Name/BlitzerChargeCannonSuperChargeActivate=Blitzer - Charge Cannon (Super Charge Activate)
 Effect/Name/BlitzerChargeCannonSuperChargeActivateInit=Blitzer - Charge Cannon (Super Charge Activate Init)
+Effect/Name/BlitzerChargeCannonSuperChargeCooldown=Blitzer - Charge Cannon (Super Charge Cooldown)
 Effect/Name/BlitzerChargeCannonSuperChargeDamage=Blitzer - Charge Cannon (Super Charge Damage)
+Effect/Name/BlitzerChargeCannonSuperChargeFail=Blitzer - Charge Cannon (Super Charge Fail)
 Effect/Name/BlitzerOverdrive=Blitzer - Overdrive (Apply Behavior)
 Effect/Name/BlitzerOverdrivePowerEnum=Blitzer - Overdrive (Power Enum)
 Effect/Name/BlitzerOverdrivePowerModify=Blitzer - Overdrive (Power Modify)
 Effect/Name/BlitzerOverdrivePowerSet=Blitzer - Overdrive (Power Set)
+Effect/Name/BlitzerSuperChargePowerEnum=Blitzer - Super Charge (Power Enum)
+Effect/Name/BlitzerSuperChargePowerModify=Blitzer - Super Charge (Power Modify)
+Effect/Name/BlitzerSuperChargePowerSet=Blitzer - Super Charge (Power Set)
+Effect/Name/BlitzerSuperCharged=Blitzer - Super Charged
+Effect/Name/BlitzerSuperChargedRemove=Blitzer - Super Charged (Remove)
 Effect/Name/BlitzerSuperCharger=Blitzer - Super Charger
 Effect/Name/BlitzerSuperChargerPeriod=Blitzer - Super Charger (Period)
 Effect/Name/BlitzerSuperChargerRemove=Blitzer - Super Charger (Remove)
-Effect/Name/BlitzerSuperchargePowerEnum=Blitzer - Supercharge (Power Enum)
-Effect/Name/BlitzerSuperchargePowerModify=Blitzer - Supercharge (Power Modify)
-Effect/Name/BlitzerSuperchargePowerSet=Blitzer - Supercharge (Power Set)
 Effect/Name/BoarIgnitionBlastCreatePersistent=Boar - Ignition Blast (Create Persistent)
 Effect/Name/BoarIgnitionBlastDummy=Boar - Ignition Blast Dummy (Offset)
 Effect/Name/BoarIgnitionBlastDummyMove=Boar - Ignition Blast Dummy (Move)
@@ -1557,23 +1544,6 @@ Effect/Name/Extermination=Extermination
 Effect/Name/ExterminationImpact=Extermination
 Effect/Name/ExterminatorIncendiaryInfusionMarker=Exterminator - Incendiary Infusion Marker (Apply)
 Effect/Name/ExterminatorIncendiaryInfusionMarkerRemove=Exterminator - Incendiary Infusion Marker (Remove)
-Effect/Name/FabricatorFinishInciterData=Fabricator Finish Inciter (Data)
-Effect/Name/FabricatorFinishInciterInit=Fabricator Finish Inciter (Init)
-Effect/Name/FabricatorFinishMoleData=Fabricator Finish Mole (Data)
-Effect/Name/FabricatorFinishMoleInit=Fabricator Finish Mole (Init)
-Effect/Name/FabricatorFinishTeslaData=Fabricator Finish Tesla (Data)
-Effect/Name/FabricatorFinishTeslaInit=Fabricator Finish Tesla (Init)
-Effect/Name/FabricatorFinishTorrentData=Fabricator Finish Torrent (Data)
-Effect/Name/FabricatorFinishTorrentInit=Fabricator Finish Torrent (Init)
-Effect/Name/FabricatorFinishVirtusData=Fabricator Finish Virtus (Data)
-Effect/Name/FabricatorFinishVirtusInit=Fabricator Finish Virtus (Init)
-Effect/Name/FabricatorTrainInciterData=Fabricator Train Inciter (Data)
-Effect/Name/FabricatorTrainMoleData=Fabricator Train Mole (Data)
-Effect/Name/FabricatorTrainSet=Fabricator Train (Set)
-Effect/Name/FabricatorTrainSwitch=Fabricator Train (Switch)
-Effect/Name/FabricatorTrainTeslaData=Fabricator Train Tesla (Data)
-Effect/Name/FabricatorTrainTorrentData=Fabricator Train Torrent (Data)
-Effect/Name/FabricatorTrainVirtusData=Fabricator Train Virtus (Data)
 Effect/Name/FeedingPoolHealAuraCP=Heal Aura
 Effect/Name/FeedingPoolHealAuraMU=Heal Aura
 Effect/Name/FeedingPoolHealAuraSA=Heal Aura
@@ -1903,32 +1873,6 @@ Effect/Name/Lunge=Lunge
 Effect/Name/LynxCannon=Lynx Cannon
 Effect/Name/LynxCannonImpact=Lynx Cannon
 Effect/Name/MakePrecursorCaster=Make Precursor Caster
-Effect/Name/ManufacturerFinishAquilaData=Manufacturer Finish Aquila (Data)
-Effect/Name/ManufacturerFinishAquilaInit=Manufacturer Finish Aquila (Init)
-Effect/Name/ManufacturerFinishBlitzerData=Manufacturer Finish Blitzer (Data)
-Effect/Name/ManufacturerFinishBlitzerInit=Manufacturer Finish Blitzer (Init)
-Effect/Name/ManufacturerFinishEqualizerData=Manufacturer Finish Equalizer (Data)
-Effect/Name/ManufacturerFinishEqualizerInit=Manufacturer Finish Equalizer (Init)
-Effect/Name/ManufacturerFinishFixerData=Manufacturer Finish Fixer (Data)
-Effect/Name/ManufacturerFinishFixerInit=Manufacturer Finish Fixer (Init)
-Effect/Name/ManufacturerFinishModeSwitchOverclockData=Manufacturer Finish Mode Switch Overclock (Data)
-Effect/Name/ManufacturerFinishModeSwitchOverclockDataMode=Manufacturer Finish Mode Switch Overclock (Data Mode)
-Effect/Name/ManufacturerFinishModeSwitchOverclockInit=Manufacturer Finish Mode Switch Overclock (Init)
-Effect/Name/ManufacturerFinishModeSwitchPerformanceDataMode=Manufacturer Finish Mode Switch Performance (Data Mode)
-Effect/Name/ManufacturerFinishModeSwitchStandardData=Manufacturer Finish Mode Switch Standard (Data)
-Effect/Name/ManufacturerFinishModeSwitchStandardDataMode=Manufacturer Finish Mode Switch Standard (Data Mode)
-Effect/Name/ManufacturerFinishModeSwitchStandardInit=Manufacturer Finish Mode Switch Standard (Init)
-Effect/Name/ManufacturerFinishSpitfireData=Manufacturer Finish Spitfire (Data)
-Effect/Name/ManufacturerFinishSpitfireInit=Manufacturer Finish Spitfire (Init)
-Effect/Name/ManufacturerModeSwitchOverclockData=Manufacturer Mode Switch Overclock (Data)
-Effect/Name/ManufacturerModeSwitchStandardData=Manufacturer Mode Switch Standard (Data)
-Effect/Name/ManufacturerTrainAquilaData=Manufacturer Train Aquila (Data)
-Effect/Name/ManufacturerTrainBlitzerData=Manufacturer Train Blitzer (Data)
-Effect/Name/ManufacturerTrainEqualizerData=Manufacturer Train Equalizer (Data)
-Effect/Name/ManufacturerTrainFixerData=Manufacturer Train Fixer (Data)
-Effect/Name/ManufacturerTrainSet=Manufacturer Train (Set)
-Effect/Name/ManufacturerTrainSpitfireData=Manufacturer Train Spitfire (Data)
-Effect/Name/ManufacturerTrainSwitch=Manufacturer Train (Switch)
 Effect/Name/MassiveSporeAA=Massive Spore
 Effect/Name/MassiveSporeAAImpact=Massive Spore
 Effect/Name/MassiveSporeAG=Massive Spore
@@ -2240,7 +2184,6 @@ Effect/Name/ShieldAuraAF=Shield Aura
 Effect/Name/ShieldAuraCP=Shield Aura
 Effect/Name/ShieldAuraTS=Shield Aura
 Effect/Name/SpeedCloak=Speed Cloak
-Effect/Name/SpitfireCounterStabilization=Spitfire - Counter Stabilization
 Effect/Name/SpitfireDeadeyeModuleApplyBehavior=Spitfire - Deadeye Module (Apply Behavior)
 Effect/Name/SpitfireDeadeyeModulePowerEnum=Spitfire - Deadeye Module (Power Enum)
 Effect/Name/SpitfireDeadeyeModulePowerModify=Spitfire - Deadeye Module (Power Modify)
@@ -2290,17 +2233,13 @@ Effect/Name/StingerDrillLMImpact=Stinger Drill
 Effect/Name/StingerDrillSw=Stinger Drill
 Effect/Name/StingerDrills=Stinger Drill
 Effect/Name/StratumMissilePod=Equalizer - Stratum Missile Pod (Launch Missile)
-Effect/Name/StratumMissilePodBonus=Equalizer - Stratum Missile Pod (Bonus)
 Effect/Name/StratumMissilePodDMG=Equalizer - Stratum Missile Pod (Damage)
-Effect/Name/StratumMissilePodImpact=Equalizer - Stratum Missile Pod (Impact Set)
 Effect/Name/StratusWeaponCP=Stratus - Weapon (CP)
 Effect/Name/StratusWeaponDMG=Stratus - Weapon (DMG)
 Effect/Name/StratusWeaponDummy=Stratus - Weapon Dummy
 Effect/Name/StratusWeaponLMLeft=Stratus - Weapon (LMLeft)
 Effect/Name/StratusWeaponLMRight=Stratus - Weapon (LMRight)
 Effect/Name/SuicideRemoveCaster=Suicide Remove Caster
-Effect/Name/Supercharge=Supercharge (Apply Behavior)
-Effect/Name/SuperchargeRB=Supercharge (Remove Behavior)
 Effect/Name/SupplimentationBuff=Supplimentation Output
 Effect/Name/SupplimentationOutputSA=Supplimentation Output
 Effect/Name/SupportEffectsS=Support Effects
@@ -2401,6 +2340,7 @@ Effect/Name/UmbraStealthCompulsion=Umbra - Stealth Compulsion (Apply Behavior)
 Effect/Name/UmbraStealthCompulsionBuffInit=Umbra - Stealth Compulsion (Buff Init)
 Effect/Name/UmbraStealthCompulsionModifyCooldown=Umbra - Stealth Compulsion (Modify Cooldown)
 Effect/Name/UmbraStealthCompulsionModifyVital=Umbra - Stealth Compulsion (Modify Vital)
+Effect/Name/UmbraStealthCompulsionRemove=Umbra - Stealth Compulsion (Remove)
 Effect/Name/UmbraStealthSuppressionModifyCooldown=Umbra - Stealth Suppression (Modify Cooldown)
 Effect/Name/UmbraStealthSuppressionSwitch=Umbra - Stealth Suppression (Switch)
 Effect/Name/VengeanceMissile=Vengeance Missile

@@ -212,6 +212,9 @@
         <MaxScale value="2.500000"/>
         <AutoScaleFactor value="0.800000"/>
     </CActorModel>
+    <CActorBeamSimple id="BlitzerAttackBeam" parent="BeamSimpleAnimationStyleOneShot">
+        <Macros value="ActionTargetTeleportDestroy"/>
+    </CActorBeamSimple>
     <CActorModel id="BurningHeat" parent="ModelAnimationStyleContinuousUNIT">
         <On Terms="Behavior.HeatBurning.On" Send="Create"/>
         <On Terms="Behavior.HeatBurning.Off" Send="AnimBracketStop BSD"/>
@@ -251,6 +254,9 @@
     </CActorSound>
     <CActorRange id="PlaceLunaMinesRange" parent="RangeAbilStandard" abil="TorrentLunaMines"/>
     <CActorSound id="LunaMineDeath" parent="SoundOneShotScion" Effect="TorrentLunaMineMissileImpactSet"/>
+    <CActorBeamSimple id="BlitzerSuperChargedAttackBeam" parent="BeamSimpleAnimationStyleOneShot">
+        <Macros value="ActionTargetTeleportDestroy"/>
+    </CActorBeamSimple>
     <CActorTurret id="TorrentTurret">
         <On Terms="TurretEnable.Torrent" Send="Create"/>
     </CActorTurret>
@@ -2403,7 +2409,7 @@
         <Magnitude value="4.000000,2.000000"/>
         <Radius value="0.400000,0.200000"/>
     </CActorForceSphere>
-    <CActorForceConeRoundedEnd id="BlitzerSuperchargeAttackForce">
+    <CActorForceConeRoundedEnd id="BlitzerSuperChargedAttackForce">
         <HostSiteOps Ops="SOpIncomingDirect1Dot5 SOpMoveDownByDot25"/>
         <Receiver Subject="::Main"/>
         <Duration value="0.200000"/>
@@ -2523,12 +2529,15 @@
         <HostSiteOps Ops="SOpAttachWeapon SOpPitchTeslaFX"/>
         <Model value="TelsaChargeConstructionEffect"/>
     </CActorModel>
-    <CActorAction id="BlitzerSuperchargeAttack" parent="GenericAttack" effectAttack="BlitzerChargeCannonSuperChargeDamage">
+    <CActorAction id="BlitzerSuperChargedAttack" parent="GenericAttack" effectAttack="BlitzerChargeCannonSuperChargeDamage">
         <LaunchAttachQuery Methods="AMFilterWeapon02"/>
-        <LaunchAssets Sound="Blitzer_AttackLaunch_SuperCharged"/>
-        <ImpactMap index="None" Scale="0.400000" Sound="Missile_Basic_Impact_Sweetner" ModelReaction="BlitzerAttackLeftImpactReaction"/>
-        <ImpactMap index="Shield" Sound="BlitzerAttackLeftImpactShield" ModelReaction="BlitzerAttackLeftImpactReactionShield"/>
-        <ImpactPhysics Name="SuperChargeCannonImpact" MatchKeys="Basic" Physics="BlitzerSuperchargeAttackForce"/>
+        <LaunchAssets Model="BlitzerSuperchargeAttackLaunch" Sound="Blitzer_AttackLaunch_SuperCharged"/>
+        <ImpactMap index="None" Sound="Missile_Basic_Impact_Sweetner"/>
+        <ImpactPhysics Name="SuperChargeCannonImpact" MatchKeys="Basic" Physics="BlitzerSuperChargedAttackForce"/>
+        <ImpactSiteOps Ops="SOpAttachHarness SOpAttachVolumeNoVizEnhance SOpForwardLaunchGuide"/>
+        <AcquisitionYawHalfArc value="10.000000"/>
+        <AcquisitionPitchHalfArc value="15.000000"/>
+        <AccuracyHalfArc value="5.000000"/>
     </CActorAction>
     <CActorSound id="BlitzerSuperChargeSound" parent="SoundOneShotScion" Behavior="SuperChargeCannon">
         <HostSiteOps Ops="SOpTargetPoint"/>
@@ -3518,15 +3527,14 @@
         <Aliases value="_UnitMedium"/>
     </CActorUnit>
     <CActorAction id="BlitzerAttack" parent="GenericAttack" effectAttack="BlitzerChargeCannonDamage">
-        <LaunchAttachQuery Methods="AMFilterBlitzer"/>
+        <LaunchAttachQuery Methods="AMFilterWeapon02"/>
         <LaunchAssets AnimProps="Stand,00" Sound="Blitzer_AttackLaunch"/>
-        <Beam value="BlitzerAttackLeftBeam"/>
-        <Missile value="BlitzerAttackLeftMissile"/>
-        <ImpactMap index="None" Scale="0.400000" Sound="Missile_Basic_Impact_Sweetner" ModelReaction="BlitzerAttackLeftImpactReaction"/>
-        <ImpactMap index="Shield" Sound="BlitzerAttackLeftImpactShield" ModelReaction="BlitzerAttackLeftImpactReactionShield"/>
-        <DamageMap index="None" Model="BlitzerAttackLeftDamage" Sound="BlitzerAttackLeftDamage" ModelReaction="BlitzerAttackLeftDamageReaction"/>
-        <DamageMap index="Shield" Sound="BlitzerAttackLeftDamageShield" ModelReaction="BlitzerAttackLeftDamageReactionShield"/>
+        <ImpactMap index="None" Sound="Missile_Basic_Impact_Sweetner"/>
         <ImpactPhysics Name="ChargeCannonImpact" MatchKeys="Basic" Physics="BlitzerAttackForce"/>
+        <ImpactSiteOps Ops="SOpAttachHarness SOpAttachVolumeNoVizEnhance SOpForwardLaunchGuide"/>
+        <AcquisitionYawHalfArc value="10.000000"/>
+        <AcquisitionPitchHalfArc value="15.000000"/>
+        <AccuracyHalfArc value="5.000000"/>
     </CActorAction>
     <CActorSound id="CloakOff">
         <On Terms="Behavior.SpeedCloak.Off" Send="Create"/>

@@ -3,6 +3,138 @@
     <CAccumulatorConstant id="AddDot5">
         <Amount value="0.5"/>
     </CAccumulatorConstant>
+    <CAccumulatorConstant id="Add1">
+        <Amount value="1"/>
+    </CAccumulatorConstant>
+    <CAccumulatorSwitch id="EqualizerTargetDamageBonusSwitch">
+        <CaseArray Validator="TargetNotDead" Accumulator="EqualizerTargetDamageBonus"/>
+    </CAccumulatorSwitch>
+    <CAccumulatorConstant id="MultiplyBy0">
+        <ApplicationRule value="Multiply"/>
+    </CAccumulatorConstant>
+    <CAccumulatorConstant id="MultiplyBy2">
+        <ApplicationRule value="Multiply"/>
+        <Amount value="2"/>
+    </CAccumulatorConstant>
+    <CAccumulatorConstant id="MultiplyByNeg1">
+        <ApplicationRule value="Multiply"/>
+        <Amount value="-1"/>
+    </CAccumulatorConstant>
+    <CAccumulatorConstant id="DivideBy2">
+        <ApplicationRule value="Multiply"/>
+        <Amount value="0.5"/>
+    </CAccumulatorConstant>
+    <CAccumulatorConstant id="DivideBy4">
+        <ApplicationRule value="Multiply"/>
+        <Amount value="0.25"/>
+    </CAccumulatorConstant>
+    <CAccumulatorVitals id="LifeMaxCaster">
+        <Ratio value="1"/>
+        <ModificationType value="PerUnitMaxVital"/>
+    </CAccumulatorVitals>
+    <CAccumulatorVitals id="LifeMaxTarget">
+        <Ratio value="1"/>
+        <UnitSource Value="Target"/>
+        <ModificationType value="PerUnitMaxVital"/>
+    </CAccumulatorVitals>
+    <CAccumulatorVitals id="LifeCurrentCaster">
+        <Ratio value="1"/>
+        <ModificationType value="PerUnit"/>
+    </CAccumulatorVitals>
+    <CAccumulatorVitals id="LifeCurrentTarget">
+        <Ratio value="1"/>
+        <UnitSource Value="Target"/>
+        <ModificationType value="PerUnit"/>
+    </CAccumulatorVitals>
+    <CAccumulatorArithmetic id="LifeFractionCaster">
+        <Parameters value="0">
+            <AccumulatorArray value="LifeCurrentCaster"/>
+        </Parameters>
+        <Parameters value="0">
+            <AccumulatorArray value="LifeMaxCaster"/>
+        </Parameters>
+        <Operation value="Divide"/>
+    </CAccumulatorArithmetic>
+    <CAccumulatorVitals id="ShieldsMaxCaster">
+        <Ratio value="1"/>
+        <VitalType value="Shields"/>
+        <ModificationType value="PerUnitMaxVital"/>
+    </CAccumulatorVitals>
+    <CAccumulatorVitals id="ShieldsMaxTarget">
+        <Ratio value="1"/>
+        <VitalType value="Shields"/>
+        <UnitSource Value="Target"/>
+        <ModificationType value="PerUnitMaxVital"/>
+    </CAccumulatorVitals>
+    <CAccumulatorSwitch id="ShieldsMaxTargetSwitch">
+        <CaseArray Validator="hasShields" Accumulator="ShieldsMaxTarget"/>
+    </CAccumulatorSwitch>
+    <CAccumulatorVitals id="ShieldsCurrentCaster">
+        <Ratio value="1"/>
+        <VitalType value="Shields"/>
+        <ModificationType value="PerUnit"/>
+    </CAccumulatorVitals>
+    <CAccumulatorVitals id="ShieldsCurrentTarget">
+        <Ratio value="1"/>
+        <VitalType value="Shields"/>
+        <UnitSource Value="Target"/>
+        <ModificationType value="PerUnit"/>
+    </CAccumulatorVitals>
+    <CAccumulatorSwitch id="ShieldsCurrentTargetSwitch">
+        <CaseArray Validator="hasShields" Accumulator="ShieldsCurrentTarget"/>
+    </CAccumulatorSwitch>
+    <CAccumulatorArithmetic id="ShieldsFractionCaster">
+        <Parameters value="0">
+            <AccumulatorArray value="ShieldsCurrentCaster"/>
+        </Parameters>
+        <Parameters value="0">
+            <AccumulatorArray value="ShieldsMaxCaster"/>
+        </Parameters>
+        <Operation value="Divide"/>
+    </CAccumulatorArithmetic>
+    <CAccumulatorArithmetic id="ShieldsFractionTarget">
+        <Parameters value="0">
+            <AccumulatorArray value="ShieldsCurrentTarget"/>
+        </Parameters>
+        <Parameters value="0">
+            <AccumulatorArray value="ShieldsMaxTarget"/>
+        </Parameters>
+        <Operation value="Divide"/>
+    </CAccumulatorArithmetic>
+    <CAccumulatorVitals id="EnergyMaxCaster">
+        <Ratio value="1"/>
+        <VitalType value="Energy"/>
+        <ModificationType value="PerUnitMaxVital"/>
+    </CAccumulatorVitals>
+    <CAccumulatorVitals id="EnergyMaxTarget">
+        <Ratio value="1"/>
+        <VitalType value="Energy"/>
+        <UnitSource Value="Target"/>
+        <ModificationType value="PerUnitMaxVital"/>
+    </CAccumulatorVitals>
+    <CAccumulatorVitals id="EnergyCurrentCaster">
+        <Ratio value="1"/>
+        <VitalType value="Energy"/>
+        <ModificationType value="PerUnit"/>
+    </CAccumulatorVitals>
+    <CAccumulatorVitals id="EnergyCurrentTarget">
+        <Ratio value="1"/>
+        <VitalType value="Energy"/>
+        <UnitSource Value="Target"/>
+        <ModificationType value="PerUnit"/>
+    </CAccumulatorVitals>
+    <CAccumulatorEffectAmount id="DamageInherited">
+        <AmountType value="DamageInherited"/>
+    </CAccumulatorEffectAmount>
+    <CAccumulatorUserData id="DefaultDataAdd"/>
+    <CAccumulatorUserData id="Scion_DisplayCooldown">
+        <MinAccumulation value="0"/>
+        <Key value="DisplayCooldown"/>
+    </CAccumulatorUserData>
+    <CAccumulatorUserData id="HeatSourceDataAdd">
+        <Key value="Heat"/>
+        <BehaviorScope Value="Source" Behavior="Heat"/>
+    </CAccumulatorUserData>
     <CAccumulatorUserData id="CasterAttackCooldownBase">
         <Key value="BeamWeaponCooldownBase"/>
     </CAccumulatorUserData>
@@ -79,100 +211,10 @@
         <ApplicationRule value="Multiply"/>
         <Behavior value="NaniteEmitterBuff"/>
     </CAccumulatorBehavior>
-    <CAccumulatorArithmetic id="BadgerRemainingDamage">
-        <Parameters value="0">
-            <AccumulatorArray value="EnergyDataAdd"/>
-            <AccumulatorArray value="MultiplyByNeg1"/>
-        </Parameters>
-    </CAccumulatorArithmetic>
-    <CAccumulatorConstant id="Add1">
-        <Amount value="1"/>
-    </CAccumulatorConstant>
-    <CAccumulatorConstant id="DivideBy4">
-        <ApplicationRule value="Multiply"/>
-        <Amount value="0.25"/>
-    </CAccumulatorConstant>
-    <CAccumulatorUserData id="HeatUserData">
-        <Key value="Heat"/>
-        <FallbackValue value="-1"/>
-        <BehaviorScope Value="Source" Behavior="Heat"/>
+    <CAccumulatorUserData id="EnergyDataAdd">
+        <Key value="Energy"/>
     </CAccumulatorUserData>
-    <CAccumulatorSwitch id="LunaMineEnergyDrain">
-        <CaseArray Validator="SourceIsMoving" Accumulator="LunaMineDrainRateMovement"/>
-        <CaseDefault value="LunaMineDrainRateNormal"/>
-    </CAccumulatorSwitch>
-    <CAccumulatorArithmetic id="LunaMineMissileOverkill">
-        <Parameters value="0">
-            <AccumulatorArray value="LunaMineMissileStackCount"/>
-            <AccumulatorArray value="LunaMineMissileDamageMult"/>
-        </Parameters>
-        <Parameters value="0">
-            <AccumulatorArray value="LifeCurrentTarget"/>
-        </Parameters>
-        <Parameters value="0">
-            <AccumulatorArray value="ShieldsCurrentTargetSwitch"/>
-        </Parameters>
-        <Operation value="Subtract"/>
-    </CAccumulatorArithmetic>
-    <CAccumulatorBehavior id="LunaMineMissileStackCount">
-        <Behavior value="LunaMineMissileData"/>
-        <UnitSource Value="Target"/>
-    </CAccumulatorBehavior>
-    <CAccumulatorConstant id="LunaMineMissileDamageMult">
-        <ApplicationRule value="Multiply"/>
-        <Amount value="60"/>
-    </CAccumulatorConstant>
-    <CAccumulatorVitals id="LifeCurrentTarget">
-        <Ratio value="1"/>
-        <UnitSource Value="Target"/>
-        <ModificationType value="PerUnit"/>
-    </CAccumulatorVitals>
-    <CAccumulatorArithmetic id="LifeFractionCaster">
-        <Parameters value="0">
-            <AccumulatorArray value="LifeCurrentCaster"/>
-        </Parameters>
-        <Parameters value="0">
-            <AccumulatorArray value="LifeMaxCaster"/>
-        </Parameters>
-        <Operation value="Divide"/>
-    </CAccumulatorArithmetic>
-    <CAccumulatorVitals id="LifeMaxCaster">
-        <Ratio value="1"/>
-        <ModificationType value="PerUnitMaxVital"/>
-    </CAccumulatorVitals>
-    <CAccumulatorArithmetic id="EqualizerTargetDamageBonus">
-        <MinAccumulation value="0"/>
-        <MaxAccumulation value="28"/>
-        <Parameters value="-0.01">
-            <AccumulatorArray value="EqualizerTargetLifeMaxBonus"/>
-        </Parameters>
-        <Parameters value="0">
-            <AccumulatorArray value="EqualizerTargetShieldMaxSwitch"/>
-        </Parameters>
-    </CAccumulatorArithmetic>
-    <CAccumulatorSwitch id="EqualizerTargetShieldMaxSwitch">
-        <CaseArray Validator="IsShieldCapable" Accumulator="EqualizerTargetShieldMaxBonus"/>
-    </CAccumulatorSwitch>
-    <CAccumulatorBehavior id="FuseFusionStacksOnCaster">
-        <Behavior value="FuseFused"/>
-    </CAccumulatorBehavior>
-    <CAccumulatorBehavior id="FuseFusionStacksOnTarget">
-        <Behavior value="FuseFused"/>
-        <UnitSource Value="Target"/>
-    </CAccumulatorBehavior>
-    <CAccumulatorSwitch id="GPIEMode0">
-        <CaseArray Validator="CasterGPIEDataModeIs0"/>
-        <CaseDefault value="MultiplyBy0"/>
-    </CAccumulatorSwitch>
-    <CAccumulatorSwitch id="GPIEMode1">
-        <CaseArray Validator="CasterGPIEDataModeIs1"/>
-        <CaseDefault value="MultiplyBy0"/>
-    </CAccumulatorSwitch>
-    <CAccumulatorSwitch id="GPIEMode2">
-        <CaseArray Validator="CasterGPIEDataModeIs2"/>
-        <CaseDefault value="MultiplyBy0"/>
-    </CAccumulatorSwitch>
-    <CAccumulatorArithmetic id="GenetronStructureEnergyLossArith">
+    <CAccumulatorArithmetic id="EnergyDamage">
         <Parameters value="0">
             <AccumulatorArray value="EnergyCurrentCaster"/>
         </Parameters>
@@ -181,72 +223,6 @@
         </Parameters>
         <Operation value="Subtract"/>
     </CAccumulatorArithmetic>
-    <CAccumulatorDistance id="InciterWeaponTrackingDistance">
-        <StartLocation Effect="InciterHalifaxGrenadesInit" Value="TargetUnit"/>
-        <EndLocation Effect="InciterHalifaxGrenadesCUSet" Value="TargetUnit"/>
-        <Scale value="9"/>
-    </CAccumulatorDistance>
-    <CAccumulatorVitals id="LifeCurrentCaster">
-        <Ratio value="1"/>
-        <ModificationType value="PerUnit"/>
-    </CAccumulatorVitals>
-    <CAccumulatorSwitch id="ShieldsCurrentTargetSwitch">
-        <CaseArray Validator="hasShields" Accumulator="ShieldsCurrentTarget"/>
-    </CAccumulatorSwitch>
-    <CAccumulatorConstant id="SpitfireCounterStabilizationBurstPeriodCount">
-        <Amount value="3"/>
-    </CAccumulatorConstant>
-    <CAccumulatorSwitch id="SpitfireCounterStabilizationBurst1">
-        <CaseArray Validator="SpitfireLifeBurst1" Accumulator="SpitfireCounterStabilizationBurstPeriodCount"/>
-    </CAccumulatorSwitch>
-    <CAccumulatorSwitch id="SpitfireCounterStabilizationBurst2">
-        <CaseArray Validator="SpitfireLifeBurst2" Accumulator="SpitfireCounterStabilizationBurstPeriodCount"/>
-    </CAccumulatorSwitch>
-    <!--Defines the most extreme value applied to the Spitfire's attack speed additive factor.-->
-    <CAccumulatorConstant id="SpitfireCounterStabilizationMax">
-        <ApplicationRule value="Multiply"/>
-        <Amount value="-0.6"/>
-    </CAccumulatorConstant>
-    <!--Defines the health fraction at which the Spitfire's additive attack speed factor should become a non-zero value.-->
-    <CAccumulatorConstant id="SpitfireCounterStabilizationThreshold">
-        <Amount value="0.875"/>
-    </CAccumulatorConstant>
-    <CAccumulatorArithmetic id="SpitfireCounterStabilization">
-        <MinAccumulation value="-1"/>
-        <MaxAccumulation value="0"/>
-        <Parameters value="0">
-            <AccumulatorArray value="LifeFractionCaster"/>
-            <AccumulatorArray value="SpitfireCounterStabilzationFractionCalc"/>
-        </Parameters>
-        <Parameters value="1">
-            <AccumulatorArray value="SpitfireCounterStabilizationMax"/>
-        </Parameters>
-    </CAccumulatorArithmetic>
-    <CAccumulatorArithmetic id="SpitfireCounterStabilzationFractionCalc">
-        <ApplicationRule value="Multiply"/>
-        <Parameters value="-1">
-            <AccumulatorArray value="SpitfireCounterStabilizationMax"/>
-        </Parameters>
-        <Parameters value="0">
-            <AccumulatorArray value="SpitfireCounterStabilizationThreshold"/>
-        </Parameters>
-        <Operation value="Divide"/>
-    </CAccumulatorArithmetic>
-    <CAccumulatorArithmetic id="SpitterWeaponTrackingArithmetic">
-        <ApplicationRule value="Multiply"/>
-        <Parameters value="10"/>
-        <Parameters value="1">
-            <AccumulatorArray value="SpitterWeaponTrackingDistance3"/>
-        </Parameters>
-        <Operation value="Divide"/>
-        <MinAccumulation value="0.75"/>
-        <MaxAccumulation value="4"/>
-    </CAccumulatorArithmetic>
-    <CAccumulatorDistance id="SpitterWeaponTrackingDistance">
-        <StartLocation Effect="SpitterSpitterSpores" Value="TargetUnit"/>
-        <EndLocation Effect="SpitterSpitterSporesCUSet" Value="TargetUnit"/>
-        <Scale value="10"/>
-    </CAccumulatorDistance>
     <CAccumulatorBehavior id="MaximumPowerGeneratorStackCaster">
         <Behavior value="MaximumPowerGenerator"/>
     </CAccumulatorBehavior>
@@ -295,60 +271,6 @@
     <CAccumulatorBehavior id="MaximumPowerRelayTowerStackCaster">
         <Behavior value="MaximumPowerRelayTower"/>
     </CAccumulatorBehavior>
-    <CAccumulatorUserData id="EnergyDataAdd">
-        <Key value="Energy"/>
-    </CAccumulatorUserData>
-    <CAccumulatorEffectAmount id="DamageInherited">
-        <AmountType value="DamageInherited"/>
-    </CAccumulatorEffectAmount>
-    <CAccumulatorUserData id="DefaultDataAdd"/>
-    <CAccumulatorConstant id="DivideBy2">
-        <ApplicationRule value="Multiply"/>
-        <Amount value="0.5"/>
-    </CAccumulatorConstant>
-    <CAccumulatorUserData id="EnergyNeededDataAdd">
-        <Key value="EnergyNeeded"/>
-        <BehaviorScope Behavior="GenetronProductionInternalEnergy"/>
-    </CAccumulatorUserData>
-    <CAccumulatorArithmetic id="GenetronCheckInternalEnergy">
-        <Parameters value="0">
-            <AccumulatorArray value="InternalEnergyDataAdd"/>
-        </Parameters>
-        <Parameters value="0">
-            <AccumulatorArray value="EnergyNeededDataAdd"/>
-        </Parameters>
-        <Operation value="Subtract"/>
-    </CAccumulatorArithmetic>
-    <CAccumulatorSwitch id="GenetronProductionModePerformance">
-        <CaseArray Validator="CasterProductionModeIsPerformance"/>
-        <CaseDefault value="MultiplyBy0"/>
-    </CAccumulatorSwitch>
-    <CAccumulatorSwitch id="GenetronProductionModeStandard">
-        <CaseArray Validator="CasterProductionModeIsStandard"/>
-        <CaseDefault value="MultiplyBy0"/>
-    </CAccumulatorSwitch>
-    <CAccumulatorSwitch id="GenetronProductionModeOverclock">
-        <CaseArray Validator="CasterProductionModeIsOverclock"/>
-        <CaseDefault value="MultiplyBy0"/>
-    </CAccumulatorSwitch>
-    <CAccumulatorArithmetic id="GenetronTrainEnergyRemaining">
-        <Parameters value="0">
-            <AccumulatorArray value="EnergyNeededDataAdd"/>
-        </Parameters>
-        <Parameters value="0">
-            <AccumulatorArray value="InternalEnergyDataAdd"/>
-        </Parameters>
-        <Operation value="Subtract"/>
-    </CAccumulatorArithmetic>
-    <CAccumulatorArithmetic id="GenetronTrainEnergyRequested">
-        <Parameters value="0">
-            <AccumulatorArray value="EnergyCurrentTarget"/>
-        </Parameters>
-        <Parameters value="0">
-            <AccumulatorArray value="GenetronTrainEnergyRemaining"/>
-        </Parameters>
-        <Operation value="Subtract"/>
-    </CAccumulatorArithmetic>
     <CAccumulatorBehavior id="OverclockBehaviorDurationRemaining">
         <Behavior value="Scion_Overclock"/>
         <Type value="DurationRemaining"/>
@@ -359,252 +281,73 @@
         <Type value="DurationRemaining"/>
         <UnitSource Value="Target"/>
     </CAccumulatorBehavior>
-    <CAccumulatorArithmetic id="ProductionModeSwitchOverclock">
-        <Parameters value="50">
-            <AccumulatorArray value="GPIEMode0"/>
-        </Parameters>
+    <CAccumulatorArithmetic id="PowershellRemainingDamage">
         <Parameters value="0">
-            <AccumulatorArray value="GPIEMode1"/>
+            <AccumulatorArray value="EnergyDataAdd"/>
         </Parameters>
+        <Operation value="Subtract"/>
     </CAccumulatorArithmetic>
-    <CAccumulatorArithmetic id="ProductionEnergyTesla">
-        <Parameters value="40">
-            <AccumulatorArray value="GenetronProductionModePerformance"/>
-        </Parameters>
-        <Parameters value="80">
-            <AccumulatorArray value="GenetronProductionModeStandard"/>
-        </Parameters>
-        <Parameters value="160">
-            <AccumulatorArray value="GenetronProductionModeOverclock"/>
-        </Parameters>
-    </CAccumulatorArithmetic>
-    <CAccumulatorArithmetic id="ProductionEnergySpitfire">
-        <Parameters value="40">
-            <AccumulatorArray value="GenetronProductionModeStandard"/>
-        </Parameters>
-        <Parameters value="80">
-            <AccumulatorArray value="GenetronProductionModeOverclock"/>
-        </Parameters>
-    </CAccumulatorArithmetic>
-    <CAccumulatorConstant id="MultiplyBy0">
-        <ApplicationRule value="Multiply"/>
+    <CAccumulatorConstant id="SpitfireCounterStabilizationBurstPeriodCount">
+        <Amount value="3"/>
     </CAccumulatorConstant>
-    <CAccumulatorConstant id="MultiplyBy2">
-        <ApplicationRule value="Multiply"/>
-        <Amount value="2"/>
-    </CAccumulatorConstant>
-    <CAccumulatorConstant id="MultiplyByNeg1">
-        <ApplicationRule value="Multiply"/>
-        <Amount value="-1"/>
-    </CAccumulatorConstant>
-    <CAccumulatorArithmetic id="ProductionEnergyFixer">
-        <Parameters value="40">
-            <AccumulatorArray value="GenetronProductionModeStandard"/>
-        </Parameters>
-        <Parameters value="80">
-            <AccumulatorArray value="GenetronProductionModeOverclock"/>
-        </Parameters>
-    </CAccumulatorArithmetic>
-    <CAccumulatorArithmetic id="ProductionEnergyEqualizer">
-        <Parameters value="40">
-            <AccumulatorArray value="GenetronProductionModeStandard"/>
-        </Parameters>
-        <Parameters value="80">
-            <AccumulatorArray value="GenetronProductionModeOverclock"/>
-        </Parameters>
-    </CAccumulatorArithmetic>
-    <CAccumulatorArithmetic id="ProductionEnergyAquila">
-        <Parameters value="25">
-            <AccumulatorArray value="GenetronProductionModePerformance"/>
-        </Parameters>
-        <Parameters value="50">
-            <AccumulatorArray value="GenetronProductionModeStandard"/>
-        </Parameters>
-        <Parameters value="100">
-            <AccumulatorArray value="GenetronProductionModeOverclock"/>
-        </Parameters>
-    </CAccumulatorArithmetic>
-    <CAccumulatorArithmetic id="ProductionEnergyBadger">
-        <Parameters value="50">
-            <AccumulatorArray value="GenetronProductionModePerformance"/>
-        </Parameters>
-        <Parameters value="100">
-            <AccumulatorArray value="GenetronProductionModeStandard"/>
-        </Parameters>
-        <Parameters value="200">
-            <AccumulatorArray value="GenetronProductionModeOverclock"/>
-        </Parameters>
-    </CAccumulatorArithmetic>
-    <CAccumulatorArithmetic id="ProductionEnergyVirtus">
-        <Parameters value="30">
-            <AccumulatorArray value="GenetronProductionModePerformance"/>
-        </Parameters>
-        <Parameters value="60">
-            <AccumulatorArray value="GenetronProductionModeStandard"/>
-        </Parameters>
-        <Parameters value="120">
-            <AccumulatorArray value="GenetronProductionModeOverclock"/>
-        </Parameters>
-    </CAccumulatorArithmetic>
-    <CAccumulatorArithmetic id="ProductionEnergyTorrent">
-        <Parameters value="35">
-            <AccumulatorArray value="GenetronProductionModeStandard"/>
-        </Parameters>
-        <Parameters value="70">
-            <AccumulatorArray value="GenetronProductionModeOverclock"/>
-        </Parameters>
-    </CAccumulatorArithmetic>
-    <CAccumulatorArithmetic id="ProductionEnergyMole">
-        <Parameters value="25">
-            <AccumulatorArray value="GenetronProductionModePerformance"/>
-        </Parameters>
-        <Parameters value="50">
-            <AccumulatorArray value="GenetronProductionModeStandard"/>
-        </Parameters>
-        <Parameters value="100">
-            <AccumulatorArray value="GenetronProductionModeOverclock"/>
-        </Parameters>
-    </CAccumulatorArithmetic>
-    <CAccumulatorArithmetic id="ProductionEnergyInciter">
-        <Parameters value="25">
-            <AccumulatorArray value="GenetronProductionModePerformance"/>
-        </Parameters>
-        <Parameters value="50">
-            <AccumulatorArray value="GenetronProductionModeStandard"/>
-        </Parameters>
-        <Parameters value="100">
-            <AccumulatorArray value="GenetronProductionModeOverclock"/>
-        </Parameters>
-    </CAccumulatorArithmetic>
-    <CAccumulatorArithmetic id="ProductionEnergyHornet">
-        <Parameters value="40">
-            <AccumulatorArray value="GenetronProductionModeStandard"/>
-        </Parameters>
-        <Parameters value="80">
-            <AccumulatorArray value="GenetronProductionModeOverclock"/>
-        </Parameters>
-    </CAccumulatorArithmetic>
-    <CAccumulatorArithmetic id="ProductionEnergyAvenger">
-        <Parameters value="50">
-            <AccumulatorArray value="GenetronProductionModeStandard"/>
-        </Parameters>
-        <Parameters value="100">
-            <AccumulatorArray value="GenetronProductionModeOverclock"/>
-        </Parameters>
-    </CAccumulatorArithmetic>
-    <CAccumulatorArithmetic id="ProductionEnergyCourier">
-        <Parameters value="50">
-            <AccumulatorArray value="GenetronProductionModeStandard"/>
-        </Parameters>
-        <Parameters value="100">
-            <AccumulatorArray value="GenetronProductionModeOverclock"/>
-        </Parameters>
-    </CAccumulatorArithmetic>
-    <CAccumulatorArithmetic id="ProductionEnergyBlitzer">
-        <Parameters value="35">
-            <AccumulatorArray value="GenetronProductionModeStandard"/>
-        </Parameters>
-        <Parameters value="70">
-            <AccumulatorArray value="GenetronProductionModeOverclock"/>
-        </Parameters>
-    </CAccumulatorArithmetic>
-    <CAccumulatorArithmetic id="ProductionEnergyBoar">
-        <Parameters value="50">
-            <AccumulatorArray value="GenetronProductionModeStandard"/>
-        </Parameters>
-        <Parameters value="100">
-            <AccumulatorArray value="GenetronProductionModeOverclock"/>
-        </Parameters>
-    </CAccumulatorArithmetic>
-    <CAccumulatorArithmetic id="ProductionEnergyJupiter">
-        <Parameters value="30">
-            <AccumulatorArray value="GenetronProductionModePerformance"/>
-        </Parameters>
-        <Parameters value="60">
-            <AccumulatorArray value="GenetronProductionModeStandard"/>
-        </Parameters>
-        <Parameters value="120">
-            <AccumulatorArray value="GenetronProductionModeOverclock"/>
-        </Parameters>
-    </CAccumulatorArithmetic>
-    <CAccumulatorVitals id="EnergyCurrentCaster">
-        <Ratio value="1"/>
-        <VitalType value="Energy"/>
-        <ModificationType value="PerUnit"/>
-    </CAccumulatorVitals>
-    <CAccumulatorVitals id="EnergyMaxTarget">
-        <Ratio value="1"/>
-        <VitalType value="Energy"/>
-        <UnitSource Value="Target"/>
-        <ModificationType value="PerUnitMaxVital"/>
-    </CAccumulatorVitals>
-    <CAccumulatorVitals id="EnergyCurrentTarget">
-        <Ratio value="1"/>
-        <VitalType value="Energy"/>
-        <UnitSource Value="Target"/>
-        <ModificationType value="PerUnit"/>
-    </CAccumulatorVitals>
-    <CAccumulatorVitals id="EnergyMaxCaster">
-        <Ratio value="1"/>
-        <VitalType value="Energy"/>
-        <ModificationType value="PerUnitMaxVital"/>
-    </CAccumulatorVitals>
-    <CAccumulatorArithmetic id="ProductionModeSwitchStandard">
-        <Parameters value="50">
-            <AccumulatorArray value="GPIEMode0"/>
-        </Parameters>
-    </CAccumulatorArithmetic>
-    <CAccumulatorUserData id="Scion_DisplayCooldown">
-        <Key value="DisplayCooldown"/>
-    </CAccumulatorUserData>
-    <CAccumulatorUserData id="Scion_DisplayCooldownMin0">
+    <CAccumulatorSwitch id="SpitfireCounterStabilizationBursts">
+        <CaseArray Validator="SpitfireLifeBurst1" Accumulator="SpitfireCounterStabilizationBurstPeriodCount" FallThrough="1"/>
+        <CaseArray Validator="SpitfireLifeBurst2" Accumulator="SpitfireCounterStabilizationBurstPeriodCount"/>
+    </CAccumulatorSwitch>
+    <CAccumulatorArithmetic id="EqualizerTargetDamageBonus">
         <MinAccumulation value="0"/>
-        <Key value="DisplayCooldown"/>
-    </CAccumulatorUserData>
-    <CAccumulatorArithmetic id="ShieldsPercentTarget">
+        <MaxAccumulation value="28"/>
         <Parameters value="0">
-            <AccumulatorArray value="ShieldsCurrentTarget"/>
+            <AccumulatorArray value="LifeMaxTarget"/>
+            <AccumulatorArray value="ShieldsMaxTargetSwitch"/>
         </Parameters>
-        <Parameters value="0">
-            <AccumulatorArray value="ShieldsMaxTarget"/>
-        </Parameters>
-        <Operation value="Divide"/>
+        <Parameters value="0.0925"/>
+        <Operation value="Multiply"/>
     </CAccumulatorArithmetic>
-    <CAccumulatorArithmetic id="ShieldsPercentCaster">
+    <CAccumulatorConstant id="LunaMineDrainRateNormal">
+        <Amount value="-0.625"/>
+    </CAccumulatorConstant>
+    <CAccumulatorConstant id="LunaMineDrainRateMovement">
+        <Amount value="-1.25"/>
+    </CAccumulatorConstant>
+    <CAccumulatorSwitch id="LunaMineEnergyDrain">
+        <CaseArray Validator="SourceIsMoving" Accumulator="LunaMineDrainRateMovement"/>
+        <CaseDefault value="LunaMineDrainRateNormal"/>
+    </CAccumulatorSwitch>
+    <CAccumulatorArithmetic id="LunaMineMissileOverkill">
         <Parameters value="0">
-            <AccumulatorArray value="ShieldsCurrentCaster"/>
+            <AccumulatorArray value="LunaMineMissileStackCount"/>
+            <AccumulatorArray value="LunaMineMissileDamageMult"/>
         </Parameters>
         <Parameters value="0">
-            <AccumulatorArray value="ShieldsMaxCaster"/>
+            <AccumulatorArray value="LifeCurrentTarget"/>
         </Parameters>
-        <Operation value="Divide"/>
+        <Parameters value="0">
+            <AccumulatorArray value="ShieldsCurrentTargetSwitch"/>
+        </Parameters>
+        <Operation value="Subtract"/>
     </CAccumulatorArithmetic>
-    <CAccumulatorVitals id="ShieldsCurrentCaster">
-        <Ratio value="1"/>
-        <VitalType value="Shields"/>
-        <ModificationType value="PerUnit"/>
-    </CAccumulatorVitals>
-    <CAccumulatorVitals id="ShieldsCurrentTarget">
-        <Ratio value="1"/>
-        <VitalType value="Shields"/>
+    <CAccumulatorBehavior id="LunaMineMissileStackCount">
+        <Behavior value="LunaMineMissileData"/>
         <UnitSource Value="Target"/>
-        <ModificationType value="PerUnit"/>
-    </CAccumulatorVitals>
-    <CAccumulatorVitals id="ShieldsMaxTarget">
-        <Ratio value="1"/>
-        <VitalType value="Shields"/>
+    </CAccumulatorBehavior>
+    <CAccumulatorConstant id="LunaMineMissileDamageMult">
+        <ApplicationRule value="Multiply"/>
+        <Amount value="60"/>
+    </CAccumulatorConstant>
+    <CAccumulatorBehavior id="FuseFusionStacksOnCaster">
+        <Behavior value="FuseFused"/>
+    </CAccumulatorBehavior>
+    <CAccumulatorBehavior id="FuseFusionStacksOnTarget">
+        <Behavior value="FuseFused"/>
         <UnitSource Value="Target"/>
-        <ModificationType value="PerUnitMaxVital"/>
-    </CAccumulatorVitals>
+    </CAccumulatorBehavior>
     <CAccumulatorSwitch id="FuseUnfuseSwitch">
         <CaseArray Validator="noShields" Accumulator="MultiplyBy0"/>
-        <CaseDefault value="ShieldsPercentTarget"/>
+        <CaseDefault value="ShieldsFractionTarget"/>
     </CAccumulatorSwitch>
-    <CAccumulatorUserData id="FuseUnfuseData"/>
     <CAccumulatorArithmetic id="FuseFusionShieldRegenerationBonus">
-        <Parameters value="1.5">
-            <AccumulatorArray value="FuseFusionStacksOnCaster"/>
-        </Parameters>
+        <Parameters value="1.5"/>
         <Parameters value="0">
             <AccumulatorArray value="FuseFusionStacksOnTarget"/>
         </Parameters>
@@ -613,33 +356,21 @@
     <CAccumulatorSwitch id="FuseFusionShieldRegenerationBonusSwitch">
         <CaseArray Validator="FuseRegenerationBonus" Accumulator="FuseFusionShieldRegenerationBonus"/>
     </CAccumulatorSwitch>
-    <CAccumulatorVitals id="ShieldsMaxCaster">
-        <Ratio value="1"/>
-        <VitalType value="Shields"/>
-        <ModificationType value="PerUnitMaxVital"/>
-    </CAccumulatorVitals>
-    <CAccumulatorDistance id="SpitterWeaponTrackingDistance2">
+    <CAccumulatorDistance id="InciterWeaponTrackingDistance">
+        <StartLocation Effect="InciterHalifaxGrenadesInit" Value="TargetUnit"/>
+        <EndLocation Effect="InciterHalifaxGrenadesCUSet" Value="TargetUnit"/>
+        <Scale value="9"/>
+    </CAccumulatorDistance>
+    <CAccumulatorDistance id="SpitterWeaponTrackingDistanceTarget">
+        <StartLocation Effect="SpitterSpitterSpores" Value="TargetUnit"/>
+        <EndLocation Effect="SpitterSpitterSporesCUSet" Value="TargetUnit"/>
+        <Scale value="10"/>
+    </CAccumulatorDistance>
+    <CAccumulatorDistance id="SpitterWeaponTrackingDistanceCaster">
         <ApplicationRule value="Multiply"/>
         <EndLocation Effect="SpitterSpitterSporesCUSet" Value="TargetUnit"/>
         <Scale value="0.01"/>
     </CAccumulatorDistance>
-    <CAccumulatorVitals id="EqualizerTargetLifeMaxBonus">
-        <Ratio value="0.0925"/>
-        <UnitSource Value="Target"/>
-        <ModificationType value="PerUnitMaxVital"/>
-    </CAccumulatorVitals>
-    <CAccumulatorVitals id="EqualizerTargetShieldMaxBonus">
-        <Ratio value="0.085"/>
-        <VitalType value="Shields"/>
-        <UnitSource Value="Target"/>
-        <ModificationType value="PerUnitMaxVital"/>
-    </CAccumulatorVitals>
-    <CAccumulatorConstant id="LunaMineDrainRateMovement">
-        <Amount value="-1.25"/>
-    </CAccumulatorConstant>
-    <CAccumulatorConstant id="LunaMineDrainRateNormal">
-        <Amount value="-0.625"/>
-    </CAccumulatorConstant>
     <CAccumulatorArithmetic id="TeslaShockChargeOverloadMultiply">
         <ApplicationRule value="Multiply"/>
         <Parameters value="3"/>
@@ -647,8 +378,4 @@
     <CAccumulatorSwitch id="TeslaShockChargeOverloadSwitch">
         <CaseArray Validator="ShockChargeOverloaded" Accumulator="TeslaShockChargeOverloadMultiply"/>
     </CAccumulatorSwitch>
-    <CAccumulatorUserData id="InternalEnergyDataAdd">
-        <Key value="InternalEnergy"/>
-        <BehaviorScope Behavior="GenetronProductionInternalEnergy"/>
-    </CAccumulatorUserData>
 </Catalog>

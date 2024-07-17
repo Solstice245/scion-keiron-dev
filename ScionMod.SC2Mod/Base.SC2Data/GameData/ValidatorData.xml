@@ -38,6 +38,11 @@
         <AbilLink value="attack"/>
         <Value value="6"/>
     </CValidatorUnitCompareOrderTargetRange>
+    <CValidatorCombine id="CasterNotDeadHiddenStasisStunnedAndTargetIsValidWeaponTarget">
+        <Type value="And"/>
+        <CombineArray value="CasterNotDeadOrHiddenOrStasisOrStunned"/>
+        <CombineArray value="TargetIsValidWeaponTarget"/>
+    </CValidatorCombine>
     <CValidatorUnitCompareVital id="SourceEnergyGTE025">
         <WhichUnit Value="Source"/>
         <Compare value="GE"/>
@@ -263,7 +268,7 @@
     </CValidatorUnitCompareVital>
     <CValidatorUnitFilters id="CasterNotDeadOrHiddenOrStasisOrStunned">
         <WhichUnit Value="Caster"/>
-        <Filters value="-;Stasis,Dead,Hidden,Stunned"/>
+        <Filters value="-;Stasis,Dead,Hidden,Stunned,Dazed"/>
     </CValidatorUnitFilters>
     <CValidatorCombine id="CasterNotDeadHiddenStasisStunnedAndTargetIsValidGroundWeaponTarget">
         <Type value="And"/>
