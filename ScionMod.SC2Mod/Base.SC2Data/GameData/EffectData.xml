@@ -678,7 +678,7 @@
     </CEffectEnumArea>
     <CEffectSwitch id="RevenantBombUnit">
         <EditorCategories value="Race:Genetron"/>
-        <CaseArray Validator="RevenantLaunchTargetSlow" Effect="JupiterRevenantBombLaunchMissile"/>
+        <CaseArray Validator="RevenantLaunchTargetSlow" Effect="JupiterRevenantBombLaunchMissileTargetUnit"/>
         <CaseDefault value="JupiterRevenantBombSpellDelay"/>
         <ValidatorArray value="RevenantBombCooldownComplete"/>
     </CEffectSwitch>
@@ -731,7 +731,7 @@
         <ValidatorArray value="RevenantLaunchTargetDistances"/>
         <ValidatorArray value="RevenantBombCooldownComplete"/>
         <EditorCategories value="Race:Genetron"/>
-        <CaseArray Effect="JupiterRevenantBombLaunchTargetUnitPoint"/>
+        <CaseArray Effect="JupiterRevenantBombLaunchMissileTargetUnit"/>
         <CaseDefault value="JupiterRevenantBombLaunchMissile"/>
         <TargetLocationType value="UnitOrPoint"/>
     </CEffectSwitch>
@@ -745,7 +745,7 @@
     <CEffectSwitch id="JupiterRevenantBombWeaponSwitch">
         <ValidatorArray value="RevenantBombCooldownComplete"/>
         <EditorCategories value="Race:Genetron"/>
-        <CaseArray Validator="RevenantLaunchTargetSlow" Effect="JupiterRevenantBombLaunchMissile"/>
+        <CaseArray Validator="RevenantLaunchTargetSlow" Effect="JupiterRevenantBombLaunchSwitch"/>
         <CaseDefault value="JupiterRevenantBombChannel"/>
         <TargetLocationType value="UnitOrPoint"/>
     </CEffectSwitch>
@@ -4204,7 +4204,9 @@
         <Flags index="ContinueWhenFull" value="1"/>
         <PeriodicValidator value="GenetronEnergyGenValidators"/>
         <RechargeVital value="Energy"/>
-        <RechargeVitalRate value="0.7148"/>
+        <RechargeVitalRate value="0.7148">
+            <AccumulatorArray value="LifeCurrentCaster"/>
+        </RechargeVitalRate>
         <InitialEffect value="DataDefaultSet1"/>
         <FinalEffect value="DataDefaultSet0"/>
     </CEffectCreateHealer>
