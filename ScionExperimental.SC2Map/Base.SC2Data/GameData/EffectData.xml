@@ -9,6 +9,40 @@
         <SpawnUnit value="AquiferRoots"/>
         <SpawnRange value="0"/>
     </CEffectCreateUnit>
+    <CEffectSet id="EnervatorSporesImpact">
+        <EffectArray index="1" value="HeatOrphanAdd4"/>
+        <EffectArray index="2" value="EroderEnervate"/>
+        <EffectArray value="EroderEnervatorSporesSearchArea"/>
+    </CEffectSet>
+    <CEffectDamage id="FletchSpritz" parent="ScionDamageRange">
+        <EditorCategories value="Race:Xayid"/>
+        <Amount value="11"/>
+    </CEffectDamage>
+    <CEffectSet id="HeatOrphanAdd4">
+        <EffectArray value="HeatOrphanIncrement4"/>
+        <EffectArray value="HeatBurning"/>
+    </CEffectSet>
+    <CEffectCreatePersistent id="HeatOrphanIncrement4">
+        <WhichLocation Value="TargetUnit"/>
+        <Flags index="OrphanParams" value="1"/>
+        <InitialEffect value="Heat"/>
+        <PeriodCount value="4"/>
+        <PeriodicEffectArray value="HeatDataIncrement"/>
+    </CEffectCreatePersistent>
+    <CEffectDamage id="Nettle" parent="ScionDamageRange" Race="Genetron">
+        <Amount value="4"/>
+        <Death value="Eviscerate"/>
+    </CEffectDamage>
+    <CEffectCreatePersistent id="RoamerNettleCreatePersistent">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="TargetUnit"/>
+        <Flags index="Channeled" value="1"/>
+        <InitialEffect value="Nettle"/>
+        <PeriodCount value="1"/>
+        <PeriodicValidator value="SpitfireBurstRoundValidator"/>
+        <PeriodicEffectArray value="Nettle"/>
+        <PeriodicPeriodArray value="0.1875"/>
+    </CEffectCreatePersistent>
     <CEffectCreateUnit id="XayidEntRootsCU">
         <EditorCategories value="Race:Xayid"/>
         <WhichLocation Value="CasterUnit"/>
@@ -257,8 +291,7 @@
         <EffectArray value="CreeperSproutCankerLM"/>
     </CEffectSet>
     <CEffectDamage id="EnervatorSporesDMG">
-        <AttributeBonus index="Light" value="-7"/>
-        <Amount value="21"/>
+        <AttributeBonus index="Armored" value="0"/>
     </CEffectDamage>
     <CEffectModifyUnit id="HealToFullLifeTarget">
         <EditorCategories value="Race:Xayid"/>
@@ -273,7 +306,8 @@
         <Amount value="9"/>
     </CEffectDamage>
     <CEffectApplyBehavior id="Scion_SageGraft">
-        <ValidatorArray index="0" value="NoGraftBuff"/>
+        <ValidatorArray index="0" value="NotFullLife"/>
+        <ValidatorArray value="NoGraftBuff"/>
         <EditorCategories value="Race:Xayid"/>
     </CEffectApplyBehavior>
     <CEffectModifyUnit id="Scion_SageGraftHeal">
@@ -297,24 +331,24 @@
         <ImpactEffect value="Scion_ToxicThornsDMG"/>
         <AmmoUnit value="Scion_WeaponToxicThorn"/>
     </CEffectLaunchMissile>
-    <CEffectLaunchMissile id="SnareEntangle" parent="ScionLaunchMissile" Race="Xayid">
-        <ImpactEffect value="SnareEntangleSet"/>
+    <CEffectLaunchMissile id="SnareEntangler" parent="ScionLaunchMissile" Race="Xayid">
+        <ImpactEffect value="SnareEntanglerSet"/>
         <AmmoUnit value="SnareAttackMissile"/>
     </CEffectLaunchMissile>
-    <CEffectApplyBehavior id="SnareEntangleAB" parent="ScionApplyBehavior">
+    <CEffectApplyBehavior id="SnareEntanglerAB" parent="ScionApplyBehavior">
         <ValidatorArray index="0" value="NotStructureTarget"/>
         <ValidatorArray value="NotFrenzied"/>
         <EditorCategories value="Race:Xayid"/>
         <Behavior value="SnareEntangled"/>
     </CEffectApplyBehavior>
-    <CEffectEnumArea id="SnareEntangleArea" parent="ScionEnumAreaEnemyGround">
+    <CEffectEnumArea id="SnareEntanglerArea" parent="ScionEnumAreaEnemyGround">
         <EditorCategories value="Race:Xayid"/>
         <Chance value="0"/>
         <ExcludeArray Value="Target"/>
-        <AreaArray Radius="1.25" Effect="SnareEntangleAB"/>
+        <AreaArray Radius="1.0625" Effect="SnareEntanglerAB"/>
     </CEffectEnumArea>
-    <CEffectDamage id="SnareEntangleDMG" parent="ScionDamageRange" Race="Xayid">
-        <Amount value="14"/>
+    <CEffectDamage id="SnareEntanglerDMG" parent="ScionDamageRange" Race="Xayid">
+        <Amount value="18"/>
         <Death value="Disintegrate"/>
     </CEffectDamage>
     <CEffectModifyUnit id="RotateFacing180Target">
@@ -324,11 +358,11 @@
     <CEffectModifyUnit id="ShowTargetUnhide">
         <ModifyFlags index="Show" value="1"/>
     </CEffectModifyUnit>
-    <CEffectSet id="SnareEntangleSet">
+    <CEffectSet id="SnareEntanglerSet">
         <EditorCategories value="Race:Xayid"/>
-        <EffectArray value="SnareEntangleAB"/>
-        <EffectArray value="SnareEntangleDMG"/>
-        <EffectArray value="SnareEntangleArea"/>
+        <EffectArray value="SnareEntanglerAB"/>
+        <EffectArray value="SnareEntanglerDMG"/>
+        <EffectArray value="SnareEntanglerArea"/>
     </CEffectSet>
     <CEffectSet id="SupportEffectsS">
         <EffectArray index="2" removed="1"/>
@@ -347,7 +381,7 @@
     </CEffectEnumArea>
     <CEffectDamage id="VirulentSpitImpact">
         <AttributeBonus index="Light" value="0"/>
-        <Amount value="10"/>
+        <Amount value="6"/>
     </CEffectDamage>
     <CEffectSet id="XayidDigest" parent="ScionSet">
         <EditorCategories value="Race:Xayid"/>

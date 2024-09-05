@@ -45,6 +45,39 @@
             <Image value="Assets\Textures\wireframe-Xayid-biomasscavern.dds"/>
         </Wireframe>
     </CActorUnit>
+    <CActorAction id="EroderAttack">
+        <AcquisitionYawHalfArc value="7.500000"/>
+        <AcquisitionPitchHalfArc value="15.000000"/>
+        <AccuracyHalfArc value="10.000000"/>
+    </CActorAction>
+    <CActorAction id="FletchAttack" parent="GenericAttack" effectAttack="FletchSpritz">
+        <AcquisitionYawHalfArc value="10.000000"/>
+        <AcquisitionPitchHalfArc value="15.000000"/>
+        <AccuracyHalfArc value="5.000000"/>
+    </CActorAction>
+    <CActorModel id="SnareAreaSlowImpact" parent="ModelAnimationStyleOneShotEffect" Effect="SnareEntanglerArea">
+        <HostSiteOps Ops="SOpAttachOriginHoldPosition SOpRotationRandomDisc"/>
+    </CActorModel>
+    <CActorAction id="RoamerNettleAttack" parent="GenericAttackBase">
+        <On Terms="Effect.RoamerNettleCreatePersistent.Start; At Caster" Send="Create"/>
+        <On Terms="Effect.Nettle.Start; FromEffectTreeDescendant" Send="ActionDamage"/>
+        <On Terms="Effect.RoamerNettleCreatePersistent.Stop" Send="Destroy"/>
+        <LaunchAttachQuery Methods="AMFilterWeapon"/>
+        <LaunchAssets Model="" Sound="Spell_Eyestalk_Launch"/>
+        <ImpactSiteOps Ops="SOpAttachHarness SOpAttachVolumeNoVizEnhance SOpForwardLaunchGuide"/>
+        <ImpactMap index="None" Model="" Sound="Spell_Eyestalk_Impact"/>
+        <ImpactPhysics Name="BulletImpact" MatchKeys="Basic" Physics="SpitfireAttackForce"/>
+        <AcquisitionYawHalfArc value="10.000000"/>
+        <AcquisitionPitchHalfArc value="15.000000"/>
+        <AccuracyHalfArc value="5.000000"/>
+        <ActionFlags index="AlignedImpactsAndDamages" value="1"/>
+    </CActorAction>
+    <CActorBeamSimple id="RoamerNettleAttackBeam" parent="BeamSimpleAnimationStyleContinuousClosingFull">
+        <Macros value="GlobalLoopMacro"/>
+        <Macros value="ActionTargetTeleportDestroy"/>
+        <On Terms="Effect.Nettle.Stop; FromEffectTreeDescendant" Send="$Spell"/>
+        <On Terms="Effect.RoamerNettleCreatePersistent.Stop; At Effect" Send="AnimBracketStop BSD"/>
+    </CActorBeamSimple>
     <CActorUnit id="XayidEnt" parent="GenericUnitXayid" unitName="XayidEnt">
         <Aliases value="_UnitHuge"/>
         <Macros index="3" value="QueueAnim"/>
@@ -154,12 +187,6 @@
         <Aliases value="_UnitHuge"/>
         <Macros index="3" value="QueueAnim"/>
         <Macros index="4" removed="1"/>
-        <On index="0" Terms="UnitBirth.##unitName##" Send="Create SoundEmitter ##unitName##_Ambience"/>
-        <On index="1" Terms="UnitBirth.##unitName##"/>
-        <On index="2" Terms="UnitRevive.##unitName##"/>
-        <On index="3" Terms="UnitRevive.##unitName##"/>
-        <On index="4" Terms="UnitConstruction.##unitName##.Start"/>
-        <On index="5" Terms="UnitConstruction.##unitName##.Finish"/>
         <On Terms="ActorCreation" Send="AnimGroupApply Placement"/>
         <On Terms="ActorCreation" Send="SetTintColor 150,100,50"/>
         <Model value="XayidEnt"/>
@@ -1251,42 +1278,35 @@
     </CActorUnit>
     <CActorUnit id="Forager" parent="GenericUnitXayid" unitName="Forager">
         <Aliases value="_UnitSmall"/>
-        <On Terms="Abil.DroneHarvest.Start" Send="AnimPlay Work Work PlayForever"/>
-        <On Terms="Abil.DroneHarvest.Stop" Send="AnimClear Work"/>
+        <On index="65" Terms="WeaponStart.*.AttackStart; AnimPlaying Birth" Send="AnimClear Birth"/>
+        <On index="66" Terms="Abil.attack.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <On index="67" Terms="Abil.DroneHarvest.Start" Send="AnimPlay Work Work PlayForever"/>
+        <On index="68" Terms="Abil.DroneHarvest.Stop" Send="AnimClear Work"/>
         <On Terms="Abil.*.WorkerStart" Send="AnimPlay Work Work PlayForever"/>
         <On Terms="Abil.*.WorkerCancel" Send="AnimClear Work"/>
         <On Terms="Abil.*.WorkerStop" Send="AnimClear Work"/>
         <On Terms="AbilMorph.XayidMorphForager.Start" Send="Destroy"/>
+        <On Terms="WeaponStart.*.AttackStart" Send="AnimBlendTimeApply 0.250000"/>
+        <On Terms="WeaponStop.*.AttackStop" Send="AnimBlendTimeApply 0.500000"/>
+        <On Terms="WeaponStart.*.AttackStart" Send="AnimBracketStart Attack Attack"/>
+        <On Terms="WeaponStop.*.AttackStop" Send="AnimBracketStop Attack"/>
+        <Macros value="CarryAnim"/>
+        <Macros value="MacroWorkerHat"/>
         <DeathArray index="Normal" ModelLink="DroneDeath" SoundLink="Drone_Explode" VoiceLink="Drone_Death"/>
         <DeathArray index="Disintegrate" ModelLink="DroneDeathAcid"/>
         <DeathArray index="Fire" ModelLink="DroneDeathFire"/>
         <PortraitModel value="DronePortrait"/>
-        <TerrainSquibs>
-            <GroupName value="RippleStandard"/>
-            <MovementDistance value="0.150000,0.150000"/>
-            <IdlePeriod value="0.100000,0.250000"/>
-            <RangeUp value="1.000000"/>
-            <RangeDown value="1.000000"/>
-            <AttachQuery Methods="AMFilterCenter"/>
-            <Visuals TerrainPhysicsMaterial="Water" ActorModel="TerrainSquibHarnessContinuous" ModelLink="WaterRippleMedium"/>
-        </TerrainSquibs>
-        <BarOffset value="42"/>
-        <BarWidth value="40"/>
+        <BarOffset value="40"/>
+        <BarWidth value="42"/>
         <ErrorArray Error="CantLandTooFarFromBuildPowerSource" Text="MustBuildNearFeedingPool"/>
         <ErrorArray Error="CantBuildTooFarFromBuildPowerSource" Text="MustBuildNearFeedingPool"/>
-        <GroupIcon>
-            <Image index="0" value="Assets\Textures\wireframe-Xayid-Scavenger.dds"/>
-        </GroupIcon>
         <SoundArray index="Ready" value="Scavenger_Ready"/>
         <SoundArray index="Help" value="Alert_ZergEconomyUnderAttack"/>
         <SoundArray index="What" value="Scavenger_What"/>
         <SoundArray index="Yes" value="Scavenger_Yes"/>
         <SoundArray index="Attack" value="Scavenger_Attack"/>
         <SoundArray index="Pissed" value="Scavenger_Pissed"/>
-        <UnitIcon value="Assets\Textures\btn-unit-Xayid-Scavenger.dds"/>
-        <Wireframe>
-            <Image index="0" value="Assets\Textures\wireframe-Xayid-Scavenger.dds"/>
-        </Wireframe>
+        <AnimBlendTime value="0.500000"/>
     </CActorUnit>
     <CActorAction id="ScourAttack">
         <LaunchAttachQuery Methods="AMFilterWeapon01"/>
@@ -1299,8 +1319,7 @@
         <Flags index="SuppressCreationErrors" value="0"/>
         <Inherits index="Visibility" value="0"/>
         <On Terms="ActorOrphan" Send="AnimBracketStop BSD"/>
-        <On Terms="ActorCreation; ValidateUnit SnareAreaSlow" Send="ModelSwap SnareAttackImpactUpgrade"/>
-        <Model value="SnareAttackImpactModel"/>
+        <On Terms="ActorCreation; ValidateEffect SnareAreaSlow" Send="ModelSwap SnareAttackImpactUpgrade"/>
         <ModelFlags index="AllowHitTest" value="1"/>
     </CActorModel>
     <CActorUnit id="Gourd" parent="ZergBuilding" unitName="Gourd">
@@ -1456,9 +1475,9 @@
         </Wireframe>
     </CActorUnit>
     <CActorMissile id="SnareAttackMissile" parent="GenericAttackMissile" unitName="SnareAttackMissile">
-        <On Terms="ActorCreation; ValidateUnit SnareAreaSlow" Send="ModelSwap SnareAttackMissileUpgrade"/>
+        <On Terms="ActorCreation; ValidateEffect SnareAreaSlow" Send="ModelSwap SnareAttackMissileUpgrade"/>
     </CActorMissile>
-    <CActorAction id="SnareAttack" parent="GenericAttack" effectImpact="SnareEntangleDMG" effectLaunch="SnareEntangle">
+    <CActorAction id="SnareAttack" parent="GenericAttack" effectImpact="SnareEntanglerDMG" effectLaunch="SnareEntangler">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <ImpactModel value="SnareAttackImpactModel"/>
     </CActorAction>
