@@ -468,9 +468,6 @@
         <RechargeVital value="Shields"/>
         <RechargeVitalRate value="7.6445"/>
     </CEffectCreateHealer>
-    <CEffectCreatePersistent id="DisruptionBeam">
-        <PeriodicValidator value="CasterIsNotDazed"/>
-    </CEffectCreatePersistent>
     <CEffectApplyBehavior id="EqualizerHardenedFrame">
         <EditorCategories value="Race:Genetron"/>
     </CEffectApplyBehavior>
@@ -1035,9 +1032,6 @@
         <CaseArray Effect="UmbraStealthCompulsionModifyVital"/>
         <CaseDefault value="UmbraStealthSuppressionModifyCooldown"/>
     </CEffectSwitch>
-    <CEffectCreatePersistent id="VoidRaySwarm">
-        <PeriodicValidator value="CasterIsNotDazed"/>
-    </CEffectCreatePersistent>
     <CEffectApplyBehavior id="VoidRayWeaponABTarget" parent="Scion_UseDurationBase">
         <Behavior value="BeamTargetCD"/>
         <Flags index="UseDuration" value="0"/>
@@ -1100,7 +1094,7 @@
         <AreaArray Radius="1.5" Effect="NaniteEmitterBuff"/>
     </CEffectEnumArea>
     <CEffectCreatePersistent id="AquilaNaniteEmitterInitTarget">
-        <ValidatorArray value="GenetronPowerSupplyGE050"/>
+        <ValidatorArray value="GenetronPowerSupplyGE100"/>
         <EditorCategories value="Race:Genetron"/>
         <InitialEffect value="AquilaNaniteEmitterPowerEnum"/>
         <ExpireEffect value="AquilaNaniteEmitterLaunchMissile"/>
@@ -1113,7 +1107,7 @@
     <CEffectModifyUnit id="AquilaNaniteEmitterPowerModify">
         <EditorCategories value="Race:Genetron"/>
         <VitalArray index="Energy">
-            <Change value="-75"/>
+            <Change value="-100"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectUserData id="AttackRateDataAdaptiveInjectionDebuff">
@@ -2867,6 +2861,7 @@
         <InitialEffect value="Pause"/>
     </CEffectCreatePersistent>
     <CEffectSet id="ChargeCannonSuperChargeSet" parent="ScionSet" Race="Genetron">
+        <EffectArray value="BlitzerChargeCannonDamage"/>
         <EffectArray value="BlitzerChargeCannonSuperChargeDamage"/>
         <EffectArray value="BlitzerSuperChargedRemove"/>
     </CEffectSet>
@@ -3266,7 +3261,6 @@
         <EffectArray value="MirrorGenetronPowerSupplyEnergyLossMU"/>
         <EffectArray value="MirrorGenetronPowerSupplyProcessingCoreData"/>
         <EffectArray value="MirrorGenetronPowerSupplyRelayTowerData"/>
-        <EffectArray value="MirrorGenetronPowerSupplyGeneratorData"/>
         <EffectArray value="MirrorGenetronPowerSupplyMU"/>
         <EffectArray value="MirrorGenetronPowerSupplyStoreEnergyData"/>
     </CEffectSet>
@@ -4204,9 +4198,7 @@
         <Flags index="ContinueWhenFull" value="1"/>
         <PeriodicValidator value="GenetronEnergyGenValidators"/>
         <RechargeVital value="Energy"/>
-        <RechargeVitalRate value="0.7148">
-            <AccumulatorArray value="LifeCurrentCaster"/>
-        </RechargeVitalRate>
+        <RechargeVitalRate value="0.7148"/>
         <InitialEffect value="DataDefaultSet1"/>
         <FinalEffect value="DataDefaultSet0"/>
     </CEffectCreateHealer>
@@ -4266,7 +4258,6 @@
         <PeriodicEffectArray value="SeparationBeamBeamWeaponCooldownComplete"/>
         <PeriodicPeriodArray value="0.0625"/>
         <ValidatorArray value="NotHoldingFire"/>
-        <PeriodicValidator value="CasterIsNotDazed"/>
     </CEffectCreatePersistent>
     <CEffectSet id="SeparationBeamInit" parent="ScionSet" Race="Keiron">
         <EffectArray value="PulsarMovementSpeed"/>
@@ -4575,8 +4566,8 @@
     </CEffectEnumArea>
     <CEffectLaunchMissile id="EnervatorSpores" parent="ScionLaunchMissile" Race="Xayid"/>
     <CEffectDamage id="EnervatorSporesDMG" parent="ScionDamageRange" Race="Xayid">
-        <AttributeBonus index="Armored" value="9"/>
-        <Amount value="16"/>
+        <AttributeBonus index="Armored" value="10"/>
+        <Amount value="15"/>
         <Death value="Fire"/>
     </CEffectDamage>
     <CEffectSet id="EnervatorSporesImpact" parent="ScionSet" Race="Xayid">
@@ -4860,7 +4851,7 @@
         <Death value="Fire"/>
     </CEffectDamage>
     <CEffectDamage id="LynxCannonImpact" parent="ScionDamageRange" Race="Genetron">
-        <Amount value="50"/>
+        <Amount value="65"/>
         <Death value="Blast"/>
     </CEffectDamage>
     <CEffectDamage id="NeutralizerBeamLMImpact" parent="ScionDamageRange" Race="Genetron">
@@ -4872,7 +4863,7 @@
         <Death value="Eviscerate"/>
     </CEffectDamage>
     <CEffectDamage id="StratumMissilePodDMG" parent="ScionDamageRange" Race="Genetron">
-        <Amount value="17">
+        <Amount value="14">
             <AccumulatorArray value="EqualizerTargetDamageBonusSwitch"/>
         </Amount>
         <Death value="Blast"/>
@@ -4880,7 +4871,7 @@
     <CEffectDamage id="BlitzerChargeCannonSuperChargeDamage" parent="ScionDamageRange" Race="Genetron">
         <ArmorReduction value="0"/>
         <Kind value="Spell"/>
-        <Amount value="27.5"/>
+        <Amount value="16.5"/>
         <Death value="Blast"/>
     </CEffectDamage>
     <CEffectDamage id="RepulsorSuppressionCannonsDamage" parent="ScionDamageRange" Race="Genetron">
@@ -5417,7 +5408,7 @@
     <CEffectEnumArea id="StagnatingBileImpact" parent="ScionEnumArea" Race="Xayid">
         <AINotifyFlags index="HurtFriend" value="1"/>
         <AINotifyFlags index="HurtEnemy" value="1"/>
-        <AreaArray Radius="1.25" Effect="StagnatingBileStun"/>
+        <AreaArray Radius="1" Effect="StagnatingBileStun"/>
     </CEffectEnumArea>
     <CEffectEnumArea id="SupplimentationOutputSA" parent="ScionEnumArea" Race="Xayid">
         <SearchFilters value="-;Self,Neutral,Enemy,Missile,Stasis,Dead,Hidden,Invulnerable"/>
@@ -6884,7 +6875,6 @@
         <PeriodicPeriodArray value="0.0625"/>
         <ValidatorArray value="CasterAndTargetNotDead"/>
         <TimeScaleSource Value="Caster"/>
-        <PeriodicValidator value="CasterIsNotDazed"/>
     </CEffectCreatePersistent>
     <CEffectCreatePersistent id="NullifierWeaponCP" parent="ScionCreatePersistent" Race="Keiron">
         <WhichLocation Value="TargetUnit"/>

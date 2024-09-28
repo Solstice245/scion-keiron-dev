@@ -9,6 +9,9 @@
     <CAccumulatorSwitch id="EqualizerTargetDamageBonusSwitch">
         <CaseArray Validator="TargetNotDead" Accumulator="EqualizerTargetDamageBonus"/>
     </CAccumulatorSwitch>
+    <CAccumulatorSwitch id="LifeMaxTargetSwitch">
+        <CaseArray Validator="TargetNotDead" Accumulator="LifeMaxTarget"/>
+    </CAccumulatorSwitch>
     <CAccumulatorConstant id="MultiplyBy0">
         <ApplicationRule value="Multiply"/>
     </CAccumulatorConstant>
@@ -67,7 +70,7 @@
         <ModificationType value="PerUnitMaxVital"/>
     </CAccumulatorVitals>
     <CAccumulatorSwitch id="ShieldsMaxTargetSwitch">
-        <CaseArray Validator="hasShields" Accumulator="ShieldsMaxTarget"/>
+        <CaseArray Validator="CanHaveShields" Accumulator="ShieldsMaxTarget"/>
     </CAccumulatorSwitch>
     <CAccumulatorVitals id="ShieldsCurrentCaster">
         <Ratio value="1"/>
@@ -288,6 +291,9 @@
         </Parameters>
         <Operation value="Subtract"/>
     </CAccumulatorArithmetic>
+    <CAccumulatorSwitch id="EnergyMaxTargetSwitch">
+        <CaseArray Validator="CanHaveEnergy" Accumulator="EnergyMaxTarget"/>
+    </CAccumulatorSwitch>
     <CAccumulatorConstant id="SpitfireCounterStabilizationBurstPeriodCount">
         <Amount value="3"/>
     </CAccumulatorConstant>
@@ -301,9 +307,10 @@
         <Parameters value="0">
             <AccumulatorArray value="LifeMaxTarget"/>
             <AccumulatorArray value="ShieldsMaxTargetSwitch"/>
+            <AccumulatorArray value="EnergyMaxTargetSwitch"/>
         </Parameters>
-        <Parameters value="0.0925"/>
-        <Operation value="Multiply"/>
+        <Parameters value="10"/>
+        <Operation value="Divide"/>
     </CAccumulatorArithmetic>
     <CAccumulatorConstant id="LunaMineDrainRateNormal">
         <Amount value="-0.625"/>

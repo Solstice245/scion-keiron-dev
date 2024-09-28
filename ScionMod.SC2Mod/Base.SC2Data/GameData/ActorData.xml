@@ -2544,7 +2544,7 @@
         <Sound value="Blitzer_Reload"/>
     </CActorSound>
     <CActorModel id="AssemblyArrayBuild" parent="GenetronBuildingBuild"/>
-    <CActorAction id="EqualizerAttack" parent="GenericAttack" effectImpact="StratumMissilePodImpact" effectLaunch="StratumMissilePod">
+    <CActorAction id="EqualizerAttack" parent="GenericAttack" effectImpact="StratumMissilePodDMG" effectLaunch="StratumMissilePod">
         <LaunchAttachQuery Methods="AMPatternEqualizerStratum"/>
         <LaunchAssets Model="VikingFighterAttackLaunch" Sound="Equalizer_Stratum_AttackLaunch"/>
         <Missile value="EqualizerStratumAttackMissile"/>
@@ -3535,6 +3535,7 @@
         <AcquisitionYawHalfArc value="10.000000"/>
         <AcquisitionPitchHalfArc value="15.000000"/>
         <AccuracyHalfArc value="5.000000"/>
+        <On index="5" Terms="Effect.BlitzerChargeCannonDamage.Start; At Caster; !EffectParent ChargeCannonSuperChargeSet" Send="Create"/>
     </CActorAction>
     <CActorSound id="CloakOff">
         <On Terms="Behavior.SpeedCloak.Off" Send="Create"/>
@@ -4654,6 +4655,22 @@
     </CActorAction>
     <CActorModel id="StagnatingBileMissileImpact" parent="ModelAnimationStyleOneShot">
         <On Terms="Effect.StagnatingBileImpact.Start" Send="Create"/>
+    </CActorModel>
+    <CActorModel id="CasnoliskStagnatingBilePrecursor">
+        <Flags index="SuppressSaveLoad" value="1"/>
+        <On Terms="Effect.StagnatingBile.Start" Send="Create"/>
+        <On Terms="Effect.StagnatingBileImpact.Start; FromEffectTreeDescendant" Send="Destroy"/>
+        <On Terms="ActorCreation" Send="AnimBracketStart BSD {} Stand Death"/>
+        <On Terms="AnimBracketState.*.AfterClosing; AnimName BSD" Send="Destroy"/>
+        <On Terms="ActorOrphan" Send="AnimBracketStop BSD"/>
+        <On Terms="ActorCreation" Send="AnimSetTimeScale BSD 1.000000"/>
+        <On Terms="ActorCreation" Send="TimerSet 1.250000 Anim"/>
+        <On Terms="TimerExpired; TimerName Anim" Send="AnimSetTimeScale BSD 0.500000"/>
+        <On Terms="ActorCreation" Send="SetTintColor 13,255,0"/>
+        <On Terms="Effect.StagnatingBile.Abort" Send="AnimBracketStop BSD"/>
+        <HostSiteOps Ops="SOpShadow"/>
+        <Model value="RavagerCorrosiveBilePrecursor"/>
+        <Scale value="2.000000,2.000000,1.500000"/>
     </CActorModel>
     <CActorRange id="VolatileDischargeUnitRange" parent="RangeAbilStandard" abil="">
         <On index="1" Terms="UnitBirth.VolatileDischarge" Send="Create"/>

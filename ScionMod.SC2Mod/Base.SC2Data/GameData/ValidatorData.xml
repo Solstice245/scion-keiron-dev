@@ -27,6 +27,10 @@
         <CombineArray value="Aperture4CargoAnd40Energy"/>
         <CombineArray value="Aperture8CargoAnd80Energy"/>
     </CValidatorCombine>
+    <CValidatorUnitFilters id="CanHaveEnergy">
+        <ResultFailed value="MustTargetEnergyCapableUnits"/>
+        <Filters value="CanHaveEnergy;-"/>
+    </CValidatorUnitFilters>
     <CValidatorUnitOrderTargetType id="CasterIsNotAttackingUnit">
         <ResultFailed value="MustTargetUnit"/>
         <AbilLink value="attack"/>
@@ -131,12 +135,6 @@
         <AbilCmdIndex value="2"/>
         <Type value="Point"/>
     </CValidatorUnitOrderTargetType>
-    <CValidatorUnitBehaviorState id="CasterIsDazed">
-        <ResultFailed value="Error,Error/IsNotStunned"/>
-        <WhichUnit Value="Caster"/>
-        <Enabled value="1"/>
-        <BehaviorState value="Daze"/>
-    </CValidatorUnitBehaviorState>
     <CValidatorUnitFilters id="FilterWorker">
         <Filters value="Worker;-"/>
     </CValidatorUnitFilters>
@@ -259,12 +257,12 @@
     <CValidatorUnitCompareVital id="SpitfireLifeBurst1">
         <WhichUnit Value="Caster"/>
         <Compare value="GT"/>
-        <Value value="20"/>
+        <Value value="30"/>
     </CValidatorUnitCompareVital>
     <CValidatorUnitCompareVital id="SpitfireLifeBurst2">
         <WhichUnit Value="Caster"/>
         <Compare value="GT"/>
-        <Value value="40"/>
+        <Value value="60"/>
     </CValidatorUnitCompareVital>
     <CValidatorUnitFilters id="CasterNotDeadOrHiddenOrStasisOrStunned">
         <WhichUnit Value="Caster"/>
@@ -306,23 +304,9 @@
         <Compare value="NE"/>
         <Behavior value="CitadelEnergized"/>
     </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitBehaviorState id="CasterIsNotDazed">
-        <ResultFailed value="Error,Error/IsStunned"/>
-        <WhichUnit Value="Caster"/>
-        <BehaviorState value="Daze"/>
-    </CValidatorUnitBehaviorState>
     <CValidatorUnitBehaviorState id="IsNotStunned">
         <ResultFailed value="Error,Error/IsStunned"/>
         <BehaviorState value="Stun"/>
-    </CValidatorUnitBehaviorState>
-    <CValidatorUnitBehaviorState id="IsDazed">
-        <ResultFailed value="Error,Error/IsNotStunned"/>
-        <Enabled value="1"/>
-        <BehaviorState value="Daze"/>
-    </CValidatorUnitBehaviorState>
-    <CValidatorUnitBehaviorState id="IsNotDazed">
-        <ResultFailed value="Error,Error/IsStunned"/>
-        <BehaviorState value="Daze"/>
     </CValidatorUnitBehaviorState>
     <CValidatorUnitCompareBehaviorCount id="JupiterSpeedAccelerator">
         <WhichUnit Value="Caster"/>
@@ -1109,12 +1093,10 @@
         <WhichUnit Value="Caster"/>
         <Behavior value="LockdownModeDuration"/>
     </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitCompareField id="CanHaveShields">
-        <ResultFailed value="MustTargetUnitWithShields"/>
-        <Compare value="GT"/>
-        <Field value="ShieldsMax"/>
-        <Value value="0"/>
-    </CValidatorUnitCompareField>
+    <CValidatorUnitFilters id="CanHaveShields">
+        <ResultFailed value="MustTargetShieldCapableUnits"/>
+        <Filters value="CanHaveShields;-"/>
+    </CValidatorUnitFilters>
     <CValidatorPlayerRequirement id="FabricatorIsTrainingTesla">
         <Find value="1"/>
         <Value value="FabricatorIsTrainingTesla"/>
