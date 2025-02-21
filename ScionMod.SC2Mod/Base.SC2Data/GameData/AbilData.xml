@@ -62,16 +62,6 @@
             </Button>
         </InfoArray>
     </CAbilResearch>
-    <CAbilSpecialize id="AvengerConstructVengeanceMissile">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <InfoArray index="Specialize1" Time="12.6" Effect="AvengerConstructVengeanceMissile">
-            <Vital index="Energy" value="50"/>
-            <Button DefaultButtonFace="ConstructVengeanceMissile" Requirements="AvengerNoVengeanceMissileAmmo"/>
-            <Flags index="AutoCast" value="1"/>
-            <Flags index="AutoCastOn" value="1"/>
-        </InfoArray>
-        <MaxCount value="1"/>
-    </CAbilSpecialize>
     <CAbilBehavior id="BadgerPowershell">
         <AbilSetId value="Powershell"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -87,7 +77,7 @@
         <OffCost>
             <Cooldown TimeUse="10"/>
         </OffCost>
-        <BehaviorArray value="BadgerPowershell"/>
+        <BehaviorArray value="BadgerPowershellBase"/>
     </CAbilBehavior>
     <CAbilEffectTarget id="ACRRepair">
         <Alignment value="Positive"/>
@@ -142,27 +132,10 @@
         </Cost>
         <CmdButtonArray index="Execute" DefaultButtonFace="HardenedShield" Requirements="GenetronPowerBalance0050"/>
     </CAbilEffectInstant>
-    <CAbilEffectInstant id="GenetronPerformanceMode">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Effect index="0" value="GenetronProductionModePerformance"/>
-        <Arc value="360"/>
-    </CAbilEffectInstant>
     <CAbilEffectInstant id="GenetronSelfDestruct">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Effect index="0" value="Kill"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="SelfDestruct"/>
-    </CAbilEffectInstant>
-    <CAbilEffectInstant id="GenetronStandardMode">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Effect index="0" value="GenetronProductionModeStandard"/>
-        <Arc value="360"/>
-        <AINotifyEffect value="GenetronPerformanceMode"/>
-    </CAbilEffectInstant>
-    <CAbilEffectInstant id="GenetronOverclockMode">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Effect index="0" value="GenetronProductionModeOverclock"/>
-        <Arc value="360"/>
-        <AINotifyEffect value="GenetronPerformanceMode"/>
     </CAbilEffectInstant>
     <CAbilEffectTarget id="AquilaNaniteEmitter">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -347,22 +320,6 @@
         <TargetFilters index="0" value="CanHaveEnergy,Visible,HasEnergy;Self,Player,Ally,Neutral,Missile,Stasis,Dead,Hidden"/>
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
     </CAbilEffectTarget>
-    <CAbilTrain id="GenetronProductionModeSwitch">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <InfoArray index="Train1" Time="4.2" Effect="GenetronProductionModePerformance">
-            <Button DefaultButtonFace="GenetronPerformanceMode" Requirements="GenetronPerformanceModeNotQueuedOrActive"/>
-            <Unit value="GenetronPerformanceModeDummy"/>
-        </InfoArray>
-        <InfoArray index="Train2" Time="4.2" Effect="GenetronProductionModeStandard">
-            <Button DefaultButtonFace="GenetronStandardMode" Requirements="GenetronStandardModeNotQueuedOrActive"/>
-            <Unit value="GenetronStandardModeDummy"/>
-        </InfoArray>
-        <InfoArray index="Train3" Time="4.2" Effect="GenetronProductionModeOverclock">
-            <Button DefaultButtonFace="GenetronOverclockMode" Requirements="GenetronOverclockModeNotQueuedOrActive"/>
-            <Unit value="GenetronOverclockModeDummy"/>
-        </InfoArray>
-        <Flags index="BestUnit" value="0"/>
-    </CAbilTrain>
     <CAbilEffectInstant id="GhostHoldFire">
         <AbilSetId value="HoldFire"/>
     </CAbilEffectInstant>
@@ -772,21 +729,6 @@
             </SectionArray>
         </InfoArray>
     </CAbilMorph>
-    <CAbilEffectTarget id="NaniteGrenade">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Cost>
-            <Vital index="Energy" value="50"/>
-            <Charge Link="Abil/FlashGrenade"/>
-            <Cooldown Link="Abil/FlashGrenade" TimeUse="4.2"/>
-        </Cost>
-        <Range value="9"/>
-        <FinishTime value="0.5"/>
-        <UninterruptibleArray index="Cast" value="1"/>
-        <UninterruptibleArray index="Finish" value="1"/>
-        <CursorEffect value="NaniteGrenadeImpact"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="NaniteGrenade" Requirements="AquilaNaniteGrenadeReq"/>
-        <Effect index="0" value="AquilaNaniteGrenadeInitTarget"/>
-    </CAbilEffectTarget>
     <CAbilEffectInstant id="SuperChargeAquila">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Effect index="0" value="AquilaSuperchargePowerEnum"/>
@@ -1035,35 +977,11 @@
         <CursorEffect value="JupiterRevenantBombImpactHeat"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="RevenantBomb"/>
     </CAbilEffectTarget>
-    <CAbilHarvest id="ACRGather">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-    </CAbilHarvest>
     <CAbilEffectTarget id="RevenantBombUnit" parent="RevenantBomb">
         <Name value="Abil/Name/RevenantBombUnit"/>
         <Effect index="0" value="RevenantBombUnit"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="RevenantBombUnit"/>
         <TargetFilters value="Ground;Missile,Stasis,Dead,Invulnerable"/>
-    </CAbilEffectTarget>
-    <CAbilEffectTarget id="SchematicTransmit">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Effect index="0" value="SchematicTransmitCP"/>
-        <TargetFilters value="Structure;Ally,Neutral,Enemy,RawResource,HarvestableResource,Missile,Stasis,Dead,Hidden"/>
-        <Range value="15"/>
-        <Arc value="360"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="SchematicTransmit">
-            <Flags index="AllowMinimap" value="0"/>
-        </CmdButtonArray>
-        <CmdButtonArray index="Cancel" DefaultButtonFace="Cancel"/>
-        <Cost>
-            <Cooldown TimeUse="1"/>
-        </Cost>
-        <Flags index="AutoCast" value="1"/>
-        <Flags index="AutoCastOn" value="1"/>
-        <Flags index="Smart" value="1"/>
-        <AutoCastFilters value="Structure,Visible;Ally,Neutral,Enemy,Stasis,Dead,Hidden"/>
-        <AutoCastRange value="15"/>
-        <AutoCastValidatorArray value="IsGenetronArmyProduction"/>
-        <SmartValidatorArray value="IsGenetronArmyProduction"/>
     </CAbilEffectTarget>
     <CAbilEffectInstant id="SpeedCloak">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -1352,42 +1270,34 @@
     <CAbilEffectInstant id="UmbraStealthCompulsion">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Flags index="Transient" value="1"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="UmbraShieldCompulsion"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="UmbraShieldCompulsion" Requirements="UseShieldCompulsion"/>
     </CAbilEffectInstant>
     <CAbilEffectInstant id="UmbraStealthCompulsionRemove">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Flags index="Transient" value="1"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="UmbraDisableStealthCompulsion" Requirements="StealthCompulsionComplete"/>
     </CAbilEffectInstant>
-    <CAbilEffectTarget id="UploaderSmartLink">
+    <CAbilEffectTarget id="StarBolt">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Effect index="0" value="GenetronSchematicTransmitIssueOrder"/>
-        <Flags index="Smart" value="1"/>
-        <Range value="15"/>
-        <Arc value="360"/>
-        <SmartValidatorArray value="IsUploader"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="Uploader"/>
-    </CAbilEffectTarget>
-    <CAbilEffectTarget id="VengeanceMissile">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Effect index="0" value="AvengerStarBoltInitTarget"/>
         <Flags index="AllowMovement" value="1"/>
         <Flags index="NoDeceleration" value="1"/>
         <Flags index="TransientPreferred" value="1"/>
         <Cost>
-            <Charge CountMax="1" CountStart="1" CountUse="1"/>
+            <Vital index="Energy" value="50"/>
+            <Cooldown TimeUse="5.6"/>
         </Cost>
         <TargetFilters value="-;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <Range value="7"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="VengeanceMissile" Requirements="GenetronPowerBalance0050"/>
-        <SharedFlags index="RegisterChargeEvent" value="1"/>
         <Arc value="360"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="StarBolt" Requirements="GenetronPowerBalance0050"/>
     </CAbilEffectTarget>
     <CAbilEffectInstant id="VirtusSelffixProtocol">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Cost>
             <Vital index="Energy" value="100"/>
         </Cost>
-        <CastOutroTime value="4.2"/>
+        <CastOutroTime value="3.5"/>
         <UninterruptibleArray index="Channel" value="1"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="SelfFixProtocol" Requirements="GenetronPowerBalance0100"/>
         <Effect index="0" value="VirtusSelffixProtocolChannelDummy"/>
@@ -1773,6 +1683,7 @@
             <Button DefaultButtonFace="BilePit" Requirements="HaveXayidDen"/>
         </InfoArray>
         <InfoArray index="Build16" Unit="SiphonerRich" Time="30">
+            <Button DefaultButtonFace="Siphoner"/>
             <ValidatorArray value="HasVespene"/>
         </InfoArray>
         <FidgetDelayMin value="5"/>

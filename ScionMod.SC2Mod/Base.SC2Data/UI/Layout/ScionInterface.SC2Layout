@@ -162,84 +162,140 @@
 
     <Frame type="Frame" name="GameUI/UIContainer/FullscreenUpperContainer" file="GameUI">
         <Frame type="Frame" name="GenetronEnergyPanel">
-            <Anchor side="Left" relative="$parent/ResourcePanel/ResourceFrame/SupplyBackground" pos="Min" offset="0"/>
+            <Anchor side="Left" relative="$parent/ResourcePanel/ResourceFrame/ResourceIconBackground1" pos="Min" offset="0"/>
             <Anchor side="Top" relative="$parent/ResourcePanel" pos="Max" offset="0"/>
             <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
             <Height val="32"/>
             <Visible val="False"/>
 
-            <Frame type="Image" name="EnergyIcon">
-                <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-                <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-                <Width val="32"/>
-                <Texture val="Assets/Textures/icon-power-nobg.dds"/>
-                <Tooltip val="@UI/ResourceTooltip_GenEnergy"/>
-                <TooltipAnchorPosition val="TopToBottom | RightToLeft"/>
-                <AcceptsMouse val="True"/>
-            </Frame>
-
-            <Frame type="CountdownLabel" name="EnergyCurrent">
-                <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-                <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-                <StartValue val="{$this/@CurrentValue}"/>
-                <CurrentValue val="0"/>
-                <Text val="0"/>
-                <Visible val="False"/>
-            </Frame>
-
-            <Frame type="CountdownLabel" name="EnergyMax">
-                <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-                <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-                <StartValue val="{$this/@CurrentValue}"/>
-                <CurrentValue val="0"/>
-                <Text val="0"/>
-                <Visible val="False"/>
-            </Frame>
-
-            <Frame type="TextFormatFrame" name="EnergyFormat">
+            <Frame type="UnitStatusFrame" name="EnergyUnit">
                 <Anchor relative="$parent"/>
-                <FormatText val="%0%/%1%"/>
-                <Replacement val="{$parent/EnergyCurrent/@Text}" index="0"/>
-                <Replacement val="{$parent/EnergyMax/@Text}" index="1"/>
-            </Frame>
 
-            <Frame type="CountdownLabel" name="EnergyLabel">
-                <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-                <Anchor side="Left" relative="$parent/EnergyIcon" pos="Max" offset="5"/>
-                <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-                <Style val="ResourcePanel"/>
-                <Text val="{$parent/EnergyFormat/@Text}"/>
-                <TooltipAnchorPosition val="TopToBottom | RightToLeft"/>
-                <Animation name="CountUp">
-                    <Event event="OnShown" action="Reset,Play"/>
-                    <Controller type="Counter" end="Loop" frame="$parent/EnergyCurrent">
-                        <Key type="Curve" time="0.0" value="1.0" out="Slow"/>
-                    </Controller>
-                    <Controller type="Counter" end="Loop" frame="$parent/EnergyMax">
-                        <Key type="Curve" time="0.0" value="1.0" out="Slow"/>
-                    </Controller>
-                </Animation>
+                <Frame type="UnitStatusBehaviorCharge" name="ChargeCount_ProcessingCore">
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                    <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                    <Behavior val="GenetronPowerChargeDummyProcCore"/>
+                    <ChargeLink val="Behavior/GenetronPowerChargeDummyProcCore"/>
+                    <ChargeLocation val="Unit"/>
+                    <Frame type="ProgressBar" name="ChargeFillProgress">
+                        <Anchor relative="$parent"/>
+                    </Frame>
+                </Frame>
+
+                <Frame type="UnitStatusBehaviorCharge" name="ChargeCount_Node">
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                    <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                    <Behavior val="GenetronPowerChargeDummyNode"/>
+                    <ChargeLink val="Behavior/GenetronPowerChargeDummyNode"/>
+                    <ChargeLocation val="Unit"/>
+                    <Frame type="ProgressBar" name="ChargeFillProgress">
+                        <Anchor relative="$parent"/>
+                    </Frame>
+                </Frame>
+
+                <Frame type="UnitStatusBehaviorCharge" name="ChargeCount_Generator">
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                    <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                    <Behavior val="GenetronPowerChargeDummyGenerator"/>
+                    <ChargeLink val="Behavior/GenetronPowerChargeDummyGenerator"/>
+                    <ChargeLocation val="Unit"/>
+                    <Frame type="ProgressBar" name="ChargeFillProgress">
+                        <Anchor relative="$parent"/>
+                    </Frame>
+                </Frame>
+
+                <Frame type="TextFormatFrame" name="FormatEnergyTooltip">
+                    <Anchor relative="$parent"/>
+                    <FormatText val="%0% %3%%6%%1% %4%%6%%2% %5%"/>
+                    <Replacement val="@UI/Tooltip/IconProcessingCore" index="0"/>
+                    <Replacement val="@UI/Tooltip/IconNode" index="1"/>
+                    <Replacement val="@UI/Tooltip/IconGenerator" index="2"/>
+                    <Replacement val="{$parent/ChargeCount_ProcessingCore/ChargeFillProgress/@Value}" index="3"/>
+                    <Replacement val="{$parent/ChargeCount_Node/ChargeFillProgress/@Value}" index="4"/>
+                    <Replacement val="{$parent/ChargeCount_Generator/ChargeFillProgress/@Value}" index="5"/>
+                    <Replacement val="@UI/NewLine" index="6"/>
+                </Frame>
+
+                <Frame type="Frame" name="EnergyBarContainer">
+                    <Anchor relative="$parent"/>
+                    <Frame type="Image" name="EnergyIcon">
+                        <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                        <Visible val="False"/>
+                        <Width val="32"/>
+                        <Texture val="Assets/Textures/icon-power-nobg.dds"/>
+                        <Tooltip val="@UI/ResourceTooltip_GenEnergy"/>
+                        <TooltipAnchorPosition val="TopToBottom | RightToLeft"/>
+                        <AcceptsMouse val="True"/>
+                    </Frame>
+
+                    <Frame type="UnitStatusEnergyBar" name="EnergyBar">
+                        <Anchor side="Bottom" relative="$parent" pos="Max" offset="-4"/>
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
+                        <Anchor side="Left" relative="$parent/EnergyIcon" pos="Max" offset="2"/>
+                        <Anchor side="Right" relative="$parent" pos="Max" offset="-8"/>
+                        <Texture val="@UI/HealthBar"/>
+                        <OwnerColor val="A00080FF" index="0"/>
+                        <AllyColor val="A00080FF" index="0"/>
+                        <EnemyColor val="A00080FF" index="0"/>
+                        <ReductionColor val="A0002080" index="0"/>
+                        <ReductionShown val="True" index="0"/>
+                        <IncreaseDuration val="0" index="0"/>
+                        <DecreaseDuration val="2000" index="0"/>
+                        <BorderColor val="282828"/>
+                        <BorderWidth val="2"/>
+                        <BackgroundColor val="60000000"/>
+                        <BackgroundShown val="True"/>
+                        <SnapToDevicePixels val="True"/>
+                        <BarInsetRect bottom="2" left="2" right="-2" top="-2"/>
+
+                        <Frame type="UnitStatusEnergyLabel" name="UnitStatusEnergyLabel">
+                            <Anchor relative="$parent"/>
+                            <RoundMode val="Down"/>
+
+                            <Frame type="Label" name="StatusLabel">
+                                <Anchor relative="$parent"/>
+                                <Style val="ModCenterSize16Bold"/>
+                                <Tooltip val="{$parent/$parent/$parent/$parent/FormatEnergyTooltip/@Text}"/>
+                                <TooltipAnchorPosition val="TopToBottom | RightToLeft"/>
+                                <AcceptsMouse val="True"/>
+                            </Frame>
+
+                            <StateGroup name="StatusLabelVisibilitySync">
+                                <DefaultState val="NotVisible"/>
+                                <State name="Visible">
+                                    <When type="Property" frame="$this" Visible="True"/>
+                                    <Action type="SetProperty" frame="$parent/$parent/EnergyIcon" Visible="True"/>
+                                </State>
+                                <State name="NotVisible">
+                                    <When type="Property" frame="$this" Visible="False"/>
+                                    <Action type="SetProperty" frame="$parent/$parent/EnergyIcon" Visible="False"/>
+                                </State>
+                            </StateGroup>
+
+                        </Frame>
+
+                    </Frame>
+
+                </Frame>
+
             </Frame>
 
         </Frame>
-        <!--
+
         <StateGroup name="ObserverCheck">
             <DefaultState val="NotObserver"/>
             <State name="IsObserver">
                 <When type="Property" frame="ObserverPanelMovingContainer/ObserverPanel" Visible="True"/>
                 <Action type="SetProperty" frame="GenetronEnergyPanel" Visible="False"/>
             </State>
-         
             <State name="NotObserver">
                 <When type="Property" frame="ObserverPanelMovingContainer/ObserverPanel" Visible="False"/>
                 <Action type="SetProperty" frame="GenetronEnergyPanel" Visible="True"/>
             </State>
         </StateGroup>
-        -->
+
     </Frame>
 
 </Desc>

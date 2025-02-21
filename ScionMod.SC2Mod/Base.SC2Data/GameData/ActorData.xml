@@ -56,6 +56,19 @@
             <Image value="Assets\Textures\wireframe-Xayid-##unitName##.dds"/>
         </Wireframe>
     </CActorUnit>
+    <CActorModel default="1" id="GenetronUnitBuild" parent="GenetronBuildingBuild">
+        <?token id="buildTime" type="CString" value="1.000000"?>
+        <Aliases index="1" value="_GenetronBuildUnitModel"/>
+        <On index="0" Terms="AbilTrain.*.Cancel"/>
+        <On index="1" Terms="AbilTrain.*.Finish" Send="Destroy"/>
+        <On index="2" Terms="ActorOrphan"/>
+        <On index="3" Terms="ActorCreation" Send="AnimPlay Cover Build,Cover PlayForever"/>
+        <On index="4" Terms="ActorCreation" Send="SetTintColor {255,255,255 2.000000} 1.500000 Bounce"/>
+        <On Terms="ActorCreation" Send="AnimPlay Build Build,Start"/>
+        <On Terms="AnimDone.*.Complete; AnimName Build" Send="AnimPlay Work Build,End 0 -1.000000 -1.000000 ##buildTime## AsDuration"/>
+        <HostSiteOps Ops="SOpAttachHardPoint"/>
+        <CreepHeightClass value=""/>
+    </CActorModel>
     <CActorModel default="1" id="GenetronConstructionBase" parent="ModelAddition">
         <?token id="Model" type="ModelLink"?>
         <?token id="buildTime" type="CString" value="1.000000"?>
@@ -155,17 +168,6 @@
     <CActorSplat default="1" id="KeironCursorSplat" parent="CursorSplat">
         <Model value="KeironAOECursorSplat"/>
     </CActorSplat>
-    <!--                                                                                         -->
-    <!-- Resources                                                                               -->
-    <!--                                                                                         -->
-    <CActorUnit default="1" id="MineralBase">
-        <On Terms="Abil.ConverterGather.Start" Send="StatusIncrement Harvest"/>
-        <On Terms="Abil.ConverterGather.Stop" Send="StatusDecrement Harvest"/>
-    </CActorUnit>
-    <CActorModel default="1" id="ModelAnimationStyleOneShotEffect" parent="ModelAnimationStyleOneShot">
-        <?token id="Effect" type="CEffectLink"?>
-        <On Terms="Effect.##Effect##.Start" Send="Create"/>
-    </CActorModel>
     <CActorSound default="1" id="SoundContinuousScion" parent="SoundContinuous">
         <?token id="Behavior" type="CBehaviorLink" value="Bogus"?>
         <?token id="Effect" type="CEffectLink" value="Bogus"?>
@@ -183,25 +185,9 @@
         <On Terms="Effect.##Effect##.##ESub##" Send="Create"/>
     </CActorSound>
     <CActorUnit id="AddonDummyBase" parent="GenericUnitStandard" unitName="AddonDummy">
-        <On Terms="Effect.Scion_OverclockAddonDummyApplyFate.Start" Send="Create AddonDummyOverclock"/>
-        <On Terms="Effect.Scion_OverclockAddonDummyApplyFate.Start" Send="Destroy"/>
-        <On Terms="Effect.ProcessingCoreMiningPriorityAddonDummyApplyFate.Start" Send="Create AddonDummyMiningPriority"/>
-        <On Terms="Effect.ProcessingCoreMiningPriorityAddonDummyApplyFate.Start" Send="Destroy"/>
         <Model value="Invisible"/>
         <BuildModel value="Invisible"/>
         <PlacementModel value="Invisible"/>
-    </CActorUnit>
-    <CActorUnit id="AddonDummyOverclock" parent="GenericUnitStandard">
-        <Model value="Invisible"/>
-        <BuildModel value="Invisible"/>
-        <PlacementModel value="Invisible"/>
-        <AddonIndicator value="Actor/AddonIndicator/Scion_Overclock"/>
-    </CActorUnit>
-    <CActorUnit id="AddonDummyMiningPriority" parent="GenericUnitStandard">
-        <Model value="Invisible"/>
-        <BuildModel value="Invisible"/>
-        <PlacementModel value="Invisible"/>
-        <AddonIndicator value="Actor/AddonIndicator/Scion_MiningPriority"/>
     </CActorUnit>
     <CActorSound id="AegisShieldLoop" parent="SoundContinuousScion" Behavior="AegisShieldAura"/>
     <CActorModel id="ApertureKeyholeTargetEnd" parent="ModelAnimationStyleOneShotUNIT">
@@ -212,6 +198,22 @@
         <MaxScale value="2.500000"/>
         <AutoScaleFactor value="0.800000"/>
     </CActorModel>
+    <CActorMissile id="AquilaNaniteEmitter" parent="GenericAttackMissile" unitName="NaniteEmitterWeapon"/>
+    <CActorSite id="AvengerStarBoltAttackImpactSite"/>
+    <CActorModel id="AvengerBuild" parent="GenetronUnitBuild" buildTime="34.000000">
+        <Model value="AvengerGenetron"/>
+    </CActorModel>
+    <CActorAction id="AvengerStarBoltRetargetAttack" parent="GenericAttack" effectImpact="AvengerStarBoltDamage" effectLaunch="AvengerStarBoltLaunchMissileRetarget">
+        <Missile value="AvengerStarBoltAttackMissile"/>
+        <ImpactMap index="None" Model="AvengerStarBoltAttackImpact" Sound="AvengerStarBoltAttackImpact" ModelReaction="AvengerStarBoltAttackImpactReaction"/>
+        <LaunchRequest Subject="AvengerStarBoltAttackImpactSite"/>
+        <ImpactSite value="AvengerStarBoltAttackImpactSite"/>
+    </CActorAction>
+    <CActorSound id="Avenger_StarBoltChargeUp" parent="SoundOneShot">
+        <On Terms="Effect.AvengerStarBoltCreatePersistent.Start" Send="Create"/>
+        <On Terms="Effect.AvengerStarBoltCreatePersistent.Stop" Send="Destroy"/>
+        <Sound value="AvengerStarBoltChargeUp"/>
+    </CActorSound>
     <CActorBeamSimple id="BlitzerAttackBeam" parent="BeamSimpleAnimationStyleOneShot">
         <Macros value="ActionTargetTeleportDestroy"/>
     </CActorBeamSimple>
@@ -233,6 +235,17 @@
         <HostSiteOps Ops="SOpMoveUpByDot15"/>
         <AutoScaleFactor value="1.000000"/>
     </CActorModel>
+    <CActorModel id="DebugSearchArea" parent="ModelAnimationStyleOneShot">
+        <On Terms="Effect.DebugSearchArea.Start" Send="Create"/>
+        <Model value="ScoutMPAirMissileImpact"/>
+    </CActorModel>
+    <CActorProgress id="GenetronConstructionAttachedUnit">
+        <Supporter Subject="_GenetronBuildModel"/>
+        <On Terms="ProgressLevel.GenetronConstructionAttached.Start; Level 0" Send="SetTransferOverrideAnim Birth,A,Stand"/>
+        <On Terms="ProgressLevel.GenetronConstructionAttached.Stop; Level 0" Send="SetTransferOverrideAnim"/>
+        <StageArray AnimProps="Build,Start" BlendTime="0.000000"/>
+        <StageArray AnimProps="Build,End"/>
+    </CActorProgress>
     <CActorModel id="JupiterRevenantBombImpact" parent="ModelAnimationStyleOneShot">
         <On Terms="Effect.JupiterRevenantBombImpact.Start" Send="Create"/>
     </CActorModel>
@@ -269,12 +282,14 @@
         <On Terms="Effect.RiotGun.Stop; FromEffectTreeDescendant" Send="$Spell"/>
         <On Terms="Effect.SpitfireRiotGunCreatePersistent.Stop; At Effect" Send="AnimBracketStop BSD"/>
     </CActorBeamSimple>
-    <CActorModel id="AquilaNaniteEmitter" parent="ModelAnimationStyleContinuous">
+    <CActorModel id="AquilaNaniteEmitterModel" parent="ModelAnimationStyleContinuous">
+        <On Terms="ActorCreation" Send="AnimPlay Cover Cover PlayForever"/>
         <On Terms="Effect.AquilaNaniteEmitterCreatePersistent.Start" Send="Create"/>
         <On Terms="Effect.AquilaNaniteEmitterCreatePersistent.Stop" Send="Create TerranSmallTriggeredExplosion"/>
         <On Terms="Effect.AquilaNaniteEmitterCreatePersistent.Stop" Target="TerranSmallTriggeredExplosion" Send="SetScale 0.800000"/>
         <On Terms="Effect.AquilaNaniteEmitterCreatePersistent.Stop" Send="AnimBracketStop BSD"/>
         <On Terms="Effect.AquilaNaniteEmitterCreatePersistent.Start" Send="Create AquilaNaniteEmitterLoop"/>
+        <Model value="NaniteEmitterWeapon"/>
     </CActorModel>
     <CActorModel id="AquilaNaniteEmitterArea" parent="ModelAnimationStyleContinuous">
         <On Terms="Effect.AquilaNaniteEmitterCreatePersistent.Start" Send="Create"/>
@@ -293,8 +308,8 @@
     <CActorRange id="AquilaNaniteEmitterRange" parent="RangeAbilStandard" abil="AquilaNaniteEmitter"/>
     <CActorAction id="AquilaNaniteEmitterAttack" parent="GenericAttack" effectImpact="AquilaNaniteEmitterCreatePersistent" effectLaunch="AquilaNaniteEmitterLaunchMissile">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
-        <LaunchAssets Sound="AquilaNaniteGrenadeLaunch"/>
-        <Missile value="AquilaNaniteGrenadeMissile"/>
+        <LaunchAssets Sound="AquilaNaniteEmitterLaunch"/>
+        <Missile value="AquilaNaniteEmitterMissile"/>
         <ImpactMap index="None" Sound="Nova_FlashBangGrenade_Impact"/>
     </CActorAction>
     <CActorSplat id="AquilaNaniteEmitterCursor" parent="TerranCursorSplat" abil="AquilaNaniteEmitter">
@@ -317,14 +332,14 @@
         <On index="3" Terms="Abil.ButtonHoverOn" Send="Create"/>
         <On index="4" Terms="Abil.ButtonHoverOff" Send="Destroy"/>
     </CActorRange>
-    <CActorModelMaterial id="BadgerEnergyShieldGlaze" parent="BehaviorGlaze" buff="BadgerPowershell">
+    <CActorModelMaterial id="BadgerEnergyShieldGlaze" parent="BehaviorGlaze" buff="BadgerPowershellBase">
         <On Terms="Behavior.SpitfirePowershell.On" Send="Create"/>
         <On Terms="Behavior.SpitfirePowershell.Off" Send="AnimBracketStop BSD"/>
     </CActorModelMaterial>
-    <CActorSound id="Badger_PowershellOn" parent="SoundOneShotScion" Behavior="BadgerPowershell">
+    <CActorSound id="Badger_PowershellOn" parent="SoundOneShotScion" Behavior="BadgerPowershellBase">
         <Host Subject="_Selectable"/>
     </CActorSound>
-    <CActorSound id="Badger_PowershellOff" parent="SoundOneShotScion" Behavior="BadgerPowershell" BSub="Off">
+    <CActorSound id="Badger_PowershellOff" parent="SoundOneShotScion" Behavior="BadgerPowershellBase" BSub="Off">
         <Host Subject="_Selectable"/>
     </CActorSound>
     <CActorModel id="BoarIgnitionBlast" parent="ModelAddition">
@@ -550,7 +565,7 @@
         <HostSiteOps Ops="SOpAttachWeapon"/>
     </CActorModel>
     <CActorSound id="Spitfire_AttackImpact" parent="SoundOneShotScion" Effect="RiotGun" ESub="Start; At Target">
-        <Sound value="Viking_AssaultAttackImpact"/>
+        <Sound value="SpitfireAttackImpact"/>
     </CActorSound>
     <CActorSound id="Spitfire_AttackLaunch" parent="SoundOneShotScion" Effect="RiotGun" ESub="Start; At Caster">
         <EditorCategories value=""/>
@@ -654,7 +669,6 @@
     <CActorRange id="OculusRevealVisualRangeEnemy">
         <Range value="6.000000"/>
         <Icon value="Assets\Textures\ScannerSweepRadius_Diffuse.dds"/>
-        <IconArcLength value="1.500000"/>
         <Host Subject="OculusRevealModelEnemy"/>
     </CActorRange>
     <CActorSound id="Olympus_DeathAlert" parent="SoundOneShotScion" Effect="OlympusExplodeDelay"/>
@@ -866,6 +880,7 @@
         <On Terms="Effect.OculusRevealVision.Stop" Send="AnimBracketStop BSD"/>
         <On Terms="ActorCreation" Send="Create OculusRevealVisualRangeFriendly"/>
         <On Terms="ActorDestruction" Target="OculusRevealVisualRangeFriendly" Send="Destroy"/>
+        <On Terms="ActorCreation" Send="SetOpacity 0.700000"/>
         <HostSiteOps Ops="SOpTargetPointStationary SOpForwardCasterPointInverted SOpMoveUpBy3 SOpMoveUpBy2" HoldPosition="1" HoldRotation="1"/>
         <Model value="OculusRevealModel"/>
         <AcceptedHostedPropTransfers index="Visibility" value="0"/>
@@ -1062,10 +1077,6 @@
     <CActorModel id="TerranSmallTriggeredExplosion" parent="ModelAnimationStyleOneShot"/>
     <CActorSound id="TeslaChargeFly" parent="SoundContinuous"/>
     <CActorSound id="TeslaChargeLand" parent="SoundOneShot"/>
-    <CActorModel id="TestModel" parent="ModelAnimationStyleOneShotEffect" Effect="Bogus">
-        <Model value="ScoutMPAirLeftAttackImpact"/>
-        <Scale value="5.000000"/>
-    </CActorModel>
     <CActorModel id="WardRestitutionImpact" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Effect.WardRestitutionRechargeSet.Start; At Target" Send="Create"/>
         <HostSiteOps Ops="SOpAttachCenter"/>
@@ -1117,29 +1128,6 @@
         <HostImpactSiteOps Ops="SOpTargetUnit SOpAttachHardPoint"/>
         <ModelFlags index="AllowHitTest" value="0"/>
     </CActorBeamSimple>
-    <CActorModel id="GenetronProductionModeSwitchAddition" parent="ModelAddition">
-        <On Terms="AbilTrain.GenetronProductionModeSwitch.Start" Send="Create"/>
-        <On Terms="AbilTrain.GenetronProductionModeSwitch.Finish" Send="AnimBracketStop BSD"/>
-        <On Terms="AbilTrain.GenetronProductionModeSwitch.Cancel" Send="AnimBracketStop BSD"/>
-        <HostSiteOps Ops="SOpAttachHardPoint01"/>
-        <Model value="UploaderCastDelayModel"/>
-        <Scale value="1.250000"/>
-        <ModelFlags index="AutomateGlobalLoops" value="1"/>
-    </CActorModel>
-    <CActorUnit id="GenetronStandardModeDummy" parent="GenericUnitStandard" unitName="GenetronStandardModeDummy">
-        <Aliases index="1" removed="1"/>
-        <AcceptedHostedPropTransfers index="CastShadows" value="0"/>
-        <Model value="Invisible"/>
-        <UnitFlags index="ShowBlobShadow" value="0"/>
-        <UnitIcon value="Assets\Textures\btn-ability-genetron-productionmode-standard.dds"/>
-    </CActorUnit>
-    <CActorUnit id="GenetronOverclockModeDummy" parent="GenericUnitStandard" unitName="GenetronOverclockModeDummy">
-        <Aliases index="1" removed="1"/>
-        <AcceptedHostedPropTransfers index="CastShadows" value="0"/>
-        <Model value="Invisible"/>
-        <UnitFlags index="ShowBlobShadow" value="0"/>
-        <UnitIcon value="Assets\Textures\btn-ability-genetron-productionmode-overclock.dds"/>
-    </CActorUnit>
     <CActorModelMaterial id="GlazeGenetronBuildHoloPlacement" parent="GlazeParent">
         <On index="0" Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand Death Instant"/>
         <Model value="GlazeGenetronBuildHoloStand"/>
@@ -1149,13 +1137,6 @@
     <CActorModelMaterial id="GlazeGenetronBuildHoloStand" parent="GlazeParent">
         <ModelFlags index="AutomateGlobalLoops" value="1"/>
     </CActorModelMaterial>
-    <CActorUnit id="GenetronPerformanceModeDummy" parent="GenericUnitStandard" unitName="GenetronPerformanceModeDummy">
-        <Aliases index="1" removed="1"/>
-        <AcceptedHostedPropTransfers index="CastShadows" value="0"/>
-        <Model value="Invisible"/>
-        <UnitFlags index="ShowBlobShadow" value="0"/>
-        <UnitIcon value="Assets\Textures\btn-ability-genetron-productionmode-performance.dds"/>
-    </CActorUnit>
     <CActorModel id="OpticalDisruptionBuff" parent="ModelAnimationStyleContinuousUNIT">
         <On Terms="Behavior.OpticalDisruptionBuff.On" Send="Create"/>
         <On Terms="Behavior.OpticalDisruptionBuff.Off" Send="Destroy"/>
@@ -1329,19 +1310,6 @@
         <BarWidth value="65"/>
         <PortraitModel value="PortraitEroder"/>
     </CActorUnit>
-    <CActorModel id="GenetronProductionMode" parent="ModelAddition">
-        <Inherits index="TimeScale" value="0"/>
-        <HostSiteOps Ops="SOpAttachHardPoint01"/>
-    </CActorModel>
-    <CActorEventMacro id="GenetronProductionModeMacro">
-        <On Terms="UnitBirth" Send="Create GenetronProductionMode"/>
-        <On Terms="Behavior.GenetronProductionModePerformanceBuff.On" Target="GenetronProductionMode" Send="$Stand,A PlayForever"/>
-        <On Terms="Behavior.GenetronProductionModeStandardBuff.On" Target="GenetronProductionMode" Send="$Stand,B PlayForever"/>
-        <On Terms="Behavior.GenetronProductionModeOverclockBuff.On" Target="GenetronProductionMode" Send="$Stand,C PlayForever"/>
-        <On Terms="AbilTrain.GenetronProductionModeSwitch.Start" Target="GenetronProductionMode" Send="SetOpacity"/>
-        <On Terms="AbilTrain.GenetronProductionModeSwitch.Finish" Target="GenetronProductionMode" Send="SetOpacity 1.000000"/>
-        <On Terms="AbilTrain.GenetronProductionModeSwitch.Cancel" Target="GenetronProductionMode" Send="SetOpacity 1.000000"/>
-    </CActorEventMacro>
     <CActorSound id="GyreAnnexLoop" parent="SoundContinuousScion" Behavior="GyreAnnexCaster"/>
     <CActorRange id="InciterELORProtocolRange" parent="RangeAbilStandard" abil="InciterELORProtocol"/>
     <CActorModel id="GeneratorBuild" parent="GenetronBuildingBuild"/>
@@ -1557,7 +1525,6 @@
     <CActorRange id="OculusRevealVisualRangeFriendly">
         <Range value="6.000000"/>
         <Icon value="Assets\Textures\ScannerSweepRadius_Diffuse.dds"/>
-        <IconArcLength value="1.500000"/>
         <Host Subject="OculusRevealModelFriendly"/>
     </CActorRange>
     <CActorUnit id="Scavenger" parent="GenericUnitXayid" unitName="Scavenger">
@@ -1789,8 +1756,6 @@
         <On Terms="WeaponStart.*.AttackStart; WeaponTargetElevation LE -20.000000" Send="AnimPlay Stance Inferior PlayForever"/>
         <On Terms="WeaponStop.*.AttackStop" Send="AnimClear Stance"/>
         <On Terms="Abil.attack.ReadyStop" Send="AnimGroupRemove Ready"/>
-        <On Terms="Abil.NaniteGrenade.SourceCastStart" Send="$Spell 0 -1.000000 0.500000 1.875000 AsDuration"/>
-        <On Terms="Abil.NaniteGrenade.SourceFinishStop" Send="AnimClear Spell"/>
         <On Terms="UnitHeightUpdate.*.Land" Send="Create Marauder_Land"/>
         <On Terms="ActorCreation; ValidatePlayer AquilaPhalanxReactorUpgraded" Send="AnimPlay Cover Cover PlayForever"/>
         <On Terms="Upgrade.PhalanxReactor.Add" Send="AnimPlay Cover Cover PlayForever"/>
@@ -2213,7 +2178,7 @@
         <Abil Link=""/>
         <Range value="3.000000"/>
     </CActorRange>
-    <CActorRange id="AvengerVengeanceMissileRange" parent="RangeAbilStandard" abil="VengeanceMissile"/>
+    <CActorRange id="AvengerStarBoltRange" parent="RangeAbilStandard" abil="StarBolt"/>
     <CActorRange id="JupiterRevenantBombRange" parent="RangeAbilStandard" abil="RevenantBomb">
         <On Terms="Abil.RevenantBombUnit.TargetOn" Send="Create"/>
         <On Terms="Abil.RevenantBombUnit.TargetOff" Send="Destroy"/>
@@ -2221,9 +2186,6 @@
         <On Terms="Abil.RevenantBombUnit.ButtonHoverOff" Send="Destroy"/>
     </CActorRange>
     <CActorRange id="ProcessorAnalyzeWeaknessRange" parent="RangeAbilStandard" abil="ProcessorAnalyzeWeakness"/>
-    <CActorModel id="AvengerVengeanceMissileAdd" parent="ModelAddition">
-        <HostSiteOps Ops="SOpAttachHardPoint"/>
-    </CActorModel>
     <CActorUnit id="FilteringPlantRich" parent="GenetronBuilding" buildTime="24.000000" unitName="FilteringPlantRich">
         <Aliases value="_UnitHuge"/>
         <Macros value="ExtractAnim"/>
@@ -2976,16 +2938,6 @@
         <On Terms="Abil.LaunchShockCharge.ButtonHoverOn" Send="Create"/>
         <On Terms="Abil.LaunchShockCharge.ButtonHoverOn" Send="Destroy"/>
     </CActorRange>
-    <CActorModel id="AquilaNaniteGrenadeStunImpact" parent="ModelAnimationStyleContinuousUNIT">
-        <On Terms="Behavior.NaniteGrenadeAB.On" Send="Create"/>
-        <On Terms="Behavior.NaniteGrenadeAB.Off" Send="AnimBracketStop BSD"/>
-        <HostSiteOps Ops="SOpAttachOverhead"/>
-    </CActorModel>
-    <CActorAction id="AquilaNaniteGrenade" parent="GenericAttack" effectImpact="NaniteGrenadeImpact" effectLaunch="NaniteGrenade">
-        <LaunchAttachQuery Methods="AMFilterWeapon"/>
-        <ImpactMap index="None" Sound="Nova_FlashBangGrenade_Impact"/>
-    </CActorAction>
-    <CActorRange id="AquilaNaniteGrenadeRange" parent="RangeAbilStandard" abil="NaniteGrenade"/>
     <CActorUnit id="Boar" parent="GenericUnitStandard" unitName="Boar">
         <On Terms="Behavior.BoarIgnitionBlastInit.On" Send="AnimBracketStart Spell Spell,Start Spell Spell,End"/>
         <On Terms="Behavior.IgnitionBlast.Off" Send="AnimBracketStop Spell"/>
@@ -3156,17 +3108,6 @@
     <CActorModel id="RepulsorPlacementModel" parent="GenetronPlacementModel">
         <On Terms="ActorCreation" Send="Create RepulsorWeaponRange"/>
     </CActorModel>
-    <CActorModel id="UploaderCastDelayModel" parent="ModelAnimationStyleContinuousUNIT">
-        <On Terms="Behavior.DownloadPhase.On" Send="Create"/>
-        <On Terms="Behavior.DownloadPhase.Off" Send="Destroy"/>
-        <HostSiteOps Ops="SOpAttachHardPoint"/>
-    </CActorModel>
-    <CActorSound id="UploaderSchematicTransmitSoundLoop" parent="SoundContinuous">
-        <On Terms="Effect.SchematicTransmitCP.Start" Send="Create"/>
-        <On Terms="Effect.SchematicTransmitCP.Stop" Send="Destroy"/>
-        <HostForProps Subject="_Unit"/>
-        <Sound value="Uploader_SchematicTransmit_Loop"/>
-    </CActorSound>
     <CActorSound id="ACRGatherSound" parent="SoundOneShot">
         <Sound value="ACR_GatherMineral"/>
     </CActorSound>
@@ -3201,15 +3142,6 @@
         <On Terms="UnitBirth.FilteringPlantRich" Send="Create"/>
     </CActorSplat>
     <CActorModel id="FilteringPlantBuild" parent="GenetronBuildingBuild"/>
-    <CActorModel id="UploaderPlacementModel" parent="PlacementModel">
-        <On Terms="ActorCreation; ModelName UploaderPlacement" Send="Create UploaderSchematicTransmitRange"/>
-        <On Terms="ActorCreation; ModelName Uploader; ModelIsLowQuality" Send="Create UploaderSchematicTransmitRange"/>
-        <On Terms="ActorDestruction" Target="MissileTurretProtectRange" Send="Destroy"/>
-    </CActorModel>
-    <CActorRange id="UploaderSchematicTransmitRange" parent="RangeAbilStandard" abil="SchematicTransmit"/>
-    <CActorSound id="AquilaNaniteGrenade_Toss" parent="SoundOneShotScion" Effect="NaniteGrenade">
-        <Sound value="Nova_FlashBangGrenade_Toss"/>
-    </CActorSound>
     <CActorAction id="AquilaMagnumAttack" parent="GenericAttack" effectAttack="D15Magnum">
         <LaunchAttachQuery Methods="AMFilterAquila"/>
         <LaunchAssets Model="GhostSnipeAttackLaunch"/>
@@ -3218,22 +3150,26 @@
     </CActorAction>
     <CActorAction id="Scion_AvengerAttack" parent="GenericAttack" effectImpact="NemesisMissilesLMImpact" effectLaunch="NemesisMissilesLM">
         <LaunchAttachQuery Methods="AMPatternAvenger"/>
-        <LaunchAssets Model="VikingFighterAttackLaunch" Sound="SkyTank_BarrageMissile_Launch_Swt"/>
+        <LaunchAssets Model="VikingFighterAttackLaunch"/>
         <Missile value="AvengerNemesisAttackMissile"/>
-        <ImpactMap index="None" Model="MarauderUpgradedAttackImpact" Sound="SkyTank_BarrageMissile_Impact"/>
+        <ImpactMap index="None" Model="AvengerNemesisMissileAttackImpact" Sound="SkyTank_BarrageMissile_Impact"/>
     </CActorAction>
     <CActorUnit id="Scion_Avenger" parent="GenericUnitStandard" unitName="Scion_Avenger">
         <Macros value="TerrainSquibAnimations"/>
         <Macros value="PhysicsDeathsSwarmAir"/>
         <Macros value="PhysicsDeathsVoidAir"/>
-        <On Terms="UnitBirth.Scion_Avenger" Send="Create AvengerVengeanceMissileAdd"/>
+        <On Terms="Effect.AvengerStarBoltCreatePersistent.Start" Send="AnimBracketStart Work Work,Start Work Work,End 0 1.250000 AsDuration"/>
+        <On Terms="Effect.AvengerStarBoltCreatePersistent.Stop" Send="AnimBracketClear Work"/>
+        <On Terms="Effect.AvengerStarBoltCreatePersistent.Start" Send="AnimPlay Work Work,Start PlayForever,NonLooping -1.000000 -1.000000 1.400000 AsDuration"/>
+        <On Terms="Effect.AvengerStarBoltCreatePersistent.Stop" Send="AnimPlay Work Work,End"/>
+        <!--On Terms="UnitBirth.Scion_Avenger" Send="Create AvengerVengeanceMissileAdd"/>
         <On Terms="AbilCharge.VengeanceMissile.Regen" Send="Create AvengerVengeanceMissileAdd"/>
-        <On Terms="AbilCharge.VengeanceMissile.Spend" Target="AvengerVengeanceMissileAdd" Send="Destroy"/>
-        <HostSiteOps Ops="SOpBankerViking"/>
+        <On Terms="AbilCharge.VengeanceMissile.Spend" Target="AvengerVengeanceMissileAdd" Send="Destroy"/-->
+        <HostSiteOps Ops="SOpBankerHarbinger"/>
         <Model value="AvengerGenetron"/>
         <ModelFlags index="OutlineEmitter" value="1"/>
         <BuildModel value="AvengerGenetron"/>
-        <DeathArray index="Normal" ModelLink="VikingFighterDeath" SoundLink="Viking_Explode" VoiceLink="VikingFighterDeathVoice"/>
+        <DeathArray index="Normal" ModelLink="Scion_AvengerDeath" SoundLink="Viking_Explode"/>
         <DeathCustoms>
             <ActorModel value="UnitDeathRagdollFlier"/>
             <ModelLink value="VikingFighterDeathRagdoll"/>
@@ -3264,17 +3200,17 @@
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-aircraftplating-level0.dds"/>
         <SoundArray index="Birth" value=""/>
         <SoundArray index="Pissed" value="Scion_Avenger_Attack"/>
-        <SoundArray index="Movement" value="Viking_FighterMovement"/>
         <UnitIcon value="Assets\Textures\btn-unit-genetron-avenger.dds"/>
         <Wireframe>
             <Image value="Assets\Textures\wireframe-genetron-avenger.dds"/>
         </Wireframe>
     </CActorUnit>
-    <CActorMissile id="AvengerVengeanceMissileAttackMissile" parent="GenericAttackMissile" unitName="VengeanceMissilesLMWeapon">
-        <Model value="AvengerVengeanceMissile"/>
+    <CActorMissile id="AvengerStarBoltAttackMissile" parent="GenericAttackMissile" unitName="StarBoltLMWeapon">
+        <Model value="AvengerStarBoltMissile"/>
     </CActorMissile>
-    <CActorAction id="AvengerVengeanceMissileAttack" parent="GenericAttack" effectImpact="VengeanceMissileLMImpact" effectLaunch="VengeanceMissileLM">
-        <LaunchAttachQuery Methods="AMFilterHardpoint"/>
+    <CActorAction id="AvengerStarBoltAttack" parent="GenericAttack" effectImpact="AvengerStarBoltDamage" effectLaunch="AvengerStarBoltLM">
+        <LaunchAttachQuery Methods="AMFilterWeapon"/>
+        <ImpactPointSite value="AvengerStarBoltAttackImpactSite"/>
     </CActorAction>
     <CActorUnit id="Badger" parent="GenericUnitStandard" unitName="Badger">
         <On index="65" Terms="WeaponStart.HellraiserGuns.AttackStart" Send="AnimBracketStart Attack Attack"/>
@@ -3308,9 +3244,6 @@
         <LaunchAttachQuery Methods="AMFilterBadgerAG AMPatternBadgerAG"/>
         <ImpactPhysics Name="HellraiserGunsImpact" MatchKeys="Basic" Physics="BadgerAttackForce"/>
     </CActorAction>
-    <CActorMissile id="AquilaNaniteGrenadeMissile" parent="GenericAttackMissile" unitName="NaniteGrenadeWeapon">
-        <Model value="AquilaNaniteGrenadeModel"/>
-    </CActorMissile>
     <CActorAction id="BadgerAutogunAttack" parent="GenericAttack" effectImpact="LancerAutogunImpact" effectLaunch="LancerAutogun">
         <Missile value="BadgerAutogunMissile"/>
         <ImpactPhysics Name="LancerAutogunImpact" MatchKeys="BasicAir" Physics="BadgerAttackForce">
@@ -3323,11 +3256,6 @@
     <CActorBeamSimple id="AquilaMagnumAttackBeam" parent="GenericAttackBeam">
         <Model value="AquilaMagnumAttackBeamModel"/>
     </CActorBeamSimple>
-    <CActorSplat id="AquilaNaniteGrenadeCursor" parent="GuideVisualCircle" unitName="Bogus">
-        <On index="0" Terms="Abil.NaniteGrenade.Cursor" Send="Create"/>
-        <Model value="JupiterAttackSplat"/>
-        <Scale value="0.700000"/>
-    </CActorSplat>
     <CActorModel id="FabricatorBuild" parent="GenetronBuildingBuild"/>
     <CActorSound id="MechUnitFabricationLoop" parent="SoundContinuous">
         <On Terms="AbilTrain.TrainLightweightMechs.Start" Send="Create"/>
@@ -3343,31 +3271,8 @@
         <Sound value="MechFabricaitonSoundLoopAlt"/>
     </CActorSound>
     <CActorModel id="UploaderBuild" parent="GenetronBuildingBuild"/>
-    <CActorBeamSimple id="UploaderSchematicTransmitBeam" parent="BeamSimpleAnimationStyleContinuous">
-        <On Terms="Effect.SchematicTransmitCP.Start; At Caster" Send="Create"/>
-        <On Terms="Effect.SchematicTransmitCP.Stop; FromEffectTreeDescendant" Send="AnimBracketStop BSD"/>
-        <On Terms="Behavior.SchematicTransmitAL1.On" Send="$Spell,A 0 0.500000"/>
-        <On Terms="Behavior.SchematicTransmitAL2.On" Send="$Spell,B 0 0.500000"/>
-        <On Terms="Behavior.SchematicTransmitAL3.On" Send="$Spell,C 0 0.500000"/>
-        <!--<On Terms="ActorCreation" Send="$Birth 0 0.000000 -1.000000 -1.000000 AsAutomatic 0.000000 20"/>
-        <On Terms="Effect.SchematicTransmitCP.Stop; FromEffectTreeDescendant" Send="AnimPlay Birth Death 0 -1.000000 -1.000000 -1.000000 AsAutomatic 0.000000 22"/>-->
-        <HostLaunch Subject="_Unit" Scope="Caster" Actor="Find"/>
-        <HostLaunchSiteOps Ops="SOpAttachHardPoint"/>
-        <HostImpact Subject="_Unit" Scope="Target" Actor="Find"/>
-        <HostImpactSiteOps Ops="SOpAttachHardPoint01"/>
-    </CActorBeamSimple>
     <CActorModel id="ManufacturerBuild" parent="GenetronBuildingBuild"/>
-    <CActorSound id="UploaderSchematicTransmitSoundStart" parent="SoundOneShot">
-        <On Terms="Effect.SchematicTransmitCP.Start" Send="Create"/>
-        <Sound value="Uploader_SchematicTransmit_Start"/>
-    </CActorSound>
-    <CActorSound id="UploaderSchematicTransmitSoundEnd" parent="SoundOneShot">
-        <On Terms="Effect.SchematicTransmitCP.Stop" Send="Create"/>
-        <Sound value="Uploader_SchematicTransmitEnd"/>
-    </CActorSound>
-    <CActorSplat id="UploaderSplat" parent="GenericUnitSplat" unitName="ProcessingCore">
-        <On index="2" Terms="UnitBirth.Uploader" Send="Create"/>
-    </CActorSplat>
+    <CActorSplat id="UploaderSplat" parent="GenericUnitSplat" unitName="Uploader"/>
     <CActorUnit id="Uploader" parent="GenetronBuilding" buildTime="29.000000" unitName="Uploader">
         <On Terms="Abil.UploaderResearchManufacL1.Start" Send="AnimPlay StandWork Stand,Work PlayForever"/>
         <On Terms="Abil.UploaderResearchManufacL1.Stop" Send="AnimClear StandWork"/>
@@ -3553,6 +3458,8 @@
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-aircraftplating-level0.dds"/>
         <On Terms="Behavior.JupiterSpeedBuff.On" Send="$Spell PlayForever"/>
         <On Terms="Behavior.JupiterSpeedBuff.Off" Send="AnimClear Spell"/>
+        <On Terms="Behavior.JupiterSpeedController.On" Send="AnimPlay Work Walk PlayForever"/>
+        <On Terms="Behavior.JupiterSpeedController.Off" Send="AnimClear Work"/>
         <Macros value="TerrainSquibAnimations"/>
         <Macros value="PhysicsDeathsSwarmAir"/>
         <Macros value="PhysicsDeathsVoidAir"/>
@@ -3671,12 +3578,12 @@
         <SoundArray index="Movement" value="Disruptor_Movement"/>
         <BarOffset value="45"/>
         <GroupIcon>
-            <Image value="Assets\Textures\wireframe-genetron-equalizer-v2.dds"/>
+            <Image value="Assets\Textures\wireframe-genetron-equalizer.dds"/>
         </GroupIcon>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-groundmechplating-level0.dds"/>
-        <UnitIcon value="Assets\Textures\btn-unit-genetron-equalizer-v2.dds"/>
+        <UnitIcon value="Assets\Textures\btn-unit-genetron-equalizer.dds"/>
         <Wireframe>
-            <Image value="Assets\Textures\wireframe-genetron-equalizer-v2.dds"/>
+            <Image value="Assets\Textures\wireframe-genetron-equalizer.dds"/>
         </Wireframe>
         <DeathArray index="Normal" ModelLink="EqualizerDeath" SoundLink="Hellion_Explode" VoiceLink="Equalizer_Death"/>
         <Aliases value="_UnitMedium"/>
@@ -3899,7 +3806,7 @@
         <On Terms="AbilTrain.BuildAircraft.Cancel" Send="AnimClear StandWork"/>
         <On Terms="Behavior.Scion_Overclock.On" Send="AnimSetTimeScaleGlobal 2.000000 Overclock"/>
         <On Terms="Behavior.Scion_Overclock.Off" Send="AnimClearTimeScaleGlobal Overclock"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced AvengerGenetron" Send="Create AvengerConstruction"/>
+        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Scion_Avenger" Send="Create AvengerBuild"/>
         <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Badger" Send="Create BadgerConstruction"/>
         <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Jupiter" Send="Create JupiterConstruction"/>
         <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Courier" Send="Create CourierConstruction"/>
@@ -4631,10 +4538,14 @@
     <CActorModel id="IncendiaryInfusionGroundExplosion" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Effect.IncendiaryInfusionSAG.Impact; At Target" Send="Create"/>
         <HostSiteOps Ops="SOpAttachCenter"/>
+        <MaxScale value="2.000000"/>
+        <AutoScaleFromSelectionFactor value="1.000000"/>
     </CActorModel>
     <CActorModel id="IncendiaryInfusionAirExplosion" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Effect.IncendiaryInfusionSAA.Impact; At Target" Send="Create"/>
         <HostSiteOps Ops="SOpAttachCenter"/>
+        <MaxScale value="2.000000"/>
+        <AutoScaleFromSelectionFactor value="1.000000"/>
     </CActorModel>
     <CActorModel id="FeedingPoolPlacement" parent="PlacementModel">
         <On Terms="ActorCreation; ModelName FeedingPool" Send="Create FeedingPoolBuffRange"/>
@@ -4930,20 +4841,18 @@
         <ImpactMap index="None" Model="RavagerWeaponImpact" Sound="Ravager_Attack_Impact"/>
     </CActorAction>
     <CActorAction id="AssailantAttack" parent="GenericAttack" effectImpact="AcidWormsLMImpact" effectLaunch="AcidWormsLM">
+        <On Terms="Effect.AcidWormsLMP.Start; At Caster" Send="Create"/>
         <LaunchAssets Sound="GuardianMP_AttackLaunch"/>
         <ImpactMap index="None" Sound="GuardianMP_AttackImpact"/>
         <ImpactPointSite value="AssailantAttackImpactSite"/>
+        <ImpactSite value="AssailantAttackImpactSite"/>
     </CActorAction>
-    <CActorAction id="AssailantAttackRetarget" parent="GenericAttack" effectImpact="AcidWormsLMRImpact" effectLaunch="AcidWormsLMR">
+    <CActorAction id="AssailantAttackRetarget" parent="GenericAttack" effectImpact="AcidWormsLMImpact" effectLaunch="AcidWormsBLM">
         <LaunchRequest Subject="AssailantAttackImpactSite" Actor="Find"/>
         <LaunchAssets Model="AssailantAttackLaunch" Sound="GuardianMP_AttackLaunch"/>
-        <Beam value="AssailantAttackBeam"/>
         <Missile value="AssailantAttackMissile"/>
         <ImpactSite value="AssailantAttackImpactSite"/>
-        <ImpactMap index="None" Model="AssailantAttackImpact" Sound="GuardianMP_AttackImpact" ModelReaction="AssailantAttackImpactReaction"/>
-        <ImpactMap index="Shield" Sound="AssailantAttackImpactShield" ModelReaction="AssailantAttackImpactReactionShield"/>
-        <DamageMap index="None" Model="AssailantAttackDamage" Sound="AssailantAttackDamage" ModelReaction="AssailantAttackDamageReaction"/>
-        <DamageMap index="Shield" Sound="AssailantAttackDamageShield" ModelReaction="AssailantAttackDamageReactionShield"/>
+        <ImpactMap index="None" Model="AssailantAttackImpact" Sound="GuardianMP_AttackImpact"/>
     </CActorAction>
     <CActorSite id="AssailantAttackImpactSite"/>
     <CActorModel id="BlindingBurstLaunch" parent="ModelAnimationStyleOneShot">
@@ -5879,6 +5788,7 @@
         <On Terms="Effect.OculusRevealVision.Stop" Send="AnimBracketStop BSD"/>
         <On Terms="ActorCreation" Send="Create OculusRevealVisualRangeEnemy"/>
         <On Terms="ActorDestruction" Target="OculusRevealVisualRangeEnemy" Send="Destroy"/>
+        <On Terms="ActorCreation" Send="SetOpacity 0.700000"/>
         <HostSiteOps Ops="SOpTargetPointStationary SOpForwardCasterPointInverted SOpMoveUpBy3 SOpMoveUpBy2" HoldPosition="1" HoldRotation="1"/>
         <Model value="OculusRevealModel"/>
         <FogVisibility value="Hidden"/>
@@ -5930,7 +5840,6 @@
     <CActorMissile id="HarbingerAirAttackMissile" parent="GenericAttackMissile" unitName="HeraldEnergyCannonsLMWeapon">
         <Model value="HarbingerAirAttackMissile"/>
     </CActorMissile>
-    <CActorModel/>
     <CActorUnit id="Aegis" parent="GenericUnitKeiron" unitName="Aegis">
         <On Terms="Behavior.AegisShieldAura.On" Send="AnimBracketStart StandWork Stand,Work,Start Stand,Work Stand,Work,End"/>
         <On Terms="Behavior.AegisShieldAura.On" Send="ModelSwap AegisShielded"/>
@@ -6022,9 +5931,10 @@
         <Model value="ProtossLargeUnitDeath"/>
         <Scale value="2.000000"/>
     </CActorModel>
-    <CActorModel id="CruxConvergenceImpactCharge" parent="ModelAnimationStyleOneShotEffect" Effect="CruxConvergence">
+    <CActorModel id="CruxConvergenceImpactCharge" parent="ModelAnimationStyleOneShot">
         <Aliases value="_Scalable"/>
-        <On index="0" Send="AnimBracketStart BSD Birth Stand Death"/>
+        <On index="0" Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand Death"/>
+        <On Terms="Effect.CruxConvergence.Start" Send="Create"/>
         <On Terms="Effect.CruxConvergence.Stop" Send="AnimBracketStop BSD"/>
     </CActorModel>
     <CActorModel id="CruxConvergenceSourceCharge1" parent="ModelAnimationStyleContinuousUNIT">
@@ -6218,9 +6128,9 @@
         <HostSiteOps Ops="SOpAttachCenter" HoldRotation="1"/>
         <AutoScaleFactor value="0.900000"/>
     </CActorModel>
-    <CActorModel id="CruxConvergenceImpact" parent="ModelAnimationStyleOneShotEffect" Effect="CruxConvergenceSA">
+    <CActorModel id="CruxConvergenceImpact" parent="ModelAnimationStyleOneShot">
         <Aliases value="_Scalable"/>
-        <On index="3" Terms="Effect.CruxConvergenceSA.Start; At Effect" Send="Create"/>
+        <On Terms="Effect.CruxConvergenceSA.Start; At Effect" Send="Create"/>
     </CActorModel>
     <CActorRange id="CruxConvergenceRange" parent="RangeAbilStandard" abil="CruxConvergence"/>
     <CActorBeamSimple id="CruxLightningBoltBeam" parent="BeamSimpleAnimationStyleOneShot">
@@ -6497,14 +6407,26 @@
     </CActorUnit>
     <CActorModel id="PlaceholderModelKeiron" parent="PlacementModel">
         <On index="0" Terms="ActorCreation"/>
-        <On Terms="ActorCreation" Send="SetTintColor {255,255,0 2.000000}"/>
+        <On Terms="ActorCreation" Send="SetCastShadows"/>
         <On Terms="ActorCreation" Send="SetTeamColor {255,255,0 2.000000}"/>
+        <On Terms="ActorCreation" Send="SetTintColor {255,255,0 2.000000} 0.000000 OneShot Yello1"/>
+        <On Terms="ActorCreation" Send="SetTintColor {255,255,0 2.000000} 0.000000 OneShot Yello2"/>
+        <On Terms="ActorCreation" Send="AnimGroupApply Placement"/>
+        <On Terms="ActorCreation" Send="$Stand PlayForever"/>
+        <On Terms="ActorCreation" Send="AnimSetPausedAll"/>
+        <On Terms="ActorCreation" Send="DestroyRibbons"/>
         <HostSiteOps Ops="SOpShadowAsyncPrecise"/>
     </CActorModel>
     <CActorModel id="PlaceholderModelKeironAir" parent="PlacementModel">
         <On index="0" Terms="ActorCreation"/>
-        <On Terms="ActorCreation" Send="SetTintColor {255,255,0 2.000000}"/>
+        <On Terms="ActorCreation" Send="SetCastShadows"/>
         <On Terms="ActorCreation" Send="SetTeamColor {255,255,0 2.000000}"/>
+        <On Terms="ActorCreation" Send="SetTintColor {255,255,0 2.000000} 0.000000 OneShot Yello1"/>
+        <On Terms="ActorCreation" Send="SetTintColor {255,255,0 2.000000} 0.000000 OneShot Yello2"/>
+        <On Terms="ActorCreation" Send="AnimGroupApply Placement"/>
+        <On Terms="ActorCreation" Send="$Stand PlayForever"/>
+        <On Terms="ActorCreation" Send="AnimSetPausedAll"/>
+        <On Terms="ActorCreation" Send="DestroyRibbons"/>
         <HostSiteOps Ops=""/>
     </CActorModel>
     <CActorModel id="PlacementModelKeiron">
@@ -6515,10 +6437,14 @@
         <Filter index="Enemy" value="1"/>
         <FogVisibility value="Visible"/>
         <On Terms="ActorCreation" Send="SetOpacity 0.300000"/>
-        <On Terms="ActorCreation" Send="SetTintColor {255,255,0 2.000000}"/>
+        <On Terms="ActorCreation" Send="SetCastShadows"/>
         <On Terms="ActorCreation" Send="SetTeamColor {255,255,0 2.000000}"/>
+        <On Terms="ActorCreation" Send="SetTintColor {255,255,0 2.000000} 0.000000 OneShot Yello1"/>
+        <On Terms="ActorCreation" Send="SetTintColor {255,255,0 2.000000} 0.000000 OneShot Yello2"/>
         <On Terms="ActorCreation" Send="AnimGroupApply Placement"/>
         <On Terms="ActorCreation" Send="$Stand PlayForever"/>
+        <On Terms="ActorCreation" Send="AnimSetPausedAll"/>
+        <On Terms="ActorCreation" Send="DestroyRibbons"/>
         <On Terms="ActorOrphan" Send="Destroy"/>
         <On Terms="Signal.*.HidePlacement" Send="SetVisibility"/>
         <On Terms="Signal.*.ShowPlacement" Send="SetVisibility 1"/>
@@ -6765,7 +6691,7 @@
         <On Terms="WeaponStart.ParagonGroundWeapon.AttackStart" Target="_ParagonTurretAG" Send="TimerKill Cover"/>
         <On Terms="WeaponStop.ParagonGroundWeapon.AttackStop" Send="TimerSet 2.000000 Cover"/>
         <On Terms="TimerExpired; TimerName Cover" Target="_ParagonTurretAG" Send="LookAtDisengage"/>
-        <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMassive" SoundLink="Tempest_Explode"/>
+        <DeathArray index="Normal" ActorModel="KeironUnitDeathExplosionMassive" SoundLink="Paragon_Explode"/>
         <BarOffset value="80"/>
         <BarWidth value="120"/>
         <LifeArmorIcon value="Assets\Textures\btn-upgrade-keiron-mechanicalarmorlevel0.dds"/>
@@ -7147,8 +7073,10 @@
         <Scale value="0.800000"/>
     </CActorModel>
     <CActorModel id="AuroraEmanatorPlacement" parent="PlacementModel">
+        <On index="0" Terms="ActorCreation"/>
         <On Terms="ActorCreation" Send="SetTintColor {255,255,0 2.000000}"/>
         <On Terms="ActorCreation" Send="SetTeamColor {255,255,0 2.000000}"/>
+        <On Terms="ActorCreation" Send="SetCastShadows"/>
         <HostSiteOps Ops="SOpRaiseBy4"/>
     </CActorModel>
     <CActorAction id="PariahAttack" parent="GenericAttack" effectAttack="Psythe"/>

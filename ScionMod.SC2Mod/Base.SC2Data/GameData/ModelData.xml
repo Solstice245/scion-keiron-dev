@@ -71,8 +71,8 @@
         <Lighting value="GenetronBuildingBuild"/>
         <Priority value="30"/>
     </CModel>
-    <CModel id="AquilaNaniteEmitter" parent="MissileFX">
-        <Model value="Assets\Effects\Genetron\NaniteEmitter.m3"/>
+    <CModel id="NaniteEmitterWeapon" parent="MissileFX">
+        <Model value="Assets\Effects\Genetron\NaniteEmitterMissile.m3"/>
         <EditorCategories value="Race:Genetron"/>
     </CModel>
     <CModel id="AquilaNaniteEmitterArea" parent="PersistentSpellFX">
@@ -86,6 +86,10 @@
         <EditorCategories value="Race:Genetron"/>
         <ScaleMax value="0.850000,0.850000,0.850000"/>
         <ScaleMin value="0.850000,0.850000,0.850000"/>
+    </CModel>
+    <CModel id="AvengerNemesisMissileAttackImpact" parent="ImpactFX">
+        <Model value="Assets\Effects\Genetron\AvengerAttackMissileImpact.m3"/>
+        <EditorCategories value="Race:Genetron"/>
     </CModel>
     <CModel id="BadgerEnergyShieldGlaze">
         <Model value="Assets\Effects\Glaze\SOA_ShieldOvercharge_Glaze\SOA_ShieldOvercharge_Glaze.m3"/>
@@ -137,6 +141,12 @@
     <CModel id="LunaMineDeath" parent="UnitDeath">
         <Model value="Assets\Units\Genetron\TorrentDroneDeath.m3"/>
         <EditorCategories value="Race:Genetron"/>
+    </CModel>
+    <CModel id="Marine">
+        <RequiredAnims value="Assets\Units\Terran\MarineRaynor\MarineRaynor.m3"/>
+    </CModel>
+    <CModel id="MarineXPR">
+        <RequiredAnims value="Assets\Units\Terran\MarineRaynor\MarineRaynor.m3"/>
     </CModel>
     <CModel id="SpitfireAttackBeam" parent="PersistentSpellFX">
         <Model value="Assets\Effects\Genetron\SpitfireAttackBeam.m3"/>
@@ -238,6 +248,20 @@
         <EditorCategories value="Race:Keiron"/>
         <ScaleMax value="0.850000,0.850000,0.850000"/>
         <ScaleMin value="0.850000,0.850000,0.850000"/>
+    </CModel>
+    <CModel id="Scion_AvengerDeath" parent="UnitDeath" Race="Terran">
+        <Model value="Assets\Units\Genetron\AvengerDeath\AvengerDeath.m3"/>
+        <LowQualityModel value="TerranLargeUnitDeathLow"/>
+        <EditorCategories value="Race:Genetron"/>
+        <Events>
+            <Variation value="1"/>
+            <Anim value="Death,02"/>
+            <Name value="Uni_DeathFXincidentallFire"/>
+            <Type value="Sound"/>
+            <Time value="0.600000"/>
+            <Payload value="Uni_DeathFXincidentallFire"/>
+        </Events>
+        <Occlusion value="Show"/>
     </CModel>
     <CModel id="WardRestitutionImpact" parent="ImpactFX">
         <Model value="Assets\Effects\Protoss\Adept_Collection_Purifier_Missile_Impact\Adept_Collection_Purifier_Missile_Impact.m3"/>
@@ -823,12 +847,6 @@
         <Model value="Assets\Effects\Zerg\RoachMissileImpact\RoachMissileImpact.m3"/>
         <EditorCategories value="Race:Xayid"/>
     </CModel>
-    <CModel id="AvengerVengeanceMissileAdd" parent="MissileFX">
-        <Model value="Assets\Effects\Genetron\AvengerVengeanceMissileAdd.m3"/>
-        <EditorCategories value="Race:Genetron"/>
-        <ScaleMax value="2.000000,2.000000,2.000000"/>
-        <ScaleMin value="2.000000,2.000000,2.000000"/>
-    </CModel>
     <CModel id="BlitzerSuperchargeAttackImpact" parent="ImpactFX">
         <Model value="Assets\Effects\Terran\MiraHorner_Wraith_Coop_Missile_Impact\MiraHorner_Wraith_Coop_Missile_Impact.m3"/>
         <AnimSpeed value="1.500000"/>
@@ -1110,36 +1128,34 @@
         <ScaleMax value="0.850000,0.850000,0.850000"/>
         <ScaleMin value="0.850000,0.850000,0.850000"/>
     </CModel>
-    <CModel id="AquilaNaniteGrenadeImpact" parent="ImpactFX">
-        <Model value="Assets\Effects\Genetron\NaniteGrenadeImpact.m3"/>
-        <EditorCategories value="Race:Genetron"/>
-        <Flags index="Wait" value="1"/>
-        <Priority value="32"/>
-    </CModel>
-    <CModel id="AquilaNaniteGrenadeModel" parent="MissileFX">
-        <Model value="Assets\Effects\Genetron\NaniteGrenade.m3"/>
-        <EditorCategories value="Race:Genetron"/>
-        <Flags index="Wait" value="1"/>
-        <Priority value="32"/>
-        <ScaleMax value="0.750000,0.750000,0.750000"/>
-        <ScaleMin value="0.750000,0.750000,0.750000"/>
-    </CModel>
-    <CModel id="AquilaNaniteGrenadeStunImpact" parent="BuffFX">
-        <Model value="Assets\Effects\Neutral\Stun_Void\Stun_Void.m3"/>
-        <EditorCategories value="Race:Genetron"/>
-        <Flags index="Wait" value="1"/>
-        <Priority value="32"/>
-    </CModel>
     <CModel id="AvengerGenetron" parent="Unit">
-        <Model value="Assets\Units\Genetron\AvengerJet.m3"/>
+        <Model value="Assets\Units\Genetron\Avenger\Avenger.m3"/>
         <EditorCategories value="Race:Genetron"/>
         <Radius value="0.750000"/>
-        <SelectionRadius value="0.937500"/>
+        <SelectionRadius value="0.812500"/>
         <SquibTypeDefault value="Metal"/>
         <UnitGlossaryCamera value="Star2CameraLow07"/>
-        <SelectionOffset value="0.000000,0.000000,-0.250000"/>
-        <ScaleMax value="0.900000,0.900000,0.900000"/>
-        <ScaleMin value="0.900000,0.900000,0.900000"/>
+        <Events>
+            <Anim value="Build,Start"/>
+            <Name value="BuildStart"/>
+            <Type value="Sound"/>
+            <Time value="0.000100"/>
+            <Payload value="Genetron_ConstructionStart2"/>
+        </Events>
+        <Events>
+            <Anim value="Work,Start"/>
+            <Name value="AvengerVengeanceMissileChannelZap0"/>
+            <Type value="Sound"/>
+            <Time value="0.500000"/>
+            <Payload value="AvengerStarBoltChannelZap"/>
+        </Events>
+        <Events>
+            <Anim value="Work,Start"/>
+            <Name value="AvengerVengeanceMissileChannelZap1"/>
+            <Type value="Sound"/>
+            <Time value="1.500000"/>
+            <Payload value="AvengerStarBoltChannelZap"/>
+        </Events>
     </CModel>
     <!--<CModel id="BlazeRefittedNozzleEffect" parent="LaunchFX">
         <Model value="Assets\Effects\Genetron\BlazeWeaponTipEffect.m3"/>
@@ -1280,10 +1296,8 @@
         <LowQualityModel value="TerranBuildingDeathLow"/>
     </CModel>
     <CModel id="InterdictorWeapon" parent="MissileFX">
-        <Model value="Assets\Effects\Terran\PlanetaryFortressMissile\PlanetaryFortressMissile.m3"/>
+        <Model value="Assets\Effects\Genetron\InterdictorAttackMissile.m3"/>
         <EditorCategories value="Race:Genetron"/>
-        <ScaleMax value="0.500000,1.250000,0.500000"/>
-        <ScaleMin value="0.500000,1.250000,0.500000"/>
     </CModel>
     <CModel id="InterdictorPlacement" parent="Placement">
         <EditorCategories value="Race:Genetron"/>
@@ -1346,11 +1360,9 @@
         <EditorCategories value="Race:Genetron"/>
         <LowQualityModel value="Repulsor"/>
     </CModel>
-    <CModel id="AvengerVengeanceMissileAttackImpact" parent="ImpactFX">
-        <Model value="Assets\Effects\Terran\VikingFighterMissileImpact\VikingFighterMissileImpact.m3"/>
+    <CModel id="AvengerStarBoltAttackImpact" parent="ImpactFX">
+        <Model value="Assets\Effects\Genetron\AvengerStarBoltMissileImpact.m3"/>
         <EditorCategories value="Race:Genetron"/>
-        <ScaleMax value="1.500000,1.500000,1.500000"/>
-        <ScaleMin value="1.500000,1.500000,1.500000"/>
     </CModel>
     <CModel id="VirtusAttackImpact" parent="ImpactFX">
         <Model value="Assets\Effects\Terran\TankWeaponImpact\TankWeaponImpact.m3"/>
@@ -1398,11 +1410,9 @@
         <ScaleMax value="0.800000,0.800000,0.800000"/>
         <ScaleMin value="0.800000,0.800000,0.800000"/>
     </CModel>
-    <CModel id="AvengerVengeanceMissile" parent="MissileFX">
-        <Model value="Assets\Effects\Terran\MiraHorner_Viking_Coop_MissileVolley\MiraHorner_Viking_Coop_MissileVolley.m3"/>
+    <CModel id="AvengerStarBoltMissile" parent="MissileFX">
+        <Model value="Assets\Effects\Genetron\AvengerStarBoltMissile.m3"/>
         <EditorCategories value="Race:Genetron"/>
-        <ScaleMax value="2.500000,2.500000,2.500000"/>
-        <ScaleMin value="2.500000,2.500000,2.500000"/>
     </CModel>
     <CModel id="Badger" parent="Unit">
         <Model value="Assets\Units\Genetron\Badger.m3"/>
@@ -1816,12 +1826,6 @@
         <ScaleMax value="0.450000,0.450000,0.750000"/>
         <ScaleMin value="0.450000,0.450000,0.750000"/>
     </CModel>
-    <CModel id="UploaderCastDelayModel" parent="PersistentSpellFX">
-        <Model value="Assets\Effects\Genetron\UploaderDownloadPhase.m3"/>
-        <EditorCategories value="Race:Genetron"/>
-        <ScaleMax value="1.100000,1.100000,1.100000"/>
-        <ScaleMin value="1.100000,1.100000,1.100000"/>
-    </CModel>
     <CModel id="UploaderDeath" parent="BuildingDeath">
         <Model value="Assets\Buildings\Terran\SigmaProjectorDeath\SigmaProjectorDeath.m3"/>
         <EditorCategories value="Race:Genetron"/>
@@ -1834,10 +1838,6 @@
         <Model value="Assets\Buildings\Genetron\UploaderPlacement.m3"/>
         <EditorCategories value="Race:Genetron"/>
         <LowQualityModel value="Uploader"/>
-    </CModel>
-    <CModel id="UploaderSchematicTransmitBeam" parent="PersistentSpellFX">
-        <Model value="Assets\Effects\Genetron\UploaderUplinkBeam.m3"/>
-        <EditorCategories value="Race:Genetron"/>
     </CModel>
     <CModel id="UploaderSplat" parent="Splat">
         <Model value="Assets\Splats\Splat_MissileTurret\Splat_MissileTurret.m3"/>
@@ -1892,7 +1892,7 @@
         <ScaleMin value="1.000000,2.250000,1.000000"/>
     </CModel>
     <CModel id="Equalizer" parent="Unit">
-        <Model value="Assets\Units\Genetron\Equalizer_V2.m3"/>
+        <Model value="Assets\Units\Genetron\Equalizer.m3"/>
         <EditorCategories value="Race:Genetron"/>
         <SelectionRadius value="0.625000"/>
         <SquibTypeDefault value="Metal"/>
@@ -1912,7 +1912,7 @@
         <ScaleMin value="0.950000,0.950000,0.950000"/>
     </CModel>
     <CModel id="EqualizerDeath" parent="UnitDeath">
-        <Model value="Assets\Units\Genetron\Equalizer_V2Death.m3"/>
+        <Model value="Assets\Units\Genetron\EqualizerDeath.m3"/>
         <EditorCategories value="Race:Genetron"/>
         <Occlusion value="Show"/>
         <LowQualityModel value="TerranMediumUnitDeathLow"/>
@@ -2223,10 +2223,8 @@
         <Priority value="32"/>
     </CModel>
     <CModel id="AvengerNemesisMissileWeapon" parent="MissileFX">
-        <Model value="Assets\Effects\Genetron\AvengerNemesisMissile.m3"/>
+        <Model value="Assets\Effects\Genetron\AvengerAttackMissile.m3"/>
         <EditorCategories value="Race:Genetron"/>
-        <ScaleMax value="2.000000,2.000000,2.000000"/>
-        <ScaleMin value="2.000000,2.000000,2.000000"/>
     </CModel>
     <CModel id="TorrentFabrication" parent="PersistentSpellFX">
         <Model value="Assets\Effects\Genetron\MechFabrication\TorrentFabrication.m3"/>
@@ -2482,15 +2480,15 @@
     <CModel id="IncendiaryInfusionAirExplosion" parent="ImpactFX">
         <Model value="Assets\Effects\Protoss\Dragoon_Purifier_Coop_AirBomb_Impact\Dragoon_Purifier_Coop_AirBomb_Impact.m3"/>
         <EditorCategories value="Race:Xayid"/>
-        <ScaleMax value="3.250000,3.250000,2.000000"/>
-        <ScaleMin value="3.250000,3.250000,2.000000"/>
+        <ScaleMax value="3.000000,3.000000,2.000000"/>
+        <ScaleMin value="3.000000,3.000000,2.000000"/>
     </CModel>
     <CModel id="IncendiaryInfusionGroundExplosion" parent="ImpactFX">
         <Model value="Assets\Effects\Terran\ThorAirCannonImpact\ThorAirCannonImpact.m3"/>
         <EditorCategories value="Race:Xayid"/>
         <Lighting value="IncendiaryInfusionAirExplosion"/>
-        <ScaleMax value="2.500000,2.500000,1.500000"/>
-        <ScaleMin value="2.500000,2.500000,1.500000"/>
+        <ScaleMax value="1.250000,1.250000,1.000000"/>
+        <ScaleMin value="1.250000,1.250000,1.000000"/>
     </CModel>
     <CModel id="IncendiaryInfusionMissile" parent="MissileFX">
         <Model value="Assets\Effects\Zerg\L2D_SpotterMissile\L2D_SpotterMissile.m3"/>
@@ -2727,7 +2725,7 @@
         <Radius value="1.000000"/>
     </CModel>
     <CModel id="BileSwarm" parent="MissileFX">
-        <Model value="Assets\Effects\Genetron\KrakenMissile.m3"/>
+        <Model value="Assets\Effects\Xayid\KrakenMissile.m3"/>
         <EditorCategories value="Race:Xayid"/>
     </CModel>
     <CModel id="VolatileDischargeMissile" parent="MissileFX">

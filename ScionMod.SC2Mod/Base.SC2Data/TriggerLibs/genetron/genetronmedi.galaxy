@@ -175,7 +175,6 @@ void GenetronOpenBuildMedi (int player) {
         AISetStock( player, 1, c_GB_Manufacturer );
         AISetStock( player, 1, c_GB_FilteringPlant );
         AISetStock( player, 2, c_GU_Spitfire );
-        AISetStock( player, 1, c_GB_Uploader );
         AISetStock( player, 2, c_GB_Node );
         AISetStock( player, 18, c_GU_ACR );
         AISetStockFarms( player, c_GB_Node, c_stockNormalFarms);
@@ -187,7 +186,6 @@ void GenetronOpenBuildMedi (int player) {
         AISetStock( player, 1, c_GB_Manufacturer );
         AISetStock( player, 1, c_GB_FilteringPlant );
         AISetStock( player, 2, c_GU_Spitfire );
-        AISetStock( player, 1, c_GB_Uploader );
         AISetStock( player, 2, c_GB_Node );
         AISetStock( player, 18, c_GU_ACR );
         AISetStockFarms( player, c_GB_Node, c_stockNormalFarms);
@@ -201,12 +199,10 @@ void GenetronOpenBuildMedi (int player) {
         AISetStock( player, 1, c_GB_Manufacturer );
         AISetStock( player, 1, c_GB_FilteringPlant );
         AISetStock( player, 1, c_GU_Spitfire );
-        AISetStock( player, 1, c_GB_Uploader );
         AISetStock( player, 2, c_GB_Node );
         AISetStock( player, 18, c_GU_ACR );
         AISetStockFarms( player, c_GB_Node, c_stockNormalFarms);
         AISetStock( player, 2, c_GB_FilteringPlant );
-        AISetStock( player, 2, c_GB_Uploader );
     }
     else if (buildType == e_buildType_Macro) {
         AISetStock( player, 1, c_GB_ProcessingCore );
@@ -215,7 +211,6 @@ void GenetronOpenBuildMedi (int player) {
         AISetStock( player, 1, c_GB_Manufacturer );
         if (GenetronMacroExpand(player)) { return; }
         AISetStock( player, 2, c_GU_Spitfire );
-        AISetStock( player, 3, c_GB_Uploader );
         AISetStock( player, 2, c_GB_Node );
         AISetStock( player, 18, c_GU_ACR );
         AISetStock( player, 1, c_GB_Fabricator );
@@ -238,7 +233,6 @@ void GenetronOpenBuildMedi (int player) {
         AISetStockUnitNext( player, 24, c_GU_ACR, c_stockIdle );
         AISetStockFarms( player, c_GB_Node, c_stockNormalFarms);
         AISetStock( player, 1, c_GB_AssemblyArray );
-        AISetStock( player, 9, c_GB_Uploader );
     }
 
     GenetronBasicDefenseStock(player);
@@ -397,34 +391,29 @@ void GenetronMidBuildMedi (int player) {
 
     if (buildType == e_buildType_Rush) {
         AISetStockUnitNext( player, 2, c_GB_Manufacturer, c_stockIdle );
-        AISetStockUnitNext( player, 4, c_GB_Uploader, c_stockIdle );
     }
     else if (buildType == e_buildType_Timing) {
         AISetStockUnitNext( player, 2, c_GB_Manufacturer, c_stockIdle );
         AISetStock( player, 1, c_GB_Fabricator);
-        AISetStock( player, 6, c_GB_Uploader);
     }
     else if (buildType == e_buildType_Power) {
         if (GenetronMacroExpand(player)) { return; }
         AISetStockUnitNext( player, 2, c_GB_Manufacturer, c_stockIdle );
         AISetStock( player, 1, c_GB_Fabricator);
-        AISetStock( player, 6, c_GB_Uploader);
     }
     else if (buildType == e_buildType_Macro) {
         if (GenetronMacroExpand(player)) { return; }
         AISetStockUnitNext( player, 2, c_GB_Manufacturer, c_stockIdle );
         AISetStock( player, 1, c_GB_Fabricator);
-        AISetStock( player, 6, c_GB_Uploader);
     }
     else if (buildType == e_buildType_Air) {
         if (GenetronMacroExpand(player)) { return; }
         AISetStock( player, 2, c_GB_AssemblyArray );
-        AISetStock( player, 9, c_GB_Uploader );
     }
 
     if (AINeedsDetection(player)) {
         AISetStock( player, 1, c_GU_Processor );
-        AISetStock( player, 2, c_GB_Interdictor_Alias );
+        AISetStock( player, 2, c_GB_Interdictor );
     }
 
     AISetStockArmyScale(player, 0.70);
@@ -728,35 +717,30 @@ void GenetronLateBuildMedi (int player) {
         AISetStockUnitNext( player, 2, c_GB_Manufacturer, c_stockIdle );
         AISetStockUnitNext( player, 1, c_GB_Fabricator, c_stockIdle );
         AISetStockUnitNext( player, 1, c_GB_AssemblyArray, c_stockIdle );
-        AISetStockUnitNext( player, 12, c_GB_Uploader, c_stockIdle );
     }
     else if (buildType == e_buildType_HighTech) {
         if (GenetronMacroExpand(player)) { return; }
         AISetStockUnitNext( player, 1, c_GB_Manufacturer, c_stockIdle );
         AISetStockUnitNext( player, 2, c_GB_Fabricator, c_stockIdle );
         AISetStockUnitNext( player, 1, c_GB_AssemblyArray, c_stockIdle );
-        AISetStockUnitNext( player, 12, c_GB_Uploader, c_stockIdle );
     }
     else if (buildType == e_buildType_Special) {
         if (GenetronMacroExpand(player)) { return; }
         AISetStockUnitNext( player, 1, c_GB_Manufacturer, c_stockIdle );
         AISetStockUnitNext( player, 2, c_GB_Fabricator, c_stockIdle );
         AISetStockUnitNext( player, 1, c_GB_AssemblyArray, c_stockIdle );
-        AISetStockUnitNext( player, 12, c_GB_Uploader, c_stockIdle );
     }
     else if (buildType == e_buildType_Mixed) {
         if (GenetronMacroExpand(player)) { return; }
         AISetStockUnitNext( player, 2, c_GB_Manufacturer, c_stockIdle );
         AISetStockUnitNext( player, 1, c_GB_Fabricator, c_stockIdle );
         AISetStockUnitNext( player, 1, c_GB_AssemblyArray, c_stockIdle );
-        AISetStockUnitNext( player, 12, c_GB_Uploader, c_stockIdle );
     }
     else if (buildType == e_buildType_Air) {
         if (GenetronMacroExpand(player)) { return; }
         AISetStockUnitNext( player, 1, c_GB_Manufacturer, c_stockIdle );
         AISetStockUnitNext( player, 1, c_GB_Fabricator, c_stockIdle );
         AISetStockUnitNext( player, 2, c_GB_AssemblyArray, c_stockIdle );
-        AISetStockUnitNext( player, 12, c_GB_Uploader, c_stockIdle );
     }
 
     AISetStock( player, 2, c_GU_Processor );
@@ -765,7 +749,7 @@ void GenetronLateBuildMedi (int player) {
 
     AISetStock( player, 2, c_GU_Courier );
     AISetStock( player, 3, c_GU_Processor );
-    AISetStock( player, 2, c_GB_Interdictor_Alias );
+    AISetStock( player, 2, c_GB_Interdictor );
 
     AISetStockArmyScale(player, 1.00);
 

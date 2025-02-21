@@ -6,12 +6,14 @@
 // 
 //==================================================================================================
 include "TriggerLibs/NativeLib"
+include "LibScio"
 
 //--------------------------------------------------------------------------------------------------
 // Library Initialization
 //--------------------------------------------------------------------------------------------------
 void InitLibs () {
     libNtve_InitLib();
+    libScio_InitLib();
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -74,7 +76,7 @@ unitgroup gv_builder_unit_group;
 unit[2][gv_const_races + 1] gv_builder_unit;
 bool gv_attack_mode;
 bool gv_vision;
-bool gv_generators;
+int gv_generators_level;
 bool gv_pause;
 int gv_tester_menu;
 int gv_tester_panel;
@@ -93,7 +95,7 @@ int gv_settings_panel;
 int[4] gv_settings_upgradebutton;
 int[2] gv_settings_researchbutton;
 int[2] gv_settings_visionbutton;
-int[2] gv_settings_generatorsbutton;
+int[4] gv_settings_generatorsbutton;
 int[gv_const_terrains + 1] gv_settings_terrainbutton;
 int[gv_const_players + 1] gv_settings_allianceplayerlabel;
 int[gv_const_players + 1][3] gv_settings_alliancebuttons;
@@ -119,7 +121,7 @@ void InitGlobals () {
     }
     gv_builder_unit_group = UnitGroupEmpty();
     gv_vision = true;
-    gv_generators = true;
+    gv_generators_level = 3;
     gv_tester_menu = c_invalidDialogControlId;
     gv_tester_panel = c_invalidDialogControlId;
     gv_menu_mode_settings = c_invalidDialogControlId;
@@ -143,7 +145,7 @@ void InitGlobals () {
     for (init_i = 0; init_i <= 1; init_i += 1) {
         gv_settings_visionbutton[init_i] = c_invalidDialogControlId;
     }
-    for (init_i = 0; init_i <= 1; init_i += 1) {
+    for (init_i = 0; init_i <= 3; init_i += 1) {
         gv_settings_generatorsbutton[init_i] = c_invalidDialogControlId;
     }
     for (init_i = 0; init_i <= gv_const_terrains; init_i += 1) {
@@ -553,6 +555,8 @@ void gf_RenderTesterUIForPlayer (int lp_player) {
     int lv_level_ii;
 
     // Automatic Variable Declarations
+    const int auto54F5D68A_ae = 3;
+    int auto54F5D68A_var;
     const int autoDC839A19_ae = gv_const_terrains;
     int autoDC839A19_var;
     const int autoF5E346DD_ae = gv_const_players;
@@ -652,13 +656,14 @@ void gf_RenderTesterUIForPlayer (int lp_player) {
                 libNtve_gf_SetDialogItemToggled(gv_settings_visionbutton[0], true, PlayerGroupSingle(lp_player));
                 libNtve_gf_SetDialogItemToggled(gv_settings_visionbutton[1], false, PlayerGroupSingle(lp_player));
             }
-            if ((gv_generators == true)) {
-                libNtve_gf_SetDialogItemToggled(gv_settings_generatorsbutton[0], false, PlayerGroupSingle(lp_player));
-                libNtve_gf_SetDialogItemToggled(gv_settings_generatorsbutton[1], true, PlayerGroupSingle(lp_player));
-            }
-            else {
-                libNtve_gf_SetDialogItemToggled(gv_settings_generatorsbutton[0], true, PlayerGroupSingle(lp_player));
-                libNtve_gf_SetDialogItemToggled(gv_settings_generatorsbutton[1], false, PlayerGroupSingle(lp_player));
+            auto54F5D68A_var = 0;
+            for ( ; auto54F5D68A_var <= auto54F5D68A_ae; auto54F5D68A_var += 1 ) {
+                if ((gv_generators_level == auto54F5D68A_var)) {
+                    libNtve_gf_SetDialogItemToggled(gv_settings_generatorsbutton[auto54F5D68A_var], true, PlayerGroupSingle(lp_player));
+                }
+                else {
+                    libNtve_gf_SetDialogItemToggled(gv_settings_generatorsbutton[auto54F5D68A_var], false, PlayerGroupSingle(lp_player));
+                }
             }
             autoDC839A19_var = 0;
             for ( ; autoDC839A19_var <= autoDC839A19_ae; autoDC839A19_var += 1 ) {
@@ -1051,6 +1056,8 @@ void gf_ResetTesterUnits () {
     gf_LoadTesterUnits(gv_unit_storage[0], gv_side_player[0]);
     gf_LoadTesterUnits(gv_unit_storage[1], gv_side_player[1]);
     gf_LoadTesterUnits(gv_unit_storage[2], 0);
+    UnitSetPropertyFixed(libScio_gv_sCION_POWERDUMMIES[gv_side_player[0]], c_unitPropEnergyPercent, 100.0);
+    UnitSetPropertyFixed(libScio_gv_sCION_POWERDUMMIES[gv_side_player[1]], c_unitPropEnergyPercent, 100.0);
     auto3D6D11B2_var = 1;
     for ( ; auto3D6D11B2_var <= auto3D6D11B2_ae; auto3D6D11B2_var += 1 ) {
         UnitControlGroupAddUnits(auto3D6D11B2_var, 1, UnitGroup(null, gv_side_player[0], RegionFromId(11), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0));
@@ -1575,7 +1582,7 @@ bool gt_Init_Func (bool testConds, bool runActions) {
     gf_AddUnitData("Spitfire", "Assets\\Textures\\btn-unit-genetron-spitfire.dds");
     gf_AddUnitData("Blitzer", "Assets\\Textures\\btn-unit-genetron-blitzer.dds");
     gf_AddUnitData("Fixer", "Assets\\Textures\\btn-unit-genetron-fixer.dds");
-    gf_AddUnitData("Equalizer", "Assets\\Textures\\btn-unit-genetron-equalizer-v2.dds");
+    gf_AddUnitData("Equalizer", "Assets\\Textures\\btn-unit-genetron-equalizer.dds");
     gf_AddUnitData("Aquila", "Assets\\Textures\\btn-unit-genetron-aquila.dds");
     gf_AddUnitData("Torrent", "Assets\\Textures\\btn-unit-genetron-torrent.dds");
     gf_AddUnitData("Mole", "Assets\\Textures\\btn-unit-genetron-mole.dds");
@@ -1653,13 +1660,13 @@ bool gt_Init_Func (bool testConds, bool runActions) {
     gf_AddUpgradeData(AbilityCommand("BarracksTechLabResearch", 2), null);
     gf_AddUpgradeData(AbilityCommand("GhostAcademyResearch", 0), null);
     gf_AddUpgradeData(AbilityCommand("FactoryTechLabResearch", 1), null);
-    gf_AddUpgradeData(AbilityCommand("FactoryTechLabResearch", 10), null);
+    gf_AddUpgradeData(AbilityCommand("FactoryTechLabResearch", 9), null);
     gf_AddUpgradeData(AbilityCommand("FactoryTechLabResearch", 4), null);
     gf_AddUpgradeData(AbilityCommand("FactoryTechLabResearch", 6), null);
     gf_AddUpgradeData(AbilityCommand("StarportTechLabResearch", 0), null);
     gf_AddUpgradeData(AbilityCommand("StarportTechLabResearch", 9), null);
-    TechTreeUpgradeAddLevel(9, "InterferenceMatrix", 1);
-    TechTreeUpgradeAddLevel(10, "InterferenceMatrix", 1);
+    TechTreeUpgradeAddLevel(gv_side_player[0], "InterferenceMatrix", 1);
+    TechTreeUpgradeAddLevel(gv_side_player[1], "InterferenceMatrix", 1);
     gf_AddUpgradeData(AbilityCommand("FusionCoreResearch", 3), null);
     gf_AddUpgradeData(AbilityCommand("FusionCoreResearch", 1), null);
     gf_AddUpgradeData(AbilityCommand("FusionCoreResearch", 0), null);
@@ -1738,8 +1745,10 @@ bool gt_Init_Func (bool testConds, bool runActions) {
     gv_settings_researchbutton[1] = gf_DialogItemFromLayoutHookup(c_triggerControlTypeButton, "UIContainer/FullscreenUpperContainer/TesterPanel/SettingsPanel/ListLeft/Research/On");
     gv_settings_visionbutton[0] = gf_DialogItemFromLayoutHookup(c_triggerControlTypeButton, "UIContainer/FullscreenUpperContainer/TesterPanel/SettingsPanel/ListLeft/Vision/Off");
     gv_settings_visionbutton[1] = gf_DialogItemFromLayoutHookup(c_triggerControlTypeButton, "UIContainer/FullscreenUpperContainer/TesterPanel/SettingsPanel/ListLeft/Vision/On");
-    gv_settings_generatorsbutton[0] = gf_DialogItemFromLayoutHookup(c_triggerControlTypeButton, "UIContainer/FullscreenUpperContainer/TesterPanel/SettingsPanel/ListLeft/Generators/Off");
-    gv_settings_generatorsbutton[1] = gf_DialogItemFromLayoutHookup(c_triggerControlTypeButton, "UIContainer/FullscreenUpperContainer/TesterPanel/SettingsPanel/ListLeft/Generators/On");
+    gv_settings_generatorsbutton[0] = gf_DialogItemFromLayoutHookup(c_triggerControlTypeButton, "UIContainer/FullscreenUpperContainer/TesterPanel/SettingsPanel/ListLeft/Generators/Level0");
+    gv_settings_generatorsbutton[1] = gf_DialogItemFromLayoutHookup(c_triggerControlTypeButton, "UIContainer/FullscreenUpperContainer/TesterPanel/SettingsPanel/ListLeft/Generators/Level1");
+    gv_settings_generatorsbutton[2] = gf_DialogItemFromLayoutHookup(c_triggerControlTypeButton, "UIContainer/FullscreenUpperContainer/TesterPanel/SettingsPanel/ListLeft/Generators/Level2");
+    gv_settings_generatorsbutton[3] = gf_DialogItemFromLayoutHookup(c_triggerControlTypeButton, "UIContainer/FullscreenUpperContainer/TesterPanel/SettingsPanel/ListLeft/Generators/Level3");
     lv_ii = 0;
     for ( ; ( (autoD1AD00AA_ai >= 0 && lv_ii <= autoD1AD00AA_ae) || (autoD1AD00AA_ai < 0 && lv_ii >= autoD1AD00AA_ae) ) ; lv_ii += autoD1AD00AA_ai ) {
         gv_settings_terrainbutton[lv_ii] = gf_DialogItemFromLayoutHookup(c_triggerControlTypeButton, ("UIContainer/FullscreenUpperContainer/TesterPanel/SettingsPanel/ListLeft/Terrain/Buttons/Terrain" + IntToString(lv_ii)));
@@ -1788,6 +1797,12 @@ bool gt_Init_Func (bool testConds, bool runActions) {
     CreepSetSpeed(c_creepSpeedGrowth, 1000.0);
     CreepSetSpeed(c_creepSpeedDecay, 1000.0);
     CreepSetSpeed(c_creepSpeedBlend, 1000.0);
+    libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[0], "TesterGenetronPowerLevel1", 1);
+    libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], "TesterGenetronPowerLevel1", 1);
+    libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[0], "TesterGenetronPowerLevel2", 1);
+    libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], "TesterGenetronPowerLevel2", 1);
+    libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[0], "TesterGenetronPowerLevel3", 1);
+    libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], "TesterGenetronPowerLevel3", 1);
     gf_LoadTerrainData(gv_data_terrain[0]);
     gf_TesterLeaderboardCreate();
     gf_SaveMapStructures();
@@ -1809,7 +1824,7 @@ bool gt_Init_Func (bool testConds, bool runActions) {
     }
     UnitMagazineArm(UnitFromId(68), AbilityCommand("ArmSiloWithNuke", 0), 10);
     UnitMagazineArm(UnitFromId(67), AbilityCommand("ArmSiloWithNuke", 0), 10);
-    libNtve_gf_SetAlliance(9, 10, libNtve_ge_AllianceSetting_Neutral);
+    libNtve_gf_SetAlliance(gv_side_player[0], gv_side_player[1], libNtve_ge_AllianceSetting_Neutral);
     auto6D144C4E_g = PlayerGroupAll();
     auto6D144C4E_var = -1;
     while (true) {
@@ -1976,12 +1991,6 @@ bool gt_DialogItemIsUsed_Func (bool testConds, bool runActions) {
     int auto5401B2A5_var;
     const int auto34D9B1CB_ae = 8;
     int auto34D9B1CB_var;
-    unitgroup auto6C43F6EC_g;
-    int auto6C43F6EC_u;
-    unit auto6C43F6EC_var;
-    unitgroup auto46BFC1D8_g;
-    int auto46BFC1D8_u;
-    unit auto46BFC1D8_var;
     const int autoFB38623C_ae = gv_const_terrains;
     const int autoFB38623C_ai = 1;
     const int auto9B9BE3C2_ae = gv_const_players;
@@ -2189,28 +2198,50 @@ bool gt_DialogItemIsUsed_Func (bool testConds, bool runActions) {
                 return true;
             }
             else if ((EventDialogControl() == gv_settings_generatorsbutton[0])) {
-                auto6C43F6EC_g = UnitGroupFromId(1);
-                auto6C43F6EC_u = UnitGroupCount(auto6C43F6EC_g, c_unitCountAll);
-                for (;; auto6C43F6EC_u -= 1) {
-                    auto6C43F6EC_var = UnitGroupUnitFromEnd(auto6C43F6EC_g, auto6C43F6EC_u);
-                    if (auto6C43F6EC_var == null) { break; }
-                    libNtve_gf_ShowHideUnit(auto6C43F6EC_var, false);
-                }
-                gv_generators = false;
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[0], "TesterGenetronPowerLevel1", 0);
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], "TesterGenetronPowerLevel1", 0);
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[0], "TesterGenetronPowerLevel2", 0);
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], "TesterGenetronPowerLevel2", 0);
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[0], "TesterGenetronPowerLevel3", 0);
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], "TesterGenetronPowerLevel3", 0);
+                gv_generators_level = 0;
                 UIDisplayMessage(PlayerGroupActive(), c_messageAreaSubtitle, StringExternal("Param/Value/D8E96574"));
                 gf_RenderTesterUIForAllPlayers();
                 return true;
             }
             else if ((EventDialogControl() == gv_settings_generatorsbutton[1])) {
-                auto46BFC1D8_g = UnitGroupFromId(1);
-                auto46BFC1D8_u = UnitGroupCount(auto46BFC1D8_g, c_unitCountAll);
-                for (;; auto46BFC1D8_u -= 1) {
-                    auto46BFC1D8_var = UnitGroupUnitFromEnd(auto46BFC1D8_g, auto46BFC1D8_u);
-                    if (auto46BFC1D8_var == null) { break; }
-                    libNtve_gf_ShowHideUnit(auto46BFC1D8_var, true);
-                }
-                gv_generators = true;
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[0], "TesterGenetronPowerLevel1", 1);
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], "TesterGenetronPowerLevel1", 1);
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[0], "TesterGenetronPowerLevel2", 0);
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], "TesterGenetronPowerLevel2", 0);
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[0], "TesterGenetronPowerLevel3", 0);
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], "TesterGenetronPowerLevel3", 0);
+                gv_generators_level = 1;
                 UIDisplayMessage(PlayerGroupActive(), c_messageAreaSubtitle, StringExternal("Param/Value/E269DFBF"));
+                gf_RenderTesterUIForAllPlayers();
+                return true;
+            }
+            else if ((EventDialogControl() == gv_settings_generatorsbutton[2])) {
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[0], "TesterGenetronPowerLevel1", 1);
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], "TesterGenetronPowerLevel1", 1);
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[0], "TesterGenetronPowerLevel2", 1);
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], "TesterGenetronPowerLevel2", 1);
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[0], "TesterGenetronPowerLevel3", 0);
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], "TesterGenetronPowerLevel3", 0);
+                gv_generators_level = 2;
+                UIDisplayMessage(PlayerGroupActive(), c_messageAreaSubtitle, StringExternal("Param/Value/AF4B7861"));
+                gf_RenderTesterUIForAllPlayers();
+                return true;
+            }
+            else if ((EventDialogControl() == gv_settings_generatorsbutton[3])) {
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[0], "TesterGenetronPowerLevel1", 1);
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], "TesterGenetronPowerLevel1", 1);
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[0], "TesterGenetronPowerLevel2", 1);
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], "TesterGenetronPowerLevel2", 1);
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[0], "TesterGenetronPowerLevel3", 1);
+                libNtve_gf_SetUpgradeLevelForPlayer(gv_side_player[1], "TesterGenetronPowerLevel3", 1);
+                gv_generators_level = 3;
+                UIDisplayMessage(PlayerGroupActive(), c_messageAreaSubtitle, StringExternal("Param/Value/4B0BA6A8"));
                 gf_RenderTesterUIForAllPlayers();
                 return true;
             }

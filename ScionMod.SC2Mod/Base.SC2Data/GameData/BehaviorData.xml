@@ -1,5 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Catalog>
+    <CBehaviorBuff id="BadgerPowershellSpellDamage">
+        <InfoFlags index="Hidden" value="1"/>
+        <InfoIcon value="Assets\Textures\btn-ability-stetmann-garypersonalstetzone-speed.dds"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <TechAliasArray value="Alias_Powershell"/>
+        <RemoveValidatorArray value="CasterHasPowershell"/>
+        <DamageResponse>
+            <Handled value="BadgerPowershellSpellDamageHandled"/>
+            <ModifyFraction value="0"/>
+            <ModifyMinimumDamage value="1"/>
+            <DamageValue value="Original"/>
+            <HandledValue value="Original"/>
+            <Kind index="Melee" value="0"/>
+            <Kind index="Ranged" value="0"/>
+            <Kind index="Splash" value="0"/>
+            <Kind index="NoProc" value="0"/>
+            <ExcludeEffectArray value="BadgerPowershellRemainingDMG"/>
+            <Chance value="1"/>
+        </DamageResponse>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="GenetronPowerChargeDummyGenerator">
+        <Cost>
+            <Charge CountMax="524287.9997" Location="Unit"/>
+        </Cost>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="GenetronPowerChargeDummyProcCore">
+        <Cost>
+            <Charge CountMax="524287.9997" Location="Unit"/>
+        </Cost>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="GenetronPowerChargeDummyNode">
+        <Cost>
+            <Charge CountMax="524287.9997" Location="Unit"/>
+        </Cost>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="StarBoltCaster">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Modification MoveSpeedMultiplier="0.5" AccelerationMultiplier="0.5">
+            <StateFlags index="SuppressAttack" value="1"/>
+            <StateFlags index="SuppressCombat" value="1"/>
+        </Modification>
+    </CBehaviorBuff>
     <CBehaviorBuff id="BlitzerSuperCharger">
         <InfoFlags index="Hidden" value="1"/>
         <InfoIcon value="Assets\Textures\btn-ability-genetron-cannonreset.dds"/>
@@ -215,15 +260,16 @@
         <Period value="0.0625"/>
         <InitialEffect value="JupiterSpeedApplyController"/>
         <PeriodicEffect value="JupiterSpeedBuffSwitch"/>
-        <InfoFlags index="Hidden" value="1"/>
+        <InfoIcon value="Assets\Textures\btn-ability-terran-emergencythrusters.dds"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="JupiterSpeedController">
-        <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <RemoveValidatorArray value="JupiterSpeedAcceleratorOrBuff"/>
         <Period value="0.0625"/>
-        <InitialEffect value="JupiterSpeedBuff"/>
+        <InitialEffect value="JupiterSpeedDataSwitch"/>
         <PeriodicEffect value="JupiterSpeedPeriodic"/>
+        <InfoIcon value="Assets\Textures\btn-tips-armory.dds"/>
+        <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="KeironStructureCharged">
         <InfoFlags index="Hidden" value="1"/>
@@ -308,17 +354,12 @@
         <RemoveValidatorArray value="CasterIsNotAnnexed"/>
         <RemoveValidatorArray value="CasterIsNotBlindedByProwler"/>
         <RemoveValidatorArray value="CasterHasNoStagnatingBileBuff"/>
-        <RemoveValidatorArray value="CasterHasNoNaniteGrenadeBuff"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="Scion_BuilderSuppressMovement">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <RemoveValidatorArray value="IsBuildingCombine"/>
         <Modification MoveSpeedMaximum="0.004" MoveSpeedMultiplier="0.01" AccelerationMultiplier="0.01"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="Scion_OverclockAddonDummy">
-        <RemoveValidatorArray value="AddonDummyCasterIsOverclocked"/>
-        <FinalEffect value="Suicide"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="Scion_Overclock">
         <InfoIcon value="Assets\Textures\btn-ability-genetron-productionmode-overclock.dds"/>
@@ -331,10 +372,6 @@
         </Modification>
         <BuffFlags index="Extend" value="1"/>
         <RefreshEffect value="Scion_OverclockRefreshQueryDuration"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="MiningPriorityAddonDummy">
-        <RemoveValidatorArray value="AddonDummyCasterIsUsingMiningPriority"/>
-        <FinalEffect value="Suicide"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="Scion_OverclockTargetMarker">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -467,29 +504,30 @@
             <Chance value="1"/>
         </DamageResponse>
     </CBehaviorBuff>
-    <CBehaviorBuff id="BadgerPowershell">
+    <CBehaviorBuff id="BadgerPowershellBase">
         <InfoIcon value="Assets\Textures\btn-ability-stetmann-garypersonalstetzone-speed.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <TechAliasArray value="Alias_Powershell"/>
         <RemoveValidatorArray value="hasEnergy"/>
         <RemoveValidatorArray value="GenetronPowerSupplyGE001"/>
         <RemoveValidatorArray value="Scion_CasterNoRavenScramblerMissile"/>
+        <Period value="0.375"/>
+        <InitialEffect value="BadgerPowershellBehaviorInit"/>
+        <PeriodicEffect value="BadgerPowershellPowerDrainETU"/>
+        <FinalEffect value="BadgerPowershellCooldown"/>
+        <Modification>
+            <StateFlags index="SuppressEnergyRegen" value="1"/>
+        </Modification>
         <DamageResponse>
-            <Handled value="BadgerPowershellSet"/>
+            <Handled value="BadgerPowershellWeaponDamageHandled"/>
             <ModifyFraction value="0"/>
             <ModifyMinimumDamage value="1"/>
             <DamageValue value="Original"/>
             <HandledValue value="Original"/>
+            <Kind index="Spell" value="0"/>
             <ExcludeEffectArray value="BadgerPowershellRemainingDMG"/>
             <Chance value="1"/>
         </DamageResponse>
-        <FinalEffect value="BadgerPowershellCooldown"/>
-        <InitialEffect value="BadgerPowershellPowerDrainETU"/>
-        <Modification>
-            <StateFlags index="SuppressEnergyRegen" value="1"/>
-        </Modification>
-        <TechAliasArray value="Alias_Powershell"/>
-        <Period value="0.375"/>
-        <PeriodicEffect value="BadgerPowershellPowerDrainETU"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="AssemblyArray">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -570,11 +608,10 @@
     <CBehaviorUnitTracker id="GenetronPowerSupplyTracker">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <InfoFlags index="Hidden" value="1"/>
+        <Cost>
+            <Charge Location="Unit"/>
+        </Cost>
     </CBehaviorUnitTracker>
-    <CBehaviorBuff id="GenetronProductionInternalEnergy">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <InfoFlags index="Hidden" value="1"/>
-    </CBehaviorBuff>
     <CBehaviorBuff id="Manufacturer">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Modification QueueCount="-2"/>
@@ -783,45 +820,9 @@
         <RemoveValidatorArray value="EnergyNotFullCaster"/>
         <FinalEffect value="GenetronEnergyStateFull"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="GenetronProductionCalibration">
-        <InfoIcon value="Assets\Textures\btn-ability-genetron-productionmode-performance.dds"/>
-        <EditorCategories value="AbilityorEffectType:Units,Race:Genetron"/>
-        <DisplayDuration index="Self" value="1"/>
-        <DisplayDuration index="Ally" value="1"/>
-        <DisableValidatorArray value="NotUnderConstruction"/>
-        <RemoveValidatorArray value="HasNoRelayTower"/>
-        <Duration value="42"/>
-        <Modification>
-            <AbilLinkDisableArray value="GenetronProductionModeStandard"/>
-            <AbilLinkDisableArray value="GenetronProductionModeOverclock"/>
-        </Modification>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="GenetronProductionModePerformanceBuff">
-        <InfoFlags index="Hidden" value="1"/>
-        <InfoIcon value="Assets\Textures\btn-ability-genetron-productionmode-performance.dds"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="NotUnderConstruction"/>
-        <Requirements value="GenetronProductionNotSwitchingMode"/>
-    </CBehaviorBuff>
     <CBehaviorBuff id="AvengerVengeanceMissileAmmo">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <InfoFlags index="Hidden" value="1"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="GenetronProductionModeStandardBuff">
-        <InfoFlags index="Hidden" value="1"/>
-        <InfoIcon value="Assets\Textures\btn-ability-genetron-productionmode-standard.dds"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="NotUnderConstruction"/>
-        <Modification QueueCount="1" TimeScale="1.5"/>
-        <Requirements value="GenetronProductionNotSwitchingMode"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="GenetronProductionModeOverclockBuff">
-        <InfoFlags index="Hidden" value="1"/>
-        <InfoIcon value="Assets\Textures\btn-ability-genetron-productionmode-overclock.dds"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="NotUnderConstruction"/>
-        <Modification QueueCount="2" TimeScale="2"/>
-        <Requirements value="GenetronProductionNotSwitchingMode"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="GenetronTurretFreeze">
         <InfoFlags index="Hidden" value="1"/>
@@ -993,6 +994,7 @@
         <Period value="0.25"/>
         <PeriodicEffect value="OlympusDischargeDebuffDMG"/>
         <InfoIcon value="Assets\Textures\btn-upgrade-stetmann-ultraliskburrowchargestun.dds"/>
+        <Alignment value="Negative"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="OlympusElectrifiedStructure">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -1011,6 +1013,7 @@
             <RateMultiplierArray index="Spawn" value="0.001"/>
         </Modification>
         <InfoIcon value="Assets\Textures\btn-upgrade-stetmann-ultraliskburrowchargestun.dds"/>
+        <Alignment value="Negative"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="OlympusExplode">
         <InfoFlags index="Hidden" value="1"/>
@@ -1339,7 +1342,6 @@
     </CBehaviorBuff>
     <CBehaviorBuff id="CloakChargeGenerator">
         <InfoFlags index="Hidden" value="1"/>
-        <InfoIcon value="Assets\Textures\btn-ability-genetron-teslacloakcharge.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <RemoveValidatorArray value="hasEnergy"/>
         <Period value="0.25"/>
@@ -1430,19 +1432,6 @@
         <PeriodicEffect value="NodePowerETU"/>
         <InitialEffect value="NodePowerETU"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="NaniteGrenadeAB">
-        <Alignment value="Negative"/>
-        <InfoIcon value="Assets\Textures\btn-upgrade-nova-flashgrenade.dds"/>
-        <BehaviorCategories index="Stun" value="1"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <BuffFlags index="RefreshStack" value="1"/>
-        <Duration value="2.1"/>
-        <Modification>
-            <ModifyFlags index="Detected" value="1"/>
-            <StateFlags index="Stun" value="1"/>
-            <StateFlags index="SuppressCloak" value="1"/>
-        </Modification>
-    </CBehaviorBuff>
     <CBehaviorBuff id="JupiterNapalm">
         <Alignment value="Negative"/>
         <InfoIcon value="Assets\Textures\btn-ability-hornerhan-bomberplatform-napalm.dds"/>
@@ -1500,7 +1489,6 @@
     <CBehaviorBuff id="ShockCharge">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <InfoIcon value="Assets\Textures\btn-ability-genetron-teslacharge.dds"/>
         <DisableValidatorArray value="NotHidden"/>
         <DisableValidatorArray value="NotStasis"/>
         <DisplayDuration index="Self" value="1"/>

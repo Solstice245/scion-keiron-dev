@@ -407,30 +407,6 @@
         <LifeStart value="30"/>
         <LifeMax value="30"/>
     </CUnit>
-    <CUnit id="GenetronPerformanceModeDummy">
-        <Race value="Gen"/>
-        <FlagArray index="Turnable" value="0"/>
-        <FlagArray index="Movable" value="0"/>
-        <FlagArray index="Uncommandable" value="1"/>
-        <FlagArray index="Unselectable" value="1"/>
-        <FlagArray index="Untargetable" value="1"/>
-        <FlagArray index="NoDraw" value="1"/>
-        <FlagArray index="Undetectable" value="1"/>
-        <FlagArray index="KillCredit" value="0"/>
-        <FlagArray index="Invulnerable" value="1"/>
-        <FlagArray index="NoScore" value="1"/>
-        <FlagArray index="Unstoppable" value="1"/>
-        <FlagArray index="CameraFollow" value="0"/>
-        <FlagArray index="NeverThink" value="1"/>
-        <EditorFlags index="NoPlacement" value="1"/>
-        <BehaviorArray Link="DummyUnit"/>
-        <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
-        <LeaderAlias value=""/>
-        <HotkeyAlias value=""/>
-        <SelectAlias value=""/>
-        <SubgroupAlias value=""/>
-        <Mover value="Fly"/>
-    </CUnit>
     <CUnit id="GenetronPowerSupplyDummy">
         <Race value="Gen"/>
         <FlagArray index="Turnable" value="0"/>
@@ -444,6 +420,9 @@
         <EditorFlags index="BlockStructures" value="0"/>
         <Mover value="Fly"/>
         <BehaviorArray Link="DummyUnit"/>
+        <BehaviorArray Link="GenetronPowerChargeDummyProcCore"/>
+        <BehaviorArray Link="GenetronPowerChargeDummyNode"/>
+        <BehaviorArray Link="GenetronPowerChargeDummyGenerator"/>
         <BehaviorArray Link="GenetronPowerBalance015On"/>
         <BehaviorArray Link="GenetronPowerBalance020On"/>
         <BehaviorArray Link="GenetronPowerBalance025On"/>
@@ -454,54 +433,6 @@
         <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
         <LeaderAlias value=""/>
         <HotkeyAlias value=""/>
-    </CUnit>
-    <CUnit id="GenetronStandardModeDummy">
-        <Race value="Gen"/>
-        <FlagArray index="Turnable" value="0"/>
-        <FlagArray index="Movable" value="0"/>
-        <FlagArray index="Uncommandable" value="1"/>
-        <FlagArray index="Unselectable" value="1"/>
-        <FlagArray index="Untargetable" value="1"/>
-        <FlagArray index="NoDraw" value="1"/>
-        <FlagArray index="Undetectable" value="1"/>
-        <FlagArray index="KillCredit" value="0"/>
-        <FlagArray index="Invulnerable" value="1"/>
-        <FlagArray index="NoScore" value="1"/>
-        <FlagArray index="Unstoppable" value="1"/>
-        <FlagArray index="CameraFollow" value="0"/>
-        <FlagArray index="NeverThink" value="1"/>
-        <EditorFlags index="NoPlacement" value="1"/>
-        <BehaviorArray Link="DummyUnit"/>
-        <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
-        <LeaderAlias value=""/>
-        <HotkeyAlias value=""/>
-        <SelectAlias value=""/>
-        <SubgroupAlias value=""/>
-        <Mover value="Fly"/>
-    </CUnit>
-    <CUnit id="GenetronOverclockModeDummy">
-        <Race value="Gen"/>
-        <FlagArray index="Turnable" value="0"/>
-        <FlagArray index="Movable" value="0"/>
-        <FlagArray index="Uncommandable" value="1"/>
-        <FlagArray index="Unselectable" value="1"/>
-        <FlagArray index="Untargetable" value="1"/>
-        <FlagArray index="NoDraw" value="1"/>
-        <FlagArray index="Undetectable" value="1"/>
-        <FlagArray index="KillCredit" value="0"/>
-        <FlagArray index="Invulnerable" value="1"/>
-        <FlagArray index="NoScore" value="1"/>
-        <FlagArray index="Unstoppable" value="1"/>
-        <FlagArray index="CameraFollow" value="0"/>
-        <FlagArray index="NeverThink" value="1"/>
-        <EditorFlags index="NoPlacement" value="1"/>
-        <BehaviorArray Link="DummyUnit"/>
-        <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
-        <LeaderAlias value=""/>
-        <HotkeyAlias value=""/>
-        <SelectAlias value=""/>
-        <SubgroupAlias value=""/>
-        <Mover value="Fly"/>
     </CUnit>
     <CUnit id="TorrentLunaMineMissile" parent="CProjectileGenetron">
         <Mover value="MissileDefault"/>
@@ -639,8 +570,8 @@
     </CUnit>
     <CUnit id="Fixer" parent="CUnitGenetron">
         <Attributes index="Light" value="1"/>
-        <LifeStart value="125"/>
-        <LifeMax value="125"/>
+        <LifeStart value="120"/>
+        <LifeMax value="120"/>
         <LifeArmor value="0"/>
         <Food value="-2"/>
         <CostResource index="Minerals" value="100"/>
@@ -760,12 +691,9 @@
         <AbilArray Link="que5"/>
         <AbilArray Link="Scion_DisplayCooldownDummy"/>
         <AbilArray Link="Rally"/>
-        <!--<AbilArray Link="GenetronProductionModeSwitch"/>-->
         <AbilArray Link="BuildAircraft"/>
         <AbilArray Link="Scion_Overclock"/>
         <BehaviorArray Link="GenetronPowerSupplyTracker"/>
-        <!--<BehaviorArray Link="GenetronProductionInternalEnergy"/>
-        <BehaviorArray Link="GenetronProductionModePerformanceBuff"/>-->
         <BehaviorArray Link="AssemblyArray"/>
         <BehaviorArray Link="TrackAndMirrorGenetronPowerSupply"/>
         <BehaviorArray Link="UnderConstruction"/>
@@ -792,14 +720,6 @@
             <LayoutButtons Face="FabricateBadger" Type="AbilCmd" AbilCmd="BuildAircraft,Train5" Row="0" Column="4"/>
             <LayoutButtons Face="Scion_Overclock" Type="AbilCmd" AbilCmd="Scion_Overclock,Execute" Row="2" Column="0"/>
         </CardLayouts>
-        <!--
-            <LayoutButtons Face="GenetronPerformanceMode" Type="AbilCmd" AbilCmd="GenetronProductionModeSwitch,Train1" Row="2" Column="0"/>
-            <LayoutButtons Face="GenetronPerformanceMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="0"/>
-            <LayoutButtons Face="GenetronStandardMode" Type="AbilCmd" AbilCmd="GenetronProductionModeSwitch,Train2" Row="2" Column="1"/>
-            <LayoutButtons Face="GenetronStandardMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="1"/>
-            <LayoutButtons Face="GenetronOverclockMode" Type="AbilCmd" AbilCmd="GenetronProductionModeSwitch,Train3" Row="2" Column="2"/>
-            <LayoutButtons Face="GenetronOverclockMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="2"/>
-        -->
     </CUnit>
     <CUnit id="Eroder" parent="CUnitXayid">
         <LifeStart value="160"/>
@@ -825,13 +745,14 @@
     </CUnit>
     <CUnit id="Interdictor" parent="CStructureGenetron">
         <Facing value="315"/>
+        <FlagArray index="AIThreatAir" value="1"/>
         <FlagArray index="AIDefense" value="1"/>
         <LifeStart value="300"/>
         <LifeMax value="300"/>
         <Sight value="11"/>
         <CostResource index="Minerals" value="100"/>
         <RepairTime value="30"/>
-        <AttackTargetPriority value="20"/>
+        <AttackTargetPriority value="19"/>
         <AbilArray Link="stop"/>
         <AbilArray Link="attack"/>
         <AbilArray Link="InterdictorBurrow"/>
@@ -858,6 +779,7 @@
         <GlossaryPriority value="19"/>
         <GlossaryAlias value="Interdictor"/>
         <TechAliasArray value="Alias_Interdictor"/>
+        <TacticalAI value=""/>
     </CUnit>
     <CUnit id="InterdictorBurrowed" parent="Interdictor">
         <Name value="Unit/Name/InterdictorBurrowed"/>
@@ -892,6 +814,7 @@
         <PlacementFootprint value=""/>
         <FlagArray index="Cloaked" value="1"/>
         <FlagArray index="Buried" value="1"/>
+        <FlagArray index="AIThreatAir" value="0"/>
         <GlossaryCategory value=""/>
         <GlossaryPriority value="0"/>
         <GlossaryAlias value=""/>
@@ -901,7 +824,6 @@
         <ScoreMakeCostFactor index="Vespene" value="0"/>
         <ScoreKillCostFactor index="Minerals" value="0"/>
         <ScoreKillCostFactor index="Vespene" value="0"/>
-        <TacticalAI value="InterdictorBurrowed"/>
         <BehaviorArray index="3" removed="1"/>
         <BehaviorArray index="4" removed="1"/>
         <Sight value="4"/>
@@ -973,6 +895,7 @@
         <RepairTime value="30"/>
         <BehaviorArray index="0" Link="HarvestableVespeneGeyserGas"/>
         <BehaviorArray Link="LockdownMode"/>
+        <BehaviorArray Link="WorkerPeriodicRefineryCheck"/>
         <EffectArray index="Create" value="RefineryRichSearch"/>
         <SeparationRadius value="1.5"/>
         <Footprint value="FootprintGeyserRoundedBuilt"/>
@@ -1126,6 +1049,7 @@
         <TechAliasArray value="Alias_Repulsor"/>
         <BehaviorArray Link="RepulsorInterdictorBurrowCD"/>
         <BehaviorArray Link="GenetronTurretFreeze"/>
+        <TacticalAI value=""/>
     </CUnit>
     <CUnit id="RepulsorBurrowed" parent="Repulsor">
         <Name value="Unit/Name/RepulsorBurrowed"/>
@@ -1143,7 +1067,6 @@
         <PlacementFootprint value=""/>
         <GlossaryCategory value=""/>
         <GlossaryAlias value=""/>
-        <TacticalAI value="RepulsorBurrowed"/>
         <BehaviorArray index="1" removed="1"/>
         <BehaviorArray index="2" removed="1"/>
         <GlossaryPriority value="17"/>
@@ -1388,6 +1311,7 @@
         <AbilArray Link="ACRRepair"/>
         <AbilArray Link="ACRBuild"/>
         <AbilArray Link="SprayTerran"/>
+        <AbilArray Link="WorkerStopIdleAbilityVespene"/>
         <WeaponArray Link="FusionCutter"/>
         <CardLayouts index="0">
             <LayoutButtons Face="GatherTerr" Type="AbilCmd" AbilCmd="SCVHarvest,Gather" Row="1" Column="0"/>
@@ -1486,6 +1410,8 @@
         <BehaviorArray Link="TrackAndMirrorGenetronPowerSupply"/>
         <BehaviorArray Link="ProcessingCorePower"/>
         <BehaviorArray Link="UnderConstruction"/>
+        <EffectArray index="Create" value="ProcCoreCreateSet"/>
+        <EffectArray index="Birth" value="CCBirthSet"/>
     </CUnit>
     <CUnit id="Manufacturer" parent="CStructureGenetron">
         <LifeStart value="1000"/>
@@ -1495,12 +1421,9 @@
         <AbilArray Link="que5"/>
         <AbilArray Link="Scion_DisplayCooldownDummy"/>
         <AbilArray Link="Rally"/>
-        <!--<AbilArray Link="GenetronProductionModeSwitch"/>-->
         <AbilArray Link="TrainLightweightMechs"/>
         <AbilArray Link="Scion_Overclock"/>
         <BehaviorArray Link="GenetronPowerSupplyTracker"/>
-        <!--<BehaviorArray Link="GenetronProductionInternalEnergy"/>
-        <BehaviorArray Link="GenetronProductionModePerformanceBuff"/>-->
         <BehaviorArray Link="Manufacturer"/>
         <BehaviorArray Link="TrackAndMirrorGenetronPowerSupply"/>
         <BehaviorArray Link="UnderConstruction"/>
@@ -1516,14 +1439,6 @@
             <LayoutButtons Face="Scion_Overclock" Type="AbilCmd" AbilCmd="Scion_Overclock,Execute" Row="2" Column="0"/>
         </CardLayouts>
         <Radius value="1.75"/>
-        <!--
-            <LayoutButtons Face="GenetronPerformanceMode" Type="AbilCmd" AbilCmd="GenetronProductionModeSwitch,Train1" Row="2" Column="0"/>
-            <LayoutButtons Face="GenetronPerformanceMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="0"/>
-            <LayoutButtons Face="GenetronStandardMode" Type="AbilCmd" AbilCmd="GenetronProductionModeSwitch,Train2" Row="2" Column="1"/>
-            <LayoutButtons Face="GenetronStandardMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="1"/>
-            <LayoutButtons Face="GenetronOverclockMode" Type="AbilCmd" AbilCmd="GenetronProductionModeSwitch,Train3" Row="2" Column="2"/>
-            <LayoutButtons Face="GenetronOverclockMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="2"/>
-        -->
         <SubgroupPriority value="10"/>
         <MinimapRadius value="1.75"/>
         <GlossaryPriority value="19"/>
@@ -1543,12 +1458,9 @@
         <AbilArray Link="que5"/>
         <AbilArray Link="Scion_DisplayCooldownDummy"/>
         <AbilArray Link="Rally"/>
-        <!--<AbilArray Link="GenetronProductionModeSwitch"/>-->
         <AbilArray Link="TrainHeavyweightMechs"/>
         <AbilArray Link="Scion_Overclock"/>
         <BehaviorArray Link="GenetronPowerSupplyTracker"/>
-        <!--<BehaviorArray Link="GenetronProductionInternalEnergy"/>
-        <BehaviorArray Link="GenetronProductionModePerformanceBuff"/>-->
         <BehaviorArray Link="Fabricator"/>
         <BehaviorArray Link="TrackAndMirrorGenetronPowerSupply"/>
         <BehaviorArray Link="UnderConstruction"/>
@@ -1563,14 +1475,6 @@
             <LayoutButtons Face="FabricateTesla" Type="AbilCmd" AbilCmd="TrainHeavyweightMechs,Train3" Row="0" Column="4"/>
             <LayoutButtons Face="Scion_Overclock" Type="AbilCmd" AbilCmd="Scion_Overclock,Execute" Row="2" Column="0"/>
         </CardLayouts>
-        <!--
-            <LayoutButtons Face="GenetronPerformanceMode" Type="AbilCmd" AbilCmd="GenetronProductionModeSwitch,Train1" Row="2" Column="0"/>
-            <LayoutButtons Face="GenetronPerformanceMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="0"/>
-            <LayoutButtons Face="GenetronStandardMode" Type="AbilCmd" AbilCmd="GenetronProductionModeSwitch,Train2" Row="2" Column="1"/>
-            <LayoutButtons Face="GenetronStandardMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="1"/>
-            <LayoutButtons Face="GenetronOverclockMode" Type="AbilCmd" AbilCmd="GenetronProductionModeSwitch,Train3" Row="2" Column="2"/>
-            <LayoutButtons Face="GenetronOverclockMode" Type="Passive" Requirements="ShowNotUnderConstruction" Row="2" Column="2"/>
-        -->
         <Radius value="1.875"/>
         <Footprint value="Footprint4x4ContourReduced"/>
         <PlacementFootprint value="Footprint4x4Contour"/>
@@ -1965,6 +1869,7 @@
         <EnergyStart value="100"/>
         <EnergyMax value="100"/>
         <EnergyRegenRate value="1.125"/>
+        <AlliedPushPriority value="1"/>
     </CUnit>
     <CUnit id="Scion_Avenger" parent="CUnitGenetronAir">
         <Attributes index="Armored" value="1"/>
@@ -1975,24 +1880,20 @@
         <EnergyMax value="50"/>
         <Speed value="3.25"/>
         <Acceleration value="3.5"/>
-        <StationaryTurningRate value="1440"/>
-        <TurningRate value="1440"/>
+        <StationaryTurningRate value="999.8437"/>
+        <TurningRate value="999.8437"/>
         <Sight value="10"/>
         <Food value="-2"/>
         <CostResource index="Minerals" value="150"/>
         <CostResource index="Vespene" value="100"/>
         <RepairTime value="28"/>
-        <AbilArray Link="que1Passive"/>
-        <AbilArray Link="AvengerConstructVengeanceMissile"/>
-        <AbilArray Link="VengeanceMissile"/>
+        <AbilArray Link="StarBolt"/>
         <BehaviorArray Link="GenetronPowerSupplyTracker"/>
         <BehaviorArray Link="TrackGenetronPowerSupplyUnit"/>
         <BehaviorArray Link="AvengerVengeanceMissileAmmo"/>
         <WeaponArray Link="NemesisMissile"/>
         <CardLayouts index="0">
-            <LayoutButtons Face="VengeanceMissile" Type="AbilCmd" AbilCmd="VengeanceMissile,Execute" Row="2" Column="0"/>
-            <LayoutButtons Face="ConstructVengeanceMissile" Type="AbilCmd" AbilCmd="AvengerConstructVengeanceMissile,Specialize1" Row="1" Column="0"/>
-            <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="que1Passive,CancelLast" Row="2" Column="4"/>
+            <LayoutButtons Face="StarBolt" Type="AbilCmd" AbilCmd="StarBolt,Execute" Row="2" Column="0"/>
         </CardLayouts>
         <Radius value="0.75"/>
         <SeparationRadius value="0.75"/>
@@ -2197,7 +2098,14 @@
             <LayoutButtons Face="AttackBarrage" Type="AbilCmd" AbilCmd="attack,Barrage" Row="1" Column="4"/>
             <LayoutButtons Face="JupiterAccelerator" Type="AbilCmd" AbilCmd="JupiterAccelerator,On" Row="2" Column="3"/>
             <LayoutButtons Face="Heat" Type="Passive" Row="1" Column="0"/>
-            <LayoutButtons Face="RevenantBombUnit" Type="AbilCmd" AbilCmd="RevenantBombUnit,Execute" Row="2" Column="1"/>
+            <LayoutButtons>
+                <Face value="RevenantBombUnit"/>
+                <Type value="AbilCmd"/>
+                <AbilCmd value="RevenantBombUnit,Execute"/>
+                <ShowInGlossary value="0"/>
+                <Row value="2"/>
+                <Column value="1"/>
+            </LayoutButtons>
         </CardLayouts>
         <Radius value="1"/>
         <SeparationRadius value="1"/>
@@ -2283,9 +2191,9 @@
     <CUnit id="TheGreatEqualizerWeapon" parent="CProjectileGenetron"/>
     <CUnit id="LaunchShockChargeWeapon" parent="CProjectileGenetronInvulnerable"/>
     <CUnit id="LaunchCloakChargeWeapon" parent="LaunchShockChargeWeapon"/>
-    <CUnit id="NaniteGrenadeWeapon" parent="CProjectileGenetronInvulnerable"/>
+    <CUnit id="NaniteEmitterWeapon" parent="CProjectileGenetronInvulnerable"/>
     <CUnit id="RevenantBombLMWeapon" parent="CProjectileGenetronInvulnerable"/>
-    <CUnit id="VengeanceMissilesLMWeapon" parent="CProjectileGenetronInvulnerable"/>
+    <CUnit id="StarBoltLMWeapon" parent="CProjectileGenetronInvulnerable"/>
     <CUnit id="CoveringSprayMissile" parent="XayidMISSILE_INVULNERBLE">
         <Mover value="AcidSpinesWeapon"/>
     </CUnit>
@@ -2596,6 +2504,26 @@
         <GlossaryPriority value="25"/>
         <Radius value="1.25"/>
     </CUnit>
+    <CUnit id="Exterminator" parent="CUnitXayidFlyer">
+        <Attributes index="Armored" value="1"/>
+        <LifeStart value="180"/>
+        <LifeMax value="180"/>
+        <LifeArmor value="1"/>
+        <Speed value="3.25"/>
+        <Food value="-3"/>
+        <CostResource index="Minerals" value="200"/>
+        <CostResource index="Vespene" value="100"/>
+        <AbilArray Link="IncendiaryInfusion"/>
+        <WeaponArray Link="Extermination"/>
+        <CardLayouts index="0">
+            <LayoutButtons Face="IncendiaryInfusion" Type="AbilCmd" AbilCmd="IncendiaryInfusion,Execute" Row="2" Column="0"/>
+        </CardLayouts>
+        <Radius value="0.875"/>
+        <SeparationRadius value="0.875"/>
+        <MinimapRadius value="0.875"/>
+        <GlossaryPriority value="17"/>
+        <SubgroupPriority value="75"/>
+    </CUnit>
     <CUnit id="ExterminationMissile" parent="XayidMISSILE"/>
     <CUnit id="IncendiaryInfusionMissile" parent="XayidMISSILE_INVULNERBLE"/>
     <CUnit id="MassaliskSporeWeaponAA" parent="XayidMISSILE"/>
@@ -2638,30 +2566,13 @@
         <MinimapRadius value="0.75"/>
         <GlossaryPriority value="16"/>
         <SubgroupPriority value="69"/>
+        <CardLayouts index="0">
+            <LayoutButtons Face="LeapingWorms" Type="Passive" Row="2" Column="0"/>
+        </CardLayouts>
     </CUnit>
     <CUnit id="AcidWormsLMWeapon" parent="XayidMISSILE"/>
     <CUnit id="EvisceratorSpineLMWeapon" parent="XayidMISSILE">
         <Mover value="AcidSpinesWeapon"/>
-    </CUnit>
-    <CUnit id="Exterminator" parent="CUnitXayidFlyer">
-        <Attributes index="Armored" value="1"/>
-        <LifeStart value="180"/>
-        <LifeMax value="180"/>
-        <LifeArmor value="1"/>
-        <Speed value="3.25"/>
-        <Food value="-3"/>
-        <CostResource index="Minerals" value="200"/>
-        <CostResource index="Vespene" value="100"/>
-        <AbilArray Link="IncendiaryInfusion"/>
-        <WeaponArray Link="Extermination"/>
-        <CardLayouts index="0">
-            <LayoutButtons Face="IncendiaryInfusion" Type="AbilCmd" AbilCmd="IncendiaryInfusion,Execute" Row="2" Column="0"/>
-        </CardLayouts>
-        <Radius value="0.875"/>
-        <SeparationRadius value="0.875"/>
-        <MinimapRadius value="0.875"/>
-        <GlossaryPriority value="17"/>
-        <SubgroupPriority value="75"/>
     </CUnit>
     <CUnit id="FeedingPool" parent="CBuildingXayid">
         <LifeStart value="450"/>
@@ -2776,6 +2687,7 @@
         <TurningRate value="360"/>
         <GlossaryAlias value="Massalisk"/>
         <TechAliasArray value="Alias_Massalisk"/>
+        <AlliedPushPriority value="1"/>
     </CUnit>
     <CUnit id="MassaliskHunkered" parent="Massalisk">
         <Name value="Unit/Name/MassaliskHunkered"/>
@@ -2871,25 +2783,54 @@
         <TechTreeProducedUnitArray value="Scavenger"/>
         <Sight value="11"/>
         <CostCategory value="Economy"/>
+        <EffectArray index="Create" value="HatcheryCreateSet"/>
+        <EffectArray index="Birth" value="HatcheryBirthSet"/>
     </CUnit>
-    <CUnit id="Siphoner" parent="Extractor">
-        <Name value="Unit/Name/Siphoner"/>
-        <Description value="Button/Tooltip/Siphoner"/>
-        <ReviveType value="Siphoner"/>
-        <Race value="Xayi"/>
+    <CUnit id="Siphoner" parent="CBuildingXayid">
+        <Facing value="329.9963"/>
+        <Mob value="Multiplayer"/>
+        <FlagArray index="Movable" value="1"/>
+        <ResourceState value="Harvestable"/>
+        <ResourceType value="Vespene"/>
+        <Collide index="Locust" value="1"/>
+        <Collide index="Phased" value="1"/>
+        <Collide index="Small" value="1"/>
+        <LifeStart value="500"/>
+        <LifeMax value="500"/>
         <LifeRegenDelay value="3"/>
         <LifeRegenRate value="0.5"/>
-        <LifeArmorName value="Unit/LifeArmorName/XayidStructureArmor"/>
-        <BuildOnAs index="0" value="SiphonerRich"/>
+        <StationaryTurningRate value="719.4726"/>
+        <TurningRate value="719.4726"/>
+        <CostCategory value="Economy"/>
+        <CostResource index="Minerals" value="75"/>
+        <AbilArray index="1" removed="1"/>
+        <AbilArray index="2" removed="1"/>
+        <BehaviorArray Link="HarvestableVespeneGeyserGasZerg"/>
+        <BehaviorArray Link="WorkerPeriodicRefineryCheck"/>
+        <CardLayouts>
+            <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
+        </CardLayouts>
+        <Radius value="1.5"/>
+        <SeparationRadius value="1.5"/>
+        <Footprint value="FootprintGeyserRoundedBuilt"/>
+        <PlacementFootprint value="Footprint3x3CappedGeyser"/>
+        <BuiltOn value="VespeneGeyser"/>
+        <BuiltOn value="SpacePlatformGeyser"/>
+        <BuiltOn value="RichVespeneGeyser"/>
+        <BuiltOn value="ProtossVespeneGeyser"/>
+        <BuiltOn value="PurifierVespeneGeyser"/>
+        <BuiltOn value="ShakurasVespeneGeyser"/>
+        <BuildOnAs value="SiphonerRich"/>
         <ScoreMake value="75"/>
+        <ScoreKill value="75"/>
         <SubgroupPriority value="29"/>
-        <LeaderAlias value="Siphoner"/>
-        <HotkeyAlias value="Siphoner"/>
-        <SelectAlias value="Siphoner"/>
-        <SubgroupAlias value="Siphoner"/>
+        <MinimapRadius value="1.5"/>
+        <TacticalAI value="Extractor"/>
         <GlossaryPriority value="2"/>
-        <HotkeyCategory value="Unit/Category/XayidUnits"/>
-        <AIEvaluateAlias value="Siphoner"/>
+        <ReviveInfoBase>
+            <Charge Link="Extractor/Revive"/>
+            <Cooldown Link="Extractor/Revive"/>
+        </ReviveInfoBase>
     </CUnit>
     <CUnit id="SiphonerRich" parent="Siphoner">
         <Name value="Unit/Name/SiphonerRich"/>
@@ -2935,9 +2876,13 @@
         <ScoreResult value=""/>
     </CUnit>
     <CUnit id="Scavenger" parent="CUnitXayid">
+        <AbilArray index="0" Link="stop"/>
+        <AbilArray index="1" Link="attack"/>
+        <AbilArray index="2" Link="move"/>
         <AbilArray Link="DroneHarvest"/>
         <AbilArray Link="FormStructures"/>
         <AbilArray Link="SprayZerg"/>
+        <AbilArray Link="WorkerStopIdleAbilityVespene"/>
         <CardLayouts index="0">
             <LayoutButtons>
                 <Face value="FormBasicStructure"/>
@@ -3119,7 +3064,7 @@
         <LifeStart value="160"/>
         <LifeMax value="160"/>
         <LifeArmor value="2"/>
-        <Speed value="2.9531"/>
+        <Speed value="3"/>
         <Food value="-2"/>
         <CostResource index="Minerals" value="100"/>
         <CostResource index="Vespene" value="25"/>
@@ -3192,7 +3137,7 @@
         <BehaviorArray Link="SpitterFate"/>
     </CUnit>
     <CUnit id="SpitterAcidWeapon" parent="XayidMISSILE">
-        <Mover value="SpitterAcidMissile"/>
+        <Mover value="SpitterAcidWeapon"/>
     </CUnit>
     <CUnit id="SearingSpore" parent="XayidMISSILE"/>
     <CUnit id="VirulentSpitWeapon" parent="XayidMISSILE">
@@ -3673,6 +3618,7 @@
         <AbilArray index="2" removed="1"/>
         <AbilArray index="3" removed="1"/>
         <BehaviorArray Link="HarvestableVespeneGeyserGasKeiron"/>
+        <BehaviorArray Link="WorkerPeriodicRefineryCheck"/>
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
             <LayoutButtons Face="SelectBuilderKeiron" Type="SelectBuilder" Row="1" Column="3"/>
@@ -4242,6 +4188,8 @@
         <TechTreeProducedUnitArray value="Gyre"/>
         <TechTreeProducedUnitArray value="Paragon"/>
         <TechTreeProducedUnitArray value="Aegis"/>
+        <EffectArray index="Create" value="NexusCreateSet"/>
+        <EffectArray index="Birth" value="NexusBirthSet"/>
     </CUnit>
     <CUnit id="CitadelCharged" parent="Citadel">
         <Description value="Button/Tooltip/CitadelCharged"/>
@@ -4274,6 +4222,8 @@
         <EnergyStart value="50"/>
         <AbilArray index="7" removed="1"/>
         <BehaviorArray Link="KeironStructureCharged"/>
+        <EffectArray index="Create" value=""/>
+        <EffectArray index="Birth" value=""/>
     </CUnit>
     <CUnit id="Converter" parent="CUnitKeiron">
         <LifeStart value="20"/>
@@ -4300,6 +4250,7 @@
         <AbilArray Link="ProbeHarvest"/>
         <AbilArray Link="KeironBuild"/>
         <AbilArray Link="SprayProtoss"/>
+        <AbilArray Link="WorkerStopIdleAbilityVespene"/>
         <WeaponArray Link="ConverterDissolutionRay"/>
         <CardLayouts index="0">
             <LayoutButtons Face="GatherProt" Type="AbilCmd" AbilCmd="ProbeHarvest,Gather" Row="1" Column="0"/>
