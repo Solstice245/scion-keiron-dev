@@ -29,7 +29,6 @@ void libScio_InitVariables () {
 bool libScio_gt_ScionInit_Func (bool testConds, bool runActions) {
     // Variable Declarations
     int lv_genetron_ui_energy_unit;
-    fixed lv_worker_inner_rad;
 
     // Automatic Variable Declarations
     playergroup auto22B9A134_g;
@@ -37,7 +36,6 @@ bool libScio_gt_ScionInit_Func (bool testConds, bool runActions) {
 
     // Variable Initialization
     lv_genetron_ui_energy_unit = c_invalidDialogControlId;
-    lv_worker_inner_rad = libNtve_gf_CatalogFieldValueGetAsReal(c_gameCatalogUnit, "SCV", "InnerRadius", c_playerAny);
 
     // Actions
     if (!runActions) {
@@ -51,9 +49,6 @@ bool libScio_gt_ScionInit_Func (bool testConds, bool runActions) {
     while (true) {
         auto22B9A134_var = PlayerGroupNextPlayer(auto22B9A134_g, auto22B9A134_var);
         if (auto22B9A134_var < 0) { break; }
-        libNtve_gf_CatalogFieldValueSetAsReal(c_gameCatalogUnit, "ACR", "InnerRadius", auto22B9A134_var, lv_worker_inner_rad);
-        libNtve_gf_CatalogFieldValueSetAsReal(c_gameCatalogUnit, "Converter", "InnerRadius", auto22B9A134_var, lv_worker_inner_rad);
-        libNtve_gf_CatalogFieldValueSetAsReal(c_gameCatalogUnit, "Scavenger", "InnerRadius", auto22B9A134_var, lv_worker_inner_rad);
         if ((TechTreeUnitCount(auto22B9A134_var, "GenetronPowerSupplyDummy", c_techCountCompleteOnly) == 0)) {
             libNtve_gf_CreateUnitsWithDefaultFacing(1, "GenetronPowerSupplyDummy", 0, auto22B9A134_var, Point(0.0, 0.0));
             libScio_gv_sCION_POWERDUMMIES[auto22B9A134_var] = UnitLastCreated();

@@ -5631,8 +5631,8 @@
     </CActorUnit>
     <CActorModel id="UmbraShieldCompulsionModel" parent="ModelAnimationStyleOneShotUNIT">
         <On Terms="Effect.UmbraStealthCompulsionModifyCooldown.Start" Send="Create"/>
-        <On Terms="ActorCreation" Send="SetTintColor 193,255,6"/>
         <HostSiteOps Ops="SOpAttachShield"/>
+        <InheritType value="OneShot"/>
     </CActorModel>
     <CActorSound id="GyreShieldBoostImpact" parent="SoundOneShotScion" Behavior="GyreShieldBoost"/>
     <CActorSound id="AegisRelocateStopSound" parent="SoundOneShot">
@@ -7179,11 +7179,11 @@
         <BarOffset value="45"/>
         <BarWidth value="40"/>
         <On index="69" Terms="UnitConstruction.Pariah.Start" Send="Create KeironMaterializeModelSmall"/>
-        <On Terms="AbilMorph.ProjectionEnd.Finish" Send="ModelSwap Pariah"/>
-        <On Terms="AbilMorph.ProjectionStart.Start" Send="ModelSwap PariahProjection"/>
-        <On Terms="AbilMorph.ProjectionEnd.Finish" Send="AnimBaselineStart"/>
-        <On Terms="AbilMorph.ProjectionEnd.Finish" Send="AnimClear Walk"/>
-        <On Terms="AbilMorph.ProjectionStart.Start" Send="AnimPlay Walk Walk PlayForever"/>
+        <On Terms="Effect.PariahProjectionMorphUnit.Start" Send="ModelSwap Pariah"/>
+        <On Terms="Effect.PariahProjectionMorphUnit.Start" Send="AnimBaselineStart"/>
+        <On Terms="Effect.PariahProjectionMorphUnit.Start" Send="AnimClear Walk"/>
+        <On Terms="Effect.PariahProjectionMorphProjection.Start" Send="ModelSwap PariahProjection"/>
+        <On Terms="Effect.PariahProjectionMorphProjection.Start" Send="AnimPlay Walk Walk PlayForever"/>
     </CActorUnit>
     <CActorUnit id="Cataract" parent="GenericUnitKeiron" unitName="Cataract">
         <WalkAnimMoveSpeed value="2.625"/>

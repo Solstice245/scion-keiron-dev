@@ -619,10 +619,10 @@
         <Effect index="0" value="SpitfireDeadeyeModulePowerEnum"/>
         <Flags index="Transient" value="1"/>
         <Cost>
-            <Vital index="Energy" value="25"/>
-            <Cooldown TimeUse="9.5"/>
+            <Vital index="Energy" value="20"/>
+            <Cooldown TimeUse="10.9"/>
         </Cost>
-        <CmdButtonArray index="Execute" DefaultButtonFace="SpitfireDeadeyeModule" Requirements="GenetronPowerBalance0025">
+        <CmdButtonArray index="Execute" DefaultButtonFace="SpitfireDeadeyeModule" Requirements="GenetronPowerBalance0020">
             <Flags index="ToSelection" value="1"/>
         </CmdButtonArray>
     </CAbilEffectInstant>
@@ -1138,7 +1138,7 @@
         <Flags index="BestUnit" value="0"/>
         <Flags index="Smart" value="1"/>
         <TargetFilters value="Visible;Self,Missile,Stasis,Dead,Hidden,Invulnerable"/>
-        <Range value="5.5"/>
+        <Range value="5"/>
         <SmartValidatorArray value="IsNotFriendly"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="TorrentDroneDetonate"/>
     </CAbilEffectTarget>
@@ -1149,11 +1149,12 @@
         <Flags index="AutoCastOn" value="1"/>
         <Flags index="BestUnit" value="0"/>
         <Flags index="ChannelingMinimum" value="0"/>
-        <TargetFilters value="Visible;Self,Missile,Stasis,Dead,Hidden,Invulnerable"/>
-        <Range value="5.5"/>
+        <TargetFilters value="Visible;Self,Missile,Stasis,Dead,Hidden,Invulnerable,Benign"/>
+        <Range value="5"/>
         <AutoCastFilters value="Visible;Player,Ally,Stasis,Dead,Hidden,Invulnerable"/>
-        <AutoCastRange value="6.5"/>
+        <AutoCastRange value="6"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="TorrentDroneDetonate"/>
+        <AutoCastValidatorArray value="IsNotDisguisedChangeling"/>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="TorrentLunaMines">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -1492,13 +1493,6 @@
     <CAbilResearch id="CasnoliskDenResearch">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <Activity value="UI/Mutating"/>
-        <InfoArray index="Research1" Time="110" Alert="ResearchComplete_Zerg" Upgrade="PiercingThrust">
-            <Resource index="Minerals" value="150"/>
-            <Resource index="Vespene" value="150"/>
-            <Button DefaultButtonFace="MutatePiercingThrust" Requirements="LearnPiercingThrust">
-                <Flags index="ShowInGlossary" value="1"/>
-            </Button>
-        </InfoArray>
         <InfoArray index="Research2" Time="110" Alert="ResearchComplete_Zerg" Upgrade="ScorpaliskMetabolics">
             <Resource index="Minerals" value="150"/>
             <Resource index="Vespene" value="150"/>
@@ -1517,13 +1511,6 @@
             <Resource index="Minerals" value="100"/>
             <Resource index="Vespene" value="100"/>
             <Button DefaultButtonFace="MutateOcularAcuity" Requirements="LearnOcularAcuity">
-                <Flags index="ShowInGlossary" value="1"/>
-            </Button>
-        </InfoArray>
-        <InfoArray index="Research5" Time="80" Alert="ResearchComplete_Zerg" Upgrade="CalcifiedHusk">
-            <Resource index="Minerals" value="100"/>
-            <Resource index="Vespene" value="100"/>
-            <Button DefaultButtonFace="MutateCalcifiedHusk" Requirements="LearnCalcifiedHusk">
                 <Flags index="ShowInGlossary" value="1"/>
             </Button>
         </InfoArray>
@@ -1560,10 +1547,9 @@
             <Cooldown Link="Abil/Dash" TimeUse="9.8"/>
         </Cost>
         <Range value="500"/>
-        <UninterruptibleArray index="Cast" value="1"/>
-        <UninterruptibleArray index="Channel" value="1"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="Dash"/>
         <Arc value="360"/>
+        <AINotifyEffect value="XayidlingDashPersistent"/>
     </CAbilEffectTarget>
     <CAbilResearch id="CatalystPitResearch">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
@@ -1596,20 +1582,6 @@
             <Resource index="Minerals" value="300"/>
             <Resource index="Vespene" value="300"/>
             <Button DefaultButtonFace="MutateFlyerCarapaceLevel3" Requirements="LearnXayidFlyerCarapaceLevel3"/>
-        </InfoArray>
-        <InfoArray index="Research7" Time="80" Upgrade="CleavingSpores">
-            <Resource index="Minerals" value="100"/>
-            <Resource index="Vespene" value="100"/>
-            <Button DefaultButtonFace="MutateCleavingSpores" Requirements="LearnCleavingSpores">
-                <Flags index="ShowInGlossary" value="1"/>
-            </Button>
-        </InfoArray>
-        <InfoArray index="Research8" Time="110" Upgrade="RefinedExcretion">
-            <Resource index="Minerals" value="100"/>
-            <Resource index="Vespene" value="100"/>
-            <Button DefaultButtonFace="MutateRefinedExcretion" Requirements="LearnRefinedExcretion">
-                <Flags index="ShowInGlossary" value="1"/>
-            </Button>
         </InfoArray>
         <Activity value="UI/Mutating"/>
     </CAbilResearch>
@@ -1864,6 +1836,7 @@
     <CAbilEffectTarget id="Scour">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
         <Flags index="RequireTargetVision" value="0"/>
+        <Flags index="Transient" value="1"/>
         <Cost>
             <Cooldown TimeUse="15"/>
         </Cost>
@@ -1872,6 +1845,7 @@
         <UninterruptibleArray index="Channel" value="1"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="Scour"/>
         <CastOutroTime value="0.3125"/>
+        <Arc value="360"/>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="StagnatingBile">
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>

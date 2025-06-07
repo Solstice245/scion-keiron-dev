@@ -51,7 +51,7 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisplayDuration index="Self" value="1"/>
         <DisplayDuration index="Ally" value="1"/>
-        <Duration value="11.2"/>
+        <Duration value="14"/>
         <Period value="0.25"/>
         <PeriodicEffect value="BlitzerSuperChargerPeriod"/>
     </CBehaviorBuff>
@@ -404,8 +404,10 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisplayDuration index="Self" value="1"/>
         <DisplayDuration index="Ally" value="1"/>
-        <Duration value="11.2"/>
-        <Modification RangedWeaponRange="1" WeaponScanBonus="1"/>
+        <Duration value="12.6"/>
+        <Modification RangedWeaponRange="1" WeaponScanBonus="1">
+            <StateFlags index="SuppressEnergyRegen" value="1"/>
+        </Modification>
     </CBehaviorBuff>
     <CBehaviorBuff id="SpitfirePowershell">
         <InfoIcon value="Assets\Textures\btn-ability-stetmann-garypersonalstetzone-speed.dds"/>
@@ -973,7 +975,9 @@
     <CBehaviorBuff id="BlitzerOverdrive">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Duration value="5.6"/>
-        <Modification MoveSpeedMultiplier="1.5"/>
+        <Modification MoveSpeedMultiplier="1.45">
+            <StateFlags index="SuppressEnergyRegen" value="1"/>
+        </Modification>
         <Tooltip value="Button/Tooltip/BlitzerOverdrive"/>
         <Alignment value="Positive"/>
         <InfoIcon value="Assets\Textures\btn-ability-stetmann-stetelliteoverloadspeed.dds"/>
@@ -1542,7 +1546,7 @@
         <BuffFlags index="RefreshStack" value="1"/>
         <MaxStackCount value="8"/>
         <Duration value="6"/>
-        <Modification UnifiedAttackSpeedFactor="0.08"/>
+        <Modification UnifiedAttackSpeedFactor="0.075"/>
         <Alignment value="Positive"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="BilePitSustain">
@@ -1568,20 +1572,13 @@
         <Replace value="FarthestDistance"/>
         <AINotifyEffect value="BlindingBurst"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="DashFrenzy">
-        <InfoIcon value="Assets\Textures\btn-upgrade-Xayid-dexterousjoints.dds"/>
-        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
-        <Modification AttackSpeedMultiplier="2"/>
-        <Duration value="0.75"/>
-        <Alignment value="Positive"/>
-    </CBehaviorBuff>
     <CBehaviorBuff id="DashSpeed">
+        <InfoFlags index="Hidden" value="1"/>
         <InfoIcon value="Assets\Textures\btn-upgrade-Xayid-dexterousjoints.dds"/>
         <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
-        <Modification MoveSpeedBonus="15.5"/>
-        <InfoFlags index="Hidden" value="1"/>
-        <Duration value="0.25"/>
-        <FinalEffect value="DashFrenzy"/>
+        <DisableValidatorArray value="CasterNotFungalGrowthed"/>
+        <BuffFlags index="Channeling" value="1"/>
+        <Modification MoveSpeedBonus="12"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="ProtectiveCloudAB">
         <InfoIcon value="Assets\Textures\btn-ability-Xayid-dynamiccoating.dds"/>
@@ -2432,8 +2429,8 @@
     <CBehaviorBuff id="PariahProjectionFate">
         <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
         <Duration value="1"/>
-        <FinalEffect value="ProjectionIME"/>
-        <Modification MoveSpeedMultiplier="3"/>
+        <FinalEffect value="PariahProjectionMorphUnit"/>
+        <Modification MoveSpeedBonus="4.5"/>
         <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="EchoReverbTeleportController">
