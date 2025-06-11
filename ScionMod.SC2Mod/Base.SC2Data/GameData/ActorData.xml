@@ -246,6 +246,32 @@
         <StageArray AnimProps="Build,Start" BlendTime="0.000000"/>
         <StageArray AnimProps="Build,End"/>
     </CActorProgress>
+    <CActorAction id="JupiterBombAttack" parent="GenericAttack" effectImpact="JupiterRevenantBombImpact" effectLaunch="JupiterBombLaunchBombLM">
+        <On index="1" Terms="Effect.##effectImpact##.Start; FromEffectTreeDescendant" Send="ActionImpact"/>
+        <On index="2" Terms="Effect.##effectImpact##.Stop; FromEffectTreeDescendant" Send="ActionImpactPhysics"/>
+        <On index="6" Terms="Effect.##effectLaunch##.Start; At Caster" Send="Create"/>
+        <Missile value="JupiterAttackMissile"/>
+        <ImpactSiteOps Ops="SOpTargetPointStationary"/>
+        <ShieldFlashType value="Full"/>
+    </CActorAction>
+    <CActorAction id="JupiterDropPodAttack" parent="GenericAttack" effectImpact="JupiterBombLaunchRB" effectLaunch="JupiterBombLaunchUnitsLM">
+        <On index="1" Terms="Effect.##effectImpact##.Start; FromEffectTreeDescendant" Send="ActionImpact"/>
+        <On index="2" Terms="Effect.##effectImpact##.Stop; FromEffectTreeDescendant" Send="ActionImpactPhysics"/>
+        <On index="6" Terms="Effect.##effectLaunch##.Start; At Caster" Send="Create"/>
+        <Missile value="JupiterDropPodMissile"/>
+        <ImpactSiteOps Ops="SOpAttachHarness SOpAttachVolumeStandard SOpAttachOrigin"/>
+    </CActorAction>
+    <CActorAction id="JupiterShockChargeAttack" parent="GenericAttack" effectImpact="JupiterBombLaunchRB" effectLaunch="JupiterBombLaunchShockLM">
+        <On index="1" Terms="Effect.##effectImpact##.Start; FromEffectTreeDescendant" Send="ActionImpact"/>
+        <On index="2" Terms="Effect.##effectImpact##.Stop; FromEffectTreeDescendant" Send="ActionImpactPhysics"/>
+        <On index="6" Terms="Effect.##effectLaunch##.Start; At Caster" Send="Create"/>
+        <Missile value="TeslaShockChargeMissile"/>
+        <ImpactSiteOps Ops="SOpAttachHarness SOpAttachVolumeStandard SOpAttachOrigin"/>
+    </CActorAction>
+    <CActorMissile id="JupiterDropPodMissile" parent="GenericAttackMissile" unitName="JupiterDropPodMissile"/>
+    <CActorUnit id="JupiterRevenantBomb" parent="GenericUnitStandard" unitName="JupiterRevenantBomb">
+        <Model value="JupiterAttackMissile"/>
+    </CActorUnit>
     <CActorModel id="JupiterRevenantBombImpact" parent="ModelAnimationStyleOneShot">
         <On Terms="Effect.JupiterRevenantBombImpact.Start" Send="Create"/>
     </CActorModel>
@@ -261,6 +287,13 @@
         <DamageMap index="None" Model="JupiterAttackDamage" Sound="JupiterAttackDamage" ModelReaction="JupiterAttackDamageReaction"/>
         <DamageMap index="Shield" Sound="JupiterAttackDamageShield" ModelReaction="JupiterAttackDamageReactionShield"/>
         <ShieldFlashType value="None"/>
+    </CActorAction>
+    <CActorAction id="JupiterCloakChargeAttack" parent="GenericAttack" effectImpact="JupiterBombLaunchRB" effectLaunch="JupiterBombLaunchCloakLM">
+        <On index="1" Terms="Effect.##effectImpact##.Start; FromEffectTreeDescendant" Send="ActionImpact"/>
+        <On index="2" Terms="Effect.##effectImpact##.Stop; FromEffectTreeDescendant" Send="ActionImpactPhysics"/>
+        <On index="6" Terms="Effect.##effectLaunch##.Start; At Caster" Send="Create"/>
+        <Missile value="TeslaCloakChargeMissile"/>
+        <ImpactSiteOps Ops="SOpAttachHarness SOpAttachVolumeStandard SOpAttachOrigin"/>
     </CActorAction>
     <CActorSound id="Jupiter_RevenantBombImpact" parent="SoundOneShot">
         <On Terms="Effect.JupiterRevenantBombImpact.Start" Send="Create"/>

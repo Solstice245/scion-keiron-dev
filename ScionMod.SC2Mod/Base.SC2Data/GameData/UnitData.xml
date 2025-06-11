@@ -350,6 +350,12 @@
         <BehaviorArray Link="TrackGenetronPowerSupplyUnit"/>
         <EnergyRegenRate value="1.125"/>
     </CUnit>
+    <CUnit id="JupiterRevenantBomb">
+        <Race value="Gen"/>
+        <CargoSize value="2"/>
+        <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
+        <Mover value="Fly"/>
+    </CUnit>
     <CUnit id="LunaMine" parent="CUnitGenetronAir">
         <DeathRevealRadius value="2"/>
         <FlagArray index="PreventDestroy" value="0"/>
@@ -389,6 +395,7 @@
         <MinimapRadius value="0.375"/>
         <GlossaryPriority value="21"/>
         <RepairTime value="10"/>
+        <CargoSize value="2"/>
     </CUnit>
     <CUnit id="LunaMineLaunch" parent="LunaMine">
         <Name value="Unit/Name/LunaMineLaunch"/>
@@ -406,6 +413,7 @@
         </CardLayouts>
         <LifeStart value="30"/>
         <LifeMax value="30"/>
+        <CargoSize value="0"/>
     </CUnit>
     <CUnit id="GenetronPowerSupplyDummy">
         <Race value="Gen"/>
@@ -433,6 +441,9 @@
         <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
         <LeaderAlias value=""/>
         <HotkeyAlias value=""/>
+    </CUnit>
+    <CUnit id="JupiterDropPodMissile" parent="CProjectileGenetronInvulnerable">
+        <Mover value="RevenantBombLMWeapon"/>
     </CUnit>
     <CUnit id="TorrentLunaMineMissile" parent="CProjectileGenetron">
         <Mover value="MissileDefault"/>
@@ -1154,6 +1165,7 @@
             <LayoutButtons Face="SelfDestruct" Type="AbilCmd" AbilCmd="GenetronSelfDestruct,Execute" Row="2" Column="4"/>
         </CardLayouts>
         <HotkeyCategory value="Unit/Category/GenetronUnits"/>
+        <CargoSize value="2"/>
     </CUnit>
     <CUnit id="AnalysisTerminal" parent="CStructureGenetron">
         <LifeStart value="850"/>
@@ -1771,6 +1783,7 @@
             <LayoutButtons Face="SelfDestruct" Type="AbilCmd" AbilCmd="GenetronSelfDestruct,Execute" Row="2" Column="4"/>
         </CardLayouts>
         <HotkeyCategory value="Unit/Category/GenetronUnits"/>
+        <CargoSize value="2"/>
     </CUnit>
     <CUnit id="Torrent" parent="CUnitGenetron">
         <LifeStart value="150"/>
@@ -2089,24 +2102,25 @@
         <AbilArray Link="JupiterAccelerator"/>
         <AbilArray Link="RevenantBomb"/>
         <AbilArray Link="RevenantBombUnit"/>
+        <AbilArray Link="LoadUnloadJupiter"/>
+        <AbilArray Link="JupiterBomb"/>
+        <AbilArray Link="JupiterConstructBomb"/>
+        <AbilArray Link="que5Passive"/>
         <BehaviorArray Link="GenetronPowerSupplyTracker"/>
         <BehaviorArray Link="TrackGenetronPowerSupplyUnit"/>
+        <BehaviorArray Link="JupiterCargoTracker"/>
+        <BehaviorArray Link="JupiterBombTrainReq"/>
         <WeaponArray Link="RevenantBomb"/>
         <CardLayouts index="0">
-            <LayoutButtons Face="RevenantBomb" Type="AbilCmd" AbilCmd="RevenantBomb,Execute" Row="2" Column="0"/>
-            <LayoutButtons Face="JupiterNapalm" Type="Passive" AbilCmd="RevenantBomb,Execute" Row="2" Column="2"/>
+            <LayoutButtons Face="JupiterNapalm" Type="Passive" AbilCmd="RevenantBomb,Execute" Row="1" Column="1"/>
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="JupiterAccelerator,Off" Row="2" Column="4"/>
             <LayoutButtons Face="AttackBarrage" Type="AbilCmd" AbilCmd="attack,Barrage" Row="1" Column="4"/>
-            <LayoutButtons Face="JupiterAccelerator" Type="AbilCmd" AbilCmd="JupiterAccelerator,On" Row="2" Column="3"/>
             <LayoutButtons Face="Heat" Type="Passive" Row="1" Column="0"/>
-            <LayoutButtons>
-                <Face value="RevenantBombUnit"/>
-                <Type value="AbilCmd"/>
-                <AbilCmd value="RevenantBombUnit,Execute"/>
-                <ShowInGlossary value="0"/>
-                <Row value="2"/>
-                <Column value="1"/>
-            </LayoutButtons>
+            <LayoutButtons Face="CourierUnloadAll" Type="AbilCmd" AbilCmd="LoadUnloadJupiter,UnloadAt" Row="2" Column="3"/>
+            <LayoutButtons Face="CourierLoad" Type="AbilCmd" AbilCmd="LoadUnloadJupiter,Load" Row="2" Column="2"/>
+            <LayoutButtons Face="JupiterAccelerator" Type="AbilCmd" AbilCmd="JupiterAccelerator,On" Row="2" Column="1"/>
+            <LayoutButtons Face="RevenantBomb" Type="AbilCmd" AbilCmd="JupiterBomb,Execute" Row="2" Column="0"/>
+            <LayoutButtons Face="TeslaConstructCharge" Type="AbilCmd" AbilCmd="JupiterConstructBomb,Train1" Row="1" Column="2"/>
         </CardLayouts>
         <Radius value="1"/>
         <SeparationRadius value="1"/>
