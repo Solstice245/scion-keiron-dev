@@ -38,6 +38,41 @@
         </Cost>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="JupiterBombTrainReq">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <DisableValidatorArray value="CasterHasLT2CargoSpace"/>
+        <Modification>
+            <AbilClassDisableArray index="CAbilTrain" value="1"/>
+        </Modification>
+    </CBehaviorBuff>
+    <CBehaviorBuff id="JupiterBombController">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <BuffFlags index="Channeled" value="1"/>
+        <Period value="0.0625"/>
+        <InitialEffect value="JupiterSpeedAccelerator"/>
+        <RefreshEffect value="JupiterBombPeriodic"/>
+        <PeriodicEffect value="JupiterBombPeriodic"/>
+        <FinalEffect value="JupiterSpeedRemoveAccelerator"/>
+    </CBehaviorBuff>
+    <CBehaviorUnitTracker id="JupiterCargoTracker">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+    </CBehaviorUnitTracker>
+    <CBehaviorBuff id="JupiterUnloadPrecursor">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Duration value="5"/>
+        <Modification>
+            <ModifyFlags index="DisableAbils" value="1"/>
+            <ModifyFlags index="DisableWeapons" value="1"/>
+            <ModifyFlags index="SuppressMoving" value="1"/>
+            <ModifyFlags index="SuppressTurning" value="1"/>
+            <StateFlags index="Invulnerable" value="1"/>
+            <StateFlags index="NoDraw" value="1"/>
+        </Modification>
+        <InitialEffect value="HideTarget"/>
+        <FinalEffect value="ShowTarget"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="StarBoltCaster">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Modification MoveSpeedMultiplier="0.5" AccelerationMultiplier="0.5">
@@ -100,6 +135,7 @@
         <Period value="0.7"/>
         <PeriodicEffect value="TorrentLunaMineDrainSwitch"/>
         <FinalEffect value="Suicide"/>
+        <DisableValidatorArray value="SourceNotHidden"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="LunaMineStun">
         <Alignment value="Negative"/>

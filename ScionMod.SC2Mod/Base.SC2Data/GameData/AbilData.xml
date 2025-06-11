@@ -124,6 +124,30 @@
     <CAbilMorph id="BurrowZerglingDown">
         <Flags index="WaitUntilStopped" value="0"/>
     </CAbilMorph>
+    <CAbilEffectTarget id="JupiterBomb">
+        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+        <Range value="72"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="RevenantBomb"/>
+        <Cost>
+            <Cooldown TimeStart="0.0625"/>
+        </Cost>
+    </CAbilEffectTarget>
+    <CAbilTrain id="JupiterConstructBomb">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <InfoArray index="Train1" Time="1" Effect="JupiterConstructBombSwitch">
+            <Button DefaultButtonFace="RevenantBomb"/>
+            <Unit value="JupiterRevenantBomb"/>
+        </InfoArray>
+    </CAbilTrain>
+    <CAbilTransport id="LoadUnloadJupiter" parent="MedivacTransport">
+        <Name value="Abil/Name/LoadUnloadJupiter"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <CmdButtonArray index="Load" DefaultButtonFace="CourierLoad"/>
+        <CmdButtonArray index="UnloadAt" DefaultButtonFace="CourierUnloadAll"/>
+        <LoadCargoEffect value="JupiterCargoTrackerLoadSwitch"/>
+        <UnloadCargoEffect value="JupiterCargoTrackerUnloadSwitch"/>
+        <UnloadValidatorArray value="JupiterHasANonBombUnit"/>
+    </CAbilTransport>
     <CAbilEffectInstant id="EqualizerHardenedFrame">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Cost>

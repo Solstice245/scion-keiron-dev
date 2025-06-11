@@ -146,6 +146,325 @@
         <AreaArray MaxCount="1" Radius="3" Effect="AvengerStarBoltExpireSet"/>
         <ImpactLocation Effect="AvengerStarBoltExpireSwitch" Value="TargetPoint"/>
     </CEffectEnumArea>
+    <CEffectModifyUnit id="HideTarget">
+        <ModifyFlags index="Hide" value="1"/>
+    </CEffectModifyUnit>
+    <CEffectModifyUnit id="ShowTarget">
+        <ModifyFlags index="Show" value="1"/>
+    </CEffectModifyUnit>
+    <CEffectSet id="JupiterBomb">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="JupiterBombTarget"/>
+        <TargetLocationType value="Point"/>
+    </CEffectSet>
+    <CEffectModifyUnit id="JupiterBombCooldown">
+        <EditorCategories value="Race:Genetron"/>
+        <ImpactUnit Value="Caster"/>
+        <Cost Abil="JupiterBomb,Execute" CooldownOperation="Set" CooldownTimeUse="5"/>
+    </CEffectModifyUnit>
+    <CEffectLaunchMissile id="JupiterBombLaunchUnitsLM">
+        <ValidatorArray index="0" value="JupiterBombLaunchShockLMTargetFilters"/>
+        <EditorCategories value="Race:Genetron"/>
+        <LaunchLocation Value="CasterUnit"/>
+        <ImpactLocation Effect="JupiterBombUnloadCU"/>
+        <AmmoUnit value="JupiterDropPodMissile"/>
+        <Movers Link="RevenantBombLMWeapon"/>
+        <FinishEffect value="JupiterBombLaunchRB"/>
+    </CEffectLaunchMissile>
+    <CEffectRemoveBehavior id="JupiterBombLaunchRB">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="JupiterUnloadPrecursor"/>
+    </CEffectRemoveBehavior>
+    <CEffectLaunchMissile id="JupiterBombLaunchShockLM">
+        <EditorCategories value="Race:Genetron"/>
+        <LaunchLocation Value="CasterUnit"/>
+        <ImpactLocation Effect="JupiterBombUnloadCU"/>
+        <AmmoUnit value="LaunchShockChargeWeapon"/>
+        <Movers Link="RevenantBombLMWeapon"/>
+        <FinishEffect value="JupiterBombLaunchRB"/>
+    </CEffectLaunchMissile>
+    <CEffectLaunchMissile id="JupiterBombLaunchCloakLM">
+        <ValidatorArray index="0" value="JupiterBombLaunchShockLMTargetFilters"/>
+        <EditorCategories value="Race:Genetron"/>
+        <LaunchLocation Value="CasterUnit"/>
+        <ImpactLocation Effect="JupiterBombUnloadCU"/>
+        <AmmoUnit value="LaunchCloakChargeWeapon"/>
+        <Movers Link="RevenantBombLMWeapon"/>
+        <FinishEffect value="JupiterBombLaunchRB"/>
+    </CEffectLaunchMissile>
+    <CEffectSet id="JupiterBombUnloadBombSet">
+        <ValidatorArray value="IsJupiterRevenantBomb"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="JupiterBombCooldown"/>
+        <EffectArray value="JupiterBombLaunchBombTarget"/>
+        <EffectArray value="JupiterBombTargetSwitch"/>
+        <EffectArray value="KillRemove"/>
+    </CEffectSet>
+    <CEffectRemoveBehavior id="JupiterBombUnloadRB">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Caster"/>
+        <BehaviorLink value="JupiterBombController"/>
+    </CEffectRemoveBehavior>
+    <CEffectSwitch id="JupiterBombLaunchSwitch">
+        <EditorCategories value="Race:Genetron"/>
+        <CaseArray Validator="IsTeslaCloakCharge" Effect="JupiterBombLaunchCloakLM"/>
+        <CaseArray Validator="IsTeslaShockCharge" Effect="JupiterBombLaunchShockLM"/>
+        <CaseDefault value="JupiterBombLaunchUnitsLM"/>
+    </CEffectSwitch>
+    <CEffectApplyBehavior id="JupiterBombUnloadAB">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Effect="JupiterBombUnloadCU"/>
+        <Behavior value="JupiterUnloadPrecursor"/>
+    </CEffectApplyBehavior>
+    <CEffectEnumTransport id="JupiterBombUnloadBombIterate">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Caster"/>
+        <MaxCount value="1"/>
+        <Effect value="JupiterBombUnloadBombSet"/>
+    </CEffectEnumTransport>
+    <CEffectCreatePersistent id="JupiterBombLaunchBombTarget">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Effect="JupiterBombTarget"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="JupiterBombLaunchBombLM"/>
+    </CEffectCreatePersistent>
+    <CEffectSet id="JupiterCargoTrackerLoadSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="JupiterCargoTrackerAdd"/>
+        <EffectArray value="JupiterCargoTrackerReloadIterate"/>
+    </CEffectSet>
+    <CEffectSwitch id="JupiterCargoTrackerLoadSwitch">
+        <EditorCategories value="Race:Genetron"/>
+        <CaseArray Validator="IsNotJupiterRevenantBomb" Effect="JupiterCargoTrackerLoadSet"/>
+        <CaseDefault value="JupiterCargoTrackerAdd"/>
+    </CEffectSwitch>
+    <CEffectSwitch id="JupiterCargoTrackerReloadSwitch">
+        <EditorCategories value="Race:Genetron"/>
+        <CaseArray Validator="CasterNotDead" Effect="JupiterCargoTrackerReloadLoad"/>
+        <CaseDefault value="KillRemove"/>
+    </CEffectSwitch>
+    <CEffectRemoveTrackedUnit id="JupiterCargoTrackerRemove">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="JupiterCargoTracker"/>
+        <TrackedUnit Value="Target"/>
+    </CEffectRemoveTrackedUnit>
+    <CEffectLoadContainer id="JupiterCargoTrackerReloadLoad">
+        <EditorCategories value="Race:Genetron"/>
+        <ContainerType value="Transport"/>
+    </CEffectLoadContainer>
+    <CEffectModifyUnit id="JupiterConstructBombSalvage">
+        <EditorCategories value="Race:Genetron"/>
+        <ModifyFlags index="Remove" value="1"/>
+        <ModifyFlags index="Salvage" value="1"/>
+        <SalvageFactor>
+            <Resource index="Minerals" value="1"/>
+            <Resource index="Vespene" value="1"/>
+        </SalvageFactor>
+    </CEffectModifyUnit>
+    <CEffectSwitch id="JupiterBombTargetSwitch">
+        <EditorCategories value="Race:Genetron"/>
+        <CaseArray Validator="JupiterHasANonOrdnanceUnit" Effect="JupiterBombTargetUnitsOffset"/>
+        <CaseArray Validator="JupiterHasACloakCharge" Effect="JupiterBombTargetChargesOffset"/>
+        <CaseArray Validator="JupiterHasAShockCharge" Effect="JupiterBombTargetChargesOffset"/>
+        <CaseDefault value="JupiterBombTargetBombsOffset"/>
+    </CEffectSwitch>
+    <CEffectCreatePersistent id="JupiterBombTargetUnitsOffset">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Effect="JupiterBombTarget"/>
+        <OffsetVectorStartLocation Value="CasterUnit"/>
+        <OffsetVectorEndLocation Effect="JupiterBombTarget"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="JupiterBombTarget"/>
+        <PeriodicOffsetArray value="0,-1.25,0"/>
+    </CEffectCreatePersistent>
+    <CEffectApplyForce id="JupiterBombForce">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Effect="JupiterBombTarget" Value="TargetPoint"/>
+        <WhichUnit Value="Caster"/>
+        <Amount value="-1"/>
+    </CEffectApplyForce>
+    <CEffectSet id="JupiterBombPeriodic">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="JupiterBombForce"/>
+        <EffectArray value="JupiterBombCheckDistance"/>
+    </CEffectSet>
+    <CEffectCreatePersistent id="JupiterBombTarget">
+        <EditorCategories value="Race:Genetron"/>
+        <InitialEffect value="JupiterBombAB"/>
+    </CEffectCreatePersistent>
+    <CEffectApplyBehavior id="JupiterBombAB">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="JupiterBombController"/>
+    </CEffectApplyBehavior>
+    <CEffectUserData id="JupiterBombCheckDistance">
+        <EditorCategories value="Race:Genetron"/>
+        <Key value="CheckDistance"/>
+        <Amount value="0">
+            <AccumulatorArray value="JupiterBombDistance"/>
+        </Amount>
+        <SourceKey value="CheckDistance"/>
+        <Operation value="Set"/>
+        <ValidateMax value="0">
+            <AccumulatorArray value="JupiterBombDistanceCheck"/>
+        </ValidateMax>
+        <EffectSuccess value="JupiterBombUnloadSwitch"/>
+    </CEffectUserData>
+    <CEffectLaunchMissile id="JupiterBombLaunchBombLM" parent="ScionLaunchMissilePoint" Race="Genetron">
+        <AINotifyFlags index="HurtEnemy" value="1"/>
+        <AINotifyFlags index="MinorDanger" value="1"/>
+        <LaunchLocation Value="CasterUnit"/>
+        <LaunchEffect value="JupiterRevenantBombLaunchCooldown"/>
+        <ImpactEffect value="JupiterRevenantBombImpact"/>
+        <AmmoOwner Value="Caster"/>
+        <AmmoUnit value="RevenantBombLMWeapon"/>
+    </CEffectLaunchMissile>
+    <CEffectCreatePersistent id="JupiterBombTargetChargesOffset">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Effect="JupiterBombTarget"/>
+        <OffsetVectorStartLocation Value="CasterUnit"/>
+        <OffsetVectorEndLocation Effect="JupiterBombTarget"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="JupiterBombTarget"/>
+        <PeriodicOffsetArray value="0,-3.5,0"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="JupiterBombTargetBombsOffset">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Effect="JupiterBombTarget"/>
+        <OffsetVectorStartLocation Value="CasterUnit"/>
+        <OffsetVectorEndLocation Effect="JupiterBombTarget"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="JupiterBombTarget"/>
+        <PeriodicOffsetArray value="0,-2.5,0"/>
+    </CEffectCreatePersistent>
+    <CEffectSet id="JupiterBombUnloadUnitsSet">
+        <ValidatorArray value="IsNotTeslaCharge"/>
+        <ValidatorArray value="IsNotJupiterRevenantBomb"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="JupiterBombCooldown"/>
+        <EffectArray value="JupiterBombUnloadCU"/>
+        <EffectArray value="JupiterBombTargetSwitch"/>
+    </CEffectSet>
+    <CEffectSet id="JupiterBombUnloadShockSet">
+        <ValidatorArray value="IsTeslaShockCharge"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="JupiterBombCooldown"/>
+        <EffectArray value="JupiterBombUnloadCU"/>
+        <EffectArray value="JupiterBombTargetSwitch"/>
+    </CEffectSet>
+    <CEffectCreateUnit id="JupiterBombUnloadCU">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Effect="JupiterBombTarget" Value="TargetPoint"/>
+        <CreateFlags index="Birth" value="0"/>
+        <CreateFlags index="DropOff" value="0"/>
+        <CreateFlags index="OffsetByRadius" value="0"/>
+        <CreateFlags index="PlacementIgnoreBlockers" value="1"/>
+        <CreateFlags index="Precursor" value="1"/>
+        <CreateFlags index="ProvideFood" value="0"/>
+        <CreateFlags index="TechComplete" value="0"/>
+        <CreateFlags index="UseFood" value="0"/>
+        <CreateFlags index="NormalizeSpawnOffset" value="0"/>
+        <SpawnOwner Value="Neutral"/>
+        <SpawnEffect value="JupiterBombUnloadCUSet"/>
+        <SpawnRange value="3"/>
+        <TypeFallbackUnit Value="Target"/>
+    </CEffectCreateUnit>
+    <CEffectSet id="JupiterBombUnloadCUSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="JupiterBombUnloadAB"/>
+        <EffectArray value="JupiterBombUnloadMU"/>
+        <EffectArray value="JupiterBombUnloadTP"/>
+        <EffectArray value="JupiterBombLaunchSwitch"/>
+        <EffectArray value="Kill"/>
+    </CEffectSet>
+    <CEffectApplyBehavior id="JupiterBombUnloadFate">
+        <EditorCategories value="Race:Genetron"/>
+    </CEffectApplyBehavior>
+    <CEffectEnumTransport id="JupiterBombUnloadCloakIterate">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Caster"/>
+        <MaxCount value="1"/>
+        <Effect value="JupiterBombUnloadCloakSet"/>
+    </CEffectEnumTransport>
+    <CEffectSet id="JupiterBombUnloadCloakSet">
+        <ValidatorArray value="IsTeslaCloakCharge"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="JupiterBombCooldown"/>
+        <EffectArray value="JupiterBombUnloadCU"/>
+        <EffectArray value="JupiterBombTargetSwitch"/>
+    </CEffectSet>
+    <CEffectEnumTransport id="JupiterBombUnloadUnitsIterate">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Caster"/>
+        <MaxCount value="1"/>
+        <Effect value="JupiterBombUnloadUnitsSet"/>
+    </CEffectEnumTransport>
+    <CEffectEnumTransport id="JupiterBombUnloadShockIterate">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Caster"/>
+        <MaxCount value="1"/>
+        <Effect value="JupiterBombUnloadShockSet"/>
+    </CEffectEnumTransport>
+    <CEffectModifyUnit id="JupiterBombUnloadMU">
+        <EditorCategories value="Race:Genetron"/>
+        <ImpactUnit Effect="JupiterBombUnloadCU"/>
+        <ModifyFlags index="DropFromContainerPassenger" value="1"/>
+    </CEffectModifyUnit>
+    <CEffectSwitch id="JupiterBombUnloadSwitch">
+        <EditorCategories value="Race:Genetron"/>
+        <CaseArray Validator="JupiterHasANonOrdnanceUnit" Effect="JupiterBombUnloadUnitsIterate"/>
+        <CaseArray Validator="JupiterHasACloakCharge" Effect="JupiterBombUnloadCloakIterate"/>
+        <CaseArray Validator="JupiterHasAShockCharge" Effect="JupiterBombUnloadShockIterate"/>
+        <CaseArray Validator="JupiterHasABomb" Effect="JupiterBombUnloadBombIterate"/>
+        <CaseDefault value="JupiterBombUnloadRB"/>
+    </CEffectSwitch>
+    <CEffectTeleport id="JupiterBombUnloadTP">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Effect="JupiterBombUnloadCU"/>
+        <MinDistance value="0"/>
+        <SourceLocation Effect="JupiterBombUnloadCU" Value="TargetUnit"/>
+        <TargetLocation Value="TargetUnit"/>
+        <TeleportFlags index="TestFog" value="0"/>
+    </CEffectTeleport>
+    <CEffectAddTrackedUnit id="JupiterCargoTrackerAdd">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="JupiterCargoTracker"/>
+        <TrackedUnit Value="Target"/>
+    </CEffectAddTrackedUnit>
+    <CEffectSwitch id="JupiterCargoTrackerUnloadSwitch">
+        <EditorCategories value="Race:Genetron"/>
+        <CaseArray Validator="IsJupiterRevenantBomb" Effect="JupiterCargoTrackerReloadLoad"/>
+        <CaseDefault value="JupiterCargoTrackerUnloadSet"/>
+    </CEffectSwitch>
+    <CEffectSwitch id="JupiterConstructBombSwitch">
+        <EditorCategories value="Race:Genetron"/>
+        <CaseArray Validator="CasterHasGTE2CargoSpace" Effect="JupiterConstructBombLoad"/>
+        <CaseDefault value="JupiterConstructBombSalvage"/>
+    </CEffectSwitch>
+    <CEffectLoadContainer id="JupiterConstructBombLoad">
+        <EditorCategories value="Race:Genetron"/>
+        <ContainerType value="Transport"/>
+    </CEffectLoadContainer>
+    <CEffectModifyUnit id="JupiterCargoTrackerReloadDrop">
+        <EditorCategories value="Race:Genetron"/>
+        <ModifyFlags index="DropFromContainerPassenger" value="1"/>
+    </CEffectModifyUnit>
+    <CEffectEnumTransport id="JupiterCargoTrackerReloadIterate">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Caster"/>
+        <Effect value="JupiterCargoTrackerReloadSet"/>
+    </CEffectEnumTransport>
+    <CEffectSet id="JupiterCargoTrackerReloadSet">
+        <ValidatorArray value="IsJupiterRevenantBomb"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="JupiterCargoTrackerReloadDrop"/>
+        <EffectArray value="JupiterCargoTrackerReloadSwitch"/>
+    </CEffectSet>
+    <CEffectSet id="JupiterCargoTrackerUnloadSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="JupiterCargoTrackerRemove"/>
+        <EffectArray value="JupiterCargoTrackerReloadIterate"/>
+    </CEffectSet>
     <CEffectMorph id="PariahProjectionMorphProjection">
         <EditorCategories value="Race:Keiron"/>
         <ActorKey value="ProjectionStart"/>
@@ -1148,9 +1467,9 @@
     </CEffectDamage>
     <CEffectSet id="TorrentLunaMineMissileImpactSet">
         <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="TorrentLunaMineMissileDamage"/>
         <EffectArray value="TorrentLunaMineMissileSearchAreaGround"/>
         <EffectArray value="TorrentLunaMineMissileSearchAreaAir"/>
+        <EffectArray value="TorrentLunaMineMissileDamage"/>
         <EffectArray value="SuicideRemoveCaster"/>
     </CEffectSet>
     <CEffectLaunchMissile id="TorrentLunaMineMissileLaunchMissile">

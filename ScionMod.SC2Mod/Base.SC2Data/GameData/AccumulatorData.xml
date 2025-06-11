@@ -22,6 +22,19 @@
     <CAccumulatorSwitch id="EqualizerTargetDamageBonusSwitch">
         <CaseArray Validator="TargetNotDead" Accumulator="EqualizerTargetDamageBonus"/>
     </CAccumulatorSwitch>
+    <CAccumulatorDistance id="JupiterBombDistance">
+        <EndLocation Effect="JupiterBombTarget" Value="TargetPoint"/>
+    </CAccumulatorDistance>
+    <CAccumulatorArithmetic id="JupiterBombDistanceCheck">
+        <Parameters value="0.1">
+            <AccumulatorArray value="JupiterBombSpeed"/>
+        </Parameters>
+        <Parameters value="3"/>
+    </CAccumulatorArithmetic>
+    <CAccumulatorBehavior id="JupiterBombSpeed">
+        <ApplicationRule value="Multiply"/>
+        <Behavior value="JupiterSpeedBuff"/>
+    </CAccumulatorBehavior>
     <CAccumulatorSwitch id="LifeMaxTargetSwitch">
         <CaseArray Validator="TargetNotDead" Accumulator="LifeMaxTarget"/>
     </CAccumulatorSwitch>

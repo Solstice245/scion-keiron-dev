@@ -27,6 +27,50 @@
         <CombineArray value="Aperture4CargoAnd40Energy"/>
         <CombineArray value="Aperture8CargoAnd80Energy"/>
     </CValidatorCombine>
+    <CValidatorUnitCompareCargo id="CasterHasGTE2CargoSpace">
+        <WhichUnit Value="Caster"/>
+        <Compare value="GE"/>
+        <Value value="2"/>
+    </CValidatorUnitCompareCargo>
+    <CValidatorUnitCompareCargo id="CasterHasLT2CargoSpace">
+        <WhichUnit Value="Caster"/>
+        <Compare value="LT"/>
+        <Value value="2"/>
+    </CValidatorUnitCompareCargo>
+    <CValidatorUnitType id="IsJupiterRevenantBomb">
+        <Value value="JupiterRevenantBomb"/>
+    </CValidatorUnitType>
+    <CValidatorUnitType id="IsNotJupiterRevenantBomb">
+        <Value value="JupiterRevenantBomb"/>
+        <Find value="0"/>
+    </CValidatorUnitType>
+    <CValidatorCompareTrackedUnitsCount id="JupiterHasABomb">
+        <Compare value="GT"/>
+        <BehaviorLink value="JupiterCargoTracker"/>
+        <TrackedUnitValidatorArray value="IsJupiterRevenantBomb"/>
+    </CValidatorCompareTrackedUnitsCount>
+    <CValidatorCompareTrackedUnitsCount id="JupiterHasANonBombUnit">
+        <ResultFailed value="Error,Error/CannotUnloadBombs"/>
+        <Compare value="GT"/>
+        <BehaviorLink value="JupiterCargoTracker"/>
+        <TrackedUnitValidatorArray value="IsNotJupiterRevenantBomb"/>
+    </CValidatorCompareTrackedUnitsCount>
+    <CValidatorCompareTrackedUnitsCount id="JupiterHasAShockCharge">
+        <Compare value="GT"/>
+        <BehaviorLink value="JupiterCargoTracker"/>
+        <TrackedUnitValidatorArray value="IsTeslaShockCharge"/>
+    </CValidatorCompareTrackedUnitsCount>
+    <CValidatorCompareTrackedUnitsCount id="JupiterHasACloakCharge">
+        <Compare value="GT"/>
+        <BehaviorLink value="JupiterCargoTracker"/>
+        <TrackedUnitValidatorArray value="IsTeslaCloakCharge"/>
+    </CValidatorCompareTrackedUnitsCount>
+    <CValidatorCompareTrackedUnitsCount id="JupiterHasANonOrdnanceUnit">
+        <Compare value="GT"/>
+        <BehaviorLink value="JupiterCargoTracker"/>
+        <TrackedUnitValidatorArray value="IsNotTeslaCharge"/>
+        <TrackedUnitValidatorArray value="IsNotJupiterRevenantBomb"/>
+    </CValidatorCompareTrackedUnitsCount>
     <CValidatorCombine id="LunaMinePeriodicSet">
         <Type value="And"/>
         <CombineArray value="CasterNotFungalGrowthed"/>
