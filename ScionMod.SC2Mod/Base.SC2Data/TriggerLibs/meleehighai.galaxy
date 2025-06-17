@@ -134,7 +134,7 @@ void AISetAttackStatus (int player, string what, int minAlly, int minSelf, bool 
         if (AIState(player, e_attackState) != e_attackState_Wait) {
             goAttack = true;
         }
-        if (AIGetTime() > 330) {
+        if (AIGetTimeDelta(player) > 330) {
             goAttack = true;
         }
     }
@@ -182,7 +182,7 @@ bool AIShouldScoutDueToBeaconOrAlly (int player) {
             if (PlayerBeaconIsSet(player, c_beaconScout)) {
                 return true;
             }
-            if (AIGetTime() > 120 && AIHasHumanAlly(player)) {
+            if (AIGetTimeDelta(player) > 120 && AIHasHumanAlly(player)) {
                 return true;
             }
         }
@@ -217,7 +217,7 @@ void AIScoutingEnableWithPreReq (int player, int scoutCount, string scout, int c
 }
 
 void AIEarlyDefenseScouting (int player) {
-    fixed time = AIGetTime();
+    fixed time = AIGetTimeDelta(player);
     bool enableScouting = false;
     bool enableDefending = false;
     int race;
@@ -506,7 +506,7 @@ bool XayidHDFastExpand (int player) {
 //--------------------------------------------------------------------------------------------------
 void AIHighSetLateGameArmy (int player, int buildIndex) {
     AISetUserInt(player, c_currentBuildIndex, buildIndex);
-    AISetUserInt(player, c_nextArmyTime, FixedToInt(AIGetTime()) + c_lateGameFrequency);
+    AISetUserInt(player, c_nextArmyTime, FixedToInt(AIGetTimeDelta(player)) + c_lateGameFrequency);
     AISetMainState(player, e_mainState_Late, e_mainSubState_Build);
 }
 
@@ -514,7 +514,7 @@ void AIHighSetLateGameArmy (int player, int buildIndex) {
 //  AIHighOpponentLikelyRushing
 //--------------------------------------------------------------------------------------------------
 bool AIHighOpponentLikelyRushing (int player) {
-    fixed time = AIGetTime();
+    fixed time = AIGetTimeDelta(player);
     fixed selfArmySize;
     fixed enemyArmySize;
 

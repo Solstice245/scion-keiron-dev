@@ -107,7 +107,7 @@ bool AITestTimeout (int player, int timeOut, int nextState, int nextSubState) {
     bool sendAttack = true;
     int waveCount;
     int desiredArmyCount;
-    if (AIGetTime() < timeOut) {
+    if (AIGetTimeDelta(player) < timeOut) {
         return false;
     }
 
@@ -147,17 +147,17 @@ void AILDGeneralSharedLogic (int player) {
         if (PlayerBeaconIsSet(player, c_beaconScout)) {
             AISetFlag(player, e_flagsScouting, true);
         }
-        else if (AIGetTime() > 300) {
+        else if (AIGetTimeDelta(player) > 300) {
             AISetFlag(player, e_flagsScouting, true);
         }
-        else if (AIGetTime() > 40 && AIHasHumanAlly(player)) {
+        else if (AIGetTimeDelta(player) > 40 && AIHasHumanAlly(player)) {
             AISetFlag(player, e_flagsScouting, true);
         }
     }
 
     // coop attacker logic
     if (AIGetCoopFlag(player, c_coopWaveAttacker)) {
-        if (AIGetTime() > 330) {
+        if (AIGetTimeDelta(player) > 330) {
             if (AIState(player, e_attackState) == e_attackState_Wait) {
                 AISetAttackState(player, e_attackState_Attack);
             }
@@ -327,7 +327,7 @@ void AISetupNextArmy (int player, int buildType, int newPhase, funcref<TemplateA
     if (newPhase == origPhase) {
         // switching due to player request
         origStartTime = origEndTime - origDuration;
-        origTimeElapsed = AIGetTime() - IntToFixed(origStartTime);
+        origTimeElapsed = AIGetTimeDelta(player) - IntToFixed(origStartTime);
         if (origTimeElapsed > origDuration - 1) {
             origTimeElapsed = origDuration - 1;
         }
@@ -362,7 +362,7 @@ void AISetupNextArmy (int player, int buildType, int newPhase, funcref<TemplateA
         AIScaleCurrentStockArmy(player, percentRemaining, 0, c_ldMaxArmyStockSize-1);
     } else {
         // switching to next phase
-        newEndTime = FixedToInt(AIGetTime()) + newDuration;
+        newEndTime = FixedToInt(AIGetTimeDelta(player)) + newDuration;
     }
 
     // set wave values

@@ -98,20 +98,33 @@ void DebugCallbackProt (int player) {
 void AINewUnitProt (int player, unit u) {
     string type = UnitGetType(u);
 
-    if (PlayerRace(player) == "Gen") {
-        AINewUnitGen(player, u);
-        return;
-    }
+    if (PlayerRace(player) != "Prot") {
 
-    if (PlayerRace(player) == "Xayi") {
-        AINewUnitXayi(player, u);
-        return;
-    }
-	
-	
-	if (PlayerRace(player) == "Keir") {
-        AINewUnitKeir(player, u);
-        return;
+        if (PlayerRace(player) == "Terr") {
+            AINewUnitTerr(player, u);
+            return;
+        }
+
+        if (PlayerRace(player) == "Zerg") {
+            AINewUnitZerg(player, u);
+            return;
+        }
+
+        if (PlayerRace(player) == "Gen") {
+            AINewUnitGen(player, u);
+            return;
+        }
+
+        if (PlayerRace(player) == "Xayi") {
+            AINewUnitXayi(player, u);
+            return;
+        }
+
+        if (PlayerRace(player) == "Keir") {
+            AINewUnitKeir(player, u);
+            return;
+        }
+
     }
 
     // ignored units
@@ -158,17 +171,28 @@ unit AIGetScoutProt (int player, int index, unit prev, bool allowWorkers) {
     unit obs;
     string prevType = UnitGetType(prev);
 
-    if (PlayerRace(player) == "Gen") {
-        return AIGetScoutGen(player, index, prev, allowWorkers);
-    }
+    if (PlayerRace(player) != "Prot") {
 
-    if (PlayerRace(player) == "Xayi") {
-        return AIGetScoutXayi(player, index, prev, allowWorkers);
-    }
-	
-	
-    if (PlayerRace(player) == "Keir") {
-        return AIGetScoutKeir(player, index, prev, allowWorkers);
+        if (PlayerRace(player) == "Terr") {
+            return AIGetScoutTerr(player, index, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Zerg") {
+            return AIGetScoutZerg(player, index, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Gen") {
+            return AIGetScoutGen(player, index, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Xayi") {
+            return AIGetScoutXayi(player, index, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Keir") {
+            return AIGetScoutKeir(player, index, prev, allowWorkers);
+        }
+
     }
 
     if (!PlayerBeaconIsSet(player, c_beaconScout) &&
@@ -215,18 +239,30 @@ unit AIEarlyDefScoutProt (int player, unit prev, bool allowWorkers) {
     unit obs;
     string prevType;
 
-    if (PlayerRace(player) == "Gen") {
-        return AIEarlyDefScoutGen(player, prev, allowWorkers);
+    if (PlayerRace(player) != "Prot") {
+
+        if (PlayerRace(player) == "Terr") {
+            return AIEarlyDefScoutTerr(player, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Zerg") {
+            return AIEarlyDefScoutZerg(player, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Gen") {
+            return AIEarlyDefScoutGen(player, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Xayi") {
+            return AIEarlyDefScoutXayi(player, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Keir") {
+            return AIEarlyDefScoutKeir(player, prev, allowWorkers);
+        }
+
     }
 
-    if (PlayerRace(player) == "Xayi") {
-        return AIEarlyDefScoutGen(player, prev, allowWorkers);
-    }
-	
-	if (PlayerRace(player) == "Keir") {
-        return AIEarlyDefScoutKeir(player, prev, allowWorkers);
-    }
-    
     if (!AIGetFlag(player, e_flagsEarlyDefScout)) {
         return c_nullUnit;
     }
@@ -286,22 +322,36 @@ void ProtossLate (int player);
 //--------------------------------------------------------------------------------------------------
 //  AIMeleeProt
 //--------------------------------------------------------------------------------------------------
-void AIMeleeProt (int player) {    
+void AIMeleeProt (int player) {
     int mainState = AIState(player, e_mainState);
 
-    if (PlayerRace(player) == "Gen") {
-        AIMeleeGen(player);
-        return;
-    }
+    if (PlayerRace(player) != "Prot") {
 
-    if (PlayerRace(player) == "Xayi") {
-        AIMeleeXayi(player);
-        return;
-    }
-	
-    if (PlayerRace(player) == "Keir") {
-        AIMeleeKeir(player);
-        return;
+        if (PlayerRace(player) == "Terr") {
+            AIMeleeTerr(player);
+            return;
+        }
+
+        if (PlayerRace(player) == "Zerg") {
+            AIMeleeZerg(player);
+            return;
+        }
+
+        if (PlayerRace(player) == "Gen") {
+            AIMeleeGen(player);
+            return;
+        }
+
+        if (PlayerRace(player) == "Xayi") {
+            AIMeleeXayi(player);
+            return;
+        }
+
+        if (PlayerRace(player) == "Keir") {
+            AIMeleeKeir(player);
+            return;
+        }
+
     }
 
     if (AIPlayerDifficulty(player) >= c_skirChMoney) {

@@ -98,12 +98,41 @@ void DebugCallbackXayi (int player) {
 void AINewUnitXayi (int player, unit u) {
     string type = UnitGetType(u);
 
+    if (PlayerRace(player) != "Xayi") {
+
+        if (PlayerRace(player) == "Prot") {
+            AINewUnitProt(player, u);
+            return;
+        }
+
+        if (PlayerRace(player) == "Terr") {
+            AINewUnitTerr(player, u);
+            return;
+        }
+
+        if (PlayerRace(player) == "Zerg") {
+            AINewUnitZerg(player, u);
+            return;
+        }
+
+        if (PlayerRace(player) == "Gen") {
+            AINewUnitGen(player, u);
+            return;
+        }
+
+        if (PlayerRace(player) == "Keir") {
+            AINewUnitKeir(player, u);
+            return;
+        }
+
+    }
+
     // ignored units
     //
     if (type == c_XU_Worm ||
         type == c_XU_Grub ||
         type == c_XU_Wasp) {
-        return;     
+        return;
     }
 
     if (UnitTypeTestAttribute(type, c_unitAttributeStructure)) {
@@ -140,6 +169,30 @@ void AINewUnitXayi (int player, unit u) {
 unit AIGetScoutXayi (int player, int index, unit prev, bool allowWorkers) {
     unit obs;
     string prevType = UnitGetType(prev);
+
+    if (PlayerRace(player) != "Xayi") {
+
+        if (PlayerRace(player) == "Prot") {
+            return AIGetScoutProt(player, index, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Terr") {
+            return AIGetScoutTerr(player, index, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Zerg") {
+            return AIGetScoutZerg(player, index, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Gen") {
+            return AIGetScoutGen(player, index, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Keir") {
+            return AIGetScoutKeir(player, index, prev, allowWorkers);
+        }
+
+    }
 
     if (!PlayerBeaconIsSet(player, c_beaconScout) &&
         !AIGetFlag(player, e_flagsScouting)) {
@@ -180,7 +233,31 @@ unit AIGetScoutXayi (int player, int index, unit prev, bool allowWorkers) {
 unit AIEarlyDefScoutXayi (int player, unit prev, bool allowWorkers) {
     unit obs;
     string prevType;
-    
+
+    if (PlayerRace(player) != "Xayi") {
+
+        if (PlayerRace(player) == "Prot") {
+            return AIEarlyDefScoutProt(player, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Terr") {
+            return AIEarlyDefScoutTerr(player, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Zerg") {
+            return AIEarlyDefScoutZerg(player, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Gen") {
+            return AIEarlyDefScoutGen(player, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Keir") {
+            return AIEarlyDefScoutKeir(player, prev, allowWorkers);
+        }
+
+    }
+
     if (!AIGetFlag(player, e_flagsEarlyDefScout)) {
         return c_nullUnit;
     }
@@ -251,6 +328,35 @@ void XayidLate (int player);
 void AIMeleeXayi (int player) {
     int mainState = AIState(player, e_mainState);
 
+    if (PlayerRace(player) != "Xayi") {
+
+        if (PlayerRace(player) == "Prot") {
+            AIMeleeProt(player);
+            return;
+        }
+
+        if (PlayerRace(player) == "Terr") {
+            AIMeleeTerr(player);
+            return;
+        }
+
+        if (PlayerRace(player) == "Zerg") {
+            AIMeleeZerg(player);
+            return;
+        }
+
+        if (PlayerRace(player) == "Gen") {
+            AIMeleeGen(player);
+            return;
+        }
+
+        if (PlayerRace(player) == "Keir") {
+            AIMeleeKeir(player);
+            return;
+        }
+
+    }
+
     if (AIPlayerDifficulty(player) >= c_skirChMoney) {
         AIMeleeCheatResources(player);
     }
@@ -265,7 +371,7 @@ void AIMeleeXayi (int player) {
 
 void XayidOpen (int player) {
     int diff = AIPlayerDifficulty(player);
-    
+
     if      (diff == c_skirVeryEasy) { XayidOpenVyEy(player); }
     else if (diff == c_skirEasy)     { XayidOpenEasy(player); }
     else if (diff == c_skirMedium)   { XayidOpenMedi(player); }
@@ -292,7 +398,7 @@ void XayidMid (int player) {
 
 void XayidLate (int player) {
     int diff = AIPlayerDifficulty(player);
-    
+
     if      (diff == c_skirVeryEasy) { XayidLateVyEy(player); }
     else if (diff == c_skirEasy)     { XayidLateEasy(player); }
     else if (diff == c_skirMedium)   { XayidLateMedi(player); }

@@ -104,6 +104,15 @@ void DebugMeleeInit () {
         }
     }
 }
+
+//--------------------------------------------------------------------------------------------------
+//  AIGetTimeDelta
+//--------------------------------------------------------------------------------------------------
+fixed AIGetTimeDelta(int player) {
+    // storing AI Time on this user index when AI is being reset
+    return AIGetTime() - AIGetUserInt(player, 142);
+}
+
 //--------------------------------------------------------------------------------------------------
 //  AIMeleeDiffSelect
 //--------------------------------------------------------------------------------------------------
@@ -116,21 +125,21 @@ void AIMeleeCheatResources (int player) {
     if (diff == c_skirChMoney) {
         // 0 - 2  minutes at 1.0
         // 2 - 20 minutes ramp to 1.5
-        if (AIGetTime() > 1200) {
+        if (AIGetTimeDelta(player) > 1200) {
             harvestBonus = 1.5;
         }
-        else if (AIGetTime() > 120) {
+        else if (AIGetTimeDelta(player) > 120) {
             // (1200 - 120) = 1080,  1080*2 = 2160   (ie at 1200 seconds this will be (1200 - 120) / 2160 = 0.5)
-            harvestBonus = 1.0 + ((AIGetTime() - 120) / 2160);
+            harvestBonus = 1.0 + ((AIGetTimeDelta(player) - 120) / 2160);
         }
     }
     else if (diff == c_skirChInsane) {
         // 0 - 20 minutes ramp from 1.2 to 2.0
-        if (AIGetTime() > 1200) {
+        if (AIGetTimeDelta(player) > 1200) {
             harvestBonus = 2.0;
         }
         else {
-            harvestBonus = 1.2 + (AIGetTime() / 1500);
+            harvestBonus = 1.2 + (AIGetTimeDelta(player) / 1500);
         }
     }
     AIHarvestBonus(player, harvestBonus);
@@ -558,6 +567,38 @@ void AIMeleeSharedInit (int player) {
     AIChooseNextOpeningBuild(player);
     AIChooseNextLateGameBuild(player);
 }
+
+//--------------------------------------------------------------------------------------------------
+// Function declarations for race based AI functions
+//--------------------------------------------------------------------------------------------------
+void AINewUnitProt(int player, unit u);
+void AINewUnitTerr(int player, unit u);
+void AINewUnitZerg(int player, unit u);
+void AINewUnitGen(int player, unit u);
+void AINewUnitKeir(int player, unit u);
+void AINewUnitXayi(int player, unit u);
+
+unit AIGetScoutProt(int player, int index, unit prev, bool allowWorkers);
+unit AIGetScoutTerr(int player, int index, unit prev, bool allowWorkers);
+unit AIGetScoutZerg(int player, int index, unit prev, bool allowWorkers);
+unit AIGetScoutGen(int player, int index, unit prev, bool allowWorkers);
+unit AIGetScoutKeir(int player, int index, unit prev, bool allowWorkers);
+unit AIGetScoutXayi(int player, int index, unit prev, bool allowWorkers);
+
+unit AIEarlyDefScoutProt(int player, unit prev, bool allowWorkers);
+unit AIEarlyDefScoutTerr(int player, unit prev, bool allowWorkers);
+unit AIEarlyDefScoutZerg(int player, unit prev, bool allowWorkers);
+unit AIEarlyDefScoutGen(int player, unit prev, bool allowWorkers);
+unit AIEarlyDefScoutKeir(int player, unit prev, bool allowWorkers);
+unit AIEarlyDefScoutXayi(int player, unit prev, bool allowWorkers);
+
+void AIMeleeProt(int player);
+void AIMeleeTerr(int player);
+void AIMeleeZerg(int player);
+void AIMeleeGen(int player);
+void AIMeleeKeir(int player);
+void AIMeleeXayi(int player);
+
 
 include "TriggerLibs/MeleeBuildAI"
 include "TriggerLibs/MeleeWaveAI"

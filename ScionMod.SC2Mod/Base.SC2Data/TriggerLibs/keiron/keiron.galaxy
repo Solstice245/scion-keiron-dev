@@ -99,6 +99,35 @@ void AINewUnitKeir (int player, unit u) {
     wave w;
     string type = UnitGetType(u);
 
+    if (PlayerRace(player) != "Keir") {
+
+        if (PlayerRace(player) == "Prot") {
+            AINewUnitProt(player, u);
+            return;
+        }
+
+        if (PlayerRace(player) == "Terr") {
+            AINewUnitTerr(player, u);
+            return;
+        }
+
+        if (PlayerRace(player) == "Zerg") {
+            AINewUnitZerg(player, u);
+            return;
+        }
+
+        if (PlayerRace(player) == "Gen") {
+            AINewUnitGen(player, u);
+            return;
+        }
+
+        if (PlayerRace(player) == "Xayi") {
+            AINewUnitXayi(player, u);
+            return;
+        }
+
+    }
+
     // ignored units
     //
     if (UnitTypeTestAttribute(type, c_unitAttributeStructure)) {
@@ -165,78 +194,126 @@ void AINewUnitKeir (int player, unit u) {
 //  AIGetScoutKeir
 //--------------------------------------------------------------------------------------------------
 unit AIGetScoutKeir (int player, int index, unit prev, bool allowWorkers) {
-  unit obs;
-  string prevType = UnitGetType(prev);
-  
-  if (!PlayerBeaconIsSet(player, c_beaconScout) &&
-      !AIGetFlag(player, e_flagsScouting)) {
-      // if no scouting beacons are set and we're not ready to scout, don't return a unit
-      return c_nullUnit;
-  }
+    unit obs;
+    string prevType = UnitGetType(prev);
 
-  if (index == 1 && PlayerBeaconIsSet(player, c_beaconScout)) {
-      AISetFlag(player, e_flagsScouting, true);
-      if (allowWorkers) {
-          // only return a worker, we want to claim a tower
-          if (prevType == c_KU_Converter) {
-              return prev;
-          } 
-          return AIGrabUnit(player, c_KU_Converter, c_prioScout, null);
-      }
-  }
+    if (PlayerRace(player) != "Keir") {
 
-  if (prevType == c_KU_Echo) {
-      return prev;
-  }
-  obs = AIGrabUnit(player, c_KU_Echo, c_prioScout, null);
-  if (obs) {
-      return obs;
-  }
-  if (prev) {
-      return prev;
-  }
-  // back to allowing workers as late scouts
-  //if (AIGetFlag(player, e_flagsLateScout)) {
-  //    return c_nullUnit;
-  //}
-  if (!allowWorkers) {
-      return c_nullUnit;
-  }
-  return AIGrabUnit(player, c_KU_Converter, c_prioScout, null);
+        if (PlayerRace(player) == "Prot") {
+            return AIGetScoutProt(player, index, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Terr") {
+            return AIGetScoutTerr(player, index, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Zerg") {
+            return AIGetScoutZerg(player, index, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Gen") {
+            return AIGetScoutGen(player, index, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Xayi") {
+            return AIGetScoutXayi(player, index, prev, allowWorkers);
+        }
+
+    }
+
+    if (!PlayerBeaconIsSet(player, c_beaconScout) &&
+        !AIGetFlag(player, e_flagsScouting)) {
+        // if no scouting beacons are set and we're not ready to scout, don't return a unit
+        return c_nullUnit;
+    }
+
+    if (index == 1 && PlayerBeaconIsSet(player, c_beaconScout)) {
+        AISetFlag(player, e_flagsScouting, true);
+        if (allowWorkers) {
+            // only return a worker, we want to claim a tower
+            if (prevType == c_KU_Converter) {
+                return prev;
+            } 
+            return AIGrabUnit(player, c_KU_Converter, c_prioScout, null);
+        }
+    }
+
+    if (prevType == c_KU_Echo) {
+        return prev;
+    }
+    obs = AIGrabUnit(player, c_KU_Echo, c_prioScout, null);
+    if (obs) {
+        return obs;
+    }
+    if (prev) {
+        return prev;
+    }
+    // back to allowing workers as late scouts
+    //if (AIGetFlag(player, e_flagsLateScout)) {
+    //    return c_nullUnit;
+    //}
+    if (!allowWorkers) {
+        return c_nullUnit;
+    }
+    return AIGrabUnit(player, c_KU_Converter, c_prioScout, null);
 }
 
 //--------------------------------------------------------------------------------------------------
 //  AIEarlyDefScoutKeir
 //--------------------------------------------------------------------------------------------------
 unit AIEarlyDefScoutKeir (int player, unit prev, bool allowWorkers) {
-  unit obs;
-  string prevType;
-  
-  if (!AIGetFlag(player, e_flagsEarlyDefScout)) {
-      return c_nullUnit;
-  }
-  prevType = UnitGetType(prev);
-  if (prevType == c_KU_Echo) {
-      return prev;
-  }
-  obs = AIGrabUnit(player, c_KU_Echo, c_prioScout, null);
-  if (obs) {
-      return obs;
-  }
-  if (prevType == c_KU_Pariah) {
-      return prev;
-  }
-  obs = AIGrabUnit(player, c_KU_Pariah, c_prioScout, null);
-  if (obs) {
-      return obs;
-  }
-  if (prev) {
-      return prev;
-  }
-  if (!allowWorkers) {
-      return c_nullUnit;
-  }
-  return AIGrabUnit(player, c_KU_Converter, c_prioScout, null);
+    unit obs;
+    string prevType;
+
+    if (PlayerRace(player) != "Keir") {
+
+        if (PlayerRace(player) == "Prot") {
+            return AIEarlyDefScoutProt(player, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Terr") {
+            return AIEarlyDefScoutTerr(player, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Zerg") {
+            return AIEarlyDefScoutZerg(player, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Gen") {
+            return AIEarlyDefScoutGen(player, prev, allowWorkers);
+        }
+
+        if (PlayerRace(player) == "Xayi") {
+            return AIEarlyDefScoutXayi(player, prev, allowWorkers);
+        }
+
+    }
+
+    if (!AIGetFlag(player, e_flagsEarlyDefScout)) {
+        return c_nullUnit;
+    }
+    prevType = UnitGetType(prev);
+    if (prevType == c_KU_Echo) {
+        return prev;
+    }
+    obs = AIGrabUnit(player, c_KU_Echo, c_prioScout, null);
+    if (obs) {
+        return obs;
+    }
+    if (prevType == c_KU_Pariah) {
+        return prev;
+    }
+    obs = AIGrabUnit(player, c_KU_Pariah, c_prioScout, null);
+    if (obs) {
+        return obs;
+    }
+    if (prev) {
+        return prev;
+    }
+    if (!allowWorkers) {
+        return c_nullUnit;
+    }
+    return AIGrabUnit(player, c_KU_Converter, c_prioScout, null);
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -276,6 +353,35 @@ void KeironLate (int player);
 //--------------------------------------------------------------------------------------------------
 void AIMeleeKeir (int player) {
     int mainState = AIState(player, e_mainState);
+
+    if (PlayerRace(player) != "Keir") {
+
+        if (PlayerRace(player) == "Prot") {
+            AIMeleeProt(player);
+            return;
+        }
+
+        if (PlayerRace(player) == "Terr") {
+            AIMeleeTerr(player);
+            return;
+        }
+
+        if (PlayerRace(player) == "Zerg") {
+            AIMeleeZerg(player);
+            return;
+        }
+
+        if (PlayerRace(player) == "Gen") {
+            AIMeleeGen(player);
+            return;
+        }
+
+        if (PlayerRace(player) == "Xayi") {
+            AIMeleeXayi(player);
+            return;
+        }
+
+    }
 
     if (AIPlayerDifficulty(player) >= c_skirChMoney) {
         AIMeleeCheatResources(player);
