@@ -38,21 +38,29 @@
         </Cost>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
     </CBehaviorBuff>
+    <CBehaviorBuff id="JupiterBombQueueMod">
+        <InfoFlags index="Hidden" value="1"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <RemoveValidatorArray value="JupiterQueueSizeBombNotDead"/>
+        <MaxStackCount value="0"/>
+        <Modification QueueSize="-1"/>
+    </CBehaviorBuff>
     <CBehaviorBuff id="JupiterBombTrainReq">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="CasterHasLT2CargoSpace"/>
         <Modification>
             <AbilClassDisableArray index="CAbilTrain" value="1"/>
         </Modification>
+        <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="JupiterBombController">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <BuffFlags index="Channeled" value="1"/>
         <Period value="0.0625"/>
         <InitialEffect value="JupiterSpeedAccelerator"/>
-        <RefreshEffect value="JupiterBombPeriodic"/>
         <PeriodicEffect value="JupiterBombPeriodic"/>
         <FinalEffect value="JupiterSpeedRemoveAccelerator"/>
+        <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
     <CBehaviorUnitTracker id="JupiterCargoTracker">
         <InfoFlags index="Hidden" value="1"/>
@@ -102,7 +110,6 @@
         <InfoIcon value="Assets\Textures\btn-ability-zerg-fireroach-increasefiredamage.dds"/>
         <RemoveValidatorArray value="HeatBurningTest"/>
         <Period value="0.5"/>
-        <InitialEffect value="HeatBurningOrphanIncrement"/>
         <PeriodicEffect value="HeatBurningDamage"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="DamageTakenNoneBenign">
@@ -291,6 +298,7 @@
     <CBehaviorBuff id="JupiterSpeedAccelerator">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <RemoveValidatorArray value="CasterHasEnergy"/>
+        <RemoveValidatorArray value="GenetronPowerSupplyGE05"/>
         <RemoveValidatorArray value="CasterNotAbducted"/>
         <RemoveValidatorArray value="CasterNotShackled"/>
         <Period value="0.0625"/>
@@ -302,7 +310,7 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <RemoveValidatorArray value="JupiterSpeedAcceleratorOrBuff"/>
         <Period value="0.0625"/>
-        <InitialEffect value="JupiterSpeedDataSwitch"/>
+        <InitialEffect value="JupiterSpeedForce"/>
         <PeriodicEffect value="JupiterSpeedPeriodic"/>
         <InfoIcon value="Assets\Textures\btn-tips-armory.dds"/>
         <InfoFlags index="Hidden" value="1"/>
@@ -504,7 +512,7 @@
         <BehaviorFlags index="Permanent" value="1"/>
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
-        <Modification TimeScale="0.375"/>
+        <Modification TimeScale="0.475"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="InducerGamutOrbNaniteEmitter">
         <BehaviorFlags index="Permanent" value="1"/>
@@ -1487,8 +1495,10 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <RemoveValidatorArray value="CasterNotAbducted"/>
         <RemoveValidatorArray value="CasterNotShackled"/>
-        <MaxStackCount value="50"/>
-        <Modification MoveSpeedMultiplier="1.031"/>
+        <MaxStackCount value="40"/>
+        <Modification MoveSpeedMultiplier="1.03">
+            <StateFlags index="SuppressEnergyRegen" value="1"/>
+        </Modification>
     </CBehaviorBuff>
     <CBehaviorBuff id="SpeedCloak">
         <InfoIcon value="Assets\Textures\btn-ability-genetron-blazespeedcloak.dds"/>
@@ -1502,15 +1512,6 @@
             <BehaviorCategoriesEnable index="Cloak" value="1"/>
         </Modification>
         <Duration value="2"/>
-        <Alignment value="Positive"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="SystemOffload">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Modification AttackSpeedMultiplier="1.15">
-            <LifeArmorBonus value="2"/>
-        </Modification>
-        <InfoIcon value="Assets\Textures\btn-tips-hacking.dds"/>
-        <Duration value="10"/>
         <Alignment value="Positive"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="AnalyzeWeakness">
@@ -2501,7 +2502,7 @@
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
         <TimeScaleSource Value="Global"/>
         <Duration value="1.4"/>
-        <Modification AttackSpeedMultiplier="0.4"/>
+        <Modification AttackSpeedMultiplier="0.5"/>
         <Alignment value="Negative"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="UmbraDamageReduction">

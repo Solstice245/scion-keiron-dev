@@ -199,6 +199,9 @@
         <AutoScaleFactor value="0.800000"/>
     </CActorModel>
     <CActorMissile id="AquilaNaniteEmitter" parent="GenericAttackMissile" unitName="NaniteEmitterWeapon"/>
+    <CActorModel id="JupiterBuild" parent="GenetronUnitBuild" buildTime="55.000000">
+        <Model value="Jupiter"/>
+    </CActorModel>
     <CActorSite id="AvengerStarBoltAttackImpactSite"/>
     <CActorModel id="AvengerBuild" parent="GenetronUnitBuild" buildTime="34.000000">
         <Model value="AvengerGenetron"/>
@@ -222,6 +225,7 @@
         <On Terms="Behavior.HeatBurning.Off" Send="AnimBracketStop BSD"/>
         <HostSiteOps Ops="SOpAttachCenterSoft"/>
         <AutoScaleFactor value="1.000000"/>
+        <MaxScale value="6.000000"/>
     </CActorModel>
     <CActorModel id="ChargingFieldBuffImpact" parent="ModelAnimationStyleContinuousUNIT">
         <On Terms="Behavior.ProcessingCoreChargingField.On" Send="Create"/>
@@ -235,6 +239,18 @@
         <HostSiteOps Ops="SOpMoveUpByDot15"/>
         <AutoScaleFactor value="1.000000"/>
     </CActorModel>
+    <CActorSound id="JupiterTransportLoadSound" parent="SoundOneShot">
+        <On Terms="AbilTransport.JupiterTransport.TransportLoad" Send="Create"/>
+        <Host Subject="_Selectable"/>
+        <HostSiteOps Ops="SOpAttachOriginStationary"/>
+        <Sound value="Medivac_Load"/>
+    </CActorSound>
+    <CActorSound id="JupiterTransportUnloadSound" parent="SoundOneShot">
+        <On Terms="AbilTransport.JupiterTransport.TransportUnload" Send="Create"/>
+        <Host Subject="_Selectable"/>
+        <HostSiteOps Ops="SOpAttachOriginStationary"/>
+        <Sound value="Medivac_Unload"/>
+    </CActorSound>
     <CActorModel id="DebugSearchArea" parent="ModelAnimationStyleOneShot">
         <On Terms="Effect.DebugSearchArea.Start" Send="Create"/>
         <Model value="ScoutMPAirMissileImpact"/>
@@ -247,51 +263,40 @@
         <StageArray AnimProps="Build,End"/>
     </CActorProgress>
     <CActorAction id="JupiterBombAttack" parent="GenericAttack" effectImpact="JupiterRevenantBombImpact" effectLaunch="JupiterBombLaunchBombLM">
-        <On index="1" Terms="Effect.##effectImpact##.Start; FromEffectTreeDescendant" Send="ActionImpact"/>
-        <On index="2" Terms="Effect.##effectImpact##.Stop; FromEffectTreeDescendant" Send="ActionImpactPhysics"/>
-        <On index="6" Terms="Effect.##effectLaunch##.Start; At Caster" Send="Create"/>
         <Missile value="JupiterAttackMissile"/>
         <ImpactSiteOps Ops="SOpTargetPointStationary"/>
         <ShieldFlashType value="Full"/>
+        <ImpactPhysics Name="Explosion" MatchKeys="Basic" Physics="SiegeTankSiegedForce"/>
     </CActorAction>
     <CActorAction id="JupiterDropPodAttack" parent="GenericAttack" effectImpact="JupiterBombLaunchRB" effectLaunch="JupiterBombLaunchUnitsLM">
-        <On index="1" Terms="Effect.##effectImpact##.Start; FromEffectTreeDescendant" Send="ActionImpact"/>
-        <On index="2" Terms="Effect.##effectImpact##.Stop; FromEffectTreeDescendant" Send="ActionImpactPhysics"/>
-        <On index="6" Terms="Effect.##effectLaunch##.Start; At Caster" Send="Create"/>
         <Missile value="JupiterDropPodMissile"/>
         <ImpactSiteOps Ops="SOpAttachHarness SOpAttachVolumeStandard SOpAttachOrigin"/>
     </CActorAction>
     <CActorAction id="JupiterShockChargeAttack" parent="GenericAttack" effectImpact="JupiterBombLaunchRB" effectLaunch="JupiterBombLaunchShockLM">
-        <On index="1" Terms="Effect.##effectImpact##.Start; FromEffectTreeDescendant" Send="ActionImpact"/>
-        <On index="2" Terms="Effect.##effectImpact##.Stop; FromEffectTreeDescendant" Send="ActionImpactPhysics"/>
-        <On index="6" Terms="Effect.##effectLaunch##.Start; At Caster" Send="Create"/>
         <Missile value="TeslaShockChargeMissile"/>
         <ImpactSiteOps Ops="SOpAttachHarness SOpAttachVolumeStandard SOpAttachOrigin"/>
     </CActorAction>
     <CActorMissile id="JupiterDropPodMissile" parent="GenericAttackMissile" unitName="JupiterDropPodMissile"/>
     <CActorUnit id="JupiterRevenantBomb" parent="GenericUnitStandard" unitName="JupiterRevenantBomb">
         <Model value="JupiterAttackMissile"/>
+        <UnitBorderNormalColor value="255,0,0"/>
+        <UnitBorderSubgroupColor value="255,0,0"/>
     </CActorUnit>
     <CActorModel id="JupiterRevenantBombImpact" parent="ModelAnimationStyleOneShot">
         <On Terms="Effect.JupiterRevenantBombImpact.Start" Send="Create"/>
     </CActorModel>
-    <CActorAction id="JupiterAttackTargetUnit" parent="GenericAttack" effectImpact="JupiterRevenantBombImpact" effectLaunch="JupiterRevenantBombLaunchMissileTargetUnit">
-        <LaunchAttachQuery Methods="AMFilterWeapon"/>
+    <CActorAction id="JupiterAttackTargetUnit" parent="GenericAttack" effectImpact="JupiterRevenantBombImpact" effectLaunch="JupiterRevenantBombSpellLaunchMissile">
         <LaunchAssets Model="JupiterAttackLaunch" Sound="JupiterAttackLaunch"/>
         <Beam value="JupiterAttackBeam"/>
         <Missile value="JupiterAttackMissile"/>
-        <ImpactSiteOps Ops="SOpAttachHarness SOpAttachVolumeStandard SOpTargetUnit"/>
         <ImpactMap index="None" Model="JupiterAttackImpact" Sound="JupiterAttackImpact" ModelReaction="JupiterAttackImpactReaction"/>
         <ImpactMap index="Shield" Sound="JupiterAttackImpactShield" ModelReaction="JupiterAttackImpactReactionShield"/>
         <ImpactPhysics Name="Explosion" MatchKeys="Basic" Physics="SiegeTankSiegedForce"/>
         <DamageMap index="None" Model="JupiterAttackDamage" Sound="JupiterAttackDamage" ModelReaction="JupiterAttackDamageReaction"/>
         <DamageMap index="Shield" Sound="JupiterAttackDamageShield" ModelReaction="JupiterAttackDamageReactionShield"/>
-        <ShieldFlashType value="None"/>
+        <ShieldFlashType value="Full"/>
     </CActorAction>
     <CActorAction id="JupiterCloakChargeAttack" parent="GenericAttack" effectImpact="JupiterBombLaunchRB" effectLaunch="JupiterBombLaunchCloakLM">
-        <On index="1" Terms="Effect.##effectImpact##.Start; FromEffectTreeDescendant" Send="ActionImpact"/>
-        <On index="2" Terms="Effect.##effectImpact##.Stop; FromEffectTreeDescendant" Send="ActionImpactPhysics"/>
-        <On index="6" Terms="Effect.##effectLaunch##.Start; At Caster" Send="Create"/>
         <Missile value="TeslaCloakChargeMissile"/>
         <ImpactSiteOps Ops="SOpAttachHarness SOpAttachVolumeStandard SOpAttachOrigin"/>
     </CActorAction>
@@ -3323,7 +3328,7 @@
     </CActorUnit>
     <CActorModel id="JupiterNapalmImpact" parent="ModelAnimationStyleContinuous">
         <On Terms="Effect.JupiterNapalmCreatePersistent.Start" Send="Create"/>
-        <On Terms="Effect.JupiterNapalmCreatePersistent.Stop" Send="Destroy"/>
+        <On Terms="Effect.JupiterNapalmCreatePersistent.Stop; FromEffectTreeDescendant" Send="Destroy"/>
         <HostSiteOps Ops="SOpTargetPointStationary"/>
     </CActorModel>
     <CActorModel id="JupiterNapalmImpactFire" parent="ModelAnimationStyleOneShotUNIT">
@@ -3331,7 +3336,6 @@
         <Host Subject="_Unit"/>
         <HostSiteOps Ops="SOpAttachTarget"/>
         <Model value="HellionTankAttackFireAddition"/>
-        <Scale value="1.200000"/>
         <ModelFlags index="AllowHitTest" value="0"/>
     </CActorModel>
     <CActorAction id="JupiterAttack" parent="GenericAttack" effectImpact="JupiterRevenantBombImpact" effectLaunch="JupiterRevenantBombLaunchMissile">
@@ -3492,7 +3496,21 @@
         <On Terms="Behavior.JupiterSpeedBuff.On" Send="$Spell PlayForever"/>
         <On Terms="Behavior.JupiterSpeedBuff.Off" Send="AnimClear Spell"/>
         <On Terms="Behavior.JupiterSpeedController.On" Send="AnimPlay Work Walk PlayForever"/>
+        <On Terms="Behavior.JupiterSpeedController.On; !AnimPlayingName StandWork" Send="StatusSet UseCover 1"/>
         <On Terms="Behavior.JupiterSpeedController.Off" Send="AnimClear Work"/>
+        <On Terms="Behavior.JupiterSpeedController.Off; !UnitWalking" Send="StatusSet UseCover 0"/>
+        <On Terms="Abil.JupiterTransport.TransportUnloadStart" Send="AnimBracketStart StandWork Stand,Work,Start Stand,Work Stand,Work,End"/>
+        <On Terms="Abil.JupiterTransport.TransportUnloadStop" Send="AnimBracketStop StandWork"/>
+        <On Terms="Abil.JupiterTransport.TransportUnloadStart" Send="StatusSet UseCover 0"/>
+        <On Terms="Abil.JupiterTransport.TransportUnloadStop; !ValidateUnit CasterIsStationary" Send="StatusSet UseCover 1"/>
+        <On Terms="UnitMovementUpdate.*.Walk; !AnimPlayingName StandWork" Send="StatusSet UseCover 1"/>
+        <On Terms="UnitMovementUpdate.*.WalkOutroStart; !AnimPlayingName Work" Send="StatusSet UseCover 0"/>
+        <On Terms="UnitMovementUpdate.*.Stand; !AnimPlayingName Work" Send="StatusSet UseCover 0"/>
+        <On Terms="StatusSet.*.UseCover; IsStatus UseCover 1" Send="AnimBracketStart Cover Cover,Start Cover Cover,End"/>
+        <On Terms="StatusSet.*.UseCover; IsStatus UseCover 0" Send="AnimBracketStop Cover"/>
+        <On Terms="ActorCreation" Send="AnimPlay CoverStand Cover,Stand PlayForever"/>
+        <On Terms="AnimBracketState.*.AfterClosing; AnimName Cover" Send="AnimPlay CoverStand Cover,Stand PlayForever"/>
+        <On Terms="AnimBracketState.*.BeforeOpening; AnimName Cover" Send="AnimClear CoverStand"/>
         <Macros value="TerrainSquibAnimations"/>
         <Macros value="PhysicsDeathsSwarmAir"/>
         <Macros value="PhysicsDeathsVoidAir"/>
@@ -3520,6 +3538,7 @@
         <HostSiteOps Ops="SOpBankerLiberator"/>
         <PortraitModel value="GenetronAdjutantPortrait"/>
         <DeathActorModel value="UnitDeathModelWithDeathMotionFlier"/>
+        <Baselines index="Walk" BlendIn="1.000000" BlendOut="1.000000"/>
     </CActorUnit>
     <CActorSound id="JupiterNapalmSound" parent="TerranFlameSound">
         <On Terms="Effect.JupiterNapalmCreatePersistent.Start" Send="Create"/>
@@ -3531,20 +3550,9 @@
         <On Terms="Effect.ProcessorAnalyzeWeaknessSA.Start" Send="Create"/>
         <Sound value="Processor_Analyze_Sound"/>
     </CActorSound>
-    <CActorBeamStandard id="ProcessorSystemOffloadBeam" parent="BeamStandardAnimationStyleOneShot">
-        <Beam value="BeamStandard"/>
-    </CActorBeamStandard>
     <CActorBeamStandard id="ProcessorAnalyzeWeaknessBeam" parent="BeamStandardAnimationStyleOneShot">
         <Beam value="BeamStandard"/>
     </CActorBeamStandard>
-    <CActorModel id="ProcessorSystemOffloadImpact" parent="ModelAnimationStyleContinuousUNIT">
-        <Inherits index="BaseModelScale" value="1"/>
-        <Inherits index="Scale" value="1"/>
-        <On Terms="Behavior.SystemOffload.On" Send="Create"/>
-        <On Terms="Behavior.SystemOffload.Off" Send="Destroy"/>
-        <HostSiteOps Ops="SOpAttachCenter"/>
-        <ModelFlags index="AllowHitTest" value="0"/>
-    </CActorModel>
     <CActorModel id="ProcessorAnalyzeWeaknessImpact" parent="ModelAnimationStyleContinuousUNIT">
         <Inherits index="BaseModelScale" value="1"/>
         <Inherits index="Scale" value="1"/>
@@ -3553,10 +3561,6 @@
         <HostSiteOps Ops="SOpAttachCenter"/>
         <ModelFlags index="AllowHitTest" value="0"/>
     </CActorModel>
-    <CActorSound id="ProcessorSystemOffloadSound" parent="SoundOneShot">
-        <On Terms="Effect.SystemOffloadSA.Start" Send="Create"/>
-        <Sound value="Processor_SystemOffload_Sound"/>
-    </CActorSound>
     <CActorModel id="NodeBuild" parent="GenetronBuildingBuild">
         <CreepHeightClass value="Small"/>
     </CActorModel>
@@ -3841,7 +3845,7 @@
         <On Terms="Behavior.Scion_Overclock.Off" Send="AnimClearTimeScaleGlobal Overclock"/>
         <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Scion_Avenger" Send="Create AvengerBuild"/>
         <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Badger" Send="Create BadgerConstruction"/>
-        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Jupiter" Send="Create JupiterConstruction"/>
+        <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Jupiter" Send="Create JupiterBuild"/>
         <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Courier" Send="Create CourierConstruction"/>
         <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Boar" Send="Create BoarConstruction"/>
         <On Terms="AbilTrain.BuildAircraft.Start; AbilTrainProduced Hornet" Send="Create HornetConstruction"/>

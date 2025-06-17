@@ -149,21 +149,100 @@
     <CEffectModifyUnit id="HideTarget">
         <ModifyFlags index="Hide" value="1"/>
     </CEffectModifyUnit>
+    <CEffectApplyBehavior id="JupiterConstructBombApplyQueueSizeBuff">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Caster"/>
+        <Behavior value="JupiterBombQueueMod"/>
+    </CEffectApplyBehavior>
+    <CEffectSet id="JupiterConstructBombSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="JupiterConstructBombApplyQueueSizeBuff"/>
+        <EffectArray value="JupiterConstructBombLoad"/>
+    </CEffectSet>
+    <CEffectDestroyPersistent id="JupiterNapalmDestroyPersistent">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="TargetPoint"/>
+        <Effect value="JupiterNapalmCreatePersistent"/>
+        <Radius value="0.4375"/>
+    </CEffectDestroyPersistent>
+    <CEffectCreatePersistent id="JupiterRevenantBombWeaponInit">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="TargetUnit"/>
+        <InitialEffect value="JupiterRevenantBombWeaponIssueOrderBomb"/>
+    </CEffectCreatePersistent>
+    <CEffectIssueOrder id="JupiterRevenantBombWeaponIssueOrderBomb">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Caster"/>
+        <Abil value="JupiterRevenantBomb"/>
+        <CmdFlags index="Preempt" value="1"/>
+        <Player Value="Caster"/>
+        <Target Value="TargetUnit"/>
+    </CEffectIssueOrder>
+    <CEffectLaunchMissile id="JupiterRevenantBombSpellLaunchMissile" parent="ScionLaunchMissilePoint" Race="Genetron">
+        <AINotifyFlags index="HurtEnemy" value="1"/>
+        <AINotifyFlags index="MinorDanger" value="1"/>
+        <LaunchLocation Value="CasterUnit"/>
+        <ImpactLocation Value="TargetUnit"/>
+        <ImpactEffect value="JupiterRevenantBombImpact"/>
+        <AmmoOwner Value="Caster"/>
+        <AmmoUnit value="RevenantBombLMWeapon"/>
+    </CEffectLaunchMissile>
+    <CEffectCreatePersistent id="JupiterRevenantBombSpellTarget">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Effect="JupiterRevenantBombSpellInit" Value="TargetUnit"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="JupiterRevenantBombSpellLaunchMissile"/>
+    </CEffectCreatePersistent>
+    <CEffectEnumTransport id="JupiterRevenantBombSpellIterateT">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichUnit Value="Caster"/>
+        <MaxCount value="1"/>
+        <Effect value="JupiterRevenantBombSpellTransportSet"/>
+    </CEffectEnumTransport>
+    <CEffectSet id="JupiterRevenantBombSpellTransportSet">
+        <ValidatorArray value="IsJupiterRevenantBomb"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="JupiterRevenantBombSpellTarget"/>
+        <EffectArray value="KillRemove"/>
+    </CEffectSet>
+    <CEffectSet id="JupiterRevenantBombImpactPointSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="JupiterShellShocked"/>
+        <EffectArray value="JupiterRevenantBombImpactPointDamage"/>
+        <EffectArray value="JupiterHeatAddPoint"/>
+    </CEffectSet>
+    <CEffectDamage id="JupiterRevenantBombImpactPointDamage" parent="ScionDamage" Race="Genetron">
+        <Amount value="75"/>
+        <Death value="Blast"/>
+    </CEffectDamage>
+    <CEffectSet id="JupiterRevenantBombImpactAreaSet">
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="JupiterShellShocked"/>
+        <EffectArray value="JupiterRevenantBombImpactAreaDamage"/>
+        <EffectArray value="JupiterHeatAddArea"/>
+    </CEffectSet>
+    <CEffectEnumArea id="JupiterRevenantBombImpactNotificationSearch" parent="ScionEnumAreaEnemyGround">
+        <EditorCategories value="Race:Genetron"/>
+        <AreaArray Radius="1.125" Effect="NotificationResponseDummy"/>
+    </CEffectEnumArea>
+    <CEffectCreatePersistent id="JupiterRevenantBombSpellInit">
+        <ValidatorArray value="JupiterHasABomb"/>
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="TargetUnit"/>
+        <PeriodCount value="1"/>
+        <PeriodicEffectArray value="JupiterRevenantBombSpellIterateT"/>
+    </CEffectCreatePersistent>
+    <CEffectApplyForce id="JupiterSpeedForce">
+        <ValidatorArray value="JupiterNoOrdersOrMovingSlow"/>
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="TargetPoint"/>
+        <WhichUnit Value="Caster"/>
+        <Amount value="1"/>
+    </CEffectApplyForce>
     <CEffectModifyUnit id="ShowTarget">
         <ModifyFlags index="Show" value="1"/>
     </CEffectModifyUnit>
-    <CEffectSet id="JupiterBomb">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="JupiterBombTarget"/>
-        <TargetLocationType value="Point"/>
-    </CEffectSet>
-    <CEffectModifyUnit id="JupiterBombCooldown">
-        <EditorCategories value="Race:Genetron"/>
-        <ImpactUnit Value="Caster"/>
-        <Cost Abil="JupiterBomb,Execute" CooldownOperation="Set" CooldownTimeUse="5"/>
-    </CEffectModifyUnit>
     <CEffectLaunchMissile id="JupiterBombLaunchUnitsLM">
-        <ValidatorArray index="0" value="JupiterBombLaunchShockLMTargetFilters"/>
         <EditorCategories value="Race:Genetron"/>
         <LaunchLocation Value="CasterUnit"/>
         <ImpactLocation Effect="JupiterBombUnloadCU"/>
@@ -195,7 +274,6 @@
     <CEffectSet id="JupiterBombUnloadBombSet">
         <ValidatorArray value="IsJupiterRevenantBomb"/>
         <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="JupiterBombCooldown"/>
         <EffectArray value="JupiterBombLaunchBombTarget"/>
         <EffectArray value="JupiterBombTargetSwitch"/>
         <EffectArray value="KillRemove"/>
@@ -272,7 +350,7 @@
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Effect="JupiterBombTarget"/>
         <OffsetVectorStartLocation Value="CasterUnit"/>
-        <OffsetVectorEndLocation Effect="JupiterBombTarget"/>
+        <OffsetVectorEndLocation Value="CasterUnit"/>
         <PeriodCount value="1"/>
         <PeriodicEffectArray value="JupiterBombTarget"/>
         <PeriodicOffsetArray value="0,-1.25,0"/>
@@ -314,7 +392,6 @@
         <AINotifyFlags index="HurtEnemy" value="1"/>
         <AINotifyFlags index="MinorDanger" value="1"/>
         <LaunchLocation Value="CasterUnit"/>
-        <LaunchEffect value="JupiterRevenantBombLaunchCooldown"/>
         <ImpactEffect value="JupiterRevenantBombImpact"/>
         <AmmoOwner Value="Caster"/>
         <AmmoUnit value="RevenantBombLMWeapon"/>
@@ -323,7 +400,7 @@
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Effect="JupiterBombTarget"/>
         <OffsetVectorStartLocation Value="CasterUnit"/>
-        <OffsetVectorEndLocation Effect="JupiterBombTarget"/>
+        <OffsetVectorEndLocation Value="CasterUnit"/>
         <PeriodCount value="1"/>
         <PeriodicEffectArray value="JupiterBombTarget"/>
         <PeriodicOffsetArray value="0,-3.5,0"/>
@@ -332,23 +409,21 @@
         <EditorCategories value="Race:Genetron"/>
         <WhichLocation Effect="JupiterBombTarget"/>
         <OffsetVectorStartLocation Value="CasterUnit"/>
-        <OffsetVectorEndLocation Effect="JupiterBombTarget"/>
+        <OffsetVectorEndLocation Value="CasterUnit"/>
         <PeriodCount value="1"/>
         <PeriodicEffectArray value="JupiterBombTarget"/>
-        <PeriodicOffsetArray value="0,-2.5,0"/>
+        <PeriodicOffsetArray value="0,-2,0"/>
     </CEffectCreatePersistent>
     <CEffectSet id="JupiterBombUnloadUnitsSet">
         <ValidatorArray value="IsNotTeslaCharge"/>
         <ValidatorArray value="IsNotJupiterRevenantBomb"/>
         <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="JupiterBombCooldown"/>
         <EffectArray value="JupiterBombUnloadCU"/>
         <EffectArray value="JupiterBombTargetSwitch"/>
     </CEffectSet>
     <CEffectSet id="JupiterBombUnloadShockSet">
         <ValidatorArray value="IsTeslaShockCharge"/>
         <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="JupiterBombCooldown"/>
         <EffectArray value="JupiterBombUnloadCU"/>
         <EffectArray value="JupiterBombTargetSwitch"/>
     </CEffectSet>
@@ -389,7 +464,6 @@
     <CEffectSet id="JupiterBombUnloadCloakSet">
         <ValidatorArray value="IsTeslaCloakCharge"/>
         <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="JupiterBombCooldown"/>
         <EffectArray value="JupiterBombUnloadCU"/>
         <EffectArray value="JupiterBombTargetSwitch"/>
     </CEffectSet>
@@ -438,7 +512,7 @@
     </CEffectSwitch>
     <CEffectSwitch id="JupiterConstructBombSwitch">
         <EditorCategories value="Race:Genetron"/>
-        <CaseArray Validator="CasterHasGTE2CargoSpace" Effect="JupiterConstructBombLoad"/>
+        <CaseArray Validator="CasterHasGTE2CargoSpace" Effect="JupiterConstructBombSet"/>
         <CaseDefault value="JupiterConstructBombSalvage"/>
     </CEffectSwitch>
     <CEffectLoadContainer id="JupiterConstructBombLoad">
@@ -752,22 +826,11 @@
         <AreaArray Radius="0.625" Effect="HeatOrphanAdd2"/>
         <AreaArray Radius="1.25" Effect="HeatOrphanAdd1"/>
     </CEffectEnumArea>
-    <CEffectEnumArea id="JupiterRevenantBombImpactHeat" parent="ScionEnumAreaEnemyGround" Race="Genetron">
+    <CEffectEnumArea id="JupiterRevenantBombImpactSearch" parent="ScionEnumArea" Race="Genetron">
         <SearchFilters value="Ground;Missile,Stasis,Dead,Hidden,Invulnerable"/>
-        <AreaArray Effect="JupiterHeatAddPoint"/>
-        <AreaArray Radius="1.5" Effect="JupiterHeatAddArea"/>
+        <AreaArray Effect="JupiterRevenantBombImpactPointSet"/>
+        <AreaArray Radius="1.125" Effect="JupiterRevenantBombImpactAreaSet"/>
     </CEffectEnumArea>
-    <CEffectLaunchMissile id="JupiterRevenantBombLaunchMissileTargetUnit" parent="ScionLaunchMissilePoint" Race="Genetron">
-        <ValidatorArray value="RevenantLaunchTargetDistances"/>
-        <ValidatorArray value="RevenantBombCooldownComplete"/>
-        <AINotifyFlags index="HurtEnemy" value="1"/>
-        <AINotifyFlags index="MinorDanger" value="1"/>
-        <LaunchEffect value="JupiterRevenantBombLaunchCooldown"/>
-        <ImpactEffect value="JupiterRevenantBombImpact"/>
-        <AmmoOwner Value="Caster"/>
-        <AmmoUnit value="RevenantBombLMWeapon"/>
-        <ImpactLocation Value="TargetUnit"/>
-    </CEffectLaunchMissile>
     <CEffectModifyUnit id="CasterLookAtTargetIfNotMoving">
         <ValidatorArray value="CasterIsNotMoving"/>
         <EditorCategories value="Race:Genetron"/>
@@ -1174,52 +1237,12 @@
         <EffectArray value="GyreAnnexDataInc"/>
         <EffectArray value="GyreAnnexABStun"/>
     </CEffectSet>
-    <CEffectCreatePersistent id="JupiterRevenantBombWeaponCancelDelay">
-        <EditorCategories value="Race:Genetron"/>
-        <InitialDelay value="0.25"/>
-        <InitialEffect value="CancelActiveBarrageAttackForQueue"/>
-    </CEffectCreatePersistent>
-    <CEffectEnumArea id="JupiterRevenantBombImpactNotification" parent="ScionEnumAreaEnemyGround" Race="Genetron">
-        <AINotifyFlags index="HurtEnemy" value="1"/>
-        <AINotifyFlags index="MinorDanger" value="1"/>
-        <ImpactLocation Value="TargetPoint"/>
-        <AreaArray Radius="1.5" Effect="NotificationResponseDummy"/>
-    </CEffectEnumArea>
-    <CEffectSet id="JupiterRevenantBombWeaponSet">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="JupiterRevenantBombWeaponSwitch"/>
-        <EffectArray value="JupiterRevenantBombWeaponCancelDelay"/>
-        <TargetLocationType value="UnitOrPoint"/>
-    </CEffectSet>
     <CEffectApplyBehavior id="JupiterSpeedBuff" parent="ScionApplyBehaviorCaster" Race="Genetron"/>
     <CEffectApplyBehavior id="JupiterSpeedAccelerator" parent="ScionApplyBehaviorCaster" Race="Genetron"/>
     <CEffectSwitch id="JupiterSpeedBuffSwitch">
         <EditorCategories value="Race:Genetron"/>
         <CaseArray Effect="JupiterSpeedBuffSet"/>
         <CaseDefault value="JupiterSpeedRemoveBuff"/>
-    </CEffectSwitch>
-    <CEffectUserData id="JupiterSpeedData0">
-        <EditorCategories value="Race:Genetron"/>
-        <Amount value="0"/>
-        <Operation value="Set"/>
-        <EffectSuccess value="JupiterSpeedForce0"/>
-        <EffectFailure value="JupiterSpeedForce0"/>
-        <TargetLocationType value="Point"/>
-        <BehaviorScope Behavior="JupiterSpeedController"/>
-    </CEffectUserData>
-    <CEffectUserData id="JupiterSpeedData1">
-        <EditorCategories value="Race:Genetron"/>
-        <Operation value="Set"/>
-        <EffectSuccess value="JupiterSpeedForce1"/>
-        <EffectFailure value="JupiterSpeedForce1"/>
-        <TargetLocationType value="Point"/>
-        <BehaviorScope Behavior="JupiterSpeedController"/>
-    </CEffectUserData>
-    <CEffectSwitch id="JupiterSpeedDataSwitch">
-        <EditorCategories value="Race:Genetron"/>
-        <CaseArray Validator="JupiterSpeedControlData0" Effect="JupiterSpeedData1"/>
-        <CaseDefault value="JupiterSpeedData0"/>
-        <TargetLocationType value="Point"/>
     </CEffectSwitch>
     <CEffectRemoveBehavior id="JupiterSpeedRemoveAccelerator">
         <EditorCategories value="Race:Genetron"/>
@@ -1264,12 +1287,6 @@
         <SearchFilters value="-;Structure,Missile,Stasis,Dead,Hidden"/>
         <AreaArray Radius="8" Effect="AegisShieldAuraKBTarget"/>
     </CEffectEnumArea>
-    <CEffectSwitch id="RevenantBombUnit">
-        <EditorCategories value="Race:Genetron"/>
-        <CaseArray Validator="RevenantLaunchTargetSlow" Effect="JupiterRevenantBombLaunchMissileTargetUnit"/>
-        <CaseDefault value="JupiterRevenantBombSpellDelay"/>
-        <ValidatorArray value="RevenantBombCooldownComplete"/>
-    </CEffectSwitch>
     <CEffectModifyUnit id="Scion_CasterLookAtTarget">
         <ImpactUnit Value="Caster"/>
         <ModifyFlags index="InterpolateFacing" value="1"/>
@@ -1278,72 +1295,22 @@
     </CEffectModifyUnit>
     <CEffectCancelOrder id="JupiterSpeedCancelOrder">
         <ValidatorArray value="JupiterIsMovingSlow"/>
+        <ValidatorArray value="JupiterSpeedBuffGTE20"/>
         <ValidatorArray value="CasterIsMovingOrAttackingPoint"/>
         <EditorCategories value="Race:Genetron"/>
         <WhichUnit Value="Caster"/>
     </CEffectCancelOrder>
-    <CEffectApplyForce id="JupiterSpeedForce0">
-        <ValidatorArray value="JupiterSpeedForce0"/>
-        <EditorCategories value="Race:Genetron"/>
-        <WhichLocation Value="TargetPoint"/>
-        <WhichUnit Value="Caster"/>
-        <Amount value="1"/>
-    </CEffectApplyForce>
-    <CEffectApplyForce id="JupiterSpeedForce1">
-        <ValidatorArray value="JupiterSpeedForce1"/>
-        <EditorCategories value="Race:Genetron"/>
-        <WhichLocation Value="TargetPoint"/>
-        <WhichUnit Value="Caster"/>
-        <Amount value="1"/>
-    </CEffectApplyForce>
     <CEffectCreatePersistent id="JupiterSpeedPeriodic" parent="ScionCreatePersistent" Race="Genetron">
         <WhichLocation Value="CasterUnit"/>
         <OffsetVectorStartLocation Value="CasterUnit"/>
         <OffsetVectorEndLocation Value="CasterUnit"/>
         <PeriodCount value="4"/>
         <PeriodicEffectArray value="JupiterSpeedCancelOrder"/>
-        <PeriodicEffectArray value="JupiterSpeedDataSwitch"/>
+        <PeriodicEffectArray value="JupiterSpeedForce"/>
         <PeriodicEffectArray value="JupiterSpeedStealth"/>
         <PeriodicEffectArray value="JupiterSpeedRemoveBuffDeceleration"/>
         <PeriodicOffsetArray value="0,1,0"/>
     </CEffectCreatePersistent>
-    <CEffectCreatePersistent id="JupiterRevenantBombSpellDelay">
-        <EditorCategories value="Race:Genetron"/>
-        <Flags index="Channeled" value="1"/>
-        <InitialDelay value="0.0625"/>
-        <InitialEffect value="JupiterRevenantBombSpellCooldown"/>
-        <ExpireEffect value="JupiterRevenantBombChannel"/>
-        <WhichLocation Value="TargetUnitOrPoint"/>
-    </CEffectCreatePersistent>
-    <CEffectSwitch id="JupiterRevenantBombLaunchSwitch">
-        <ValidatorArray value="RevenantLaunchTargetDistances"/>
-        <ValidatorArray value="RevenantBombCooldownComplete"/>
-        <EditorCategories value="Race:Genetron"/>
-        <CaseArray Effect="JupiterRevenantBombLaunchMissileTargetUnit"/>
-        <CaseDefault value="JupiterRevenantBombLaunchMissile"/>
-        <TargetLocationType value="UnitOrPoint"/>
-    </CEffectSwitch>
-    <CEffectSet id="JupiterRevenantBombChannelPeriodSet">
-        <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="JupiterRevenantBombLaunchSwitch"/>
-        <EffectArray value="JupiterSpeedAccelerator"/>
-        <EffectArray value="Scion_CasterLookAtTarget"/>
-        <TargetLocationType value="UnitOrPoint"/>
-    </CEffectSet>
-    <CEffectSwitch id="JupiterRevenantBombWeaponSwitch">
-        <ValidatorArray value="RevenantBombCooldownComplete"/>
-        <EditorCategories value="Race:Genetron"/>
-        <CaseArray Validator="RevenantLaunchTargetSlow" Effect="JupiterRevenantBombLaunchSwitch"/>
-        <CaseDefault value="JupiterRevenantBombChannel"/>
-        <TargetLocationType value="UnitOrPoint"/>
-    </CEffectSwitch>
-    <CEffectEnumArea id="JupiterRevenantBombLaunchTargetUnitPoint">
-        <EditorCategories value="Race:Genetron"/>
-        <ImpactLocation Value="TargetUnit"/>
-        <IncludeArray Value="Target"/>
-        <SearchFilters value="-;Player,Ally,Neutral,Enemy"/>
-        <AreaArray Effect="JupiterRevenantBombLaunchMissileTargetUnit"/>
-    </CEffectEnumArea>
     <CEffectSet id="JupiterSpeedBuffSet">
         <ValidatorArray value="CasterHasEnergy"/>
         <ValidatorArray value="GenetronPowerSupplyGE05"/>
@@ -1583,7 +1550,7 @@
     <CEffectModifyUnit id="TorrentPlaceLunaMinesPowerModify">
         <EditorCategories value="Race:Genetron"/>
         <VitalArray index="Energy">
-            <Change value="-75"/>
+            <Change value="-100"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectApplyBehavior id="UmbraStealthCompulsion">
@@ -2824,14 +2791,6 @@
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
         <Effect value="SpitfireOverdrivePowerSet"/>
     </CEffectEnumTrackedUnits>
-    <CEffectModifyUnit id="JupiterRevenantBombSpellCooldown">
-        <EditorCategories value="Race:Genetron"/>
-        <ImpactUnit Value="Caster"/>
-        <Cost Abil="RevenantBomb,Execute" CooldownOperation="Set" CooldownTimeUse="0.0625"/>
-        <ModifyFlags index="InterpolateFacing" value="1"/>
-        <FacingLocation Value="TargetUnitOrPoint"/>
-        <FacingType value="LookAt"/>
-    </CEffectModifyUnit>
     <CEffectModifyUnit id="MendMU">
         <EditorCategories value="Race:Xayid"/>
         <VitalArray index="Life">
@@ -3062,7 +3021,7 @@
     <CEffectModifyUnit id="JupiterSpeedPowerModify">
         <EditorCategories value="Race:Genetron"/>
         <VitalArray index="Energy">
-            <Change value="-0.75"/>
+            <Change value="-0.6"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectEnumTrackedUnits id="CourierCloakingFieldDrainInitETU">
@@ -4399,7 +4358,7 @@
         <WhichLocation Value="TargetUnit"/>
         <Flags index="OrphanParams" value="1"/>
         <InitialEffect value="Heat"/>
-        <PeriodCount value="40"/>
+        <PeriodCount value="24"/>
         <PeriodicEffectArray value="HeatDataIncrement"/>
     </CEffectCreatePersistent>
     <CEffectCreatePersistent id="JupiterHeatPeriodIncrement">
@@ -4419,12 +4378,12 @@
         <WhichLocation Value="TargetUnit"/>
         <Flags index="OrphanParams" value="1"/>
         <InitialEffect value="Heat"/>
-        <PeriodCount value="10"/>
+        <PeriodCount value="8"/>
         <PeriodicEffectArray value="HeatDataIncrement"/>
     </CEffectCreatePersistent>
     <CEffectApplyBehavior id="JupiterNapalm" parent="ScionApplyBehavior" Race="Genetron"/>
     <CEffectCreatePersistent id="JupiterNapalmCreatePersistent" parent="ScionCreatePersistent" Race="Genetron">
-        <PeriodCount value="31"/>
+        <PeriodCount value="27"/>
         <PeriodicEffectArray value="JupiterNapalmSearchArea"/>
         <PeriodicPeriodArray value="0.375"/>
         <InitialDelay value="1"/>
@@ -4442,16 +4401,19 @@
         <Death value="Fire"/>
     </CEffectDamage>
     <CEffectEnumArea id="JupiterNapalmSearchArea" parent="ScionEnumArea" Race="Genetron">
+        <AINotifyFlags index="HurtFriend" value="1"/>
         <AINotifyFlags index="HurtEnemy" value="1"/>
-        <AINotifyFlags index="MinorDanger" value="1"/>
+        <AINotifyFlags index="MajorDanger" value="1"/>
         <ImpactLocation Value="TargetPoint"/>
         <SearchFilters value="Ground;Missile,Stasis,Dead,Hidden,Invulnerable"/>
-        <AreaArray Radius="1.5" Effect="JupiterNapalmSearchImpactSet"/>
+        <AreaArray Radius="1.125" Effect="JupiterNapalmSearchImpactSet"/>
+        <DebugTrace value="1"/>
     </CEffectEnumArea>
     <CEffectSet id="JupiterNapalmSearchImpactSet">
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="JupiterNapalmOrphan"/>
         <EffectArray value="HeatBurning"/>
+        <EffectArray value="NotificationResponseDummy"/>
     </CEffectSet>
     <CEffectCreatePersistent id="JupiterNapalmOrphan">
         <EditorCategories value="Race:Genetron"/>
@@ -4813,9 +4775,6 @@
     <CEffectApplyBehavior id="SupplimentationBuff" parent="ScionApplyBehavior" Race="Xayid">
         <ValidatorArray index="0" value="IsXayidProductionStructure"/>
     </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="SystemOffloadAB" parent="ScionApplyBehavior" Race="Genetron">
-        <Behavior value="SystemOffload"/>
-    </CEffectApplyBehavior>
     <CEffectSet id="TeslaShockChargeExpire" parent="ScionSet" Race="Genetron">
         <EffectArray value="TeslaShockChargeExpireSwitch"/>
         <EffectArray value="TeslaShockChargeExpireSearch"/>
@@ -4967,41 +4926,30 @@
         <EffectArray value="ProcessorFate"/>
         <EffectArray value="KillSource"/>
     </CEffectSet>
-    <CEffectCreatePersistent id="JupiterRevenantBombImpact" parent="ScionCreatePersistent" Race="Genetron">
+    <CEffectCreatePersistent id="JupiterRevenantBombImpact" Race="Genetron">
+        <EditorCategories value="Race:Genetron"/>
         <ExpireDelay value="0.0625"/>
-        <ExpireEffect value="JupiterRevenantBombImpactNotification"/>
-        <PeriodCount value="4"/>
-        <PeriodicEffectArray value="JupiterRevenantBombDMG"/>
-        <PeriodicEffectArray value="JupiterRevenantBombImpactHeat"/>
-        <PeriodicEffectArray value="JupiterRevenantBombImpactShellShock"/>
+        <ExpireEffect value="JupiterRevenantBombImpactNotificationSearch"/>
+        <PeriodCount value="3"/>
+        <PeriodicEffectArray value="JupiterRevenantBombImpactSearch"/>
+        <PeriodicEffectArray value="JupiterNapalmDestroyPersistent"/>
         <PeriodicEffectArray value="JupiterNapalmCreatePersistent"/>
-        <AINotifyEffect value="JupiterRevenantBombDMG"/>
-        <WhichLocation Value="TargetUnitOrPoint"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0"/>
+        <PeriodicPeriodArray value="0"/>
     </CEffectCreatePersistent>
     <CEffectModifyUnit id="JupiterSpeedModifyUnit">
         <EditorCategories value="Race:Genetron"/>
         <ImpactUnit Value="Caster"/>
         <VitalArray index="Energy">
-            <Change value="-0.75"/>
+            <Change value="-0.6"/>
         </VitalArray>
-    </CEffectModifyUnit>
-    <CEffectModifyUnit id="JupiterRevenantBombLaunchCooldown">
-        <EditorCategories value="Race:Genetron"/>
-        <ImpactUnit Value="Caster"/>
-        <Cost Abil="RevenantBomb,Execute" CooldownOperation="Set" CooldownTimeUse="8.4"/>
     </CEffectModifyUnit>
     <CEffectApplyBehavior id="JupiterSpeedApplyController" parent="ScionApplyBehaviorCaster" Race="Genetron">
         <ValidatorArray index="0" value="CasterHasEnergy"/>
         <ValidatorArray value="CasterNotFungalGrowthed"/>
         <Behavior value="JupiterSpeedController"/>
     </CEffectApplyBehavior>
-    <CEffectSwitch id="RevenantBomb">
-        <EditorCategories value="Race:Genetron"/>
-        <CaseArray Validator="RevenantLaunchTargetSlow" Effect="JupiterRevenantBombLaunchMissile"/>
-        <CaseDefault value="JupiterRevenantBombSpellDelay"/>
-        <TargetLocationType value="Point"/>
-        <ValidatorArray value="RevenantBombCooldownComplete"/>
-    </CEffectSwitch>
     <CEffectDamage id="ScavengerSpawnClaws" parent="ScionDamageMelee" Race="Xayid">
         <Amount value="10"/>
     </CEffectDamage>
@@ -5175,46 +5123,10 @@
     </CEffectLaunchMissile>
     <CEffectLaunchMissile id="NemesisMissilesLM" parent="ScionLaunchMissile" Race="Genetron"/>
     <CEffectLaunchMissile id="HurricaneMissilesLM" parent="ScionLaunchMissile" Race="Genetron"/>
-    <CEffectDamage id="JupiterRevenantBombDMG" parent="ScionDamage" Race="Genetron">
-        <AINotifyFlags index="HurtEnemy" value="1"/>
-        <AINotifyFlags index="MinorDanger" value="1"/>
-        <ImpactLocation Value="TargetPoint"/>
+    <CEffectDamage id="JupiterRevenantBombImpactAreaDamage" parent="ScionDamage" Race="Genetron">
         <Amount value="15"/>
         <Death value="Blast"/>
-        <AreaArray Fraction="5"/>
-        <AreaArray Radius="1.5" Fraction="1"/>
-        <ExcludeArray index="0" removed="1"/>
-        <SearchFilters value="Ground;Missile,Stasis,Dead,Hidden,Invulnerable"/>
     </CEffectDamage>
-    <CEffectEnumArea id="JupiterRevenantBombImpactShellShock" parent="ScionEnumAreaEnemyGround" Race="Genetron">
-        <AreaArray Radius="1.5" Effect="JupiterShellShocked"/>
-    </CEffectEnumArea>
-    <CEffectLaunchMissile id="JupiterRevenantBombLaunchMissile" parent="ScionLaunchMissilePoint" Race="Genetron">
-        <ImpactEffect value="JupiterRevenantBombImpact"/>
-        <AmmoUnit value="RevenantBombLMWeapon"/>
-        <AmmoOwner Value="Caster"/>
-        <AINotifyFlags index="HurtEnemy" value="1"/>
-        <AINotifyFlags index="MinorDanger" value="1"/>
-        <LaunchEffect value="JupiterRevenantBombLaunchCooldown"/>
-        <ValidatorArray value="RevenantLaunchTargetDistances"/>
-        <ValidatorArray value="RevenantBombCooldownComplete"/>
-    </CEffectLaunchMissile>
-    <CEffectCreatePersistent id="JupiterRevenantBombChannel" parent="ScionCreatePersistent" Race="Genetron">
-        <WhichLocation Value="TargetUnitOrPoint"/>
-        <Flags index="Channeled" value="1"/>
-        <Flags index="PersistUntilDestroyed" value="1"/>
-        <PeriodicEffectArray value="JupiterRevenantBombChannelPeriodSet"/>
-        <PeriodicPeriodArray value="0.0625"/>
-        <InitialEffect value="JupiterSpeedAccelerator"/>
-        <FinalEffect value="JupiterSpeedRemoveAccelerator"/>
-        <PeriodicValidator value="RevenantBombCooldownComplete"/>
-    </CEffectCreatePersistent>
-    <CEffectEnumArea id="SystemOffloadSA" parent="ScionEnumArea" Race="Genetron">
-        <AINotifyFlags index="HelpFriend" value="1"/>
-        <ImpactLocation Value="TargetPoint"/>
-        <SearchFilters value="-;Neutral,Enemy,Structure,Missile,Stasis,Dead,Hidden"/>
-        <AreaArray Radius="2" Effect="SystemOffloadAB"/>
-    </CEffectEnumArea>
     <CEffectEnumArea id="ProcessorAnalyzeWeaknessSA" parent="ScionEnumArea" Race="Genetron">
         <AINotifyFlags index="HelpFriend" value="1"/>
         <ImpactLocation Value="TargetPoint"/>
@@ -5284,7 +5196,7 @@
         <Death value="Eviscerate"/>
     </CEffectDamage>
     <CEffectDamage id="StratumMissilePodDMG" parent="ScionDamageRange" Race="Genetron">
-        <Amount value="28">
+        <Amount value="14">
             <AccumulatorArray value="EqualizerTargetDamageBonusSwitch"/>
         </Amount>
         <Death value="Blast"/>
@@ -5576,7 +5488,7 @@
     <CEffectUserData id="TitanWeaponBeamWeaponCooldownBase">
         <EditorCategories value="Race:Keiron"/>
         <Key value="BeamWeaponCooldownBase"/>
-        <Amount value="0.602"/>
+        <Amount value="0.5625"/>
         <SourceKey value="BeamWeaponCooldownBase"/>
         <Operation value="Set"/>
     </CEffectUserData>
@@ -6178,9 +6090,10 @@
         <PeriodicEffectArray value="HarbingerHeraldEnergyCannonsSA"/>
         <PeriodicPeriodArray value="0.25"/>
         <AINotifyEffect value="HarbingerHeraldEnergyCannonsSA"/>
+        <InitialEffect value="HarbingerHeraldEnergyCannonsSA"/>
     </CEffectCreatePersistent>
     <CEffectDamage id="HarbingerHeraldEnergyCannonsAOEDMG" parent="ScionDamage" Race="Keiron">
-        <Amount value="2.5"/>
+        <Amount value="3"/>
     </CEffectDamage>
     <CEffectEnumArea id="HarbingerHeraldEnergyCannonsSA" parent="ScionEnumAreaEnemyAir" Race="Keiron">
         <ImpactLocation Value="TargetPoint"/>
@@ -7342,8 +7255,9 @@
         <SearchFilters value="Ground;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
     </CEffectDamage>
     <CEffectDamage id="ShadowCannonImpact" parent="ScionDamageRange" Race="Keiron">
-        <Amount value="38"/>
+        <Amount value="28"/>
         <Death value="Electrocute"/>
+        <AttributeBonus index="Armored" value="10"/>
     </CEffectDamage>
     <CEffectSet id="TitanBlastS" parent="ScionSet" Race="Keiron">
         <EffectArray value="TitanBlast"/>

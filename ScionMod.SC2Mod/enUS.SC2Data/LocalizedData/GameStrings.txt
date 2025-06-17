@@ -69,8 +69,10 @@ Abil/Name/InciterELORProtocol=Inciter - ELOR Protocol
 Abil/Name/InterdictorBurrow=Burrow
 Abil/Name/InterdictorUnburrow=Unburrow
 Abil/Name/JupiterAccelerator=Jupiter - Accelerator
-Abil/Name/JupiterBomb=Jupiter - Bomb
+Abil/Name/JupiterAirstrike=Jupiter - Airstrike
 Abil/Name/JupiterConstructBomb=Jupiter - Construct Bomb
+Abil/Name/JupiterRevenantBomb=Jupiter - Revenant Bomb
+Abil/Name/JupiterTransport=Jupiter - Load-Unload
 Abil/Name/KeironBuild=Keiron Build
 Abil/Name/KeironCitadelAegisTrain=Keiron - Citadel Aegis Train
 Abil/Name/KeironCitadelMaterialize=Keiron - Citadel Materialize
@@ -78,7 +80,6 @@ Abil/Name/KeironCitadelTrain=Keiron - Citadel Train
 Abil/Name/KeironWarpable=Keiron Warpable
 Abil/Name/LaunchCloakCharge=Launch Cloak Charge
 Abil/Name/LaunchShockCharge=Launch Shock Charge
-Abil/Name/LoadUnloadJupiter=Load-Unload (Jupiter)
 Abil/Name/Mend=Mend
 Abil/Name/MendlingSacrificialMutation=Mendling >> Sacrificial Mutation
 Abil/Name/MiningPriority=Mining Priority
@@ -121,8 +122,6 @@ Abil/Name/RallyProcessingCore=Processing Core - Rally
 Abil/Name/ReliquaryResearch=Reliquary Research
 Abil/Name/RepulsorBurrow=Burrow
 Abil/Name/RepulsorUnburrow=Unburrow
-Abil/Name/RevenantBomb=Revenant Bomb (Point)
-Abil/Name/RevenantBombUnit=Revenant Bomb (Unit)
 Abil/Name/ReverbRB=Reverb Teleport
 Abil/Name/SanctumResearch=Sanctum Research
 Abil/Name/ScionAddonDummyBuild=Scion Addon Dummy Build
@@ -158,6 +157,7 @@ Abil/Name/WardShellDome=Ward - Shell Dome
 Abil/Name/XayidlingDash=Dash
 Abil/Name/XayithoanWatcher=Xayithoan - Watcher
 Abil/Name/que1Passive=Queue (1) Passive
+Abil/Name/que4Passive=Queue (4) Passive
 Alert/Text/BuildComplete_Keir=Structure complete.
 Alert/Text/BuildComplete_Xayi=Structure complete.
 Alert/Text/OlympusDischargeLaunch=<c val="ffff00">Olympus Discharge detected: %s.</c>
@@ -222,8 +222,6 @@ Behavior/Name/HeatBurning=Burning
 Behavior/Name/HornetBoreDrillBase=Bore Drill
 Behavior/Name/IncendiaryInfusionAA=Incendiary Infusion
 Behavior/Name/IncendiaryInfusionAG=Incendiary Infusion
-Behavior/Name/JupiterBombController=Jupiter - Bomb Controller
-Behavior/Name/JupiterBombTrainReq=Jupiter - Bomb Train Req
 Behavior/Name/JupiterSpeedAccelerator=Jupiter Speed Accelerator
 Behavior/Name/KeironChargeDummyDiscord=Keiron - Charge Dummy Discord
 Behavior/Name/KeironChargeDummyTS1=Keiron - Charge Dummy TS1
@@ -260,7 +258,6 @@ Behavior/Name/SpitfirePowershell=Powershell
 Behavior/Name/StagnatingBileStun=Stagnating Bile Stun
 Behavior/Name/StarBoltCaster=Avenger - Star Bolt Caster
 Behavior/Name/SuperChargeCannon=Super Charged
-Behavior/Name/SystemOffload=System Offload
 Behavior/Name/TeslaShockChargeOverload=Tesla - Shock Charge Overload
 Behavior/Name/TitanWeapon=Inhibitor Beam
 Behavior/Name/TrackingImplant=Tracking Implant
@@ -319,7 +316,6 @@ Behavior/Tooltip/ShockChargeDecloak=Target was recently hit by a Tesla's Shock C
 Behavior/Tooltip/SpeedCloak=Cloaked, and moving 40% faster.
 Behavior/Tooltip/SpitfirePowershell=This unit takes reduced damage and has reduced movment speed.
 Behavior/Tooltip/StagnatingBileStun=Stunned. Cannot move or cast abilities.
-Behavior/Tooltip/SystemOffload=This unit fire 15% faster.
 Behavior/Tooltip/TrackingImplant=Ranged units produced from the <c val="FFFF80">Manufacturer</c> can attack implanted units from a further range.
 Behavior/Tooltip/VenomInjection=Slowed by <c val="FFFF80">Scorpalisk</c> attacks by 25%.
 Behavior/Tooltip/VirtusSelffixProtocolBuff=Reduces received weapon damage by <d ref="-(Behavior,VirtusSelffixProtocolBuff,DamageResponse.ModifyFraction-1)*100"/>%.
@@ -490,7 +486,10 @@ Button/Name/InterlacingBond=Interlacing Bond
 Button/Name/InternalOptimization=Internal Optimization
 Button/Name/InternalRepairSystem=Internal Repair System
 Button/Name/JupiterAccelerator=Accelerator
+Button/Name/JupiterAirstrike=Airstrike
+Button/Name/JupiterLoad=Load
 Button/Name/JupiterNapalm=Napalm
+Button/Name/JupiterUnloadAll=Unload All
 Button/Name/KeironBioArmorLevel1=Upgrade Biological Armor Level 1
 Button/Name/KeironBioArmorLevel2=Upgrade Biological Armor Level 2
 Button/Name/KeironBioArmorLevel3=Upgrade Biological Armor Level 3
@@ -679,7 +678,6 @@ Button/Name/Stratus=Shape Stratus
 Button/Name/SubterraneanSensors=Subterranean Sensors
 Button/Name/SunkenWarren=Form Sunken Warren
 Button/Name/Supplimentation=Supplimentation
-Button/Name/SystemOffload=System Offload
 Button/Name/SystemRecharge=System Recharge
 Button/Name/TechVault=Build Tech Vault
 Button/Name/TeslaConstructCharge=Construct Charge
@@ -732,7 +730,7 @@ Button/Tooltip/Aquila=Support trooper. Can use Nanite Emitter.<n/><n/><c val="78
 Button/Tooltip/AquilaNaniteEmitter=Creates a zone on the ground which lasts <d ref="Effect,AquilaNaniteEmitterCreatePersistent,PeriodCount*Effect,AquilaNaniteEmitterCreatePersistent,PeriodicPeriodArray[0]"/> seconds. Ground units inside of this zone have their movement and attack speed decreased by <d ref="-Behavior,NaniteEmitterBuff,Modification.AdditiveMoveSpeedFactor*100*Behavior,NaniteEmitterBuff,MaxStackCount"/>%.<n/><n/><c val="78F0FF">Uses <d ref="-Effect,AquilaNaniteEmitterPowerModify,VitalArray[Energy].Change"/> power.</c><n/><c val="FFFF80">Massive units have <d ref="1/Behavior,NaniteEmitterBuff,MaxStackCount*100"/>% immunity.</c>
 Button/Tooltip/AquilaSupercharge=The caster's next attack will deal <d ref="Effect,D15MagnumSC,Amount/Effect,D15Magnum,Amount*100"/>% damage as spell damage. Weapon range is extended by <d ref="Behavior,SuperChargeCannon,Modification.RangedWeaponRange" precision="1"/> while charged. The charge lasts for <d ref="Behavior,SuperChargeCannon,Duration"/> seconds.<n/><n/><c val="78F0FF">Uses <d ref="Effect,AquilaSuperchargePowerModify,VitalArray[Energy].Change*(-1)"/> power.</c>
 Button/Tooltip/Assailant=Anti-ground assault flyer. Attack missiles seek valid targets until dealing damage.<n/><n/><c val="FFFF80">Can attack ground units.</c>
-Button/Tooltip/AssemblyArray=Aircraft production facility.<n/><n/><c val="FFFF80">Enables:</c><n/>- Avengers<n/>- Hornets<n/>- Couriers<n/>- Boars
+Button/Tooltip/AssemblyArray=Aircraft production facility.<n/><n/><c val="FFFF80">Enables:</c><n/>- Avengers<n/>- Hornets<n/>- Boars
 Button/Tooltip/Atrium=<c val="FFFF80">Enables:</c><n/>- Inducers from Citadels<n/>- Myriads from Citadels
 Button/Tooltip/AttackBarrage=Orders the selected units which can use this function to fire upon the selected point on the ground.
 Button/Tooltip/Aurora=Tactical-strike aircraft. Can use Emanator.<n/><n/><c val="FFFF80">Can attack ground units.</c>
@@ -862,7 +860,7 @@ Button/Tooltip/GyreShieldBoost=Increases the target's shields by 100. Also grant
 Button/Tooltip/Harbinger=Assault frigate. Can use Judgement Mode.<n/><n/><c val="FFFF80">Can attack ground and air units.</c>
 Button/Tooltip/HarbingerExitJudgementMode=Reverts the Harbinger back to its usual form.
 Button/Tooltip/HarbingerJudgementMode=While in Judgement Mode, Harbinger air attacks deal <d ref="Effect,HarbingerHeraldEnergyCannonsAOEDMG,Amount/Effect,HarbingerHeraldEnergyCannonsAOECP,PeriodicPeriodArray[0]"/> damage per second to enemy air units in an area for <d ref="Effect,HarbingerHeraldEnergyCannonsAOECP,PeriodicPeriodArray[0]*Effect,HarbingerHeraldEnergyCannonsAOECP,PeriodCount"/> seconds. They are also <d ref="-Behavior,HarbingerJudgementMode,Modification.MoveSpeedMultiplier+1*100"/>% slower and are unable to attack ground.
-Button/Tooltip/Heat=When Heat exceeds a threshold, the heated unit begins burning. Burning stops when Heat falls below the threshold. The burn threshold varies based on unit size.<n/><n/>Burning immediately adds <d ref="Effect,HeatBurningOrphanIncrement,PeriodCount"/> Heat. Deals <d ref="Effect,HeatBurningDamage,Amount"/> damage for each point of Heat as it decays.<n/><n/>Heat decays at a rate of <d ref="1/Behavior,Heat,Period" precision="1"/> per second.
+Button/Tooltip/Heat=When Heat exceeds a threshold, the heated unit begins burning. Burning stops when Heat falls below the threshold. The burn threshold varies based on unit size.<n/><n/>Deals <d ref="Effect,HeatBurningDamage,Amount"/> damage for each point of Heat as it decays.<n/><n/>Heat decays at a rate of <d ref="1/Behavior,Heat,Period" precision="1"/> per second.
 Button/Tooltip/HeavyOrdnanceMode=Makes The Great Equalizer the active weapon.<n/><n/>The Great Equalizer deals immense single target damage.
 Button/Tooltip/HeavyOrdnanceMode2=Makes the Stratum Missile Launcher the active weapon.
 Button/Tooltip/Hornet=Fast anti-ground fighter that excels against armored targets.<n/><n/><c val="FFFF80">Can attack ground units.</c>
@@ -880,9 +878,12 @@ Button/Tooltip/InterlacingBond=Gains 1 shield armor. The infused unit gains +0.5
 Button/Tooltip/InternalOptimization=<c val="FFFF80">Teslas</c> gain +100% charge constructon speed.
 Button/Tooltip/InternalRepairSystem=The <c val="FFFF80">Processor</c> regenerates health while out of combat.
 Button/Tooltip/Jupiter=Bomber aircraft. Can use Revenant Bomb to damage enemies, and apply napalm on the ground for damage over time.<n/><n/><c val="78F0FF">Power user.</c>
-Button/Tooltip/JupiterAccelerator=Activates additional thrusters, massively increasing speed while consuming energy and power.<n/><n/>Sustained speed after using at least 20 <c val="f078ff">energy</c> and <c val="78F0FF">power</c> causes the caster to become cloaked.<n/><n/>Is activated automatically when engaging in a long distance bombing.
+Button/Tooltip/JupiterAccelerator=Massively increases speed at the cost of energy and power. Sustained speed after using at least <d ref="-Effect,JupiterSpeedModifyUnit,VitalArray[Energy].Change*Validator,JupiterSpeedBuffGTEStealth,Value"/> <c val="f078ff">energy</c> and <c val="78F0FF">power</c> causes the caster to become cloaked.
+Button/Tooltip/JupiterAirstrike=Activates the Accelerator and drops all cargo, including bombs, at the target point in a line pattern.
 Button/Tooltip/JupiterDropPodMissile=
+Button/Tooltip/JupiterLoad=Loads units into the Jupiter's hold.
 Button/Tooltip/JupiterNapalm=Revenant Bomb applies napalm to an area on the ground. Napalm applies <d ref="Effect,JupiterHeatPeriodIncrement,PeriodCount/Behavior,JupiterNapalm,Period" precision="1"/> <c val="FFD090">Heat</c> per second. Lasts for <d ref="Effect,JupiterNapalmCreatePersistent,PeriodCount*Effect,JupiterNapalmCreatePersistent,PeriodicPeriodArray[0]"/> seconds.
+Button/Tooltip/JupiterUnloadAll=Unloads all units.
 Button/Tooltip/KeironBioArmorLevel1=Upgrades the armor of biological units.
 Button/Tooltip/KeironBioArmorLevel2=Further upgrades the armor of biological units.
 Button/Tooltip/KeironBioArmorLevel3=Maximizes the armor of biological units.
@@ -1090,7 +1091,6 @@ Button/Tooltip/Stratus=Anti-air defensive structure. <n/><n/><c val="ffff8a">Can
 Button/Tooltip/SubterraneanSensors=While burrowed, the <c val="FFFF80">Mole</c> gains +<d ref="Behavior,MoleSubterraneanSensors,Modification.Radar"/> ground radar range.<n/><n/><c val="78F0FF">Drains <d ref="Effect,MoleSubterraneanSensorsPowerRate,RechargeVitalRate"/> power per second.</c>
 Button/Tooltip/SunkenWarren=<c val="FFFF80">Enables:</c><n/>- Krakens at the Avian Nest
 Button/Tooltip/Supplimentation=Improves the spawn rate of nearby owned production by 7%.<n/><n/><c val="FFFF80">Can stack up to 3 times.</c>
-Button/Tooltip/SystemOffload=Boosts the attack speed of friendly units by 15% in the target area. Offloads additional performance heavy tasks to the Processing Core, allowing the affected units to run more efficiently.
 Button/Tooltip/SystemRecharge=Recharges the energy of a friendly Genetron unit.<n/><n/><c val="F078FF">Restores <d ref="1/Effect,ProcessorSystemRechargeCH,DrainVitalCostFactor"/> energy per 1 energy and <c val="78F0FF">1 power</c>.</c>
 Button/Tooltip/TechVault=Contains weapon upgrades for Genetron heavy ground units, and weapon and armor upgrades for Genetron air units.<n/><n/><c val="FFFF80">Enables:</c><n/>- Inciters at the Fabricator<n/>- Virtus at the Fabricator
 Button/Tooltip/Tesla=Area control specialist. Can construct and launch specialized charges.<n/><n/><c val="78F0FF">Power user.</c>
@@ -1751,10 +1751,8 @@ Effect/Name/InducerGamutOrbPostLaunchSet=Inducer - Gamut Orb (Post Launch Set)
 Effect/Name/InducerGamutOrbReturnInhibitorBeam=Inducer - Gamut Orb (Return Inhibitor Beam)
 Effect/Name/InducerGamutOrbReturnNaniteEmitter=Inducer - Gamut Orb (Return Nanite Emitter)
 Effect/Name/InducerGamutOrbReturnTimeWarp=Inducer - Gamut Orb (Return Time Warp)
-Effect/Name/JupiterBomb=Jupiter - Bomb (Init)
 Effect/Name/JupiterBombAB=Jupiter - Bomb (AB)
 Effect/Name/JupiterBombCheckDistance=Jupiter - Bomb (CheckDistance)
-Effect/Name/JupiterBombCooldown=Jupiter - Bomb (Cooldown)
 Effect/Name/JupiterBombForce=Jupiter - Bomb (Force)
 Effect/Name/JupiterBombLaunchBombLM=Jupiter - Bomb Launch Bomb (LM)
 Effect/Name/JupiterBombLaunchBombTarget=Jupiter - Bomb Launch Bomb (Target)
@@ -1796,8 +1794,10 @@ Effect/Name/JupiterCargoTrackerReloadSwitch=Jupiter - Cargo Tracker Reload (Swit
 Effect/Name/JupiterCargoTrackerRemove=Jupiter - Cargo Tracker Remove
 Effect/Name/JupiterCargoTrackerUnloadSet=Jupiter - Cargo Tracker Unload (Set)
 Effect/Name/JupiterCargoTrackerUnloadSwitch=Jupiter - Cargo Tracker Unload (Switch)
+Effect/Name/JupiterConstructBombApplyQueueSizeBuff=Jupiter - Construct Bomb (Apply Queue Size Buff)
 Effect/Name/JupiterConstructBombLoad=Jupiter - Construct Bomb (Load)
 Effect/Name/JupiterConstructBombSalvage=Jupiter - Construct Bomb (Salvage)
+Effect/Name/JupiterConstructBombSet=Jupiter - Construct Bomb (Set)
 Effect/Name/JupiterConstructBombSwitch=Jupiter - Construct Bomb (Switch)
 Effect/Name/JupiterHeatAddArea=Jupiter - Heat (Add Area)
 Effect/Name/JupiterHeatAddPoint=Jupiter - Heat (Add Point)
@@ -1808,26 +1808,24 @@ Effect/Name/JupiterNapalm=Jupiter - Napalm (Apply Behavior)
 Effect/Name/JupiterNapalmCreatePersistent=Jupiter - Napalm (Create Persistent)
 Effect/Name/JupiterNapalmDamage=Jupiter - Napalm (Damage)
 Effect/Name/JupiterNapalmDamageInitial=Jupiter - Napalm (Damage Initial)
+Effect/Name/JupiterNapalmDestroyPersistent=Jupiter - Napalm (Destroy Persistent)
 Effect/Name/JupiterNapalmOrphan=Jupiter - Napalm (Orphan)
 Effect/Name/JupiterNapalmSearchArea=Jupiter - Napalm (Search Area)
 Effect/Name/JupiterNapalmSearchImpactSet=Jupiter - Napalm (Search Impact Set)
-Effect/Name/JupiterRevenantBombChannel=Jupiter - Revenant Bomb (Channel)
-Effect/Name/JupiterRevenantBombChannelPeriodSet=Jupiter - Revenant Bomb (Channel>Period Set)
-Effect/Name/JupiterRevenantBombDMG=Jupiter - Revenant Bomb (Impact Damage)
 Effect/Name/JupiterRevenantBombImpact=Jupiter - Revenant Bomb (Impact)
-Effect/Name/JupiterRevenantBombImpactHeat=Jupiter - Revenant Bomb (Impact Heat)
-Effect/Name/JupiterRevenantBombImpactNotification=Jupiter - Revenant Bomb (Impact Notification)
-Effect/Name/JupiterRevenantBombImpactShellShock=Jupiter - Revenant Bomb (Impact ShellShock)
-Effect/Name/JupiterRevenantBombLaunchCooldown=Jupiter - Revenant Bomb (Launch Cooldown)
-Effect/Name/JupiterRevenantBombLaunchMissile=Jupiter - Revenant Bomb (Launch Missile)
-Effect/Name/JupiterRevenantBombLaunchMissileTargetUnit=Jupiter - Revenant Bomb (Launch Missile Target Unit)
-Effect/Name/JupiterRevenantBombLaunchSwitch=Jupiter - Revenant Bomb (Launch Switch)
-Effect/Name/JupiterRevenantBombLaunchTargetUnitPoint=Jupiter - Revenant Bomb (Launch Target Unit Point)
-Effect/Name/JupiterRevenantBombSpellCooldown=Jupiter - Revenant Bomb (Spell Cooldown)
-Effect/Name/JupiterRevenantBombSpellDelay=Jupiter - Revenant Bomb (Spell Delay)
-Effect/Name/JupiterRevenantBombWeaponCancelDelay=Jupiter - Revenant Bomb (Weapon Cancel Delay)
-Effect/Name/JupiterRevenantBombWeaponSet=Jupiter - Revenant Bomb (Weapon Set)
-Effect/Name/JupiterRevenantBombWeaponSwitch=Jupiter - Revenant Bomb (Weapon Switch)
+Effect/Name/JupiterRevenantBombImpactAreaDamage=Jupiter - Revenant Bomb (Impact Area Damage)
+Effect/Name/JupiterRevenantBombImpactAreaSet=Jupiter - Revenant Bomb (Impact Area Set)
+Effect/Name/JupiterRevenantBombImpactNotificationSearch=Jupiter - Revenant Bomb (Impact Notification Search)
+Effect/Name/JupiterRevenantBombImpactPointDamage=Jupiter - Revenant Bomb (Impact Point Damage)
+Effect/Name/JupiterRevenantBombImpactPointSet=Jupiter - Revenant Bomb (Impact Point Set)
+Effect/Name/JupiterRevenantBombImpactSearch=Jupiter - Revenant Bomb (Impact Search)
+Effect/Name/JupiterRevenantBombSpellInit=Jupiter - Revenant Bomb (Spell Init)
+Effect/Name/JupiterRevenantBombSpellIterateT=Jupiter - Revenant Bomb (Spell IterateT)
+Effect/Name/JupiterRevenantBombSpellLaunchMissile=Jupiter - Revenant Bomb (Spell Launch Missile)
+Effect/Name/JupiterRevenantBombSpellTarget=Jupiter - Revenant Bomb (Spell Target)
+Effect/Name/JupiterRevenantBombSpellTransportSet=Jupiter - Revenant Bomb (Spell Transport Set)
+Effect/Name/JupiterRevenantBombWeaponInit=Jupiter - Revenant Bomb (Weapon Init)
+Effect/Name/JupiterRevenantBombWeaponIssueOrderBomb=Jupiter - Revenant Bomb (Weapon Issue Order Bomb)
 Effect/Name/JupiterShellShocked=Jupiter - Shell-Shocked (Apply Behavior)
 Effect/Name/JupiterSpeedAccelerator=Jupiter - Speed (Apply Accelerator)
 Effect/Name/JupiterSpeedApplyController=Jupiter - Speed (Apply Controller)
@@ -1835,11 +1833,7 @@ Effect/Name/JupiterSpeedBuff=Jupiter - Speed (Apply Buff)
 Effect/Name/JupiterSpeedBuffSet=Jupiter - Speed (Buff Set)
 Effect/Name/JupiterSpeedBuffSwitch=Jupiter - Speed (Buff Switch)
 Effect/Name/JupiterSpeedCancelOrder=Jupiter - Speed (Cancel Order)
-Effect/Name/JupiterSpeedData0=Jupiter - Speed (Data 0)
-Effect/Name/JupiterSpeedData1=Jupiter - Speed (Data 1)
-Effect/Name/JupiterSpeedDataSwitch=Jupiter - Speed (Data Switch)
-Effect/Name/JupiterSpeedForce0=Jupiter - Speed (Force 0)
-Effect/Name/JupiterSpeedForce1=Jupiter - Speed (Force 1)
+Effect/Name/JupiterSpeedForce=Jupiter - Speed (Force)
 Effect/Name/JupiterSpeedModifyUnit=Jupiter - Speed (Modify Unit)
 Effect/Name/JupiterSpeedPeriodic=Jupiter - Speed (Periodic)
 Effect/Name/JupiterSpeedPowerEnum=Jupiter - Speed (Power Enum)
@@ -2091,8 +2085,6 @@ Effect/Name/RepulsorSuppressionCannonsDamage=Repulsor - Suppression Cannons (Dam
 Effect/Name/ResidualAcidCP=Residual Acid
 Effect/Name/ResidualAcidDMG=Residual Acid
 Effect/Name/ResidualAcidSA=Residual Acid
-Effect/Name/RevenantBomb=Jupiter - Revenant Bomb (Spell Switch)
-Effect/Name/RevenantBombUnit=Jupiter - Revenant Bomb (Spell Switch Unit)
 Effect/Name/ReverbCasterController=Reverb Caster Controller
 Effect/Name/ReverbFateBounds=Reverb Fate Bounds
 Effect/Name/ReverbFateMU=Reverb Fate
@@ -2272,8 +2264,6 @@ Effect/Name/SuicideRemoveCaster=Suicide Remove Caster
 Effect/Name/SupplimentationBuff=Supplimentation Output
 Effect/Name/SupplimentationOutputSA=Supplimentation Output
 Effect/Name/SupportEffectsS=Support Effects
-Effect/Name/SystemOffloadAB=System Offload
-Effect/Name/SystemOffloadSA=System Offload
 Effect/Name/TeslaChargeCompleteCloakCharge=Tesla - Charge Complete (Cloak Charge)
 Effect/Name/TeslaChargeCompleteShockCharge=Tesla - Charge Complete (Shock Charge)
 Effect/Name/TeslaChargeSpawned=Tesla - Charge Spawned
@@ -2990,7 +2980,7 @@ Weapon/Name/ParagonAirWeapon=Paragon - Air Weapon
 Weapon/Name/ParagonGroundWeapon=Paragon - Ground Weapon
 Weapon/Name/Psythe=Psythe
 Weapon/Name/RangedWeaponXayid=Ranged Weapon (Xayid)
-Weapon/Name/RevenantBomb=Revenant Bomb
+Weapon/Name/RevenantBombNoScan=Revenant Bomb NoScan
 Weapon/Name/ReverberatorFlare=Reverberator Flare
 Weapon/Name/RiotGun=Riot Gun
 Weapon/Name/ScavengerClaws=Claws

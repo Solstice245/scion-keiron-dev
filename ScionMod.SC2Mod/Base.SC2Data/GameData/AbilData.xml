@@ -124,29 +124,56 @@
     <CAbilMorph id="BurrowZerglingDown">
         <Flags index="WaitUntilStopped" value="0"/>
     </CAbilMorph>
-    <CAbilEffectTarget id="JupiterBomb">
-        <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
-        <Range value="72"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="RevenantBomb"/>
-        <Cost>
-            <Cooldown TimeStart="0.0625"/>
-        </Cost>
+    <CAbilEffectTarget id="JupiterAirstrike">
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <Effect index="0" value="JupiterBombTarget"/>
+        <Flags index="AllowMovement" value="1"/>
+        <Flags index="BestUnit" value="0"/>
+        <Flags index="NoDeceleration" value="1"/>
+        <Flags index="RangeUseCasterRadius" value="0"/>
+        <Flags index="RequireTargetVision" value="0"/>
+        <Range value="85"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="JupiterAirstrike"/>
     </CAbilEffectTarget>
     <CAbilTrain id="JupiterConstructBomb">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <InfoArray index="Train1" Time="1" Effect="JupiterConstructBombSwitch">
-            <Button DefaultButtonFace="RevenantBomb"/>
+        <InfoArray index="Train1" Time="8.4" Effect="JupiterConstructBombSwitch">
+            <Button DefaultButtonFace="RevenantBomb" Requirements="HaveOrdnanceCache"/>
             <Unit value="JupiterRevenantBomb"/>
         </InfoArray>
+        <Flags index="BestUnit" value="0"/>
     </CAbilTrain>
-    <CAbilTransport id="LoadUnloadJupiter" parent="MedivacTransport">
-        <Name value="Abil/Name/LoadUnloadJupiter"/>
+    <CAbilEffectTarget id="JupiterRevenantBomb">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <CmdButtonArray index="Load" DefaultButtonFace="CourierLoad"/>
-        <CmdButtonArray index="UnloadAt" DefaultButtonFace="CourierUnloadAll"/>
+        <Effect index="0" value="JupiterRevenantBombSpellInit"/>
+        <Flags index="AllowMovement" value="1"/>
+        <Flags index="AutoCast" value="1"/>
+        <Flags index="AutoCastOn" value="1"/>
+        <Flags index="NoDeceleration" value="1"/>
+        <Cost>
+            <Cooldown TimeUse="2"/>
+        </Cost>
+        <TargetFilters value="Ground;Missile,Stasis,Dead,Hidden,Invulnerable"/>
+        <TargetSorts>
+            <SortArray value="TSPriorityDesc"/>
+            <SortArray value="TSDistance"/>
+        </TargetSorts>
+        <Range value="2.5"/>
+        <Arc value="360"/>
+        <AutoCastFilters value="Visible;Player,Ally,Neutral,Benign,Passive"/>
+        <AutoCastRange value="2.5"/>
+        <AutoCastValidatorArray value="CasterIsAttackingOrPatrolling"/>
+        <CmdButtonArray index="Execute" DefaultButtonFace="Attack"/>
+    </CAbilEffectTarget>
+    <CAbilTransport id="JupiterTransport" parent="MedivacTransport">
+        <Name value="Abil/Name/JupiterTransport"/>
+        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
+        <CmdButtonArray index="Load" DefaultButtonFace="JupiterLoad"/>
+        <CmdButtonArray index="UnloadAt" DefaultButtonFace="JupiterUnloadAll"/>
         <LoadCargoEffect value="JupiterCargoTrackerLoadSwitch"/>
         <UnloadCargoEffect value="JupiterCargoTrackerUnloadSwitch"/>
         <UnloadValidatorArray value="JupiterHasANonBombUnit"/>
+        <StateBehavior value="JupiterCargoTracker"/>
     </CAbilTransport>
     <CAbilEffectInstant id="EqualizerHardenedFrame">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -179,7 +206,7 @@
     </CAbilEffectTarget>
     <CAbilBehavior id="JupiterAccelerator">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <CmdButtonArray index="On" DefaultButtonFace="JupiterAccelerator"/>
+        <CmdButtonArray index="On" DefaultButtonFace="JupiterAccelerator" Requirements="GenetronPowerBalance0015"/>
         <CmdButtonArray index="Off" DefaultButtonFace="Cancel"/>
         <Flags index="Toggle" value="1"/>
         <Flags index="Transient" value="1"/>
@@ -700,12 +727,12 @@
             <Button DefaultButtonFace="FabricateAvengerGenetron"/>
             <Unit value="Scion_Avenger"/>
         </InfoArray>
-        <InfoArray index="Train2" Time="42">
+        <!--InfoArray index="Train2" Time="42">
             <Button DefaultButtonFace="FabricateCourier"/>
             <Unit value="Courier"/>
-        </InfoArray>
+        </InfoArray-->
         <InfoArray index="Train3" Time="56">
-            <Button DefaultButtonFace="FabricateJupiter" Requirements="HaveOrdnanceCache"/>
+            <Button DefaultButtonFace="FabricateJupiter" Requirements="HaveTechVault"/>
             <Unit value="Jupiter"/>
         </InfoArray>
         <InfoArray index="Train4" Time="35">
@@ -987,26 +1014,6 @@
         <ValidatorArray value="IsBurrowedInterdictor"/>
         <AbilClassDisableArray index="CAbilAttack" value="1"/>
     </CAbilMorph>
-    <CAbilEffectTarget id="RevenantBomb">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <PostEffectBehavior Behavior="RevenantBombAbilityChannel"/>
-        <Flags index="AllowMovement" value="1"/>
-        <Flags index="NoDeceleration" value="1"/>
-        <Flags index="RequireTargetVision" value="0"/>
-        <Cost>
-            <Cooldown Location="Unit" Operation="Set" TimeUse="8.4"/>
-        </Cost>
-        <Range value="72"/>
-        <Arc value="360"/>
-        <CursorEffect value="JupiterRevenantBombImpactHeat"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="RevenantBomb"/>
-    </CAbilEffectTarget>
-    <CAbilEffectTarget id="RevenantBombUnit" parent="RevenantBomb">
-        <Name value="Abil/Name/RevenantBombUnit"/>
-        <Effect index="0" value="RevenantBombUnit"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="RevenantBombUnit"/>
-        <TargetFilters value="Ground;Missile,Stasis,Dead,Invulnerable"/>
-    </CAbilEffectTarget>
     <CAbilEffectInstant id="SpeedCloak">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Flags index="Transient" value="1"/>
@@ -1179,6 +1186,9 @@
         <AutoCastRange value="6"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="TorrentDroneDetonate"/>
         <AutoCastValidatorArray value="IsNotDisguisedChangeling"/>
+        <TargetSorts>
+            <SortArray value="TSPriorityDesc"/>
+        </TargetSorts>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="TorrentLunaMines">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -1187,7 +1197,7 @@
         <EffectRange index="0" value="1,1000"/>
         <CmdButtonArray index="Execute" DefaultButtonFace="TorrentPlaceLunaMines" Requirements="GenetronPowerBalance0075"/>
         <Cost>
-            <Vital index="Energy" value="75"/>
+            <Vital index="Energy" value="100"/>
             <Cooldown TimeUse="5.4"/>
         </Cost>
     </CAbilEffectTarget>
@@ -2266,7 +2276,7 @@
     <CAbilResearch id="ConduitResearch">
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
         <Activity value="UI/Developing"/>
-        <InfoArray index="Research1" Time="80" Upgrade="DissonanceProjector">
+        <InfoArray index="Research1" Time="110" Upgrade="DissonanceProjector">
             <Resource index="Minerals" value="100"/>
             <Resource index="Vespene" value="100"/>
             <Button DefaultButtonFace="DevelopDissonanceProjector" Requirements="LearnDissonanceProjector">
@@ -2838,4 +2848,9 @@
         <CmdButtonArray index="Execute" DefaultButtonFace="ELORProtocol" Requirements="GenetronPowerBalance0075"/>
         <Arc value="225"/>
     </CAbilEffectTarget>
+    <CAbilQueue id="que4Passive">
+        <EditorCategories value="Race:Neutral,AbilityorEffectType:Structures"/>
+        <QueueSize value="4"/>
+        <Flags index="Passive" value="1"/>
+    </CAbilQueue>
 </Catalog>
