@@ -239,6 +239,19 @@
         <WhichUnit Value="Caster"/>
         <Amount value="1"/>
     </CEffectApplyForce>
+    <CEffectLoadContainer id="JupiterSpeedLoadTarget">
+        <ValidatorArray value="CasterIsLoadingTarget"/>
+        <EditorCategories value="Race:Genetron"/>
+        <ContainerType value="Transport"/>
+    </CEffectLoadContainer>
+    <CEffectEnumArea id="JupiterSpeedLoadTargetsEnum">
+        <EditorCategories value="Race:Genetron"/>
+        <DebugTrace value="1"/>
+        <ImpactLocation Value="SourceUnit"/>
+        <SearchFilters value="-;Ally,Neutral,Enemy,Stasis,Dead,Hidden"/>
+        <AreaArray Radius="1" Effect="JupiterSpeedLoadTarget"/>
+        <SearchFlags index="ExtendByUnitRadius" value="1"/>
+    </CEffectEnumArea>
     <CEffectEnumTrackedUnits id="ProcessingCoreSystemRechargePowerEnum">
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
@@ -1319,9 +1332,10 @@
         <WhichLocation Value="CasterUnit"/>
         <OffsetVectorStartLocation Value="CasterUnit"/>
         <OffsetVectorEndLocation Value="CasterUnit"/>
-        <PeriodCount value="4"/>
+        <PeriodCount value="5"/>
         <PeriodicEffectArray value="JupiterSpeedCancelOrder"/>
         <PeriodicEffectArray value="JupiterSpeedForce"/>
+        <PeriodicEffectArray value="JupiterSpeedLoadTargetsEnum"/>
         <PeriodicEffectArray value="JupiterSpeedStealth"/>
         <PeriodicEffectArray value="JupiterSpeedRemoveBuffDeceleration"/>
         <PeriodicOffsetArray value="0,1,0"/>
