@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+
+    <Frame type="Label" name="ScionPlayerId">
+
+        <Frame type="Label" name="PowerTag">
+            <Anchor relative="$parent"/>
+            <Text val="{$ScionPowerTags/P0/@StringValue}"/>
+
+            <StateGroup name="PowerUnitTag">
+                <DefaultState val="Default"/>
+                <State name="P1">
+                    <When type="Property" frame="$parent" operator="Equal" Text="1"/>
+                    <Action type="SetProperty" Text="{$ScionPowerTags/P1/@StringValue}"/>
+                </State>
+                <State name="P2">
+                    <When type="Property" frame="$parent" operator="Equal" Text="2"/>
+                    <Action type="SetProperty" Text="{$ScionPowerTags/P2/@StringValue}"/>
+                </State>
+                <State name="P3">
+                    <When type="Property" frame="$parent" operator="Equal" Text="3"/>
+                    <Action type="SetProperty" Text="{$ScionPowerTags/P3/@StringValue}"/>
+                </State>
+                <State name="P4">
+                    <When type="Property" frame="$parent" operator="Equal" Text="4"/>
+                    <Action type="SetProperty" Text="{$ScionPowerTags/P4/@StringValue}"/>
+                </State>
+                <State name="P5">
+                    <When type="Property" frame="$parent" operator="Equal" Text="5"/>
+                    <Action type="SetProperty" Text="{$ScionPowerTags/P5/@StringValue}"/>
+                </State>
+                <State name="P6">
+                    <When type="Property" frame="$parent" operator="Equal" Text="6"/>
+                    <Action type="SetProperty" Text="{$ScionPowerTags/P6/@StringValue}"/>
+                </State>
+                <State name="P7">
+                    <When type="Property" frame="$parent" operator="Equal" Text="7"/>
+                    <Action type="SetProperty" Text="{$ScionPowerTags/P7/@StringValue}"/>
+                </State>
+                <State name="P8">
+                    <When type="Property" frame="$parent" operator="Equal" Text="8"/>
+                    <Action type="SetProperty" Text="{$ScionPowerTags/P8/@StringValue}"/>
+                </State>
+                <State name="P9">
+                    <When type="Property" frame="$parent" operator="Equal" Text="9"/>
+                    <Action type="SetProperty" Text="{$ScionPowerTags/P9/@StringValue}"/>
+                </State>
+                <State name="P10">
+                    <When type="Property" frame="$parent" operator="Equal" Text="10"/>
+                    <Action type="SetProperty" Text="{$ScionPowerTags/P10/@StringValue}"/>
+                </State>
+                <State name="P11">
+                    <When type="Property" frame="$parent" operator="Equal" Text="11"/>
+                    <Action type="SetProperty" Text="{$ScionPowerTags/P11/@StringValue}"/>
+                </State>
+                <State name="P12">
+                    <When type="Property" frame="$parent" operator="Equal" Text="12"/>
+                    <Action type="SetProperty" Text="{$ScionPowerTags/P12/@StringValue}"/>
+                </State>
+                <State name="P13">
+                    <When type="Property" frame="$parent" operator="Equal" Text="13"/>
+                    <Action type="SetProperty" Text="{$ScionPowerTags/P13/@StringValue}"/>
+                </State>
+                <State name="P14">
+                    <When type="Property" frame="$parent" operator="Equal" Text="14"/>
+                    <Action type="SetProperty" Text="{$ScionPowerTags/P14/@StringValue}"/>
+                </State>
+                <State name="P15">
+                    <When type="Property" frame="$parent" operator="Equal" Text="15"/>
+                    <Action type="SetProperty" Text="{$ScionPowerTags/P15/@StringValue}"/>
+                </State>
+                <State name="Default"/>
+            </StateGroup>
+
+        </Frame>
+
+    </Frame>
+
+    <Frame type="ResourceFrame" name="ScionResourceFrame">
+        <Width val="1020"/>
+
+        <Frame type="UnitStatusFrame" name="PowerUnitStatus">
+            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+            <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+            <Anchor side="Right" relative="$parent/PlayerRaceImage" pos="Min" offset="0"/>
+            <Width val="220"/>
+
+            <Frame type="Image" name="PowerIcon">
+                <Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
+                <Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                <Visible val="{$parent/PowerBar/@Visible}"/>
+                <Height val="32"/>
+                <Width val="32"/>
+                <Texture val="Assets/Textures/icon-power-nobg.dds"/>
+                <Tooltip val="@UI/ResourceTooltip_GenEnergy"/>
+                <TooltipDelayed val="True"/>
+                <TooltipAnchorPosition val="TopToBottom | RightToLeft"/>
+                <AcceptsMouseTooltip val="True"/>
+            </Frame>
+
+            <Frame type="UnitStatusEnergyBar" name="PowerBar">
+                <Anchor side="Top" relative="$parent" pos="Min" offset="10"/>
+                <Anchor side="Bottom" relative="$parent" pos="Max" offset="-6"/>
+                <Anchor side="Left" relative="$parent/PowerIcon" pos="Max" offset="2"/>
+                <Anchor side="Right" relative="$parent" pos="Max" offset="-8"/>
+                <Texture val="@UI/HealthBar"/>
+                <OwnerColor val="A00080FF" index="0"/>
+                <AllyColor val="A00080FF" index="0"/>
+                <EnemyColor val="A00080FF" index="0"/>
+                <ReductionColor val="A0002080" index="0"/>
+                <ReductionShown val="True" index="0"/>
+                <IncreaseDuration val="0" index="0"/>
+                <DecreaseDuration val="2000" index="0"/>
+                <BorderColor val="282828"/>
+                <BorderWidth val="2"/>
+                <BackgroundColor val="60000000"/>
+                <BackgroundShown val="True"/>
+                <SnapToDevicePixels val="True"/>
+                <BarInsetRect bottom="2" left="2" right="2" top="2"/>
+
+                <Frame type="Label" name="EnergyLabel">
+                    <Anchor relative="$parent"/>
+                    <Style val="ModCenterSize16Bold"/>
+                    <Text val="{FormatEnergyLabel/@Text}"/>
+                    <Tooltip val="{FormatEnergyLabelTooltip/@Text}"/>
+                    <TooltipAnchorPosition val="TopToBottom | RightToLeft"/>
+                    <AcceptsMouseTooltip val="True"/>
+
+                    <Frame type="TextFormatFrame" name="FormatEnergyLabel">
+                        <Anchor relative="$parent"/>
+                        <FormatText val="%0%/%1%"/>
+                        <Replacement val="{MathEnergyCurrent/@ResultInt}" index="0"/>
+                        <Replacement val="{MathEnergyMax/@ResultInt}" index="1"/>
+
+                        <Frame type="MathFrame" name="MathEnergyCurrent">
+                            <A val="{$parent/UnitFrame/@CurrentEnergy}"/>
+                            <B val="0.0"/>
+                            <Operator val="Add"/>
+                        </Frame>
+
+                        <Frame type="MathFrame" name="MathEnergyMax">
+                            <A val="{$parent/UnitFrame/@MaxEnergy}"/>
+                            <B val="0.0"/>
+                            <Operator val="Add"/>
+                        </Frame>
+
+                        <Frame type="UnitFrame" name="UnitFrame">
+                            <Anchor relative="$parent"/>
+                            <UnitTag val="{$parent/$parent/$parent/$parent/@UnitTag}"/>
+                        </Frame>
+
+                    </Frame>
+
+                    <Frame type="TextFormatFrame" name="FormatEnergyLabelTooltip">
+                        <Anchor relative="$parent"/>
+                        <FormatText val="%0% %3%%6%%1% %4%%6%%2% %5%"/>
+                        <Replacement val="@UI/Tooltip/IconProcessingCore" index="0"/>
+                        <Replacement val="@UI/Tooltip/IconNode" index="1"/>
+                        <Replacement val="@UI/Tooltip/IconGenerator" index="2"/>
+                        <Replacement val="{ChargeCount_ProcessingCore/ChargeFillProgress/@Value}" index="3"/>
+                        <Replacement val="{ChargeCount_Node/ChargeFillProgress/@Value}" index="4"/>
+                        <Replacement val="{ChargeCount_Generator/ChargeFillProgress/@Value}" index="5"/>
+                        <Replacement val="@UI/NewLine" index="6"/>
+
+                        <Frame type="UnitStatusBehaviorCharge" name="ChargeCount_ProcessingCore">
+                            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                            <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                            <Behavior val="GenetronPowerChargeDummyProcCore"/>
+                            <ChargeLink val="Behavior/GenetronPowerChargeDummyProcCore"/>
+                            <ChargeLocation val="Unit"/>
+                            <Frame type="ProgressBar" name="ChargeFillProgress">
+                                <Anchor relative="$parent"/>
+                            </Frame>
+                        </Frame>
+
+                        <Frame type="UnitStatusBehaviorCharge" name="ChargeCount_Node">
+                            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                            <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                            <Behavior val="GenetronPowerChargeDummyNode"/>
+                            <ChargeLink val="Behavior/GenetronPowerChargeDummyNode"/>
+                            <ChargeLocation val="Unit"/>
+                            <Frame type="ProgressBar" name="ChargeFillProgress">
+                                <Anchor relative="$parent"/>
+                            </Frame>
+                        </Frame>
+
+                        <Frame type="UnitStatusBehaviorCharge" name="ChargeCount_Generator">
+                            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                            <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                            <Behavior val="GenetronPowerChargeDummyGenerator"/>
+                            <ChargeLink val="Behavior/GenetronPowerChargeDummyGenerator"/>
+                            <ChargeLocation val="Unit"/>
+                            <Frame type="ProgressBar" name="ChargeFillProgress">
+                                <Anchor relative="$parent"/>
+                            </Frame>
+                        </Frame>
+
+                    </Frame>
+
+                </Frame>
+
+            </Frame>
+
+        </Frame>
+
+    </Frame>
+
+</Desc>

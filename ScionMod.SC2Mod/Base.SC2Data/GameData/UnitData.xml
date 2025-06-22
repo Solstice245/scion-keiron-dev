@@ -356,8 +356,9 @@
         <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
         <Mover value="Fly"/>
         <CostCategory value="Army"/>
-        <CostResource index="Minerals" value="10"/>
-        <CostResource index="Vespene" value="10"/>
+        <CostResource index="Minerals" value="5"/>
+        <CostResource index="Vespene" value="5"/>
+        <Food value="-0.5"/>
     </CUnit>
     <CUnit id="LunaMine" parent="CUnitGenetronAir">
         <DeathRevealRadius value="2"/>
@@ -464,7 +465,6 @@
         <Radius value="1.25"/>
         <SubgroupPriority value="6"/>
         <GlossaryPriority value="28"/>
-        <TechTreeUnlockedUnitArray value="Jupiter"/>
         <TechTreeUnlockedUnitArray value="Badger"/>
         <MinimapRadius value="1.75"/>
     </CUnit>
@@ -508,7 +508,7 @@
         <RepairTime value="75"/>
         <AbilArray Link="OlympusDischarge"/>
         <BehaviorArray index="0" Link="GenetronPowerSupplyTracker"/>
-        <BehaviorArray Link="TrackAndMirrorGenetronPowerSupply"/>
+        <BehaviorArray Link="TrackGenetronPowerSupply"/>
         <BehaviorArray Link="LockdownMode"/>
         <BehaviorArray Link="UnderConstruction"/>
         <BehaviorArray Link="OlympusExplode"/>
@@ -708,9 +708,9 @@
         <AbilArray Link="BuildAircraft"/>
         <AbilArray Link="Scion_Overclock"/>
         <BehaviorArray Link="GenetronPowerSupplyTracker"/>
-        <BehaviorArray Link="AssemblyArray"/>
-        <BehaviorArray Link="TrackAndMirrorGenetronPowerSupply"/>
+        <BehaviorArray Link="TrackGenetronPowerSupply"/>
         <BehaviorArray Link="UnderConstruction"/>
+        <BehaviorArray Link="AssemblyArray"/>
         <Radius value="1.875"/>
         <Footprint value="Footprint4x4ContourReduced"/>
         <PlacementFootprint value="Footprint4x4Contour"/>
@@ -1002,8 +1002,7 @@
         <RepairTime value="40"/>
         <BehaviorArray index="0" Link="GenetronPowerSupplyTracker"/>
         <BehaviorArray Link="LockdownMode"/>
-        <BehaviorArray Link="GenetronEnergyStateNotFull"/>
-        <BehaviorArray Link="TrackAndMirrorGenetronPowerSupply"/>
+        <BehaviorArray Link="TrackGenetronPowerSupply"/>
         <EffectArray index="Birth" value="GenetronUpdatePowerGenerationTargetSA"/>
         <SubgroupPriority value="5"/>
         <Sight value="11"/>
@@ -1013,11 +1012,10 @@
     <CUnit id="Generator" parent="CStructureGenetron">
         <LifeStart value="575"/>
         <LifeMax value="575"/>
-        <BehaviorArray index="0" Link="GenetronPowerSupplyTracker"/>
-        <BehaviorArray Link="LockdownMode"/>
+        <BehaviorArray Link="GenetronPowerSupplyTracker"/>
         <BehaviorArray Link="TrackGenetronPowerSupply"/>
-        <BehaviorArray Link="GeneratorPower"/>
         <BehaviorArray Link="UnderConstruction"/>
+        <BehaviorArray Link="GeneratorPower"/>
         <CardLayouts index="0">
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
             <LayoutButtons Face="GeneratorPowerGrid" Type="Passive" Requirements="NotUnderConstructionAndNotLockedDown" Row="2" Column="0"/>
@@ -1142,6 +1140,7 @@
         <GlossaryPriority value="26"/>
         <TechTreeUnlockedUnitArray value="Inciter"/>
         <TechTreeUnlockedUnitArray value="Virtus"/>
+        <TechTreeUnlockedUnitArray value="Jupiter"/>
     </CUnit>
     <CUnit id="CloakCharge">
         <Race value="Gen"/>
@@ -1395,9 +1394,8 @@
         <AbilArray Link="MiningPriority"/>
         <AbilArray Link="CoreSystemRecharge"/>
         <AbilArray Link="ProcessingCoreChargingField"/>
-        <BehaviorArray Link="GenetronEnergyStateNotFull"/>
         <BehaviorArray Link="GenetronPowerSupplyTracker"/>
-        <BehaviorArray Link="TrackAndMirrorGenetronPowerSupply"/>
+        <BehaviorArray Link="TrackGenetronPowerSupply"/>
         <BehaviorArray Link="ProcessingCorePower"/>
         <BehaviorArray Link="UnderConstruction"/>
         <EffectArray index="Create" value="ProcCoreCreateSet"/>
@@ -1437,9 +1435,9 @@
         <AbilArray Link="TrainLightweightMechs"/>
         <AbilArray Link="Scion_Overclock"/>
         <BehaviorArray Link="GenetronPowerSupplyTracker"/>
-        <BehaviorArray Link="Manufacturer"/>
-        <BehaviorArray Link="TrackAndMirrorGenetronPowerSupply"/>
+        <BehaviorArray Link="TrackGenetronPowerSupply"/>
         <BehaviorArray Link="UnderConstruction"/>
+        <BehaviorArray Link="Manufacturer"/>
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
@@ -1474,9 +1472,9 @@
         <AbilArray Link="TrainHeavyweightMechs"/>
         <AbilArray Link="Scion_Overclock"/>
         <BehaviorArray Link="GenetronPowerSupplyTracker"/>
-        <BehaviorArray Link="Fabricator"/>
-        <BehaviorArray Link="TrackAndMirrorGenetronPowerSupply"/>
+        <BehaviorArray Link="TrackGenetronPowerSupply"/>
         <BehaviorArray Link="UnderConstruction"/>
+        <BehaviorArray Link="Fabricator"/>
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
@@ -1629,11 +1627,10 @@
         <Food value="8"/>
         <CostResource index="Minerals" value="100"/>
         <RepairTime value="25"/>
-        <BehaviorArray index="0" Link="GenetronPowerSupplyTracker"/>
-        <BehaviorArray Link="LockdownMode"/>
+        <BehaviorArray Link="GenetronPowerSupplyTracker"/>
         <BehaviorArray Link="TrackGenetronPowerSupply"/>
-        <BehaviorArray Link="NodePower"/>
         <BehaviorArray Link="UnderConstruction"/>
+        <BehaviorArray Link="NodePower"/>
         <CardLayouts index="0">
             <LayoutButtons Face="NodePowerGrid" Type="Passive" Requirements="NotUnderConstructionAndNotLockedDown" Row="2" Column="0"/>
         </CardLayouts>
@@ -2106,29 +2103,21 @@
         <AbilArray Link="JupiterAccelerator"/>
         <AbilArray Link="JupiterTransport"/>
         <AbilArray Link="JupiterAirstrike"/>
-        <AbilArray Link="JupiterConstructBomb"/>
+        <AbilArray Link="JupiterTrain"/>
         <AbilArray Link="JupiterRevenantBomb"/>
         <BehaviorArray Link="GenetronPowerSupplyTracker"/>
         <BehaviorArray Link="TrackGenetronPowerSupplyUnit"/>
         <BehaviorArray Link="JupiterBombTrainReq"/>
         <CardLayouts index="0">
             <LayoutButtons Face="Attack" Type="AbilCmd" AbilCmd="JupiterRevenantBomb,Execute" Row="0" Column="4"/>
-            <LayoutButtons>
-                <Face value="JupiterNapalm"/>
-                <Type value="Passive"/>
-                <AbilCmd value="RevenantBomb,255"/>
-                <ShowInGlossary value="0"/>
-                <Row value="1"/>
-                <Column value="1"/>
-            </LayoutButtons>
-            <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="JupiterAccelerator,Off" Row="2" Column="4"/>
+            <LayoutButtons Face="BuildRevenantBomb" Type="AbilCmd" AbilCmd="JupiterTrain,Train1" Row="1" Column="1"/>
             <LayoutButtons Face="CancelSlot" Type="AbilCmd" AbilCmd="que4Passive,CancelLast" Row="2" Column="4"/>
-            <LayoutButtons Face="Heat" Type="Passive" ShowInGlossary="0" Row="1" Column="0"/>
+            <LayoutButtons Face="JupiterAirstrike" Type="AbilCmd" AbilCmd="JupiterAirstrike,Execute" Row="1" Column="0"/>
             <LayoutButtons Face="JupiterUnloadAll" Type="AbilCmd" AbilCmd="JupiterTransport,UnloadAt" Row="2" Column="3"/>
             <LayoutButtons Face="JupiterLoad" Type="AbilCmd" AbilCmd="JupiterTransport,Load" Row="2" Column="2"/>
-            <LayoutButtons Face="JupiterAccelerator" Type="AbilCmd" AbilCmd="JupiterAccelerator,On" Row="2" Column="1"/>
-            <LayoutButtons Face="JupiterAirstrike" Type="AbilCmd" AbilCmd="JupiterAirstrike,Execute" Row="2" Column="0"/>
-            <LayoutButtons Face="TeslaConstructCharge" Type="AbilCmd" AbilCmd="JupiterConstructBomb,Train1" Row="1" Column="2"/>
+            <LayoutButtons Face="DeactivateAccelerator" Type="AbilCmd" AbilCmd="JupiterAccelerator,Off" Row="2" Column="1"/>
+            <LayoutButtons Face="JupiterAccelerator" Type="AbilCmd" AbilCmd="JupiterAccelerator,On" Row="2" Column="0"/>
+            <LayoutButtons Face="Heat" Type="Passive" ShowInGlossary="0" Row="1" Column="2"/>
         </CardLayouts>
         <Radius value="1"/>
         <SeparationRadius value="1"/>
@@ -2145,7 +2134,7 @@
         <GlossaryWeakArray value="Mutalisk"/>
         <FlagArray index="AlwaysThreatens" value="1"/>
         <Response value="Flee"/>
-        <WeaponArray Link="RevenantBombNoScan"/>
+        <WeaponArray Link="RevenantBombDummy"/>
     </CUnit>
     <CUnit id="Scion_Processor" parent="CUnitGenetronAir">
         <FlagArray index="AICaster" value="1"/>

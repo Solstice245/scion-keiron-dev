@@ -267,6 +267,7 @@
         <ImpactSiteOps Ops="SOpTargetPointStationary"/>
         <ShieldFlashType value="Full"/>
         <ImpactPhysics Name="Explosion" MatchKeys="Basic" Physics="SiegeTankSiegedForce"/>
+        <LaunchAssets Sound="JupiterAttackLaunch"/>
     </CActorAction>
     <CActorAction id="JupiterDropPodAttack" parent="GenericAttack" effectImpact="JupiterBombLaunchRB" effectLaunch="JupiterBombLaunchUnitsLM">
         <Missile value="JupiterDropPodMissile"/>
@@ -279,8 +280,15 @@
     <CActorMissile id="JupiterDropPodMissile" parent="GenericAttackMissile" unitName="JupiterDropPodMissile"/>
     <CActorUnit id="JupiterRevenantBomb" parent="GenericUnitStandard" unitName="JupiterRevenantBomb">
         <Model value="JupiterAttackMissile"/>
+        <GroupIcon>
+            <Image value="Assets\Textures\wireframe-genetron-jupiterbomb.dds"/>
+        </GroupIcon>
         <UnitBorderNormalColor value="255,0,0"/>
         <UnitBorderSubgroupColor value="255,0,0"/>
+        <UnitIcon value="Assets\Textures\btn-unit-genetron-jupiterbomb.dds"/>
+        <Wireframe>
+            <Image value="Assets\Textures\wireframe-genetron-jupiterbomb.dds"/>
+        </Wireframe>
     </CActorUnit>
     <CActorModel id="JupiterRevenantBombImpact" parent="ModelAnimationStyleOneShot">
         <On Terms="Effect.JupiterRevenantBombImpact.Start" Send="Create"/>
@@ -3191,6 +3199,7 @@
         <LaunchAssets Model="VikingFighterAttackLaunch"/>
         <Missile value="AvengerNemesisAttackMissile"/>
         <ImpactMap index="None" Model="AvengerNemesisMissileAttackImpact" Sound="SkyTank_BarrageMissile_Impact"/>
+        <ImpactPhysics Name="LanzerTorpedoImpact" MatchKeys="Basic" Physics="LanzerTorpedoAttackDeathForce"/>
     </CActorAction>
     <CActorUnit id="Scion_Avenger" parent="GenericUnitStandard" unitName="Scion_Avenger">
         <Macros value="TerrainSquibAnimations"/>
@@ -3210,7 +3219,7 @@
         <DeathArray index="Normal" ModelLink="Scion_AvengerDeath" SoundLink="Viking_Explode"/>
         <DeathCustoms>
             <ActorModel value="UnitDeathRagdollFlier"/>
-            <ModelLink value="VikingFighterDeathRagdoll"/>
+            <ModelLink value="Scion_AvengerDeath"/>
             <Name value="RagdollBasic"/>
             <PhysicsMatchKeysOrdered value="BasicAir,Basic"/>
             <BodySquibs Name="Basic" Model="TerranSquibDeathRagdoll"/>
@@ -3249,6 +3258,7 @@
     <CActorAction id="AvengerStarBoltAttack" parent="GenericAttack" effectImpact="AvengerStarBoltDamage" effectLaunch="AvengerStarBoltLM">
         <LaunchAttachQuery Methods="AMFilterWeapon"/>
         <ImpactPointSite value="AvengerStarBoltAttackImpactSite"/>
+        <ImpactPhysics Name="LanzerTorpedoImpact" MatchKeys="Basic" Physics="LanzerTorpedoAttackDeathForce"/>
     </CActorAction>
     <CActorUnit id="Badger" parent="GenericUnitStandard" unitName="Badger">
         <On index="65" Terms="WeaponStart.HellraiserGuns.AttackStart" Send="AnimBracketStart Attack Attack"/>
@@ -3518,11 +3528,23 @@
         <DeathCustoms>
             <ActorModel value="UnitDeathRagdollFlier"/>
             <AnimProps value="Alternate"/>
-            <ModelLink value="JupiterDeath"/>
+            <ModelLink value="JupiterDeathRagdoll"/>
             <Name value="RagdollBasic"/>
             <PhysicsMatchKeysOrdered value="BasicAir,Basic"/>
-            <BodySquibs Name="BasicAir" Model="TerranSquibDeathRagdoll"/>
+            <BodySquibs Name="Basic" Model="TerranSquibDeathRagdoll"/>
         </DeathCustoms>
+        <DeathCustoms Name="RagdollNuke" InheritsFrom="RagdollBasic">
+            <BodySquibs Name="Fire"/>
+        </DeathCustoms>
+        <DeathCustoms Name="RagdollFire" InheritsFrom="RagdollBasic">
+            <BodySquibs Name="Fire"/>
+        </DeathCustoms>
+        <DeathCustoms Name="RagdollAcid" InheritsFrom="RagdollBasic">
+            <BodySquibs Name="Acid"/>
+        </DeathCustoms>
+        <DeathCustoms Name="RagdollOverkillDPRH" InheritsFrom="RagdollBasic"/>
+        <DeathCustoms Name="RagdollOverkillDOI" InheritsFrom="RagdollBasic"/>
+        <DeathCustoms Name="RagdollMidair" InheritsFrom="RagdollBasic"/>
         <GroupIcon>
             <Image value="Assets\Textures\wireframe-genetron-jupiter.dds"/>
         </GroupIcon>
@@ -3539,6 +3561,16 @@
         <PortraitModel value="GenetronAdjutantPortrait"/>
         <DeathActorModel value="UnitDeathModelWithDeathMotionFlier"/>
         <Baselines index="Walk" BlendIn="1.000000" BlendOut="1.000000"/>
+        <Aliases value="_UnitLarge"/>
+        <PhysicsMatchKeysOrdered value="BasicAir,Basic"/>
+        <TerrainSquibs>
+            <MovementDistance value="0.150000,0.150000"/>
+            <IdlePeriod value="0.250000,0.500000"/>
+            <RangeDown value="5.000000"/>
+            <RangeDownFade value="1.000000"/>
+            <AttachQuery Methods="AMFilterCenter"/>
+            <Visuals TerrainPhysicsMaterial="Water" ActorModel="TerrainSquibHarnessContinuous" ModelLink="WaterRippleMassive15"/>
+        </TerrainSquibs>
     </CActorUnit>
     <CActorSound id="JupiterNapalmSound" parent="TerranFlameSound">
         <On Terms="Effect.JupiterNapalmCreatePersistent.Start" Send="Create"/>
@@ -5424,6 +5456,8 @@
         <On Terms="AbilTransport.TransportFerrion.CargoUnload" Send="AnimBracketStop Unload"/>
         <On Terms="AbilTransport.CourierTransport.CargoLoad" Send="AnimBracketStart Unload IGNORE Unload Unload,End DontResetOnUnhide"/>
         <On Terms="AbilTransport.CourierTransport.CargoUnload" Send="AnimBracketStop Unload"/>
+        <On Terms="AbilTransport.JupiterTransport.CargoLoad" Send="AnimBracketStart Unload IGNORE Unload Unload,End DontResetOnUnhide"/>
+        <On Terms="AbilTransport.JupiterTransport.CargoUnload" Send="AnimBracketStop Unload"/>
     </CActorEventMacro>
     <CActorMissile id="RoamerAttackMissile" parent="GenericAttackMissile" unitName="VirulentSpitWeapon">
         <Model value="VirulentSpit"/>

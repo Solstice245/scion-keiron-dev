@@ -239,6 +239,21 @@
         <WhichUnit Value="Caster"/>
         <Amount value="1"/>
     </CEffectApplyForce>
+    <CEffectEnumTrackedUnits id="ProcessingCoreSystemRechargePowerEnum">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="ProcessingCoreSystemRechargeHealSource"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectCreatePersistent id="ProcessingCoreSystemRechargeHealSource">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="TargetUnit"/>
+        <InitialEffect value="ProcessingCoreSystemRechargeHealTarget"/>
+    </CEffectCreatePersistent>
+    <CEffectCreatePersistent id="ProcessingCoreSystemRechargeHealTarget">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Effect="ProcessingCoreSystemRechargePowerEnum" Value="TargetUnit"/>
+        <InitialEffect value="ProcessingCoreSystemRecharge"/>
+    </CEffectCreatePersistent>
     <CEffectModifyUnit id="ShowTarget">
         <ModifyFlags index="Show" value="1"/>
     </CEffectModifyUnit>
@@ -3609,6 +3624,7 @@
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
         <Effect value="MirrorGenetronPowerSupplySet"/>
+        <Chance value="0"/>
     </CEffectEnumTrackedUnits>
     <CEffectModifyUnit id="MirrorGenetronPowerSupplyEnergyLossMU">
         <ValidatorArray value="CasterNotDead"/>
@@ -4012,9 +4028,8 @@
         <ValidatorArray value="NotWarpingIn"/>
         <ValidatorArray value="NotVortexd"/>
         <ValidatorArray value="NotUncommandable"/>
-        <ValidatorArray value="SourceNotHidden"/>
-        <ValidatorArray value="CasterHasEnergy"/>
-        <ValidatorArray value="GenetronPowerSupplyGE001"/>
+        <ValidatorArray value="CasterIsNotHidden"/>
+        <ValidatorArray value="SourceEnergyGT0"/>
         <ValidatorArray value="EnergyNotFull"/>
         <ValidatorArray value="GenetronPowerUser"/>
         <EditorCategories value="Race:Genetron"/>
@@ -4022,6 +4037,8 @@
         <DrainVitalCostFactor value="0.25"/>
         <RechargeVital value="Energy"/>
         <RechargeVitalRate value="71.4296"/>
+        <LaunchUnit Value="Target"/>
+        <ImpactUnit Effect="ProcessingCoreSystemRechargePowerEnum"/>
     </CEffectCreateHealer>
     <CEffectDamage id="TeslaShockChargeDummyDMG">
         <EditorCategories value="Race:Genetron"/>
@@ -4287,20 +4304,6 @@
     <CEffectLaunchMissile id="EvisceratorSpinesLMDummy" parent="ScionLaunchMissile" Race="Xayid">
         <AmmoUnit value="EvisceratorSpineLMDummyWeapon"/>
     </CEffectLaunchMissile>
-    <CEffectApplyBehavior id="GenetronEnergyStateFull" parent="ScionApplyBehaviorCaster" Race="Genetron">
-        <ValidatorArray index="0" value="CasterIsNotHidden"/>
-        <ValidatorArray value="CasterNotDead"/>
-    </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="GenetronEnergyStateNotFull" parent="ScionApplyBehaviorCaster" Race="Genetron">
-        <ValidatorArray index="0" value="CasterIsNotHidden"/>
-        <ValidatorArray value="CasterNotDead"/>
-    </CEffectApplyBehavior>
-    <CEffectSet id="GenetronEnergyStateSet" parent="ScionSet" Race="Genetron">
-        <ValidatorArray value="CasterIsNotHidden"/>
-        <ValidatorArray value="CasterNotDead"/>
-        <EffectArray value="GenetronUpdatePowerGenerationTargetSA"/>
-        <EffectArray value="GenetronEnergyStateNotFull"/>
-    </CEffectSet>
     <CEffectApplyBehavior id="GlazeFire" parent="ScionApplyBehavior" Race="Xayid">
         <Flags index="UseDuration" value="1"/>
         <Duration value="11.25"/>

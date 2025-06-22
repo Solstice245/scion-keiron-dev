@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+
+    <Frame type="CommandPanel" name="GameUI/UIContainer/ConsoleUIContainer/CommandPanel" file="GameUI">
+
+        <Frame type="CommandTooltip" name="CommandTooltip" template="CommandButton/CommandTooltipTemplate">
+
+            <Frame type="Label" name="SupplyLabel" template="CommandButton/ResourceLabelTemplate">
+                <Anchor side="Top" relative="$parent/SupplyIcon" pos="Mid" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/SupplyIcon" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/SupplyIcon" pos="Max" offset="5"/>
+                <Alpha val="255"/>
+            </Frame>
+
+            <Frame type="Label" name="SupplyLabelPrecision" template="CommandButton/ResourceLabelTemplate">
+                <Anchor side="Top" relative="$parent/SupplyIcon" pos="Mid" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/SupplyIcon" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/SupplyIcon" pos="Max" offset="5"/>
+                <Visible val="{$parent/SupplyLabel/@Visible}"/>
+                <Alpha val="{AlphaDiff/@ResultInt}"/>
+                <Text val="{SupplyFormat/@Text}"/>
+
+                <Frame type="TextFormatFrame" name="SupplyFormat">
+                    <FormatText val="%0%%1%%2%"/>
+                    <Replacement index="0" val=""/>
+                    <Replacement index="1" val="{$parent/SupplyValue/@Result}"/>
+                    <Replacement index="2" val=""/>
+                </Frame>
+
+                <Frame type="MathFrame" name="SupplyValue">
+                    <A val="{$parent/$parent/UnitCacheFrame/@Unit[Food]}"/>
+                    <Operator val="Absolute"/>
+                </Frame>
+
+                <Frame type="MathFrame" name="AlphaDiff">
+                    <A val="255"/>
+                    <B val="{$parent/$parent/SupplyLabel/@Alpha}"/>
+                    <Operator val="Subtract"/>
+                </Frame>
+
+                <Frame type="PlayerSupplyFrame" name="PlayerSupplyFrame">
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                    <Anchor side="Left" relative="$parent" pos="Max" offset="0"/>
+                    <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+                    <PlayerId val="{$ScionSelectionPlayerId/@Text}"/>
+
+                    <Frame type="Label" name="UsedLabel">
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Label" name="DividerLabel">
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                    </Frame>
+
+                    <Frame type="Label" name="CapLabel">
+                        <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                    </Frame>
+
+                </Frame>
+
+                <Frame type="MathFrame" name="SupplyAdded">
+                    <A val="{$parent/SupplyValue/@Result}"/>
+                    <B val="{$parent/PlayerSupplyFrame/UsedLabel/@Text}"/>
+                    <Operator val="Add"/>
+                </Frame>
+
+                <Frame type="MathFrame" name="SupplyComp">
+                    <A val="{$parent/SupplyAdded/@Result}"/>
+                    <B val="{$parent/PlayerSupplyFrame/CapLabel/@Text}"/>
+                    <Operator val="Subtract"/>
+                </Frame>
+
+                <StateGroup name="LabelColor">
+                    <DefaultState val="Default"/>
+
+                    <State name="InsufficientSupply">
+                        <When type="Property" Frame="SupplyComp" Result="0" Operator="GreaterThan"/>
+                        <Action type="SetProperty" frame="SupplyFormat" Replacement="&lt;c val=&quot;FF0000&quot;&gt;" index="0"/>
+                        <Action type="SetProperty" frame="SupplyFormat" Replacement="&lt;/c&gt;" index="2"/>
+                    </State>
+
+                    <State name="Default"/>
+                </StateGroup>
+
+            </Frame>
+
+            <Frame type="Label" name="CommandButtonImage">
+                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                <Visible val="False"/>
+
+                <StateGroup name="ActiveCommandButtonFace" template="CommandTooltipFrameTemplates/ActiveCommandButtonFace"/>
+
+            </Frame>
+
+            <Frame type="UnitCacheFrame" name="UnitCacheFrame">
+                <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+
+                <StateGroup name="UnitList" template="CommandTooltipFrameTemplates/SupplyPreciseUnitListTemplate"/>
+
+            </Frame>
+
+        </Frame>
+
+    </Frame>
+</Desc>

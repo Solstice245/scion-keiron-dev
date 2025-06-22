@@ -20,6 +20,22 @@ void libScio_InitVariables () {
 
     libScio_InitVariables_completed = true;
 
+    libScio_gv_powerUnitTag0 = "";
+    libScio_gv_powerUnitTag1 = "";
+    libScio_gv_powerUnitTag2 = "";
+    libScio_gv_powerUnitTag3 = "";
+    libScio_gv_powerUnitTag4 = "";
+    libScio_gv_powerUnitTag5 = "";
+    libScio_gv_powerUnitTag6 = "";
+    libScio_gv_powerUnitTag7 = "";
+    libScio_gv_powerUnitTag8 = "";
+    libScio_gv_powerUnitTag9 = "";
+    libScio_gv_powerUnitTag10 = "";
+    libScio_gv_powerUnitTag11 = "";
+    libScio_gv_powerUnitTag12 = "";
+    libScio_gv_powerUnitTag13 = "";
+    libScio_gv_powerUnitTag14 = "";
+    libScio_gv_powerUnitTag15 = "";
 }
 
 // Triggers
@@ -28,36 +44,60 @@ void libScio_InitVariables () {
 //--------------------------------------------------------------------------------------------------
 bool libScio_gt_ScionInit_Func (bool testConds, bool runActions) {
     // Variable Declarations
-    int lv_genetron_ui_energy_unit;
+    int lv_scion_ui_edit_box;
+    int lv_scion_ui_local_player_id;
 
     // Automatic Variable Declarations
-    playergroup auto22B9A134_g;
-    int auto22B9A134_var;
+    const int autoED8AD020_ae = 15;
+    int autoED8AD020_var;
 
     // Variable Initialization
-    lv_genetron_ui_energy_unit = c_invalidDialogControlId;
+    lv_scion_ui_edit_box = c_invalidDialogControlId;
+    lv_scion_ui_local_player_id = c_invalidDialogControlId;
 
     // Actions
     if (!runActions) {
         return true;
     }
 
-    DialogControlHookupStandard(c_triggerControlTypeUnitStatus, "UIContainer/FullscreenUpperContainer/GenetronEnergyPanel/EnergyUnit");
-    lv_genetron_ui_energy_unit = DialogControlLastCreated();
-    auto22B9A134_g = PlayerGroupAll();
-    auto22B9A134_var = -1;
-    while (true) {
-        auto22B9A134_var = PlayerGroupNextPlayer(auto22B9A134_g, auto22B9A134_var);
-        if (auto22B9A134_var < 0) { break; }
-        if ((TechTreeUnitCount(auto22B9A134_var, "GenetronPowerSupplyDummy", c_techCountCompleteOnly) == 0)) {
-            libNtve_gf_CreateUnitsWithDefaultFacing(1, "GenetronPowerSupplyDummy", 0, auto22B9A134_var, Point(0.0, 0.0));
-            libScio_gv_sCION_POWERDUMMIES[auto22B9A134_var] = UnitLastCreated();
+    DialogControlHookupStandard(c_triggerControlTypeEditBox, "UIContainer/ScionContainer/ScionEditBox");
+    lv_scion_ui_edit_box = DialogControlLastCreated();
+    libNtve_gf_SetDialogItemEditorValue(lv_scion_ui_edit_box, " <House Special><Dependency><Scion Custom Races> (https://github.com/Solstice245/scion-keiron-dev) ", PlayerGroupAll());
+    DialogControlHookupStandard(c_triggerControlTypeLabel, "UIContainer/ScionContainer/ScionLocalPlayerId");
+    lv_scion_ui_local_player_id = DialogControlLastCreated();
+    autoED8AD020_var = 0;
+    for ( ; autoED8AD020_var <= autoED8AD020_ae; autoED8AD020_var += 1 ) {
+        libNtve_gf_SetDialogItemText(lv_scion_ui_local_player_id, IntToText(autoED8AD020_var), PlayerGroupSingle(autoED8AD020_var));
+        if ((PlayerType(autoED8AD020_var) == c_playerTypeUser) && (PlayerHandle(autoED8AD020_var) == "")) {
+            TriggerEnable(libScio_gt_CheatPower, true);
+        }
+
+        if ((TechTreeUnitCount(autoED8AD020_var, "GenetronPowerSupplyDummy", c_techCountCompleteOnly) == 0)) {
+            libNtve_gf_CreateUnitsWithDefaultFacing(1, "GenetronPowerSupplyDummy", 0, autoED8AD020_var, Point(0.0, 0.0));
+            libScio_gv_sCION_POWERDUMMIES[autoED8AD020_var] = UnitLastCreated();
         }
         else {
-            libScio_gv_sCION_POWERDUMMIES[auto22B9A134_var] = UnitGroupUnit(UnitGroup("GenetronPowerSupplyDummy", auto22B9A134_var, RegionEntireMap(), UnitFilter(0, 0, 0, (1 << (c_targetFilterDead - 32))), 0), 1);
+            libScio_gv_sCION_POWERDUMMIES[autoED8AD020_var] = UnitGroupUnit(UnitGroup("GenetronPowerSupplyDummy", autoED8AD020_var, RegionEntireMap(), UnitFilter(0, 0, 0, (1 << (c_targetFilterDead - 32))), 0), 1);
         }
-        libNtve_gf_SetDialogItemUnit(lv_genetron_ui_energy_unit, libScio_gv_sCION_POWERDUMMIES[auto22B9A134_var], PlayerGroupSingle(auto22B9A134_var));
     }
+    libScio_gv_activePlayer1 = PlayerGroupPlayer(PlayerGroupActive(), 1);
+    libScio_gv_activePlayer2 = PlayerGroupPlayer(PlayerGroupActive(), 2);
+    libScio_gv_powerUnitTag0 = (IntToString(((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[0]) >> 18) & 262143)) + ("#" + IntToString((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[0]) & 262143))));
+    libScio_gv_powerUnitTag1 = (IntToString(((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[1]) >> 18) & 262143)) + ("#" + IntToString((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[1]) & 262143))));
+    libScio_gv_powerUnitTag2 = (IntToString(((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[2]) >> 18) & 262143)) + ("#" + IntToString((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[2]) & 262143))));
+    libScio_gv_powerUnitTag3 = (IntToString(((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[3]) >> 18) & 262143)) + ("#" + IntToString((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[3]) & 262143))));
+    libScio_gv_powerUnitTag4 = (IntToString(((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[4]) >> 18) & 262143)) + ("#" + IntToString((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[4]) & 262143))));
+    libScio_gv_powerUnitTag5 = (IntToString(((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[5]) >> 18) & 262143)) + ("#" + IntToString((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[5]) & 262143))));
+    libScio_gv_powerUnitTag6 = (IntToString(((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[6]) >> 18) & 262143)) + ("#" + IntToString((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[6]) & 262143))));
+    libScio_gv_powerUnitTag7 = (IntToString(((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[7]) >> 18) & 262143)) + ("#" + IntToString((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[7]) & 262143))));
+    libScio_gv_powerUnitTag8 = (IntToString(((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[8]) >> 18) & 262143)) + ("#" + IntToString((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[8]) & 262143))));
+    libScio_gv_powerUnitTag9 = (IntToString(((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[9]) >> 18) & 262143)) + ("#" + IntToString((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[9]) & 262143))));
+    libScio_gv_powerUnitTag10 = (IntToString(((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[10]) >> 18) & 262143)) + ("#" + IntToString((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[10]) & 262143))));
+    libScio_gv_powerUnitTag11 = (IntToString(((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[11]) >> 18) & 262143)) + ("#" + IntToString((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[11]) & 262143))));
+    libScio_gv_powerUnitTag12 = (IntToString(((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[12]) >> 18) & 262143)) + ("#" + IntToString((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[12]) & 262143))));
+    libScio_gv_powerUnitTag13 = (IntToString(((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[13]) >> 18) & 262143)) + ("#" + IntToString((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[13]) & 262143))));
+    libScio_gv_powerUnitTag14 = (IntToString(((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[14]) >> 18) & 262143)) + ("#" + IntToString((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[14]) & 262143))));
+    libScio_gv_powerUnitTag15 = (IntToString(((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[15]) >> 18) & 262143)) + ("#" + IntToString((UnitGetTag(libScio_gv_sCION_POWERDUMMIES[15]) & 262143))));
     return true;
 }
 
@@ -67,8 +107,74 @@ void libScio_gt_ScionInit_Init () {
     TriggerAddEventMapInit(libScio_gt_ScionInit);
 }
 
+//--------------------------------------------------------------------------------------------------
+// Trigger: Cheat Power
+//--------------------------------------------------------------------------------------------------
+bool libScio_gt_CheatPower_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    unit lv_iterPowerDummy;
+
+    // Automatic Variable Declarations
+    const int auto148FF411_ae = 15;
+    int auto148FF411_var;
+    const int autoD0506021_ae = 15;
+    int autoD0506021_var;
+
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!((StringSub(EventChatMessage(false), 1, 8) == "setpower"))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    AchievementsDisable(EventPlayer());
+    if ((StringWord(EventChatMessage(false), 3) != null)) {
+        lv_iterPowerDummy = libScio_gv_sCION_POWERDUMMIES[StringToInt(StringWord(EventChatMessage(false), 3))];
+        if ((lv_iterPowerDummy != null)) {
+            UnitSetPropertyFixed(lv_iterPowerDummy, c_unitPropEnergy, StringToFixed(StringWord(EventChatMessage(false), 2)));
+        }
+
+    }
+    else if ((StringWord(EventChatMessage(false), 2) != null)) {
+        auto148FF411_var = 0;
+        for ( ; auto148FF411_var <= auto148FF411_ae; auto148FF411_var += 1 ) {
+            lv_iterPowerDummy = libScio_gv_sCION_POWERDUMMIES[auto148FF411_var];
+            if ((lv_iterPowerDummy != null)) {
+                UnitSetPropertyFixed(lv_iterPowerDummy, c_unitPropEnergy, StringToFixed(StringWord(EventChatMessage(false), 2)));
+            }
+
+        }
+    }
+    else if (true) {
+        autoD0506021_var = 0;
+        for ( ; autoD0506021_var <= autoD0506021_ae; autoD0506021_var += 1 ) {
+            lv_iterPowerDummy = libScio_gv_sCION_POWERDUMMIES[autoD0506021_var];
+            if ((lv_iterPowerDummy != null)) {
+                UnitSetPropertyFixed(lv_iterPowerDummy, c_unitPropEnergyPercent, 100.0);
+            }
+
+        }
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libScio_gt_CheatPower_Init () {
+    libScio_gt_CheatPower = TriggerCreate("libScio_gt_CheatPower_Func");
+    TriggerEnable(libScio_gt_CheatPower, false);
+    TriggerAddEventChatMessage(libScio_gt_CheatPower, c_playerAny, "setpower", false);
+}
+
 void libScio_InitTriggers () {
     libScio_gt_ScionInit_Init();
+    libScio_gt_CheatPower_Init();
 }
 
 //--------------------------------------------------------------------------------------------------
