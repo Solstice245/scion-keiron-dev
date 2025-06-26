@@ -22,19 +22,35 @@
     <CAccumulatorSwitch id="EqualizerTargetDamageBonusSwitch">
         <CaseArray Validator="TargetNotDead" Accumulator="EqualizerTargetDamageBonus"/>
     </CAccumulatorSwitch>
-    <CAccumulatorDistance id="JupiterBombDistance">
-        <EndLocation Effect="JupiterBombTarget" Value="TargetPoint"/>
+    <CAccumulatorDistance id="JupiterAirstrikeDistance">
+        <EndLocation Effect="JupiterAirstrikeInitTarget" Value="TargetPoint"/>
     </CAccumulatorDistance>
-    <CAccumulatorArithmetic id="JupiterBombDistanceCheck">
-        <Parameters value="0.1">
-            <AccumulatorArray value="JupiterBombSpeed"/>
+    <CAccumulatorArithmetic id="JupiterSpeedBuffBonus">
+        <MinAccumulation value="0"/>
+        <Parameters value="0">
+            <AccumulatorArray value="JupiterSpeedBuffData"/>
         </Parameters>
-        <Parameters value="2.5"/>
+        <Parameters value="0.045"/>
+        <Operation value="Multiply"/>
     </CAccumulatorArithmetic>
-    <CAccumulatorBehavior id="JupiterBombSpeed">
-        <ApplicationRule value="Multiply"/>
-        <Behavior value="JupiterSpeedBuff"/>
-    </CAccumulatorBehavior>
+    <CAccumulatorArithmetic id="JupiterAirstrikeRangeBonus">
+        <MinAccumulation value="0"/>
+        <Parameters value="0">
+            <AccumulatorArray value="JupiterSpeedBuffData"/>
+        </Parameters>
+        <Parameters value="0.075"/>
+        <Operation value="Multiply"/>
+    </CAccumulatorArithmetic>
+    <CAccumulatorUserData id="JupiterSpeedBuffData">
+        <BehaviorScope Value="Source" Behavior="JupiterSpeedBuff"/>
+    </CAccumulatorUserData>
+    <CAccumulatorArithmetic id="JupiterSpeedBuffIncrementValue">
+        <MinAccumulation value="1"/>
+        <MaxAccumulation value="50"/>
+        <Parameters value="1">
+            <AccumulatorArray value="JupiterSpeedBuffData"/>
+        </Parameters>
+    </CAccumulatorArithmetic>
     <CAccumulatorSwitch id="LifeMaxTargetSwitch">
         <CaseArray Validator="TargetNotDead" Accumulator="LifeMaxTarget"/>
     </CAccumulatorSwitch>
@@ -345,7 +361,7 @@
         <Amount value="-1.25"/>
     </CAccumulatorConstant>
     <CAccumulatorSwitch id="LunaMineEnergyDrain">
-        <CaseArray Validator="SourceIsMoving" Accumulator="LunaMineDrainRateMovement"/>
+        <CaseArray Validator="SourceIsNotStationary" Accumulator="LunaMineDrainRateMovement"/>
         <CaseDefault value="LunaMineDrainRateNormal"/>
     </CAccumulatorSwitch>
     <CAccumulatorArithmetic id="LunaMineMissileOverkill">

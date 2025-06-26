@@ -199,6 +199,24 @@
         <AutoScaleFactor value="0.800000"/>
     </CActorModel>
     <CActorMissile id="AquilaNaniteEmitter" parent="GenericAttackMissile" unitName="NaniteEmitterWeapon"/>
+    <CActorSound id="JupiterAcceleratorLoop" parent="SoundContinuous">
+        <Inherits index="Visibility" value="0"/>
+        <FogVisibility value="Visible"/>
+        <On index="1" Terms="ActorOrphan" Send="Destroy"/>
+        <On index="2" Terms="Behavior.JupiterSpeedBuff.On" Send="Create"/>
+        <On Terms="Behavior.JupiterSpeedBuff.Off" Send="Destroy"/>
+        <On Terms="ActorCreation" Send="SoundSetMuted 1 0"/>
+        <On Terms="ActorCreation" Send="StatusSet JupiterSpeed 0"/>
+        <On Terms="Effect.JupiterSpeedDataIncrement.Start; ValidateUnit CasterIsMovingGTE5" Send="Signal Unmute"/>
+        <On Terms="Signal.*.Unmute; IsStatus JupiterSpeed 0" Send="SoundSetMuted"/>
+        <On Terms="Signal.*.Unmute" Send="StatusSet JupiterSpeed 1"/>
+        <On Terms="Effect.JupiterSpeedDataDecrement.Start; ValidateUnit CasterIsMovingLT5" Send="Signal Mute"/>
+        <On Terms="Signal.*.Mute; IsStatus JupiterSpeed 1" Send="SoundSetMuted 1"/>
+        <On Terms="Signal.*.Mute" Send="StatusSet JupiterSpeed 0"/>
+        <On Terms="ActionDamage" Send="ActionDamagePhysics"/>
+        <!--On Terms="Behavior.JupiterSpeedBuff.Off" Send="TimerSet 0.500000 KillSound"/>
+        <On Terms="TimerExpired; TimerName KillSound" Send="Destroy"/-->
+    </CActorSound>
     <CActorSimple id="JupiterAirstrikeUnloadSimple">
         <On Terms="Behavior.JupiterUnloadPrecursor.Off" Send="Create"/>
         <On Terms="ActorCreation" Target="_Unit" Send="AnimBracketClear Unload Instant"/>
@@ -266,18 +284,18 @@
         <StageArray AnimProps="Build,Start" BlendTime="0.000000"/>
         <StageArray AnimProps="Build,End"/>
     </CActorProgress>
-    <CActorAction id="JupiterBombAttack" parent="GenericAttack" effectImpact="JupiterRevenantBombImpact" effectLaunch="JupiterBombLaunchBombLM">
+    <!--CActorAction id="JupiterBombAttack" parent="GenericAttack" effectImpact="JupiterRevenantBombImpact" effectLaunch="JupiterAirstrikeLaunchMissileBomb">
         <Missile value="JupiterAttackMissile"/>
         <ImpactSiteOps Ops="SOpTargetPointStationary"/>
         <ShieldFlashType value="Full"/>
         <ImpactPhysics Name="Explosion" MatchKeys="Basic" Physics="SiegeTankSiegedForce"/>
         <LaunchAssets Sound="JupiterAttackLaunch"/>
-    </CActorAction>
-    <CActorAction id="JupiterDropPodAttack" parent="GenericAttack" effectImpact="JupiterBombLaunchRB" effectLaunch="JupiterBombLaunchUnitsLM">
+    </CActorAction-->
+    <CActorAction id="JupiterDropPodAttack" parent="GenericAttack" effectImpact="JupiterAirstrikeUnloadPrecursorRemove" effectLaunch="JupiterAirstrikeLaunchMissileUnit">
         <Missile value="JupiterDropPodMissile"/>
         <ImpactSiteOps Ops="SOpAttachHarness SOpAttachVolumeStandard SOpAttachOrigin"/>
     </CActorAction>
-    <CActorAction id="JupiterShockChargeAttack" parent="GenericAttack" effectImpact="JupiterBombLaunchRB" effectLaunch="JupiterBombLaunchShockLM">
+    <CActorAction id="JupiterShockChargeAttack" parent="GenericAttack" effectImpact="JupiterAirstrikeUnloadPrecursorRemove" effectLaunch="JupiterAirstrikeLaunchMissileShock">
         <Missile value="TeslaShockChargeMissile"/>
         <ImpactSiteOps Ops="SOpAttachHarness SOpAttachVolumeStandard SOpAttachOrigin"/>
     </CActorAction>
@@ -297,18 +315,7 @@
     <CActorModel id="JupiterRevenantBombImpact" parent="ModelAnimationStyleOneShot">
         <On Terms="Effect.JupiterRevenantBombImpact.Start" Send="Create"/>
     </CActorModel>
-    <CActorAction id="JupiterAttackTargetUnit" parent="GenericAttack" effectImpact="JupiterRevenantBombImpact" effectLaunch="JupiterRevenantBombSpellLaunchMissile">
-        <LaunchAssets Model="JupiterAttackLaunch" Sound="JupiterAttackLaunch"/>
-        <Beam value="JupiterAttackBeam"/>
-        <Missile value="JupiterAttackMissile"/>
-        <ImpactMap index="None" Model="JupiterAttackImpact" Sound="JupiterAttackImpact" ModelReaction="JupiterAttackImpactReaction"/>
-        <ImpactMap index="Shield" Sound="JupiterAttackImpactShield" ModelReaction="JupiterAttackImpactReactionShield"/>
-        <ImpactPhysics Name="Explosion" MatchKeys="Basic" Physics="SiegeTankSiegedForce"/>
-        <DamageMap index="None" Model="JupiterAttackDamage" Sound="JupiterAttackDamage" ModelReaction="JupiterAttackDamageReaction"/>
-        <DamageMap index="Shield" Sound="JupiterAttackDamageShield" ModelReaction="JupiterAttackDamageReactionShield"/>
-        <ShieldFlashType value="Full"/>
-    </CActorAction>
-    <CActorAction id="JupiterCloakChargeAttack" parent="GenericAttack" effectImpact="JupiterBombLaunchRB" effectLaunch="JupiterBombLaunchCloakLM">
+    <CActorAction id="JupiterCloakChargeAttack" parent="GenericAttack" effectImpact="JupiterAirstrikeUnloadPrecursorRemove" effectLaunch="JupiterAirstrikeLaunchMissileCloak">
         <Missile value="TeslaCloakChargeMissile"/>
         <ImpactSiteOps Ops="SOpAttachHarness SOpAttachVolumeStandard SOpAttachOrigin"/>
     </CActorAction>
@@ -2165,14 +2172,6 @@
         <Model value="Invisible"/>
         <UnitFlags index="ShowBlobShadow" value="0"/>
     </CActorUnit>
-    <CActorModel id="GenetronPowerOutage" parent="ModelAnimationStyleContinuousUNIT">
-        <On Terms="Behavior.GenetronPowerOutage.On" Send="Create"/>
-        <On Terms="Behavior.GenetronPowerOutage.Off" Send="Destroy"/>
-        <On Terms="ActorCreation" Send="SetTintColor 255,0,0"/>
-        <HostSiteOps Ops="SOpAttachHardPoint"/>
-        <Model value="UploaderCastDelayModel"/>
-        <Scale value="1.500000"/>
-    </CActorModel>
     <CActorModel id="VirtusSelfFixProtocolA" parent="ModelAnimationStyleContinuousUNIT">
         <On Terms="Behavior.VirtusSelffixProtocolBuff.On" Send="Create"/>
         <On Terms="Behavior.VirtusSelffixProtocolBuff.Off" Send="AnimBracketStop BSD"/>
@@ -2235,7 +2234,6 @@
         <On Terms="Abil.RevenantBombUnit.ButtonHoverOn" Send="Create"/>
         <On Terms="Abil.RevenantBombUnit.ButtonHoverOff" Send="Destroy"/>
     </CActorRange>
-    <CActorRange id="ProcessorAnalyzeWeaknessRange" parent="RangeAbilStandard" abil="ProcessorAnalyzeWeakness"/>
     <CActorUnit id="FilteringPlantRich" parent="GenetronBuilding" buildTime="24.000000" unitName="FilteringPlantRich">
         <Aliases value="_UnitHuge"/>
         <Macros value="ExtractAnim"/>
@@ -2660,9 +2658,10 @@
         <On Terms="Behavior.JupiterSpeedBuff.On" Send="Create"/>
         <On Terms="Behavior.JupiterSpeedBuff.Off" Send="Destroy"/>
         <On Terms="ActorCreation" Send="SoundSetPaused 1 0"/>
-        <On Terms="BehaviorStackItem.JupiterSpeedBuff.Add; ValidateUnit CasterIsMovingGTE8; IsStatus JupiterSound 0" Send="SoundSetPaused"/>
-        <On Terms="BehaviorStackItem.JupiterSpeedBuff.Add; ValidateUnit CasterIsMovingGTE8; IsStatus JupiterSound 0" Send="StatusSet JupiterSound 1"/>
-        <On Terms="BehaviorStackItem.JupiterSpeedBuff.Remove; ValidateUnit CasterIsMovingLT8; IsStatus JupiterSound 1" Send="Destroy"/>
+        <On Terms="Effect.JupiterSpeedDataIncrement.Start; ValidateUnit CasterIsMovingGTE8; IsStatus JupiterSound 0" Send="SoundSetPaused"/>
+        <On Terms="Effect.JupiterSpeedDataIncrement.Start; ValidateUnit CasterIsMovingGTE8; IsStatus JupiterSound 0" Send="StatusSet JupiterSound 1"/>
+        <On Terms="Effect.JupiterSpeedDataDecrement.Start; ValidateUnit CasterIsMovingLT8; IsStatus JupiterSound 1" Send="Destroy"/>
+        <Inherits index="Visibility" value="0"/>
     </CActorSound>
     <CActorUnit id="Interdictor" parent="GenetronBuilding" buildTime="29.000000" unitName="Interdictor">
         <On index="65" Terms="WeaponStart.NeutralizerBeam.AttackStart" Send="AnimPlay Attack Attack"/>
@@ -3138,9 +3137,6 @@
     <CActorMissile id="InciterAttackMissile" parent="GenericAttackMissile" unitName="HalifaxGrenadesLMWeapon">
         <Model value="InciterAttackMissile"/>
     </CActorMissile>
-    <CActorSplat id="ProcessorAnalyzeWeaknessCursor" parent="TerranCursorSplat" abil="ProcessorAnalyzeWeakness">
-        <Scale value="3.750000"/>
-    </CActorSplat>
     <CActorRange id="TeslaCloakChargeRangeEnemy" parent="TeslaCloakChargeRangeFriendly">
         <Filter index="Self" value="1"/>
         <Filter index="Ally" value="1"/>
@@ -3352,11 +3348,10 @@
         <Model value="HellionTankAttackFireAddition"/>
         <ModelFlags index="AllowHitTest" value="0"/>
     </CActorModel>
-    <CActorAction id="JupiterAttack" parent="GenericAttack" effectImpact="JupiterRevenantBombImpact" effectLaunch="JupiterRevenantBombLaunchMissile">
-        <LaunchAttachQuery Methods="AMFilterWeapon"/>
+    <CActorAction id="JupiterAttack" parent="GenericAttack" effectImpact="JupiterRevenantBombImpact" effectLaunch="JupiterRevenantBombSpellLaunchMissile">
         <ImpactPhysics Name="Explosion" MatchKeys="Basic" Physics="SiegeTankSiegedForce"/>
-        <ImpactSiteOps Ops="SOpTargetPointStationary"/>
-        <ShieldFlashType value="None"/>
+        <ShieldFlashType value="Full"/>
+        <On Terms="Effect.JupiterAirstrikeLaunchMissileBomb.Start; At Caster" Send="Create"/>
     </CActorAction>
     <CActorSplat id="JupiterAttackSplat" parent="GuideVisualCircle" unitName="Bogus">
         <On index="0" Terms="Abil.RevenantBomb.Cursor" Send="Create"/>
@@ -3506,13 +3501,19 @@
         <Sound value="Terran_CloakOn"/>
     </CActorSound>
     <CActorUnit id="Jupiter" parent="GenericUnitStandard" unitName="Jupiter">
-        <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-aircraftplating-level0.dds"/>
+        <!-- activates extra booster anim -->
         <On Terms="Behavior.JupiterSpeedBuff.On" Send="$Spell PlayForever"/>
         <On Terms="Behavior.JupiterSpeedBuff.Off" Send="AnimClear Spell"/>
-        <On Terms="Behavior.JupiterSpeedController.On" Send="AnimPlay Work Walk PlayForever"/>
-        <On Terms="Behavior.JupiterSpeedController.On; !AnimPlayingName StandWork" Send="StatusSet UseCover 1"/>
-        <On Terms="Behavior.JupiterSpeedController.Off" Send="AnimClear Work"/>
-        <On Terms="Behavior.JupiterSpeedController.Off; !UnitWalking" Send="StatusSet UseCover 0"/>
+        <!-- forces walk animation during forced movement -->
+        <On Terms="Behavior.JupiterSpeedBuff.On" Send="AnimPlay Work Walk PlayForever"/>
+        <On Terms="Behavior.JupiterSpeedBuff.On; !AnimPlayingName StandWork" Send="StatusSet UseCover 1"/>
+        <On Terms="Behavior.JupiterAirstrike.On" Send="AnimPlay Work Walk PlayForever"/>
+        <On Terms="Behavior.JupiterAirstrike.On; !AnimPlayingName StandWork" Send="StatusSet UseCover 1"/>
+        <!-- disables forced walk animation -->
+        <On Terms="Behavior.JupiterSpeedBuff.Off; ValidateUnit JupiterNoForcedMovement" Send="AnimClear Work"/>
+        <On Terms="Behavior.JupiterSpeedBuff.Off; !UnitWalking; ValidateUnit JupiterNoForcedMovement" Send="StatusSet UseCover 0"/>
+        <On Terms="Behavior.JupiterAirstrike.Off; ValidateUnit JupiterNoForcedMovement" Send="AnimClear Work"/>
+        <On Terms="Behavior.JupiterAirstrike.Off; !UnitWalking; ValidateUnit JupiterNoForcedMovement" Send="StatusSet UseCover 0"/>
         <On Terms="Abil.JupiterTransport.TransportUnloadStart" Send="AnimBracketStart StandWork Stand,Work,Start Stand,Work Stand,Work,End"/>
         <On Terms="Abil.JupiterTransport.TransportUnloadStop" Send="AnimBracketStop StandWork"/>
         <On Terms="Abil.JupiterTransport.TransportUnloadStart" Send="StatusSet UseCover 0"/>
@@ -3549,6 +3550,7 @@
         <DeathCustoms Name="RagdollOverkillDPRH" InheritsFrom="RagdollBasic"/>
         <DeathCustoms Name="RagdollOverkillDOI" InheritsFrom="RagdollBasic"/>
         <DeathCustoms Name="RagdollMidair" InheritsFrom="RagdollBasic"/>
+        <LifeArmorIcon value="Assets\Textures\btn-upgrade-genetron-aircraftplating-level0.dds"/>
         <GroupIcon>
             <Image value="Assets\Textures\wireframe-genetron-jupiter.dds"/>
         </GroupIcon>
@@ -3582,21 +3584,6 @@
         <HostSiteOps Ops="SOpTargetPoint"/>
         <Sound value="DOM_Fire_Large_Loops"/>
     </CActorSound>
-    <CActorSound id="ProcessorAnalyzeWeaknessSound" parent="SoundOneShot">
-        <On Terms="Effect.ProcessorAnalyzeWeaknessSA.Start" Send="Create"/>
-        <Sound value="Processor_Analyze_Sound"/>
-    </CActorSound>
-    <CActorBeamStandard id="ProcessorAnalyzeWeaknessBeam" parent="BeamStandardAnimationStyleOneShot">
-        <Beam value="BeamStandard"/>
-    </CActorBeamStandard>
-    <CActorModel id="ProcessorAnalyzeWeaknessImpact" parent="ModelAnimationStyleContinuousUNIT">
-        <Inherits index="BaseModelScale" value="1"/>
-        <Inherits index="Scale" value="1"/>
-        <On Terms="Behavior.AnalyzeWeakness.On" Send="Create"/>
-        <On Terms="Behavior.AnalyzeWeakness.Off" Send="Destroy"/>
-        <HostSiteOps Ops="SOpAttachCenter"/>
-        <ModelFlags index="AllowHitTest" value="0"/>
-    </CActorModel>
     <CActorModel id="NodeBuild" parent="GenetronBuildingBuild">
         <CreepHeightClass value="Small"/>
     </CActorModel>
@@ -4082,7 +4069,7 @@
     <CActorRange id="TeslaShockChargeRangeFriendly">
         <Filter index="Neutral" value="1"/>
         <Filter index="Enemy" value="1"/>
-        <Range value="3.000000"/>
+        <Range value="2.500000"/>
         <Icon value="Assets\Textures\scannersweepradius_diffuse.dds"/>
         <IconArcLength value="1.500000"/>
         <IconTint value="255,0,255,255"/>
@@ -4099,10 +4086,13 @@
     <CActorUnit id="TeslaShockChargeUnit" parent="GenericUnitStandard" unitName="ShockCharge">
         <On Terms="ActorCreation" Send="Create TeslaShockChargeRangeFriendly"/>
         <On Terms="ActorCreation" Send="Create TeslaShockChargeRangeEnemy"/>
-        <On Terms="Behavior.ShockCharge.On" Send="$Spell 0 0.000000 0.000000 2.100000 AsDuration"/>
+        <On Terms="Behavior.ShockChargePulser.On; !AnimPlayingName Spell" Send="$Spell 0 0.000000 0.000000 2.100000 AsDuration"/>
         <On Terms="Behavior.TeslaShockChargeOverload.On" Send="AnimPlay Cover Cover PlayForever"/>
         <On Terms="Behavior.TeslaShockChargeOverload.Off" Send="AnimClear Cover"/>
+        <On Terms="Effect.TeslaShockChargePulserApplyBehavior.Start" Send="$Spell 0 0.000000 0.000000 3.500000 AsDuration"/>
         <On Terms="Effect.TeslaShockChargeExpireRecharge.Start" Send="$Spell 0 0.000000 0.000000 2.100000 AsDuration"/>
+        <On Terms="Effect.HideTarget.Start" Send="AnimSetPausedAll"/>
+        <On Terms="Effect.ShowTarget.Start" Send="AnimSetPausedAll 0"/>
         <Model value="TeslaShockCharge"/>
         <BuildModel value="TeslaShockCharge"/>
         <DeathArray index="Normal" ModelLink="TerranSmallTriggeredExplosion"/>

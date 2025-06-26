@@ -38,29 +38,32 @@
         </Cost>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="JupiterBombQueueMod">
+    <CBehaviorBuff id="JupiterQueueMod">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <RemoveValidatorArray value="JupiterQueueSizeBombNotDead"/>
         <MaxStackCount value="0"/>
         <Modification QueueSize="-1"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="JupiterBombTrainReq">
+    <CBehaviorBuff id="JupiterTrainReq">
+        <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <DisableValidatorArray value="CasterHasLT2CargoSpace"/>
         <Modification>
             <AbilClassDisableArray index="CAbilTrain" value="1"/>
         </Modification>
-        <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="JupiterBombController">
+    <CBehaviorBuff id="JupiterAirstrike">
+        <InfoFlags index="Hidden" value="1"/>
+        <InfoIcon value="Assets\Textures\btn-ability-genetron-airstrike.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <BuffFlags index="Channeled" value="1"/>
         <Period value="0.0625"/>
-        <InitialEffect value="JupiterSpeedAccelerator"/>
-        <PeriodicEffect value="JupiterBombPeriodic"/>
-        <FinalEffect value="JupiterSpeedRemoveAccelerator"/>
-        <InfoFlags index="Hidden" value="1"/>
+        <InitialEffect value="JupiterAirstrikePeriodic"/>
+        <PeriodicEffect value="JupiterAirstrikePeriodic"/>
+        <Modification>
+            <ModifyFlags index="SuppressTurning" value="1"/>
+        </Modification>
     </CBehaviorBuff>
     <CBehaviorUnitTracker id="JupiterCargoTracker">
         <InfoFlags index="Hidden" value="1"/>
@@ -70,6 +73,8 @@
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Duration value="5"/>
+        <InitialEffect value="HideTarget"/>
+        <FinalEffect value="ShowTarget"/>
         <Modification>
             <ModifyFlags index="DisableAbils" value="1"/>
             <ModifyFlags index="DisableWeapons" value="1"/>
@@ -78,14 +83,13 @@
             <StateFlags index="Invulnerable" value="1"/>
             <StateFlags index="NoDraw" value="1"/>
         </Modification>
-        <InitialEffect value="HideTarget"/>
-        <FinalEffect value="ShowTarget"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="StarBoltCaster">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Modification MoveSpeedMultiplier="0.5" AccelerationMultiplier="0.5">
             <StateFlags index="SuppressAttack" value="1"/>
             <StateFlags index="SuppressCombat" value="1"/>
+            <StateFlags index="SuppressEnergyRegen" value="1"/>
         </Modification>
     </CBehaviorBuff>
     <CBehaviorBuff id="BlitzerSuperCharger">
@@ -187,13 +191,6 @@
             <BehaviorLinkDisableArray value="AcidNestVolatileAcidSearch"/>
         </Modification>
     </CBehaviorBuff>
-    <CBehaviorBuff id="Active">
-        <InfoFlags index="Hidden" value="1"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <InitialEffect value="ProcessorActive"/>
-        <FinalEffect value="ProcessorFateSet"/>
-        <RemoveValidatorArray value="CasterNotDead"/>
-    </CBehaviorBuff>
     <CBehaviorBuff id="BeamWeaponCooldown">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="AbilityorEffectType:Units,Race:Neutral"/>
@@ -213,6 +210,7 @@
         <Duration value="1"/>
         <Modification>
             <StateFlags index="SuppressCollision" value="1"/>
+            <StateFlags index="SuppressEnergyRegen" value="1"/>
             <StateFlags index="Resistant" value="1"/>
             <LifeArmorBonus value="2"/>
             <WeaponArray Link="BoarIgnitionBlastDummy"/>
@@ -295,25 +293,16 @@
             <Chance value="1"/>
         </DamageResponse>
     </CBehaviorBuff>
-    <CBehaviorBuff id="JupiterSpeedAccelerator">
+    <CBehaviorBuff id="JupiterAccelerator">
+        <InfoIcon value="Assets\Textures\btn-ability-genetron-jupiterbooston.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <RemoveValidatorArray value="CasterHasEnergy"/>
         <RemoveValidatorArray value="GenetronPowerSupplyGE05"/>
         <RemoveValidatorArray value="CasterNotAbducted"/>
         <RemoveValidatorArray value="CasterNotShackled"/>
-        <Period value="0.0625"/>
-        <InitialEffect value="JupiterSpeedApplyController"/>
-        <PeriodicEffect value="JupiterSpeedBuffSwitch"/>
-        <InfoIcon value="Assets\Textures\btn-ability-terran-emergencythrusters.dds"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="JupiterSpeedController">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <RemoveValidatorArray value="JupiterSpeedAcceleratorOrBuff"/>
-        <Period value="0.0625"/>
-        <InitialEffect value="JupiterSpeedForce"/>
-        <PeriodicEffect value="JupiterSpeedPeriodic"/>
-        <InfoIcon value="Assets\Textures\btn-tips-armory.dds"/>
-        <InfoFlags index="Hidden" value="1"/>
+        <Period value="1"/>
+        <InitialEffect value="JupiterSpeedBuff"/>
+        <PeriodicEffect value="JupiterSpeedBuff"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="KeironStructureCharged">
         <InfoFlags index="Hidden" value="1"/>
@@ -422,11 +411,6 @@
         <Duration value="0.125"/>
         <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="SpellDamageTest">
-        <Modification>
-            <DamageDealtFraction index="Spell" value="10"/>
-        </Modification>
-    </CBehaviorBuff>
     <CBehaviorBuff id="SpitfireAbilitiesReq">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -471,9 +455,9 @@
         <DisableValidatorArray value="GenetronPowerSupplyGEOlympusDischarge"/>
         <DisableValidatorArray value="NotUnderConstruction"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="Detector13p75">
+    <CBehaviorBuff id="Detector13p75" parent="Detector">
         <InfoFlags index="Hidden" value="1"/>
-        <Modification Detect="13.75"/>
+        <Modification Detect="13.75" DetectFilters="-;-"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="Detector6" parent="Detector">
         <Alignment value="Positive"/>
@@ -803,6 +787,7 @@
         <InfoFlags index="Hidden" value="1"/>
         <InfoIcon value="Assets\Textures\btn-status-detector.dds"/>
         <Modification Detect="14"/>
+        <Tooltip value="Behavior/Tooltip/Detector11"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="DisableShieldRegen">
         <InfoFlags index="Hidden" value="1"/>
@@ -853,10 +838,6 @@
             <DamageTakenFraction index="NoProc" value="0.25"/>
         </Modification>
         <Alignment value="Negative"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="AvengerVengeanceMissileAmmo">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="GenetronTurretFreeze">
         <InfoFlags index="Hidden" value="1"/>
@@ -1194,7 +1175,9 @@
                 <Cooldown Link="Behavior/LockdownModeDuration"/>
             </Cost>
         </DamageResponse>
-        <Modification WeaponMinRange="500"/>
+        <Modification WeaponMinRange="500">
+            <StateFlags index="SuppressEnergyRegen" value="1"/>
+        </Modification>
     </CBehaviorBuff>
     <CBehaviorBuff id="SpitterFate">
         <InfoFlags index="Hidden" value="1"/>
@@ -1210,17 +1193,6 @@
         <Duration value="1.4"/>
         <Modification>
             <StateFlags index="Cloak" value="1"/>
-        </Modification>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="GenetronPowerOutage">
-        <Alignment value="Negative"/>
-        <InfoFlags index="Hidden" value="1"/>
-        <InfoIcon value="Assets\Textures\btn-ability-stetmann-stetelliteoverloadenergy.dds"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <TimeScaleSource Value="Global"/>
-        <Duration value="0.25"/>
-        <Modification>
-            <RateMultiplierArray index="Queueable" value="0.001"/>
         </Modification>
     </CBehaviorBuff>
     <CBehaviorBuff id="WardPassiveShellRegen">
@@ -1255,7 +1227,7 @@
     </CBehaviorBuff>
     <CBehaviorBuff id="ShockChargeDecloak">
         <Alignment value="Negative"/>
-        <InfoIcon value="Assets\Textures\btn-ability-genetron-launchshockcharge.dds"/>
+        <InfoIcon value="Assets\Textures\btn-unit-genetron-teslashockcharge.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <RemoveValidatorArray value="IsNotBuried"/>
         <Duration value="5"/>
@@ -1296,7 +1268,7 @@
         <Alignment value="Negative"/>
         <InfoIcon value="Assets\Textures\btn-ability-genetron-shellshockbomb.dds"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Duration value="4.2"/>
+        <Duration value="3.5"/>
         <Modification>
             <StateFlags index="Silence" value="1"/>
             <StateFlags index="Daze" value="1"/>
@@ -1442,10 +1414,6 @@
         <LandCheckRadius value="10"/>
         <InfoIcon value="Assets\Textures\btn-ability-genetron-cliffjump-inciter.dds"/>
     </CBehaviorJump>
-    <CBehaviorBuff id="ProcessorActive">
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <InfoFlags index="Hidden" value="1"/>
-    </CBehaviorBuff>
     <CBehaviorBuff id="ResourceTap">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Modification>
@@ -1483,10 +1451,17 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <RemoveValidatorArray value="CasterNotAbducted"/>
         <RemoveValidatorArray value="CasterNotShackled"/>
-        <MaxStackCount value="40"/>
-        <Modification MoveSpeedMultiplier="1.03" DecelerationBonus="10">
+        <RemoveValidatorArray value="JupiterSpeedBuffDataNotCleared"/>
+        <Modification AccelerationBonus="500" DecelerationBonus="500">
             <StateFlags index="SuppressEnergyRegen" value="1"/>
+            <AdditiveMoveSpeedFactor value="0">
+                <AccumulatorArray value="JupiterSpeedBuffBonus"/>
+            </AdditiveMoveSpeedFactor>
         </Modification>
+        <InfoIcon value="Assets\Textures\btn-ability-genetron-jupiterbooston.dds"/>
+        <Period value="0.0625"/>
+        <InitialEffect value="JupiterSpeedPeriodic"/>
+        <PeriodicEffect value="JupiterSpeedPeriodic"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="SpeedCloak">
         <InfoIcon value="Assets\Textures\btn-ability-genetron-blazespeedcloak.dds"/>
@@ -1502,38 +1477,19 @@
         <Duration value="2"/>
         <Alignment value="Positive"/>
     </CBehaviorBuff>
-    <CBehaviorBuff id="AnalyzeWeakness">
-        <InfoIcon value="Assets\Textures\btn-ability-hornerhan-raven-analyzetarget.dds"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <Modification>
-            <DamageTakenFraction index="Spell" value="0.2"/>
-            <DamageTakenFraction index="Melee" value="0.2"/>
-            <DamageTakenFraction index="Ranged" value="0.2"/>
-            <DamageTakenFraction index="Splash" value="0.2"/>
-            <DamageTakenFraction index="NoProc" value="0.2"/>
-        </Modification>
-        <Duration value="10"/>
-        <Alignment value="Negative"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="ShockCharge">
+    <CBehaviorBuff id="ShockChargePulser">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="NotHidden"/>
-        <DisableValidatorArray value="NotStasis"/>
         <DisplayDuration index="Self" value="1"/>
         <DisplayDuration index="Ally" value="1"/>
         <DisplayDuration index="Neutral" value="1"/>
         <DisplayDuration index="Enemy" value="1"/>
+        <DisableValidatorArray value="NotHidden"/>
+        <DisableValidatorArray value="NotStasis"/>
         <Duration value="2.1"/>
+        <InitialEffect value="TeslaShockChargeNotificationSearch"/>
         <ExpireEffect value="TeslaShockChargeExpire"/>
         <AINotifyEffect value="TeslaShockChargeExpireSearch"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="TrackingImplant">
-        <Alignment value="Negative"/>
-        <InfoIcon value="Assets\Textures\btn-tips-terran-penetrator.dds"/>
-        <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
-        <BuffFlags index="RefreshStack" value="1"/>
-        <Duration value="30"/>
     </CBehaviorBuff>
     <CBehaviorSpawn id="AvianNestSpawnWasp">
         <InfoFlags index="Hidden" value="1"/>
@@ -1614,27 +1570,6 @@
         </DamageResponse>
         <TimeScaleSource Value="Global"/>
         <Duration value="0.6"/>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="DynamicCoatingDebuff">
-        <Cost>
-            <Charge Link="Behavior/DynamicCoatingBuff"/>
-            <Cooldown Link="Behavior/DynamicCoatingBuff"/>
-        </Cost>
-        <InfoIcon value="Assets\Textures\btn-ability-Xayid-dynamiccoating.dds"/>
-        <EditorCategories value="Race:Xayid,AbilityorEffectType:Units"/>
-        <Modification>
-            <DamageDealtFraction index="Spell" value="0.7"/>
-            <DamageDealtFraction index="Melee" value="0.7"/>
-            <DamageDealtFraction index="Ranged" value="0.7"/>
-            <DamageDealtFraction index="Splash" value="0.7"/>
-            <DamageDealtFraction index="NoProc" value="0.7"/>
-        </Modification>
-        <DamageResponse>
-            <Cost>
-                <Charge Link="Behavior/DynamicCoatingBuff"/>
-                <Cooldown Link="Behavior/DynamicCoatingBuff"/>
-            </Cost>
-        </DamageResponse>
     </CBehaviorBuff>
     <CBehaviorPowerSource id="FeedingPoolPower">
         <InfoFlags index="Hidden" value="1"/>
@@ -2325,7 +2260,7 @@
         <DisableValidatorArray value="NotContaminated"/>
         <DisableValidatorArray value="NotHidden"/>
         <BuffFlags index="Countdown" value="0"/>
-        <Duration value="49"/>
+        <Duration value="51.8"/>
         <ExpireEffect value="FoundryUmbraSet"/>
         <TimeScaleSource Effect="KeironChargeDummyCUSet"/>
     </CBehaviorBuff>
@@ -2496,17 +2431,12 @@
     <CBehaviorBuff id="UmbraDamageReduction">
         <InfoFlags index="Hidden" value="1"/>
         <EditorCategories value="AbilityorEffectType:Units,Race:Keiron"/>
-        <DisableValidatorArray value="CasterIsMoving"/>
-        <DisableValidatorArray value="hasShields"/>
+        <DisableValidatorArray value="SourceIsNotStationary"/>
+        <DisableValidatorArray value="SourceHasShields"/>
         <DamageResponse ModifyFraction="0.6667">
             <Kind index="Melee" value="0"/>
             <Chance value="1"/>
         </DamageResponse>
-    </CBehaviorBuff>
-    <CBehaviorBuff id="UmbraShieldVisualControl">
-        <EditorCategories value="Race:Keiron,AbilityorEffectType:Units"/>
-        <DisableValidatorArray value="CasterShieldsGE20"/>
-        <InfoFlags index="Hidden" value="1"/>
     </CBehaviorBuff>
     <CBehaviorBuff id="UmbraStealth">
         <InfoFlags index="Hidden" value="1"/>
