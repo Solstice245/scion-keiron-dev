@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+
+    <Frame type="UnitStatusFrame" name="TemplateKeironProductionStatus">
+        <Height val="12"/>
+        <Width val="200"/>
+        <RenderType val="HDR"/>
+        <VisibleToEnemy val="False"/>
+
+        <Frame type="Frame" name="AttachPointFrame">
+            <Anchor side="Top" relative="$parent" pos="Min" offset="-20"/>
+            <Anchor side="Left" relative="$parent" pos="Min" offset="100"/>
+        </Frame>
+
+        <Frame type="TextFormatFrame" name="FormatCatalogLinkName">
+            <FormatText val="%0%Production"/>
+            <Replacement index="0" val="{$parent/@Unit}"/>
+        </Frame>
+
+        <Frame type="TextFormatFrame" name="FormatChargeLinkName">
+            <FormatText val="Abil/%0%Production"/>
+            <Replacement index="0" val="{$parent/@Unit}"/>
+        </Frame>
+
+        <Frame type="TextFormatFrame" name="FormatDataCapRef">
+            <FormatText val="Accumulator,%0%Production@ChargeCap,Amount"/>
+            <Replacement index="0" val="{$parent/@Unit}"/>
+        </Frame>
+
+        <Frame type="TextFormatFrame" name="FormatDataCooldownRef">
+            <FormatText val="Abil,%0%Production,Cost[0].Cooldown.TimeUse"/>
+            <Replacement index="0" val="{$parent/@Unit}"/>
+        </Frame>
+
+        <Frame type="UnitStatusAbilIcon" name="AbilIconFrame">
+            <Anchor side="Top" relative="$parent" pos="Max" offset="0"/>
+            <Anchor side="Left" relative="$parent" pos="Max" offset="0"/>
+            <AcceptsMouse val="False"/>
+            <Alpha val="0"/>
+
+            <AbilityLink val="{$parent/FormatCatalogLinkName/@Text}"/>
+
+            <Frame type="AbilIcon" name="AbilIcon">
+                <Anchor relative="$parent"/>
+
+                <Frame type="Image" name="IconImage">
+                    <Anchor relative="$parent"/>
+                </Frame>
+
+                <Frame type="Image" name="CooldownImage">
+                    <Anchor relative="$parent"/>
+                </Frame>
+
+                <Frame type="Label" name="CooldownLabel">
+                    <Anchor relative="$parent"/>
+                </Frame>
+
+            </Frame>
+
+        </Frame>
+
+        <Frame type="UnitStatusAbilCharge" name="AbilChargeFrame">
+            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+            <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+            <AcceptsMouse val="False"/>
+            <Alpha val="0"/>
+
+            <AbilityLink val="{$parent/FormatCatalogLinkName/@Text}"/>
+            <ChargeLink val="{$parent/FormatChargeLinkName/@Text}"/>
+            <ChargeLocation val="Abil"/>
+
+            <Frame type="ProgressBar" name="ChargeFillProgress">
+                <Anchor relative="$parent"/>
+            </Frame>
+
+        </Frame>
+
+        <Frame type="DataRefFrame" name="DataCap">
+            <Argument name="ref" val="{$parent/FormatDataCapRef/@Text}"/>
+        </Frame>
+
+        <Frame type="DataRefFrame" name="DataCooldown">
+            <Argument name="ref" val="{$parent/FormatDataCooldownRef/@Text}"/>
+        </Frame>
+
+        <Frame type="TextFormatFrame" name="FormatTextureEmpty">
+            <FormatText val="Assets\Textures\ui_status_keironproduction_progress%0%_empty.dds"/>
+            <Replacement index="0" val="{$parent/DataCap/@StringValue}"/>
+        </Frame>
+
+        <Frame type="TextFormatFrame" name="FormatTextureHalf">
+            <FormatText val="Assets\Textures\ui_status_keironproduction_progress%0%_half.dds"/>
+            <Replacement index="0" val="{$parent/DataCap/@StringValue}"/>
+        </Frame>
+
+        <Frame type="TextFormatFrame" name="FormatTextureFull">
+            <FormatText val="Assets\Textures\ui_status_keironproduction_progress%0%_full.dds"/>
+            <Replacement index="0" val="{$parent/DataCap/@StringValue}"/>
+        </Frame>
+
+        <Frame type="MathFrame" name="MathCooldownFactor">
+            <A val="1"/>
+            <B val="{$parent/DataCooldown/@RealValue}"/>
+            <Operator val="Divide"/>
+        </Frame>
+
+        <Frame type="MathFrame" name="MathCooldownDiff">
+            <A val="{$parent/DataCooldown/@RealValue}"/>
+            <B val="{$parent/AbilIconFrame/AbilIcon/CooldownLabel/@Text}"/>
+            <Operator val="Subtract"/>
+        </Frame>
+
+        <Frame type="MathFrame" name="MathCooldownFactored">
+            <A val="{$parent/MathCooldownDiff/@Result}"/>
+            <B val="{$parent/MathCooldownFactor/@Result}"/>
+            <Operator val="Multiply"/>
+        </Frame>
+
+        <Frame type="MathFrame" name="MathHalfProgress">
+            <A val="{$parent/AbilChargeFrame/ChargeFillProgress/@Value}"/>
+            <B val="{$parent/MathCooldownFactored/@Result}"/>
+            <Operator val="Add"/>
+
+            <StateGroup name="FixBlip">
+                <DefaultState val="Unfix"/>
+                <State name="Fix">
+                    <When type="Property" frame="$parent/MathCooldownFactored" operator="GreaterThanOrEqual" Result="1"/>
+                    <Action type="SetProperty" B="0"/>
+                </State>
+                <State name="Unfix">
+                    <When type="Property" frame="$parent/MathCooldownFactored" operator="LessThan" Result="1"/>
+                    <Action type="SetProperty" B="{$parent/MathCooldownFactored/@Result}"/>
+                </State>
+            </StateGroup>
+
+        </Frame>
+
+        <Frame type="ProgressBar" name="ProgressHalf">
+            <Anchor relative="$parent"/>
+            <AcceptsMouse val="False"/>
+
+            <MinValue val="0"/>
+            <MaxValue val="{$parent/DataCap/@RealValue}"/>
+            <Value val="{$parent/MathHalfProgress/@Result}"/>
+
+            <Frame type="Image" name="BorderImage">
+                <Anchor relative="$parent"/>
+                <Texture val="{$parent/$parent/FormatTextureEmpty/@Text}"/>
+            </Frame>
+
+            <Frame type="Frame" name="FillImageContainer">
+                <Anchor relative="$parent"/>
+
+                <Frame type="Image" name="FillImage">
+                    <Anchor relative="$parent"/>
+                    <Texture val="{$parent/$parent/$parent/FormatTextureHalf/@Text}"/>
+                </Frame>
+
+            </Frame>
+
+        </Frame>
+
+        <Frame type="ProgressBar" name="ProgressCompleted">
+            <Anchor relative="$parent"/>
+            <AcceptsMouse val="False"/>
+
+            <MinValue val="0"/>
+            <MaxValue val="{$parent/DataCap/@RealValue}"/>
+            <Value val="{$parent/AbilChargeFrame/ChargeFillProgress/@Value}"/>
+
+            <Frame type="Frame" name="FillImageContainer">
+                <Anchor relative="$parent"/>
+
+                <Frame type="Image" name="FillImage">
+                    <Anchor relative="$parent"/>
+                    <Texture val="{$parent/$parent/$parent/FormatTextureFull/@Text}"/>
+                </Frame>
+
+            </Frame>
+
+        </Frame>
+
+    </Frame>
+
+    <Frame type="UnitStatusFrame" name="TemplateEdificeStatus" template="StatusKeironProduction/TemplateKeironProductionStatus">
+        <Frame type="DataRefFrame" name="DataCap">
+            <Argument name="ref" val="Accumulator,EdificeProduction@ChargeCap,Amount"/>
+        </Frame>
+        <Frame type="DataRefFrame" name="DataCooldown">
+            <Argument name="ref" val="Abil,EdificeProduction,Cost[0].Cooldown.TimeUse"/>
+        </Frame>
+    </Frame>
+
+    <Frame type="UnitStatusFrame" name="TemplateConduitStatus" template="StatusKeironProduction/TemplateKeironProductionStatus">
+        <Frame type="DataRefFrame" name="DataCap">
+            <Argument name="ref" val="Accumulator,ConduitProduction@ChargeCap,Amount"/>
+        </Frame>
+        <Frame type="DataRefFrame" name="DataCooldown">
+            <Argument name="ref" val="Abil,ConduitProduction,Cost[0].Cooldown.TimeUse"/>
+        </Frame>
+    </Frame>
+
+    <Frame type="UnitStatusFrame" name="TemplateSanctumStatus" template="StatusKeironProduction/TemplateKeironProductionStatus">
+        <Frame type="DataRefFrame" name="DataCap">
+            <Argument name="ref" val="Accumulator,SanctumProduction@ChargeCap,Amount"/>
+        </Frame>
+        <Frame type="DataRefFrame" name="DataCooldown">
+            <Argument name="ref" val="Abil,SanctumProduction,Cost[0].Cooldown.TimeUse"/>
+        </Frame>
+    </Frame>
+
+    <Frame type="UnitStatusFrame" name="TemplateElysiumStatus" template="StatusKeironProduction/TemplateKeironProductionStatus">
+        <Frame type="DataRefFrame" name="DataCap">
+            <Argument name="ref" val="Accumulator,ElysiumProduction@ChargeCap,Amount"/>
+        </Frame>
+        <Frame type="DataRefFrame" name="DataCooldown">
+            <Argument name="ref" val="Abil,ElysiumProduction,Cost[0].Cooldown.TimeUse"/>
+        </Frame>
+    </Frame>
+
+    <Frame type="UnitStatusFrame" name="TemplateFoundryStatus" template="StatusKeironProduction/TemplateKeironProductionStatus">
+        <Frame type="DataRefFrame" name="DataCap">
+            <Argument name="ref" val="Accumulator,FoundryProduction@ChargeCap,Amount"/>
+        </Frame>
+        <Frame type="DataRefFrame" name="DataCooldown">
+            <Argument name="ref" val="Abil,FoundryProduction,Cost[0].Cooldown.TimeUse"/>
+        </Frame>
+    </Frame>
+
+    <Frame type="UnitStatusFrame" name="TemplateAtriumStatus" template="StatusKeironProduction/TemplateKeironProductionStatus">
+        <Frame type="DataRefFrame" name="DataCap">
+            <Argument name="ref" val="Accumulator,AtriumProduction@ChargeCap,Amount"/>
+        </Frame>
+        <Frame type="DataRefFrame" name="DataCooldown">
+            <Argument name="ref" val="Abil,AtriumProduction,Cost[0].Cooldown.TimeUse"/>
+        </Frame>
+    </Frame>
+
+    <Frame type="UnitStatusFrame" name="TemplatePantheonStatus" template="StatusKeironProduction/TemplateKeironProductionStatus">
+        <Frame type="DataRefFrame" name="DataCap">
+            <Argument name="ref" val="Accumulator,PantheonProduction@ChargeCap,Amount"/>
+        </Frame>
+        <Frame type="DataRefFrame" name="DataCooldown">
+            <Argument name="ref" val="Abil,PantheonProduction,Cost[0].Cooldown.TimeUse"/>
+        </Frame>
+    </Frame>
+
+    <Frame type="UnitStatusFrame" name="TemplateOutletStatus" template="StatusKeironProduction/TemplateKeironProductionStatus">
+        <Frame type="DataRefFrame" name="DataCap">
+            <Argument name="ref" val="Accumulator,OutletProduction@ChargeCap,Amount"/>
+        </Frame>
+        <Frame type="DataRefFrame" name="DataCooldown">
+            <Argument name="ref" val="Abil,OutletProduction,Cost[0].Cooldown.TimeUse"/>
+        </Frame>
+    </Frame>
+
+    <Frame type="UnitStatusFrame" name="TemplateEmpyreanStatus" template="StatusKeironProduction/TemplateKeironProductionStatus">
+        <Frame type="DataRefFrame" name="DataCap">
+            <Argument name="ref" val="Accumulator,EmpyreanProduction@ChargeCap,Amount"/>
+        </Frame>
+        <Frame type="DataRefFrame" name="DataCooldown">
+            <Argument name="ref" val="Abil,EmpyreanProduction,Cost[0].Cooldown.TimeUse"/>
+        </Frame>
+    </Frame>
+
+    <Frame type="UnitStatusFrame" name="TemplateZenithStatus" template="StatusKeironProduction/TemplateKeironProductionStatus">
+        <Frame type="DataRefFrame" name="DataCap">
+            <Argument name="ref" val="Accumulator,ZenithProduction@ChargeCap,Amount"/>
+        </Frame>
+        <Frame type="DataRefFrame" name="DataCooldown">
+            <Argument name="ref" val="Abil,ZenithProduction,Cost[0].Cooldown.TimeUse"/>
+        </Frame>
+    </Frame>
+
+</Desc>

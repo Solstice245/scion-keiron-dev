@@ -213,7 +213,6 @@
         <CostCategory value="Technology"/>
         <AbilArray Link="BuildInProgress"/>
         <AbilArray Link="que5"/>
-        <AbilArray Link="ReliquaryResearch"/>
         <AbilArray Link="KeironCitadelMaterialize"/>
         <BehaviorArray Link="KeironShellRestoration"/>
         <ScoreResult value="BuildOrder"/>
@@ -356,7 +355,7 @@
         <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
         <Mover value="Fly"/>
         <CostCategory value="Army"/>
-        <CostResource index="Minerals" value="5"/>
+        <CostResource index="Minerals" value="10"/>
         <CostResource index="Vespene" value="5"/>
         <Food value="-0.5"/>
     </CUnit>
@@ -448,6 +447,11 @@
     </CUnit>
     <CUnit id="JupiterDropPodMissile" parent="CProjectileGenetronInvulnerable">
         <Mover value="RevenantBombLMWeapon"/>
+        <FlagArray index="NoDraw" value="1"/>
+    </CUnit>
+    <CUnit id="KeironProductionBoosterWeapon" parent="MISSILE_INVULNERABLE">
+        <Race value="Keir"/>
+        <EditorCategories value="ObjectType:Projectile,ObjectFamily:Melee"/>
     </CUnit>
     <CUnit id="TorrentLunaMineMissile" parent="CProjectileGenetron">
         <Mover value="MissileDefault"/>
@@ -1214,7 +1218,7 @@
         <BehaviorArray Link="WardShellDomeReqDummy"/>
         <BehaviorArray Link="WardShellDomeTracker"/>
         <WeaponArray Link="WardWeapon"/>
-        <EffectArray index="Create" value="FoundryUmbraDelay"/>
+        <EffectArray index="Create" value="FoundryProduction@ConsumeInit"/>
         <CardLayouts index="0">
             <LayoutButtons Row="0" Column="0"/>
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="WardShellDome,Cancel" Row="2" Column="4"/>
@@ -2104,6 +2108,7 @@
         <BehaviorArray Link="GenetronPowerSupplyTracker"/>
         <BehaviorArray Link="TrackGenetronPowerSupplyUnit"/>
         <BehaviorArray Link="JupiterTrainReq"/>
+        <BehaviorArray Link="JupiterSpeedAccel"/>
         <CardLayouts index="0">
             <LayoutButtons Face="Attack" Type="AbilCmd" AbilCmd="JupiterRevenantBomb,Execute" Row="0" Column="4"/>
             <LayoutButtons Face="BuildRevenantBomb" Type="AbilCmd" AbilCmd="JupiterTrain,Train1" Row="1" Column="1"/>
@@ -3450,7 +3455,7 @@
         <AbilArray Link="FuseUnfuse"/>
         <AbilArray Link="ApertureLoadUnload"/>
         <AbilArray Link="ApertureKeyhole"/>
-        <EffectArray index="Create" value="CelestialOutletAurApeDelay"/>
+        <EffectArray index="Create" value="OutletProduction@ConsumeInit"/>
         <CardLayouts index="0">
             <LayoutButtons Face="AcquireMove" Type="AbilCmd" AbilCmd="move,AcquireMove" Row="0" Column="4"/>
             <LayoutButtons Face="ApetureLoad" Type="AbilCmd" AbilCmd="ApertureLoadUnload,Load" Row="2" Column="2"/>
@@ -3500,7 +3505,7 @@
         <CostResource index="Vespene" value="50"/>
         <AbilArray index="2" Link="ProgressRally"/>
         <AbilArray Link="FuseFusion"/>
-        <EffectArray index="Create" value="AstralConduitEchoDelay"/>
+        <EffectArray index="Create" value="ConduitProduction@ConsumeInit"/>
         <CardLayouts index="0">
             <LayoutButtons Face="AcquireMove" Type="AbilCmd" AbilCmd="move,AcquireMove" Row="0" Column="4"/>
             <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
@@ -3547,16 +3552,6 @@
         <Mover value="OracleWeapon"/>
         <EditorCategories value="ObjectType:Projectile,ObjectFamily:Melee"/>
     </CUnit>
-    <CUnit id="KeironChargeDummy">
-        <Race value="Keir"/>
-        <FlagArray index="Unselectable" value="1"/>
-        <FlagArray index="Untargetable" value="1"/>
-        <FlagArray index="Undetectable" value="1"/>
-        <FlagArray index="Invulnerable" value="1"/>
-        <EditorFlags index="NoPalettes" value="1"/>
-        <EditorCategories value="ObjectType:Other,ObjectFamily:Melee"/>
-        <BehaviorArray Link="DummyUnit"/>
-    </CUnit>
     <CUnit id="Thor">
         <Collide index="Flying6" value="1"/>
     </CUnit>
@@ -3578,12 +3573,14 @@
         <ShieldsMax value="400"/>
         <CostResource index="Minerals" value="300"/>
         <CostResource index="Vespene" value="200"/>
-        <AbilArray index="2" Link="KeironCitadelMaterialize"/>
-        <AbilArray index="3" removed="1"/>
-        <BehaviorArray Link="ZenithParagonBase"/>
-        <EffectArray index="Death" value="ZenithParagonDeathCP"/>
+        <AbilArray Link="ZenithProduction"/>
+        <BehaviorArray Link="ZenithProduction"/>
+        <BehaviorArray Link="ZenithProduction@Boost"/>
+        <BehaviorArray Link="ZenithProduction@Slow"/>
+        <EffectArray index="Birth" value="ZenithProduction@Cooldown"/>
+        <EffectArray index="Death" value="ZenithProduction@Death"/>
         <CardLayouts index="0">
-            <LayoutButtons index="0" Face="KeironCharges" Type="Passive" Row="2" Column="0"/>
+            <LayoutButtons index="0" Face="ZenithProduction" Type="AbilCmd" AbilCmd="ZenithProduction,Execute" Row="2" Column="0"/>
             <LayoutButtons Face="SelectBuilderKeiron" Type="SelectBuilder" Row="1" Column="3"/>
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
@@ -3619,7 +3616,6 @@
         <AttackTargetPriority value="11"/>
         <AbilArray index="1" removed="1"/>
         <AbilArray index="2" removed="1"/>
-        <AbilArray index="3" removed="1"/>
         <BehaviorArray Link="HarvestableVespeneGeyserGasKeiron"/>
         <BehaviorArray Link="WorkerPeriodicRefineryCheck"/>
         <CardLayouts index="0">
@@ -3661,7 +3657,7 @@
             <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
             <LayoutButtons Face="Unfuse" Type="AbilCmd" AbilCmd="FuseUnfuse,Execute" Row="1" Column="4"/>
         </CardLayouts>
-        <EffectArray index="Create" value="CelestialOutletAurApeDelay"/>
+        <EffectArray index="Create" value="OutletProduction@ConsumeInit"/>
         <Attributes index="Light" value="1"/>
         <Attributes index="Biological" value="1"/>
         <Attributes index="Mechanical" value="1"/>
@@ -3681,12 +3677,15 @@
         <ShieldsStart value="300"/>
         <ShieldsMax value="300"/>
         <CostResource index="Minerals" value="200"/>
-        <AbilArray index="2" Link="KeironCitadelMaterialize"/>
-        <AbilArray index="3" Link="ConduitResearch"/>
-        <BehaviorArray Link="KeironChargeDummyCreation"/>
-        <EffectArray index="Death" value="AstralConduitEchoDeathCP"/>
+        <AbilArray Link="ConduitResearch"/>
+        <AbilArray Link="ConduitProduction"/>
+        <BehaviorArray Link="ConduitProduction"/>
+        <BehaviorArray Link="ConduitProduction@Boost"/>
+        <BehaviorArray Link="ConduitProduction@Slow"/>
+        <EffectArray index="Birth" value="ConduitProduction@Cooldown"/>
+        <EffectArray index="Death" value="ConduitProduction@Death"/>
         <CardLayouts index="0">
-            <LayoutButtons index="0" Face="KeironCharges" Type="Passive" Row="2" Column="0"/>
+            <LayoutButtons index="0" Face="ConduitProduction" Type="AbilCmd" AbilCmd="ConduitProduction,Execute" Row="2" Column="0"/>
             <LayoutButtons Face="SelectBuilderKeiron" Type="SelectBuilder" Row="1" Column="3"/>
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
@@ -3728,7 +3727,7 @@
         <AbilArray Link="HarbingerExitJudgementMode"/>
         <WeaponArray Link="HeraldEnergyCannons"/>
         <WeaponArray Link="AuguryGuns"/>
-        <EffectArray index="Create" value="EmpyreanHarParDelay"/>
+        <EffectArray index="Create" value="EmpyreanProduction@ConsumeInit"/>
         <CardLayouts index="0">
             <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
             <LayoutButtons Face="HarbingerJudgementMode" Type="AbilCmd" AbilCmd="HarbingerJudgementModeStart,Execute" Row="2" Column="0"/>
@@ -3752,12 +3751,15 @@
         <ShieldsMax value="400"/>
         <CostResource index="Minerals" value="250"/>
         <CostResource index="Vespene" value="150"/>
-        <AbilArray index="2" Link="KeironCitadelMaterialize"/>
-        <AbilArray index="3" Link="AtriumResearch"/>
-        <BehaviorArray Link="KeironChargeDummyCreation"/>
-        <EffectArray index="Death" value="AtriumIndMyrDeathCP"/>
+        <AbilArray Link="AtriumResearch"/>
+        <AbilArray Link="AtriumProduction"/>
+        <BehaviorArray Link="AtriumProduction"/>
+        <BehaviorArray Link="AtriumProduction@Boost"/>
+        <BehaviorArray Link="AtriumProduction@Slow"/>
+        <EffectArray index="Birth" value="AtriumProduction@Cooldown"/>
+        <EffectArray index="Death" value="AtriumProduction@Death"/>
         <CardLayouts index="0">
-            <LayoutButtons index="0" Face="KeironCharges" Type="Passive" Row="2" Column="0"/>
+            <LayoutButtons index="0" Face="AtriumProduction" Type="AbilCmd" AbilCmd="AtriumProduction,Execute" Row="2" Column="0"/>
             <LayoutButtons Face="SelectBuilderKeiron" Type="SelectBuilder" Row="1" Column="3"/>
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
@@ -3779,7 +3781,6 @@
         <AttackTargetPriority value="20"/>
         <AbilArray index="1" Link="stop"/>
         <AbilArray index="2" Link="attack"/>
-        <AbilArray index="3" removed="1"/>
         <BehaviorArray Link="KeironConstructionFreeze"/>
         <WeaponArray Link="NullifierWeapon" Turret="Nullifier"/>
         <WeaponArray Link="NullifierWeaponDummy" Turret="NullifierMovement"/>
@@ -3827,7 +3828,7 @@
         <AbilArray Link="CruxLightningBolt"/>
         <AbilArray Link="CruxConvergence"/>
         <WeaponArray Link="CruxWeapon"/>
-        <EffectArray index="Create" value="ElysiumCruxDelay"/>
+        <EffectArray index="Create" value="ElysiumProduction@ConsumeInit"/>
         <CardLayouts index="0">
             <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
             <LayoutButtons Face="CruxLightningBolt" Type="AbilCmd" AbilCmd="CruxLightningBolt,Execute" Row="2" Column="1"/>
@@ -3851,12 +3852,15 @@
         <ShieldsMax value="300"/>
         <CostResource index="Minerals" value="225"/>
         <CostResource index="Vespene" value="100"/>
-        <AbilArray index="2" Link="KeironCitadelMaterialize"/>
-        <AbilArray index="3" Link="ElysiumResearch"/>
-        <BehaviorArray Link="ElysiumCruxBase"/>
-        <EffectArray index="Death" value="ElysiumCruxDeathCP"/>
+        <AbilArray Link="ElysiumResearch"/>
+        <AbilArray Link="ElysiumProduction"/>
+        <BehaviorArray Link="ElysiumProduction"/>
+        <BehaviorArray Link="ElysiumProduction@Boost"/>
+        <BehaviorArray Link="ElysiumProduction@Slow"/>
+        <EffectArray index="Birth" value="ElysiumProduction@Cooldown"/>
+        <EffectArray index="Death" value="ElysiumProduction@Death"/>
         <CardLayouts index="0">
-            <LayoutButtons index="0" Face="KeironCharges" Type="Passive" Row="2" Column="0"/>
+            <LayoutButtons index="0" Face="ElysiumProduction" Type="AbilCmd" AbilCmd="ElysiumProduction,Execute" Row="2" Column="0"/>
             <LayoutButtons Face="SelectBuilderKeiron" Type="SelectBuilder" Row="1" Column="3"/>
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
@@ -3876,7 +3880,6 @@
         <CostResource index="Minerals" value="100"/>
         <AbilArray index="1" Link="stop"/>
         <AbilArray index="2" Link="attack"/>
-        <AbilArray index="3" removed="1"/>
         <BehaviorArray Link="KeironConstructionFreeze"/>
         <WeaponArray Link="StratusWeapon" Turret="Stratus"/>
         <WeaponArray Link="StratusWeaponDummy" Turret="StratusMovement"/>
@@ -3909,7 +3912,7 @@
         <CostResource index="Minerals" value="75"/>
         <AbilArray index="1" Link="stop"/>
         <AbilArray index="2" Link="OculusReveal"/>
-        <AbilArray index="3" Link="OculusChargeInstant"/>
+        <AbilArray Link="OculusChargeInstant"/>
         <CardLayouts index="0">
             <LayoutButtons index="0" Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
             <LayoutButtons Face="SelectBuilderKeiron" Type="SelectBuilder" Row="1" Column="3"/>
@@ -3957,7 +3960,7 @@
         <AbilArray Link="GyreShackle"/>
         <AbilArray Link="GyreInflux"/>
         <BehaviorArray Link="Detector12"/>
-        <EffectArray index="Create" value="EmpyreanHarParDelay"/>
+        <EffectArray index="Create" value="EmpyreanProduction@ConsumeInit"/>
         <CardLayouts index="0">
             <LayoutButtons Face="AcquireMove" Type="AbilCmd" AbilCmd="move,AcquireMove" Row="0" Column="4"/>
             <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
@@ -3984,12 +3987,14 @@
         <ShieldsMax value="350"/>
         <CostResource index="Minerals" value="250"/>
         <CostResource index="Vespene" value="150"/>
-        <AbilArray index="2" Link="KeironCitadelMaterialize"/>
-        <AbilArray index="3" removed="1"/>
-        <BehaviorArray Link="KeironChargeDummyCreation"/>
-        <EffectArray index="Death" value="EmpyreanHarParDeathCP"/>
+        <AbilArray Link="EmpyreanProduction"/>
+        <BehaviorArray Link="EmpyreanProduction"/>
+        <BehaviorArray Link="EmpyreanProduction@Boost"/>
+        <BehaviorArray Link="EmpyreanProduction@Slow"/>
+        <EffectArray index="Birth" value="EmpyreanProduction@Cooldown"/>
+        <EffectArray index="Death" value="EmpyreanProduction@Death"/>
         <CardLayouts index="0">
-            <LayoutButtons index="0" Face="KeironCharges" Type="Passive" Row="2" Column="0"/>
+            <LayoutButtons index="0" Face="EmpyreanProduction" Type="AbilCmd" AbilCmd="EmpyreanProduction,Execute" Row="2" Column="0"/>
             <LayoutButtons Face="SelectBuilderKeiron" Type="SelectBuilder" Row="1" Column="3"/>
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
@@ -4044,7 +4049,7 @@
         <AbilArray Link="EmissaryOrb"/>
         <WeaponArray Link="ParagonAirWeapon" Turret="Phoenix"/>
         <WeaponArray Link="ParagonGroundWeapon"/>
-        <EffectArray index="Create" value="ZenithParagonDelay"/>
+        <EffectArray index="Create" value="ZenithProduction@ConsumeInit"/>
         <CardLayouts index="0">
             <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
             <LayoutButtons Face="EmissaryOrb" Type="AbilCmd" AbilCmd="EmissaryOrb,Execute" Row="2" Column="0"/>
@@ -4091,7 +4096,7 @@
         <CostCategory value="Economy"/>
         <CostResource index="Minerals" value="400"/>
         <AbilArray index="2" Link="RallyCommand"/>
-        <AbilArray index="3" Link="KeironCitadelTrain"/>
+        <AbilArray Link="KeironCitadelTrain"/>
         <AbilArray Link="KeironCitadelAegisTrain"/>
         <AbilArray Link="KeironCitadelMaterialize"/>
         <AbilArray Link="CitadelEnergize"/>
@@ -4196,7 +4201,6 @@
     </CUnit>
     <CUnit id="CitadelCharged" parent="Citadel">
         <Description value="Button/Tooltip/CitadelCharged"/>
-        <EnergyMax value="100"/>
         <EnergyRegenRate value="0.5625"/>
         <CardLayouts index="0">
             <LayoutButtons index="7">
@@ -4219,14 +4223,16 @@
             </LayoutButtons>
             <LayoutButtons index="10" removed="1"/>
         </CardLayouts>
-        <CostResource index="Minerals" value="575"/>
-        <ScoreMake value="150"/>
-        <ScoreKill value="550"/>
-        <EnergyStart value="50"/>
+        <CostResource index="Minerals" value="650"/>
+        <CostResource index="Vespene" value="100"/>
+        <ScoreMake value="350"/>
+        <ScoreKill value="750"/>
         <AbilArray index="7" removed="1"/>
         <BehaviorArray Link="KeironStructureCharged"/>
+        <BehaviorArray Link="CitadelChargedBuff"/>
         <EffectArray index="Create" value=""/>
         <EffectArray index="Birth" value=""/>
+        <Food value="24"/>
     </CUnit>
     <CUnit id="Converter" parent="CUnitKeiron">
         <LifeStart value="20"/>
@@ -4254,6 +4260,7 @@
         <AbilArray Link="KeironBuild"/>
         <AbilArray Link="SprayProtoss"/>
         <AbilArray Link="WorkerStopIdleAbilityVespene"/>
+        <AbilArray Link="ConverterProductionBoost"/>
         <WeaponArray Link="ConverterDissolutionRay"/>
         <CardLayouts index="0">
             <LayoutButtons Face="GatherProt" Type="AbilCmd" AbilCmd="ProbeHarvest,Gather" Row="1" Column="0"/>
@@ -4263,6 +4270,7 @@
             <LayoutButtons Face="Halt" Type="AbilCmd" AbilCmd="KeironBuild,Halt" Row="2" Column="4"/>
             <LayoutButtons Face="Unfuse" Type="AbilCmd" AbilCmd="FuseUnfuse,Execute" Row="1" Column="4"/>
             <LayoutButtons Face="Spray" Type="AbilCmd" AbilCmd="SprayProtoss,Execute" Row="2" Column="3"/>
+            <LayoutButtons Face="ConverterSacrifice" Type="AbilCmd" AbilCmd="ConverterProductionBoost,Execute" Row="2" Column="2"/>
         </CardLayouts>
         <CardLayouts CardId="0002">
             <LayoutButtons Face="Cancel" Type="CancelSubmenu" Row="2" Column="4"/>
@@ -4401,7 +4409,7 @@
         <AbilArray index="3" Link="ProgressRally"/>
         <AbilArray Link="KeironWarpable"/>
         <AbilArray Link="FuseUnfuse"/>
-        <EffectArray index="Create" value="AtriumIndMyrDelay"/>
+        <EffectArray index="Create" value="AtriumProduction@ConsumeInit"/>
         <CardLayouts index="0">
             <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
             <LayoutButtons Face="Unfuse" Type="AbilCmd" AbilCmd="FuseUnfuse,Execute" Row="1" Column="4"/>
@@ -4479,7 +4487,7 @@
         <Sight value="10"/>
         <Food value="-3"/>
         <CargoSize value="2"/>
-        <EffectArray index="Create" value="SanctumPulSubDelay"/>
+        <EffectArray index="Create" value="SanctumProduction@ConsumeInit"/>
         <MinimapRadius value="0.625"/>
         <GlossaryPriority value="15"/>
         <LifeArmorName value="Unit/LifeArmorName/KeironBiologicalArmor"/>
@@ -4527,7 +4535,7 @@
             <LayoutButtons Face="Unfuse" Type="AbilCmd" AbilCmd="FuseUnfuse,Execute" Row="1" Column="4"/>
         </CardLayouts>
         <MinimapRadius value="1"/>
-        <EffectArray index="Create" value="AtriumIndMyrDelay"/>
+        <EffectArray index="Create" value="AtriumProduction@ConsumeInit"/>
         <GlossaryPriority value="23"/>
         <LifeArmorName value="Unit/LifeArmorName/KeironMechanicalArmor"/>
         <Collide index="ForceField" value="0"/>
@@ -4551,12 +4559,15 @@
         <ShieldsStart value="350"/>
         <ShieldsMax value="350"/>
         <CostResource index="Minerals" value="200"/>
-        <AbilArray index="2" Link="KeironCitadelMaterialize"/>
-        <AbilArray index="3" Link="SanctumResearch"/>
-        <BehaviorArray Link="KeironChargeDummyCreation"/>
-        <EffectArray index="Death" value="SanctumPulSubDeathCP"/>
+        <AbilArray Link="SanctumResearch"/>
+        <AbilArray Link="SanctumProduction"/>
+        <BehaviorArray Link="SanctumProduction"/>
+        <BehaviorArray Link="SanctumProduction@Boost"/>
+        <BehaviorArray Link="SanctumProduction@Slow"/>
+        <EffectArray index="Birth" value="SanctumProduction@Cooldown"/>
+        <EffectArray index="Death" value="SanctumProduction@Death"/>
         <CardLayouts index="0">
-            <LayoutButtons index="0" Face="KeironCharges" Type="Passive" Row="2" Column="0"/>
+            <LayoutButtons index="0" Face="SanctumProduction" Type="AbilCmd" AbilCmd="SanctumProduction,Execute" Row="2" Column="0"/>
             <LayoutButtons Face="SelectBuilderKeiron" Type="SelectBuilder" Row="1" Column="3"/>
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
@@ -4596,7 +4607,7 @@
         <BehaviorArray Link="KeironConstructionFreeze"/>
         <WeaponArray Link="TitanWeapon" Turret="Titan"/>
         <WeaponArray Link="TitanWeaponDummy" Turret="TitanMovement"/>
-        <EffectArray index="Create" value="PantheonTitanDelay"/>
+        <EffectArray index="Create" value="PantheonProduction@ConsumeInit"/>
         <CardLayouts index="0">
             <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
             <LayoutButtons Face="InhibitorBeam" Type="Passive" Row="2" Column="0"/>
@@ -4622,12 +4633,14 @@
         <ShieldsMax value="400"/>
         <CostResource index="Minerals" value="300"/>
         <CostResource index="Vespene" value="150"/>
-        <AbilArray index="2" Link="KeironCitadelMaterialize"/>
-        <AbilArray index="3" removed="1"/>
-        <BehaviorArray Link="PantheonTitanBase"/>
-        <EffectArray index="Death" value="PantheonTitanDeathCP"/>
+        <AbilArray Link="PantheonProduction"/>
+        <BehaviorArray Link="PantheonProduction"/>
+        <BehaviorArray Link="PantheonProduction@Boost"/>
+        <BehaviorArray Link="PantheonProduction@Slow"/>
+        <EffectArray index="Birth" value="PantheonProduction@Cooldown"/>
+        <EffectArray index="Death" value="PantheonProduction@Death"/>
         <CardLayouts index="0">
-            <LayoutButtons index="0" Face="KeironCharges" Type="Passive" Row="2" Column="0"/>
+            <LayoutButtons index="0" Face="PantheonProduction" Type="AbilCmd" AbilCmd="PantheonProduction,Execute" Row="2" Column="0"/>
             <LayoutButtons Face="SelectBuilderKeiron" Type="SelectBuilder" Row="1" Column="3"/>
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
@@ -4657,7 +4670,6 @@
         <BehaviorArray Link="UmbraStealth"/>
         <BehaviorArray Link="UmbraStealthSuppression"/>
         <BehaviorArray Link="UmbraDamageReduction"/>
-        <BehaviorArray Link="UmbraShieldVisualControl"/>
         <WeaponArray Link="ShadowCannon"/>
         <CardLayouts index="0">
             <LayoutButtons Face="GhostHoldFire" Type="AbilCmd" AbilCmd="GhostHoldFire,Execute" Row="1" Column="2"/>
@@ -4676,7 +4688,7 @@
         <Attributes index="Armored" value="1"/>
         <Attributes index="Mechanical" value="1"/>
         <MinimapRadius value="0.625"/>
-        <EffectArray index="Create" value="FoundryUmbraDelay"/>
+        <EffectArray index="Create" value="FoundryProduction@ConsumeInit"/>
         <GlossaryPriority value="20"/>
         <SubgroupPriority value="20"/>
         <LifeArmorName value="Unit/LifeArmorName/KeironMechanicalArmor"/>
@@ -4703,7 +4715,7 @@
         <AbilArray Link="FuseUnfuse"/>
         <AbilArray Link="Projection"/>
         <WeaponArray Link="Psythe"/>
-        <EffectArray index="Create" value="EdificeParVolDelay"/>
+        <EffectArray index="Create" value="EdificeProduction@ConsumeInit"/>
         <CardLayouts index="0">
             <LayoutButtons Face="Projection" Type="AbilCmd" AbilCmd="Projection,Execute" Row="2" Column="0"/>
             <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
@@ -4768,7 +4780,7 @@
         <Radius value="0.625"/>
         <InnerRadius value="0.5"/>
         <CargoSize value="2"/>
-        <EffectArray index="Create" value="SanctumPulSubDelay"/>
+        <EffectArray index="Create" value="SanctumProduction@ConsumeInit"/>
         <AbilArray index="3" Link="ProgressRally"/>
         <AbilArray Link="KeironWarpable"/>
         <AbilArray Link="FuseUnfuse"/>
@@ -4817,7 +4829,7 @@
             <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
             <LayoutButtons Face="Unfuse" Type="AbilCmd" AbilCmd="FuseUnfuse,Execute" Row="1" Column="4"/>
         </CardLayouts>
-        <EffectArray index="Create" value="AstralConduitEchoDelay"/>
+        <EffectArray index="Create" value="ConduitProduction@ConsumeInit"/>
         <GlossaryPriority value="30"/>
         <SubgroupPriority value="26"/>
         <LifeArmorName value="Unit/LifeArmorName/KeironBiologicalArmor"/>
@@ -4871,10 +4883,23 @@
         <ShieldsStart value="350"/>
         <ShieldsMax value="350"/>
         <CostResource index="Minerals" value="200"/>
-        <BehaviorArray Link="KeironChargeDummyCreation"/>
-        <EffectArray index="Death" value="EdificeParVolDeathCP"/>
+        <AbilArray index="2" Link="EdificeResearch"/>
+        <AbilArray Link="KeironCitadelMaterialize"/>
+        <AbilArray Link="EdificeProduction"/>
+        <BehaviorArray Link="EdificeProduction"/>
+        <BehaviorArray Link="EdificeProduction@Boost"/>
+        <BehaviorArray Link="EdificeProduction@Slow"/>
+        <EffectArray index="Birth" value="EdificeProduction@Cooldown"/>
+        <EffectArray index="Death" value="EdificeProduction@Death"/>
         <CardLayouts index="0">
-            <LayoutButtons index="0" Face="KeironCharges" Type="Passive" Row="2" Column="0"/>
+            <LayoutButtons index="0">
+                <Face value="EdificeProduction"/>
+                <Type value="AbilCmd"/>
+                <AbilCmd value="EdificeProduction,Execute"/>
+                <Behavior value="EdificeProduction"/>
+                <Row value="2"/>
+                <Column value="0"/>
+            </LayoutButtons>
             <LayoutButtons Face="DevelopExaltedShields" Type="AbilCmd" AbilCmd="EdificeResearch,Research1" Row="0" Column="1"/>
             <LayoutButtons Face="DevelopModifiedGait" Type="AbilCmd" AbilCmd="EdificeResearch,Research3" Row="0" Column="0"/>
             <LayoutButtons Face="SelectBuilderKeiron" Type="SelectBuilder" Row="1" Column="3"/>
@@ -4882,10 +4907,9 @@
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
             <LayoutButtons Face="DevelopLatentCharge" Type="AbilCmd" AbilCmd="EdificeResearch,Research2" Row="0" Column="2"/>
         </CardLayouts>
-        <AbilArray index="2" Link="EdificeResearch"/>
-        <GlossaryPriority value="55"/>
         <ScoreMake value="200"/>
         <ScoreKill value="200"/>
+        <GlossaryPriority value="55"/>
         <TechTreeUnlockedUnitArray value="Pariah"/>
         <TechTreeUnlockedUnitArray value="Volt"/>
     </CUnit>
@@ -4897,12 +4921,15 @@
         <ShieldsMax value="350"/>
         <CostResource index="Minerals" value="225"/>
         <CostResource index="Vespene" value="100"/>
-        <AbilArray index="2" Link="KeironCitadelMaterialize"/>
-        <AbilArray index="3" Link="FoundryResearch"/>
-        <BehaviorArray Link="KeironChargeDummyCreation"/>
-        <EffectArray index="Death" value="FoundryUmbraDeathCP"/>
+        <AbilArray Link="FoundryResearch"/>
+        <AbilArray Link="FoundryProduction"/>
+        <BehaviorArray Link="FoundryProduction"/>
+        <BehaviorArray Link="FoundryProduction@Boost"/>
+        <BehaviorArray Link="FoundryProduction@Slow"/>
+        <EffectArray index="Birth" value="FoundryProduction@Cooldown"/>
+        <EffectArray index="Death" value="FoundryProduction@Death"/>
         <CardLayouts index="0">
-            <LayoutButtons index="0" Face="KeironCharges" Type="Passive" Row="2" Column="0"/>
+            <LayoutButtons index="0" Face="FoundryProduction" Type="AbilCmd" AbilCmd="FoundryProduction,Execute" Row="2" Column="0"/>
             <LayoutButtons Face="SelectBuilderKeiron" Type="SelectBuilder" Row="1" Column="3"/>
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
@@ -4922,12 +4949,15 @@
         <ShieldsMax value="350"/>
         <CostResource index="Minerals" value="225"/>
         <CostResource index="Vespene" value="100"/>
-        <AbilArray index="2" Link="KeironCitadelMaterialize"/>
-        <AbilArray index="3" Link="OutletResearch"/>
-        <BehaviorArray Link="KeironChargeDummyCreation"/>
-        <EffectArray index="Death" value="CelestialOutletAurApeDeathCP"/>
+        <AbilArray Link="OutletResearch"/>
+        <AbilArray Link="OutletProduction"/>
+        <BehaviorArray Link="OutletProduction"/>
+        <BehaviorArray Link="OutletProduction@Boost"/>
+        <BehaviorArray Link="OutletProduction@Slow"/>
+        <EffectArray index="Birth" value="OutletProduction@Cooldown"/>
+        <EffectArray index="Death" value="OutletProduction@Death"/>
         <CardLayouts index="0">
-            <LayoutButtons index="0" Face="KeironCharges" Type="Passive" Row="2" Column="0"/>
+            <LayoutButtons index="0" Face="OutletProduction" Type="AbilCmd" AbilCmd="OutletProduction,Execute" Row="2" Column="0"/>
             <LayoutButtons Face="SelectBuilderKeiron" Type="SelectBuilder" Row="1" Column="3"/>
             <LayoutButtons Face="CancelBuilding" Type="AbilCmd" AbilCmd="BuildInProgress,Cancel" Row="2" Column="4"/>
             <LayoutButtons Face="Cancel" Type="AbilCmd" AbilCmd="que5,CancelLast" Row="2" Column="4"/>
@@ -4950,7 +4980,7 @@
         <CostResource index="Minerals" value="50"/>
         <WeaponArray Link="ElectronBolt"/>
         <Radius value="0.375"/>
-        <EffectArray index="Create" value="EdificeParVolDelay"/>
+        <EffectArray index="Create" value="EdificeProduction@ConsumeInit"/>
         <MinimapRadius value="0.375"/>
         <AbilArray index="3" Link="ProgressRally"/>
         <AbilArray Link="KeironWarpable"/>
@@ -5047,6 +5077,8 @@
         <GlossaryPriority value="16"/>
         <ScoreMake value="200"/>
         <ScoreKill value="200"/>
+        <AbilArray index="2" Link="ReliquaryResearch"/>
+        <AbilArray Link="KeironCitadelMaterialize"/>
     </CUnit>
     <CUnit id="InciterELORProtocolTargetDummy">
         <Race value="Gen"/>

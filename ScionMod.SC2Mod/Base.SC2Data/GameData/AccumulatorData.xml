@@ -6,6 +6,12 @@
     <CAccumulatorConstant id="Add1">
         <Amount value="1"/>
     </CAccumulatorConstant>
+    <CAccumulatorConstant id="AtriumProduction@ChargeCap">
+        <Amount value="2"/>
+    </CAccumulatorConstant>
+    <CAccumulatorUserData id="AtriumProduction@UserData">
+        <BehaviorScope Behavior="AtriumProduction"/>
+    </CAccumulatorUserData>
     <CAccumulatorConstant id="BadgerPowershellArmor">
         <Amount value="1"/>
     </CAccumulatorConstant>
@@ -19,6 +25,66 @@
         </Parameters>
         <Operation value="Subtract"/>
     </CAccumulatorArithmetic>
+    <CAccumulatorBehavior id="CasterStackCountAddInhibitorBeam">
+        <Behavior value="TitanWeapon"/>
+    </CAccumulatorBehavior>
+    <CAccumulatorUserData id="ConverterProductionBoostUserData">
+        <BehaviorScope Value="Target" Behavior="ConverterProductionBoost"/>
+    </CAccumulatorUserData>
+    <CAccumulatorConstant id="ConduitProduction@ChargeCap">
+        <Amount value="3"/>
+    </CAccumulatorConstant>
+    <CAccumulatorUserData id="ConduitProduction@UserData">
+        <BehaviorScope Behavior="ConduitProduction"/>
+    </CAccumulatorUserData>
+    <CAccumulatorConstant id="ElysiumProduction@ChargeCap">
+        <Amount value="2"/>
+    </CAccumulatorConstant>
+    <CAccumulatorUserData id="ElysiumProduction@UserData">
+        <BehaviorScope Behavior="ElysiumProduction"/>
+    </CAccumulatorUserData>
+    <CAccumulatorConstant id="EmpyreanProduction@ChargeCap">
+        <Amount value="2"/>
+    </CAccumulatorConstant>
+    <CAccumulatorUserData id="EmpyreanProduction@UserData">
+        <BehaviorScope Behavior="EmpyreanProduction"/>
+    </CAccumulatorUserData>
+    <CAccumulatorConstant id="OutletProduction@ChargeCap">
+        <Amount value="2"/>
+    </CAccumulatorConstant>
+    <CAccumulatorUserData id="OutletProduction@UserData">
+        <BehaviorScope Behavior="OutletProduction"/>
+    </CAccumulatorUserData>
+    <CAccumulatorConstant id="ZenithProduction@ChargeCap">
+        <Amount value="1"/>
+    </CAccumulatorConstant>
+    <CAccumulatorUserData id="ZenithProduction@UserData">
+        <BehaviorScope Behavior="ZenithProduction"/>
+    </CAccumulatorUserData>
+    <CAccumulatorConstant id="PantheonProduction@ChargeCap">
+        <Amount value="1"/>
+    </CAccumulatorConstant>
+    <CAccumulatorUserData id="PantheonProduction@UserData">
+        <BehaviorScope Behavior="PantheonProduction"/>
+    </CAccumulatorUserData>
+    <CAccumulatorConstant id="SanctumProduction@ChargeCap">
+        <Amount value="2"/>
+    </CAccumulatorConstant>
+    <CAccumulatorUserData id="SanctumProduction@UserData">
+        <BehaviorScope Behavior="SanctumProduction"/>
+    </CAccumulatorUserData>
+    <CAccumulatorConstant id="FoundryProduction@ChargeCap">
+        <Amount value="2"/>
+    </CAccumulatorConstant>
+    <CAccumulatorUserData id="FoundryProduction@UserData">
+        <BehaviorScope Behavior="FoundryProduction"/>
+    </CAccumulatorUserData>
+    <CAccumulatorConstant id="EdificeProduction@ChargeCap">
+        <Amount value="3"/>
+    </CAccumulatorConstant>
+    <CAccumulatorUserData id="EdificeProduction@UserData">
+        <BehaviorScope Behavior="EdificeProduction"/>
+    </CAccumulatorUserData>
     <CAccumulatorSwitch id="EqualizerTargetDamageBonusSwitch">
         <CaseArray Validator="TargetNotDead" Accumulator="EqualizerTargetDamageBonus"/>
     </CAccumulatorSwitch>
@@ -180,15 +246,6 @@
         <Key value="Heat"/>
         <BehaviorScope Value="Source" Behavior="Heat"/>
     </CAccumulatorUserData>
-    <CAccumulatorUserData id="CasterAttackCooldownBase">
-        <Key value="BeamWeaponCooldownBase"/>
-    </CAccumulatorUserData>
-    <CAccumulatorArithmetic id="CasterAttackCooldownFinal">
-        <MinAccumulation value="0.0625"/>
-        <Parameters value="-0.0625">
-            <AccumulatorArray value="CasterAttackRateReciprocal"/>
-        </Parameters>
-    </CAccumulatorArithmetic>
     <CAccumulatorArithmetic id="CasterAttackRateAdditiveFactor">
         <Parameters value="-0.4">
             <AccumulatorArray value="CasterStackCountMultiplyAdaptiveInjectionEnemy"/>
@@ -199,30 +256,11 @@
         <Parameters value="-0.25">
             <AccumulatorArray value="CasterStackCountMultiplyNaniteEmitterBuff"/>
         </Parameters>
-        <Parameters value="1"/>
     </CAccumulatorArithmetic>
     <CAccumulatorArithmetic id="CasterAttackRateMultipliers">
         <Parameters value="0">
-            <AccumulatorArray value="CasterAttackRateAdditiveFactor"/>
-        </Parameters>
-        <Parameters value="0">
             <AccumulatorArray value="CasterAttackRatePowerInhibitorBeam"/>
         </Parameters>
-        <Parameters value="0">
-            <AccumulatorArray value="CasterAttackRatePowerTimeWarp"/>
-        </Parameters>
-        <MinAccumulation value="0.25"/>
-        <MaxAccumulation value="128"/>
-        <Operation value="Multiply"/>
-    </CAccumulatorArithmetic>
-    <CAccumulatorArithmetic id="CasterAttackRateReciprocal">
-        <Parameters value="0">
-            <AccumulatorArray value="CasterAttackCooldownBase"/>
-        </Parameters>
-        <Parameters value="0">
-            <AccumulatorArray value="CasterAttackRateMultipliers"/>
-        </Parameters>
-        <Operation value="Divide"/>
     </CAccumulatorArithmetic>
     <CAccumulatorArithmetic id="CasterAttackRatePowerInhibitorBeam">
         <Parameters value="0.5"/>
@@ -231,19 +269,6 @@
         </Parameters>
         <Operation value="Power"/>
     </CAccumulatorArithmetic>
-    <CAccumulatorArithmetic id="CasterAttackRatePowerTimeWarp">
-        <Parameters value="0.5"/>
-        <Parameters value="0">
-            <AccumulatorArray value="CasterStackCountAddTimeWarp"/>
-        </Parameters>
-        <Operation value="Power"/>
-    </CAccumulatorArithmetic>
-    <CAccumulatorBehavior id="CasterStackCountAddInhibitorBeam">
-        <Behavior value="TitanWeapon"/>
-    </CAccumulatorBehavior>
-    <CAccumulatorBehavior id="CasterStackCountAddTimeWarp">
-        <Behavior value="TemporalField"/>
-    </CAccumulatorBehavior>
     <CAccumulatorBehavior id="CasterStackCountMultiplyAdaptiveInjectionFriend">
         <ApplicationRule value="Multiply"/>
         <Behavior value="FrenzyInjection"/>

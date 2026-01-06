@@ -27,6 +27,30 @@
         <CombineArray value="Aperture4CargoAnd40Energy"/>
         <CombineArray value="Aperture8CargoAnd80Energy"/>
     </CValidatorCombine>
+    <CValidatorCombine id="AtriumProduction@CooldownActive">
+        <CombineArray value="AtriumProduction@CooldownComplete"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareCooldown id="AtriumProduction@CooldownComplete">
+        <Compare value="LE"/>
+        <CooldownLink value="Abil/AtriumProduction"/>
+        <Ability value="AtriumProduction"/>
+    </CValidatorUnitCompareCooldown>
+    <CValidatorEffectTreeUserData id="AtriumProduction@UserDataGT0">
+        <CheckExistence value="0"/>
+        <Compare value="GT"/>
+        <Key value="Default"/>
+        <BehaviorScope Value="Target" Behavior="AtriumProduction"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorEffectTreeUserData id="AtriumProduction@UserDataNotCapped">
+        <CheckExistence value="0"/>
+        <Compare value="LT"/>
+        <Key value="Default"/>
+        <Value value="0">
+            <AccumulatorArray value="AtriumProduction@ChargeCap"/>
+        </Value>
+        <BehaviorScope Value="Target" Behavior="AtriumProduction"/>
+    </CValidatorEffectTreeUserData>
     <CValidatorUnitCompareCargo id="CasterHasGTE2CargoSpace">
         <WhichUnit Value="Caster"/>
         <Compare value="GE"/>
@@ -40,6 +64,289 @@
     <CValidatorCombine id="CasterIsAttackingOrPatrolling">
         <CombineArray value="CasterIsAttacking"/>
         <CombineArray value="CasterIsPatrolling"/>
+    </CValidatorCombine>
+    <CValidatorUnitOrderQueue id="CasterIsLoadingAny">
+        <AbilClass value="CAbilTransport"/>
+    </CValidatorUnitOrderQueue>
+    <CValidatorCombine id="AtriumProduction@NotProducing">
+        <CombineArray value="AtriumProduction@CooldownComplete"/>
+        <CombineArray value="AtriumProduction@UserDataNotCapped"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareBehaviorCount id="ConverterProductionBoost">
+        <Compare value="GT"/>
+        <Behavior value="ConverterProductionBoost"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorEffectTreeUserData id="ConverterProductionBoostUserDataLTE0">
+        <Compare value="LE"/>
+        <Key value="Default"/>
+        <BehaviorScope Value="Target" Behavior="ConverterProductionBoost"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorCombine id="ConduitProduction@CooldownActive">
+        <CombineArray value="ConduitProduction@CooldownComplete"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareCooldown id="ConduitProduction@CooldownComplete">
+        <Compare value="LE"/>
+        <CooldownLink value="Abil/ConduitProduction"/>
+        <Ability value="ConduitProduction"/>
+    </CValidatorUnitCompareCooldown>
+    <CValidatorEffectTreeUserData id="ConduitProduction@UserDataGT0">
+        <CheckExistence value="0"/>
+        <Compare value="GT"/>
+        <Key value="Default"/>
+        <BehaviorScope Value="Target" Behavior="ConduitProduction"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorEffectTreeUserData id="ConduitProduction@UserDataNotCapped">
+        <CheckExistence value="0"/>
+        <Compare value="LT"/>
+        <Key value="Default"/>
+        <Value value="0">
+            <AccumulatorArray value="ConduitProduction@ChargeCap"/>
+        </Value>
+        <BehaviorScope Value="Target" Behavior="ConduitProduction"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorCombine id="ConduitProduction@NotProducing">
+        <CombineArray value="ConduitProduction@CooldownComplete"/>
+        <CombineArray value="ConduitProduction@UserDataNotCapped"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="ElysiumProduction@NotProducing">
+        <CombineArray value="ElysiumProduction@CooldownComplete"/>
+        <CombineArray value="ElysiumProduction@UserDataNotCapped"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="ElysiumProduction@CooldownActive">
+        <CombineArray value="ElysiumProduction@CooldownComplete"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareCooldown id="ElysiumProduction@CooldownComplete">
+        <Compare value="LE"/>
+        <CooldownLink value="Abil/ElysiumProduction"/>
+        <Ability value="ElysiumProduction"/>
+    </CValidatorUnitCompareCooldown>
+    <CValidatorCombine id="EmpyreanProduction@NotProducing">
+        <CombineArray value="EmpyreanProduction@CooldownComplete"/>
+        <CombineArray value="EmpyreanProduction@UserDataNotCapped"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorEffectTreeUserData id="ElysiumProduction@UserDataGT0">
+        <CheckExistence value="0"/>
+        <Compare value="GT"/>
+        <Key value="Default"/>
+        <BehaviorScope Value="Target" Behavior="ElysiumProduction"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorEffectTreeUserData id="ElysiumProduction@UserDataNotCapped">
+        <CheckExistence value="0"/>
+        <Compare value="LT"/>
+        <Key value="Default"/>
+        <Value value="0">
+            <AccumulatorArray value="ElysiumProduction@ChargeCap"/>
+        </Value>
+        <BehaviorScope Value="Target" Behavior="ElysiumProduction"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorCombine id="EmpyreanProduction@CooldownActive">
+        <CombineArray value="EmpyreanProduction@CooldownComplete"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareCooldown id="EmpyreanProduction@CooldownComplete">
+        <Compare value="LE"/>
+        <CooldownLink value="Abil/EmpyreanProduction"/>
+        <Ability value="EmpyreanProduction"/>
+    </CValidatorUnitCompareCooldown>
+    <CValidatorCombine id="FoundryProduction@NotProducing">
+        <CombineArray value="FoundryProduction@CooldownComplete"/>
+        <CombineArray value="FoundryProduction@UserDataNotCapped"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorEffectTreeUserData id="EmpyreanProduction@UserDataGT0">
+        <CheckExistence value="0"/>
+        <Compare value="GT"/>
+        <Key value="Default"/>
+        <BehaviorScope Value="Target" Behavior="EmpyreanProduction"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorEffectTreeUserData id="EmpyreanProduction@UserDataNotCapped">
+        <CheckExistence value="0"/>
+        <Compare value="LT"/>
+        <Key value="Default"/>
+        <Value value="0">
+            <AccumulatorArray value="EmpyreanProduction@ChargeCap"/>
+        </Value>
+        <BehaviorScope Value="Target" Behavior="EmpyreanProduction"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorCombine id="EdificeProduction@NotProducing">
+        <CombineArray value="EdificeProduction@CooldownComplete"/>
+        <CombineArray value="EdificeProduction@UserDataNotCapped"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="OutletProduction@NotProducing">
+        <CombineArray value="OutletProduction@CooldownComplete"/>
+        <CombineArray value="OutletProduction@UserDataNotCapped"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorPlayerRequirement id="HasKeironProductionAbility">
+        <Find value="1"/>
+        <Value value="HaveKeironProductionAbility"/>
+        <WhichUnit Value="Target"/>
+        <ResultFailed value="Error,Error/HasKeironProductionAbility"/>
+    </CValidatorPlayerRequirement>
+    <CValidatorCombine id="OutletProduction@CooldownActive">
+        <CombineArray value="OutletProduction@CooldownComplete"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareCooldown id="OutletProduction@CooldownComplete">
+        <Compare value="LE"/>
+        <CooldownLink value="Abil/OutletProduction"/>
+        <Ability value="OutletProduction"/>
+    </CValidatorUnitCompareCooldown>
+    <CValidatorCombine id="PantheonProduction@NotProducing">
+        <CombineArray value="PantheonProduction@CooldownComplete"/>
+        <CombineArray value="PantheonProduction@UserDataNotCapped"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorEffectTreeUserData id="OutletProduction@UserDataGT0">
+        <CheckExistence value="0"/>
+        <Compare value="GT"/>
+        <Key value="Default"/>
+        <BehaviorScope Value="Target" Behavior="OutletProduction"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorEffectTreeUserData id="OutletProduction@UserDataNotCapped">
+        <CheckExistence value="0"/>
+        <Compare value="LT"/>
+        <Key value="Default"/>
+        <Value value="0">
+            <AccumulatorArray value="OutletProduction@ChargeCap"/>
+        </Value>
+        <BehaviorScope Value="Target" Behavior="OutletProduction"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorCombine id="SanctumProduction@NotProducing">
+        <CombineArray value="SanctumProduction@CooldownComplete"/>
+        <CombineArray value="SanctumProduction@UserDataNotCapped"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="ZenithProduction@NotProducing">
+        <CombineArray value="ZenithProduction@CooldownComplete"/>
+        <CombineArray value="ZenithProduction@UserDataNotCapped"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="ZenithProduction@CooldownActive">
+        <CombineArray value="ZenithProduction@CooldownComplete"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareCooldown id="ZenithProduction@CooldownComplete">
+        <Compare value="LE"/>
+        <CooldownLink value="Abil/ZenithProduction"/>
+        <Ability value="ZenithProduction"/>
+    </CValidatorUnitCompareCooldown>
+    <CValidatorEffectTreeUserData id="ZenithProduction@UserDataGT0">
+        <CheckExistence value="0"/>
+        <Compare value="GT"/>
+        <Key value="Default"/>
+        <BehaviorScope Value="Target" Behavior="ZenithProduction"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorEffectTreeUserData id="ZenithProduction@UserDataNotCapped">
+        <CheckExistence value="0"/>
+        <Compare value="LT"/>
+        <Key value="Default"/>
+        <Value value="0">
+            <AccumulatorArray value="ZenithProduction@ChargeCap"/>
+        </Value>
+        <BehaviorScope Value="Target" Behavior="ZenithProduction"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorCombine id="PantheonProduction@CooldownActive">
+        <CombineArray value="PantheonProduction@CooldownComplete"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareCooldown id="PantheonProduction@CooldownComplete">
+        <Compare value="LE"/>
+        <CooldownLink value="Abil/PantheonProduction"/>
+        <Ability value="PantheonProduction"/>
+    </CValidatorUnitCompareCooldown>
+    <CValidatorEffectTreeUserData id="PantheonProduction@UserDataGT0">
+        <CheckExistence value="0"/>
+        <Compare value="GT"/>
+        <Key value="Default"/>
+        <BehaviorScope Value="Target" Behavior="PantheonProduction"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorEffectTreeUserData id="PantheonProduction@UserDataNotCapped">
+        <CheckExistence value="0"/>
+        <Compare value="LT"/>
+        <Key value="Default"/>
+        <Value value="0">
+            <AccumulatorArray value="PantheonProduction@ChargeCap"/>
+        </Value>
+        <BehaviorScope Value="Target" Behavior="PantheonProduction"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorCombine id="SanctumProduction@CooldownActive">
+        <CombineArray value="SanctumProduction@CooldownComplete"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareCooldown id="SanctumProduction@CooldownComplete">
+        <Compare value="LE"/>
+        <CooldownLink value="Abil/SanctumProduction"/>
+        <Ability value="SanctumProduction"/>
+    </CValidatorUnitCompareCooldown>
+    <CValidatorEffectTreeUserData id="SanctumProduction@UserDataGT0">
+        <CheckExistence value="0"/>
+        <Compare value="GT"/>
+        <Key value="Default"/>
+        <BehaviorScope Value="Target" Behavior="SanctumProduction"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorEffectTreeUserData id="SanctumProduction@UserDataNotCapped">
+        <CheckExistence value="0"/>
+        <Compare value="LT"/>
+        <Key value="Default"/>
+        <Value value="0">
+            <AccumulatorArray value="SanctumProduction@ChargeCap"/>
+        </Value>
+        <BehaviorScope Value="Target" Behavior="SanctumProduction"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorCombine id="FoundryProduction@CooldownActive">
+        <CombineArray value="FoundryProduction@CooldownComplete"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareCooldown id="FoundryProduction@CooldownComplete">
+        <Compare value="LE"/>
+        <CooldownLink value="Abil/FoundryProduction"/>
+        <Ability value="FoundryProduction"/>
+    </CValidatorUnitCompareCooldown>
+    <CValidatorEffectTreeUserData id="FoundryProduction@UserDataGT0">
+        <CheckExistence value="0"/>
+        <Compare value="GT"/>
+        <Key value="Default"/>
+        <BehaviorScope Value="Target" Behavior="FoundryProduction"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorEffectTreeUserData id="FoundryProduction@UserDataNotCapped">
+        <CheckExistence value="0"/>
+        <Compare value="LT"/>
+        <Key value="Default"/>
+        <Value value="0">
+            <AccumulatorArray value="FoundryProduction@ChargeCap"/>
+        </Value>
+        <BehaviorScope Value="Target" Behavior="FoundryProduction"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorCombine id="EdificeProduction@CooldownActive">
+        <CombineArray value="EdificeProduction@CooldownComplete"/>
+        <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorEffectTreeUserData id="EdificeProduction@UserDataGT0">
+        <CheckExistence value="0"/>
+        <Compare value="GT"/>
+        <Key value="Default"/>
+        <BehaviorScope Value="Target" Behavior="EdificeProduction"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorEffectTreeUserData id="EdificeProduction@UserDataNotCapped">
+        <CheckExistence value="0"/>
+        <Compare value="LT"/>
+        <Key value="Default"/>
+        <Value value="0">
+            <AccumulatorArray value="EdificeProduction@ChargeCap"/>
+        </Value>
+        <BehaviorScope Value="Target" Behavior="EdificeProduction"/>
+    </CValidatorEffectTreeUserData>
+    <CValidatorCombine id="JupiterSpeedAccel">
+        <CombineArray value="CasterIsMoving"/>
+        <CombineArray value="CasterIsLoadingAny"/>
     </CValidatorCombine>
     <CValidatorCondition id="JupiterSpeedBuffMovementCondition">
         <IfArray Test="JupiterHasAirstrikeController" Return="Success"/>
@@ -603,13 +910,13 @@
         <Compare value="LT"/>
         <Value value="1.5"/>
     </CValidatorPlayerCompareFoodAvailable>
-    <CValidatorEffectTreeUserData id="CasterDataDefaultGT1">
+    <CValidatorEffectTreeUserData id="DataDefaultGT1">
         <CheckExistence value="0"/>
         <Compare value="GT"/>
         <Key value="Default"/>
         <Value value="1"/>
     </CValidatorEffectTreeUserData>
-    <CValidatorEffectTreeUserData id="CasterDataDefaultGTDot5">
+    <CValidatorEffectTreeUserData id="DataDefaultGTDot5">
         <CheckExistence value="0"/>
         <Compare value="GT"/>
         <Key value="Default"/>
@@ -724,10 +1031,6 @@
         <CombineArray value="NoNaniteEmitterBuff"/>
         <CombineArray value="ThreatensAquila"/>
     </CValidatorCombine>
-    <CValidatorUnitCompareBehaviorCount id="CasterNoBeamWeaponCooldown">
-        <WhichUnit Value="Caster"/>
-        <Behavior value="BeamWeaponCooldown"/>
-    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="NoKeyhole">
         <ResultFailed value="Error,Error/Scion_Keyhole"/>
         <Behavior value="ApertureTeleportTarget"/>
@@ -880,7 +1183,7 @@
         <Value value="75"/>
         <Vital value="Energy"/>
     </CValidatorUnitCompareVital>
-    <CValidatorEffectTreeUserData id="CasterDataDefaultIs1">
+    <CValidatorEffectTreeUserData id="DataDefaultIs1">
         <CheckExistence value="0"/>
         <Key value="Default"/>
         <Value value="1"/>
@@ -1340,6 +1643,11 @@
         <Location value="Behavior"/>
         <Behavior value="ChannelWeaponCooldown"/>
     </CValidatorUnitCompareCooldown>
+    <CValidatorUnitCompareCooldown id="EdificeProduction@CooldownComplete">
+        <Compare value="LE"/>
+        <CooldownLink value="Abil/EdificeProduction"/>
+        <Ability value="EdificeProduction"/>
+    </CValidatorUnitCompareCooldown>
     <CValidatorUnitCompareBehaviorCount id="UmbraStealthSuppressionOff">
         <Behavior value="UmbraStealthSuppression"/>
     </CValidatorUnitCompareBehaviorCount>
@@ -1533,7 +1841,7 @@
         <Compare value="GT"/>
         <Behavior value="GyreAnnexCaster"/>
     </CValidatorUnitCompareBehaviorCount>
-    <CValidatorEffectTreeUserData id="CasterDataDefaultIs0">
+    <CValidatorEffectTreeUserData id="DataDefaultIs0">
         <CheckExistence value="0"/>
         <Key value="Default"/>
     </CValidatorEffectTreeUserData>
@@ -1672,11 +1980,6 @@
         <WhichUnit Value="Caster"/>
         <Compare value="GT"/>
         <Behavior value="MassaliskHunkered"/>
-    </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitCompareBehaviorCount id="KeironStructureHasDiscordDebuff">
-        <WhichUnit Value="Caster"/>
-        <Value value="1"/>
-        <Behavior value="DiscordZoneDebuffStructure"/>
     </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="NotDummyUnit">
         <Behavior value="DummyUnit"/>
@@ -1893,9 +2196,7 @@
     <CValidatorUnitType id="IsLurker">
         <Value value="LurkerMP"/>
     </CValidatorUnitType>
-    <CValidatorUnitType id="IsLurkerBurrowed">
-        <Value value="LurkerMPBurrowed"/>
-    </CValidatorUnitType>
+    <CValidatorUnitType id="IsLurkerBurrowed"/>
     <CValidatorUnitType id="IsMole">
         <Value value="Mole"/>
     </CValidatorUnitType>
@@ -2432,6 +2733,7 @@
     </CValidatorCombine>
     <CValidatorUnitType id="IsCitadelCharged">
         <Value value="CitadelCharged"/>
+        <ResultFailed value="Error,Error/IsChargedCitadel"/>
     </CValidatorUnitType>
     <CValidatorUnitType id="NotCitadelNormal">
         <Value value="Citadel"/>
@@ -2732,38 +3034,6 @@
     <CValidatorUnitCompareBehaviorCount id="TargetIsNotFused">
         <ResultFailed value="Error,ErrorText/TargetIsNotFused"/>
         <Behavior value="FuseFused"/>
-    </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitCompareBehaviorCount id="UnitChargeE1">
-        <WhichUnit Value="Caster"/>
-        <Value value="1"/>
-        <Behavior value="KeironUnitCharge"/>
-    </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitCompareBehaviorCount id="UnitChargeE2">
-        <WhichUnit Value="Caster"/>
-        <Value value="2"/>
-        <Behavior value="KeironUnitCharge"/>
-    </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitCompareBehaviorCount id="UnitChargeLT1">
-        <WhichUnit Value="Caster"/>
-        <Compare value="LT"/>
-        <Value value="1"/>
-        <Behavior value="KeironUnitCharge"/>
-    </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitCompareBehaviorCount id="UnitChargeLT3">
-        <WhichUnit Value="Caster"/>
-        <Compare value="LT"/>
-        <Value value="3"/>
-        <Behavior value="KeironUnitCharge"/>
-    </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitCompareBehaviorCount id="UnitChargeGT0">
-        <Compare value="GT"/>
-        <Behavior value="KeironUnitCharge"/>
-    </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitCompareBehaviorCount id="UnitChargeLT2">
-        <WhichUnit Value="Caster"/>
-        <Compare value="LT"/>
-        <Value value="2"/>
-        <Behavior value="KeironUnitCharge"/>
     </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="HasNoTurn">
         <WhichUnit Value="Caster"/>
