@@ -240,6 +240,7 @@
         <InfoArray index="Train1" Time="8.4" Effect="JupiterConstructBombSwitch">
             <Button DefaultButtonFace="BuildRevenantBomb" Requirements="HaveOrdnanceCache"/>
             <Unit value="JupiterRevenantBomb"/>
+            <Flags index="AutoCast" value="1"/>
         </InfoArray>
     </CAbilTrain>
     <CAbilEffectTarget id="JupiterRevenantBomb">
@@ -254,7 +255,7 @@
         </Cost>
         <TargetFilters value="Ground;Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <TargetSorts>
-            <SortArray value="TSPriorityDesc"/>
+            <SortArray value="TSScionPriorityDesc"/>
             <SortArray value="TSDistance"/>
         </TargetSorts>
         <Range value="2.5"/>
@@ -1299,14 +1300,14 @@
         <Flags index="BestUnit" value="0"/>
         <Flags index="ChannelingMinimum" value="0"/>
         <TargetFilters value="Visible;Self,Missile,Stasis,Dead,Hidden,Invulnerable,Benign"/>
+        <TargetSorts>
+            <SortArray value="TSScionPriorityDesc"/>
+        </TargetSorts>
         <Range value="5"/>
         <AutoCastFilters value="Visible;Player,Ally,Stasis,Dead,Hidden,Invulnerable"/>
         <AutoCastRange value="6"/>
-        <CmdButtonArray index="Execute" DefaultButtonFace="TorrentDroneDetonate"/>
         <AutoCastValidatorArray value="IsNotDisguisedChangeling"/>
-        <TargetSorts>
-            <SortArray value="TSPriorityDesc"/>
-        </TargetSorts>
+        <CmdButtonArray index="Execute" DefaultButtonFace="TorrentDroneDetonate"/>
     </CAbilEffectTarget>
     <CAbilEffectTarget id="TorrentLunaMines">
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
@@ -1357,27 +1358,27 @@
         <EditorCategories value="Race:Genetron,AbilityorEffectType:Units"/>
         <Activity value="UI/Fabricating"/>
         <InfoArray index="Train1" Time="44.8">
-            <Button DefaultButtonFace="FabricateSpitfire"/>
+            <Button DefaultButtonFace="FabricateSpitfire" State="Restricted"/>
             <Unit value="Spitfire"/>
         </InfoArray>
         <InfoArray index="Train2" Time="50.4">
-            <Button DefaultButtonFace="FabricateEqualizer" Requirements="HaveOutfittingStation"/>
+            <Button DefaultButtonFace="FabricateEqualizer" State="Restricted" Requirements="HaveOutfittingStation"/>
             <Unit value="Equalizer"/>
         </InfoArray>
         <InfoArray index="Train3" Time="44.8">
-            <Button DefaultButtonFace="FabricateBlitzer" Requirements="HaveAnalysisTerminal"/>
+            <Button DefaultButtonFace="FabricateBlitzer" State="Restricted" Requirements="HaveAnalysisTerminal"/>
             <Unit value="Blitzer"/>
         </InfoArray>
         <InfoArray index="Train4" Time="42">
-            <Button DefaultButtonFace="Blaze" Requirements="HaveOutfittingStation"/>
+            <Button DefaultButtonFace="Blaze" State="Restricted" Requirements="HaveOutfittingStation"/>
             <Unit value="Blaze"/>
         </InfoArray>
         <InfoArray index="Train5" Time="56">
-            <Button DefaultButtonFace="FabricateAquila" Requirements="HaveChemicalFirm"/>
+            <Button DefaultButtonFace="FabricateAquila" State="Restricted" Requirements="HaveChemicalFirm"/>
             <Unit value="Aquila"/>
         </InfoArray>
         <InfoArray index="Train6" Time="44.8">
-            <Button DefaultButtonFace="FabricateFixer" Requirements="HaveOutfittingStation"/>
+            <Button DefaultButtonFace="FabricateFixer" State="Restricted" Requirements="HaveOutfittingStation"/>
             <Unit value="Fixer"/>
         </InfoArray>
     </CAbilTrain>
@@ -2966,9 +2967,10 @@
         <CmdButtonArray index="Execute" DefaultButtonFace="ELORProtocol" Requirements="GenetronPowerBalance0075"/>
         <Arc value="225"/>
     </CAbilEffectTarget>
-    <CAbilQueue id="que4Passive">
+    <CAbilQueue id="que4Jupiter">
         <EditorCategories value="Race:Neutral,AbilityorEffectType:Structures"/>
         <QueueSize value="4"/>
+        <Flags index="BestUnit" value="0"/>
         <Flags index="Passive" value="1"/>
     </CAbilQueue>
 </Catalog>

@@ -179,6 +179,10 @@
         <CombineArray value="EdificeProduction@UserDataNotCapped"/>
         <Negate value="1"/>
     </CValidatorCombine>
+    <CValidatorUnitCompareBehaviorCount id="NotHaveBeamTargetCDBehaviorDummy">
+        <Behavior value="BeamTargetCDDummy"/>
+        <RequireCasterUnit Value="Caster"/>
+    </CValidatorUnitCompareBehaviorCount>
     <CValidatorCombine id="OutletProduction@NotProducing">
         <CombineArray value="OutletProduction@CooldownComplete"/>
         <CombineArray value="OutletProduction@UserDataNotCapped"/>
@@ -223,6 +227,11 @@
         <CombineArray value="SanctumProduction@CooldownComplete"/>
         <CombineArray value="SanctumProduction@UserDataNotCapped"/>
         <Negate value="1"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="ScionNotHaveBeamTargetCDBehavior">
+        <Type value="And"/>
+        <CombineArray value="NotHaveBeamTargetCDBehavior"/>
+        <CombineArray value="NotHaveBeamTargetCDBehaviorDummy"/>
     </CValidatorCombine>
     <CValidatorCombine id="ZenithProduction@NotProducing">
         <CombineArray value="ZenithProduction@CooldownComplete"/>
@@ -839,16 +848,6 @@
         <Compare value="GT"/>
         <Behavior value="NaniteEmitterBuff"/>
     </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitCompareBehaviorCount id="GamutOrbHasTimeWarp">
-        <WhichUnit Effect="GamutOrbRM" Value="Source"/>
-        <Compare value="NE"/>
-        <Behavior value="InducerGamutOrbTimeWarp"/>
-    </CValidatorUnitCompareBehaviorCount>
-    <CValidatorUnitCompareBehaviorCount id="GamutOrbHasNaniteEmitter">
-        <WhichUnit Effect="GamutOrbRM" Value="Source"/>
-        <Compare value="NE"/>
-        <Behavior value="InducerGamutOrbNaniteEmitter"/>
-    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareBehaviorCount id="NaniteEmitterBuffCountE1">
         <Value value="1"/>
         <Behavior value="NaniteEmitterBuff"/>
@@ -858,26 +857,6 @@
         <CombineArray value="IsMassive"/>
         <CombineArray value="NaniteEmitterBuffCountE2"/>
     </CValidatorCombine>
-    <CValidatorPlayerRequirement id="AssemblyArrayIsTrainingAvenger">
-        <Find value="1"/>
-        <Value value="AssemblyArrayIsTrainingAvenger"/>
-    </CValidatorPlayerRequirement>
-    <CValidatorPlayerRequirement id="AssemblyArrayIsTrainingJupiter">
-        <Find value="1"/>
-        <Value value="AssemblyArrayIsTrainingJupiter"/>
-    </CValidatorPlayerRequirement>
-    <CValidatorPlayerRequirement id="AssemblyArrayIsTrainingCourier">
-        <Find value="1"/>
-        <Value value="AssemblyArrayIsTrainingCourier"/>
-    </CValidatorPlayerRequirement>
-    <CValidatorPlayerRequirement id="AssemblyArrayIsTrainingBoar">
-        <Find value="1"/>
-        <Value value="AssemblyArrayIsTrainingBoar"/>
-    </CValidatorPlayerRequirement>
-    <CValidatorPlayerRequirement id="AssemblyArrayIsTrainingBadger">
-        <Find value="1"/>
-        <Value value="AssemblyArrayIsTrainingBadger"/>
-    </CValidatorPlayerRequirement>
     <CValidatorCombine id="AvengerTacticalAI">
         <CombineArray value="InRangeCurrentTargetOfTarget"/>
         <CombineArray value="hasEnergy"/>
@@ -1046,11 +1025,6 @@
         <Value value="Aegis"/>
         <Find value="0"/>
     </CValidatorUnitType>
-    <CValidatorUnitCompareBehaviorCount id="GamutOrbHasInhibitorBeam">
-        <WhichUnit Effect="GamutOrbRM" Value="Source"/>
-        <Compare value="NE"/>
-        <Behavior value="InducerGamutOrbInhibitorBeam"/>
-    </CValidatorUnitCompareBehaviorCount>
     <CValidatorUnitCompareOrderCount id="AnnexTargetHasNoMoveOrders" parent="CasterHasNoOrders">
         <WhichUnit Effect="GyreAnnexDataInc" Value="Target"/>
         <AbilLink value="move"/>
@@ -1488,26 +1462,6 @@
         <ResultFailed value="MustTargetShieldCapableUnits"/>
         <Filters value="CanHaveShields;-"/>
     </CValidatorUnitFilters>
-    <CValidatorPlayerRequirement id="FabricatorIsTrainingTesla">
-        <Find value="1"/>
-        <Value value="FabricatorIsTrainingTesla"/>
-    </CValidatorPlayerRequirement>
-    <CValidatorPlayerRequirement id="FabricatorIsTrainingMole">
-        <Find value="1"/>
-        <Value value="FabricatorIsTrainingMole"/>
-    </CValidatorPlayerRequirement>
-    <CValidatorPlayerRequirement id="FabricatorIsTrainingInciter">
-        <Find value="1"/>
-        <Value value="FabricatorIsTrainingInciter"/>
-    </CValidatorPlayerRequirement>
-    <CValidatorPlayerRequirement id="FabricatorIsTrainingVirtus">
-        <Find value="1"/>
-        <Value value="FabricatorIsTrainingVirtus"/>
-    </CValidatorPlayerRequirement>
-    <CValidatorPlayerRequirement id="AssemblyArrayIsTrainingHornet">
-        <Find value="1"/>
-        <Value value="AssemblyArrayIsTrainingHornet"/>
-    </CValidatorPlayerRequirement>
     <CValidatorCombine id="FuseRegenerationBonus">
         <Type value="And"/>
         <CombineArray value="HasShellRestoration"/>
@@ -1528,30 +1482,6 @@
         <Value value="Olympus"/>
         <Find value="0"/>
     </CValidatorUnitType>
-    <CValidatorPlayerRequirement id="ManufacturerIsTrainingSpitfire">
-        <Find value="1"/>
-        <Value value="ManufacturerIsTrainingSpitfire"/>
-    </CValidatorPlayerRequirement>
-    <CValidatorPlayerRequirement id="ManufacturerIsTrainingBlitzer">
-        <Find value="1"/>
-        <Value value="ManufacturerIsTrainingBlitzer"/>
-    </CValidatorPlayerRequirement>
-    <CValidatorPlayerRequirement id="ManufacturerIsTrainingFixer">
-        <Find value="1"/>
-        <Value value="ManufacturerIsTrainingFixer"/>
-    </CValidatorPlayerRequirement>
-    <CValidatorPlayerRequirement id="ManufacturerIsTrainingEqualizer">
-        <Find value="1"/>
-        <Value value="ManufacturerIsTrainingEqualizer"/>
-    </CValidatorPlayerRequirement>
-    <CValidatorPlayerRequirement id="ManufacturerIsTrainingAquila">
-        <Find value="1"/>
-        <Value value="ManufacturerIsTrainingAquila"/>
-    </CValidatorPlayerRequirement>
-    <CValidatorPlayerRequirement id="FabricatorIsTrainingTorrent">
-        <Find value="1"/>
-        <Value value="FabricatorIsTrainingTorrent"/>
-    </CValidatorPlayerRequirement>
     <CValidatorUnitCompareVital id="CasterMaximumEnergy0">
         <ResultFailed value="NotEnoughEnergy"/>
         <WhichUnit Value="Caster"/>
@@ -1695,14 +1625,6 @@
         <Value value="5"/>
         <Vital value="Energy"/>
     </CValidatorUnitCompareVital>
-    <CValidatorCombine id="AssemblyArrayIsTraining">
-        <CombineArray value="AssemblyArrayIsTrainingHornet"/>
-        <CombineArray value="AssemblyArrayIsTrainingAvenger"/>
-        <CombineArray value="AssemblyArrayIsTrainingCourier"/>
-        <CombineArray value="AssemblyArrayIsTrainingBoar"/>
-        <CombineArray value="AssemblyArrayIsTrainingJupiter"/>
-        <CombineArray value="AssemblyArrayIsTrainingBadger"/>
-    </CValidatorCombine>
     <CValidatorCombine id="GenetronEnergyGenValidators">
         <Type value="And"/>
         <CombineArray value="NotDead"/>
@@ -1790,21 +1712,6 @@
         <WhichUnit Value="Caster"/>
         <Behavior value="JupiterSpeedBuff"/>
     </CValidatorUnitCompareBehaviorCount>
-    <CValidatorCombine id="ManufacturerIsTraining">
-        <CombineArray value="ManufacturerIsTrainingSpitfire"/>
-        <CombineArray value="ManufacturerIsTrainingBlitzer"/>
-        <CombineArray value="ManufacturerIsTrainingFixer"/>
-        <CombineArray value="ManufacturerIsTrainingEqualizer"/>
-        <CombineArray value="ManufacturerIsTrainingAquila"/>
-        <CombineArray value="GenetronProductionIsModeSwitching"/>
-    </CValidatorCombine>
-    <CValidatorCombine id="FabricatorIsTraining">
-        <CombineArray value="FabricatorIsTrainingTorrent"/>
-        <CombineArray value="FabricatorIsTrainingMole"/>
-        <CombineArray value="FabricatorIsTrainingInciter"/>
-        <CombineArray value="FabricatorIsTrainingTesla"/>
-        <CombineArray value="FabricatorIsTrainingVirtus"/>
-    </CValidatorCombine>
     <CValidatorUnitCompareBehaviorCount id="CasterHasSelfFixProtocol">
         <WhichUnit Value="Caster"/>
         <Compare value="NE"/>

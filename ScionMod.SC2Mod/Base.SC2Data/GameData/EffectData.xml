@@ -1001,8 +1001,8 @@
     <CEffectModifyUnit id="ShowTarget">
         <ModifyFlags index="Show" value="1"/>
     </CEffectModifyUnit>
-    <CEffectApplyBehavior id="BeamWeaponCooldown">
-        <Behavior value="BeamTargetCD"/>
+    <CEffectApplyBehavior id="ScionBeamWeaponCooldown">
+        <Behavior value="BeamTargetCDDummy"/>
     </CEffectApplyBehavior>
     <CEffectCancelOrder id="CancelActiveBarrageAttackForQueue">
         <ValidatorArray value="CasterHasQueuedOrders"/>
@@ -2519,8 +2519,6 @@
         <Behavior value="GyreAnnexedStun"/>
     </CEffectApplyBehavior>
     <CEffectSet id="GyreAnnexSearchEnumSet">
-        <ValidatorArray value="NoKeyhole"/>
-        <ValidatorArray value="IsNotNexusMassRecallTargetPhased"/>
         <ValidatorArray value="AnnexCasterToAnnexTargetDistance"/>
         <ValidatorArray value="IsNotPhasedUnit"/>
         <EditorCategories value="Race:Keiron"/>
@@ -2561,10 +2559,10 @@
     <!--          attack speed modification behaviors.-->
     <!--    ============================================== -->
     <CEffectSet id="NullifierWeaponBeamWeaponCooldownComplete">
-        <ValidatorArray value="NotHaveBeamTargetCDBehavior"/>
+        <ValidatorArray value="ScionNotHaveBeamTargetCDBehavior"/>
         <EditorCategories value="Race:Keiron"/>
         <EffectArray value="NullifierWeaponDMG"/>
-        <EffectArray value="BeamWeaponCooldown"/>
+        <EffectArray value="ScionBeamWeaponCooldown"/>
     </CEffectSet>
     <CEffectApplyBehavior id="SpitfireDeadeyeModuleApplyBehavior" parent="ScionApplyBehaviorCaster" Race="Genetron">
         <Behavior value="SpitfireDeadeyeModule"/>
@@ -2847,18 +2845,6 @@
         <WhichUnit Value="Source"/>
         <Behavior value="InducerGamutOrbTimeWarp"/>
     </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="InducerGamutOrbReturnTimeWarp">
-        <ValidatorArray index="0" value="GamutOrbHasTimeWarp"/>
-        <EditorCategories value="Race:Keiron"/>
-        <WhichUnit Value="Source"/>
-        <Behavior value="InducerGamutOrbTimeWarp"/>
-    </CEffectApplyBehavior>
-    <CEffectApplyBehavior id="InducerGamutOrbReturnNaniteEmitter">
-        <ValidatorArray index="0" value="GamutOrbHasNaniteEmitter"/>
-        <EditorCategories value="Race:Keiron"/>
-        <WhichUnit Value="Source"/>
-        <Behavior value="InducerGamutOrbNaniteEmitter"/>
-    </CEffectApplyBehavior>
     <CEffectApplyBehavior id="NaniteEmitterBuff">
         <EditorCategories value="Race:Genetron"/>
         <Count value="2"/>
@@ -3109,10 +3095,10 @@
         <PeriodicOffsetArray value="0.27,0,0"/>
     </CEffectCreatePersistent>
     <CEffectSet id="SeparationBeamBeamWeaponCooldownComplete">
-        <ValidatorArray value="NotHaveBeamTargetCDBehavior"/>
+        <ValidatorArray value="ScionNotHaveBeamTargetCDBehavior"/>
         <EditorCategories value="Race:Keiron"/>
         <EffectArray value="SeparationBeamDMG"/>
-        <EffectArray value="BeamWeaponCooldown"/>
+        <EffectArray value="ScionBeamWeaponCooldown"/>
     </CEffectSet>
     <CEffectUserData id="SpitterSpitterSporesBreakDataCheck">
         <EditorCategories value="Race:Xayid"/>
@@ -3594,10 +3580,10 @@
         <EffectArray value="TitanWeaponSet"/>
     </CEffectSet>
     <CEffectSet id="TitanWeaponBeamWeaponCooldownComplete">
-        <ValidatorArray value="NotHaveBeamTargetCDBehavior"/>
+        <ValidatorArray value="ScionNotHaveBeamTargetCDBehavior"/>
         <EditorCategories value="Race:Keiron"/>
         <EffectArray value="TitanWeaponDMG"/>
-        <EffectArray value="BeamWeaponCooldown"/>
+        <EffectArray value="ScionBeamWeaponCooldown"/>
     </CEffectSet>
     <CEffectCreatePersistent id="KeironShaperDummy">
         <ValidatorArray value="IsCitadel"/>
@@ -3628,12 +3614,6 @@
         <AreaArray Radius="0.1" Effect="EroderEnervate"/>
         <SearchFlags index="ExtendByUnitRadius" value="1"/>
     </CEffectEnumArea>
-    <CEffectApplyBehavior id="InducerGamutOrbReturnInhibitorBeam">
-        <ValidatorArray index="0" value="GamutOrbHasInhibitorBeam"/>
-        <EditorCategories value="Race:Keiron"/>
-        <WhichUnit Value="Source"/>
-        <Behavior value="InducerGamutOrbInhibitorBeam"/>
-    </CEffectApplyBehavior>
     <CEffectApplyBehavior id="InducerGamutOrbApplyInhibitorBeam">
         <ValidatorArray index="0" value="CasterHasInhibitorBeamStatus"/>
         <EditorCategories value="Race:Keiron"/>
@@ -3681,7 +3661,7 @@
         <EditorCategories value="Race:Xayid"/>
         <SearchFilters value="Ground;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <TargetSorts>
-            <SortArray value="TSPriorityDesc"/>
+            <SortArray value="TSScionPriorityDesc"/>
             <SortArray value="TSRandom"/>
         </TargetSorts>
         <AreaArray MaxCount="1" Radius="3" Effect="AcidWormsBLM"/>
@@ -7098,7 +7078,7 @@
         <ExcludeArray Value="Target"/>
         <SearchFilters value="-;Player,Ally,Missile,Stasis,Dead,Hidden,Invulnerable"/>
         <TargetSorts>
-            <SortArray value="TSPriorityDesc"/>
+            <SortArray value="TSScionPriorityDesc"/>
             <SortArray value="TSLife"/>
         </TargetSorts>
         <AreaArray Radius="3" Effect="VoltElectronBoltBounceSet"/>
