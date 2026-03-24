@@ -438,6 +438,25 @@
         <Cost Abil="KeironCitadelMaterialize,Train14" ChargeCountUse="1"/>
         <Cost Abil="EmpyreanProduction,Execute" ChargeCountUse="1"/>
     </CEffectModifyUnit>
+    <CEffectSet id="GenetronOverclockInitManufacturer">
+        <ValidatorArray value="IsManufacturer"/>
+        <ValidatorArray value="GenetronPowerSupplyGE075"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="GenetronOverclockTargetMarkerApply"/>
+        <EffectArray value="Scion_OverclockManufacturerPowerEnum"/>
+    </CEffectSet>
+    <CEffectSet id="GenetronOverclockInitDefault">
+        <ValidatorArray value="GenetronPowerSupplyGE100"/>
+        <EditorCategories value="Race:Genetron"/>
+        <EffectArray value="GenetronOverclockTargetMarkerApply"/>
+        <EffectArray value="Scion_OverclockPowerEnum"/>
+    </CEffectSet>
+    <CEffectCreatePersistent id="GenetronOverclockManufacturerPowerSet">
+        <EditorCategories value="Race:Genetron"/>
+        <WhichLocation Value="TargetUnit"/>
+        <InitialEffect value="Scion_OverclockPowerModify"/>
+        <ExpireEffect value="Scion_OverclockTargetSort"/>
+    </CEffectCreatePersistent>
     <CEffectModifyUnit id="OutletProduction@BoostCooldown">
         <EditorCategories value="Race:Keiron"/>
         <Cost Abil="OutletProduction,0" CooldownOperation="Add" CooldownTimeUse="-1.4"/>
@@ -521,6 +540,17 @@
         <EditorCategories value="Race:Keiron"/>
         <Cost Abil="KeironCitadelMaterialize,Train11" ChargeCountUse="1"/>
         <Cost Abil="OutletProduction,0" ChargeCountUse="1"/>
+    </CEffectModifyUnit>
+    <CEffectEnumTrackedUnits id="Scion_OverclockManufacturerPowerEnum">
+        <EditorCategories value="Race:Genetron"/>
+        <BehaviorLink value="GenetronPowerSupplyTracker"/>
+        <Effect value="GenetronOverclockPowerSet"/>
+    </CEffectEnumTrackedUnits>
+    <CEffectModifyUnit id="Scion_OverclockManufacturerPowerModify">
+        <EditorCategories value="Race:Genetron"/>
+        <VitalArray index="Energy">
+            <Change value="-75"/>
+        </VitalArray>
     </CEffectModifyUnit>
     <CEffectModifyUnit id="ZenithProduction@BoostCooldown">
         <EditorCategories value="Race:Keiron"/>
@@ -2179,11 +2209,11 @@
             <Change value="-0.45"/>
         </VitalArray>
     </CEffectModifyUnit>
-    <CEffectSet id="GenetronOverclockInit">
+    <CEffectSwitch id="GenetronOverclockInit">
         <EditorCategories value="Race:Genetron"/>
-        <EffectArray value="GenetronOverclockTargetMarkerApply"/>
-        <EffectArray value="Scion_OverclockPowerEnum"/>
-    </CEffectSet>
+        <CaseArray Effect="GenetronOverclockInitManufacturer"/>
+        <CaseDefault value="GenetronOverclockInitDefault"/>
+    </CEffectSwitch>
     <CEffectApplyBehavior id="GenetronOverclockTargetMarkerApply">
         <EditorCategories value="Race:Genetron"/>
         <Behavior value="Scion_OverclockTargetMarker"/>
@@ -3485,7 +3515,6 @@
         <EditorCategories value="Race:Genetron"/>
         <BehaviorLink value="GenetronPowerSupplyTracker"/>
         <Effect value="GenetronOverclockPowerSet"/>
-        <ValidatorArray value="GenetronPowerSupplyGE075"/>
     </CEffectEnumTrackedUnits>
     <CEffectCreatePersistent id="ProcessingCoreMiningPriorityRefreshCooldownLoop">
         <EditorCategories value="Race:Genetron"/>
@@ -3709,7 +3738,7 @@
     <CEffectModifyUnit id="Scion_OverclockPowerModify">
         <EditorCategories value="Race:Genetron"/>
         <VitalArray index="Energy">
-            <Change value="-75"/>
+            <Change value="-100"/>
         </VitalArray>
     </CEffectModifyUnit>
     <CEffectApplyBehavior id="SpitfireOverdriveApplyBehavior" parent="ScionApplyBehaviorCaster" Race="Genetron">
