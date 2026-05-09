@@ -35,7 +35,7 @@
     </CActorRange>
     <CActorModel default="1" id="GenetronBuildingBuild" parent="TerranBuildingBuild">
         <Aliases index="1" value="_GenetronBuildModel"/>
-        <On index="4" Send="Create GenetronConstructionAttached"/>
+        <On index="4" Terms="ActorCreation" Send="Create GenetronConstructionAttached"/>
         <Inherits index="ModelMaterials" value="0"/>
     </CActorModel>
     <CActorUnit default="1" id="GenericUnitXayid" parent="GenericUnitStandard">
@@ -61,7 +61,7 @@
         <On index="1" Terms="AbilTrain.*.Finish" Send="Destroy"/>
         <On index="2" Terms="ActorOrphan"/>
         <On index="3" Terms="ActorCreation" Send="AnimPlay Cover Build,Cover PlayForever"/>
-        <On index="4" Send="SetTintColor {255,255,255 2.000000} 1.500000 Bounce"/>
+        <On index="4" Terms="ActorCreation" Send="SetTintColor {255,255,255 2.000000} 1.500000 Bounce"/>
         <On Terms="ActorCreation" Send="AnimPlay Build Build,Start"/>
         <On Terms="AnimDone.*.Complete; AnimName Build" Send="AnimPlay Work Build,End 0 -1.000000 -1.000000 ##buildTime## AsDuration"/>
         <HostSiteOps Ops="SOpAttachHardPoint"/>
@@ -3326,13 +3326,6 @@
         <On Terms="Effect.JupiterNapalmCreatePersistent.Stop; FromEffectTreeDescendant" Send="Destroy"/>
         <HostSiteOps Ops="SOpTargetPointStationary"/>
     </CActorModel>
-    <CActorModel id="JupiterNapalmImpactFire" parent="ModelAnimationStyleOneShotUNIT">
-        <On Terms="Effect.JupiterNapalmDamageInitial.Start; At Target" Send="Create"/>
-        <Host Subject="_Unit"/>
-        <HostSiteOps Ops="SOpAttachTarget"/>
-        <Model value="HellionTankAttackFireAddition"/>
-        <ModelFlags index="AllowHitTest" value="0"/>
-    </CActorModel>
     <CActorAction id="JupiterAttack" parent="GenericAttack" effectImpact="JupiterRevenantBombImpact" effectLaunch="JupiterRevenantBombSpellLaunchMissile">
         <ImpactPhysics Name="Explosion" MatchKeys="Basic" Physics="SiegeTankSiegedForce"/>
         <ShieldFlashType value="Full"/>
@@ -3565,10 +3558,9 @@
             <Visuals TerrainPhysicsMaterial="Water" ActorModel="TerrainSquibHarnessContinuous" ModelLink="WaterRippleMassive15"/>
         </TerrainSquibs>
     </CActorUnit>
-    <CActorSound id="JupiterNapalmSound" parent="TerranFlameSound">
+    <CActorSound id="JupiterNapalmSound" parent="SoundContinuous">
         <On Terms="Effect.JupiterNapalmCreatePersistent.Start" Send="Create"/>
         <On Terms="Effect.JupiterNapalmCreatePersistent.Stop" Send="Destroy"/>
-        <HostSiteOps Ops="SOpTargetPoint"/>
         <Sound value="DOM_Fire_Large_Loops"/>
     </CActorSound>
     <CActorModel id="NodeBuild" parent="GenetronBuildingBuild">
@@ -3781,7 +3773,7 @@
         <CooldownDisplay value="Scion_DisplayCooldownDummy,Execute"/>
     </CActorUnit>
     <CActorSplat id="ProcessingCoreSplat" parent="GenericUnitSplat" unitName="ProcessingCore"/>
-    <CActorUnit id="Manufacturer" parent="GenetronBuilding" buildTime="69.000000" unitName="Manufacturer">
+    <CActorUnit id="Manufacturer" parent="GenetronBuilding" buildTime="64.000000" unitName="Manufacturer">
         <On Terms="AbilTrain.TrainLightweightMechs.Start" Send="AnimPlay StandWork Stand,Work PlayForever,RandomStartOffset -1.000000 -1.000000 1.000000 AsTimeScale"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Finish" Send="AnimClear StandWork"/>
         <On Terms="AbilTrain.TrainLightweightMechs.Cancel" Send="AnimClear StandWork"/>
