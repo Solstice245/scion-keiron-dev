@@ -61,13 +61,42 @@
         <Compare value="LT"/>
         <Value value="2"/>
     </CValidatorUnitCompareCargo>
+    <CValidatorCondition id="JupiterTrainingBombOrderOnlyCondition">
+        <IfArray Test="JupiterTrainingBombCount0" Return="Failure"/>
+        <IfArray Test="JupiterTrainingBombCount1" Return="SourceOrderCount01"/>
+        <IfArray Test="JupiterTrainingBombCount2" Return="SourceOrderCount02"/>
+        <IfArray Test="JupiterTrainingBombCount3" Return="SourceOrderCount03"/>
+        <IfArray Test="JupiterTrainingBombCount4" Return="SourceOrderCount04"/>
+        <Else value="Failure"/>
+    </CValidatorCondition>
+    <CValidatorUnitCompareOrderCount id="JupiterTrainingBombCount0">
+        <AbilLink value="JupiterTrain"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="JupiterTrainingBombCount1">
+        <AbilLink value="JupiterTrain"/>
+        <Value value="1"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="JupiterTrainingBombCount2">
+        <AbilLink value="JupiterTrain"/>
+        <Value value="2"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="JupiterTrainingBombCount3">
+        <AbilLink value="JupiterTrain"/>
+        <Value value="3"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="JupiterTrainingBombCount4">
+        <AbilLink value="JupiterTrain"/>
+        <Value value="4"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorEffectTreeUserData id="JupiterSpeedDistanceLT0">
+        <Compare value="LT"/>
+        <Key value="Dist"/>
+        <BehaviorScope Value="Source" Behavior="JupiterSpeedBuff"/>
+    </CValidatorEffectTreeUserData>
     <CValidatorCombine id="CasterIsAttackingOrPatrolling">
         <CombineArray value="CasterIsAttacking"/>
         <CombineArray value="CasterIsPatrolling"/>
     </CValidatorCombine>
-    <CValidatorUnitOrderQueue id="CasterIsLoadingAny">
-        <AbilClass value="CAbilTransport"/>
-    </CValidatorUnitOrderQueue>
     <CValidatorCombine id="AtriumProduction@NotProducing">
         <CombineArray value="AtriumProduction@CooldownComplete"/>
         <CombineArray value="AtriumProduction@UserDataNotCapped"/>
@@ -237,6 +266,28 @@
         <CombineArray value="NotHaveBeamTargetCDBehavior"/>
         <CombineArray value="NotHaveBeamTargetCDBehaviorDummy"/>
     </CValidatorCombine>
+    <CValidatorUnitWeaponFiring id="SourceIsFiringWeapon">
+        <WhichUnit Value="Source"/>
+    </CValidatorUnitWeaponFiring>
+    <CValidatorUnitCompareOrderCount id="SourceOrderCount00">
+        <WhichUnit Value="Source"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="SourceOrderCount01">
+        <WhichUnit Value="Source"/>
+        <Value value="1"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="SourceOrderCount02">
+        <WhichUnit Value="Source"/>
+        <Value value="2"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="SourceOrderCount03">
+        <WhichUnit Value="Source"/>
+        <Value value="3"/>
+    </CValidatorUnitCompareOrderCount>
+    <CValidatorUnitCompareOrderCount id="SourceOrderCount04">
+        <WhichUnit Value="Source"/>
+        <Value value="4"/>
+    </CValidatorUnitCompareOrderCount>
     <CValidatorCombine id="ZenithProduction@NotProducing">
         <CombineArray value="ZenithProduction@CooldownComplete"/>
         <CombineArray value="ZenithProduction@UserDataNotCapped"/>
@@ -357,28 +408,20 @@
         </Value>
         <BehaviorScope Value="Target" Behavior="EdificeProduction"/>
     </CValidatorEffectTreeUserData>
-    <CValidatorCombine id="JupiterSpeedAccel">
-        <CombineArray value="CasterIsMoving"/>
-        <CombineArray value="CasterIsLoadingAny"/>
-    </CValidatorCombine>
-    <CValidatorCondition id="JupiterSpeedBuffMovementCondition">
+    <CValidatorCondition id="JupiterSpeedBuffAccelCondition">
         <IfArray Test="JupiterHasAirstrikeController" Return="Success"/>
-        <IfArray Test="SourceIsStationary" Return="SourceHasNoOrders"/>
+        <IfArray Test="SourceIsStationary" Return="Failure"/>
         <Else value="Success"/>
     </CValidatorCondition>
-    <CValidatorUnitCompareOrderCount id="SourceHasOrders" parent="CasterHasOrders">
-        <WhichUnit Value="Source"/>
-    </CValidatorUnitCompareOrderCount>
-    <CValidatorCombine id="SourceHasOrdersAndIsStationary">
-        <CombineArray value="SourceHasOrders"/>
-        <CombineArray value="SourceIsStationary"/>
-    </CValidatorCombine>
     <CValidatorUnitWeaponAnimating id="SourceIsAnimatingWeapon">
         <WhichUnit Value="Source"/>
     </CValidatorUnitWeaponAnimating>
     <CValidatorCombine id="JupiterForceValidators">
-        <CombineArray value="SourceHasNoOrders"/>
+        <CombineArray value="SourceOrderCount00"/>
         <CombineArray value="SourceIsAnimatingWeapon"/>
+        <CombineArray value="SourceIsFiringWeapon"/>
+        <CombineArray value="JupiterSpeedDistanceLT0"/>
+        <CombineArray value="JupiterTrainingBombOrderOnlyCondition"/>
     </CValidatorCombine>
     <CValidatorCombine id="CasterIsLoadingTarget">
         <CombineArray value="CasterIsLoadingTargetActive"/>
@@ -1089,9 +1132,6 @@
         <Compare value="GT"/>
         <Vital value="Energy"/>
     </CValidatorUnitCompareVital>
-    <CValidatorUnitCompareOrderCount id="SourceHasNoOrders" parent="CasterHasNoOrders">
-        <WhichUnit Value="Source"/>
-    </CValidatorUnitCompareOrderCount>
     <CValidatorUnitFilters id="TargetIsInRadar">
         <Filters value="Radar;-"/>
     </CValidatorUnitFilters>

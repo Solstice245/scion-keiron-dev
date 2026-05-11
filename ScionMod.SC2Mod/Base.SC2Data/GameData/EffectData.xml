@@ -66,6 +66,25 @@
         <?token id="Race" value="Neutral"?>
         <EditorCategories value="Race:##Race##"/>
     </CEffectSet>
+    <CEffectSet id="SourceCancelActiveMoveOrAttackMoveOrder">
+        <EffectArray value="SourceCancelActiveAttackMoveSwitch"/>
+        <EffectArray value="SourceCancelActiveMoveCommandOrder"/>
+    </CEffectSet>
+    <CEffectSwitch id="SourceCancelActiveAttackMoveSwitch">
+        <CaseArray Effect="TargetUnitValidationDummy"/>
+        <CaseDefault value="SourceCancelActiveAttackCommandOrder"/>
+    </CEffectSwitch>
+    <CEffectCancelOrder id="SourceCancelActiveMoveCommandOrder">
+        <WhichUnit Value="Source"/>
+        <AbilCmd value="move,Move"/>
+    </CEffectCancelOrder>
+    <CEffectCancelOrder id="SourceCancelActiveAttackCommandOrder">
+        <WhichUnit Value="Source"/>
+        <AbilCmd value="attack,Execute"/>
+    </CEffectCancelOrder>
+    <CEffectDamage id="TargetUnitValidationDummy">
+        <ImpactLocation Value="TargetUnit"/>
+    </CEffectDamage>
     <CEffectModifyUnit id="AtriumProduction@BoostCooldown">
         <EditorCategories value="Race:Keiron"/>
         <Cost Abil="AtriumProduction,Execute" CooldownOperation="Add" CooldownTimeUse="-1.4"/>
@@ -1583,14 +1602,51 @@
     <CEffectCreatePersistent id="JupiterSpeedPeriodic" parent="ScionCreatePersistent" Race="Genetron">
         <WhichLocation Value="SourceUnit"/>
         <OffsetVectorEndLocation Value="SourceUnit"/>
-        <PeriodCount value="3"/>
+        <PeriodCount value="4"/>
+        <PeriodicEffectArray value="JupiterSpeedDistanceSwitch"/>
         <PeriodicEffectArray value="JupiterSpeedForce"/>
         <PeriodicEffectArray value="JupiterSpeedLoadTargetsEnum"/>
         <PeriodicEffectArray value="JupiterSpeedDataSwitch"/>
+        <PeriodicOffsetArray value="0,0,0"/>
         <PeriodicOffsetArray value="0,1,0"/>
         <PeriodicOffsetArray value="0,0,0"/>
         <PeriodicOffsetArray value="0,0,0"/>
     </CEffectCreatePersistent>
+    <CEffectSwitch id="JupiterSpeedDistanceSwitch">
+        <EditorCategories value="Race:Genetron"/>
+        <CaseArray Effect="JupiterSpeedLastTarget"/>
+        <CaseArray Validator="SourceIsStationary" Effect="JupiterSpeedDistanceDataLT0"/>
+        <CaseArray Effect="JupiterSpeedDistanceDataInc"/>
+    </CEffectSwitch>
+    <CEffectLastTarget id="JupiterSpeedLastTarget">
+        <EditorCategories value="Race:Genetron"/>
+        <Effect value="JupiterSpeedDistanceDataLastTarget"/>
+    </CEffectLastTarget>
+    <CEffectUserData id="JupiterSpeedDistanceDataLastTarget">
+        <EditorCategories value="Race:Genetron"/>
+        <Key value="Dist"/>
+        <Amount value="0">
+            <AccumulatorArray value="SourceUnitToTargetPointDistance"/>
+        </Amount>
+        <Operation value="Set"/>
+        <ValidateMax value="0.75"/>
+        <EffectSuccess value="SourceCancelActiveMoveOrAttackMoveOrder"/>
+        <BehaviorScope Value="Source" Behavior="JupiterSpeedBuff"/>
+    </CEffectUserData>
+    <CEffectUserData id="JupiterSpeedDistanceDataLT0">
+        <EditorCategories value="Race:Genetron"/>
+        <Key value="Dist"/>
+        <Amount value="-1"/>
+        <Operation value="Set"/>
+        <BehaviorScope Value="Source" Behavior="JupiterSpeedBuff"/>
+    </CEffectUserData>
+    <CEffectUserData id="JupiterSpeedDistanceDataInc">
+        <EditorCategories value="Race:Genetron"/>
+        <Key value="Dist"/>
+        <Amount value="0.2"/>
+        <SourceKey value="Dist"/>
+        <BehaviorScope Value="Source" Behavior="JupiterSpeedBuff"/>
+    </CEffectUserData>
     <CEffectApplyForce id="JupiterSpeedForce">
         <ValidatorArray value="JupiterForceValidators"/>
         <EditorCategories value="Race:Genetron"/>
@@ -1618,7 +1674,7 @@
     </CEffectSwitch>
     <CEffectSet id="JupiterSpeedDataIncrementSet">
         <ValidatorArray value="JupiterSpeedBuffEnergyCondition"/>
-        <ValidatorArray value="JupiterSpeedBuffMovementCondition"/>
+        <ValidatorArray value="JupiterSpeedBuffAccelCondition"/>
         <ValidatorArray value="JupiterHasAcceleratorOrAirstrike"/>
         <EditorCategories value="Race:Genetron"/>
         <EffectArray value="JupiterSpeedDataIncrement"/>
