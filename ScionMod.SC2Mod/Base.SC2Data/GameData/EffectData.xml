@@ -66,10 +66,6 @@
         <?token id="Race" value="Neutral"?>
         <EditorCategories value="Race:##Race##"/>
     </CEffectSet>
-    <CEffectSet id="SourceCancelActiveMoveOrAttackMoveOrder">
-        <EffectArray value="SourceCancelActiveAttackMoveSwitch"/>
-        <EffectArray value="SourceCancelActiveMoveCommandOrder"/>
-    </CEffectSet>
     <CEffectSwitch id="SourceCancelActiveAttackMoveSwitch">
         <CaseArray Effect="TargetUnitValidationDummy"/>
         <CaseDefault value="SourceCancelActiveAttackCommandOrder"/>
@@ -1630,15 +1626,22 @@
         </Amount>
         <Operation value="Set"/>
         <ValidateMax value="0.75"/>
-        <EffectSuccess value="SourceCancelActiveMoveOrAttackMoveOrder"/>
+        <EffectSuccess value="JupiterSpeedFuzzyOrderModificationSet"/>
         <BehaviorScope Value="Source" Behavior="JupiterSpeedBuff"/>
+        <EffectFailure value="JupiterSpeedUnloadSet"/>
     </CEffectUserData>
+    <CEffectSet id="JupiterSpeedFuzzyOrderModificationSet">
+        <EffectArray value="SourceCancelActiveAttackMoveSwitch"/>
+        <EffectArray value="SourceCancelActiveMoveCommandOrder"/>
+        <EffectArray value="JupiterSpeedUnloadSet"/>
+    </CEffectSet>
     <CEffectUserData id="JupiterSpeedDistanceDataLT0">
         <EditorCategories value="Race:Genetron"/>
         <Key value="Dist"/>
         <Amount value="-1"/>
         <Operation value="Set"/>
         <BehaviorScope Value="Source" Behavior="JupiterSpeedBuff"/>
+        <EffectFailure value="JupiterSpeedUnloadSet"/>
     </CEffectUserData>
     <CEffectUserData id="JupiterSpeedDistanceDataInc">
         <EditorCategories value="Race:Genetron"/>
@@ -1646,7 +1649,32 @@
         <Amount value="0.2"/>
         <SourceKey value="Dist"/>
         <BehaviorScope Value="Source" Behavior="JupiterSpeedBuff"/>
+        <EffectSuccess value="JupiterSpeedUnloadSet"/>
+        <EffectFailure value="JupiterSpeedUnloadSet"/>
     </CEffectUserData>
+    <CEffectSet id="JupiterSpeedUnloadSet">
+        <EditorCategories value="Race:Genetron"/>
+        <ValidatorArray value="SourceIsUnloadingAtActive"/>
+        <ValidatorArray value="SourceIsStationary"/>
+        <EffectArray value="JupiterSpeedCancelUnloadAtOrder"/>
+        <EffectArray value="JupiterSpeedUnloadAllOrder"/>
+        <EffectArray value="DebugSearchArea"/>
+    </CEffectSet>
+    <CEffectCancelOrder id="JupiterSpeedCancelUnloadAtOrder">
+        <EditorCategories value="Race:Genetron"/>
+        <AbilCmd value="JupiterTransport,UnloadAt"/>
+        <WhichUnit Value="Source"/>
+    </CEffectCancelOrder>
+    <CEffectIssueOrder id="JupiterSpeedUnloadAllOrder">
+        <EditorCategories value="Race:Genetron"/>
+        <Abil value="JupiterTransport"/>
+        <AbilCmdIndex value="2"/>
+        <CmdFlags index="Preempt" value="1"/>
+        <OwningPlayer Value="Source"/>
+        <WhichUnit Value="Source"/>
+        <Player Value="Source"/>
+        <Target Value="SourceUnit"/>
+    </CEffectIssueOrder>
     <CEffectApplyForce id="JupiterSpeedForce">
         <ValidatorArray value="JupiterForceValidators"/>
         <EditorCategories value="Race:Genetron"/>
