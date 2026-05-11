@@ -1,8 +1,29 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Desc>
 
+    <!-- GameHeart support -->
+    <Frame type="Frame" name="UnitIconTemplate">
+        <Height val="60"/>
+        <Width val="60"/>
+        <Frame type="Image" name="IconBG">
+            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+            <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+            <Height val="60"/>
+            <Width val="60"/>
+            <Visible val="False"/>
+        </Frame>
+
+        <Frame type="Image" name="Icon">
+            <Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
+            <Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
+            <Height val="50"/>
+            <Width val="50"/>
+            <Visible val="False"/>
+        </Frame>
+    </Frame>
+
     <Frame type="UnitStatusFrame" name="TemplateKeironProductionStatus">
-        <Height val="12"/>
+        <Height val="76"/>
         <Width val="200"/>
         <RenderType val="HDR"/>
         <VisibleToEnemy val="False"/>
@@ -136,7 +157,10 @@
         </Frame>
 
         <Frame type="ProgressBar" name="ProgressHalf">
-            <Anchor relative="$parent"/>
+            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+            <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+            <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+            <Height val="12"/>
             <AcceptsMouse val="False"/>
 
             <MinValue val="0"/>
@@ -161,7 +185,7 @@
         </Frame>
 
         <Frame type="ProgressBar" name="ProgressCompleted">
-            <Anchor relative="$parent"/>
+            <Anchor relative="$parent/ProgressHalf"/>
             <AcceptsMouse val="False"/>
 
             <MinValue val="0"/>
@@ -178,6 +202,23 @@
 
             </Frame>
 
+        </Frame>
+
+        <!-- GameHeart support -->
+        <Frame type="Frame" name="StatusIcon1" template="StatusKeironProduction/UnitIconTemplate">
+            <Anchor side="Top" relative="$parent/ProgressHalf" pos="Max" offset="4"/>
+            <Anchor side="Left" relative="$parent" pos="Mid" offset="0"/>
+            <Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+        </Frame>
+        <!-- GameHeart support -->
+        <Frame type="Frame" name="StatusIcon2" template="StatusKeironProduction/UnitIconTemplate">
+            <Anchor side="Top" relative="$parent/ProgressHalf" pos="Max" offset="4"/>
+            <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+        </Frame>
+        <!-- GameHeart support -->
+        <Frame type="Frame" name="StatusIcon3" template="StatusKeironProduction/UnitIconTemplate">
+            <Anchor side="Top" relative="$parent/ProgressHalf" pos="Max" offset="4"/>
+            <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
         </Frame>
 
     </Frame>
